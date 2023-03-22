@@ -2,6 +2,7 @@
 
 (defconst
   MEM_EXT_TYPE_0          10)
+  ; TODO find name and create constants 3 and 16
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -10,8 +11,9 @@
 ;;                     ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 
+
 ;; 2.1.1)
-(defconstraint forst-row (:domain {0}) (vanishes STAMP))
+(defconstraint first-row (:domain {0}) (vanishes STAMP))
 
 ;; 2.1.2)
 (defconstraint stampIncrements ()
@@ -37,14 +39,14 @@
     (vanishes (next CT))))
 
 ;; 2.1.5
-(defconstraint memExtType0 ()
+(defconstraint heartBeatOnMemExtType0 ()
   (if-not-zero STAMP
     (if-eq MXT MEM_EXT_TYPE_0
       (begin 
         (= ROOB 0)
         (= NOOP 1)
         (= MXX 0)
-        (= (next STAMP) (+ STAMP 1))
+        (inc STAMP 1)
       ))))
 
 ;; 2.1.6
@@ -53,7 +55,7 @@
     (if-eq ROOB 1
       (begin 
         (= MXX 1)
-        (= (next STAMP) (+ STAMP 1))
+        (inc STAMP 1)
       ))))
 
 ;; 2.1.7
@@ -64,6 +66,38 @@
         (begin 
           (= CT 0)
           (= MXX 0)
-          (= (next STAMP) (+ STAMP 1))
+          (inc STAMP 1)
         )))))
+
+(defun (loopBody iterCount)
+    (begin
+      (if-not-zero (- CT iterCount) 
+        (begin
+          (inc CT 1)
+          (remains-constant STAMP)
+          (remains-constant MXX)))
+      (if-eq CT iterCount
+        (inc STAMP 1))))
+
+;; 2.1.8
+(defconstraint realInstruction ()
+  (if-not-zero STAMP
+    (if-zero ROOB
+      (if-zero NOOP
+        (if-not-zero (- MXT MEM_EXT_TYPE_0)
+          (begin 
+            (if-zero MXX 
+              (loopBody 3))
+            (if-eq MXX 1 
+              (loopBody 16))))))))
+
+;; 2.1.9
+(defconstraint dontTerminateMidInstruction (:domain {-1})
+  (if-not-zero STAMP
+    (if-zero ROOB
+      (if-not-zero (- MXT MEM_EXT_TYPE_0)
+      (if-zero MXX 
+        (= CT 3)
+        (= CT 16))))))
+
 
