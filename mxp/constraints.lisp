@@ -46,3 +46,24 @@
         (= MXX 0)
         (= (next STAMP) (+ STAMP 1))
       ))))
+
+;; 2.1.6
+(defconstraint ridiculouslyOutOfBounds ()
+  (if-not-zero STAMP
+    (if-eq ROOB 1
+      (begin 
+        (= MXX 1)
+        (= (next STAMP) (+ STAMP 1))
+      ))))
+
+;; 2.1.7
+(defconstraint noop ()
+  (if-not-zero STAMP
+    (if-zero ROOB
+      (if-eq NOOP 1
+        (begin 
+          (= CT 0)
+          (= MXX 0)
+          (= (next STAMP) (+ STAMP 1))
+        )))))
+
