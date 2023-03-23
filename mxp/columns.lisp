@@ -15,8 +15,8 @@
 	VAL_3_LO
 	VAL_4_HI
 	VAL_4_LO
-	(BYTE :byte :array[8])
-	(ACC :array[6])
+	(BYTE :byte :array[0:8])
+	(ACC :array[0:6])
 	MSIZE
 	MSIZE_NEW
 	MEMORY_EXPANSION_COST
