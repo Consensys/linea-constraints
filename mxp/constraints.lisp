@@ -1,8 +1,10 @@
 (module mxp)
 
 (defconst
-  MEM_EXT_TYPE_0          10)
-  ; TODO find name and create constants 3 and 16
+  MEM_EXT_TYPE_0          10
+  SHORTCYCLE              3
+  LONGCYCLE               16)
+
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -16,8 +18,8 @@
 (defconstraint first-row (:domain {0}) (vanishes STAMP))
 
 ;; 2.1.2)
-(defconstraint stampIncrements ()
-  (vanishes (* (inc STAMP 0)
+(defconstraint stamp-increments ()
+  (vanishes (* (remains-constant STAMP)
                (inc STAMP 1))))
 
 ;; 2.1.3)
@@ -26,9 +28,9 @@
    (vanishes ROOB)
    (vanishes NOOP)
    (vanishes MSIZE)
-   (vanishes MSIZE_NU)
+   (vanishes MSIZE_NEW)
    (vanishes MXC)
-   (vanishes MXC_NU)
+   (vanishes MXC_NEW)
    (vanishes COMP)
    (vanishes MAX_OFFSET)
    (vanishes MXE)))
@@ -69,15 +71,13 @@
           (inc STAMP 1)
         )))))
 
-(defun (loopBody iterCount)
-    (begin
-      (if-not-zero (- CT iterCount) 
+(defun (loopBody maxCT)
+      (if-eq-else CT maxCT
+        (inc STAMP 1)
         (begin
           (inc CT 1)
           (remains-constant STAMP)
-          (remains-constant MXX)))
-      (if-eq CT iterCount
-        (inc STAMP 1))))
+          (remains-constant MXX))))
 
 ;; 2.1.8
 (defconstraint realInstruction ()
@@ -87,9 +87,9 @@
         (if-not-zero (- MXT MEM_EXT_TYPE_0)
           (begin 
             (if-zero MXX 
-              (loopBody 3))
+              (loopBody SHORTCYCLE))
             (if-eq MXX 1 
-              (loopBody 16))))))))
+              (loopBody LONGCYCLE))))))))
 
 ;; 2.1.9
 (defconstraint dontTerminateMidInstruction (:domain {-1})
@@ -97,7 +97,7 @@
     (if-zero ROOB
       (if-not-zero (- MXT MEM_EXT_TYPE_0)
       (if-zero MXX 
-        (= CT 3)
-        (= CT 16))))))
+        (= CT SHORTCYCLE)
+        (= CT LONGCYCLE))))))
 
 
