@@ -7,14 +7,14 @@
 	(NOOP	:BOOLEAN)
 	COUNTER
 	CN
-	VAL_HI_1
-	VAL_LO_1
-	VAL_HI_2
-	VAL_LO_2
-	VAL_HI_3
-	VAL_LO_3
-	VAL_HI_4
-	VAL_LO_4
+	VAL_1_HI
+	VAL_1_LO
+	VAL_2_HI
+	VAL_2_LO
+	VAL_3_HI
+	VAL_3_LO
+	VAL_4_HI
+	VAL_4_LO
 	(BYTE :byte :array[8])
 	(ACC :array[6])
 	MSIZE
