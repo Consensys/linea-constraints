@@ -133,7 +133,6 @@
 ;; 2.3.1
 (defconstraint roob-initial-value (:domain {0}) (vanishes ROOB))
 
-
 ;; 2.3.2
 (defconstraint roob-when-mem-ext-type0 ()
   (if-eq MXT MEM_EXT_TYPE_0
@@ -141,7 +140,7 @@
 
 ;; 2.3.3
 (defconstraint roob-when-mem-ext-type1 ()
-  (if-zero (* (- MXT MEM_EXT_TYPE_1a) (- MXT MEM_EXT_TYPE_1b))
+  (if-zero (either (- MXT MEM_EXT_TYPE_1a) (- MXT MEM_EXT_TYPE_1b))
     (if-zero-else VAL_1_HI
       (= ROOB 0)
       (= ROOB 1))))
@@ -151,7 +150,7 @@
 (defun (ridiculous-offset-size OFFSET_HI SIZE_LO SIZE_HI)
      (either 
       (is-non-zero SIZE_HI)
-      (is-non-zero (* OFFSET_HI SIZE_LO))))
+      (is-non-zero (either OFFSET_HI SIZE_LO))))
 
 ;; 2.3.4
 (defconstraint roob-when-mem-ext-type2 ()
