@@ -193,8 +193,12 @@
         (if-zero VAL_3_LO
           (= NOOP 1)
           (vanishes 0)))
-      ;; (if-eq MXT MEM_EXT_TYPE_3
-      ;;   TODO)
+      (if-eq MXT MEM_EXT_TYPE_3
+        (begin
+          (if-zero VAL_3_LO (if-zero VAL_4_LO (= NOOP 1)))
+          (if-zero (either (is-non-zero VAL_3_LO)
+                      (is-non-zero VAL_4_LO))
+            (vanishes NOOP))))
 )))
 
 ;; 2.4.4
@@ -208,5 +212,4 @@
         (begin
           (vanishes VAL_4_HI)
           (= VAL_4_LO MSIZE))))))
-
 
