@@ -11,7 +11,6 @@
 
 (defunalias if-zero-else if-zero)
 
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                     ;;
 ;;    2.1 heartbeat    ;;
@@ -145,23 +144,21 @@
       (= ROOB 0)
       (= ROOB 1))))
 
-(defun (is-non-zero value) (if-zero value 1 0))
-
 (defun (ridiculous-offset-size OFFSET_HI SIZE_LO SIZE_HI)
      (either 
-      (is-non-zero SIZE_HI)
-      (is-non-zero (either OFFSET_HI SIZE_LO))))
+      (is-not-zero SIZE_HI)
+      (is-not-zero (either OFFSET_HI SIZE_LO))))
 
 ;; 2.3.4
 (defconstraint roob-when-mem-ext-type2 ()
   (if-eq MXT MEM_EXT_TYPE_2
-    (= ROOB (is-non-zero
+    (= ROOB (is-not-zero
       (ridiculous-offset-size VAL_1_HI VAL_3_LO VAL_3_HI)))))
 
 ;; 2.3.5
 (defconstraint roob-when-mem-ext-type3 ()
   (if-eq MXT MEM_EXT_TYPE_3
-    (= ROOB (is-non-zero (either 
+    (= ROOB (is-not-zero (either 
         (ridiculous-offset-size VAL_1_HI VAL_3_LO VAL_3_HI)
         (ridiculous-offset-size VAL_2_HI VAL_4_LO VAL_4_HI))))))
 
@@ -196,8 +193,8 @@
       (if-eq MXT MEM_EXT_TYPE_3
         (begin
           (if-zero VAL_3_LO (if-zero VAL_4_LO (= NOOP 1)))
-          (if-zero (either (is-non-zero VAL_3_LO)
-                      (is-non-zero VAL_4_LO))
+          (if-zero (either (is-not-zero VAL_3_LO)
+                      (is-not-zero VAL_4_LO))
             (vanishes NOOP))))
 )))
 
@@ -212,4 +209,167 @@
         (begin
           (vanishes VAL_4_HI)
           (= VAL_4_LO MSIZE))))))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                               ;;
+;;    2.5 Byte decompositions    ;;
+;;                               ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;; 2.5.1
+(defconstraint byte-decompositions ()
+  (for k [0:6] 
+    (begin 
+      (if-zero-else CT
+        (= [ACC k] [BYTE k])
+        (= [ACC k] (+ (* 256 (prev [ACC k])) [BYTE k]))))))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                               ;;
+;;    Specialized constraints    ;;
+;;                               ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+(defun (standard-regime)
+  (begin
+    (is-not-zero STAMP)
+    (vanishes NOOP)
+    (vanishes ROOB)))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                       ;;
+;;    2.6 Max offsets    ;;
+;;                       ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;; 2.6.1
+(defconstraint max-offset-type-1a (:guard (standard-regime))
+  (if-eq MXT MEM_EXT_TYPE_1a
+    (begin
+      (= LAST_OFFSET_1 (+ VAL_1_LO 31))
+      (vanishes LAST_OFFSET_2))))
+
+;; 2.6.2
+(defconstraint max-offset-type-1b (:guard (standard-regime))
+  (if-eq MXT MEM_EXT_TYPE_1a
+    (begin
+      (= LAST_OFFSET_1 VAL_1_LO)
+      (vanishes LAST_OFFSET_2))))
+
+;; 2.6.3
+(defconstraint max-offset-type-2 (:guard (standard-regime))
+  (if-eq MXT MEM_EXT_TYPE_1a
+    (begin
+      (= LAST_OFFSET_1 (+ VAL_1_LO (- VAL_3_LO 1)))
+      (vanishes LAST_OFFSET_2))))
+  
+;; 2.6.4
+(defconstraint max-offset-type-3 (:guard (standard-regime))
+  (if-eq MXT MEM_EXT_TYPE_1a
+    (begin
+      (if-zero-else VAL_3_LO
+        (vanishes LAST_OFFSET_1)
+        (= LAST_OFFSET_1 (+ VAL_1_LO (- VAL_3_LO 1))))
+      (if-zero-else VAL_4_LO
+        (vanishes LAST_OFFSET_2)
+        (= LAST_OFFSET_2 (+ VAL_2_LO (- VAL_4_LO 1)))))))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                    ;;
+;;    2.7 Offsets are out of bonds    ;;
+;;                                    ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;; 2.7.1
+(defconstraint offsets-out-of-bonds (:guard (standard-regime))
+  (if-eq MXX 1
+    (if-eq CT LONGCYCLE
+      (vanishes (*
+        (- (- LAST_OFFSET_1 256) [ACC 1])
+        (- (- LAST_OFFSET_2 256) [ACC 2]))))))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                   ;;
+;;    2.8 Offsets are in of bonds    ;;
+;;                                   ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+(defun (offsets-are-in-bounds)
+  (begin
+    (vanishes MXX)
+    (= CT SHORTCYCLE)))
+
+;; 2.8.1
+(defconstraint number-of-evm-words (:guard (and (standard-regime) (offsets-are-in-bounds)))
+  (if-eq MXT MEM_EXT_TYPE_2
+   (begin
+     (= VAL_3_LO (- (* 32 [ACC 0]) (shift [BYTE 7] -2)))
+     (= (shift [BYTE 7] -3) (+ 224 (shift [BYTE 7] -2)))))) ; 224 == 256 - 32
+
+;; 2.8.2
+(defconstraint offsets-are-small (:guard (and (standard-regime) (offsets-are-in-bounds)))
+  (begin 
+    (= [ACC 1] LAST_OFFSET_1)
+    (= [ACC 2] LAST_OFFSET_2)
+  ))
+
+;; 2.8.3
+(defconstraint comp-offsets (:guard (and (standard-regime) (offsets-are-in-bounds)))
+  (= [ACC 3] (
+    + (*  (- LAST_OFFSET_1 LAST_OFFSET_2)
+          (- (* 2 COMP) 1))
+      (- COMP 1))))
+
+;; 2.8.4
+(defconstraint define-max-offset (:guard (and (standard-regime) (offsets-are-in-bounds)))
+  (= MAX_OFFSET 
+    (+  (* COMP LAST_OFFSET_1)
+        (* (- 1 COMP) LAST_OFFSET_2))))
+
+;; 2.8.5
+(defconstraint mem-expansion-took-place (:guard (and (standard-regime) (offsets-are-in-bounds)))
+  (= [ACC 4]
+    (-  (*  (- (+ MAX_OFFSET 1)
+               MSIZE)
+            (- (* 2 MXE)
+               1)
+        MXE))))
+
+;; 2.8.6
+(defconstraint expansion-simple (:guard (and (standard-regime) (offsets-are-in-bounds)))
+  (if-zero-else MXE
+    (begin
+      (= MSIZE_NEW MSIZE)
+      (vanishes MXC))
+    (= MSIZE_NEW (+ MAX_OFFSET 1))))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                       ;;
+;;    2.9 Cost update    ;;
+;;                       ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+(defun (expansion-happened)
+  (begin
+    (offsets-are-in-bounds)
+    (= MXE 1)))
+
+;; 2.9.1
+(defconstraint euclidean-div-msize (:guard (and (standard-regime) (expansion-happened)))
+  (begin
+    (= MSIZE_NEW (- (* 32 [ACC 5]) [BYTE 7]))
+    (= (prev [BYTE 7]) (+ [BYTE 7] 224) ))) ; 224 == 256 - 32
+
 

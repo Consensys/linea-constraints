@@ -15,6 +15,8 @@
 	VAL_3_LO
 	VAL_4_HI
 	VAL_4_LO
+	LAST_OFFSET_1
+	LAST_OFFSET_2
 	(BYTE :byte :array[0:8])
 	(ACC :array[0:6])
 	MSIZE
