@@ -164,3 +164,49 @@
     (= ROOB (is-non-zero (either 
         (ridiculous-offset-size VAL_1_HI VAL_3_LO VAL_3_HI)
         (ridiculous-offset-size VAL_2_HI VAL_4_LO VAL_4_HI))))))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                     ;;
+;;    2.4 NOOP flag    ;;
+;;                     ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;; 2.4.1
+(defconstraint noop-initial-value (:domain {0}) (vanishes NOOP))
+
+;; 2.4.2
+(defconstraint noop-when-roob () (if-eq ROOB 1 (= NOOP 1)))
+
+;; 2.4.3
+(defconstraint noop-when-no-roob () 
+  (if-zero ROOB
+    (begin 
+      (if-eq MXT MEM_EXT_TYPE_0
+        (= NOOP 1))
+      (if-eq MXT MEM_EXT_TYPE_1a
+        (vanishes NOOP))
+      (if-eq MXT MEM_EXT_TYPE_1b
+        (vanishes NOOP))
+      (if-eq MXT MEM_EXT_TYPE_2
+        (if-zero VAL_3_LO
+          (= NOOP 1)
+          (vanishes 0)))
+      ;; (if-eq MXT MEM_EXT_TYPE_3
+      ;;   TODO)
+)))
+
+;; 2.4.4
+(defconstraint behaviour-when-noop () 
+  (if-eq NOOP 1
+    (begin
+      (vanishes DELTA_MXC)
+      (= MSIZE MSIZE_NEW)
+      (= MXC MXC_NEW)
+      (if-eq MXT MEM_EXT_TYPE_0 
+        (begin
+          (vanishes VAL_4_HI)
+          (= VAL_4_LO MSIZE))))))
+
+
