@@ -33,20 +33,18 @@
    (counter-constancy CT MXPE)))
 
 
-
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                     ;;
-;;    2.3 ROOB flag    ;;
+;;    2.2 ROOB flag    ;;
 ;;                     ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-;; 2.3.1
+;; 2.2.1
 (defconstraint roob-when-type-1 (:guard (= [TYPE 1] 1))
     (vanishes ROOB))
 
-;; 2.3.2
+;; 2.2.2
 (defconstraint roob-when-type-2-3 (:guard (is-not-zero (+ [TYPE 2] [TYPE 3])))
   (if-zero OFFSET_1_HI
     (vanishes ROOB)
@@ -57,37 +55,37 @@
       (is-not-zero SIZE_HI)
       (is-not-zero (either OFFSET_HI SIZE_LO))))
 
-;; 2.3.4
+;; 2.2.3
 (defconstraint roob-when-mem-4 (:guard (= [TYPE 4] 1))
     (= ROOB (is-not-zero
       (ridiculous-offset-size OFFSET_1_HI SIZE_1_LO SIZE_1_HI))))
 
-;; 2.3.5
+;; 2.2.4
 (defconstraint roob-when-mem-5 (:guard (= [TYPE 5] 1))
     (= ROOB (is-not-zero (either 
         (ridiculous-offset-size OFFSET_1_HI SIZE_1_LO SIZE_1_HI)
         (ridiculous-offset-size OFFSET_2_HI SIZE_2_LO SIZE_2_HI)))))
 
 
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                     ;;
-;;    2.4 NOOP flag    ;;
+;;    2.3 NOOP flag    ;;
 ;;                     ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; 2.4.1
-(defconstraint noop-and-types (:guard vanishes ROOB) 
+
+;; 2.3.1
+(defconstraint noop-and-types (:guard (vanishes ROOB)) 
   (begin 
     (if-not-zero (+ (+ [TYPE 1] [TYPE 2]) [TYPE 3])
       (= NOOP [TYPE 1]))
     (if-eq [TYPE 4] 1
       (= NOOP (is-zero SIZE_1_LO)))
     (if-eq [TYPE 5] 1
-      (= NOOP (is-zero (SIZE_1_LO + SIZE_2_LO))))))
+      (= NOOP (is-zero (+ SIZE_1_LO SIZE_2_LO))))))
 
 
-;; 2.4.2
+;; 2.3.2
 (defconstraint noop-consequences (:guard (= NOOP 1))
   (begin 
     (vanishes DELTA_MXPC)
@@ -97,97 +95,62 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                     ;;
-;;    2.1 heartbeat    ;;
+;;    2.4 heartbeat    ;;
 ;;                     ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-;; ;; 2.1.1)
-;; (defconstraint first-row (:domain {0}) (vanishes STAMP))
+;; 2.4.1)
+(defconstraint first-row (:domain {0}) (vanishes STAMP))
 
-;; ;; 2.1.2)
-;; (defconstraint stamp-increments ()
-;;   (vanishes (* (remains-constant STAMP)
-;;                (inc STAMP 1))))
+;; 2.4.2)
+(defconstraint stamp-increments ()
+  (vanishes (* (remains-constant STAMP)
+               (inc STAMP 1))))
 
-;; ;; 2.1.3)
-;; (defconstraint zeroRow (:guard (is-zero STAMP))
-;;   (begin
-;;    (vanishes ROOB)
-;;    (vanishes NOOP)
-;;    (vanishes MSIZE)
-;;    (vanishes MSIZE_NEW)
-;;    (vanishes MXC)
-;;    (vanishes MXC_NEW)
-;;    (vanishes COMP)
-;;    (vanishes MAX_OFFSET)
-;;    (vanishes MXE)))
+;; 2.4.3)
+(defconstraint stamp-is-zero (:guard (is-zero STAMP))
+  (begin
+   (vanishes (+ (+ ROOB NOOP) MXPX))
+   (vanishes CT)
+   (vanishes INST)))
 
-;; ;; 2.1.4)
-;; (defconstraint counterReset ()
-;;   (if-not-zero (remains-constant STAMP)
-;;     (vanishes (next CT))))
+;; 2.4.4)
+(defconstraint only-one-type ()
+  (= 1 (+ (+ (+ (+ [TYPE 1] [TYPE 2]) [TYPE 3]) [TYPE 4]) [TYPE 5])))
 
-;; ;; 2.1.5
-;; (defconstraint heartBeatOnMemExtType0 ()
-;;   (if-not-zero STAMP
-;;     (if-eq MXT MEM_EXT_TYPE_0
-;;       (begin 
-;;         (= ROOB 0)
-;;         (= NOOP 1)
-;;         (= MXPX 0)
-;;         (inc STAMP 1)
-;;       ))))
+;; 2.4.5)
+(defconstraint counter-reset ()
+  (if-not-zero (remains-constant STAMP)
+    (vanishes (next CT))))
 
-;; ;; 2.1.6
-;; (defconstraint ridiculouslyOutOfBounds ()
-;;   (if-not-zero STAMP
-;;     (if-eq ROOB 1
-;;       (begin 
-;;         (= MXPX 1)
-;;         (inc STAMP 1)
-;;       ))))
+;; 2.4.6)
+(defconstraint roob-or-noop (:guard (is-not-zero (+ ROOB NOOP)))
+  (begin
+    (inc STAMP 1)
+    (= MXPX ROOB)))
 
-;; ;; 2.1.7
-;; (defconstraint noop ()
-;;   (if-not-zero STAMP
-;;     (if-zero ROOB
-;;       (if-eq NOOP 1
-;;         (begin 
-;;           (= CT 0)
-;;           (= MXPX 0)
-;;           (inc STAMP 1)
-;;         )))))
+;; 2.4.7
+(defconstraint real-instructions ()
+  (if-not-zero STAMP
+    (if-zero ROOB
+      (if-zero NOOP
+        (if-zero MXPX
+          (if-eq-else CT SHORTCYCLE
+            (inc STAMP 1)
+            (inc CT 1))
+          (if-eq-else CT LONGCYCLE
+            (inc STAMP 1)
+            (inc CT 1)))))))
 
-;; (defun (loopBody maxCT)
-;;       (if-eq-else CT maxCT
-;;         (inc STAMP 1)
-;;         (begin
-;;           (inc CT 1)
-;;           (remains-constant STAMP)
-;;           (remains-constant MXPX))))
-
-;; ;; 2.1.8
-;; (defconstraint realInstruction ()
-;;   (if-not-zero STAMP
-;;     (if-zero ROOB
-;;       (if-zero NOOP
-;;         (if-not-zero (- MXT MEM_EXT_TYPE_0)
-;;           (begin 
-;;             (if-zero MXPX 
-;;               (loopBody SHORTCYCLE))
-;;             (if-eq MXPX 1 
-;;               (loopBody LONGCYCLE))))))))
-
-;; ;; 2.1.9
-;; (defconstraint dontTerminateMidInstruction (:domain {-1})
-;;   (if-not-zero STAMP
-;;     (if-zero ROOB
-;;       (if-not-zero (- MXT MEM_EXT_TYPE_0)
-;;       (if-zero MXPX 
-;;         (= CT SHORTCYCLE)
-;;         (= CT LONGCYCLE))))))
-
+;; 2.4.8
+(defconstraint dont-terminate-mid-instructions (:domain {-1})
+  (if-not-zero STAMP
+    (if-zero ROOB
+      (if-zero NOOP
+        (if-zero MXPX 
+          (= CT SHORTCYCLE)
+          (= CT LONGCYCLE))))))
 
 
 
