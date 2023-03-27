@@ -2,7 +2,8 @@
 
 (defconst
   SHORTCYCLE              3
-  LONGCYCLE               16)
+  LONGCYCLE               16
+  2_POW_32                4294967296)
 
 
 
@@ -229,27 +230,27 @@
         (= MAX_OFFSET_2 (+ OFFSET_2_LO (- SIZE_2_LO 1)))))))
 
 
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; ;;                                    ;;
-;; ;;    2.7 Offsets are out of bonds    ;;
-;; ;;                                    ;;
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                    ;;
+;;    2.7 Offsets are out of bonds    ;;
+;;                                    ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-;; ;; 2.7.1
-;; (defconstraint offsets-out-of-bonds (:guard (standard-regime))
-;;   (if-eq MXPX 1
-;;     (if-eq CT LONGCYCLE
-;;       (vanishes (*
-;;         (- (- MAX_OFFSET_1 256) [ACC 1])
-;;         (- (- MAX_OFFSET_2 256) [ACC 2]))))))
+;; 2.7.1
+(defconstraint offsets-out-of-bonds (:guard (standard-regime))
+  (if-eq MXPX 1
+    (if-eq CT LONGCYCLE
+      (vanishes (*
+        (- (- MAX_OFFSET_1 2_POW_32) [ACC 1])
+        (- (- MAX_OFFSET_2 2_POW_32) [ACC 2]))))))
 
 
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; ;;                                   ;;
-;; ;;    2.8 Offsets are in of bonds    ;;
-;; ;;                                   ;;
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                   ;;
+;;    2.8 Offsets are in of bonds    ;;
+;;                                   ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
 ;; (defun (offsets-are-in-bounds)
