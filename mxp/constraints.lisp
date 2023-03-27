@@ -63,60 +63,37 @@
       (ridiculous-offset-size OFFSET_1_HI SIZE_1_LO SIZE_1_HI))))
 
 ;; 2.3.5
-(defconstraint roob-when-mem-4 (:guard (= [TYPE 5] 1))
+(defconstraint roob-when-mem-5 (:guard (= [TYPE 5] 1))
     (= ROOB (is-not-zero (either 
         (ridiculous-offset-size OFFSET_1_HI SIZE_1_LO SIZE_1_HI)
         (ridiculous-offset-size OFFSET_2_HI SIZE_2_LO SIZE_2_HI)))))
 
 
 
+;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                     ;;
+;;    2.4 NOOP flag    ;;
+;;                     ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;
-;; ;;                     ;;
-;; ;;    2.4 NOOP flag    ;;
-;; ;;                     ;;
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 2.4.1
+(defconstraint noop-and-types (:guard vanishes ROOB) 
+  (begin 
+    (if-not-zero (+ (+ [TYPE 1] [TYPE 2]) [TYPE 3])
+      (= NOOP [TYPE 1]))
+    (if-eq [TYPE 4] 1
+      (= NOOP (is-zero SIZE_1_LO)))
+    (if-eq [TYPE 5] 1
+      (= NOOP (is-zero (SIZE_1_LO + SIZE_2_LO))))))
 
 
-;; ;; 2.4.1
-;; (defconstraint noop-initial-value (:domain {0}) (vanishes NOOP))
+;; 2.4.2
+(defconstraint noop-consequences (:guard (= NOOP 1))
+  (begin 
+    (vanishes DELTA_MXPC)
+    (= WORDS_NEW WORDS)
+    (= MXPC_NEW MXPC)))
 
-;; ;; 2.4.2
-;; (defconstraint noop-when-roob () (if-eq ROOB 1 (= NOOP 1)))
-
-;; ;; 2.4.3
-;; (defconstraint noop-when-no-roob () 
-;;   (if-zero ROOB
-;;     (begin 
-;;       (if-eq MXT MEM_EXT_TYPE_0
-;;         (= NOOP 1))
-;;       (if-eq MXT MEM_EXT_TYPE_1a
-;;         (vanishes NOOP))
-;;       (if-eq MXT MEM_EXT_TYPE_1b
-;;         (vanishes NOOP))
-;;       (if-eq MXT MEM_EXT_TYPE_2
-;;         (if-zero VAL_3_LO
-;;           (= NOOP 1)
-;;           (vanishes 0)))
-;;       (if-eq MXT MEM_EXT_TYPE_3
-;;         (begin
-;;           (if-zero VAL_3_LO (if-zero VAL_4_LO (= NOOP 1)))
-;;           (if-zero (either (is-not-zero VAL_3_LO)
-;;                       (is-not-zero VAL_4_LO))
-;;             (vanishes NOOP))))
-;; )))
-
-;; ;; 2.4.4
-;; (defconstraint behaviour-when-noop () 
-;;   (if-eq NOOP 1
-;;     (begin
-;;       (vanishes DELTA_MXC)
-;;       (= MSIZE MSIZE_NEW)
-;;       (= MXC MXC_NEW)
-;;       (if-eq MXT MEM_EXT_TYPE_0 
-;;         (begin
-;;           (vanishes VAL_4_HI)
-;;           (= VAL_4_LO MSIZE))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                     ;;
