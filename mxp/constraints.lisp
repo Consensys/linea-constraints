@@ -3,7 +3,7 @@
 (defconst
   SHORTCYCLE              3
   LONGCYCLE               16
-  2_POW_32                4294967296)
+  TWO_POW_32                4294967296)
 
 
 
@@ -242,65 +242,63 @@
   (if-eq MXPX 1
     (if-eq CT LONGCYCLE
       (vanishes (*
-        (- (- MAX_OFFSET_1 2_POW_32) [ACC 1])
-        (- (- MAX_OFFSET_2 2_POW_32) [ACC 2]))))))
+        (- (- MAX_OFFSET_1 TWO_POW_32) [ACC 1])
+        (- (- MAX_OFFSET_2 TWO_POW_32) [ACC 2]))))))
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;                                   ;;
-;;    2.8 Offsets are in of bonds    ;;
-;;                                   ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                ;;
+;;    2.8 Offsets are in bonds    ;;
+;;                                ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-;; (defun (offsets-are-in-bounds)
-;;   (begin
-;;     (vanishes MXPX)
-;;     (= CT SHORTCYCLE)))
+(defun (offsets-are-in-bounds)
+  (and
+    (= CT SHORTCYCLE)
+    (vanishes MXPX)))
 
-;; ;; 2.8.1
-;; (defconstraint number-of-evm-words (:guard (and (standard-regime) (offsets-are-in-bounds)))
-;;   (if-eq MXT MEM_EXT_TYPE_2
-;;    (begin
-;;      (= SIZE_1_LO (- (* 32 [ACC 0]) (shift [BYTE 7] -2)))
-;;      (= (shift [BYTE 7] -3) (+ 224 (shift [BYTE 7] -2)))))) ; 224 == 256 - 32
+;; 2.8.1
+(defconstraint size-in-evm-words (:guard (and (standard-regime) (offsets-are-in-bounds)))
+  (if-eq [TYPE 4] 1
+   (begin
+     (= SIZE_1_LO (- (* 32 ACC_W) BYTE_R))
+     (= (prev BYTE_R) (+ 224 BYTE_R))))) ; 224 == 256 - 32
 
-;; ;; 2.8.2
-;; (defconstraint offsets-are-small (:guard (and (standard-regime) (offsets-are-in-bounds)))
-;;   (begin 
-;;     (= [ACC 1] MAX_OFFSET_1)
-;;     (= [ACC 2] MAX_OFFSET_2)
-;;   ))
+;; 2.8.2
+(defconstraint offsets-are-small (:guard (and (standard-regime) (offsets-are-in-bounds)))
+  (begin 
+    (= [ACC 1] MAX_OFFSET_1)
+    (= [ACC 2] MAX_OFFSET_2)
+  ))
 
-;; ;; 2.8.3
-;; (defconstraint comp-offsets (:guard (and (standard-regime) (offsets-are-in-bounds)))
-;;   (= [ACC 3] (
-;;     + (*  (- MAX_OFFSET_1 MAX_OFFSET_2)
-;;           (- (* 2 COMP) 1))
-;;       (- COMP 1))))
+;; 2.8.3
+(defconstraint comp-offsets (:guard (and (standard-regime) (offsets-are-in-bounds)))
+  (=
+    (+ [ACC 3] (- 1 COMP))
+    (* (- MAX_OFFSET_1 MAX_OFFSET_2) (- (* 2 COMP) 1))))
 
-;; ;; 2.8.4
-;; (defconstraint define-max-offset (:guard (and (standard-regime) (offsets-are-in-bounds)))
-;;   (= MAX_OFFSET 
-;;     (+  (* COMP MAX_OFFSET_1)
-;;         (* (- 1 COMP) MAX_OFFSET_2))))
+;; 2.8.4
+(defconstraint define-max-offset (:guard (and (standard-regime) (offsets-are-in-bounds)))
+  (= MAX_OFFSET 
+    (+  (* COMP MAX_OFFSET_1)
+        (* (- 1 COMP) MAX_OFFSET_2))))
 
-;; ;; 2.8.5
-;; (defconstraint mem-expansion-took-place (:guard (and (standard-regime) (offsets-are-in-bounds)))
-;;   (= [ACC 4]
-;;     (-  (*  (- (+ MAX_OFFSET 1)
-;;                MSIZE)
-;;             (- (* 2 MXE)
-;;                1)
-;;         MXE))))
+;; 2.8.5
+(defconstraint define-a (:guard (and (standard-regime) (offsets-are-in-bounds)))
+  (begin
+    (=
+      (+ MAX_OFFSET 1)
+      (- (* 32 ACC_A) (shift BYTE_R -2)))
+    (=
+      (shift BYTE_R -3)
+      (+ 224 (shift BYTE_R -2)))))
 
-;; ;; 2.8.6
-;; (defconstraint expansion-simple (:guard (and (standard-regime) (offsets-are-in-bounds)))
-;;   (if-zero MXE
-;;     (begin
-;;       (= MSIZE_NEW MSIZE)
-;;       (vanishes MXC))
-;;     (= MSIZE_NEW (+ MAX_OFFSET 1))))
+;; 2.8.5
+(defconstraint mem-expension-took-place (:guard (and (standard-regime) (offsets-are-in-bounds)))
+  (=
+    (+ [ACC 4] MXPE)
+    (* (- ACC_A WORDS) (- (* 2 MXPE) 1))))
 
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;
