@@ -51,9 +51,9 @@
     (is-not-zero ROOB)))
 
 (defun (ridiculous-offset-size OFFSET_HI SIZE_LO SIZE_HI)
-     (either 
-      (is-not-zero SIZE_HI)
-      (is-not-zero (either OFFSET_HI SIZE_LO))))
+  (either 
+    (is-not-zero SIZE_HI)
+    (is-not-zero (either OFFSET_HI SIZE_LO))))
 
 ;; 2.2.3
 (defconstraint roob-when-mem-4 (:guard (= [TYPE 4] 1))
@@ -161,12 +161,10 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-;; 2.5.1
 (defun (check-accumulation _ACC _BYTE)
-  (begin 
-    (if-zero CT
-      (= _ACC _BYTE)
-      (= _ACC (+ (* 256 (prev _ACC)) _BYTE)))))
+  (if-zero CT
+    (= _ACC _BYTE)
+    (= _ACC (+ (* 256 (prev _ACC)) _BYTE))))
 
 ;; 2.5.1
 (defconstraint byte-decompositions ()
@@ -178,58 +176,57 @@
     (check-accumulation ACC_Q BYTE_Q)))
 
 
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; ;;                               ;;
-;; ;;    Specialized constraints    ;;
-;; ;;                               ;;
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                               ;;
+;;    Specialized constraints    ;;
+;;                               ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-;; (defun (standard-regime)
-;;   (begin
-;;     (is-not-zero STAMP)
-;;     (vanishes NOOP)
-;;     (vanishes ROOB)))
+(defun (standard-regime)
+  (and
+    (is-not-zero STAMP)
+    (vanishes (+ NOOP ROOB))))
 
 
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; ;;                       ;;
-;; ;;    2.6 Max offsets    ;;
-;; ;;                       ;;
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                       ;;
+;;    2.6 Max offsets    ;;
+;;                       ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-;; ;; 2.6.1
-;; (defconstraint max-offset-type-1a (:guard (standard-regime))
-;;   (if-eq MXT MEM_EXT_TYPE_1a
-;;     (begin
-;;       (= LAST_OFFSET_1 (+ VAL_1_LO 31))
-;;       (vanishes LAST_OFFSET_2))))
+;; 2.6.1
+(defconstraint max-offset-type-2 (:guard (standard-regime))
+  (if-eq [TYPE 2] 1
+    (begin
+      (= MAX_OFFSET_1 (+ OFFSET_1_LO 31))
+      (vanishes MAX_OFFSET_2))))
 
-;; ;; 2.6.2
-;; (defconstraint max-offset-type-1b (:guard (standard-regime))
-;;   (if-eq MXT MEM_EXT_TYPE_1a
-;;     (begin
-;;       (= LAST_OFFSET_1 VAL_1_LO)
-;;       (vanishes LAST_OFFSET_2))))
+;; 2.6.2
+(defconstraint max-offset-type-3 (:guard (standard-regime))
+  (if-eq [TYPE 3] 1
+    (begin
+      (= MAX_OFFSET_1 (+ OFFSET_1_LO 1))
+      (vanishes MAX_OFFSET_2))))
 
-;; ;; 2.6.3
-;; (defconstraint max-offset-type-2 (:guard (standard-regime))
-;;   (if-eq MXT MEM_EXT_TYPE_1a
-;;     (begin
-;;       (= LAST_OFFSET_1 (+ VAL_1_LO (- VAL_3_LO 1)))
-;;       (vanishes LAST_OFFSET_2))))
+;; 2.6.3
+(defconstraint max-offset-type-4 (:guard (standard-regime))
+  (if-eq [TYPE 4] 1
+    (begin
+      (= MAX_OFFSET_1 (+ OFFSET_1_LO (- SIZE_1_LO 1)))
+      (vanishes MAX_OFFSET_2))))
   
-;; ;; 2.6.4
-;; (defconstraint max-offset-type-3 (:guard (standard-regime))
-;;   (if-eq MXT MEM_EXT_TYPE_1a
-;;     (begin
-;;       (if-zero VAL_3_LO
-;;         (vanishes LAST_OFFSET_1)
-;;         (= LAST_OFFSET_1 (+ VAL_1_LO (- VAL_3_LO 1))))
-;;       (if-zero VAL_4_LO
-;;         (vanishes LAST_OFFSET_2)
-;;         (= LAST_OFFSET_2 (+ VAL_2_LO (- VAL_4_LO 1)))))))
+;; 2.6.4
+(defconstraint max-offset-type-5 (:guard (standard-regime))
+  (if-eq [TYPE 5] 1
+    (begin
+      (if-zero SIZE_1_LO
+        (vanishes MAX_OFFSET_1)
+        (= MAX_OFFSET_1 (+ OFFSET_1_LO (- SIZE_1_LO 1))))
+      (if-zero SIZE_2_LO
+        (vanishes MAX_OFFSET_2)
+        (= MAX_OFFSET_2 (+ OFFSET_2_LO (- SIZE_2_LO 1)))))))
 
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -244,8 +241,8 @@
 ;;   (if-eq MXPX 1
 ;;     (if-eq CT LONGCYCLE
 ;;       (vanishes (*
-;;         (- (- LAST_OFFSET_1 256) [ACC 1])
-;;         (- (- LAST_OFFSET_2 256) [ACC 2]))))))
+;;         (- (- MAX_OFFSET_1 256) [ACC 1])
+;;         (- (- MAX_OFFSET_2 256) [ACC 2]))))))
 
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -264,28 +261,28 @@
 ;; (defconstraint number-of-evm-words (:guard (and (standard-regime) (offsets-are-in-bounds)))
 ;;   (if-eq MXT MEM_EXT_TYPE_2
 ;;    (begin
-;;      (= VAL_3_LO (- (* 32 [ACC 0]) (shift [BYTE 7] -2)))
+;;      (= SIZE_1_LO (- (* 32 [ACC 0]) (shift [BYTE 7] -2)))
 ;;      (= (shift [BYTE 7] -3) (+ 224 (shift [BYTE 7] -2)))))) ; 224 == 256 - 32
 
 ;; ;; 2.8.2
 ;; (defconstraint offsets-are-small (:guard (and (standard-regime) (offsets-are-in-bounds)))
 ;;   (begin 
-;;     (= [ACC 1] LAST_OFFSET_1)
-;;     (= [ACC 2] LAST_OFFSET_2)
+;;     (= [ACC 1] MAX_OFFSET_1)
+;;     (= [ACC 2] MAX_OFFSET_2)
 ;;   ))
 
 ;; ;; 2.8.3
 ;; (defconstraint comp-offsets (:guard (and (standard-regime) (offsets-are-in-bounds)))
 ;;   (= [ACC 3] (
-;;     + (*  (- LAST_OFFSET_1 LAST_OFFSET_2)
+;;     + (*  (- MAX_OFFSET_1 MAX_OFFSET_2)
 ;;           (- (* 2 COMP) 1))
 ;;       (- COMP 1))))
 
 ;; ;; 2.8.4
 ;; (defconstraint define-max-offset (:guard (and (standard-regime) (offsets-are-in-bounds)))
 ;;   (= MAX_OFFSET 
-;;     (+  (* COMP LAST_OFFSET_1)
-;;         (* (- 1 COMP) LAST_OFFSET_2))))
+;;     (+  (* COMP MAX_OFFSET_1)
+;;         (* (- 1 COMP) MAX_OFFSET_2))))
 
 ;; ;; 2.8.5
 ;; (defconstraint mem-expansion-took-place (:guard (and (standard-regime) (offsets-are-in-bounds)))
