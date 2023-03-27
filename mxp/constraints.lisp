@@ -154,20 +154,28 @@
 
 
 
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; ;;                               ;;
-;; ;;    2.5 Byte decompositions    ;;
-;; ;;                               ;;
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                               ;;
+;;    2.5 Byte decompositions    ;;
+;;                               ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-;; ;; 2.5.1
-;; (defconstraint byte-decompositions ()
-;;   (for k [0:6] 
-;;     (begin 
-;;       (if-zero CT
-;;         (= [ACC k] [BYTE k])
-;;         (= [ACC k] (+ (* 256 (prev [ACC k])) [BYTE k]))))))
+;; 2.5.1
+(defun (check-accumulation _ACC _BYTE)
+  (begin 
+    (if-zero CT
+      (= _ACC _BYTE)
+      (= _ACC (+ (* 256 (prev _ACC)) _BYTE)))))
+
+;; 2.5.1
+(defconstraint byte-decompositions ()
+  (begin
+    (for k [1:4] 
+      (check-accumulation [ACC k] [BYTE k]))
+    (check-accumulation ACC_A BYTE_A)
+    (check-accumulation ACC_W BYTE_W)
+    (check-accumulation ACC_Q BYTE_Q)))
 
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
