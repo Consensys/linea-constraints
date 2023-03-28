@@ -42,11 +42,11 @@
 
 
 ;; 2.2.1
-(defconstraint roob-when-type-1 (:guard (= [TYPE 1] 1))
+(defconstraint roob-when-type-1 (:guard [TYPE 1])
     (vanishes ROOB))
 
 ;; 2.2.2
-(defconstraint roob-when-type-2-3 (:guard (is-not-zero (+ [TYPE 2] [TYPE 3])))
+(defconstraint roob-when-type-2-3 (:guard (+ [TYPE 2] [TYPE 3]))
   (if-zero OFFSET_1_HI
     (vanishes ROOB)
     (is-not-zero ROOB)))
@@ -57,12 +57,12 @@
     (is-not-zero (either OFFSET_HI SIZE_LO))))
 
 ;; 2.2.3
-(defconstraint roob-when-mem-4 (:guard (= [TYPE 4] 1))
+(defconstraint roob-when-mem-4 (:guard [TYPE 4])
     (= ROOB (is-not-zero
       (ridiculous-offset-size OFFSET_1_HI SIZE_1_LO SIZE_1_HI))))
 
 ;; 2.2.4
-(defconstraint roob-when-mem-5 (:guard (= [TYPE 5] 1))
+(defconstraint roob-when-mem-5 (:guard [TYPE 5])
     (= ROOB (is-not-zero (either 
         (ridiculous-offset-size OFFSET_1_HI SIZE_1_LO SIZE_1_HI)
         (ridiculous-offset-size OFFSET_2_HI SIZE_2_LO SIZE_2_HI)))))
@@ -76,7 +76,7 @@
 
 
 ;; 2.3.1
-(defconstraint noop-and-types (:guard (vanishes ROOB)) 
+(defconstraint noop-and-types (:guard (- 1 ROOB)) 
   (begin 
     (if-not-zero (+ (+ [TYPE 1] [TYPE 2]) [TYPE 3])
       (= NOOP [TYPE 1]))
@@ -85,13 +85,17 @@
     (if-eq [TYPE 5] 1
       (= NOOP (is-zero (+ SIZE_1_LO SIZE_2_LO))))))
 
-
 ;; 2.3.2
-(defconstraint noop-consequences (:guard (= NOOP 1))
+(defconstraint noop-consequences (:guard NOOP)
   (begin 
     (vanishes DELTA_MXPC)
     (= WORDS_NEW WORDS)
     (= MXPC_NEW MXPC)))
+
+;; 2.3.3
+(defconstraint noop-and-roob ()
+  (if-not-zero ROOB
+    (vanishes NOOP)))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -110,11 +114,12 @@
                (inc STAMP 1))))
 
 ;; 2.4.3)
-(defconstraint stamp-is-zero (:guard (is-zero STAMP))
-  (begin
-   (vanishes (+ (+ ROOB NOOP) MXPX))
-   (vanishes CT)
-   (vanishes INST)))
+(defconstraint stamp-is-zero ()
+  (if-zero STAMP
+    (begin
+      (vanishes (+ (+ ROOB NOOP) MXPX))
+      (vanishes CT)
+      (vanishes INST))))
 
 ;; 2.4.4)
 (defconstraint only-one-type ()
@@ -126,10 +131,11 @@
     (vanishes (next CT))))
 
 ;; 2.4.6)
-(defconstraint roob-or-noop (:guard (is-not-zero (+ ROOB NOOP)))
-  (begin
-    (inc STAMP 1)
-    (= MXPX ROOB)))
+(defconstraint roob-or-noop ()
+  (if-not-zero (+ ROOB NOOP)
+    (begin
+      (inc STAMP 1)
+      (= MXPX ROOB))))
 
 ;; 2.4.7
 (defconstraint real-instructions ()
@@ -185,9 +191,9 @@
 
 
 (defun (standard-regime)
-  (and
-    (is-not-zero STAMP)
-    (vanishes (+ NOOP ROOB))))
+  (*
+    STAMP
+    (- 1 (+ NOOP ROOB)))) ; NOOP + ROOB is binary cf noop section
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -230,15 +236,15 @@
         (= MAX_OFFSET_2 (+ OFFSET_2_LO (- SIZE_2_LO 1)))))))
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;                                    ;;
-;;    2.7 Offsets are out of bonds    ;;
-;;                                    ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                     ;;
+;;    2.7 Offsets are out of bounds    ;;
+;;                                     ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
 ;; 2.7.1
-(defconstraint offsets-out-of-bonds (:guard (standard-regime))
+(defconstraint offsets-out-of-bounds (:guard (standard-regime))
   (if-eq MXPX 1
     (if-eq CT LONGCYCLE
       (vanishes (*
@@ -248,75 +254,56 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                ;;
-;;    2.8 Offsets are in bonds    ;;
+;;    2.8 Offsets are in bounds    ;;
 ;;                                ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-
 (defun (offsets-are-in-bounds)
-  (and
-    (= CT SHORTCYCLE)
-    (vanishes MXPX)))
+  (*
+    (is-zero (- CT SHORTCYCLE))
+    (- 1 MXPX)))
 
 ;; 2.8.1
-(defconstraint size-in-evm-words (:guard (and (standard-regime) (offsets-are-in-bounds)))
+(defconstraint size-in-evm-words (:guard (* (standard-regime) (offsets-are-in-bounds)))
   (if-eq [TYPE 4] 1
-   (begin
+    (begin
      (= SIZE_1_LO (- (* 32 ACC_W) BYTE_R))
-     (= (prev BYTE_R) (+ 224 BYTE_R))))) ; 224 == 256 - 32
+     (= (prev BYTE_R) (+ (- 256 32) BYTE_R)))))
 
 ;; 2.8.2
-(defconstraint offsets-are-small (:guard (and (standard-regime) (offsets-are-in-bounds)))
+(defconstraint offsets-are-small (:guard (* (standard-regime) (offsets-are-in-bounds)))
   (begin 
     (= [ACC 1] MAX_OFFSET_1)
     (= [ACC 2] MAX_OFFSET_2)
   ))
 
 ;; 2.8.3
-(defconstraint comp-offsets (:guard (and (standard-regime) (offsets-are-in-bounds)))
+(defconstraint comp-offsets (:guard (* (standard-regime) (offsets-are-in-bounds)))
   (=
     (+ [ACC 3] (- 1 COMP))
     (* (- MAX_OFFSET_1 MAX_OFFSET_2) (- (* 2 COMP) 1))))
 
 ;; 2.8.4
-(defconstraint define-max-offset (:guard (and (standard-regime) (offsets-are-in-bounds)))
+(defconstraint define-max-offset (:guard (* (standard-regime) (offsets-are-in-bounds)))
   (= MAX_OFFSET 
     (+  (* COMP MAX_OFFSET_1)
         (* (- 1 COMP) MAX_OFFSET_2))))
 
 ;; 2.8.5
-(defconstraint define-a (:guard (and (standard-regime) (offsets-are-in-bounds)))
+(defconstraint define-a (:guard (* (standard-regime) (offsets-are-in-bounds)))
   (begin
     (=
       (+ MAX_OFFSET 1)
       (- (* 32 ACC_A) (shift BYTE_R -2)))
     (=
       (shift BYTE_R -3)
-      (+ 224 (shift BYTE_R -2)))))
+      (+ (- 256 32) (shift BYTE_R -2)))))
 
 ;; 2.8.5
-(defconstraint mem-expension-took-place (:guard (and (standard-regime) (offsets-are-in-bounds)))
+(defconstraint mem-expension-took-place (:guard (* (standard-regime) (offsets-are-in-bounds)))
   (=
     (+ [ACC 4] MXPE)
     (* (- ACC_A WORDS) (- (* 2 MXPE) 1))))
 
-
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; ;;                       ;;
-;; ;;    2.9 Cost update    ;;
-;; ;;                       ;;
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
-;; (defun (expansion-happened)
-;;   (begin
-;;     (offsets-are-in-bounds)
-;;     (= MXE 1)))
-
-;; ;; 2.9.1
-;; (defconstraint euclidean-div-msize (:guard (and (standard-regime) (expansion-happened)))
-;;   (begin
-;;     (= MSIZE_NEW (- (* 32 [ACC 5]) [BYTE 7]))
-;;     (= (prev [BYTE 7]) (+ [BYTE 7] 224) ))) ; 224 == 256 - 32
 
 
