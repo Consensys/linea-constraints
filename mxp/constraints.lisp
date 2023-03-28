@@ -1,6 +1,7 @@
 (module mxp)
 
 (defconst
+  G_MEM                   3 ; 'G_memory' in Ethereum yellow paper
   SHORTCYCLE              3
   LONGCYCLE               16
   TWO_POW_32                4294967296)
@@ -75,15 +76,15 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-;; 2.3.1
-(defconstraint noop-and-types (:guard (- 1 ROOB)) 
-  (begin 
-    (if-not-zero (+ (+ [TYPE 1] [TYPE 2]) [TYPE 3])
-      (= NOOP [TYPE 1]))
-    (if-eq [TYPE 4] 1
-      (= NOOP (is-zero SIZE_1_LO)))
-    (if-eq [TYPE 5] 1
-      (= NOOP (is-zero (+ SIZE_1_LO SIZE_2_LO))))))
+;; ;; 2.3.1
+;; (defconstraint noop-and-types (:guard (- 1 ROOB)) 
+;;   (begin 
+;;     (if-not-zero (+ (+ [TYPE 1] [TYPE 2]) [TYPE 3])
+;;       (= NOOP [TYPE 1]))
+;;     (if-eq [TYPE 4] 1
+;;       (= NOOP (is-zero SIZE_1_LO)))
+;;     (if-eq [TYPE 5] 1
+;;       (= NOOP (is-zero (+ SIZE_1_LO SIZE_2_LO))))))
 
 ;; 2.3.2
 (defconstraint noop-consequences (:guard NOOP)
@@ -243,18 +244,18 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-;; 2.7.1
-(defconstraint offsets-out-of-bounds (:guard (standard-regime))
-  (if-eq MXPX 1
-    (if-eq CT LONGCYCLE
-      (vanishes (*
-        (- (- MAX_OFFSET_1 TWO_POW_32) [ACC 1])
-        (- (- MAX_OFFSET_2 TWO_POW_32) [ACC 2]))))))
+;; ;; 2.7.1
+;; (defconstraint offsets-out-of-bounds (:guard (standard-regime))
+;;   (if-eq MXPX 1
+;;     (if-eq CT LONGCYCLE
+;;       (vanishes (*
+;;         (- (- MAX_OFFSET_1 TWO_POW_32) [ACC 1])
+;;         (- (- MAX_OFFSET_2 TWO_POW_32) [ACC 2]))))))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                ;;
-;;    2.8 Offsets are in bounds    ;;
+;;    2.8 Offsets are in bounds   ;;
 ;;                                ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -263,12 +264,12 @@
     (is-zero (- CT SHORTCYCLE))
     (- 1 MXPX)))
 
-;; 2.8.1
-(defconstraint size-in-evm-words (:guard (* (standard-regime) (offsets-are-in-bounds)))
-  (if-eq [TYPE 4] 1
-    (begin
-     (= SIZE_1_LO (- (* 32 ACC_W) BYTE_R))
-     (= (prev BYTE_R) (+ (- 256 32) BYTE_R)))))
+;; ;; 2.8.1
+;; (defconstraint size-in-evm-words (:guard (* (standard-regime) (offsets-are-in-bounds)))
+;;   (if-eq [TYPE 4] 1
+;;     (begin
+;;      (= SIZE_1_LO (- (* 32 ACC_W) BYTE_R))
+;;      (= (prev BYTE_R) (+ (- 256 32) BYTE_R)))))
 
 ;; 2.8.2
 (defconstraint offsets-are-small (:guard (* (standard-regime) (offsets-are-in-bounds)))
@@ -289,15 +290,15 @@
     (+  (* COMP MAX_OFFSET_1)
         (* (- 1 COMP) MAX_OFFSET_2))))
 
-;; 2.8.5
-(defconstraint define-a (:guard (* (standard-regime) (offsets-are-in-bounds)))
-  (begin
-    (=
-      (+ MAX_OFFSET 1)
-      (- (* 32 ACC_A) (shift BYTE_R -2)))
-    (=
-      (shift BYTE_R -3)
-      (+ (- 256 32) (shift BYTE_R -2)))))
+;; ;; 2.8.5
+;; (defconstraint define-a (:guard (* (standard-regime) (offsets-are-in-bounds)))
+;;   (begin
+;;     (=
+;;       (+ MAX_OFFSET 1)
+;;       (- (* 32 ACC_A) (shift BYTE_R -2)))
+;;     (=
+;;       (shift BYTE_R -3)
+;;       (+ (256 - 32) (shift BYTE_R -2)))))
 
 ;; 2.8.5
 (defconstraint mem-expension-took-place (:guard (* (standard-regime) (offsets-are-in-bounds)))
@@ -306,4 +307,88 @@
     (* (- ACC_A WORDS) (- (* 2 MXPE) 1))))
 
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                              ;;
+;;    2.9 No expansion event    ;;
+;;                              ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+(defconstraint no-extansion (:guard (* (standard-regime) (offsets-are-in-bounds)))
+  (if-zero MXPE
+    (begin
+      (= WORDS_NEW WORDS)
+      (= MXPC_NEW MXPC))))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                            ;;
+;;    2.10 Expansion event    ;;
+;;                            ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+(defun (expansion-happened)
+  (* (offsets-are-in-bounds) MXPE))
+
+;; 2.10.1
+(defconstraint update-words (:guard (* (standard-regime) (expansion-happened)))
+  (= WORDS_NEW ACC_A))
+
+
+(defun (q)
+  (+ ACC_Q (+
+              (* TWO_POW_32 (shift BYTE_QQ -2))
+              (* (* 256 TWO_POW_32) (shift BYTE_QQ -3)))))
+
+
+;; 2.10.2
+(defconstraint euclidean-div (:guard (* (standard-regime) (expansion-happened)))
+  (begin
+    (=
+      (* ACC_A ACC_A)
+        (+ 
+          (* 512 (q))
+          (+ (* 256 (shift BYTE_QQ -1)) BYTE_QQ)))
+    (vanishes (* (shift BYTE_QQ -1) (- 1 (shift BYTE_QQ -1))))))
+
+
+;; 2.10.2
+(defconstraint define-mxpc-new (:guard (* (standard-regime) (expansion-happened)))
+  (= MXPC_NEW (+ (* G_MEM ACC_A) (q))))
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                          ;;
+;;    2.11 Expansion gas    ;;
+;;                          ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;; 2.11.1
+(defconstraint expansion-gas (:guard (* (standard-regime) (offsets-are-in-bounds)))
+  (= DELTA_MXPC
+    (+
+      (- MXPC_NEW MXPC); quadratic cost
+      (+ (* GBYTE SIZE_1_LO) (* GWORD ACC_W))))) ; linear cost
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                    ;;
+;;    2.12 Consistency Constraints    ;;
+;;                                    ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;; 2.12.1
+(defconstraint consistency ()
+  (if-zero CN
+    (if-eq-else (next CN) CN
+      (begin
+        (= (next WORDS) WORDS_NEW)
+        (= (next MXPC) MXPC_NEW))
+      (begin
+        (vanishes (next WORDS))
+        (vanishes (next MXPC))))))
 
