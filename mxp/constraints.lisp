@@ -77,14 +77,14 @@
 
 
 ;; ;; 2.3.1
-;; (defconstraint noop-and-types (:guard (- 1 ROOB)) 
-;;   (begin 
-;;     (if-not-zero (+ (+ [TYPE 1] [TYPE 2]) [TYPE 3])
-;;       (= NOOP [TYPE 1]))
-;;     (if-eq [TYPE 4] 1
-;;       (= NOOP (is-zero SIZE_1_LO)))
-;;     (if-eq [TYPE 5] 1
-;;       (= NOOP (is-zero (+ SIZE_1_LO SIZE_2_LO))))))
+(defconstraint noop-and-types (:guard (- 1 ROOB)) 
+  (begin 
+    (if-not-zero (+ (+ [TYPE 1] [TYPE 2]) [TYPE 3])
+      (= NOOP [TYPE 1]))
+    (if-eq [TYPE 4] 1
+      (= NOOP (is-zero SIZE_1_LO)))
+    (if-eq [TYPE 5] 1
+      (= NOOP (is-zero (+ SIZE_1_LO SIZE_2_LO))))))
 
 ;; 2.3.2
 (defconstraint noop-consequences (:guard NOOP)
@@ -244,13 +244,13 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-;; ;; 2.7.1
-;; (defconstraint offsets-out-of-bounds (:guard (standard-regime))
-;;   (if-eq MXPX 1
-;;     (if-eq CT LONGCYCLE
-;;       (vanishes (*
-;;         (- (- MAX_OFFSET_1 TWO_POW_32) [ACC 1])
-;;         (- (- MAX_OFFSET_2 TWO_POW_32) [ACC 2]))))))
+;; 2.7.1
+(defconstraint offsets-out-of-bounds (:guard (standard-regime))
+  (if-eq MXPX 1
+    (if-eq CT LONGCYCLE
+      (vanishes (*
+        (- (- MAX_OFFSET_1 TWO_POW_32) [ACC 1])
+        (- (- MAX_OFFSET_2 TWO_POW_32) [ACC 2]))))))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -264,12 +264,12 @@
     (is-zero (- CT SHORTCYCLE))
     (- 1 MXPX)))
 
-;; ;; 2.8.1
-;; (defconstraint size-in-evm-words (:guard (* (standard-regime) (offsets-are-in-bounds)))
-;;   (if-eq [TYPE 4] 1
-;;     (begin
-;;      (= SIZE_1_LO (- (* 32 ACC_W) BYTE_R))
-;;      (= (prev BYTE_R) (+ (- 256 32) BYTE_R)))))
+;; 2.8.1
+(defconstraint size-in-evm-words (:guard (* (standard-regime) (offsets-are-in-bounds)))
+  (if-eq [TYPE 4] 1
+    (begin
+     (= SIZE_1_LO (- (* 32 ACC_W) BYTE_R))
+     (= (prev BYTE_R) (+ (- 256 32) BYTE_R)))))
 
 ;; 2.8.2
 (defconstraint offsets-are-small (:guard (* (standard-regime) (offsets-are-in-bounds)))
@@ -290,15 +290,15 @@
     (+  (* COMP MAX_OFFSET_1)
         (* (- 1 COMP) MAX_OFFSET_2))))
 
-;; ;; 2.8.5
-;; (defconstraint define-a (:guard (* (standard-regime) (offsets-are-in-bounds)))
-;;   (begin
-;;     (=
-;;       (+ MAX_OFFSET 1)
-;;       (- (* 32 ACC_A) (shift BYTE_R -2)))
-;;     (=
-;;       (shift BYTE_R -3)
-;;       (+ (256 - 32) (shift BYTE_R -2)))))
+;; 2.8.5
+(defconstraint define-a (:guard (* (standard-regime) (offsets-are-in-bounds)))
+  (begin
+    (=
+      (+ MAX_OFFSET 1)
+      (- (* 32 ACC_A) (shift BYTE_R -2)))
+    (=
+      (shift BYTE_R -3)
+      (+ (- 256 32) (shift BYTE_R -2)))))
 
 ;; 2.8.5
 (defconstraint mem-expension-took-place (:guard (* (standard-regime) (offsets-are-in-bounds)))
