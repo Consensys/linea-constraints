@@ -381,14 +381,16 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
+(defpermutation (CN_perm STAMP_perm MXPC_perm MXPC_NEW_perm WORDS_perm WORDS_NEW_perm) (CN MEMORY_EXPANSION_STAMP MXPC MXPC_NEW WORDS WORDS_NEW) ())
+
 ;; 2.12.1
 (defconstraint consistency ()
-  (if-zero CN
-    (if-eq-else (next CN) CN
+  (if-zero CN_perm
+    (if-eq-else (next CN_perm) CN_perm
       (begin
-        (= (next WORDS) WORDS_NEW)
-        (= (next MXPC) MXPC_NEW))
+        (= (next WORDS_perm) WORDS_NEW_perm)
+        (= (next MXPC_perm) MXPC_NEW_perm))
       (begin
-        (vanishes (next WORDS))
-        (vanishes (next MXPC))))))
+        (vanishes (next WORDS_perm))
+        (vanishes (next MXPC_perm))))))
 
