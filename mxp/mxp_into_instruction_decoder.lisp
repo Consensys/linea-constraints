@@ -1,16 +1,16 @@
 
-(defun (binary-activation-flag) MEMORY_EXPANSION_FLAG)
+(module mxp)
 
 (defplookup plookup-mxp-into-instruction-decoder
     ;source columns
     (
-        (* [mxp.TYPE 1] (binary-activation-flag))
-        (* [mxp.TYPE 2] (binary-activation-flag))
-        (* [mxp.TYPE 3] (binary-activation-flag))
-        (* [mxp.TYPE 4] (binary-activation-flag))
-        (* [mxp.TYPE 5] (binary-activation-flag))
-        (* mxp.GWORD (binary-activation-flag))
-        (* mxp.GBYTE (binary-activation-flag))
+        [TYPE 1]
+        [TYPE 2]
+        [TYPE 3]
+        [TYPE 4]
+        [TYPE 5]
+        GWORD
+        GBYTE
     )
     ;target columns
     (
