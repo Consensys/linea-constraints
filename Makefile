@@ -35,7 +35,9 @@ WCP := wcp/columns.lisp \
 	   # wcp/hub_into_wcp.lisp \
 
 MXP := mxp/columns.lisp \
-	   mxp/constraints.lisp
+	   mxp/constraints.lisp \
+	   mxp/mxp_into_instruction_decoder.lisp
+	   
 
 TABLES := $(wildcard lookup_tables/tables/*lisp)
 
