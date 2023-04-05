@@ -385,7 +385,7 @@
 
 ;; 2.12.1
 (defconstraint consistency ()
-  (if-zero CN_perm
+  (if-not-zero CN_perm
     (if-eq-else (next CN_perm) CN_perm
       (begin
         (= (next WORDS_perm) WORDS_NEW_perm)
