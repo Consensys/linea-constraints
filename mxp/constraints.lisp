@@ -43,11 +43,11 @@
 
 
 ;; 2.2.1
-(defconstraint roob-when-type-1 (:guard [TYPE 1])
+(defconstraint roob-when-type-1 (:guard [MXP_TYPE 1])
     (vanishes ROOB))
 
 ;; 2.2.2
-(defconstraint roob-when-type-2-3 (:guard (+ [TYPE 2] [TYPE 3]))
+(defconstraint roob-when-type-2-3 (:guard (+ [MXP_TYPE 2] [MXP_TYPE 3]))
   (if-zero OFFSET_1_HI
     (vanishes ROOB)
     (is-not-zero ROOB)))
@@ -58,12 +58,12 @@
     (is-not-zero (either OFFSET_HI SIZE_LO))))
 
 ;; 2.2.3
-(defconstraint roob-when-mem-4 (:guard [TYPE 4])
+(defconstraint roob-when-mem-4 (:guard [MXP_TYPE 4])
     (= ROOB (is-not-zero
       (ridiculous-offset-size OFFSET_1_HI SIZE_1_LO SIZE_1_HI))))
 
 ;; 2.2.4
-(defconstraint roob-when-mem-5 (:guard [TYPE 5])
+(defconstraint roob-when-mem-5 (:guard [MXP_TYPE 5])
     (= ROOB (is-not-zero (either 
         (ridiculous-offset-size OFFSET_1_HI SIZE_1_LO SIZE_1_HI)
         (ridiculous-offset-size OFFSET_2_HI SIZE_2_LO SIZE_2_HI)))))
@@ -79,11 +79,11 @@
 ;; ;; 2.3.1
 (defconstraint noop-and-types (:guard (- 1 ROOB)) 
   (begin 
-    (if-not-zero (+ (+ [TYPE 1] [TYPE 2]) [TYPE 3])
-      (= NOOP [TYPE 1]))
-    (if-eq [TYPE 4] 1
+    (if-not-zero (+ (+ [MXP_TYPE 1] [MXP_TYPE 2]) [MXP_TYPE 3])
+      (= NOOP [MXP_TYPE 1]))
+    (if-eq [MXP_TYPE 4] 1
       (= NOOP (is-zero SIZE_1_LO)))
-    (if-eq [TYPE 5] 1
+    (if-eq [MXP_TYPE 5] 1
       (= NOOP (is-zero (+ SIZE_1_LO SIZE_2_LO))))))
 
 ;; 2.3.2
@@ -124,7 +124,7 @@
 
 ;; 2.4.4)
 (defconstraint only-one-type ()
-  (= 1 (+ (+ (+ (+ [TYPE 1] [TYPE 2]) [TYPE 3]) [TYPE 4]) [TYPE 5])))
+  (= 1 (+ (+ (+ (+ [MXP_TYPE 1] [MXP_TYPE 2]) [MXP_TYPE 3]) [MXP_TYPE 4]) [MXP_TYPE 5])))
 
 ;; 2.4.5)
 (defconstraint counter-reset ()
@@ -206,28 +206,28 @@
 
 ;; 2.6.1
 (defconstraint max-offset-type-2 (:guard (standard-regime))
-  (if-eq [TYPE 2] 1
+  (if-eq [MXP_TYPE 2] 1
     (begin
       (= MAX_OFFSET_1 (+ OFFSET_1_LO 31))
       (vanishes MAX_OFFSET_2))))
 
 ;; 2.6.2
 (defconstraint max-offset-type-3 (:guard (standard-regime))
-  (if-eq [TYPE 3] 1
+  (if-eq [MXP_TYPE 3] 1
     (begin
       (= MAX_OFFSET_1 (+ OFFSET_1_LO 1))
       (vanishes MAX_OFFSET_2))))
 
 ;; 2.6.3
 (defconstraint max-offset-type-4 (:guard (standard-regime))
-  (if-eq [TYPE 4] 1
+  (if-eq [MXP_TYPE 4] 1
     (begin
       (= MAX_OFFSET_1 (+ OFFSET_1_LO (- SIZE_1_LO 1)))
       (vanishes MAX_OFFSET_2))))
   
 ;; 2.6.4
 (defconstraint max-offset-type-5 (:guard (standard-regime))
-  (if-eq [TYPE 5] 1
+  (if-eq [MXP_TYPE 5] 1
     (begin
       (if-zero SIZE_1_LO
         (vanishes MAX_OFFSET_1)
@@ -266,7 +266,7 @@
 
 ;; 2.8.1
 (defconstraint size-in-evm-words (:guard (* (standard-regime) (offsets-are-in-bounds)))
-  (if-eq [TYPE 4] 1
+  (if-eq [MXP_TYPE 4] 1
     (begin
      (= SIZE_1_LO (- (* 32 ACC_W) BYTE_R))
      (= (prev BYTE_R) (+ (- 256 32) BYTE_R)))))
@@ -371,7 +371,7 @@
   (= DELTA_MXPC
     (+
       (- MXPC_NEW MXPC); quadratic cost
-      (+ (* GBYTE SIZE_1_LO) (* GWORD ACC_W))))) ; linear cost
+      (+ (* MXP_GBYTE SIZE_1_LO) (* MXP_GWORD ACC_W))))) ; linear cost
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

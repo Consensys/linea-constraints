@@ -4,13 +4,13 @@
 (defplookup plookup-mxp-into-instruction-decoder
     ;source columns
     (
-        [TYPE 1]
-        [TYPE 2]
-        [TYPE 3]
-        [TYPE 4]
-        [TYPE 5]
-        GWORD
-        GBYTE
+        [MXP_TYPE 1]
+        [MXP_TYPE 2]
+        [MXP_TYPE 3]
+        [MXP_TYPE 4]
+        [MXP_TYPE 5]
+        MXP_GWORD
+        MXP_GBYTE
     )
     ;target columns
     (
