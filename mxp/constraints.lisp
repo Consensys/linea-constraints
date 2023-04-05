@@ -29,7 +29,7 @@
    (counter-constancy CT WORDS_NEW)
    (counter-constancy CT MXPC)
    (counter-constancy CT MXPC_NEW)
-   (counter-constancy CT INST)
+   (counter-constancy CT MXP_INST)
    (counter-constancy CT COMP)
    (counter-constancy CT MXPX)
    (counter-constancy CT MXPE)))
@@ -120,7 +120,7 @@
     (begin
       (vanishes (+ (+ ROOB NOOP) MXPX))
       (vanishes CT)
-      (vanishes INST))))
+      (vanishes MXP_INST))))
 
 ;; 2.4.4)
 (defconstraint only-one-type ()

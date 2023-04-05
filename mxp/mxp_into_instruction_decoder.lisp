@@ -11,6 +11,7 @@
         [MXP_TYPE 5]
         MXP_GWORD
         MXP_GBYTE
+        MXP_INST
     )
     ;target columns
     (
@@ -21,5 +22,6 @@
         instruction-decoder.MXP_TYPE_5
         instruction-decoder.MXP_GWORD
         instruction-decoder.MXP_GBYTE
+        instruction-decoder.MXP_INST
     )
 )
