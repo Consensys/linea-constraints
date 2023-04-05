@@ -123,7 +123,7 @@
       (vanishes MXP_INST))))
 
 ;; 2.4.4)
-(defconstraint only-one-type ()
+(defconstraint only-one-type (:guard STAMP)
   (= 1 (+ (+ (+ (+ [MXP_TYPE 1] [MXP_TYPE 2]) [MXP_TYPE 3]) [MXP_TYPE 4]) [MXP_TYPE 5])))
 
 ;; 2.4.5)
