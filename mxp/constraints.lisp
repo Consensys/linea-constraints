@@ -294,7 +294,7 @@
 (defconstraint define-a (:guard (* (standard-regime) (offsets-are-in-bounds)))
   (begin
     (=
-      (+ MAX_OFFSET 1)
+      MAX_OFFSET
       (- (* 32 ACC_A) (shift BYTE_R -2)))
     (=
       (shift BYTE_R -3)
