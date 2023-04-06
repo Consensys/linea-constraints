@@ -215,7 +215,7 @@
 (defconstraint max-offset-type-3 (:guard (standard-regime))
   (if-eq [MXP_TYPE 3] 1
     (begin
-      (= MAX_OFFSET_1 (+ OFFSET_1_LO 1))
+      (= MAX_OFFSET_1 OFFSET_1_LO)
       (vanishes MAX_OFFSET_2))))
 
 ;; 2.6.3
