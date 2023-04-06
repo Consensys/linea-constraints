@@ -84,7 +84,7 @@
     (if-eq [MXP_TYPE 4] 1
       (= NOOP (is-zero SIZE_1_LO)))
     (if-eq [MXP_TYPE 5] 1
-      (= NOOP (is-zero (+ SIZE_1_LO SIZE_2_LO))))))
+      (= NOOP (is-zero (+ SIZE_1_LO SIZE_2_LO)))))) ;; TODO change this to something lesss tricky
 
 ;; 2.3.2
 (defconstraint noop-consequences (:guard NOOP)
