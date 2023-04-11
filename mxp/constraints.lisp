@@ -379,7 +379,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-(defpermutation (CN_perm STAMP_perm MXPC_perm MXPC_NEW_perm WORDS_perm WORDS_NEW_perm) (CN MEMORY_EXPANSION_STAMP MXPC MXPC_NEW WORDS WORDS_NEW) ())
+(defpermutation (CN_perm STAMP_perm MXPC_perm MXPC_NEW_perm WORDS_perm WORDS_NEW_perm)
+                ((↓ CN) (↓ MEMORY_EXPANSION_STAMP) MXPC MXPC_NEW WORDS WORDS_NEW) ())
 
 ;; 2.12.1
 (defconstraint consistency ()
