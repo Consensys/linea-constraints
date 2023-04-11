@@ -387,7 +387,7 @@
 (defconstraint consistency ()
   (if-not-zero CN_perm
     (if-eq-else (next CN_perm) CN_perm
-      (if-not-zero (- STAMP_perm (next STAMP_perm))
+      (if-not-zero (remains-constant STAMP_perm)
         (begin
           (= (next WORDS_perm) WORDS_NEW_perm)
           (= (next MXPC_perm) MXPC_NEW_perm)))
