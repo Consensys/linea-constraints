@@ -387,9 +387,10 @@
 (defconstraint consistency ()
   (if-not-zero CN_perm
     (if-eq-else (next CN_perm) CN_perm
-      (begin
-        (= (next WORDS_perm) WORDS_NEW_perm)
-        (= (next MXPC_perm) MXPC_NEW_perm))
+      (if-not-zero (- STAMP_perm (next STAMP_perm))
+        (begin
+          (= (next WORDS_perm) WORDS_NEW_perm)
+          (= (next MXPC_perm) MXPC_NEW_perm)))
       (begin
         (vanishes (next WORDS_perm))
         (vanishes (next MXPC_perm))))))
