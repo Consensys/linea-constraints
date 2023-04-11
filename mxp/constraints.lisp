@@ -4,7 +4,7 @@
   G_MEM                   3 ; 'G_memory' in Ethereum yellow paper
   SHORTCYCLE              3
   LONGCYCLE               16
-  TWO_POW_32                4294967296)
+  TWO_POW_32              4294967296)
 
 
 
@@ -76,15 +76,15 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-;; ;; 2.3.1
+;; 2.3.1
 (defconstraint noop-and-types (:guard (- 1 ROOB)) 
   (begin 
-    (if-not-zero (+ (+ [MXP_TYPE 1] [MXP_TYPE 2]) [MXP_TYPE 3])
+    (if-not-zero (+ [MXP_TYPE 1] [MXP_TYPE 2] [MXP_TYPE 3])
       (= NOOP [MXP_TYPE 1]))
     (if-eq [MXP_TYPE 4] 1
       (= NOOP (is-zero SIZE_1_LO)))
     (if-eq [MXP_TYPE 5] 1
-      (= NOOP (is-zero (+ SIZE_1_LO SIZE_2_LO)))))) ;; TODO change this to something lesss tricky
+      (= NOOP (is-zero (+ SIZE_1_LO SIZE_2_LO))))))
 
 ;; 2.3.2
 (defconstraint noop-consequences (:guard NOOP)
@@ -118,13 +118,13 @@
 (defconstraint stamp-is-zero ()
   (if-zero STAMP
     (begin
-      (vanishes (+ (+ ROOB NOOP) MXPX))
+      (vanishes (+ ROOB NOOP MXPX))
       (vanishes CT)
       (vanishes MXP_INST))))
 
 ;; 2.4.4)
 (defconstraint only-one-type (:guard STAMP)
-  (= 1 (+ (+ (+ (+ [MXP_TYPE 1] [MXP_TYPE 2]) [MXP_TYPE 3]) [MXP_TYPE 4]) [MXP_TYPE 5])))
+  (= 1 (+ [MXP_TYPE 1] [MXP_TYPE 2] [MXP_TYPE 3] [MXP_TYPE 4] [MXP_TYPE 5])))
 
 ;; 2.4.5)
 (defconstraint counter-reset ()
@@ -275,8 +275,7 @@
 (defconstraint offsets-are-small (:guard (* (standard-regime) (offsets-are-in-bounds)))
   (begin 
     (= [ACC 1] MAX_OFFSET_1)
-    (= [ACC 2] MAX_OFFSET_2)
-  ))
+    (= [ACC 2] MAX_OFFSET_2)))
 
 ;; 2.8.3
 (defconstraint comp-offsets (:guard (* (standard-regime) (offsets-are-in-bounds)))
@@ -287,8 +286,8 @@
 ;; 2.8.4
 (defconstraint define-max-offset (:guard (* (standard-regime) (offsets-are-in-bounds)))
   (= MAX_OFFSET 
-    (+  (* COMP MAX_OFFSET_1)
-        (* (- 1 COMP) MAX_OFFSET_2))))
+    (+ (* COMP MAX_OFFSET_1)
+       (* (- 1 COMP) MAX_OFFSET_2))))
 
 ;; 2.8.5
 (defconstraint define-a (:guard (* (standard-regime) (offsets-are-in-bounds)))
@@ -356,7 +355,6 @@
 ;; 2.10.2
 (defconstraint define-mxpc-new (:guard (* (standard-regime) (expansion-happened)))
   (= MXPC_NEW (+ (* G_MEM ACC_A) (q))))
-
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
