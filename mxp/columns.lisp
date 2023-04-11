@@ -1,4 +1,5 @@
 (module mxp)
+
 (defcolumns
 	MEMORY_EXPANSION_STAMP
 	CN
