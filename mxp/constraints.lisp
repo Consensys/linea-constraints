@@ -52,21 +52,22 @@
     (vanishes ROOB)
     (is-not-zero ROOB)))
 
+;; boolean function -> returns 1 if the offset is ridiculously out of bound
 (defun (ridiculous-offset-size OFFSET_HI SIZE_LO SIZE_HI)
-  (either 
+  (or 
     (is-not-zero SIZE_HI)
     (is-not-zero (either OFFSET_HI SIZE_LO))))
 
 ;; 2.2.3
 (defconstraint roob-when-mem-4 (:guard [MXP_TYPE 4])
-    (= ROOB (is-not-zero
-      (ridiculous-offset-size OFFSET_1_HI SIZE_1_LO SIZE_1_HI))))
+    (= ROOB (ridiculous-offset-size OFFSET_1_HI SIZE_1_LO SIZE_1_HI)))
 
 ;; 2.2.4
 (defconstraint roob-when-mem-5 (:guard [MXP_TYPE 5])
-    (= ROOB (is-not-zero (either 
+    (= ROOB 
+      (or 
         (ridiculous-offset-size OFFSET_1_HI SIZE_1_LO SIZE_1_HI)
-        (ridiculous-offset-size OFFSET_2_HI SIZE_2_LO SIZE_2_HI)))))
+        (ridiculous-offset-size OFFSET_2_HI SIZE_2_LO SIZE_2_HI))))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;
