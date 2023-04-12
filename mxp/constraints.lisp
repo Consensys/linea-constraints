@@ -1,7 +1,7 @@
 (module mxp)
 
 (defconst
-  G_MEM                   3 ; 'G_memory' in Ethereum yellow paper
+  G_MEM                   3 ;; 'G_memory' in Ethereum yellow paper
   SHORTCYCLE              3
   LONGCYCLE               16
   TWO_POW_32              4294967296)
@@ -53,7 +53,7 @@
     (is-not-zero ROOB)))
 
 ;; boolean function -> returns 1 if the offset is ridiculously out of bound
-(defun (ridiculous-offset-size OFFSET_HI SIZE_LO SIZE_HI)
+(defpurefun (ridiculous-offset-size OFFSET_HI SIZE_LO SIZE_HI)
   (or 
     (is-not-zero SIZE_HI)
     (is-not-zero (either OFFSET_HI SIZE_LO))))
@@ -112,8 +112,8 @@
 
 ;; 2.4.2)
 (defconstraint stamp-increments ()
-  (vanishes (* (remains-constant STAMP)
-               (inc STAMP 1))))
+  (either (remains-constant STAMP)
+               (inc STAMP 1)))
 
 ;; 2.4.3)
 (defconstraint stamp-is-zero ()
@@ -125,7 +125,7 @@
 
 ;; 2.4.4)
 (defconstraint only-one-type (:guard STAMP)
-  (= 1 (+ [MXP_TYPE 1] [MXP_TYPE 2] [MXP_TYPE 3] [MXP_TYPE 4] [MXP_TYPE 5])))
+  (= 1 (reduce + (for i [5] [MXP_TYPE i]))))
 
 ;; 2.4.5)
 (defconstraint counter-reset ()
@@ -155,12 +155,8 @@
 ;; 2.4.8
 (defconstraint dont-terminate-mid-instructions (:domain {-1})
   (if-not-zero STAMP
-    (if-zero ROOB
-      (if-zero NOOP
-        (if-zero MXPX 
-          (= CT SHORTCYCLE)
-          (= CT LONGCYCLE))))))
-
+               (if-zero (force-bool (+ ROOB NOOP))
+                        (= CT (if-zero MXPX SHORTCYCLE LONGCYCLE)))))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -170,19 +166,14 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-(defun (check-accumulation _ACC _BYTE)
-  (if-zero CT
-    (= _ACC _BYTE)
-    (= _ACC (+ (* 256 (prev _ACC)) _BYTE))))
-
 ;; 2.5.1
 (defconstraint byte-decompositions ()
   (begin
-    (for k [1:4] 
-      (check-accumulation [ACC k] [BYTE k]))
-    (check-accumulation ACC_A BYTE_A)
-    (check-accumulation ACC_W BYTE_W)
-    (check-accumulation ACC_Q BYTE_Q)))
+    (for k [1:4]
+      (byte-decomposition CT [ACC k] [BYTE k]))
+    (byte-decomposition CT ACC_A BYTE_A)
+    (byte-decomposition CT ACC_W BYTE_W)
+    (byte-decomposition CT ACC_Q BYTE_Q)))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -195,7 +186,7 @@
 (defun (standard-regime)
   (*
     STAMP
-    (- 1 (+ NOOP ROOB)))) ; NOOP + ROOB is binary cf noop section
+    (- 1 (+ NOOP ROOB)))) ;; NOOP + ROOB is binary cf noop section
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -349,8 +340,8 @@
       (* ACC_A ACC_A)
         (+ 
           (* 512 (q))
-          (+ (* 256 (shift BYTE_QQ -1)) BYTE_QQ)))
-    (vanishes (* (shift BYTE_QQ -1) (- 1 (shift BYTE_QQ -1))))))
+          (+ (* 256 (prev BYTE_QQ)) BYTE_QQ)))
+    (vanishes (* (prev BYTE_QQ) (- 1 (prev BYTE_QQ))))))
 
 
 ;; 2.10.2
@@ -369,8 +360,8 @@
 (defconstraint expansion-gas (:guard (* (standard-regime) (offsets-are-in-bounds)))
   (= DELTA_MXPC
     (+
-      (- MXPC_NEW MXPC); quadratic cost
-      (+ (* MXP_GBYTE SIZE_1_LO) (* MXP_GWORD ACC_W))))) ; linear cost
+      (- MXPC_NEW MXPC) ;; quadratic cost
+      (+ (* MXP_GBYTE SIZE_1_LO) (* MXP_GWORD ACC_W))))) ;; linear cost
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -381,7 +372,7 @@
 
 
 (defpermutation (CN_perm STAMP_perm MXPC_perm MXPC_NEW_perm WORDS_perm WORDS_NEW_perm)
-                ((↓ CN) (↓ MEMORY_EXPANSION_STAMP) MXPC MXPC_NEW WORDS WORDS_NEW) ())
+                ((↓ CN) (↓ MEMORY_EXPANSION_STAMP) MXPC MXPC_NEW WORDS WORDS_NEW))
 
 ;; 2.12.1
 (defconstraint consistency ()
