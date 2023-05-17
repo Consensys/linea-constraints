@@ -44,4 +44,5 @@
 ;; aliases
 (defalias
     CT			COUNTER
-    LC          LIMB_CONSTRUCTED)
+    LC          LIMB_CONSTRUCTED
+    P           POWER)
