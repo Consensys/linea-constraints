@@ -790,9 +790,20 @@
                             (* 4 (next [DEPTH 2])))))))))
 
 (defconstraint phase10-9to13 (:guard (eq 1 [PHASE 10]))   ;; 4.5.2.9 to 4.5.2.13 
- (if-zero [DEPTH 1] (remains-constant PHASE_BYTESIZE)))
-
-;; TODO 
+ (if-zero [DEPTH 1] 
+       (remains-constant PHASE_BYTESIZE)  ;; 9
+       (begin
+       (did-decrease PHASE_BYTESIZE (* LC nBYTES)) ;;10
+       (if-zero (* is_prefix              ;;11
+                   (- 1 [DEPTH 2])
+              (did-decrease AL_item_BYTESIZE (* LC nBYTES))))
+       (if-zero CT  
+              (begin
+              (did-decrease nb_Addr (* is_prefix                         ;; 12
+                                    (- 1 [DEPTH 2])))
+              (did-decrease nb_Sto (* (- 1 is_prefix)                        ;; 13
+                                      ([DEPTH 2]))))))))
+ 
 
 (defconstraint phase10-14 (:guard (eq 1 [PHASE 10]))   ;; 4.5.2.14
  (if-zero (+ CT
