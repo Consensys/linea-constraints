@@ -50,8 +50,7 @@
 
 ;; 2.3.1.1
 (defconstraint stamp-constancies ()
-  (begin
-   (stamp-constancy ABS_TX_NUM TYPE)))
+   (stamp-constancy ABS_TX_NUM TYPE))
 
 ;; 2.3.1.2
 (defconstraint counter-constancy ()
@@ -275,7 +274,7 @@
 
 ;; 2.3.5.1 & 2.3.5.2
 (defconstraint init-index()
- (if-zero didnt-change ABS_TX_NUM
+ (if-zero (didnt-change ABS_TX_NUM)
        (begin
        (eq INDEX_LT 
            (+ (prev INDEX_LT) (* (prev LC) (prev LT))))
@@ -303,7 +302,8 @@
 
 (defconstraint finalisation (:domain {-1})
  (if-not-zero ABS_TX_NUM
-       (eq (+ end_phase [PHASE 14] 2))))
+       (eq 2
+           (+ end_phase [PHASE 14]))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                             ;;
@@ -329,8 +329,8 @@
               (begin                                                                                            ;;1.b
               (eq LIMB (* list_short (^ 256 15)))
               (eq nBYTES 1)))
-       (begin                                                                                                   ;; 2
-       (defconstraint byte-counting-RLP-prefix() (ByteCountingConstraints(1 -(15 nbstep))))                   ;; 2.a
+       (begin
+       (ByteCountingConstraints 1 (- 15 number_step))                  ;; 2.a
        (if-eq DONE 1                                                                                            ;; 2.b
               (begin
               (eq [ACC 1] input)                                                                                 ;; 2.b.i                                                        
@@ -392,13 +392,13 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defun (rlp32bytesIntegerConstraints input_hi input_lo oli ct)
- (it-not-zero oli 
+ (if-not-zero oli 
        (begin                                                                ;; 1
        (eq LIMB (* int_short (^ 256 15)))
        (eq nBYTES 1))
        (begin                                                                           ;; 2
        (eq number_step 16)
-       (iz-zero input_hi                                       
+       (if-zero input_hi                                       
               (ByteCountingConstraints 2 0)                                         ;;2.b
               (ByteCountingConstraints 1 0))                                            ;;2.c
        (if-eq DONE 1                                                         ;;2.d
@@ -444,7 +444,7 @@
               (eq [ACC 2] input_lo)
               (did-change (prev LC))
               (eq (prev LIMB)
-                  (+ (* ((+ int_short 20) (^ 256 LLARGEMO)))
+                  (+ (* (+ int_short 20) (^ 256 LLARGEMO))
                      (* input_hi (^ 256 11))))
               (eq (prev nBYTES) 5)
               (eq LIMB input_lo)
@@ -493,7 +493,7 @@
               (eq P                                       ;; 2.a.ii
                   (* 256 (prev P))))
               (begin 
-              (did-increase ACC_BYTESIZE 1)                    ;; 2.b.i
+              (did-inc ACC_BYTESIZE 1)                    ;; 2.b.i
               (didnt-change ACC_BYTESIZE)))))                      ;;2.b.ii
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -508,7 +508,7 @@
 ;;                             ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defconstraint phase0-1 (:guard (eq [Phase 0] 1))   ;; 4.1.1
+(defconstraint phase0-1 (:guard (eq [PHASE 0] 1))   ;; 4.1.1
  (if-zero (prev [PHASE 0])
        (begin
        (eq 23 (+ OLI                 ;;1.a
@@ -524,8 +524,9 @@
               (eq LIMB (* TYPE (^ 256 LLARGEMO)))
               (eq nBYTES 1))))))
 
-(defconstraint phase0-2 (:guard (eq [Phase 0] 1))   ;; 4.1.2
- (if-zero (and (eq LT 1) (vanishes LX))
+(defconstraint phase0-2 (:guard (eq [PHASE 0] 1))   ;; 4.1.2
+ (if-zero (+ (- 1 LT)
+             LX)
        (begin
        (eq 12 (+ is_padding                      ;; 2.a
                  (* 2 end_phase)                     ;; 2.b
@@ -538,7 +539,7 @@
               (eq 2 (+ (next LT)
                        (* 2 (next LX))))))))
 
-(defconstraint phase0-3 (:guard (eq [Phase 0] 1))   ;; 4.1.3
+(defconstraint phase0-3 (:guard (eq [PHASE 0] 1))   ;; 4.1.3
  (if-zero (and (vanishes LT) (eq LX 1))
        (begin
        (eq 6 (+ is_padding                           ;; 3.a
@@ -564,8 +565,8 @@
  (eq number_step                                        ;; 1
      (+ (* 8 (+ (reduce + (for i [1 : 6] [PHASE i]))
                 [PHASE 12]))
-        (*12 [PHASE 8])))
- (vanishes (+ is_bytesize) is_list)
+        (* 12 [PHASE 8])))
+ (vanishes (+ is_bytesize is_list))
  (rlpPrefixConstraints [INPUT 1] CT OLI number_step is_bytesize is_list)
  (if-eq DONE 1                                          ;; 2
        (eq end_phase 1))))
@@ -597,10 +598,10 @@
        (begin
        (if-eq (prev LC) 1                               ;; 2.a
               (eq INDEX_DATA 
-                  (+ (prev (INDEX_DATA)) 1)))
+                  (+ (prev INDEX_DATA) 1)))
        (if-eq (prev is_padding) 1                             ;; 2.b
               (eq INDEX_DATA 
-                  (+ (prev (INDEX_DATA)) 1))))))
+                  (+ (prev INDEX_DATA) 1))))))
 
 (defconstraint phase9-3 (:guard (eq 1 [PHASE 9]))   ;; 4.4.2.3
  (if-zero is_padding
@@ -675,8 +676,8 @@
                                    (eq (+ is_padding (next is_padding)) 1)
                                    (vanishes (+ (next LIMB) (shift LIMB 2)))
                                    (eq (next PHASE_BYTESIZE) (shift PHASE_BYTESIZE 2))
-                                   (eq (next DATAGASCOST) (shift DATAGASCOST 2)))
-                                   (vanishes (next is_padding))))))))))      ;; 7.c.vi.F       
+                                   (eq (next DATAGASCOST) (shift DATAGASCOST 2))
+                                   (vanishes (next is_padding)))))))))))     ;; 7.c.vi.F       
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                             ;;
@@ -762,12 +763,13 @@
        (rlpStorageKeyConstraints [INPUT 1] [INPUT 2] CT)))
 
 (defconstraint phase10-8 (:guard (eq 1 [PHASE 10]))   ;; 4.5.2.8
- (if-zero (and (eq [DEPTH 2] 1) (DONE 1))
+ (if-zero (+ (- 1 [DEPTH 2]) 
+             (- 1 DONE))
        (if-not-zero nb_Sto_per_Addr
               (eq 6 
                   (+ (next is_prefix)                 ;; 8.a
-                     (* 2 next ([DEPTH 1]))
-                     (* 4 next ([DEPTH 2]))))
+                     (* 2 (next [DEPTH 1]))
+                     (* 4 (next [DEPTH 2]))))
               (begin                                    ;; 8.b
               (vanishes AL_item_BYTESIZE)              ;; 8.b.i
               (if-not-zero nb_Addr              ;; 8.b.ii
@@ -780,16 +782,16 @@
  (if-zero [DEPTH 1] 
        (remains-constant PHASE_BYTESIZE)  ;; 9
        (begin
-       (did-decrease PHASE_BYTESIZE (* LC nBYTES)) ;;10
+       (did-dec PHASE_BYTESIZE (* LC nBYTES)) ;;10
        (if-zero (* is_prefix              ;;11
-                   (- 1 [DEPTH 2])
-              (did-decrease AL_item_BYTESIZE (* LC nBYTES))))
+                   (- 1 [DEPTH 2]))
+              (did-dec AL_item_BYTESIZE (* LC nBYTES)))
        (if-zero CT  
               (begin
-              (did-decrease nb_Addr (* is_prefix                         ;; 12
-                                    (- 1 [DEPTH 2])))
-              (did-decrease nb_Sto (* (- 1 is_prefix)                        ;; 13
-                                      ([DEPTH 2]))))))))
+              (did-dec nb_Addr (* is_prefix                         ;; 12
+                                  (- 1 [DEPTH 2])))
+              (did-dec nb_Sto (* (- 1 is_prefix)                        ;; 13
+                                 [DEPTH 2])))))))
  
 
 (defconstraint phase10-14 (:guard (eq 1 [PHASE 10]))   ;; 4.5.2.14
@@ -803,7 +805,7 @@
 ;;                             ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defconstraint phase11-1 (:guard (eq [Phase 11] 1))   ;; 4.6.1
+(defconstraint phase11-1 (:guard (eq [PHASE 11] 1))   ;; 4.6.1
  (if-zero (prev [PHASE 0])
        (begin
        (eq 1 
@@ -820,7 +822,7 @@
                      (* 4 (next LT))
                      (* 8 (next LX))))))))
 
-(defconstraint phase11-2 (:guard (eq [Phase 11] 1))   ;; 4.6.2
+(defconstraint phase11-2 (:guard (eq [PHASE 11] 1))   ;; 4.6.2
  (if-eq (+ (prev LX) LX) 1
        (if-eq-else (^ 2 (- [INPUT 1] 27)) (- [INPUT 1] 27)
               (eq 7                                     ;; 2.a
@@ -843,15 +845,15 @@
                             (* 64 (next end_phase))))
                      (eq (next LIMB)
                          (+ (* int_short (^ 256 LLARGEMO))
-                            (* int_short (^ 256 14)))))))
-                     (eq (next nBYTES) 2))))
+                            (* int_short (^ 256 14))))
+                     (eq (next nBYTES) 2)))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                             ;;
 ;;    4.7 Phase 13-14 : r & s  ;;
 ;;                             ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defconstraint phase13_14 (:guard (eq (+ [Phase 13] [PHASE 14]) 1))   ;; 4.7
+(defconstraint phase13_14 (:guard (eq (+ [PHASE 13] [PHASE 14]) 1))   ;; 4.7
  (begin
  (if-zero (+ [INPUT 1] [INPUT 2])
        (eq OLI 1)   ;; 1

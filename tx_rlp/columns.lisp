@@ -3,7 +3,7 @@
 (defcolumns
     ABS_TX_NUM
     LIMB
-    nBYTES
+    (nBYTES :byte)
     (LIMB_CONSTRUCTED	:boolean)
     (LT	:boolean)
     (LX	:boolean)
