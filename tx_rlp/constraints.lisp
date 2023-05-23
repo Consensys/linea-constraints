@@ -780,7 +780,7 @@
 
 (defconstraint phase10-9to13 (:guard (eq 1 [PHASE 10]))   ;; 4.5.2.9 to 4.5.2.13 
  (if-zero [DEPTH 1] 
-       (remains-constant PHASE_BYTESIZE)  ;; 9
+       (debug (remains-constant PHASE_BYTESIZE))  ;; 9
        (begin
        (did-dec PHASE_BYTESIZE (* LC nBYTES)) ;;10
        (if-zero (* is_prefix              ;;11
