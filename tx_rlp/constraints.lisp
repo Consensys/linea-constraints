@@ -330,7 +330,7 @@
               (eq LIMB (* list_short (^ 256 15)))
               (eq nBYTES 1)))
        (begin
-       (ByteCountingConstraints 1 (- 15 number_step))                  ;; 2.a
+       (ByteCountingConstraints 1 (- LLARGE number_step))                  ;; 2.a
        (if-eq DONE 1                                                                                            ;; 2.b
               (begin
               (eq [ACC 1] input)                                                                                 ;; 2.b.i                                                        
@@ -484,9 +484,12 @@
 (if-zero CT
        (begin                                           ;; 1
        (if-zero [ACC k]
-              (vanishes ACC_BYTESIZE)                    ;; 1.a
-              (eq ACC_BYTESIZE 1))                      ;; 1.b
-       (eq P (^ 256 base_offset)))                             ;; 1.c
+              (begin                      ;; 1.a
+              (vanishes ACC_BYTESIZE)                    
+              (eq P (^ 256 (+ base_offset 1))))
+              ( begin                                          ;; 1.b
+              (eq ACC_BYTESIZE 1)
+              (eq P (^ 256 base_offset))))                      
        (if-zero [ACC k]                                 ;; 2
               (begin
               (vanishes ACC_BYTESIZE)                    ;; 2.a.i
@@ -494,7 +497,7 @@
                   (* 256 (prev P))))
               (begin 
               (did-inc ACC_BYTESIZE 1)                    ;; 2.b.i
-              (didnt-change ACC_BYTESIZE)))))                      ;;2.b.ii
+              (didnt-change ACC_BYTESIZE))))))                      ;;2.b.ii
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                             ;;
