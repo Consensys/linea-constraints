@@ -36,7 +36,7 @@
     (DEPTH	:boolean	:array[2])
     ADDR_HI
     ADDR_LO
-    AL_item_BYTESIZE
+    ACCESS_TUPLE_BYTESIZE
     nb_Addr
     nb_Sto
     nb_Sto_per_Addr)

@@ -722,7 +722,7 @@
                (eq [DEPTH 1] 1)
                (vanishes [DEPTH 2]))
        (begin               ;; 4.a
-       (eq [INPUT 1] AL_item_BYTESIZE)
+       (eq [INPUT 1] ACCESS_TUPLE_BYTESIZE)
        (eq number_step 8)
        (eq 3 (+ is_bytesize
                 (* 2 is_list)))
@@ -774,7 +774,7 @@
                      (* 2 (next [DEPTH 1]))
                      (* 4 (next [DEPTH 2]))))
               (begin                                    ;; 8.b
-              (vanishes AL_item_BYTESIZE)              ;; 8.b.i
+              (vanishes ACCESS_TUPLE_BYTESIZE)              ;; 8.b.i
               (if-not-zero nb_Addr              ;; 8.b.ii
                      (eq 3 
                          (+ (next is_prefix)
@@ -788,7 +788,7 @@
        (did-dec PHASE_BYTESIZE (* LC nBYTES)) ;;10
        (if-zero (* is_prefix              ;;11
                    (- 1 [DEPTH 2]))
-              (did-dec AL_item_BYTESIZE (* LC nBYTES)))
+              (did-dec ACCESS_TUPLE_BYTESIZE (* LC nBYTES)))
        (if-zero CT  
               (begin
               (did-dec nb_Addr (* is_prefix                         ;; 12
