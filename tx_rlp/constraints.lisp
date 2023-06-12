@@ -407,12 +407,24 @@
               (eq [ACC 2] input_lo)
               (if-zero input_hi
                      (begin                                                  ;; 2.d.iii 
-                     (did-change (prev LC))
-                     (eq (prev LIMB) (* (+ int_short ACC_BYTESIZE)
-                                                (^ 256 15)))
-                     (eq (prev nBYTES) 1)
-                     (eq LIMB (* input_lo P))
-                     (eq nBYTES ACC_BYTESIZE))
+                     (eq BIT_ACC [byte 2])                      ;; 2.d.ii
+
+                     (if-zero (and (ACC_BYTESIZE 1)
+                                   (vanishes (shift bit -7)))
+                                   
+                            (begin                      ;; 2.d.iii.A
+                            (did-change LC)
+                            (eq LIMB (* input_lo P))
+                            (eq nBYTES ACC_BYTESIZE))
+                            (begin                      ;; 2.d.iii.B
+                            (did-change (prev LC))
+                            (eq (prev LIMB) (* (+ int_short ACC_BYTESIZE)
+                                               (^ 256 15)))
+                            (eq (prev nBYTES) 1)
+                            (eq LIMB (* input_lo P))
+                            (eq nBYTES ACC_BYTESIZE))))
+
+
                      (begin                                                    ;; 2.d.iv 
                      (did-change (shift LC -2))
                      (eq (shift LIMB -2) 
@@ -442,11 +454,14 @@
               (eq [ACC 1] input_hi)
               (vanishes (shift [ACC 1] -4))
               (eq [ACC 2] input_lo)
-              (did-change (prev LC))
+              (did-change (shift LC -2))
+              (eq (shift LIMB -2)
+                  (* int_short (^ 256 15)))
+              (eq (shift LIMB -2)
+                  1)
               (eq (prev LIMB)
-                  (+ (* (+ int_short 20) (^ 256 LLARGEMO))
-                     (* input_hi (^ 256 11))))
-              (eq (prev nBYTES) 5)
+                  (* input_hi (^ 256 12)))
+              (eq (prev nBYTES) 4)
               (eq LIMB input_lo)
               (eq nBYTES LLARGE))))))
 
@@ -801,6 +816,14 @@
  (if-zero (+ CT
              (* is_prefix (- 1 [DEPTH 2])))
        (did-dec nb_Sto_per_Addr (* (- 1 is_prefix) [DEPTH 2]))))
+
+(defconstraint phase10-14 (:guard (eq 1 [PHASE 10]))   ;; 4.5.2.15
+ (if-zero (and (vanishes [DEPTH 2]) 
+               (didnt-change nb_Addr))
+               (begin
+               (didnt-change ADDR_HI)
+               (didnt-change ADDR_LO))))
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                             ;;
