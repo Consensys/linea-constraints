@@ -877,6 +877,14 @@
                (remained-constant! ADDR_LO))))
 
 
+(defconstraint phase10-14 (:guard (eq 1 [PHASE 10]))   ;; 4.5.2.15
+ (if-zero (and (vanishes [DEPTH 2]) 
+               (didnt-change nb_Addr))
+               (begin
+               (didnt-change ADDR_HI)
+               (didnt-change ADDR_LO))))
+
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                             ;;
 ;;    4.6 Phase 11 : Beta / w  ;;
