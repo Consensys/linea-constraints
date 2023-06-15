@@ -861,15 +861,15 @@
               (did-dec! nb_Sto (* (- 1 is_prefix)                        ;; 13
                                  [DEPTH 2])))))))
  
-;; check name
-(defconstraint phase10-14-1 (:guard  [PHASE 10])   ;; 4.5.2.14
+;; 4.5.2.14
+(defconstraint phase10-14 (:guard  [PHASE 10])   
  (if-zero (+ CT
              (* is_prefix (- 1 [DEPTH 2])))
        (did-dec! nb_Sto_per_Addr (* (- 1 is_prefix) [DEPTH 2]))))
 
 
-;; check name
-(defconstraint phase10-14-2 (:guard  [PHASE 10])   ;; 4.5.2.15
+;; 4.5.2.15
+(defconstraint phase10-15 (:guard  [PHASE 10])   
  (if-zero (and! (vanishes! [DEPTH 2]) 
                (remained-constant! nb_Addr))
                (begin
