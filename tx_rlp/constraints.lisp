@@ -46,7 +46,7 @@
 (defpurefun (phase-decrementing PHASE C)
   (if-eq (* PHASE (prev PHASE)) 1
            (or! (remained-constant! C)
-                       (did-inc! C 1))))
+                       (did-dec! C 1))))
 
 ;; 2.3.1.1
 (defconstraint stamp-constancies ()
@@ -528,7 +528,7 @@
 ;;                             ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defconstraint phase0-1 (:guard (eq! [PHASE 0] 1))   ;; 4.1.1
+(defconstraint phase0-1 (:guard [PHASE 0])   ;; 4.1.1
  (if-zero (prev [PHASE 0])
        (begin
        (eq! 23 (+ OLI                 ;;1.a
@@ -544,7 +544,7 @@
               (eq! LIMB (* TYPE (^ 256 LLARGEMO)))
               (eq! nBYTES 1))))))
 
-(defconstraint phase0-2 (:guard (eq! [PHASE 0] 1))   ;; 4.1.2
+(defconstraint phase0-2 (:guard [PHASE 0])   ;; 4.1.2
  (if-zero (+ (- 1 LT)
              LX)
        (begin
@@ -559,7 +559,7 @@
               (eq! 2 (+ (next LT)
                        (* 2 (next LX))))))))
 
-(defconstraint phase0-3 (:guard (eq! [PHASE 0] 1))   ;; 4.1.3
+(defconstraint phase0-3 (:guard [PHASE 0])   ;; 4.1.3
  (if-zero (and! (vanishes! LT) (eq! LX 1))
        (begin
        (eq! 6 (+ is_padding                           ;; 3.a
@@ -577,10 +577,9 @@
 ;;    4.2 Phase 1, 2, 3, 4, 5 , 6 , 8 , 12 : RLP(integer))  ;;
 ;;                             ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defconstraint phaseinteger (:guard (eq! 1
-                                        (+ (reduce + (for i [1 : 6] [PHASE i]))
-                                           [PHASE 8]
-                                           [PHASE 12])))
+(defconstraint phaseinteger (:guard (+ (reduce + (for i [1 : 6] [PHASE i]))
+                                       [PHASE 8]
+                                       [PHASE 12]))
  (begin
  (eq! number_step                                        ;; 1
      (+ (* 8 (+ (reduce + (for i [1 : 6] [PHASE i]))
@@ -596,7 +595,7 @@
 ;;    4.3 Phase 7 : Address  ;;
 ;;                             ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defconstraint phase7 (:guard (eq! 1 [PHASE 7]))
+(defconstraint phase7 (:guard [PHASE 7])
  (begin
  (rlpAddressConstraints [INPUT 1] [INPUT 2] OLI CT)
  (if-eq DONE 1
@@ -608,7 +607,7 @@
 ;;                             ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 4.4.2.1
-(defconstraint phase9-1 (:guard (eq! 1 [PHASE 9]))   
+(defconstraint phase9-1 (:guard [PHASE 9])   
  (if-eq (+ is_prefix 
            (next is_prefix))
         2
@@ -617,7 +616,7 @@
        (remained-constant! PHASE_BYTESIZE))))
 
 ;; 4.4.2.2
-(defconstraint phase9-2 (:guard (eq! 1 [PHASE 9]))   
+(defconstraint phase9-2 (:guard [PHASE 9])   
  (if-zero (prev is_prefix)
        (begin
        (if-eq (prev LC) 1                               ;; 2.a
@@ -626,25 +625,25 @@
               (did-inc! INDEX_DATA 1)))))
 
 ;; 4.4.2.3
-(defconstraint phase9-3 (:guard (eq! 1 [PHASE 9]))   
+(defconstraint phase9-3 (:guard [PHASE 9])   
  (if-zero is_padding
        (vanishes! end_phase)))
 
 ;; 4.4.2.4
-(defconstraint phase9-4 (:guard (eq! 1 [PHASE 9]))   
+(defconstraint phase9-4 (:guard [PHASE 9])   
  (if-zero (and! (eq! is_padding 1) 
                 (eq! DONE 1))
        (eq! end_phase 1)))
 
 ;; 4.4.2.5
-(defconstraint phase9-5 (:guard (eq! 1 [PHASE 9]))   
+(defconstraint phase9-5 (:guard [PHASE 9]) 
  (if-zero (prev [PHASE 9])
        (if-zero PHASE_BYTESIZE
               (eq! OLI 1)
               (vanishes! OLI))))
 
 ;; 4.4.2.6
-(defconstraint phase9-6 (:guard (eq! 1 [PHASE 9]))   
+(defconstraint phase9-6 (:guard [PHASE 9]) 
  (if-zero (and! (eq! OLI 1) 
                 (vanishes! (prev [PHASE 9])))
        (begin
@@ -657,7 +656,7 @@
        (debug (eq! end_phase 1)))))
 
 ;; 4.4.2.7
-(defconstraint phase9-7 (:guard (eq! 1 [PHASE 9]))   
+(defconstraint phase9-7 (:guard [PHASE 9]) 
  (if-zero OLI
        ;; 7.a
        (begin
@@ -754,14 +753,14 @@
 ;;    4.5 Phase 10 : AccessList  ;;
 ;;                             ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defconstraint phase10-1 (:guard (eq! 1 [PHASE 10]))   ;; 4.5.2.1
+(defconstraint phase10-1 (:guard [PHASE 10])   ;; 4.5.2.1
  (if-not-zero PHASE_BYTESIZE (vanishes! end_phase)))
 
-(defconstraint phase10-2 (:guard (eq! 1 [PHASE 10]))   ;; 4.5.2.2
+(defconstraint phase10-2 (:guard [PHASE 10])  ;; 4.5.2.2
  (if-zero (and! (vanishes! PHASE_BYTESIZE) (eq! DONE 1)) 
        (eq! end_phase 1)))
 
-(defconstraint phase10-3 (:guard (eq! 1 [PHASE 10]))   ;; 4.5.2.3
+(defconstraint phase10-3 (:guard [PHASE 10])   ;; 4.5.2.3
  (if-zero (prev [PHASE 10])
        (if-zero nb_Addr
               (begin                      ;; 3.a
@@ -784,7 +783,7 @@
                               (* 2 (next [DEPTH 1]))
                               (* 4 (next [DEPTH 2])))))))))
 
-(defconstraint phase10-4 (:guard (eq! 1 [PHASE 10]))   ;; 4.5.2.4
+(defconstraint phase10-4 (:guard [PHASE 10])   ;; 4.5.2.4
  (if-zero (all! (eq! is_prefix 1)
                (eq! [DEPTH 1] 1)
                (vanishes! [DEPTH 2]))
@@ -799,7 +798,7 @@
                        (* 2 (next [DEPTH 1]))
                        (* 4 (next [DEPTH 2]))))))))
 
-(defconstraint phase10-5 (:guard (eq! 1 [PHASE 10]))   ;; 4.5.2.5
+(defconstraint phase10-5 (:guard [PHASE 10])   ;; 4.5.2.5
  (if-zero (all! (vanishes! is_prefix)
                (eq! [DEPTH 1] 1)
                (vanishes! [DEPTH 2]))
@@ -814,7 +813,7 @@
                      (next [DEPTH 1]) 
                      (next [DEPTH 2])))))))
 
-(defconstraint phase10-6 (:guard (eq! 1 [PHASE 10]))   ;; 4.5.2.6
+(defconstraint phase10-6 (:guard  [PHASE 10])   ;; 4.5.2.6
  (if-eq 3 (+ is_prefix [DEPTH 1] [DEPTH 2])
        (begin
        (if-zero nb_Sto_per_Addr
@@ -826,13 +825,13 @@
        (eq! 2 (+ is_bytesize is_list))
        (rlpPrefixConstraints [INPUT 1] CT OLI number_step is_bytesize is_list))))
 
-(defconstraint phase10-7 (:guard (eq! 1 [PHASE 10]))   ;; 4.5.2.7
+(defconstraint phase10-7 (:guard  [PHASE 10])   ;; 4.5.2.7
  (if-zero (all! (vanishes! is_prefix)
                (eq! [DEPTH 1] 1)
                (eq! [DEPTH 2] 1))
        (rlpStorageKeyConstraints [INPUT 1] [INPUT 2] CT)))
 
-(defconstraint phase10-8 (:guard (eq! 1 [PHASE 10]))   ;; 4.5.2.8
+(defconstraint phase10-8 (:guard  [PHASE 10])   ;; 4.5.2.8
  (if-zero (+ (- 1 [DEPTH 2]) 
              (- 1 DONE))
        (if-not-zero nb_Sto_per_Addr
@@ -848,9 +847,8 @@
                             (* 2 (next [DEPTH 1]))
                             (* 4 (next [DEPTH 2])))))))))
 
-(defconstraint phase10-9to13 (:guard (eq! 1 [PHASE 10]))   ;; 4.5.2.9 to 4.5.2.13 
- (if-zero [DEPTH 1] 
-       (debug (will-remain-constant! PHASE_BYTESIZE))  ;; 9
+(defconstraint phase10-9to13 (:guard  [PHASE 10])   ;; 4.5.2.9 to 4.5.2.13 
+ (if-not-zero [DEPTH 1] 
        (begin
        (did-dec! PHASE_BYTESIZE (* LC nBYTES)) ;;10
        (if-zero (* is_prefix              ;;11
@@ -864,14 +862,14 @@
                                  [DEPTH 2])))))))
  
 ;; check name
-(defconstraint phase10-14-1 (:guard (eq! 1 [PHASE 10]))   ;; 4.5.2.14
+(defconstraint phase10-14-1 (:guard  [PHASE 10])   ;; 4.5.2.14
  (if-zero (+ CT
              (* is_prefix (- 1 [DEPTH 2])))
        (did-dec! nb_Sto_per_Addr (* (- 1 is_prefix) [DEPTH 2]))))
 
 
 ;; check name
-(defconstraint phase10-14-2 (:guard (eq! 1 [PHASE 10]))   ;; 4.5.2.15
+(defconstraint phase10-14-2 (:guard  [PHASE 10])   ;; 4.5.2.15
  (if-zero (and! (vanishes! [DEPTH 2]) 
                (remained-constant! nb_Addr))
                (begin
@@ -885,7 +883,7 @@
 ;;                             ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defconstraint phase11-1 (:guard (eq! [PHASE 11] 1))   ;; 4.6.1
+(defconstraint phase11-1 (:guard  [PHASE 11])   ;; 4.6.1
  (if-zero (prev [PHASE 0])
        (begin
        (eq! 1 
@@ -902,7 +900,7 @@
                      (* 4 (next LT))
                      (* 8 (next LX))))))))
 
-(defconstraint phase11-2 (:guard (eq! [PHASE 11] 1))   ;; 4.6.2
+(defconstraint phase11-2 (:guard  [PHASE 11])   ;; 4.6.2
  (if-eq (+ (prev LX) LX) 1
        (if-eq-else (^ (- [INPUT 1] 27) 2) (- [INPUT 1] 27)
               (eq! 7                                     ;; 2.a
@@ -933,7 +931,7 @@
 ;;    4.7 Phase 13-14 : r & s  ;;
 ;;                             ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defconstraint phase13_14 (:guard (eq! (+ [PHASE 13] [PHASE 14]) 1))   ;; 4.7
+(defconstraint phase13_14 (:guard (+ [PHASE 13] [PHASE 14]))   ;; 4.7
  (begin
  (if-zero (+ [INPUT 1] [INPUT 2])
        (eq! OLI 1)   ;; 1
