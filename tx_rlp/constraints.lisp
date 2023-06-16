@@ -248,7 +248,7 @@
 ;; 2.3.3.4 & 2.3.3.5
 (defconstraint done-imply-heartbeat (:guard ABS_TX_NUM)              
        (if-zero DONE
-              (will-eq! CT (+ CT 1))       
+              (will-inc! CT 1)       
               (begin
               (eq! LC (- 1 is_padding))
               (vanishes! (next CT)))))
@@ -458,12 +458,13 @@
               (eq! [ACC 2] input_lo)
               (did-change! (shift LC -2))
               (eq! (shift LIMB -2)
-                  (* int_short (^ 256 15)))
-              (eq! (shift LIMB -2)
-                  1)
+                   (* int_short (^ 256 15)))
+              (eq! (shift nBYTES -2)
+                   1)
               (eq! (prev LIMB)
-                  (* input_hi (^ 256 12)))
-              (eq! (prev nBYTES) 4)
+                   (* input_hi (^ 256 12)))
+              (eq! (prev nBYTES) 
+                   4)
               (eq! LIMB input_lo)
               (eq! nBYTES LLARGE))))))
 
