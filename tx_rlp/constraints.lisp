@@ -876,13 +876,13 @@
                (remained-constant! ADDR_HI)
                (remained-constant! ADDR_LO))))
 
-
-(defconstraint phase10-14 (:guard (eq 1 [PHASE 10]))   ;; 4.5.2.15
- (if-zero (and (vanishes [DEPTH 2]) 
-               (didnt-change nb_Addr))
+;; 4.5.2.16
+(defconstraint phase10-16 (:guard [PHASE 10]) 
+ (if-zero (and (vanishes! [DEPTH 2]) 
+               (remained-constant! nb_Addr))
                (begin
-               (didnt-change ADDR_HI)
-               (didnt-change ADDR_LO))))
+               (remained-constant! ADDR_HI)
+               (remained-constant! ADDR_LO))))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
