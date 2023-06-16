@@ -1,4 +1,4 @@
-(module tx_rlp)
+(module txRlp)
 
 (defconst
   int_short               128  ;;RLP prefix of a short integer (<56 bytes), defined in the EYP.

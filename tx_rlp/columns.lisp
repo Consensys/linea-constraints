@@ -1,4 +1,4 @@
-(module tx_rlp)
+(module txRlp)
 
 (defcolumns
     ABS_TX_NUM
