@@ -484,8 +484,8 @@
        (eq! [ACC 2] input_lo)
        (did-change! (shift LC -2))
        (eq! (shift LIMB -2)
-           (* (+ int_short 32)
-              (^ 256 LLARGEMO)))
+            (* (+ int_short 32)
+               (^ 256 LLARGEMO)))
        (eq! (shift nBYTES -2) 1)
        (eq! (prev LIMB) input_hi)
        (eq! (prev nBYTES) LLARGE)
@@ -893,7 +893,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defconstraint phase11-1 (:guard  [PHASE 11])   ;; 4.6.1
- (if-zero (prev [PHASE 0])
+ (if-zero (prev [PHASE 11])
        (begin
        (eq! 1 
            (+ LT
