@@ -458,7 +458,7 @@
               (eq! [ACC 2] input_lo)
               (did-change! (shift LC -2))
               (eq! (shift LIMB -2)
-                   (* int_short (^ 256 15)))
+                   (* int_short (^ 256 LLARGEMO)))
               (eq! (shift nBYTES -2)
                    1)
               (eq! (prev LIMB)
@@ -610,7 +610,7 @@
 ;; 4.4.2.1
 (defconstraint phase9-1 (:guard [PHASE 9])   
  (if-eq (+ is_prefix 
-           (next is_prefix))
+           (prev is_prefix))
         2
        (begin
        (vanishes! INDEX_DATA)
@@ -618,7 +618,8 @@
 
 ;; 4.4.2.2
 (defconstraint phase9-2 (:guard [PHASE 9])   
- (if-zero (prev is_prefix)
+ (if-zero (+ (prev is_prefix)
+             (- 1 (prev [PHASE 9])))
        (begin
        (if-eq (prev LC) 1                               ;; 2.a
               (did-inc! INDEX_DATA 1))

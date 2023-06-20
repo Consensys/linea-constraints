@@ -16,9 +16,9 @@
     (COUNTER	:byte)
     (DONE	:boolean)
     (number_step	:byte)
-    (INPUT	:array[2])
+    (INPUT	:display :bytes :array[2])
     (BYTE :byte :array[2])
-    (ACC :array[2])
+    (ACC :display :bytes :array[2])
     ACC_BYTESIZE
     (BIT	:boolean)
     (BIT_ACC	:byte)
