@@ -28,25 +28,25 @@
 ;; Definition counter-incrementing.
 (defpurefun (counter-incrementing CT C)
   (if-not-zero CT
-               (or! (remained-constant! C)
-                       (did-inc! C 1))))
+       (or! (remained-constant! C)
+            (did-inc! C 1))))
 
 ;; Definition phase-constancy.
 (defpurefun (phase-constancy PHASE C)
   (if-eq (* PHASE (prev PHASE)) 1
-           (remained-constant! C)))
+       (remained-constant! C)))
 
 ;; Definition phase-incrementing
 (defpurefun (phase-incrementing PHASE C)
   (if-eq (* PHASE (prev PHASE)) 1
-           (or! (remained-constant! C)
-                   (did-inc! C 1))))
+       (or! (remained-constant! C)
+            (did-inc! C 1))))
 
 ;; Definition phase-decrementing
 (defpurefun (phase-decrementing PHASE C)
   (if-eq (* PHASE (prev PHASE)) 1
-           (or! (remained-constant! C)
-                       (did-dec! C 1))))
+       (or! (remained-constant! C)
+            (did-dec! C 1))))
 
 ;; 2.3.1.1
 (defconstraint stamp-constancies ()
@@ -55,29 +55,29 @@
 ;; 2.3.1.2
 (defconstraint counter-constancy ()
   (begin
-   (counter-constancy CT [INPUT 1])
-   (counter-constancy CT [INPUT 2])
-   (counter-constancy CT OLI)
-   (counter-constancy CT number_step)
-   (counter-constancy CT LT)
-   (counter-constancy CT LX)
-   (counter-constancy CT is_prefix)
-   (counter-constancy CT is_bytesize)
-   (counter-constancy CT is_list)
-   (counter-constancy CT is_padding)
-   (counter-constancy CT nb_Addr)
-   (counter-constancy CT nb_Sto)
-   (counter-constancy CT nb_Sto_per_Addr)
-   (counter-constancy CT [DEPTH 1])
-   (counter-constancy CT [DEPTH 2])
-   (counter-constancy CT COMP)))
+       (counter-constancy CT [INPUT 1])
+       (counter-constancy CT [INPUT 2])
+       (counter-constancy CT OLI)
+       (counter-constancy CT number_step)
+       (counter-constancy CT LT)
+       (counter-constancy CT LX)
+       (counter-constancy CT is_prefix)
+       (counter-constancy CT is_bytesize)
+       (counter-constancy CT is_list)
+       (counter-constancy CT is_padding)
+       (counter-constancy CT nb_Addr)
+       (counter-constancy CT nb_Sto)
+       (counter-constancy CT nb_Sto_per_Addr)
+       (counter-constancy CT [DEPTH 1])
+       (counter-constancy CT [DEPTH 2])
+       (counter-constancy CT COMP)))
 
 ;; 2.3.1.3 & (debug 2.3.1.9)
 (defconstraint counter-incrementing ()
-   (begin
-   (counter-incrementing CT LC)
-   (debug (counter-incrementing CT DONE))
-   (debug (counter-incrementing CT ACC_BYTESIZE))))
+  (begin
+       (counter-incrementing CT LC)
+       (debug (counter-incrementing CT DONE))
+       (debug (counter-incrementing CT ACC_BYTESIZE))))
 
 ;; 2.3.1.4
 (defconstraint phase9-constancy ()
@@ -86,8 +86,8 @@
 ;; 2.3.1.5
 (defconstraint phase0-constancy ()
   (begin
-   (phase-constancy [PHASE 0] RLP_LT_BYTESIZE)
-   (phase-constancy [PHASE 0] RLP_LX_BYTESIZE)))
+       (phase-constancy [PHASE 0] RLP_LT_BYTESIZE)
+       (phase-constancy [PHASE 0] RLP_LX_BYTESIZE)))
 
 ;; 2.3.1.6
 (defconstraint phase9-decrementing ()
@@ -96,8 +96,8 @@
 ;; 2.3.1.7 (debug 2.3.1.11)
 (defconstraint phase9-incrementing ()
    (begin 
-   (phase-incrementing [PHASE 9] is_padding)
-   (debug (phase-incrementing [PHASE 9] INDEX_DATA))))
+       (phase-incrementing [PHASE 9] is_padding)
+       (debug (phase-incrementing [PHASE 9] INDEX_DATA))))
 
 ;; 2.3.1.8
 ;; (defconstraint phase0-decrementing()
@@ -135,17 +135,16 @@
 ;; 2.3.2.2
 (defconstraint ABS_TX_NUM-is-zero ()
   (if-zero ABS_TX_NUM
-           (vanishes! (reduce + (for i [0 : 14] [PHASE i])))))
+       (vanishes! (reduce + (for i [0 : 14] [PHASE i])))))
 
 ;; 2.3.2.3
 (defconstraint ABS_TX_NUM-is-nonzero ()
   (if-not-zero ABS_TX_NUM
-               (eq! 1 (reduce + (for i [0 : 14] [PHASE i])))))
+       (eq! 1 (reduce + (for i [0 : 14] [PHASE i])))))
 
 ;; 2.3.2.4
 (defconstraint ABS_TX_NUM-evolution()
-  (eq!
-       ABS_TX_NUM
+  (eq! ABS_TX_NUM
        (+ (prev ABS_TX_NUM) 
           (* [PHASE 0] (remained-constant! [PHASE 0])))))
 
@@ -156,17 +155,17 @@
 ;; 2.3.2.6
 (defconstraint LT-and-LX()
   (if-eq (reduce + (for i [1 : 10] [PHASE i])) 1
-              (eq! (+ LT LX) 2)))
+       (eq! (+ LT LX) 2)))
 
 ;; 2.3.2.7
 (defconstraint LT-only()
   (if-eq (reduce + (for i [12 : 14] [PHASE i])) 1
-              (eq! 1 (+ LT (* 2 LX)))))
+       (eq! 1 (+ LT (* 2 LX)))))
 
 ;; 2.3.2.8
 (defconstraint no-done-no-end ()
   (if-zero DONE
-           (vanishes! end_phase)))
+       (vanishes! end_phase)))
 
 ;; 2.3.2.9
 (defconstraint no-end-no-changephase ()
@@ -180,53 +179,53 @@
 (defconstraint phase-transition ()
   (if-eq end_phase 1
        (begin
-       (if-eq [PHASE 0] 1
-              (if-zero TYPE
-                     (eq! (next [PHASE 2]) 1)
-                     (eq! (next [PHASE 1]) 1)))
-       (if-eq [PHASE 1] 1
-              (eq! (next [PHASE 2]) 1))
-       (if-eq [PHASE 2] 1
-              (if-eq-else TYPE 2
-                     (eq! (next [PHASE 4]) 1)
-                     (eq! (next [PHASE 3]) 1)))
-       (if-eq [PHASE 3] 1
-              (eq! (next [PHASE 6]) 1))
-       (if-eq [PHASE 4] 1
-              (eq! (next [PHASE 5]) 1))
-       (if-eq [PHASE 5] 1
-              (eq! (next [PHASE 6]) 1))
-       (if-eq [PHASE 6] 1
-              (eq! (next [PHASE 7]) 1))
-       (if-eq [PHASE 7] 1
-              (eq! (next [PHASE 8]) 1))
-       (if-eq [PHASE 8] 1
-              (eq! (next [PHASE 9]) 1))
-       (if-eq [PHASE 9] 1
-              (begin
-              (debug (vanishes! PHASE_BYTESIZE))
-              (vanishes! DATAGASCOST)
-              (if-zero TYPE
-                     (eq! (next [PHASE 11]) 1)
-                     (eq! (next [PHASE 10]) 1))))
-       (if-eq [PHASE 10] 1
-              (begin
-              (debug (vanishes! PHASE_BYTESIZE))
-              (vanishes! nb_Addr)
-              (vanishes! nb_Sto)
-              (vanishes! nb_Sto_per_Addr)
-              (eq! (next [PHASE 12]) 1)))
-       (if-eq [PHASE 11] 1
-              (eq! (next [PHASE 13]) 1))
-       (if-eq [PHASE 12] 1
-              (eq! (next [PHASE 13]) 1))
-       (if-eq [PHASE 13] 1
-              (eq! (next [PHASE 14]) 1))
-       (if-eq [PHASE 14] 1
-              (begin
-              (vanishes! RLP_LT_BYTESIZE)
-              (vanishes! RLP_LX_BYTESIZE)
-              (eq! (next [PHASE 0]) 1))))))
+              (if-eq [PHASE 0] 1
+                     (if-zero TYPE
+                            (eq! (next [PHASE 2]) 1)
+                            (eq! (next [PHASE 1]) 1)))
+              (if-eq [PHASE 1] 1
+                     (eq! (next [PHASE 2]) 1))
+              (if-eq [PHASE 2] 1
+                     (if-eq-else TYPE 2
+                            (eq! (next [PHASE 4]) 1)
+                            (eq! (next [PHASE 3]) 1)))
+              (if-eq [PHASE 3] 1
+                     (eq! (next [PHASE 6]) 1))
+              (if-eq [PHASE 4] 1
+                     (eq! (next [PHASE 5]) 1))
+              (if-eq [PHASE 5] 1
+                     (eq! (next [PHASE 6]) 1))
+              (if-eq [PHASE 6] 1
+                     (eq! (next [PHASE 7]) 1))
+              (if-eq [PHASE 7] 1
+                     (eq! (next [PHASE 8]) 1))
+              (if-eq [PHASE 8] 1
+                     (eq! (next [PHASE 9]) 1))
+              (if-eq [PHASE 9] 1
+                     (begin
+                            (debug (vanishes! PHASE_BYTESIZE))
+                            (vanishes! DATAGASCOST)
+                            (if-zero TYPE
+                                   (eq! (next [PHASE 11]) 1)
+                                   (eq! (next [PHASE 10]) 1))))
+              (if-eq [PHASE 10] 1
+                     (begin
+                            (debug (vanishes! PHASE_BYTESIZE))
+                            (vanishes! nb_Addr)
+                            (vanishes! nb_Sto)
+                            (vanishes! nb_Sto_per_Addr)
+                            (eq! (next [PHASE 12]) 1)))
+              (if-eq [PHASE 11] 1
+                     (eq! (next [PHASE 13]) 1))
+              (if-eq [PHASE 12] 1
+                     (eq! (next [PHASE 13]) 1))
+              (if-eq [PHASE 13] 1
+                     (eq! (next [PHASE 14]) 1))
+              (if-eq [PHASE 14] 1
+                     (begin
+                            (vanishes! RLP_LT_BYTESIZE)
+                            (vanishes! RLP_LX_BYTESIZE)
+                            (eq! (next [PHASE 0]) 1))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                             ;;
@@ -241,15 +240,15 @@
 
 ;; 2.3.3.2 & 2.3.3.3
 (defconstraint cy-imply-done (:guard ABS_TX_NUM)
-        (if-eq-else CT (- number_step 1)
-              (eq! DONE 1)
-              (vanishes! DONE)))
+ (if-eq-else CT (- number_step 1)
+       (eq! DONE 1)
+       (vanishes! DONE)))
 
 ;; 2.3.3.4 & 2.3.3.5
 (defconstraint done-imply-heartbeat (:guard ABS_TX_NUM)              
-       (if-zero DONE
-              (will-inc! CT 1)       
-              (begin
+ (if-zero DONE
+       (will-inc! CT 1)       
+       (begin
               (eq! LC (- 1 is_padding))
               (vanishes! (next CT)))))
 
@@ -262,7 +261,7 @@
 ;; 2.3.4.1
 (defconstraint byte-decompositions ()
  (for k [1:2]
-      (byte-decomposition CT [ACC k] [BYTE k])))
+       (byte-decomposition CT [ACC k] [BYTE k])))
 
 ;; 2.3.4.2
 (defconstraint bit-decomposition ()
@@ -280,22 +279,26 @@
 (defconstraint init-index()
  (if-zero (remained-constant! ABS_TX_NUM)
        (begin
-       (eq! INDEX_LT 
-           (+ (prev INDEX_LT) (* (prev LC) (prev LT))))
-       (eq! INDEX_LX 
-           (+ (prev INDEX_LX) (* (prev LC) (prev LX)))))
+              (eq! INDEX_LT 
+                   (+ (prev INDEX_LT) 
+                      (* (prev LC) (prev LT))))
+              (eq! INDEX_LX 
+                   (+ (prev INDEX_LX) 
+                      (* (prev LC) (prev LX)))))
        (begin
-       (vanishes! INDEX_LT)
-       (vanishes! INDEX_LX))))
+              (vanishes! INDEX_LT)
+              (vanishes! INDEX_LX))))
 
 ;; 2.3.5.3 
 (defconstraint rlpbytesize-decreasing()
  (if-eq 1 (reduce + (for i [1 : 14] [PHASE i]))
        (begin
-       (eq! RLP_LT_BYTESIZE
-           (- (prev RLP_LT_BYTESIZE) (* LC LT nBYTES)))
-       (eq! RLP_LX_BYTESIZE
-           (- (prev RLP_LX_BYTESIZE) (* LC LX nBYTES))))))
+              (eq! RLP_LT_BYTESIZE
+                   (- (prev RLP_LT_BYTESIZE) 
+                      (* LC LT nBYTES)))
+              (eq! RLP_LX_BYTESIZE
+                   (- (prev RLP_LX_BYTESIZE) 
+                      (* LC LX nBYTES))))))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -307,7 +310,7 @@
 (defconstraint finalisation (:domain {-1})
  (if-not-zero ABS_TX_NUM
        (eq! 2
-           (+ end_phase [PHASE 14]))))
+            (+ end_phase [PHASE 14]))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                             ;;
@@ -326,67 +329,67 @@
 
 (defun (rlpPrefixConstraints input ct oli nbstep isbytesize islist)
  (if-not-zero oli
-       (if-zero islist                                                                                          ;; 1
-              (begin                                                                                            ;; 1.a 
-              (eq! LIMB (* int_short (^ 256 LLARGEMO)))
+       (begin                                                                                            ;; 1.a 
+              (if-zero islist                                                                                          ;; 1
+                     (eq! LIMB (* int_short (^ 256 LLARGEMO)))
+                     (eq! LIMB (* list_short (^ 256 LLARGEMO))))
               (eq! nBYTES 1))
-              (begin                                                                                            ;;1.b
-              (eq! LIMB (* list_short (^ 256 LLARGEMO)))
-              (eq! nBYTES 1)))
        (begin
-       (if-eq number_step 8 (ByteCountingConstraints 1 (- LLARGE 8)))                ;; 2.a
-       (if-eq number_step 12 (ByteCountingConstraints 1 (- LLARGE 12)))
-       (if-eq DONE 1                                                                                            ;; 2.b
-              (begin
-              (eq! [ACC 1] input)                                                                                 ;; 2.b.i                                                        
-              (eq! BIT_ACC [BYTE 1])                                                                             ;;2.b.ii
-              (eq! [ACC 2]                                                                  ;; 2.b.iii
-                   (- (* (- (* 2 COMP) 1) 
-                         (- input 55))
-                      COMP))
-              (if-zero isbytesize                                          ;;2.b.iv
+              (if-eq number_step 8 (ByteCountingConstraints 1 (- LLARGE 8)))                ;; 2.a
+              (if-eq number_step 12 (ByteCountingConstraints 1 (- LLARGE 12)))
+              (if-eq DONE 1                                                                                            ;; 2.b
                      (begin
-                     (if-zero (and! (eq! ACC_BYTESIZE 1) 
-                                   (vanishes! (shift BIT -7)))
-                            (vanishes! (prev LC))                                             ;;2.b.iv.A
-                            (begin                                                                ;; 2.B.iv.B/C/D
-                            (did-change! (prev LC))
-                            (eq! (prev LIMB) 
-                                (* (+ int_short ACC_BYTESIZE)
-                                   (^ 256 15)))
-                            (eq! (prev nBYTES) 1)))
-                     (eq! LIMB (* input P))
-                     (eq! nBYTES 1)))       
-              (if-zero (and! (eq! isbytesize 1) 
-                            (vanishes! islist))                    ;;2.b.v
-                     (if-zero COMP
-                            (begin                                                  ;; 2.b.v.A
-                            (vanishes! (prev LC))
-                            (eq! LIMB 
-                                (* (+ int_short ACC_BYTESIZE)
-                                   (^ 256 15)))
-                            (eq! nBYTES 1))
-                            (begin                                                  ;; 2.b.v.B
-                            (did-change! (prev LC))
-                            (eq! (prev LIMB) (* (+ int_long ACC_BYTESIZE)
-                                                (^ 256 15)))
-                            (eq! (prev nBYTES) 1)
-                            (eq! LIMB (* input P))
-                            (eq! nBYTES ACC_BYTESIZE))))       
-              (if-eq islist 1                   ;;2.b.vi
-                     (if-zero COMP
-                            (begin                                                  ;; 2.b.vi.A
-                            (vanishes! (prev LC))
-                            (eq! LIMB (* (+ list_short ACC_BYTESIZE)
-                                                (^ 256 15)))
-                            (eq! nBYTES 1))
-                            (begin                                                  ;; 2.b.vi.B
-                            (did-change! (prev LC))
-                            (eq! (prev LIMB) (* (+ list_long ACC_BYTESIZE)
-                                                (^ 256 15)))
-                            (eq! (prev nBYTES) 1)
-                            (eq! LIMB (* input P))
-                            (eq! nBYTES ACC_BYTESIZE)))))))))
+                            (eq! [ACC 1] input)                                                                        ;; 2.b.i                                                        
+                            (eq! BIT_ACC [BYTE 1])                                                                             ;;2.b.ii
+                            (eq! [ACC 2]                                                                  ;; 2.b.iii
+                                 (- (* (- (* 2 COMP) 1) 
+                                       (- input 55))
+                                    COMP))
+                            (if-zero isbytesize                                          ;;2.b.iv
+                                   (begin
+                                          (if-zero (+ (- ACC_BYTESIZE 1) 
+                                                      (shift BIT -7))
+                                                 (vanishes! (prev LC))                                             ;;2.b.iv.A
+                                                 (begin                                                                ;; 2.B.iv.B/C/D
+                                                        (did-change! (prev LC))
+                                                        (eq! (prev LIMB) 
+                                                            (* (+ int_short ACC_BYTESIZE)
+                                                               (^ 256 15)))
+                                                        (eq! (prev nBYTES) 1)))
+                                          (eq! LIMB (* input P))
+                                          (eq! nBYTES ACC_BYTESIZE)))       
+                            (if-zero (+ (- 1 isbytesize) 
+                                        islist)                    ;;2.b.v
+                                   (if-zero COMP
+                                          (begin                                                  ;; 2.b.v.A
+                                                 (vanishes! (prev LC))
+                                                 (eq! LIMB 
+                                                     (* (+ int_short input)
+                                                        (^ 256 15)))
+                                                 (eq! nBYTES 1))
+                                          (begin                                                  ;; 2.b.v.B
+                                                 (did-change! (prev LC))
+                                                 (eq! (prev LIMB) (* (+ int_long ACC_BYTESIZE)
+                                                                     (^ 256 15)))
+                                                 (eq! (prev nBYTES) 1)
+                                                 (eq! LIMB (* input P))
+                                                 (eq! nBYTES ACC_BYTESIZE))))       
+                            (if-eq islist 1                   ;;2.b.vi
+                                   (if-zero COMP
+                                          (begin                                                  ;; 2.b.vi.A
+                                                 (vanishes! (prev LC))
+                                                 (eq! LIMB 
+                                                      (* (+ list_short input)
+                                                         (^ 256 15)))
+                                                 (eq! nBYTES 1))
+                                          (begin                                                  ;; 2.b.vi.B
+                                                 (did-change! (prev LC))
+                                                 (eq! (prev LIMB) 
+                                                      (* (+ list_long ACC_BYTESIZE)
+                                                         (^ 256 15)))
+                                                 (eq! (prev nBYTES) 1)
+                                                 (eq! LIMB (* input P))
+                                                 (eq! nBYTES ACC_BYTESIZE)))))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                             ;;
@@ -397,46 +400,44 @@
 (defun (rlp32bytesIntegerConstraints input_hi input_lo oli ct)
  (if-not-zero oli 
        (begin                                                                ;; 1
-       (eq! LIMB (* int_short (^ 256 15)))
-       (eq! nBYTES 1))
+              (eq! LIMB (* int_short (^ 256 15)))
+              (eq! nBYTES 1))
        (begin                                                                           ;; 2
-       (eq! number_step 16)
-       (if-zero input_hi                                       
-              (ByteCountingConstraints 2 0)                                         ;;2.b
-              (ByteCountingConstraints 1 0))                                            ;;2.c
-       (if-eq DONE 1                                                         ;;2.d
-              (begin 
-              (eq! [ACC 1] input_hi)
-              (eq! [ACC 2] input_lo)
-              (if-zero input_hi
-                     (begin                                                  ;; 2.d.iii 
-                     (eq! BIT_ACC [BYTE 2])                      ;; 2.d.ii
-                     (if-zero (and! (eq! ACC_BYTESIZE 1)
-                                   (vanishes! (shift BIT -7)))
-                                   
-                            (begin                      ;; 2.d.iii.A
-                            (did-change! LC)
-                            (eq! LIMB (* input_lo P))
-                            (eq! nBYTES ACC_BYTESIZE))
-                            (begin                      ;; 2.d.iii.B
-                            (did-change! (prev LC))
-                            (eq! (prev LIMB) (* (+ int_short ACC_BYTESIZE)
-                                               (^ 256 15)))
-                            (eq! (prev nBYTES) 1)
-                            (eq! LIMB (* input_lo P))
-                            (eq! nBYTES ACC_BYTESIZE))))
+              (eq! number_step 16)
+              (if-zero input_hi                                       
+                     (ByteCountingConstraints 2 0)                                         ;;2.b
+                     (ByteCountingConstraints 1 0))                                            ;;2.c
+              (if-eq DONE 1                                                         ;;2.d
+                     (begin 
+                            (eq! [ACC 1] input_hi)
+                            (eq! [ACC 2] input_lo)
+                            (if-zero input_hi
+                                   (begin                                                  ;; 2.d.iii 
+                                          (eq! BIT_ACC [BYTE 2])                      ;; 2.d.ii
+                                          (if-zero (+ (- ACC_BYTESIZE 1)
+                                                      (shift BIT -7))
 
-
-                     (begin                                                    ;; 2.d.iv 
-                     (did-change! (shift LC -2))
-                     (eq! (shift LIMB -2) 
-                         (* (+ int_short LLARGE ACC_BYTESIZE)
-                            (^ 256 15)))
-                     (eq! (shift nBYTES -2) 1)
-                     (eq! (prev LIMB) (* input_hi P))
-                     (eq! (prev nBYTES) ACC_BYTESIZE)
-                     (eq! LIMB input_lo)
-                     (eq! nBYTES LLARGE))))))))
+                                                 (begin                      ;; 2.d.iii.A
+                                                        (did-change! LC)
+                                                        (eq! LIMB (* input_lo P))
+                                                        (eq! nBYTES ACC_BYTESIZE))
+                                                 (begin                      ;; 2.d.iii.B
+                                                 (did-change! (prev LC))
+                                                 (eq! (prev LIMB) (* (+ int_short ACC_BYTESIZE)
+                                                                    (^ 256 15)))
+                                                 (eq! (prev nBYTES) 1)
+                                                 (eq! LIMB (* input_lo P))
+                                                 (eq! nBYTES ACC_BYTESIZE))))
+                                   (begin                                                    ;; 2.d.iv 
+                                   (did-change! (shift LC -2))
+                                   (eq! (shift LIMB -2) 
+                                       (* (+ int_short LLARGE ACC_BYTESIZE)
+                                          (^ 256 15)))
+                                   (eq! (shift nBYTES -2) 1)
+                                   (eq! (prev LIMB) (* input_hi P))
+                                   (eq! (prev nBYTES) ACC_BYTESIZE)
+                                   (eq! LIMB input_lo)
+                                   (eq! nBYTES LLARGE))))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                             ;;
@@ -561,7 +562,8 @@
                        (* 2 (next LX))))))))
 
 (defconstraint phase0-3 (:guard [PHASE 0])   ;; 4.1.3
- (if-zero (and! (vanishes! LT) (eq! LX 1))
+ (if-zero (+ LT 
+             (- 1 LX))
        (begin
        (eq! 6 (+ is_padding                           ;; 3.a
                 (* 2 is_bytesize)                    ;; 3.b
@@ -582,14 +584,16 @@
                                        [PHASE 8]
                                        [PHASE 12]))
  (begin
- (eq! number_step                                        ;; 1
-     (+ (* 8 (+ (reduce + (for i [1 : 6] [PHASE i]))
-                [PHASE 12]))
-        (* 12 [PHASE 8])))
- (vanishes! (+ is_bytesize is_list))
- (rlpPrefixConstraints [INPUT 1] CT OLI number_step is_bytesize is_list)
- (if-eq DONE 1                                          ;; 2
-       (eq! end_phase 1))))
+       (if-zero [INPUT 1]
+              (eq! OLI 1)
+              (eq! number_step                                       
+                  (+ (* 8 (+ (reduce + (for i [1 : 6] [PHASE i]))
+                             [PHASE 12]))
+                     (* 12 [PHASE 8]))))
+       (vanishes! (+ is_bytesize is_list))
+       (rlpPrefixConstraints [INPUT 1] CT OLI number_step is_bytesize is_list)
+       (if-eq DONE 1                                         
+             (eq! end_phase 1))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                             ;;
@@ -598,9 +602,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defconstraint phase7 (:guard [PHASE 7])
  (begin
- (rlpAddressConstraints [INPUT 1] [INPUT 2] OLI CT)
- (if-eq DONE 1
-       (eq! end_phase 1))))
+       (rlpAddressConstraints [INPUT 1] [INPUT 2] OLI CT)
+       (if-eq DONE 1
+             (eq! end_phase 1))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                             ;;
@@ -662,93 +666,98 @@
  (if-zero OLI
        ;; 7.a
        (begin
-       (if-zero (prev [PHASE 9])                 
-              (vanishes! (+ (- 1 is_prefix
-                            is_padding))))
-       ;; 7.b
-       (if-eq is_prefix 1
-              (if-eq-else PHASE_BYTESIZE 1
-                     ;; 7.b.i
-                     (begin
-                     ;; 7.b.i.A
-                     (eq! number_step 8)
-                     ; 7.b.i.B
-                     (if-eq DONE 1 
+              (if-zero (prev [PHASE 9])                 
+                     (vanishes! (+ (- 1 is_prefix
+                                   is_padding))))
+              ;; 7.b
+              (if-eq is_prefix 1
+                     (if-eq-else PHASE_BYTESIZE 1
+                            ;; 7.b.i
                             (begin
-                            (eq! BIT_ACC [BYTE 1])
-                            (eq! [ACC 1] [INPUT 1])
-                            (vanishes! (prev LC))
-                            (if-zero (shift BIT -7)
-                                   (begin
-                                   (eq! LIMB 
-                                        (* [INPUT 1] (^ 256 15)))
-                                   (eq! nBYTES 1))
-                                   (begin
-                                   (eq! LIMB 
-                                        (+ (* (+ int_short 1) 
-                                              (^ 256 15))
-                                           (* [INPUT 1] 
-                                              (^ 256 14))))
-                                   (eq! nBYTES 2)))
-                            (will-dec! PHASE_BYTESIZE 1)
-                            (will-remain-constant! (next PHASE_BYTESIZE))
-                            (if-zero [INPUT 1]
-                                   (will-dec! DATAGASCOST G_txdatazero)
-                                   (will-dec! DATAGASCOST G_txdatanonzero))
-                            (will-remain-constant! (next DATAGASCOST))
-                            (eq! (next number_step) 2)
-                            (eq! 1
-                                 (+ is_padding (next is_padding))))))
-                     ;; 7.b.ii
-                     (begin
-                     ;; 7.b.ii.A
-                     (eq! [INPUT 1] PHASE_BYTESIZE)
-                     (eq! number_step 8)
-                     (vanishes! (+ (- 1 is_bytesize)
-                                   is_list))
-                     (rlpPrefixConstraints [INPUT 1] CT OLI number_step is_bytesize is_list)
-                     ;; 7.b.ii.B
-                     (will-remain-constant! PHASE_BYTESIZE)
-                     ;; 7.b.ii.C
-                     (will-remain-constant! DATAGASCOST)
-                     ;; 7.b.ii.D
-                     (if-eq DONE 1
-                            (vanishes! (+ (next is_prefix)
-                                          (next is_padding)))))))
-              ;; 7.c
-              (if-zero (and! (vanishes! is_prefix) (vanishes! is_padding))             
-                     (begin
-                     (eq! number_step LLARGE)  ;; 7.c.i
-                     (if-not-zero PHASE_BYTESIZE
-                            (begin                                                  ;; 7.c.ii
-                            (will-dec! PHASE_BYTESIZE 1)                                           ;;7.c.ii.A
-                            (if-zero [BYTE 1]
-                                   (will-dec! DATAGASCOST G_txdatazero)                   ;;7.c.ii.B
-                                   (will-dec! DATAGASCOST G_txdatanonzero)))                      ;;7.c.ii.C
-                            (begin                                    ;; 7.c.iii
-                            (will-remain-constant! PHASE_BYTESIZE)             ;; 7.c.iii.A
-                            (will-remain-constant! DATAGASCOST)))                 ;; 7.c.iii.B
-                     (if-zero CT
-                            (eq! ACC_BYTESIZE 1)                ;; 7.c.iv
-                            (if-not-zero PHASE_BYTESIZE
-                                   (did-inc! ACC_BYTESIZE 1) ;; 7.c.v.A
-                                   (begin                      ;; 7.c.v.B
-                                   (will-remain-constant! ACC_BYTESIZE)
-                                   (vanishes! [BYTE 1]))))
-                     (if-eq DONE 1                                    ;; 7.c.vi
+                                   ;; 7.b.i.A
+                                   (eq! number_step 8)
+                                   ; 7.b.i.B
+                                   (if-eq DONE 1 
+                                          (begin
+                                                 (eq! BIT_ACC [BYTE 1])
+                                                 (eq! [ACC 1] [INPUT 1])
+                                                 (vanishes! (prev LC))
+                                                 (if-zero (shift BIT -7)
+                                                        (begin
+                                                        (eq! LIMB 
+                                                             (* [INPUT 1] (^ 256 15)))
+                                                        (eq! nBYTES 1))
+                                                        (begin
+                                                        (eq! LIMB 
+                                                             (+ (* (+ int_short 1) 
+                                                                   (^ 256 15))
+                                                                (* [INPUT 1] 
+                                                                   (^ 256 14))))
+                                                        (eq! nBYTES 2)))
+                                                 (will-dec! PHASE_BYTESIZE 1)
+                                                 (will-remain-constant! (next PHASE_BYTESIZE))
+                                                 (if-zero [INPUT 1]
+                                                        (will-dec! DATAGASCOST G_txdatazero)
+                                                        (will-dec! DATAGASCOST G_txdatanonzero))
+                                                 (will-remain-constant! (next DATAGASCOST))
+                                                 (eq! (next number_step) 2)
+                                                 (eq! 1
+                                                      (+ is_padding (next is_padding))))))
+                            ;; 7.b.ii
                             (begin
-                            (vanishes! (prev LC))        ;; 7.c.vi.A
-                            (eq! [ACC 1] [INPUT 1])        ;; 7.c.vi.B
-                            (eq! LIMB [INPUT 1])        ;; 7.c.vi.C
-                            (eq! nBYTES ACC_BYTESIZE)         ;; 7.c.vi.D
-                            (if-eq (^ PHASE_BYTESIZE 2) PHASE_BYTESIZE
-                                   (begin                             ;; 7.c.vi.E
-                                   (eq! (next number_step) 2)
-                                   (eq! (+ is_padding (next is_padding)) 1)
-                                   (vanishes! (+ (next LIMB) (shift LIMB 2)))
-                                   (eq! (next PHASE_BYTESIZE) (shift PHASE_BYTESIZE 2))
-                                   (eq! (next DATAGASCOST) (shift DATAGASCOST 2))
-                                   (vanishes! (next is_padding)))))))))))   ;; 7.c.vi.F       
+                                   ;; 7.b.ii.A
+                                   (eq! [INPUT 1] PHASE_BYTESIZE)
+                                   (eq! number_step 8)
+                                   (vanishes! (+ (- 1 is_bytesize)
+                                                 is_list))
+                                   (rlpPrefixConstraints [INPUT 1] CT OLI number_step is_bytesize is_list)
+                                   ;; 7.b.ii.B
+                                   (will-remain-constant! PHASE_BYTESIZE)
+                                   ;; 7.b.ii.C
+                                   (will-remain-constant! DATAGASCOST)
+                                   ;; 7.b.ii.D
+                                   (if-eq DONE 1
+                                          (vanishes! (+ (next is_prefix)
+                                                        (next is_padding)))))))
+                     ;; 7.c
+                     (if-zero (+ is_prefix is_padding)             
+                            (begin
+                                   (eq! number_step LLARGE)  ;; 7.c.i
+                                   (if-not-zero PHASE_BYTESIZE
+                                          (begin                                                  ;; 7.c.ii
+                                                 (will-dec! PHASE_BYTESIZE 1)                                           ;;7.c.ii.A
+                                                 (if-zero [BYTE 1]
+                                                        (will-dec! DATAGASCOST G_txdatazero)                   ;;7.c.ii.B
+                                                        (will-dec! DATAGASCOST G_txdatanonzero)))                      ;;7.c.ii.C
+                                          (begin                                    ;; 7.c.iii
+                                                 (will-remain-constant! PHASE_BYTESIZE)             ;; 7.c.iii.A
+                                                 (will-remain-constant! DATAGASCOST)))                 ;; 7.c.iii.B
+                                   (if-zero CT
+                                          (eq! ACC_BYTESIZE 1)                ;; 7.c.iv
+                                          (if-not-zero PHASE_BYTESIZE
+                                                 (did-inc! ACC_BYTESIZE 1) ;; 7.c.v.A
+                                                 (begin                      ;; 7.c.v.B
+                                                        (remained-constant! ACC_BYTESIZE)
+                                                        (vanishes! [BYTE 1]))))
+                                   (if-eq DONE 1                                    ;; 7.c.vi
+                                          (begin
+                                                 (vanishes! (prev LC))        ;; 7.c.vi.A
+                                                 (eq! [ACC 1] [INPUT 1])        ;; 7.c.vi.B
+                                                 (eq! LIMB [INPUT 1])        ;; 7.c.vi.C
+                                                 (eq! nBYTES ACC_BYTESIZE)         ;; 7.c.vi.D
+                                                 (if-eq-else (^ PHASE_BYTESIZE 2) PHASE_BYTESIZE
+                                                        (begin                             ;; 7.c.vi.E
+                                                               (eq! (next number_step) 2)
+                                                               (eq! 1
+                                                                    (+ is_padding 
+                                                                       (next is_padding)))
+                                                               (vanishes! (+ (next LIMB) 
+                                                                             (shift LIMB 2)))
+                                                               (eq! (next PHASE_BYTESIZE) 
+                                                                    (shift PHASE_BYTESIZE 2))
+                                                               (eq! (next DATAGASCOST) 
+                                                                    (shift DATAGASCOST 2)))
+                                                        (vanishes! (next is_padding))))))))))   ;; 7.c.vi.F       
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                             ;;
@@ -768,24 +777,24 @@
  (if-zero (prev [PHASE 10])
        (if-zero nb_Addr
               (begin                      ;; 3.a
-              (eq! [INPUT 1] PHASE_BYTESIZE)
-              (eq! 7 (+ OLI
-                       (* 2 is_bytesize)
-                       (* 4 is_list)))
-              (rlpPrefixConstraints [INPUT 1] CT OLI number_step is_bytesize is_list))
+                     (eq! [INPUT 1] PHASE_BYTESIZE)
+                     (vanishes! (+ (- 1 OLI)
+                                   (- 1 is_bytesize)
+                                   (- 1 is_list)))
+                     (rlpPrefixConstraints [INPUT 1] CT OLI number_step is_bytesize is_list))
               (begin                      ;; 3.b
-              (eq! 25 (+ is_prefix            ;; 3.b.i
-                        (* 2 [DEPTH 1])              ;; 3.b.ii
-                        (* 4 [DEPTH 2])              ;; 3.b.iii
-                        (* 8 is_bytesize)
-                        (* 16 is_list)))
-              (eq! [INPUT 1] PHASE_BYTESIZE)            ;; 3.b.iv
-              (eq! number_step 8)
-              (rlpPrefixConstraints [INPUT 1] CT OLI number_step is_bytesize is_list)
-              (if-eq DONE 1               ;; 3.b.v
-                     (eq! 3 (+ (next is_prefix)
-                              (* 2 (next [DEPTH 1]))
-                              (* 4 (next [DEPTH 2])))))))))
+                     (vanishes! (+ (- 1 is_prefix)            ;; 3.b.i
+                                   [DEPTH 1]              ;; 3.b.ii
+                                   [DEPTH 2]              ;; 3.b.iii
+                                   (- 1 is_bytesize)
+                                   (- 1 is_list)))
+                     (eq! [INPUT 1] PHASE_BYTESIZE)            ;; 3.b.iv
+                     (eq! number_step 8)
+                     (rlpPrefixConstraints [INPUT 1] CT OLI number_step is_bytesize is_list)
+                     (if-eq DONE 1               ;; 3.b.v
+                            (vanishes! (+ (- 1 (next is_prefix))
+                                          (- 1 (next [DEPTH 1]))
+                                          (next [DEPTH 2]))))))))
 
 (defconstraint phase10-4 (:guard [PHASE 10])   ;; 4.5.2.4
  (if-zero (+ (- 1 is_prefix)
