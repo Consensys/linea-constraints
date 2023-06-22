@@ -893,7 +893,8 @@
                                    (- 1 (next LX))))))))
 
 (defconstraint phase11-2 (:guard  [PHASE 11])   ;; 4.6.2
- (if-eq (+ (prev LX) LX) 1
+ (if-zero (+ (prev LX)
+             (- 1 LX))
        (if-eq-else (^ (- [INPUT 1] 27) 2) (- [INPUT 1] 27)
               (eq! 3                                     ;; 2.a
                    (+ OLI
