@@ -50,20 +50,18 @@
          (stamp-constancy STAMP TRM_ADDR_HI)
          (stamp-constancy STAMP IS_PREC)))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;                                 ;;
-;;    2.3 Pivot bit constraints    ;;
-;;                                 ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defconstraint pivot-bit ()
-  (begin (is-binary PBIT)
-         (if-zero CT
-                  (vanishes! PBIT))
-         (if-not-zero CT
-                      (vanishes! (* (remained-constant! PBIT) (did-inc! PBIT 1))))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                           ;;
+;;    2.3 PBIT constraints   ;;
+;;                           ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defconstraint pbit-constraint ()
+  (begin (if-zero CT
+                  (vanishes! PBIT)
+                  (or! (remained-constant! PBIT) (did-inc! PBIT 1)))
          (if-eq CT 12
-                (= 1
-                   (+ PBIT (prev PBIT))))))
+                (begin (vanishes! (prev PBIT))
+                       (eq! PBIT 1)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                                   ;;
@@ -96,35 +94,25 @@
                 (= ADDR_LO ACC_LO)
                 (= TRM_ADDR_HI ACC_T))))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;                                   ;;
-;;    2.6 Identifying precompiles    ;;
-;;                                   ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defun (bit-decomposition-associated-with-ONES)
-  (+ ONES
-     (* (shift ONES -1) 2)
-     (* (shift ONES -2) 4)
-     (* (shift ONES -3) 8)
-     (* (shift ONES -4) 16)
-     (* (shift ONES -5) 32)
-     (* (shift ONES -6) 64)
-     (* (shift ONES -7) 128)))
+(defconstraint target-constraint ()
+  (if-eq CT 15
+         (begin (eq! ADDR_HI ACC_HI)
+                (eq! ADDR_LO ACC_LO)
+                (eq! TRM_ADDR_HI ACC_T))))
 
-(defconstraint binaryness ()
-  (begin (is-binary IS_PREC)
-         (is-binary ONES)))
-
-(defconstraint identifying-precompiles ()
-  (if-eq CT LLARGEMO
-         (begin (if-not-zero (+ TRM_ADDR_HI (- ADDR_LO BYTE_LO))
-                             (= IS_PREC 0))
-                (if-zero (+ TRM_ADDR_HI (- ADDR_LO BYTE_LO))
-                         (if-zero BYTE_LO
-                                  (= IS_PREC 0)
-                                  (= (+ (* (- MAX_PREC_ADDR BYTE_LO)
-                                           (- (* 2 IS_PREC) 1)
-                                           (- IS_PREC 1)))
-                                     (bit-decomposition-associated-with-ONES)))))))
+(defconstraint is-prec-constraint ()
+  (if-eq CT 15
+         (if-zero (+ TRM_ADDR_HI (- ADDR_LO BYTE_LO))
+                  (if-zero BYTE_LO
+                           (vanishes! IS_PREC)
+                           (eq! (+ (* (- 9 BYTE_LO)
+                                      (- (* 2 IS_PREC) 1))
+                                   (- IS_PREC 1))
+                                (reduce +
+                                        (for k
+                                             [0 : 7]
+                                             (* (^ 2 k)
+                                                (shift ONE (- 0 k)))))))
+                  (vanishes! IS_PREC))))
 
 
