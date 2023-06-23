@@ -70,6 +70,9 @@ RLP_TXRCPT := rlp_txrcpt/columns.lisp rlp_txrcpt/constraints.lisp
 
 LIBRARY := library/constant.lisp library/rlp_constraints_pattern.lisp
 
+TRM := trm/columns.lisp \
+		trm/constraints.lisp
+
 ZKEVM_MODULES := ${LIBRARY} \
 	${ALU} \
 	${BIN} \
