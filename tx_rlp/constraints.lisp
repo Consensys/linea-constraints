@@ -94,10 +94,9 @@
   (phase-decrementing [PHASE 9] is_prefix))
 
 ;; 2.3.1.7 (debug 2.3.1.11)
-(defconstraint phase9-incrementing ()
-  (begin
-   (phase-incrementing [PHASE 9] is_padding)
-   (debug (phase-incrementing [PHASE 9] INDEX_DATA))))
+;; (defconstraint phase9-incrementing ()
+;;   (begin
+;;    (debug (phase-incrementing [PHASE 9] INDEX_DATA))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                      ;;
@@ -582,22 +581,15 @@
 ;;    4.4 Phase 9 : Data  ;;
 ;;                             ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; 4.4.2.1
-(defconstraint phase9-1 (:guard [PHASE 9])
-  (if-zero (+ (- 1 is_prefix)
-              (- 1 (prev is_prefix)))
-           (begin
-            (vanishes! INDEX_DATA)
-            (remained-constant! PHASE_BYTESIZE))))
-
-;; 4.4.2.2
-(defconstraint phase9-2 (:guard [PHASE 9])
-  (if-zero (+ (prev is_prefix)
-              (- 1 (prev [PHASE 9])))
-           (begin
-            (if-not-zero (+ (prev LC)
-                            (prev is_padding))
-                         (did-inc! INDEX_DATA 1)))))
+;; 4.4.2.1 & 4.4.2.2
+(defconstraint phase9-1-2 (:guard [PHASE 9])
+  (if-eq-else is_prefix 1
+    (vanishes! INDEX_DATA)
+    (if-zero (+ (prev is_prefix)
+                (* (- 1 (prev LC))
+                   (- 1 (prev is_padding))))
+      (did-inc! INDEX_DATA 1)
+      (remained-constant! INDEX_DATA))))
 
 ;; 4.4.2.3
 (defconstraint phase9-3 (:guard [PHASE 9])
@@ -623,12 +615,13 @@
               (prev [PHASE 9]))
            (begin
             (eq! [INPUT 1] PHASE_BYTESIZE)
-            (vanishes! (+ (- 1 is_bytesize)        ;; 6.a
-                          is_list        ;; 6.a
-                          (- 1 (+ is_padding (next is_padding)))))  ;; 6.b
-            (rlpPrefixConstraints [INPUT 1] CT OLI number_step is_bytesize is_list)        ;; 6.a
-            (debug (vanishes! (next LIMB)))        ;; 6.c
-            (debug (eq! end_phase 1)))))
+            (vanishes! (+ (- 1 is_bytesize)  
+                          is_list        
+                          (- 1 (+ is_prefix (next is_prefix)))
+                          is_padding
+                          (- 1 is_padding)))
+            (rlpPrefixConstraints [INPUT 1] CT OLI number_step is_bytesize is_list))))        
+            
 
 ;; 4.4.2.7
 (defconstraint phase9-7 (:guard [PHASE 9])
@@ -636,58 +629,33 @@
            ;; 7.a
            (begin
             (if-zero (prev [PHASE 9])
-                     (vanishes! (+ (- 1 is_prefix
-                                      is_padding))))
+                     (eq! is_prefix 1))
             ;; 7.b
             (if-eq is_prefix 1
-                   (if-eq-else PHASE_BYTESIZE 1
-                               ;; 7.b.i
-                               (begin
-                                ;; 7.b.i.A
-                                (eq! number_step 8)
-                                        ; 7.b.i.B
-                                (if-eq DONE 1
-                                       (begin
-                                        (eq! BIT_ACC [BYTE 1])
-                                        (eq! [ACC 1] [INPUT 1])
-                                        (vanishes! (prev LC))
-                                        (if-zero (shift BIT -7)
-                                                 (begin
-                                                  (eq! LIMB
-                                                       (* [INPUT 1] (^ 256 15)))
-                                                  (eq! nBYTES 1))
-                                                 (begin
-                                                  (eq! LIMB
-                                                       (+ (* (+ int_short 1)
-                                                             (^ 256 15))
-                                                          (* [INPUT 1]
-                                                             (^ 256 14))))
-                                                  (eq! nBYTES 2)))
-                                        (will-dec! PHASE_BYTESIZE 1)
-                                        (will-remain-constant! (next PHASE_BYTESIZE))
-                                        (if-zero [INPUT 1]
-                                                 (will-dec! DATAGASCOST G_txdatazero)
-                                                 (will-dec! DATAGASCOST G_txdatanonzero))
-                                        (will-remain-constant! (next DATAGASCOST))
-                                        (eq! (next number_step) 2)
-                                        (eq! 1
-                                             (+ is_padding (next is_padding))))))
-                               ;; 7.b.ii
-                               (begin
-                                ;; 7.b.ii.A
-                                (eq! [INPUT 1] PHASE_BYTESIZE)
-                                (eq! number_step 8)
-                                (vanishes! (+ (- 1 is_bytesize)
-                                              is_list))
-                                (rlpPrefixConstraints [INPUT 1] CT OLI number_step is_bytesize is_list)
-                                ;; 7.b.ii.B
-                                (will-remain-constant! PHASE_BYTESIZE)
-                                ;; 7.b.ii.C
-                                (will-remain-constant! DATAGASCOST)
-                                ;; 7.b.ii.D
-                                (if-eq DONE 1
-                                       (vanishes! (+ (next is_prefix)
-                                                     (next is_padding)))))))
+                    (begin
+                     (eq! number_step 8)
+                     (vanishes! is_list)
+                     (will-remain-constant! PHASE_BYTESIZE)
+                     (will-remain-constant! DATAGASCOST)
+                     (if-eq-else PHASE_BYTESIZE 1
+                            (if-eq DONE 1
+                                    (begin
+                                      (will-remain-constant! [INPUT 1])
+                                      (eq! BIT_ACC [BYTE 1])
+                                      (eq! [ACC 1] [INPUT 1])
+                                      (vanishes! (prev LC))
+                                      (if-zero (shift BIT -7)
+                                              (eq! is_padding 1)
+                                              (begin 
+                                                (vanishes! is_padding)
+                                                (eq! LIMB (* (+ int_short 1)
+                                                             (^ 256 LLARGEMO)))
+                                                (eq! nBYTES 1)))))
+                            (begin 
+                              (vanishes! (+ is_padding
+                                            (- 1 is_bytesize)))
+                              (eq! [INPUT 1] PHASE_BYTESIZE)
+                              (rlpPrefixConstraints [INPUT 1] CT OLI number_step is_bytesize is_list)))))
             ;; 7.c
             (if-zero (+ is_prefix is_padding)
                      (begin
