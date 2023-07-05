@@ -619,7 +619,7 @@
                           is_list        
                           (- 1 (+ is_prefix (next is_prefix)))
                           is_padding
-                          (- 1 is_padding)))
+                          (- 1 (next is_padding))))
             (rlpPrefixConstraints [INPUT 1] CT OLI number_step is_bytesize is_list))))        
             
 
