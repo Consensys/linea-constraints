@@ -685,9 +685,9 @@
                               (if-eq-else (^ PHASE_BYTESIZE 2) PHASE_BYTESIZE
                                           (begin                             ;; 7.c.vi.E
                                            (eq! (next number_step) 2)
-                                           (eq! 1
-                                                (+ is_padding
-                                                   (next is_padding)))
+                                           (vanishes! (+ is_padding
+                                                         (- 1 (next is_padding))
+                                                         (- 1 (shift is_padding 2))))
                                            (vanishes! (+ (next LIMB)
                                                          (shift LIMB 2)))
                                            (eq! (next PHASE_BYTESIZE)
