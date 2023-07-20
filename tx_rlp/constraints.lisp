@@ -598,7 +598,8 @@
 
 ;; 4.4.2.4
 (defconstraint phase9-4 (:guard [PHASE 9])
-  (if-zero (+ (- 1 is_padding)
+  (if-zero (+ is_prefix
+              (- 1 is_padding)
               (- 1 DONE))
            (eq! end_phase 1)))
 
@@ -640,8 +641,10 @@
                      (if-eq-else PHASE_BYTESIZE 1
                             (if-eq DONE 1
                                     (begin
-                                      (will-remain-constant! [INPUT 1])
-                                      (eq! BIT_ACC [BYTE 1])
+                                      (eq! (next [INPUT 1])
+                                           (* [INPUT 1]
+                                              (^ 256 15)))
+                                      (eq! BIT_ACC [BYTE 1]) 
                                       (eq! [ACC 1] [INPUT 1])
                                       (vanishes! (prev LC))
                                       (if-zero (shift BIT -7)
