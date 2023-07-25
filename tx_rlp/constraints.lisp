@@ -16,6 +16,38 @@
 ;;                              ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(defconstraint boolean-constraint ()
+  (begin 
+  (is-binary LIMB_CONSTRUCTED)
+  (is-binary LT)
+  (is-binary LX)
+  (is-binary REQUIRES_EVM_EXECUTION)
+  (is-binary [PHASE 0])
+  (is-binary [PHASE 1])
+  (is-binary [PHASE 2])
+  (is-binary [PHASE 3])
+  (is-binary [PHASE 4])
+  (is-binary [PHASE 5])
+  (is-binary [PHASE 6])
+  (is-binary [PHASE 7])
+  (is-binary [PHASE 8])
+  (is-binary [PHASE 9])
+  (is-binary [PHASE 10])
+  (is-binary [PHASE 11])
+  (is-binary [PHASE 12])
+  (is-binary [PHASE 13])
+  (is-binary [PHASE 14])
+  (is-binary end_phase)
+  (is-binary OLI)
+  (is-binary DONE)
+  (is-binary BIT)
+  (is-binary is_bytesize)
+  (is-binary is_list)
+  (is-binary COMP)
+  (is-binary is_padding)
+  (is-binary is_prefix)
+  (is-binary [DEPTH 1])
+  (is-binary [DEPTH 2])))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -48,9 +80,18 @@
          (or! (remained-constant! C)
               (did-dec! C 1))))
 
+;; Definition block-constant
+(defpurefun (block-constant ABS_TX_NUM C)
+  (if-zero ABS_TX_NUM
+    (vanishes! C)
+    (will-remain-constant! C)))
+
 ;; 2.3.1.1
 (defconstraint stamp-constancies ()
-  (stamp-constancy ABS_TX_NUM TYPE))
+(begin
+  (stamp-constancy ABS_TX_NUM TYPE)
+  (stamp-constancy ABS_TX_NUM REQUIRES_EVM_EXECUTION)
+  (stamp-constancy ABS_TX_NUM CODE_FRAGMENT_INDEX)))
 
 ;; 2.3.1.2
 (defconstraint counter-constancy ()
@@ -79,19 +120,64 @@
    (debug (counter-incrementing CT DONE))
    (debug (counter-incrementing CT ACC_BYTESIZE))))
 
-;; 2.3.1.4
-(defconstraint phase9-constancy ()
-  (phase-constancy [PHASE 9] OLI))
-
-;; 2.3.1.5
 (defconstraint phase0-constancy ()
   (begin
    (phase-constancy [PHASE 0] RLP_LT_BYTESIZE)
-   (phase-constancy [PHASE 0] RLP_LX_BYTESIZE)))
+   (phase-constancy [PHASE 0] RLP_LX_BYTESIZE)
+   (phase-constancy [PHASE 0] DATA_HI)
+   (phase-constancy [PHASE 0] DATA_LO)))
 
-;; 2.3.1.6
 (defconstraint phase9-decrementing ()
   (phase-decrementing [PHASE 9] is_prefix))
+
+(defconstraint phase2-constancy ()
+  (begin
+   (phase-constancy [PHASE 2] DATA_HI)
+   (phase-constancy [PHASE 2] DATA_LO)))
+
+(defconstraint phase3-constancy ()
+  (begin
+   (phase-constancy [PHASE 3] DATA_HI)
+   (phase-constancy [PHASE 3] DATA_LO)))
+
+(defconstraint phase4-constancy ()
+  (begin
+   (phase-constancy [PHASE 4] DATA_HI)
+   (phase-constancy [PHASE 4] DATA_LO)))
+
+(defconstraint phase5-constancy ()
+  (begin
+   (phase-constancy [PHASE 5] DATA_HI)
+   (phase-constancy [PHASE 5] DATA_LO)))
+
+(defconstraint phase6-constancy ()
+  (begin
+   (phase-constancy [PHASE 6] DATA_HI)
+   (phase-constancy [PHASE 6] DATA_LO)))
+
+(defconstraint phase7-constancy ()
+  (begin
+   (phase-constancy [PHASE 7] DATA_HI)
+   (phase-constancy [PHASE 7] DATA_LO)))
+
+(defconstraint phase8-constancy ()
+  (begin
+   (phase-constancy [PHASE 8] DATA_HI)
+   (phase-constancy [PHASE 8] DATA_LO)))
+
+(defconstraint phase9-constancy ()
+  (begin
+   (phase-constancy [PHASE 9] DATA_HI)
+   (phase-constancy [PHASE 9] DATA_LO)
+   (phase-constancy [PHASE 9] OLI)))
+
+(defconstraint phase10-constancy ()
+  (begin
+   (phase-constancy [PHASE 10] DATA_HI)
+   (phase-constancy [PHASE 10] DATA_LO)))
+
+(defconstraint block-constancies ()
+  (block-constant ABS_TX_NUM ABS_TX_NUM_INFINY))
 
 ;; 2.3.1.7 (debug 2.3.1.11)
 ;; (defconstraint phase9-incrementing ()

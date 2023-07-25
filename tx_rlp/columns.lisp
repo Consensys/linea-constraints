@@ -9,6 +9,11 @@
     (LX	:boolean)
     INDEX_LT
     INDEX_LX
+    ABS_TX_NUM_INFINY
+    DATA_HI
+    DATA_LO
+    CODE_FRAGMENT_INDEX
+    (REQUIRES_EVM_EXECUTION :boolean)
     (PHASE	:boolean	:array[0:14])
     (end_phase	:boolean)
     (TYPE	:byte)
@@ -45,4 +50,5 @@
 (defalias
     CT			COUNTER
     LC          LIMB_CONSTRUCTED
-    P           POWER)
+    P           POWER
+    CFI         CODE_FRAGMENT_INDEX)
