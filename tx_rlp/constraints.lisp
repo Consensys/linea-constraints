@@ -38,7 +38,6 @@
   (is-binary [PHASE 13])
   (is-binary [PHASE 14])
   (is-binary end_phase)
-  (is-binary OLI)
   (is-binary DONE)
   (is-binary BIT)
   (is-binary is_bytesize)
@@ -98,7 +97,6 @@
   (begin
    (counter-constancy CT [INPUT 1])
    (counter-constancy CT [INPUT 2])
-   (counter-constancy CT OLI)
    (counter-constancy CT number_step)
    (counter-constancy CT LT)
    (counter-constancy CT LX)
@@ -168,8 +166,7 @@
 (defconstraint phase9-constancy ()
   (begin
    (phase-constancy [PHASE 9] DATA_HI)
-   (phase-constancy [PHASE 9] DATA_LO)
-   (phase-constancy [PHASE 9] OLI)))
+   (phase-constancy [PHASE 9] DATA_LO)))
 
 (defconstraint phase10-constancy ()
   (begin
@@ -295,11 +292,6 @@
 ;;                             ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; 2.3.3.1
-(defconstraint oli-imply-step (:guard ABS_TX_NUM)
-  (if-eq OLI 1
-         (eq! number_step 1)))
-
 ;; 2.3.3.2 & 2.3.3.3
 (defconstraint cy-imply-done (:guard ABS_TX_NUM)
   (if-eq-else CT (- number_step 1)
@@ -371,8 +363,10 @@
 
 (defconstraint finalisation (:domain {-1})
   (if-not-zero ABS_TX_NUM
-               (eq! 2
-                    (+ end_phase [PHASE 14]))))
+               (begin
+                (eq! ABS_TX_NUM_INFINY ABS_TX_NUM)
+                (eq! 2
+                    (+ end_phase [PHASE 14])))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                             ;;
@@ -386,8 +380,8 @@
 ;;                                            ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defun (rlpPrefixConstraints input ct oli nbstep isbytesize islist)
-    (if-not-zero oli
+(defun (rlpPrefixConstraints input ct nbstep isbytesize islist)
+    (if-eq-else number_step 1
                  (begin                                                                                            ;; 1.a
                   (if-zero islist                                                                                          ;; 1
                            (eq! LIMB (* int_short (^ 256 LLARGEMO)))
@@ -456,8 +450,8 @@
 ;;                             ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defun (rlp32bytesIntegerConstraints input_hi input_lo oli ct)
-    (if-not-zero oli
+(defun (rlp32bytesIntegerConstraints input_hi input_lo number_step ct)
+    (if-eq-else number_step 1
                  (begin                                                                ;; 1
                   (eq! LIMB (* int_short (^ 256 15)))
                   (eq! nBYTES 1))
@@ -504,8 +498,8 @@
 ;;                             ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defun (rlpAddressConstraints input_hi input_lo oli ct)
-    (if-not-zero oli
+(defun (rlpAddressConstraints input_hi input_lo ct)
+    (if-eq-else number_step 1
                  (begin   ;; 1
                   (eq! LIMB (* int_short (^ 256 LLARGEMO)))
                   (eq! nBYTES 1))
@@ -537,7 +531,6 @@
 
 (defun (rlpStorageKeyConstraints input_hi input_lo ct)
     (begin
-     (vanishes! OLI)
      (eq! number_step LLARGE)
      (if-eq DONE 1
             (begin
@@ -555,7 +548,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                             ;;
-;;    3.4 Byte counting constraintsy  ;;
+;;    3.4 Byte counting constraints  ;;
 ;;                             ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -589,8 +582,8 @@
 (defconstraint phase0-1 (:guard [PHASE 0])   ;; 4.1.1
   (if-zero (prev [PHASE 0])
            (begin
-            (vanishes! (+ (- 1 OLI)                 ;;1.a
-                          (- 1 LT)           ;;1.b
+            (eq! number_step 1)
+            (vanishes! (+ (- 1 LT)           ;;1.b
                           (- 1 LX)           ;;1.c
                           end_phase           ;;1.d
                           (- 1 (next LT))           ;;1.g
@@ -613,7 +606,7 @@
                           (- 1 is_list)))                     ;; 2.c
             (eq! [INPUT 1] RLP_LT_BYTESIZE)            ;; 2.c
             (eq! number_step 8)
-            (rlpPrefixConstraints [INPUT 1] CT OLI number_step is_bytesize is_list)
+            (rlpPrefixConstraints [INPUT 1] CT number_step is_bytesize is_list)
             (if-eq DONE 1                             ;; 2.d
                    (vanishes! (+ (next LT)
                                  (- 1 (next LX))))))))
@@ -627,7 +620,7 @@
                           (- 1 is_list)))                    ;; 3.b
             (eq! [INPUT 1] RLP_LX_BYTESIZE)            ;; 3.b
             (eq! number_step 8)
-            (rlpPrefixConstraints [INPUT 1] CT OLI number_step is_bytesize is_list)
+            (rlpPrefixConstraints [INPUT 1] CT number_step is_bytesize is_list)
             (if-eq DONE 1                      ;; 3.c
                    (eq! end_phase 1)))))
 
@@ -642,13 +635,13 @@
                                        [PHASE 12]))
   (begin
    (if-zero [INPUT 1]
-            (eq! OLI 1)
+            (eq! number_step 1)
             (eq! number_step
                  (+ (* 8 (+ (reduce + (for i [1 : 6] [PHASE i]))
                             [PHASE 12]))
                     (* 12 [PHASE 8]))))
    (vanishes! (+ is_bytesize is_list))
-   (rlpPrefixConstraints [INPUT 1] CT OLI number_step is_bytesize is_list)
+   (rlpPrefixConstraints [INPUT 1] CT number_step is_bytesize is_list)
    (if-eq DONE 1
           (begin
            (eq! end_phase 1)
@@ -664,7 +657,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defconstraint phase7 (:guard [PHASE 7])
   (begin
-   (rlpAddressConstraints [INPUT 1] [INPUT 2] OLI CT)
+   (rlpAddressConstraints [INPUT 1] [INPUT 2] CT)
    (if-eq DONE 1
           (begin
            (eq! end_phase 1)
@@ -706,14 +699,14 @@
   (if-zero (prev [PHASE 9])
           (begin
            (if-zero PHASE_BYTESIZE
-                    (eq! OLI 1)
-                    (vanishes! OLI))
+                    (eq! number_step 1)
+                    (eq! number_step 8))
            (eq! DATA_HI DATAGASCOST)
            (eq! DATA_LO PHASE_BYTESIZE))))
 
 ;; 4.4.2.6
 (defconstraint phase9-6 (:guard [PHASE 9])
-  (if-zero (+ (- 1 OLI)
+  (if-zero (+ number_step
               (prev [PHASE 9]))
            (begin
             (eq! [INPUT 1] PHASE_BYTESIZE)
@@ -722,12 +715,13 @@
                           (- 1 (+ is_prefix (next is_prefix)))
                           is_padding
                           (- 1 (next is_padding))))
-            (rlpPrefixConstraints [INPUT 1] CT OLI number_step is_bytesize is_list))))        
+            (rlpPrefixConstraints [INPUT 1] CT number_step is_bytesize is_list)
+            (eq! (next number_step) 1))))        
             
 
 ;; 4.4.2.7
 (defconstraint phase9-7 (:guard [PHASE 9])
-  (if-zero OLI
+  (if-not-zero (- 1 number_step)
            ;; 7.a
            (begin
             (if-zero (prev [PHASE 9])
@@ -759,7 +753,7 @@
                               (vanishes! (+ is_padding
                                             (- 1 is_bytesize)))
                               (eq! [INPUT 1] PHASE_BYTESIZE)
-                              (rlpPrefixConstraints [INPUT 1] CT OLI number_step is_bytesize is_list)))))
+                              (rlpPrefixConstraints [INPUT 1] CT number_step is_bytesize is_list)))))
             ;; 7.c
             (if-zero (+ is_prefix is_padding)
                      (begin
@@ -814,7 +808,7 @@
            (eq! end_phase 1)))
 
 ;; 4.5.2.3
-(defconstraint phase10-3 (:guard [PHASE 10])
+(defconstraint phase10-3-4 (:guard [PHASE 10])
   (if-zero (prev [PHASE 10])
           (begin
            (eq! DATA_HI nb_Sto)
@@ -822,10 +816,10 @@
            (if-zero nb_Addr
                     (begin                      ;; 3.a
                      (eq! [INPUT 1] PHASE_BYTESIZE)
-                     (vanishes! (+ (- 1 OLI)
-                                   (- 1 is_bytesize)
+                     (eq! number_step 1)
+                     (vanishes! (+ (- 1 is_bytesize)
                                    (- 1 is_list)))
-                     (rlpPrefixConstraints [INPUT 1] CT OLI number_step is_bytesize is_list))
+                     (rlpPrefixConstraints [INPUT 1] CT number_step is_bytesize is_list))
                     (begin                      ;; 3.b
                      (vanishes! (+ (- 1 is_prefix)            ;; 3.b.i
                                    [DEPTH 1]              ;; 3.b.ii
@@ -834,13 +828,13 @@
                                    (- 1 is_list)))
                      (eq! [INPUT 1] PHASE_BYTESIZE)            ;; 3.b.iv
                      (eq! number_step 8)
-                     (rlpPrefixConstraints [INPUT 1] CT OLI number_step is_bytesize is_list)
+                     (rlpPrefixConstraints [INPUT 1] CT number_step is_bytesize is_list)
                      (if-eq DONE 1               ;; 3.b.v
                             (vanishes! (+ (- 1 (next is_prefix))
                                           (- 1 (next [DEPTH 1]))
                                           (next [DEPTH 2])))))))))
 
-(defconstraint phase10-4 (:guard [PHASE 10])   ;; 4.5.2.4
+(defconstraint phase10-5 (:guard [PHASE 10])   ;; 4.5.2.4
   (if-zero (+ (- 1 is_prefix)
               (- 1 [DEPTH 1])
               [DEPTH 2])
@@ -849,48 +843,46 @@
             (eq! number_step 8)
             (vanishes! (+ (- 1 is_bytesize)
                           (- 1 is_list)))
-            (rlpPrefixConstraints [INPUT 1] CT OLI number_step is_bytesize is_list)
+            (rlpPrefixConstraints [INPUT 1] CT number_step is_bytesize is_list)
             (if-eq DONE 1               ;;4.b
                    (vanishes! (+ (next is_prefix)
                                  (- 1 (next [DEPTH 1]))
                                  (next [DEPTH 2])))))))
 
-(defconstraint phase10-5 (:guard [PHASE 10])   ;; 4.5.2.5
+(defconstraint phase10-6 (:guard [PHASE 10])   ;; 4.5.2.5
   (if-zero (+ is_prefix
               (- 1 [DEPTH 1])
               [DEPTH 2])
            (begin
             (eq! [INPUT 1] ADDR_HI)     ;; 5.a
             (eq! [INPUT 2] ADDR_LO)
-            (vanishes! OLI)
-            (rlpAddressConstraints [INPUT 1] [INPUT 2] OLI CT)
+            (eq! number_step 16)
+            (rlpAddressConstraints [INPUT 1] [INPUT 2] CT)
             (if-eq DONE 1               ;; 5.b
                    (eq! 3
                         (+ (next is_prefix)
                            (next [DEPTH 1])
                            (next [DEPTH 2])))))))
 
-(defconstraint phase10-6 (:guard  [PHASE 10])   ;; 4.5.2.6
+(defconstraint phase10-7 (:guard  [PHASE 10])   ;; 4.5.2.6
   (if-eq 3 (+ is_prefix
               [DEPTH 1]
               [DEPTH 2])
          (begin
           (if-zero nb_Sto_per_Addr
-                   (eq! (* OLI number_step) 1)            ;;6.a
-                   (begin            ;;6.b
-                    (vanishes! OLI)
-                    (eq! number_step 8)))
+                   (eq! number_step 1)            ;;6.a
+                   (eq! number_step 8))
           (eq! [INPUT 1] (* 33 nb_Sto_per_Addr))          ;; 6.c
           (eq! 2 (+ is_bytesize is_list))
-          (rlpPrefixConstraints [INPUT 1] CT OLI number_step is_bytesize is_list))))
+          (rlpPrefixConstraints [INPUT 1] CT number_step is_bytesize is_list))))
 
-(defconstraint phase10-7 (:guard  [PHASE 10])   ;; 4.5.2.7
+(defconstraint phase10-8 (:guard  [PHASE 10])   ;; 4.5.2.7
   (if-zero (+ is_prefix
               (- 1 [DEPTH 1])
               (- 1 [DEPTH 2]))
            (rlpStorageKeyConstraints [INPUT 1] [INPUT 2] CT)))
 
-(defconstraint phase10-8 (:guard  [PHASE 10])   ;; 4.5.2.8
+(defconstraint phase10-9 (:guard  [PHASE 10])   ;; 4.5.2.8
   (if-zero (+ (- 1 [DEPTH 2])
               (- 1 DONE))
            (if-not-zero nb_Sto_per_Addr
@@ -904,8 +896,9 @@
                                                     (- 1 (next [DEPTH 1]))
                                                     (next [DEPTH 2]))))))))
 
-(defconstraint phase10-9to13 (:guard  [PHASE 10])   ;; 4.5.2.9 to 4.5.2.13
-  (if-not-zero [DEPTH 1]
+(defconstraint phase10-10to14 (:guard  [PHASE 10])   
+  (if-zero [DEPTH 1]
+               (will-remain-constant! PHASE_BYTESIZE)
                (begin
                 (did-dec! PHASE_BYTESIZE (* LC nBYTES)) ;;10
                 (if-zero (* is_prefix              ;;11
@@ -919,29 +912,20 @@
                                               [DEPTH 2])))))))
 
 ;; 4.5.2.14
-(defconstraint phase10-14 (:guard  [PHASE 10])
+(defconstraint phase10-15 (:guard  [PHASE 10])
   (if-zero (+ CT
               (* is_prefix (- 1 [DEPTH 2])))
            (did-dec! nb_Sto_per_Addr (* (- 1 is_prefix) [DEPTH 2]))))
 
 
 ;; 4.5.2.15
-(defconstraint phase10-15 (:guard  [PHASE 10])
+(defconstraint phase10-16 (:guard  [PHASE 10])
   (if-zero (+ [DEPTH 2]
               (- nb_Addr
                  (prev nb_Addr)))
            (begin
             (remained-constant! ADDR_HI)
             (remained-constant! ADDR_LO))))
-
-;; 4.5.2.16
-(defconstraint phase10-16 (:guard [PHASE 10])
-  (if-zero (+ [DEPTH 2]
-              (- nb_Addr (prev nb_Addr)))
-           (begin
-            (remained-constant! ADDR_HI)
-            (remained-constant! ADDR_LO))))
-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                             ;;
@@ -957,7 +941,7 @@
                           is_bytesize
                           is_list))
             (eq! number_step 8)
-            (rlpPrefixConstraints [INPUT 1] CT OLI number_step is_bytesize is_list)
+            (rlpPrefixConstraints [INPUT 1] CT number_step is_bytesize is_list)
             (if-eq DONE 1
                    (vanishes! (+ is_padding
                                  end_phase
@@ -968,23 +952,24 @@
   (if-zero (+ (prev LX)
               (- 1 LX))
            (if-eq-else (^ (- [INPUT 1] 27) 2) (- [INPUT 1] 27)
-                       (eq! 3                                     ;; 2.a
-                            (+ OLI
-                               is_padding
-                               end_phase))
+                        (begin 
+                         (eq! number_step 1)
+                         (eq! 2                                     ;; 2.a
+                            (+ is_padding
+                               end_phase)))
                        (begin                      ;; 2.b
                         (eq! number_step 8)
                         (eq! 0 (+ is_bytesize is_list))
-                        (rlpPrefixConstraints [INPUT 1] CT OLI number_step is_bytesize is_list)
+                        (rlpPrefixConstraints [INPUT 1] CT number_step is_bytesize is_list)
                         (if-eq DONE 1                      ;; 2.b.i
                                (begin
                                 (vanishes! (+ is_padding
                                               end_phase
-                                              (- 1 (next OLI))
                                               (next LT)
                                               (- 1 (next LX))
                                               (next is_padding)
                                               (- 1 (next end_phase))))
+                                (eq! (next number_step) 1)
                                 (eq! (next LIMB)
                                      (+ (* int_short (^ 256 LLARGEMO))
                                         (* int_short (^ 256 14))))
@@ -998,8 +983,8 @@
 (defconstraint phase13_14 (:guard (+ [PHASE 13] [PHASE 14]))   ;; 4.7
   (begin
    (if-zero (+ [INPUT 1] [INPUT 2])
-            (eq! OLI 1)   ;; 1
-            (vanishes! OLI)) ;; 2 & 3
-   (rlp32bytesIntegerConstraints [INPUT 1] [INPUT 2] OLI CT) ;; 4
+            (eq! number_step 1)   ;; 1
+            (eq! number_step 16)) ;; 2 & 3
+   (rlp32bytesIntegerConstraints [INPUT 1] [INPUT 2] number_step CT) ;; 4
    (if-eq DONE 1   ;; 5
           (eq! end_phase 1))))

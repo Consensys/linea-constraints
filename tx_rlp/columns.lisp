@@ -17,7 +17,6 @@
     (PHASE	:boolean	:array[0:14])
     (end_phase	:boolean)
     (TYPE	:byte)
-    (OLI	:boolean)
     (COUNTER	:byte)
     (DONE	:boolean)
     (number_step	:byte)
