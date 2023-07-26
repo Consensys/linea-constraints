@@ -128,50 +128,11 @@
 (defconstraint phase9-decrementing ()
   (phase-decrementing [PHASE 9] is_prefix))
 
-(defconstraint phase2-constancy ()
-  (begin
-   (phase-constancy [PHASE 2] DATA_HI)
-   (phase-constancy [PHASE 2] DATA_LO)))
-
-(defconstraint phase3-constancy ()
-  (begin
-   (phase-constancy [PHASE 3] DATA_HI)
-   (phase-constancy [PHASE 3] DATA_LO)))
-
-(defconstraint phase4-constancy ()
-  (begin
-   (phase-constancy [PHASE 4] DATA_HI)
-   (phase-constancy [PHASE 4] DATA_LO)))
-
-(defconstraint phase5-constancy ()
-  (begin
-   (phase-constancy [PHASE 5] DATA_HI)
-   (phase-constancy [PHASE 5] DATA_LO)))
-
-(defconstraint phase6-constancy ()
-  (begin
-   (phase-constancy [PHASE 6] DATA_HI)
-   (phase-constancy [PHASE 6] DATA_LO)))
-
-(defconstraint phase7-constancy ()
-  (begin
-   (phase-constancy [PHASE 7] DATA_HI)
-   (phase-constancy [PHASE 7] DATA_LO)))
-
-(defconstraint phase8-constancy ()
-  (begin
-   (phase-constancy [PHASE 8] DATA_HI)
-   (phase-constancy [PHASE 8] DATA_LO)))
-
-(defconstraint phase9-constancy ()
-  (begin
-   (phase-constancy [PHASE 9] DATA_HI)
-   (phase-constancy [PHASE 9] DATA_LO)))
-
-(defconstraint phase10-constancy ()
-  (begin
-   (phase-constancy [PHASE 10] DATA_HI)
-   (phase-constancy [PHASE 10] DATA_LO)))
+(defconstraint phasek-constancies ()
+  (for i [2:10]
+       (begin
+        (phase-constancy [PHASE i] DATA_HI)
+        (phase-constancy [PHASE i] DATA_LO))))
 
 (defconstraint block-constancies ()
   (block-constant ABS_TX_NUM ABS_TX_NUM_INFINY))
