@@ -22,21 +22,8 @@
   (is-binary LT)
   (is-binary LX)
   (is-binary REQUIRES_EVM_EXECUTION)
-  (is-binary [PHASE 0])
-  (is-binary [PHASE 1])
-  (is-binary [PHASE 2])
-  (is-binary [PHASE 3])
-  (is-binary [PHASE 4])
-  (is-binary [PHASE 5])
-  (is-binary [PHASE 6])
-  (is-binary [PHASE 7])
-  (is-binary [PHASE 8])
-  (is-binary [PHASE 9])
-  (is-binary [PHASE 10])
-  (is-binary [PHASE 11])
-  (is-binary [PHASE 12])
-  (is-binary [PHASE 13])
-  (is-binary [PHASE 14])
+  (for i [14]
+   (is-binary [PHASE i]))
   (is-binary end_phase)
   (is-binary DONE)
   (is-binary BIT)
@@ -943,7 +930,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defconstraint phase13_14 (:guard (+ [PHASE 13] [PHASE 14]))   ;; 4.7
   (begin
-   (if-zero (+ [INPUT 1] [INPUT 2])
+   (if-zero (+ (~ [INPUT 1]) (~ [INPUT 2]))
             (eq! number_step 1)   ;; 1
             (eq! number_step 16)) ;; 2 & 3
    (rlp32bytesIntegerConstraints [INPUT 1] [INPUT 2] number_step CT) ;; 4
