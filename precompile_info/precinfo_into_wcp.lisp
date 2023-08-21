@@ -13,11 +13,11 @@
     (
         ;source columns
         0
-        prec_info.WCP_ARG1_LO
+        precompile_info.WCP_ARG1_LO
         0
-        prec_info.WCP_ARG2_LO
+        precompile_info.WCP_ARG2_LO
         0
-        prec_info.WCP_RES
-        (if-zero prec_info.STAMP 0 0x10) ;; opcode 0x10 = "LT"
+        precompile_info.WCP_RES
+        (if-zero precompile_info.STAMP 0 0x10) ;; opcode 0x10 = "LT"
     )
 )

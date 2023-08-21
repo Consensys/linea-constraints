@@ -1,4 +1,4 @@
-(module prec_info)
+(module precompile_info)
 
 (defconst
   MODEXP_CYCLE 15

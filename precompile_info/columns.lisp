@@ -1,4 +1,4 @@
-(module prec_info)
+(module precompile_info)
 
 (defcolumns
   STAMP
