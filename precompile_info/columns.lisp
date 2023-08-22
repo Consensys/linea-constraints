@@ -1,6 +1,6 @@
 (module precompile_info)
 
-(defcolumns
+(defcolumns 
   STAMP
   ADDR_LO
   GAS_STPD
@@ -50,3 +50,4 @@
   MODEXP_MAX_LE_PRIME_AND_1
   MODEXP_BIG_FRACTION
   (TRANSMITS_PAIRING_COUNT_TO_ECDATA :boolean))
+
