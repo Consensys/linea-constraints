@@ -168,8 +168,9 @@
                       (vanishes! MALFORMED_DATA))))
 
 (defconstraint execution-modexp-0 ()
-  (if-not-zero MODEXP (vanishes! MALFORMED_DATA)))
-  
+  (if-not-zero MODEXP
+               (vanishes! MALFORMED_DATA)))
+
 (defconstraint execution-modexp-empty-calldata ()
   (if-not-zero MODEXP
                (if-zero CALL_DATA_SIZE
@@ -182,11 +183,14 @@
   (* MODEXP CALL_DATA_SIZE))
 
 (defconstraint execution-modexp-1 (:guard (modexp-running))
+  (eq! TOUCHES_RAM 1))
+
+(defconstraint execution-modexp-2 (:guard (modexp-running))
   (if-not-zero COUNTER
                (begin (eq! (shift WCP_ARG1_LO 2) (shift MODEXP_PARAMS 1))
                       (eq! (shift WCP_ARG2_LO 2) (shift MODEXP_PARAMS 5)))))
 
-(defconstraint execution-modexp-2 (:guard (modexp-running))
+(defconstraint execution-modexp-3 (:guard (modexp-running))
   (if-zero COUNTER
            (begin (will-eq! MOD_ARG1_LO
                             (+ 7
@@ -195,23 +199,23 @@
                                   (next MODEXP_PARAMS))))
                   (will-eq! MOD_ARG2_LO 8))))
 
-(defconstraint execution-modexp-3 (:guard (modexp-running))
+(defconstraint execution-modexp-4 (:guard (modexp-running))
   (if-zero-else COUNTER
                 (eq! MODEXP_BYTE_ACC MODEXP_BYTES)
                 (eq! MODEXP_BYTE_ACC
                      (+ (* 256 (prev MODEXP_BYTE_ACC))
                         MODEXP_BYTES))))
 
-(defconstraint execution-modexp-4 (:guard (modexp-running))
+(defconstraint execution-modexp-5 (:guard (modexp-running))
   (if-zero COUNTER
            (if-zero-else (shift MODEXP_PARAMS 6)
                          (eq! (shift MODEXP_BYTE_ACC 15) (shift MODEXP_PARAMS 7))
                          (eq! (shift MODEXP_BYTE_ACC 15) (shift MODEXP_PARAMS 6)))))
 
-(defconstraint execution-modexp-5 (:guard (modexp-running))
+(defconstraint execution-modexp-6 (:guard (modexp-running))
   (if-zero-else MODEXP_BYTE_ACC (vanishes! MODEXP_BYTE_SWITCH) (eq! MODEXP_BYTE_SWITCH 1)))
 
-(defconstraint execution-modexp-6 (:guard (modexp-running))
+(defconstraint execution-modexp-7 (:guard (modexp-running))
   (begin (if-zero COUNTER
                   (eq! MODEXP_BYTE_SWITCH_INDEX MODEXP_BYTE_SWITCH))
          (if-not-eq COUNTER
@@ -219,7 +223,7 @@
                     (will-eq! MODEXP_BYTE_SWITCH_INDEX
                               (+ MODEXP_BYTE_SWITCH_INDEX (next MODEXP_BYTE_SWITCH))))))
 
-(defconstraint execution-modexp-7 (:guard (modexp-running))
+(defconstraint execution-modexp-8 (:guard (modexp-running))
   (begin (if-zero COUNTER
                   (if-eq MODEXP_BYTE_SWITCH 1 (eq! MODEXP_E_LEADING_WORD_FIRST_BYTE MODEXP_BYTES)))
          (if-zero MODEXP_BYTE_SWITCH
@@ -228,7 +232,7 @@
                               (if-eq (next MODEXP_BYTE_SWITCH) 1
                                      (eq! MODEXP_E_LEADING_WORD_FIRST_BYTE (next MODEXP_BYTES)))))))
 
-(defconstraint execution-modexp-8 (:guard (modexp-running))
+(defconstraint execution-modexp-9 (:guard (modexp-running))
   (begin (if-zero-else COUNTER
                        (vanishes! MODEXP_BIT_ACC)
                        (eq! MODEXP_BIT_ACC
@@ -236,10 +240,10 @@
                                MODEXP_BITS)))
          (if-eq COUNTER 15 (eq! MODEXP_BIT_ACC MODEXP_E_LEADING_WORD_FIRST_BYTE))))
 
-(defconstraint execution-modexp-9 (:guard (modexp-running))
+(defconstraint execution-modexp-10 (:guard (modexp-running))
   (if-zero-else MODEXP_BIT_ACC (vanishes! MODEXP_BIT_SWITCH) (eq! MODEXP_BIT_SWITCH 1)))
 
-(defconstraint execution-modexp-10 (:guard (modexp-running))
+(defconstraint execution-modexp-11 (:guard (modexp-running))
   (begin (if-zero COUNTER
                   (eq! MODEXP_BIT_SWITCH_INDEX MODEXP_BIT_SWITCH))
          (if-not-eq COUNTER
@@ -247,7 +251,7 @@
                     (will-eq! MODEXP_BIT_SWITCH_INDEX
                               (+ MODEXP_BIT_SWITCH_INDEX (next MODEXP_BIT_SWITCH))))))
 
-(defconstraint execution-modexp-11 (:guard (modexp-running))
+(defconstraint execution-modexp-12 (:guard (modexp-running))
   (if-zero COUNTER
            (if-zero-else (shift MODEXP_PARAMS 6)
                          (eq! MODEXP_E_LEADING_WORD_BIT_LENGTH
@@ -260,17 +264,17 @@
                                     (shift MODEXP_BYTE_SWITCH_INDEX (- 15 1)))
                                  (shift MODEXP_BIT_SWITCH_INDEX 15))))))
 
-(defconstraint execution-modexp-12 (:guard (modexp-running))
+(defconstraint execution-modexp-13 (:guard (modexp-running))
   (if-zero-else MODEXP_E_LEADING_WORD_BIT_LENGTH
                 (vanishes! MODEXP_E_LEADING_WORD_LOG)
                 (eq! MODEXP_E_LEADING_WORD_LOG (- MODEXP_E_LEADING_WORD_BIT_LENGTH 1))))
 
-(defconstraint execution-modexp-13 (:guard (modexp-running))
+(defconstraint execution-modexp-14 (:guard (modexp-running))
   (if-zero COUNTER
            (begin (eq! (shift WCP_ARG1_LO 3) 32)
                   (eq! (shift WCP_ARG2_LO 3) (shift MODEXP_PARAMS 3)))))
 
-(defconstraint execution-modexp-14 (:guard (modexp-running))
+(defconstraint execution-modexp-15 (:guard (modexp-running))
   (if-zero COUNTER
            (eq! MODEXP_LE_PRIME
                 (+ (* 8
@@ -278,23 +282,23 @@
                       (- (shift MODEXP_PARAMS 3) 32))
                    MODEXP_E_LEADING_WORD_LOG))))
 
-(defconstraint execution-modexp-15 (:guard (modexp-running))
+(defconstraint execution-modexp-16 (:guard (modexp-running))
   (if-zero-else MODEXP_LE_PRIME
                 (eq! MODEXP_MAX_LE_PRIME_AND_1 1)
                 (eq! MODEXP_MAX_LE_PRIME_AND_1 MODEXP_LE_PRIME)))
 
-(defconstraint execution-modexp-16 (:guard (modexp-running))
+(defconstraint execution-modexp-17 (:guard (modexp-running))
   (if-zero COUNTER
            (begin (eq! (shift MOD_ARG1_LO 2) (* MOD_RES MOD_RES MODEXP_MAX_LE_PRIME_AND_1))
                   (eq! (shift MOD_ARG2_LO 2) 3)
                   (eq! (shift MOD_RES 2) MODEXP_BIG_FRACTION))))
 
-(defconstraint execution-modexp-17 (:guard (modexp-running))
+(defconstraint execution-modexp-18 (:guard (modexp-running))
   (if-zero COUNTER
            (begin (eq! (shift WCP_ARG1_LO 4) 200)
                   (eq! (shift WCP_ARG2_LO 4) MODEXP_BIG_FRACTION))))
 
-(defconstraint execution-modexp-18 (:guard (modexp-running))
+(defconstraint execution-modexp-19 (:guard (modexp-running))
   (if-zero COUNTER
            (eq! CONSUMED_GAS
                 (+ (* (shift WCP_RES 4) MODEXP_BIG_FRACTION)
