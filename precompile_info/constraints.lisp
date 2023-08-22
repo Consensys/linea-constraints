@@ -167,6 +167,9 @@
                       (eq! TOUCHES_RAM PROVIDES_RETURN_DATA)
                       (vanishes! MALFORMED_DATA))))
 
+(defconstraint execution-modexp-0 ()
+  (if-not-zero MODEXP (vanishes! MALFORMED_DATA)))
+  
 (defconstraint execution-modexp-empty-calldata ()
   (if-not-zero MODEXP
                (if-zero CALL_DATA_SIZE
