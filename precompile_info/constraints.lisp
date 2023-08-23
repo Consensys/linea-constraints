@@ -3,7 +3,7 @@
 (defconst 
   MODEXP_CYCLE     15
   NON_MODEXP_CYCLE 3
-  MAX_STAMP_JUMP   4294967296)
+  MAX_STAMP_JUMP   4294967296) ;; 2^32
 
 (defpurefun (if-not-eq X Y Z)
   (if-not-zero (- X Y)
@@ -105,10 +105,10 @@
 
 (defconstraint small-jumps-for-stamp ()
   (if-zero (next COUNTER)
-           (begin (eq! WCP_ARG1_LO
-                       (- (next STAMP) STAMP))
-                  (eq! WCP_ARG2_LO MAX_STAMP_JUMP)
-                  (eq! WCP_RES 1))))
+           (begin (will-eq! WCP_ARG1_LO
+                            (- (next STAMP) STAMP))
+                  (will-eq! WCP_ARG2_LO MAX_STAMP_JUMP)
+                  (will-eq! WCP_RES 1))))
 
 (defconstraint finalization-constraints (:domain {-1})
   (begin  ;; in case of modexp
