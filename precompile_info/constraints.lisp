@@ -110,7 +110,7 @@
                   (eq! WCP_ARG2_LO MAX_STAMP_JUMP)
                   (eq! WCP_RES 1))))
 
-(defconstraint finalization-constarints (:domain {-1})
+(defconstraint finalization-constraints (:domain {-1})
   (begin  ;; in case of modexp
          (if-not-zero MODEXP
                       (eq! COUNTER MODEXP_CYCLE))
