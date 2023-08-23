@@ -2,7 +2,7 @@
 
 (defconst 
   MODEXP_CYCLE     15
-  NON_MODEXP_CYCLE 4
+  NON_MODEXP_CYCLE 3
   MAX_STAMP_JUMP   4294967296)
 
 (defpurefun (if-not-eq X Y Z)
