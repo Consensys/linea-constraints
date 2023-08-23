@@ -123,7 +123,7 @@
 ;;    3.5 Call Data Words    ;;
 ;;                           ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defconstraint call-data-words ()
+(defconstraint call-data-words (:guard STAMP)
   (if-zero COUNTER
            (begin (eq! MOD_ARG1_LO (+ CALL_DATA_SIZE 31))
                   (eq! MOD_ARG2_LO 32)
@@ -134,7 +134,7 @@
 ;;    3.6 Execution    ;;
 ;;                     ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;
-(defconstraint enough-gas ()
+(defconstraint enough-gas (:guard STAMP)
   (if-zero COUNTER
            (begin (will-eq! WCP_ARG1_LO CONSUMED_GAS)
                   (will-eq! WCP_ARG2_LO (+ GAS_STPD 1))
