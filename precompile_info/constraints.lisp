@@ -187,7 +187,7 @@
   (eq! TOUCHES_RAM 1))
 
 (defconstraint execution-modexp-2 (:guard (modexp-running))
-  (if-not-zero COUNTER
+  (if-zero COUNTER
                (begin (eq! (shift WCP_ARG1_LO 2) (shift MODEXP_PARAMS 1))
                       (eq! (shift WCP_ARG2_LO 2) (shift MODEXP_PARAMS 5)))))
 
