@@ -398,9 +398,10 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;
 (defconstraint requires-ec-data ()
   (begin (if-eq (+ EC_RECOVER EC_ADD EC_MUL) 1 (eq! REQUIRES_ECDATA ENOUGH_GAS))
-         (if-eq-else CALL_DATA_SIZE (* 192 PAIRING_COUNT)
-                     (eq! REQUIRES_ECDATA ENOUGH_GAS)
-                     (vanishes! REQUIRES_ECDATA))
+         (if-eq EC_PAIRING 1
+                (if-eq-else CALL_DATA_SIZE (* 192 PAIRING_COUNT)
+                            (eq! REQUIRES_ECDATA ENOUGH_GAS)
+                            (vanishes! REQUIRES_ECDATA)))
          (if-zero (+ EC_RECOVER EC_ADD EC_MUL EC_PAIRING)
                   (vanishes! REQUIRES_ECDATA))))
 
