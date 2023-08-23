@@ -43,7 +43,8 @@
          (stamp-consitency MALFORMED_DATA)
          (stamp-consitency ENOUGH_GAS)
          (stamp-consitency BLAKE_F)
-         (stamp-consitency BLAKE_ROUNDS)))
+         (stamp-consitency BLAKE_ROUNDS)
+         (stamp-consitency REQUIRES_ECDATA)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                           ;;
@@ -328,8 +329,7 @@
                                               (+ (* 34000 PAIRING_COUNT) 45000))
                                          (eq! TOUCHES_RAM ENOUGH_GAS)
                                          (if-eq ENOUGH_GAS 1
-                                                (begin (eq! MALFORMED_DATA (- 1 EC_DATA_CHECKS_PASSED))
-                                                       (eq! TRANSMITS_PAIRING_COUNT_TO_ECDATA 1))))
+                                                (eq! MALFORMED_DATA (- 1 EC_DATA_CHECKS_PASSED))))
                                   (begin (eq! MALFORMED_DATA 1)
                                          (vanishes! TOUCHES_RAM))))))
 
@@ -390,4 +390,17 @@
 
 (defconstraint provides-return-data ()
   (if-zero-else RETURN_DATA_SIZE (vanishes! PROVIDES_RETURN_DATA) (eq! PROVIDES_RETURN_DATA 1)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;
+;;                    ;;
+;;    3.10 Lookups    ;;
+;;                    ;;
+;;;;;;;;;;;;;;;;;;;;;;;;
+(defconstraint requires-ec-data ()
+  (begin (if-eq (+ EC_RECOVER EC_ADD EC_MUL) 1 (eq! REQUIRES_ECDATA ENOUGH_GAS))
+         (if-eq-else CALL_DATA_SIZE (* 192 PAIRING_COUNT)
+                     (eq! REQUIRES_ECDATA ENOUGH_GAS)
+                     (vanishes! REQUIRES_ECDATA))
+         (if-zero (+ EC_RECOVER EC_ADD EC_MUL EC_PAIRING)
+                  (vanishes! REQUIRES_ECDATA))))
 
