@@ -45,6 +45,12 @@ EC_DATA := ec_data/columns.lisp \
 	   ec_data/ecdata_into_wcp.lisp \
 	   ec_data/hub_into_ecdata.lisp \
 
+PRECOMPILE_INFO := precompile_info/columns.lisp \
+	   precompile_info/constraints.lisp \
+	   precompile_info/precinfo_into_ecdata.lisp \
+	   precompile_info/precinfo_into_mod.lisp \
+	   precompile_info/precinfo_into_wcp.lisp \
+
 TX_RLP := tx_rlp/columns.lisp \
 		  tx_rlp/constraints.lisp \
 
@@ -61,7 +67,7 @@ RLP := rlp/columns.lisp \
 
 PHONEY_RLP := phoney_rlp/column.lisp
 
-ZKEVM_FILES := ${STACK} ${ALU} ${BIN} ${SHIFT} ${WCP} ${TABLES} ${PUB_DATA} ${MXP} ${EC_DATA} ${RLP} ${PHONEY_RLP} # ${TX_RLP} # ${MEMORY} ${ROM}
+ZKEVM_FILES := ${STACK} ${ALU} ${BIN} ${SHIFT} ${WCP} ${TABLES} ${PUB_DATA} ${MXP} ${EC_DATA} ${PRECOMPILE_INFO} ${RLP} ${PHONEY_RLP} # ${TX_RLP} # ${MEMORY} ${ROM}
 
 zkevm.go: ${ZKEVM_FILES}
 	${CORSET} wizard-iop -vv -P define -o $@ ${ZKEVM_FILES}
