@@ -43,8 +43,7 @@
          (stamp-consitency MALFORMED_DATA)
          (stamp-consitency ENOUGH_GAS)
          (stamp-consitency BLAKE_F)
-         (stamp-consitency BLAKE_ROUNDS)
-         (stamp-consitency REQUIRES_ECDATA)))
+         (stamp-consitency BLAKE_ROUNDS)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                           ;;
@@ -188,8 +187,8 @@
 
 (defconstraint execution-modexp-2 (:guard (modexp-running))
   (if-zero COUNTER
-               (begin (eq! (shift WCP_ARG1_LO 2) (shift MODEXP_PARAMS 1))
-                      (eq! (shift WCP_ARG2_LO 2) (shift MODEXP_PARAMS 5)))))
+           (begin (eq! (shift WCP_ARG1_LO 2) (shift MODEXP_PARAMS 1))
+                  (eq! (shift WCP_ARG2_LO 2) (shift MODEXP_PARAMS 5)))))
 
 (defconstraint execution-modexp-3 (:guard (modexp-running))
   (if-zero COUNTER
@@ -375,9 +374,11 @@
 (defconstraint return-data-size-if-success ()
   (if-not-zero SUCCESS
                (begin (if-not-zero EC_RECOVER
-                                   (if-zero-else EC_DATA_CHECKS_PASSED
+                                   (if-zero-else CALL_DATA_SIZE
                                                  (vanishes! RETURN_DATA_SIZE)
-                                                 (eq! RETURN_DATA_SIZE 32)))
+                                                 (if-zero-else EC_DATA_CHECKS_PASSED
+                                                               (vanishes! RETURN_DATA_SIZE)
+                                                               (eq! RETURN_DATA_SIZE 32))))
                       (if-not-zero (+ SHA2 RIPEMD EC_PAIRING)
                                    (eq! RETURN_DATA_SIZE 32))
                       (if-not-zero IDENTITY
@@ -390,18 +391,4 @@
 
 (defconstraint provides-return-data ()
   (if-zero-else RETURN_DATA_SIZE (vanishes! PROVIDES_RETURN_DATA) (eq! PROVIDES_RETURN_DATA 1)))
-
-;;;;;;;;;;;;;;;;;;;;;;;;
-;;                    ;;
-;;    3.10 Lookups    ;;
-;;                    ;;
-;;;;;;;;;;;;;;;;;;;;;;;;
-(defconstraint requires-ec-data ()
-  (begin (if-eq (+ EC_RECOVER EC_ADD EC_MUL) 1 (eq! REQUIRES_ECDATA ENOUGH_GAS))
-         (if-eq EC_PAIRING 1
-                (if-eq-else CALL_DATA_SIZE (* 192 PAIRING_COUNT)
-                            (eq! REQUIRES_ECDATA ENOUGH_GAS)
-                            (vanishes! REQUIRES_ECDATA)))
-         (if-zero (+ EC_RECOVER EC_ADD EC_MUL EC_PAIRING)
-                  (vanishes! REQUIRES_ECDATA))))
 

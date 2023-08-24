@@ -1,3 +1,7 @@
+(defun (requires-ec-data)
+  (* precompile_info.TOUCHES_RAM
+     (+ precompile_info.EC_RECOVER precompile_info.EC_ADD precompile_info.EC_MUL precompile_info.EC_PAIRING)))
+
 (defplookup 
   precinfo-into-ecdata
   (
@@ -7,7 +11,7 @@
   )
   (
     ;source columns
-    (* precompile_info.STAMP precompile_info.REQUIRES_ECDATA)
-    (* precompile_info.PAIRING_COUNT precompile_info.REQUIRES_ECDATA)
+    (* precompile_info.STAMP (requires-ec-data))
+    (* precompile_info.PAIRING_COUNT (requires-ec-data))
   ))
 
