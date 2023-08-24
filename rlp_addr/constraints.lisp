@@ -70,7 +70,7 @@
  (begin
   (is-binary create2)
   (is-binary not_little)
-  (is-binary BIT)
+  (is-binary BIT1)
   (is-binary LC)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -82,7 +82,7 @@
 (defconstraint create-byte-decomposition (:guard (- 1 create2))
  (if-zero ct
   (begin
-    (eq! ACC BYTE)
+    (eq! ACC BYTE1)
     (if-zero ACC
       (begin
         (vanishes! ACC_BYTESIZE)
@@ -90,10 +90,10 @@
       (begin 
         (eq! ACC_BYTESIZE 1)
         (eq! POWER (^ 256 7))))
-    (eq! BIT_ACC BIT))
+    (eq! BIT_ACC BIT1))
   (begin
     (eq! ACC (+ (* 256 (prev ACC)
-                   BYTE)))
+                   BYTE1)))
     (if-zero ACC
       (begin
         (remained-constant! ACC)
@@ -101,15 +101,15 @@
       (begin
         (did-inc! ACC 1)
         (remained-constant! POWER)))
-    (eq! BIT_ACC (+ (* 2 BIT_ACC) BIT)))))
+    (eq! BIT_ACC (+ (* 2 BIT_ACC) BIT1)))))
 
 (defconstraint create-last-row (:guard (- 1 create2))
  (if-eq ct 7
   (begin
     (eq! ACC NONCE)
-    (eq! BIT_ACC BYTE)
+    (eq! BIT_ACC BYTE1)
     (if-zero (+ (~ (eq! ACC_BYTESIZE 1))
-                (shift BIT -7))
+                (shift BIT1 -7))
       (vanishes! not_little)
       (eq! not_little 1))
     (eq! (+ (shift LC -4) (shift LC -3)) 1)

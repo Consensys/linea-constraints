@@ -21,10 +21,10 @@
   ;; Register columns
   STAMP
   ct                          ;; rhytm of an RLP encoding operation (16 lines)
-  (BYTE :BYTE)
+  (BYTE1 :BYTE)
   ACC
   ACC_BYTESIZE
   POWER
-  (BIT :bool)
+  (BIT1 :bool)
   (BIT_ACC :BYTE)
   (not_little :bool))
