@@ -255,12 +255,12 @@
   (if-zero COUNTER
            (if-zero-else (shift MODEXP_PARAMS 6)
                          (eq! MODEXP_E_LEADING_WORD_BIT_LENGTH
-                              (+ 128
-                                 (* 8
+                              (+ (* 8
                                     (shift MODEXP_BYTE_SWITCH_INDEX (- 15 1)))
                                  (shift MODEXP_BIT_SWITCH_INDEX 15)))
                          (eq! MODEXP_E_LEADING_WORD_BIT_LENGTH
-                              (+ (* 8
+                              (+ 128
+                                 (* 8
                                     (shift MODEXP_BYTE_SWITCH_INDEX (- 15 1)))
                                  (shift MODEXP_BIT_SWITCH_INDEX 15))))))
 
