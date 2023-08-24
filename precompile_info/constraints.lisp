@@ -289,7 +289,8 @@
 
 (defconstraint execution-modexp-17 (:guard (modexp-running))
   (if-zero COUNTER
-           (begin (eq! (shift MOD_ARG1_LO 2) (* MOD_RES MOD_RES MODEXP_MAX_LE_PRIME_AND_1))
+           (begin (eq! (shift MOD_ARG1_LO 2)
+                       (* (next MOD_RES) (next MOD_RES) MODEXP_MAX_LE_PRIME_AND_1))
                   (eq! (shift MOD_ARG2_LO 2) 3)
                   (eq! (shift MOD_RES 2) MODEXP_BIG_FRACTION))))
 
