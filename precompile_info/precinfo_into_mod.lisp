@@ -12,11 +12,11 @@
   )
   (
     ;source columns
-    0
+    precompile_info.EMPTY_COLUMN
     precompile_info.MOD_ARG1_LO
-    0
+    precompile_info.EMPTY_COLUMN
     precompile_info.MOD_ARG2_LO
-    0
+    precompile_info.EMPTY_COLUMN
     precompile_info.MOD_RES
     (if-zero precompile_info.STAMP
              0

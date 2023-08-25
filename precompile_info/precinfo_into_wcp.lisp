@@ -12,11 +12,11 @@
   )
   (
     ;source columns
-    0
+    precompile_info.EMPTY_COLUMN
     precompile_info.WCP_ARG1_LO
-    0
+    precompile_info.EMPTY_COLUMN
     precompile_info.WCP_ARG2_LO
-    0
+    precompile_info.EMPTY_COLUMN
     precompile_info.WCP_RES
     (if-zero precompile_info.STAMP
              0

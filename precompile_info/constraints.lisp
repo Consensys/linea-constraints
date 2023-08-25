@@ -1,5 +1,9 @@
 (module precompile_info)
 
+;; TODO Remove when Corset accepts lookups with zeros
+(defconstraint TODO-REMOVE ()
+  (vanishes! EMPTY_COLUMN))
+
 (defconst 
   MODEXP_CYCLE     15
   NON_MODEXP_CYCLE 3
