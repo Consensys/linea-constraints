@@ -22,11 +22,6 @@
 (defun (block-constant C)
   (if-not-zero ABS_TX_NUM (will-remain-constant! C)))
 
-;; Def transaction-constant
-(defun (transaction-constant C)
-  (if-not-eq ABS_TX_NUM (+ (prev ABS_TX_NUM) 1)
-    (remained-constant! C)))
-
 ;; Def counter-constant
 (defun (counter-constant  C)
   (if-not-zero CT (remained-constant! C)))
@@ -56,10 +51,9 @@
 
 ;; Constancies              
 (defconstraint block-constancies ()
-  (block-constant ABS_TX_NUM_MAX))
-
-(defconstraint transaction-constancies ()
-  (transaction-constant LOG_NUM_MAX))
+  (begin
+    (block-constant ABS_TX_NUM_MAX)
+    (block-constant ABS_LOG_NUM)))
 
 (defconstraint counter-constancies ()
  (begin
@@ -90,7 +84,9 @@
 ;;    4.1.2 Global Phase Constraints    ;;
 
 (defconstraint initial-stamp (:domain {0})
-  (vanishes! ABS_TX_NUM))
+  (begin 
+    (vanishes! ABS_TX_NUM)
+    (vanishes! ABS_LOG_NUM)))
 
 (defconstraint phase-exclusion ()
   (if-zero ABS_TX_NUM
@@ -101,6 +97,11 @@
   (eq! ABS_TX_NUM
        (+ (prev ABS_TX_NUM)
           (* [PHASE 0] (remained-constant! [PHASE 0])))))
+
+(defconstraint ABS_LOG_NUM-evolution ()
+  (if-zero (+ [PHASE 4] (- 1 DEPTH_1) IS_PREFIX IS_TOPIC IS_DATA CT)
+    (did-inc! ABS_LOG_NUM 1)
+    (remained-constant! ABS_LOG_NUM)))
 
 (defconstraint no-done-no-end ()
   (if-zero DONE
@@ -121,9 +122,7 @@
                     (* [PHASE 3] (next [PHASE 4]))
                     (* [PHASE 4] (next [PHASE 0]))))
           (if-eq [PHASE 4] 1
-            (begin
-              (vanishes! TXRCPT_SIZE)
-              (eq! LOG_NUM LOG_NUM_MAX))))))
+            (vanishes! TXRCPT_SIZE)))))
 
 ;;    4.1.3 Byte decomposition's loop heartbeat  ;;
 
@@ -185,7 +184,8 @@
     (begin
       (eq! PHASE_END 1)
       (eq! [PHASE 4] 1)
-      (eq! ABS_TX_NUM ABS_TX_NUM_MAX))))
+      (eq! ABS_TX_NUM ABS_TX_NUM_MAX)
+      (eq! ABS_LOG_NUM ABS_LOG_NUM_MAX))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                             ;;
@@ -288,8 +288,6 @@
 (defconstraint phase4-phaseRlpPrefix (:guard [PHASE 4])
   (if-zero DEPTH_1
     (begin
-      (vanishes! LOG_NUM)
-      (eq! [INPUT 2] LOG_NUM_MAX)
       (eq! [INPUT 1] PHASE_SIZE)
       (if-zero [INPUT 1]
         (begin
@@ -438,11 +436,6 @@
             (vanishes! (+ (- 1 (next IS_PREFIX))
                           (next IS_TOPIC)
                           (next IS_DATA)))))))))
-
-(defconstraint phase4-logNum-update (:guard [PHASE 4])
-  (if-zero (+ CT (- 1 DEPTH_1) (- 1 IS_PREFIX) IS_TOPIC IS_DATA)
-    (did-inc! LOG_NUM 1)
-    (remained-constant! LOG_NUM)))
 
 (defconstraint phase4-logEntrySize-update (:guard [PHASE 4])
   (if-zero (+ (- 1 DEPTH_1) (* IS_PREFIX (- 1 IS_TOPIC) (- 1 IS_DATA)))

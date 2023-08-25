@@ -3,9 +3,9 @@
 (defcolumns
     ABS_TX_NUM
     ABS_TX_NUM_MAX
-    LOG_NUM
-    LOG_NUM_MAX
-    LIMB
+    ABS_LOG_NUM
+    ABS_LOG_NUM_MAX
+    (LIMB :display :bytes)
     (nBYTES :byte)
     (LIMB_CONSTRUCTED	:boolean)
     INDEX
