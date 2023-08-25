@@ -235,15 +235,16 @@
 ;; 4.2.3 Phase 2 : cumulative gas Ru  ;;
 (defconstraint phase2 ()
   (if-eq [PHASE 2] 1
-    (eq! nSTEP 8)
-    (rlpPrefixInt [INPUT 1] CT nSTEP DONE
-                  [BYTE 1] [ACC 1] ACC_SIZE POWER BIT BIT_ACC
-                  LIMB LC nBYTES)
-    (if-eq DONE 1
-      (begin
-        (limbShifting [INPUT 1] POWER ACC_SIZE
-                      LIMB nBYTES)
-        (eq! PHASE_END 1)))))
+    (begin
+      (eq! nSTEP 8)
+      (rlpPrefixInt [INPUT 1] CT nSTEP DONE
+                    [BYTE 1] [ACC 1] ACC_SIZE POWER BIT BIT_ACC
+                    LIMB LC nBYTES)
+      (if-eq DONE 1
+        (begin
+          (limbShifting [INPUT 1] POWER ACC_SIZE
+                        LIMB nBYTES)
+          (eq! PHASE_END 1))))))
 
 ;;  Phase 3: bloom filter Rb    ;;
 (defconstraint phase3-prefix (:guard [PHASE 3])
@@ -402,7 +403,7 @@
                           (next IS_DATA)))))
         (begin
           (eq! nSTEP 8)
-          (if-eq LOCAL_SIZE 1
+          (if-eq-else LOCAL_SIZE 1
             (begin
               (rlpPrefixInt [INPUT 3] CT nSTEP DONE
                             [BYTE 1] [ACC 1] ACC_SIZE POWER BIT BIT_ACC

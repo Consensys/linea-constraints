@@ -1,5 +1,3 @@
-(module rlpPatterns)
-
 (defconst
   int_short               128  ;;RLP prefix of a short integer (<56 bytes), defined in the EYP.
   int_long                183  ;;RLP prefix of a long integer (>55 bytes), defined in the EYP.
@@ -16,24 +14,24 @@
           comp)))
 
 ;; Byte counting constraints    ;;
-(defpurefun (byteCountAndPower ct nStep acc byteSize POWER)
+(defpurefun (byteCountAndPower ct nStep acc byteSize power)
   (if-zero ct
     (begin 
       (if-zero acc
         (begin
           (vanishes! byteSize)
-          (if-eq nSTEP 8 (eq! power (^ 256 9)))
-          (if-eq nSTEP 16 (eq! power 256)))
+          (if-eq nStep 8 (eq! power (^ 256 9)))
+          (if-eq nStep 16 (eq! power 256)))
         (begin
           (eq! byteSize 1)
-          (if-eq nSTEP 8 (eq! power (^ 256 8)))
-          (if-eq nSTEP 16 (eq! power 1)))))
+          (if-eq nStep 8 (eq! power (^ 256 8)))
+          (if-eq nStep 16 (eq! power 1)))))
     (if-zero acc
       (begin 
         (vanishes! byteSize)
         (eq! power (* 256 (prev power))))
       (begin
-        (did-increased! byteSize 1)
+        (did-inc! byteSize 1)
         (remained-constant! power)))))
 
 ;; Rlp prefix of a small (< 16 bytes long) integer / bytestring ;;
@@ -44,7 +42,7 @@
                          limb lc nBytes)
   (begin
     (byteCountAndPower ct nStep acc byteSize power)
-    (if-eq DONE 1
+    (if-eq done 1
       (begin
         (eq! acc input)
         (eq! bitAcc byte)
@@ -73,7 +71,7 @@
           (begin
             (eq! (+ (shift lc -2) (prev lc)) 1)
             (eq! (prev limb) (* (+ (* int_long (- 1 isList)) (* list_long isList) byteSize) (^ 256 LLARGEMO)))
-            (eq! (prev nBYTES) 1)
+            (eq! (prev nBytes) 1)
             (eq! limb (* length power))
             (eq! nBytes byteSize)))))))
 
