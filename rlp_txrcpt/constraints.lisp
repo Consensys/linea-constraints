@@ -270,7 +270,7 @@
             (begin
               (eq! [ACC k] [INPUT k])
               (eq! [INPUT k] (shift LIMB (- k 4)))
-              (eq! (shift (- k 4) nBYTES) LLARGE)))
+              (eq! (shift nBYTES (- k 4)) LLARGE)))
           (eq! (+ (shift LC -4) (shift LC -3)) 1)
           (if-zero PHASE_SIZE
             (eq! PHASE_END 1)
