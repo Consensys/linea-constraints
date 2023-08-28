@@ -273,13 +273,10 @@
               (eq! (shift nBYTES (- k 4)) LLARGE)))
           (eq! (+ (shift LC -4) (shift LC -3)) 1)
           (if-zero PHASE_SIZE
-            (eq! PHASE_END 1)
-            (vanishes! PHASE_END))))
+            (eq! PHASE_END 1))))
       (eq! INDEX_LOCAL (+ (prev INDEX_LOCAL) (* (prev LC) (- 1 (prev IS_PREFIX))))))))
 
 ;;  Phase 4: log series Rl    ;;
-(defconstraint phase4-ifPhaseSize-noEnd (:guard [PHASE 4])
-  (if-not-zero PHASE_SIZE (vanishes! PHASE_END)))
 
 (defconstraint phase4-init (:guard [PHASE 4])
   (if-zero (prev [PHASE 4])
