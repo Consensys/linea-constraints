@@ -94,7 +94,8 @@
 		 (transaction-constant IGAS)
 		 (transaction-constant GPRC)
 		 (transaction-constant BASEFEE)
-		 (transaction-constant DATA_SIZE)
+		 (transaction-constant CALL_DATA_SIZE)
+		 (transaction-constant INIT_CODE_SIZE)
 		 (transaction-constant TYPE0)
 		 (transaction-constant TYPE1)
 		 (transaction-constant TYPE2)
@@ -238,7 +239,15 @@
     (= (nonce)           NONCE)
     (= (is_dep)          IS_DEP)
     (= (value)           VALUE)
-    (= (data_size)       DATA_SIZE)
+    (if-zero IS_DEP
+	     ;; IS_DEP == 0
+	     (begin
+		(= (data_size) CALL_DATA_SIZE)
+		(vanishes!     INIT_CODE_SIZE))
+	     ;; IS_DEP != 0
+	     (begin
+	       (vanishes!      CALL_DATA_SIZE))
+	       (= (data_size)  INIT_CODE_SIZE)
     (= (gas_limit)       GAS_LIMIT)
     (if-zero IS_DEP
 	     (begin
