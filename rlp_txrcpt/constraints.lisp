@@ -51,7 +51,7 @@
 ;; Constancies              
 (defconstraint block-constancies ()
   (begin (block-constant ABS_TX_NUM_MAX)
-         (block-constant ABS_LOG_NUM)))
+         (block-constant ABS_LOG_NUM_MAX)))
 
 (defconstraint counter-constancies ()
   (begin (for i [1 : 4] (counter-constant [INPUT i]))
@@ -94,7 +94,7 @@
           (* [PHASE 0] (remained-constant! [PHASE 0])))))
 
 (defconstraint ABS_LOG_NUM-evolution ()
-  (if-zero (+ [PHASE 4] (- 1 DEPTH_1) IS_PREFIX IS_TOPIC IS_DATA CT)
+  (if-zero (+ [PHASE 4] (- 1 DEPTH_1) (- 1 IS_PREFIX) IS_TOPIC IS_DATA CT)
            (did-inc! ABS_LOG_NUM 1)
            (remained-constant! ABS_LOG_NUM)))
 
