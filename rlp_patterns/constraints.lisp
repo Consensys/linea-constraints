@@ -8,7 +8,7 @@
 
 ;;  Comparaison to 55 ;;
 (defpurefun (compTo55 length comp acc) 
-  (eq! 55 
+  (eq! acc 
        (- (* (- (* 2 comp) 1)
              (- length 55))
           comp)))
