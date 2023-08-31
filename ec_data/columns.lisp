@@ -5,6 +5,7 @@
 	INDEX
 	CT_MIN
 	LIMB
+	RETURN_DATA
 
 	TYPE
 	(EC_RECOVER	:boolean)
@@ -21,6 +22,7 @@
 	(HURDLE	:boolean)
 	(PRELIMINARY_CHECKS_PASSED	:boolean)
 	(ALL_CHECKS_PASSED	:boolean)
+	(ECDSA_RECOVER_PASSED	:boolean)
 
 	SQUARE
 	CUBE

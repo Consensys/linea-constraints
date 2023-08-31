@@ -331,14 +331,25 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; 3.12.1
-(defconstraint all-checks-passed-not-pairing()
-  (if-not-zero (+ EC_RECOVER EC_ADD EC_MUL)
+(defconstraint all-checks-passed-ecrecover()
+  (if-not-zero EC_RECOVER
+      (= ALL_CHECKS_PASSED (* PRELIMINARY_CHECKS_PASSED ECDSA_RECOVER_PASSED))))
+
+;; 3.12.2
+(defconstraint all-checks-passed-add-or-mul()
+  (if-not-zero (+ EC_ADD EC_MUL)
       (= ALL_CHECKS_PASSED PRELIMINARY_CHECKS_PASSED)))
 
-;; 3.12.1
+;; 3.12.3
 (defconstraint all-checks-passed-pairing()
   (if-not-zero EC_PAIRING
       (= ALL_CHECKS_PASSED (* PRELIMINARY_CHECKS_PASSED (- 1 SOMETHING_WASNT_ON_G2)))))
+
+;; 3.12.4
+(defconstraint no-return-data-if-all-checks-didnt-passed()
+  (if-zero ALL_CHECKS_PASSED
+      (vanishes! RETURN_DATA)))
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                    ;;
