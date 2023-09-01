@@ -294,10 +294,10 @@
                                 (eq! (shift nBYTES -2) 1)
                                 (eq! (prev LIMB)
                                      (* [INPUT 1] (^ 256 12)))
-                                (eq! (prev LIMB) 4)
+                                (eq! (prev nBYTES) 4)
                                 (eq! LIMB [INPUT 2])
                                 (eq! nBYTES LLARGE)
-                                (vanishes! (+ (- 1 IS_PREFIX) (- 1 IS_TOPIC) IS_DATA)))))))
+                                (vanishes! (+ (- 1 (next IS_PREFIX)) (- 1 (next IS_TOPIC)) (next IS_DATA))))))))
 
 (defconstraint phase4-topic-prefix (:guard [PHASE 4])
   (if-eq (* IS_PREFIX IS_TOPIC) 1
