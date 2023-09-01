@@ -54,12 +54,16 @@
          (block-constant ABS_LOG_NUM_MAX)))
 
 (defconstraint counter-constancies ()
-  (begin (for i [1 : 4] (counter-constant [INPUT i]))
+  (begin (for i [2 : 4] (counter-constant [INPUT i]))
          (counter-constant nSTEP)
          (counter-constant IS_PREFIX)
          (counter-constant DEPTH_1)
          (counter-constant IS_TOPIC)
          (counter-constant IS_DATA)))
+
+(defconstraint special-ct-constancy ()
+  (if-not-zero (+ (- 1 [PHASE 4]) (- 1 DEPTH_1) IS_PREFIX (- 1 IS_DATA))
+    (counter-constant [INPUT 1])))
 
 (defconstraint ct-incrementings ()
   (begin (counter-incrementing LC)
