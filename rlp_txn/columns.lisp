@@ -1,4 +1,4 @@
-(module txRlp)
+(module rlpTxn)
 
 (defcolumns
     ABS_TX_NUM
@@ -27,12 +27,9 @@
     (BIT	:boolean)
     (BIT_ACC	:byte)
     POWER
-    (is_bytesize	:boolean)
-    (is_list	:boolean)
-    (COMP	:boolean)
     RLP_LT_BYTESIZE
     RLP_LX_BYTESIZE
-    (is_padding	:boolean)
+    (LC_CORRECTION	:boolean)
     (is_prefix	:boolean)
     PHASE_BYTESIZE
     INDEX_DATA
