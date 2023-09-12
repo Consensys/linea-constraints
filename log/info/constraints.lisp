@@ -5,8 +5,15 @@
   LOG1       0xa1 
   LOG2       0xa2 
   LOG3       0xa3 
-  LOG4       0xa4 
-  )
+  LOG4       0xa4
+  phaseIdSize 69
+  phaseIdAddr 44
+  phaseIdTopicBase 54
+  phaseIdTopicIncrement 80
+  phaseIdNoLog 9)
+
+  (defun (if-not-eq A B then)
+    (if-not-zero (- A B) then))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                     ;;
@@ -35,7 +42,7 @@
                (if-zero TXN_EMITS_LOGS
                         (begin
                           (remained-constant! ABS_LOG_NUM)
-                          (did-inc! ABS_TXN_NUM)
+                          (did-inc! ABS_TXN_NUM 1)
                           (vanishes! CT_MAX)
                           (vanishes! INST))))
 
@@ -44,20 +51,20 @@
                  (if-zero CT
                           (begin
                             (did-inc! ABS_LOG_NUM 1)
-                            (= CT_MAX (+ 1 (- INST LOG_0)))))
+                            (= CT_MAX (+ 1 (- INST LOG0)))))
                  (if-not-zero (remained-constant! ABS_TXN_NUM)
                               (did-inc! ABS_LOG_NUM 1)
-                              (= CT_MAX (+ 2 (- INST LOG_0))))
+                              (= CT_MAX (+ 2 (- INST LOG0))))
                  (if-eq-else CT CT_MAX
                              ;; CT == CT_MAX
                              (begin
                                (vanishes! (* (will-remain-constant! ABS_TXN_NUM)
                                              (will-remain-constant! ABS_LOG_NUM)))
-                               (will-eq! ABS_LOG_NUM (+ ABS_LOG_NUM (next TX_EMITS_LOGS))))
+                               (will-eq! ABS_LOG_NUM (+ ABS_LOG_NUM (next TXN_EMITS_LOGS))))
                              ;; CT != CT_MAX
                              (will-inc! CT 1))))
 
-(defconstraint final-row (:domain {-1} :guard ABX_TX_NUM)
+(defconstraint final-row (:domain {-1} :guard ABS_TXN_NUM)
                (begin
                  (= ABS_TXN_NUM ABS_TXN_NUM_MAX)
                  (= ABS_LOG_NUM ABS_LOG_NUM_MAX)
@@ -82,9 +89,9 @@
                  (for k [1 : 4] (counter-constancy CT [TOPIC_LO k]))
                  (counter-constancy CT DATA_SIZE)))
 
-(defun (transaction-constancy X) (if-not-eq (next ABS_TX_NUM)
-                                            (+ 1 ABS_TX_NUM)
-                                            (will-eq! X)))
+(defun (transaction-constancy X) (if-not-eq (next ABS_TXN_NUM)
+                                            (+ 1 ABS_TXN_NUM)
+                                            (will-remain-constant! X)))
 
 (defconstraint transaction-constancies ()
                (begin
@@ -116,7 +123,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-(defconstraints inst-and-flags ()
+(defconstraint inst-and-flags ()
                 (begin
                   ;; (= INST (reduce + (for k [0 : 4] (* [IS_LOG_X k] [LOG_k_INST k]))))
                   (= INST (+
@@ -137,34 +144,41 @@
 
 (defconstraint verticalization-row-1-and-2 (:guard (reduce + (for k [0 : 4] [IS_LOG_X k])))
                (begin
-                 ;; (= PHASE ) ;; TODO
+                 (= PHASE phaseIdSize)
                  (= DATA_HI DATA_SIZE)
-                 (= DATA_LO (- INST LOG_0)
+                 (= DATA_LO (- INST LOG0))
                  ;;
-                 ;; (= (shift  PHASE   1) ) ;; TODO
+                 (= (shift  PHASE   1) phaseIdAddr)
                  (= (shift  DATA_HI 1) ADDR_HI)
                  (= (shift  DATA_LO 1) ADDR_LO)))
 
 (defconstraint verticalization-row-3 (:guard (reduce + (for k [1 : 4] [IS_LOG_X k])))
                (begin
-                 ;; (= (shift  PHASE   2) ) ;; TODO
+                 (= (shift  PHASE   2) (+ phaseIdTopicBase phaseIdTopicIncrement))
                  (= (shift  DATA_HI 2) [TOPIC_HI 1])
-                 (= (shift  DATA_LO 2) [TOPIC_LO 1]))
+                 (= (shift  DATA_LO 2) [TOPIC_LO 1])))
 
 (defconstraint verticalization-row-4 (:guard (reduce + (for k [2 : 4] [IS_LOG_X k])))
                (begin
-                 ;; (= (shift  PHASE   3) ) ;; TODO
+                 (= (shift  PHASE   3) (+ phaseIdTopicBase (* 2 phaseIdTopicIncrement)))
                  (= (shift  DATA_HI 3) [TOPIC_HI 2])
-                 (= (shift  DATA_LO 3) [TOPIC_LO 2]))
+                 (= (shift  DATA_LO 3) [TOPIC_LO 2])))
 
 (defconstraint verticalization-row-5 (:guard (reduce + (for k [3 : 4] [IS_LOG_X k])))
                (begin
-                 ;; (= (shift  PHASE   4) ) ;; TODO
+                 (= (shift  PHASE   4) (+ phaseIdTopicBase (* 3 phaseIdTopicIncrement)))
                  (= (shift  DATA_HI 4) [TOPIC_HI 3])
-                 (= (shift  DATA_LO 4) [TOPIC_LO 3]))
+                 (= (shift  DATA_LO 4) [TOPIC_LO 3])))
 
 (defconstraint verticalization-row-6 (:guard (reduce + (for k [4 : 4] [IS_LOG_X k])))
                (begin
-                 ;; (= (shift  PHASE   5) ) ;; TODO
+                 (= (shift  PHASE   5) (+ phaseIdTopicBase (* 4 phaseIdTopicIncrement)))
                  (= (shift  DATA_HI 5) [TOPIC_HI 4])
-                 (= (shift  DATA_LO 5) [TOPIC_LO 4]))
+                 (= (shift  DATA_LO 5) [TOPIC_LO 4])))
+
+(defconstraint verticalisation-no-log ()
+  (if-zero TXN_EMITS_LOGS
+    (begin
+      (eq! PHASE phaseIdNoLog)
+      (vanishes! DATA_HI)
+      (vanishes! DATA_LO))))
