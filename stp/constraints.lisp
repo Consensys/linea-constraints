@@ -87,6 +87,7 @@
                  (debug (is-binary OOGX))
                  (debug (is-binary TO_HAS_CODE))
                  (debug (is-binary ABORT))
+                 (debug (is-binary FCOND))
                  (is-binary WCP_FLAG)
                  (is-binary MOD_FLAG)))
 
@@ -122,6 +123,7 @@
                  (counter-constancy CT TO_HAS_CODE)
                  (counter-constancy CT TO_NONCE)
                  (counter-constancy CT ABORT)
+                 (counter-constancy CT FCOND)
                  ;
                  (counter-constancy CT OOGX)
                  (counter-constancy CT INST_TYPE)
@@ -143,8 +145,8 @@
 (defun (create-oneSixtyFourth)                   (shift RES_LO 2))
 (defun (create-LgDiff)                           (- (create-gDiff) (create-oneSixtyFourth)))
 (defun (create-abortSum)                         (+ (- 1 (shift RES_LO 3)) ;; <- evaluates to 1 iff CSD >= 1024
-                                                    (shift RES_LO 4)       ;; <- evaluates to 1 iff CALL_VALUE > FROM_BALANCE
-                                                    (- 1 (shift RES_LO 5)) ;; <- evaluates to 1 iff TO address has nonzero nonce
+                                                    (shift RES_LO 4))      ;; <- evaluates to 1 iff CALL_VALUE > FROM_BALANCE
+(defun (create-fCondSum)                         (+ (- 1 (shift RES_LO 5)) ;; <- evaluates to 1 iff TO address has nonzero nonce
                                                     TO_HAS_CODE))          ;; <- evaluates to 1 iff TO address has nonempty code
 
 ;; common rows of all CREATE instructions
@@ -228,7 +230,12 @@
                           (= GAS_STIPEND (create-LgDiff))
                           (if-zero (create-abortSum)
                                    (vanishes! ABORT)
-                                   (= ABORT 1)))
+                                   (= ABORT 1))
+                          (if-zero ABORT
+                                   (if-zero (create-fCondSum)
+                                            (vanishes! FCOND)
+                                            (= FCOND 1))
+                                   (vanishes! FCOND)))
                         ;; OOGX == 1
                         (begin
                           (= GAS_COST (create-gPrelim))
