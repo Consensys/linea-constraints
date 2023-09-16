@@ -1,16 +1,27 @@
 (module txn_data)
 
 (defconst
-	nROWS0                    6
-	nROWS1                    7
-	nROWS2                    7
+	nROWS0                           6
+	nROWS1                           7
+	nROWS2                           7
 	;;
-	G_transaction         21000
-	G_txcreate            32000
-	G_accesslistaddress    2400
-	G_accessliststorage    1900
+	G_transaction                21000
+	G_txcreate                   32000
+	G_accesslistaddress           2400
+	G_accessliststorage           1900
 	;;
-	LT                     0x10
+	LT                            0x10
+        common_rlp_txn_phase_number_0            0
+        common_rlp_txn_phase_number_1            7
+        common_rlp_txn_phase_number_2            2
+        common_rlp_txn_phase_number_3            8
+        common_rlp_txn_phase_number_4            9
+        common_rlp_txn_phase_number_5            6
+        type_0_rlp_txn_phase_number_6            3
+        type_1_rlp_txn_phase_number_6            3
+        type_1_rlp_txn_phase_number_7           10
+        type_2_rlp_txn_phase_number_6            5
+        type_2_rlp_txn_phase_number_7           10
 	)
 
 ;; sum of transaction type flags
@@ -192,20 +203,20 @@
 ;;                   ;;
 ;;;;;;;;;;;;;;;;;;;;;;;
 
-(defun (tx_type)              DATA_LO)
-(defun (to_addr_hi)           (shift DATA_HI 1))
-(defun (to_addr_lo)           (shift DATA_LO 1))
-(defun (nonce)                (shift DATA_LO 2))
-(defun (is_dep)               (shift DATA_HI 3))
-(defun (value)                (shift DATA_LO 3))
-(defun (data_cost)            (shift DATA_HI 4))
-(defun (data_size)            (shift DATA_LO 4))
-(defun (gas_limit)            (shift DATA_LO 5))
-(defun (gas_price)            (shift DATA_HI 6))
-(defun (max_priority_fee)     (shift DATA_LO 6))
-(defun (max_fee)              (shift DATA_LO 6))
-(defun (num_keys)             (shift DATA_HI 7))
-(defun (num_addr)             (shift DATA_LO 7))
+(defun (tx_type)              (shift OUTGOING_LO 0))
+(defun (optional_to_addr_hi)  (shift OUTGOING_HI 1))
+(defun (optional_to_addr_lo)  (shift OUTGOING_LO 1))
+(defun (nonce)                (shift OUTGOING_LO 2))
+(defun (is_dep)               (shift OUTGOING_HI 3))
+(defun (value)                (shift OUTGOING_LO 3))
+(defun (data_cost)            (shift OUTGOING_HI 4))
+(defun (data_size)            (shift OUTGOING_LO 4))
+(defun (gas_limit)            (shift OUTGOING_LO 5))
+(defun (gas_price)            (shift OUTGOING_HI 6))
+(defun (max_priority_fee)     (shift OUTGOING_LO 6))
+(defun (max_fee)              (shift OUTGOING_LO 6))
+(defun (num_keys)             (shift OUTGOING_HI 7))
+(defun (num_addr)             (shift OUTGOING_LO 7))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                           ;;
@@ -216,60 +227,56 @@
 
 (defun (setting_phase_numbers)
   (begin
-    (vanishes! PHASE)
-;;  (= (shift PHASE 0) 0)
-    (= (shift PHASE 1) 7)
-    (= (shift PHASE 2) 2)
-    (= (shift PHASE 3) 8)
-    (= (shift PHASE 4) 9)
-    (= (shift PHASE 5) 6)
+    (= (shift PHASE 0)                     common_rlp_txn_phase_number_0)
+    (= (shift PHASE 1)                     common_rlp_txn_phase_number_1)
+    (= (shift PHASE 2)                     common_rlp_txn_phase_number_2)
+    (= (shift PHASE 3)                     common_rlp_txn_phase_number_3)
+    (= (shift PHASE 4)                     common_rlp_txn_phase_number_4)
+    (= (shift PHASE 5)                     common_rlp_txn_phase_number_5)
     ;;
-    (if-not-zero TYPE0 (= (shift PHASE 6)  3))
+    (if-not-zero TYPE0 (= (shift PHASE 6)  type_0_rlp_txn_phase_number_6))
     ;;
-    (if-not-zero TYPE1 (= (shift PHASE 6)  3))
-    (if-not-zero TYPE1 (= (shift PHASE 7) 10))
+    (if-not-zero TYPE1 (= (shift PHASE 6)  type_1_rlp_txn_phase_number_6))
+    (if-not-zero TYPE1 (= (shift PHASE 7)  type_1_rlp_txn_phase_number_7))
     ;;
-    (if-not-zero TYPE2 (= (shift PHASE 6)  5))
-    (if-not-zero TYPE2 (= (shift PHASE 7) 10))
+    (if-not-zero TYPE2 (= (shift PHASE 6)  type_2_rlp_txn_phase_number_6))
+    (if-not-zero TYPE2 (= (shift PHASE 7)  type_2_rlp_txn_phase_number_7))
     ))
 
 (defun (data_transfer)
   (begin
-    (= (tx_type)         (+ TYPE1 TYPE2 TYPE2))
-    (= (nonce)           NONCE)
-    (= (is_dep)          IS_DEP)
-    (= (value)           VALUE)
+    (= (tx_type)                  (+ TYPE1 TYPE2 TYPE2))
+    (= (nonce)                    NONCE)
+    (= (is_dep)                   IS_DEP)
+    (= (value)                    VALUE)
+    (= (optional_to_addr_hi)      (* (- 1 IS_DEP) TO_HI))
+    (= (optional_to_addr_lo)      (* (- 1 IS_DEP) TO_LO))
     (if-zero IS_DEP
 	     ;; IS_DEP == 0
 	     (begin
-		(= (data_size) CALL_DATA_SIZE)
-		(vanishes!     INIT_CODE_SIZE))
+	       (= (data_size) CALL_DATA_SIZE)
+	       (vanishes!     INIT_CODE_SIZE))
 	     ;; IS_DEP != 0
 	     (begin
-	       (vanishes!      CALL_DATA_SIZE))
+	       (vanishes!      CALL_DATA_SIZE)
 	       (= (data_size)  INIT_CODE_SIZE)
-    (= (gas_limit)       GAS_LIMIT)
-    (if-zero IS_DEP
-	     (begin
-	       (= (to_addr_hi) TO_HI)
-	       (= (to_addr_lo) TO_LO)))
-    ))
+	       (= (gas_limit)       GAS_LIMIT)))))
 
 (defun (vanishing_data_cells)
   (begin
-    (vanishes! DATA_HI)
-;;  (vanishes! (shift DATA_HI 0))
-    (vanishes! (shift DATA_HI 2))
-    (vanishes! (shift DATA_HI 5))
+    (vanishes! (shift OUTGOING_HI 0))
+    (vanishes! (shift OUTGOING_HI 2))
+    (vanishes! (shift OUTGOING_HI 5))
     (if-zero TYPE2
-	         (vanishes! (shift DATA_HI 6)))
+	     (vanishes! (shift OUTGOING_HI 6)))
     ))
 
 (defconstraint verticalization (:guard (remained-constant! ABS))
-				       (begin
-					 (setting_phase_numbers)
-					 (data_transfer)
-					 (vanishing_data_cells)))
+	       (begin
+		 (setting_phase_numbers)
+		 (data_transfer)
+		 (vanishing_data_cells)
+		 ))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
