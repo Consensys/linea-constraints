@@ -10,6 +10,10 @@
   LLARGE          16
   LLARGEMO        15)
 
+(defpurefun (if-not-eq A B then)
+  (if-not-zero (- A B)
+               then))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                              ;;
 ;;    2.3 Global Constraints    ;;
@@ -80,12 +84,12 @@
          (counter-constancy CT [DEPTH 1])
          (counter-constancy CT [DEPTH 2])))
 
-;; 2.3.1.3 & (debug 2.3.1.9)
 (defconstraint counter-incrementing ()
-  (begin (counter-incrementing CT LC)
-         (counter-incrementing CT LC_CORRECTION)
-         (debug (counter-incrementing CT DONE))
-         (debug (counter-incrementing CT ACC_BYTESIZE))))
+  (counter-incrementing CT LC_CORRECTION))
+
+(defconstraint counter-incrementing-except-data-prefix ()
+  (if-zero (* [PHASE 9] IS_PREFIX)
+           (counter-incrementing CT LIMB_CONSTRUCTED)))
 
 (defconstraint phase0-constancy ()
   (begin (phase-constancy [PHASE 0] RLP_LT_BYTESIZE)
@@ -442,10 +446,10 @@
                               (+ (* 8
                                     (reduce + (for i [1 : 6] [PHASE i])))
                                  (* LLARGE [PHASE 8])))
-                         (rlpPrefixInt [INPUT 1] CT nSTEP DONE [BYTE 1] [ACC 1] ACC_BYTESIZE POWER BIT BIT_ACC LIMB LC nBYTES)))
+                         (rlpPrefixInt [INPUT 1] CT nSTEP DONE [BYTE 1] [ACC 1] ACC_BYTESIZE POWER BIT BIT_ACC LIMB LC nBYTES)
+                         (if-eq DONE 1 (limbShifting [INPUT 1] POWER ACC_BYTESIZE LIMB nBYTES))))
          (if-eq DONE 1
-                (begin (limbShifting [INPUT 1] POWER ACC_BYTESIZE LIMB nBYTES)
-                       (eq! PHASE_END 1)
+                (begin (eq! PHASE_END 1)
                        (if-eq (+ [PHASE 2] [PHASE 3] [PHASE 5] [PHASE 6] [PHASE 8]) 1 (eq! DATA_LO [INPUT 1]))
                        (if-eq [PHASE 4] 1
                               (eq! (next DATA_HI) [INPUT 1]))))))
@@ -480,7 +484,7 @@
                        (remained-constant! INDEX_DATA))))
 
 (defconstraint phase9-nolccorrection-noend (:guard [PHASE 9])
-  (if-zero LC_CORRECTION
+  (if-zero (* LC_CORRECTION (- 1 IS_PREFIX))
            (vanishes! PHASE_END)))
 
 (defconstraint phase9-endphase (:guard [PHASE 9])
@@ -524,6 +528,7 @@
                                                        LIMB
                                                        LC
                                                        nBYTES)
+                                         (if-not-eq COUNTER (- nSTEP 2) (vanishes! LC))
                                          (if-eq DONE 1
                                                 (begin (eq! (+ (prev LC_CORRECTION) LC_CORRECTION)
                                                             1)
@@ -543,7 +548,10 @@
                                                                 [ACC 2]
                                                                 LC
                                                                 LIMB
-                                                                nBYTES)))
+                                                                nBYTES)
+                                         (if-not-zero (* (- 1 DONE)
+                                                         (- nSTEP (+ COUNTER 2)))
+                                                      (vanishes! LIMB_CONSTRUCTED))))
                       (if-eq DONE 1
                              (vanishes! (+ (next IS_PREFIX) (next LC_CORRECTION)))))))
 
