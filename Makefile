@@ -59,8 +59,8 @@ MEMORY := $(wildcard hub/mmio/columns.lisp) \
 		  $(wildcard hub/mmu/columns.lisp) \
 		  lookup_tables/mmuID/columns.lisp
 
-RLP := rlp/columns.lisp \
-	  rlp/constraints.lisp
+RLP_ADDR := rlp_addr/columns.lisp \
+	  rlp_addr/constraints.lisp
 
 PHONEY_RLP := phoney_rlp/column.lisp
 
