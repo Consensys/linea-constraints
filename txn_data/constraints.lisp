@@ -1,25 +1,28 @@
 (module txn_data)
 
 (defconst
-	nROWS0                           6
-	nROWS1                           7
-	nROWS2                           7
+	nROWS0                                   6
+	nROWS1                                   7
+	nROWS2                                   7
 	;;
-	G_transaction                21000
-	G_txcreate                   32000
-	G_accesslistaddress           2400
-	G_accessliststorage           1900
+	G_transaction                        21000
+	G_txcreate                           32000
+	G_accesslistaddress                   2400
+	G_accessliststorage                   1900
 	;;
-	LT                            0x10
+	LT                                    0x10
         common_rlp_txn_phase_number_0            0
         common_rlp_txn_phase_number_1            7
         common_rlp_txn_phase_number_2            2
         common_rlp_txn_phase_number_3            8
         common_rlp_txn_phase_number_4            9
         common_rlp_txn_phase_number_5            6
+
         type_0_rlp_txn_phase_number_6            3
+
         type_1_rlp_txn_phase_number_6            3
         type_1_rlp_txn_phase_number_7           10
+
         type_2_rlp_txn_phase_number_6            5
         type_2_rlp_txn_phase_number_7           10
 	)
