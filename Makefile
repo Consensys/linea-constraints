@@ -35,6 +35,9 @@ WCP := wcp/columns.lisp \
 	   wcp/constraints.lisp \
 	   # wcp/hub_into_wcp.lisp \
 
+TRM := trm/columns.lisp \
+           trm/constraints.lisp
+
 MXP := mxp/columns.lisp \
 	   mxp/constraints.lisp \
 	   mxp/mxp_into_instruction_decoder.lisp
@@ -45,8 +48,8 @@ EC_DATA := ec_data/columns.lisp \
 	   ec_data/ecdata_into_wcp.lisp \
 	   ec_data/hub_into_ecdata.lisp \
 
-TX_RLP := tx_rlp/columns.lisp \
-		  tx_rlp/constraints.lisp \
+RLP_TXN := rlp_txn/columns.lisp \
+		  rlp_txn/constraints.lisp \
 
 TABLES := $(wildcard lookup_tables/tables/*lisp)
 
@@ -63,7 +66,9 @@ PHONEY_RLP := phoney_rlp/column.lisp
 
 TXRCPT_RLP := rlp_txrcpt/columns.lisp rlp_txrcpt/constraints.lisp rlp_patterns/constraints.lisp
 
-ZKEVM_FILES := ${STACK} ${ALU} ${BIN} ${SHIFT} ${WCP} ${TABLES} ${PUB_DATA} ${MXP} ${EC_DATA} ${RLP} ${PHONEY_RLP} ${TXRCPT_RLP} # ${TX_RLP} # ${MEMORY} ${ROM}
+LIBRARY := rlp_patterns/constraints.lisp
+
+ZKEVM_FILES := ${STACK} ${ALU} ${BIN} ${SHIFT} ${WCP} ${TABLES} ${PUB_DATA} ${MXP} ${EC_DATA} ${RLP} ${PHONEY_RLP} ${RLP_TXN} ${TXRCPT_RLP} ${LIBRARY} # ${MEMORY} ${ROM}
 
 zkevm.go: ${ZKEVM_FILES}
 	${CORSET} wizard-iop -vv -P define -o $@ ${ZKEVM_FILES}
