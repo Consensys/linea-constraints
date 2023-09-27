@@ -35,6 +35,9 @@ WCP := wcp/columns.lisp \
 	   wcp/constraints.lisp \
 	   # wcp/hub_into_wcp.lisp \
 
+TRM := trm/columns.lisp \
+           trm/constraints.lisp
+
 MXP := mxp/columns.lisp \
 	   mxp/constraints.lisp \
 	   mxp/mxp_into_instruction_decoder.lisp
