@@ -21,13 +21,17 @@
   INDEX
   ;; Register columns
   STAMP
-  ct
+  COUNTER
   (BYTE1 :byte)
   ACC
   ACC_BYTESIZE
   POWER
   (BIT1 :bool)
   (BIT_ACC :byte)
-  (TINY_NONE_ZERO_NONCE :bool))
+  (TINY_NON_ZERO_NONCE :bool))
+
+;; aliases
+(defalias 
+  ct COUNTER)
 
 

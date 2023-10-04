@@ -65,7 +65,7 @@
          (stamp-constancy STAMP KEC_HI)
          (stamp-constancy STAMP KEC_LO)
          (stamp-constancy STAMP RECIPE)
-         (stamp-constancy STAMP TINY_NONE_ZERO_NONCE)))
+         (stamp-constancy STAMP TINY_NON_ZERO_NONCE)))
 
 (defpurefun (ct-incrementing ct X)
   (if-not-zero ct
@@ -84,7 +84,7 @@
 (defconstraint binarity ()
   (begin (is-binary RECIPE_1)
          (is-binary RECIPE_2)
-         (is-binary TINY_NONE_ZERO_NONCE)
+         (is-binary TINY_NON_ZERO_NONCE)
          (is-binary BIT1)
          (is-binary LC)))
 
@@ -131,10 +131,10 @@
                     (begin (eq! ACC_BYTESIZE 1)
                            (eq! POWER (^ 256 7))))
            (if-zero ACC
-                    (begin (remained-constant! ACC)
+                    (begin (remained-constant! ACC_BYTESIZE)
                            (eq! POWER
                                 (* (prev POWER) 256)))
-                    (begin (did-inc! ACC 1)
+                    (begin (did-inc! ACC_BYTESIZE 1)
                            (remained-constant! POWER)))))
 
 (defconstraint recipe1-last-row (:guard RECIPE_1)
@@ -144,12 +144,12 @@
                 (eq! BIT_ACC BYTE1)
                 (if-zero (+ (~ (eq! ACC_BYTESIZE 1))
                             (shift BIT1 -7))
-                         (eq! 1 TINY_NONE_ZERO_NONCE)
-                         (vanishes! TINY_NONE_ZERO_NONCE))
+                         (eq! 1 TINY_NON_ZERO_NONCE)
+                         (vanishes! TINY_NON_ZERO_NONCE))
                 (eq! (+ (shift LC -4) (shift LC -3))
                      1)
                 (eq! (shift LIMB -3)
-                     (* (+ list_short 1 20 ACC_BYTESIZE (- 1 TINY_NONE_ZERO_NONCE))
+                     (* (+ list_short 1 20 ACC_BYTESIZE (- 1 TINY_NON_ZERO_NONCE))
                         (^ 256 15)))
                 (eq! (shift nBYTES -3) 1)
                 (vanishes! (shift INDEX -3))
@@ -162,14 +162,14 @@
                 (if-zero NONCE
                          (eq! LIMB
                               (* int_short (^ 256 15)))
-                         (if-eq-else 1 TINY_NONE_ZERO_NONCE
+                         (if-eq-else 1 TINY_NON_ZERO_NONCE
                                      (eq! LIMB
                                           (* NONCE (^ 256 15)))
                                      (eq! LIMB
                                           (+ (* (+ int_short ACC_BYTESIZE) (^ 256 15))
                                              (* NONCE POWER)))))
                 (eq! nBYTES
-                     (+ ACC_BYTESIZE (- 1 TINY_NONE_ZERO_NONCE)))
+                     (+ ACC_BYTESIZE (- 1 TINY_NON_ZERO_NONCE)))
                 (eq! INDEX 3))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
