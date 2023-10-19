@@ -202,10 +202,10 @@
   (shift OUTGOING_LO 5))
 
 (defun (gas_price)
-  (shift OUTGOING_HI 6))
+  (shift OUTGOING_LO 6))
 
 (defun (max_priority_fee)
-  (shift OUTGOING_LO 6))
+  (shift OUTGOING_HI 6))
 
 (defun (max_fee)
   (shift OUTGOING_LO 6))
@@ -222,25 +222,25 @@
 ;;                           ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun (setting_phase_numbers)
-  (begin (= (shift PHASE 0) common_rlp_txn_phase_number_0)
-         (= (shift PHASE 1) common_rlp_txn_phase_number_1)
-         (= (shift PHASE 2) common_rlp_txn_phase_number_2)
-         (= (shift PHASE 3) common_rlp_txn_phase_number_3)
-         (= (shift PHASE 4) common_rlp_txn_phase_number_4)
-         (= (shift PHASE 5) common_rlp_txn_phase_number_5)
+  (begin (= (shift PHASE_RLP_TXN 0) common_rlp_txn_phase_number_0)
+         (= (shift PHASE_RLP_TXN 1) common_rlp_txn_phase_number_1)
+         (= (shift PHASE_RLP_TXN 2) common_rlp_txn_phase_number_2)
+         (= (shift PHASE_RLP_TXN 3) common_rlp_txn_phase_number_3)
+         (= (shift PHASE_RLP_TXN 4) common_rlp_txn_phase_number_4)
+         (= (shift PHASE_RLP_TXN 5) common_rlp_txn_phase_number_5)
          ;;
          (if-not-zero TYPE0
-                      (= (shift PHASE 6) type_0_rlp_txn_phase_number_6))
+                      (= (shift PHASE_RLP_TXN 6) type_0_rlp_txn_phase_number_6))
          ;;
          (if-not-zero TYPE1
-                      (= (shift PHASE 6) type_1_rlp_txn_phase_number_6))
+                      (= (shift PHASE_RLP_TXN 6) type_1_rlp_txn_phase_number_6))
          (if-not-zero TYPE1
-                      (= (shift PHASE 7) type_1_rlp_txn_phase_number_7))
+                      (= (shift PHASE_RLP_TXN 7) type_1_rlp_txn_phase_number_7))
          ;;
          (if-not-zero TYPE2
-                      (= (shift PHASE 6) type_2_rlp_txn_phase_number_6))
+                      (= (shift PHASE_RLP_TXN 6) type_2_rlp_txn_phase_number_6))
          (if-not-zero TYPE2
-                      (= (shift PHASE 7) type_2_rlp_txn_phase_number_7))))
+                      (= (shift PHASE_RLP_TXN 7) type_2_rlp_txn_phase_number_7))))
 
 (defun (data_transfer)
   (begin (= (tx_type) (+ TYPE1 TYPE2 TYPE2))

@@ -1,3 +1,4 @@
+;; TODO once HUB implemented
 ;; (defun (sel))
 (defplookup 
   txnData_into_wcp
