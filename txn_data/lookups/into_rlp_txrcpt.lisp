@@ -1,4 +1,4 @@
-(defpurefun (subphaseId-rlp-txnrcpt)
+(defpurefun (subphaseId-rlp-txrcpt)
   (+ (reduce +
              (for i [1 : 5] (* i [rlpTxRcpt.PHASE i])))
      (* 6 rlpTxRcpt.IS_PREFIX)
@@ -13,15 +13,15 @@
   (
     rlpTxRcpt.ABS_TX_NUM_MAX
     rlpTxRcpt.ABS_TX_NUM
-    (subphaseId-rlp-txnrcpt)
+    (subphaseId-rlp-txrcpt)
     [rlpTxRcpt.INPUT 1]
   )
   ;source columns
   (
-    (* txnData.ABS_TX_NUM_MAX (~ txnData.PHASE_RLP_TXN))
-    (* txnData.ABS_TX_NUM (~ txnData.PHASE_RLP_TXN))
-    (* txnData.PHASE_RLP_TXNRCPT (~ txnData.PHASE_RLP_TXN))
-    (* txnData.OUTGOING_RLP_TXNRCPT (~ txnData.PHASE_RLP_TXN))
+    (* txnData.ABS_TX_NUM_MAX (~ txnData.PHASE_RLP_TXNRCPT))
+    (* txnData.ABS_TX_NUM (~ txnData.PHASE_RLP_TXNRCPT))
+    (* txnData.PHASE_RLP_TXNRCPT (~ txnData.PHASE_RLP_TXNRCPT))
+    (* txnData.OUTGOING_RLP_TXNRCPT (~ txnData.PHASE_RLP_TXNRCPT))
   ))
 
 

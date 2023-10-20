@@ -10,7 +10,7 @@
   create2_shift                     0xff ;; create2 first byte
   const_recipe_1                    1    ;; for RlpAddr, used to discriminate between recipe for create
   const_recipe_2                    2    ;; for RlpAddr, used to discriminate between recipe for create
-  rlp_txnrcpt_subPhaseId_Type       1
+  rlp_txnrcpt_subPhaseId_Type       7
   rlp_txnrcpt_subPhaseId_StatusCode 2
   rlp_txnrcpt_subPhaseId_CumulGas   3
   rlp_txnrcpt_subPhaseId_NoLogEntry 11
