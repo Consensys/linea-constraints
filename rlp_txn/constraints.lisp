@@ -1,15 +1,5 @@
 (module rlpTxn)
 
-(defconst 
-  int_short       128 ;;RLP prefix of a short integer (<56 bytes), defined in the EYP.
-  int_long        183 ;;RLP prefix of a long integer (>55 bytes), defined in the EYP.
-  list_short      192 ;;RLP prefix of a short list (<56 bytes), defined in the EYP.
-  list_long       247 ;;RLP prefix of a long list (>55 bytes), defined in the EYP.
-  G_txdatazero    4   ;;Gas cost for a zero data byte, defined in the EYP.
-  G_txdatanonzero 16  ;;Gas cost for a non-zero data byte, defined in the EYP.
-  LLARGE          16
-  LLARGEMO        15)
-
 (defpurefun (if-not-eq A B then)
   (if-not-zero (- A B)
                then))

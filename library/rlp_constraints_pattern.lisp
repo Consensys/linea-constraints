@@ -1,10 +1,24 @@
 (defconst 
-  int_short  128 ;;RLP prefix of a short integer (<56 bytes), defined in the EYP.
-  int_long   183 ;;RLP prefix of a long integer (>55 bytes), defined in the EYP.
-  list_short 192 ;;RLP prefix of a short list (<56 bytes), defined in the EYP.
-  list_long  247 ;;RLP prefix of a long list (>55 bytes), defined in the EYP.
-  LLARGE     16
-  LLARGEMO   15)
+  int_short                         128  ;;RLP prefix of a short integer (<56 bytes), defined in the EYP.
+  int_long                          183  ;;RLP prefix of a long integer (>55 bytes), defined in the EYP.
+  list_short                        192  ;;RLP prefix of a short list (<56 bytes), defined in the EYP.
+  list_long                         247  ;;RLP prefix of a long list (>55 bytes), defined in the EYP.
+  LLARGE                            16
+  LLARGEMO                          15
+  G_txdatazero                      4    ;;Gas cost for a zero data byte, defined in the EYP.
+  G_txdatanonzero                   16   ;;Gas cost for a non-zero data byte, defined in the EYP.
+  create2_shift                     0xff ;; create2 first byte
+  const_recipe_1                    1    ;; for RlpAddr, used to discriminate between recipe for create
+  const_recipe_2                    2    ;; for RlpAddr, used to discriminate between recipe for create
+  rlp_txnrcpt_subPhaseId_Type       1
+  rlp_txnrcpt_subPhaseId_StatusCode 2
+  rlp_txnrcpt_subPhaseId_CumulGas   3
+  rlp_txnrcpt_subPhaseId_NoLogEntry 11
+  rlp_txnrcpt_subPhaseId_Addr       53
+  rlp_txnrcpt_subPhaseId_TopicBase  65
+  rlp_txnrcpt_subPhaseId_DataLimb   77
+  rlp_txnrcpt_subPhaseId_DataSize   83
+  rlp_txnrcpt_subPhaseId_TopicDelta 96)
 
 ;;  Comparaison to 55 ;;
 (defpurefun (compTo55 length comp acc)

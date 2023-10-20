@@ -68,7 +68,7 @@ RLP_ADDR := rlpAddr/columns.lisp rlpAddr/constraints.lisp
 
 RLP_TXRCPT := rlp_txrcpt/columns.lisp rlp_txrcpt/constraints.lisp
 
-LIBRARY := rlp_patterns/constraints.lisp
+LIBRARY := library/constant.lisp library/rlp_constraints_pattern.lisp
 
 ZKEVM_MODULES := ${ALU} \
 	${BIN} \

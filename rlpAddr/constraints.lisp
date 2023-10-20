@@ -1,12 +1,5 @@
 (module rlpAddr)
 
-(defconst 
-  create2_shift  0xff ;; create2 first byte
-  list_short     0xc0 ;; RLP prefix for a short list
-  int_short      0x80 ;; RLP prefix for a number > 127
-  const_recipe_1 1
-  const_recipe_2 2)
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                              ;;
 ;;    3.1 Heartbeat    ;;

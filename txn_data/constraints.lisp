@@ -31,10 +31,6 @@
 (defpurefun (stamp_progression STAMP)
   (vanishes! (* (will-remain-constant! STAMP) (will-inc! STAMP 1))))
 
-;; TODO: better solution for the zero column ?
-(defconstraint zerocol-must-be-the-zero-column ()
-  (vanishes! ZEROCOL))
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                     ;;
 ;;    2.1 Heartbeat    ;;
@@ -380,5 +376,18 @@
                   (if-zero (shift WCP_RES_LO 6)
                            (= GAS_PRICE (+ (max_priority_fee) BASEFEE))
                            (= GAS_PRICE (max_fee))))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                           ;;
+;;    2.11 Verticalisation for RlpTxnRcpt    ;;
+;;                                           ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defconstraint verticalisation-rlp-txn-rcpt (:guard (remained-constant! ABS))
+  (begin (eq! PHASE_RLP_TXNRCPT rlp_txnrcpt_subPhaseId_Type)
+         (eq! OUTGOING_RLP_TXNRCPT (tx_type))
+         (eq! (next PHASE_RLP_TXNRCPT) rlp_txnrcpt_subPhaseId_StatusCode)
+         (eq! (next OUTGOING_RLP_TXNRCPT) STATUS_CODE)
+         (eq! (shift PHASE_RLP_TXNRCPT 2) rlp_txnrcpt_subPhaseId_CumulGas)
+         (eq! (shift OUTGOING_RLP_TXNRCPT 2) CUMULATIVE_CONSUMED_GAS)))
 
 

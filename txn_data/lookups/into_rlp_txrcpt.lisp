@@ -1,25 +1,27 @@
-(defun (sel-txnData-to-rlpAddr)
-  txnData.IS_DEP)
+(defpurefun (subphaseId-rlp-txnrcpt)
+  (+ (reduce +
+             (for i [1 : 5] (* i [rlpTxRcpt.PHASE i])))
+     (* 6 rlpTxRcpt.IS_PREFIX)
+     (* 12 rlpTxRcpt.IS_TOPIC)
+     (* 24 rlpTxRcpt.IS_DATA)
+     (* 48 rlpTxRcpt.DEPTH_1)
+     (* 96 rlpTxRcpt.IS_TOPIC rlpTxRcpt.INDEX_LOCAL)))
 
 (defplookup 
-  txnData-into-rlpAddr
+  txnData-into-rlpTxnRcpt
   ;reference columns
   (
-    rlpAddr.ADDR_HI
-    rlpAddr.ADDR_LO
-    rlpAddr.DEP_ADDR_HI
-    rlpAddr.DEP_ADDR_LO
-    rlpAddr.NONCE
-    rlpAddr.RECIPE_1
+    rlpTxRcpt.ABS_TX_NUM_MAX
+    rlpTxRcpt.ABS_TX_NUM
+    (subphaseId-rlp-txnrcpt)
+    [rlpTxRcpt.INPUT 1]
   )
   ;source columns
   (
-    (* txnData.FROM_HI (sel-txnData-to-rlpAddr))
-    (* txnData.FROM_LO (sel-txnData-to-rlpAddr))
-    (* txnData.TO_HI (sel-txnData-to-rlpAddr))
-    (* txnData.TO_LO (sel-txnData-to-rlpAddr))
-    (* txnData.NONCE (sel-txnData-to-rlpAddr))
-    (* txnData.IS_DEP (sel-txnData-to-rlpAddr))
+    (* txnData.ABS_TX_NUM_MAX (~ txnData.PHASE_RLP_TXN))
+    (* txnData.ABS_TX_NUM (~ txnData.PHASE_RLP_TXN))
+    (* txnData.PHASE_RLP_TXNRCPT (~ txnData.PHASE_RLP_TXN))
+    (* txnData.OUTGOING_RLP_TXNRCPT (~ txnData.PHASE_RLP_TXN))
   ))
 
 
