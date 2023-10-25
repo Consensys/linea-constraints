@@ -21,7 +21,8 @@
   CT_MAX_CALL   1
   CT_MAX_CREATE 2
   CT_MAX_SSTORE 0
-  CT_MAX_RETURN 0)
+  CT_MAX_RETURN 0
+  LT            0x10)
 
 (defun (flag_sum)
   (+ IS_JUMP IS_JUMPI IS_RDC IS_CDL IS_CALL IS_CREATE IS_SSTORE IS_RETURN))
@@ -124,7 +125,7 @@
 ;; IS_CREATE = 0 => OOB_EVENT_2 = 0
 (defconstraint is-create-oob-event ()
   (if-zero IS_CREATE
-           (vanishes! OOB_EVENT_2)))
+           (vanishes! [OOB_EVENT 2])))
 
 ;; for lookups check commented code in mxp and bin/hub_into_bin.lisp
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -138,9 +139,47 @@
 
 (defconstraint flag-sum-equal-one ()
   (if-not-zero STAMP
-               (eq! 1 (flag_sum))))
+               (eq! (flag_sum) 1)))
 
 (defconstraint decoding ()
   (eq! INCOMING_INST (wght_sum)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                               ;;
+;;   Populating lookup columns   ;;
+;;                               ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun (standing-hypothesis)
+  (did-change! STAMP))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                       ;;
+;;    3.2 For JUMP       ;;
+;;                       ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun (jump-hypothesis)
+  (eq! IS_JUMP 1))
+
+(defun (pc_new_hi)
+  [INCOMING_DATA 1])
+
+(defun (pc_new_lo)
+  [INCOMING_DATA 2])
+
+(defun (codesize)
+  [INCOMING_DATA 5])
+
+(defconstraint valid-jump (:guard (and! (standing-hypothesis) (jump-hypothesis)))
+  (begin (eq! WCP 1)
+         (vanishes! ADD)
+         (eq! OUTGOING_INST LT)
+         (eq! [OUTGOING_DATA 1] (pc_new_hi))
+         (eq! [OUTGOING_DATA 2] (pc_new_lo))
+         (eq! [OUTGOING_DATA 3] 0)
+         (eq! [OUTGOING_DATA 4] (codesize))))
+
+(defconstraint set-oob-event (:guard (and! (standing-hypothesis) (jump-hypothesis)))
+  (begin (eq! [OOB_EVENT 1] (- 1 OUTGOING_RES_LO))
+         (vanishes! [OOB_EVENT 2])))
 
 
