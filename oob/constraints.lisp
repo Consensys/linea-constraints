@@ -127,5 +127,20 @@
            (vanishes! OOB_EVENT_2)))
 
 ;; for lookups check commented code in mxp and bin/hub_into_bin.lisp
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                             ;;
+;;    2.5 instruction decoding ;;
+;;                             ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defconstraint flag-sum-vanishes ()
+  (if-zero STAMP
+           (vanishes! (flag_sum))))
+
+(defconstraint flag-sum-equal-one ()
+  (if-not-zero STAMP
+               (eq! 1 (flag_sum))))
+
+(defconstraint decoding ()
+  (eq! INCOMING_INST (wght_sum)))
 
 
