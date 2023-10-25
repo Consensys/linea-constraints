@@ -63,6 +63,21 @@
 (defconstraint stamp-increments ()
   (any! (remained-constant! STAMP) (did-inc! STAMP 1)))
 
+(defconstraint counter-reset ()
+  (if-not-zero (remained-constant! STAMP)
+               (vanishes! CT)))
+
+(defconstraint ct-max ()
+  (eq! CT_MAX (maxct_sum)))
+
+(defconstraint non-trivial-instruction-counter-cycle (:domain {-1})
+  (if-not-zero (vanishes! STAMP)
+               (if-eq-else CT CT_MAX (will-inc! STAMP 1) (will-inc! CT 1))))
+
+(defconstraint final-row (:domain {-1})
+  (if-not-zero (vanishes! STAMP)
+               (eq! CT CT_MAX)))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                             ;;
 ;;    2.3 counter constancy    ;;
