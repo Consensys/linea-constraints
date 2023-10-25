@@ -68,15 +68,15 @@
                (vanishes! CT)))
 
 (defconstraint ct-max ()
-  (eq! CT_MAX (maxct_sum)))
+  (= CT_MAX (maxct_sum)))
 
 (defconstraint non-trivial-instruction-counter-cycle (:domain {-1})
-  (if-not-zero (vanishes! STAMP)
+  (if-not-zero STAMP
                (if-eq-else CT CT_MAX (will-inc! STAMP 1) (will-inc! CT 1))))
 
 (defconstraint final-row (:domain {-1})
-  (if-not-zero (vanishes! STAMP)
-               (eq! CT CT_MAX)))
+  (if-not-zero STAMP
+               (= CT CT_MAX)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                             ;;
