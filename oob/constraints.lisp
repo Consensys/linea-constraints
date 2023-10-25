@@ -22,7 +22,8 @@
   CT_MAX_CREATE 2
   CT_MAX_SSTORE 0
   CT_MAX_RETURN 0
-  LT            0x10)
+  LT            0x10
+  ISZERO        0x15)
 
 (defun (flag_sum)
   (+ IS_JUMP IS_JUMPI IS_RDC IS_CDL IS_CALL IS_CREATE IS_SSTORE IS_RETURN))
@@ -178,8 +179,48 @@
          (eq! [OUTGOING_DATA 3] 0)
          (eq! [OUTGOING_DATA 4] (codesize))))
 
-(defconstraint set-oob-event (:guard (and! (standing-hypothesis) (jump-hypothesis)))
+(defconstraint set-oob-event-jump (:guard (and! (standing-hypothesis) (jump-hypothesis)))
   (begin (eq! [OOB_EVENT 1] (- 1 OUTGOING_RES_LO))
          (vanishes! [OOB_EVENT 2])))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                       ;;
+;;    3.3 For JUMPI      ;;
+;;                       ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun (jumpi-hypothesis)
+  (eq! IS_JUMP 1))
+
+;; Here we re-use some aliases from the previous section
+(defun (jump_condition_hi)
+  [INCOMING_DATA 3])
+
+(defun (jump_condition_lo)
+  [INCOMING_DATA 4])
+
+(defconstraint valid-jumpi (:guard (and! (standing-hypothesis) (jumpi-hypothesis)))
+  (begin (eq! WCP 1)
+         (vanishes! ADD)
+         (eq! OUTGOING_INST LT)
+         (eq! [OUTGOING_DATA 1] (pc_new_hi))
+         (eq! [OUTGOING_DATA 2] (pc_new_lo))
+         (eq! [OUTGOING_DATA 3] 0)
+         (eq! [OUTGOING_DATA 4] (codesize))))
+
+(defconstraint valid-jumpi-future (:domain {1} :guard (and! (standing-hypothesis) (jumpi-hypothesis)))
+  (begin (eq! WCP 1)
+         (vanishes! ADD)
+         (eq! OUTGOING_INST ISZERO)
+         (eq! [OUTGOING_DATA 1] (jump_condition_hi))
+         (eq! [OUTGOING_DATA 2] (jump_condition_lo))
+         (eq! [OUTGOING_DATA 3] 0)
+         (eq! [OUTGOING_DATA 4] 0)))
+
+(defconstraint set-oob-event-jumpi (:guard (and! (standing-hypothesis) (jumpi-hypothesis)))
+  (begin (eq! [OOB_EVENT 1]
+              (* (- 1 (next OUTGOING_RES_LO))
+                 (- 1 OUTGOING_RES_LO)))
+         (eq! [OOB_EVENT 2]
+              (- 1 (next OUTGOING_RES_LO)))))
 
 
