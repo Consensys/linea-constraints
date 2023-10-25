@@ -1,5 +1,10 @@
 (module oob)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                     ;;
+;; 2.1 shorthands and  ;;
+;;     constants       ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;
 (defconst 
   C_JUMP        0x56
   C_JUMPI       0x57
@@ -19,39 +24,44 @@
   CT^INF_RETURN 0)
 
 (defun (flag_sum)
-  (IS_JUMP + IS_JUMPI + IS_RDC + IS_CDL + IS_CALL + IS_CREATE + IS_SSTORE + IS_RETURN))
+  (+ IS_JUMP IS_JUMPI IS_RDC IS_CDL IS_CALL IS_CREATE IS_SSTORE IS_RETURN))
 
 (defun (wght_sum)
-  (C_JUMP*IS_JUMP +
-                  C_JUMPI*IS_JUMPI
-                  +
-                  C_RDC*IS_RDC
-                  +
-                  C_CDL*IS_CDL
-                  +
-                  C_CALL*IS_CALL
-                  +
-                  C_CREATE*IS_CREATE
-                  +
-                  C_SSTORE*IS_SSTORE
-                  +
-                  C_RETURN*IS_RETURN))
+  (+ (* C_JUMP IS_JUMP)
+     (* C_JUMPI IS_JUMPI)
+     (* C_RDC IS_RDC)
+     (* C_CDL IS_CDL)
+     (* C_CALL IS_CALL)
+     (* C_CREATE IS_CREATE)
+     (* C_SSTORE IS_SSTORE)
+     (* C_RETURN IS_RETURN)))
 
 (defun (maxct_sum)
-  (CT^INF_JUMP*IS_JUMP +
-                       CT^INF_JUMPI*IS_JUMPI
-                       +
-                       CT^INF_RDC*IS_RDC
-                       +
-                       CT^INF_CDL*IS_CDL
-                       +
-                       CT^INF_CALL*IS_CALL
-                       +
-                       CT^INF_CREATE*IS_CREATE
-                       +
-                       CT^INF_SSTORE*IS_SSTORE
-                       +
-                       CT^INF_RETURN*IS_RETURN))
+  (+ (* CT^INF_JUMP IS_JUMP)
+     (* CT^INF_JUMPI IS_JUMPI)
+     (* CT^INF_RDC IS_RDC)
+     (* CT^INF_CDL IS_CDL)
+     (* CT^INF_CALL IS_CALL)
+     (* CT^INF_CREATE IS_CREATE)
+     (* CT^INF_SSTORE IS_SSTORE)
+     (* CT^INF_RETURN IS_RETURN)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                     ;;
+;;    2.2 heartbeat    ;;
+;;                     ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;
+(defconstraint first-row (:domain {0})
+  (vanishes! STAMP))
+
+(defconstraint h2 ()
+  (if-zero STAMP
+           (all! (vanishes! CT)
+                 (vanishes! CT_MAX)
+                 (vanishes! (+ WCP ADD (flag_sum))))))
+
+(defconstraint stamp-increments ()
+  (any! (remained-constant! STAMP) (did-inc! STAMP 1)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                             ;;
