@@ -6,7 +6,7 @@
   CT_MAX
   (INCOMING_DATA :array [6])
   (OOB_EVENT :boolean :array [2])
-  (INCOMING_INST :display :opcode)
+  (INCOMING_INST :display :opcode) ;; all calls and creates are grouped under the same instruction
   (IS_JUMP :boolean)
   (IS_JUMPI :boolean)
   (IS_RDC :boolean)

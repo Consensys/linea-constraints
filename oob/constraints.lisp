@@ -14,14 +14,14 @@
   C_CREATE      0xCE
   C_SSTORE      0x55
   C_RETURN      0xF3
-  CT^INF_JUMP   0
-  CT^INF_JUMPI  1
-  CT^INF_RDC    2
-  CT^INF_CDL    0
-  CT^INF_CALL   1
-  CT^INF_CREATE 2
-  CT^INF_SSTORE 0
-  CT^INF_RETURN 0)
+  CT_MAX_JUMP   0
+  CT_MAX_JUMPI  1
+  CT_MAX_RDC    2
+  CT_MAX_CDL    0
+  CT_MAX_CALL   1
+  CT_MAX_CREATE 2
+  CT_MAX_SSTORE 0
+  CT_MAX_RETURN 0)
 
 (defun (flag_sum)
   (+ IS_JUMP IS_JUMPI IS_RDC IS_CDL IS_CALL IS_CREATE IS_SSTORE IS_RETURN))
@@ -37,14 +37,14 @@
      (* C_RETURN IS_RETURN)))
 
 (defun (maxct_sum)
-  (+ (* CT^INF_JUMP IS_JUMP)
-     (* CT^INF_JUMPI IS_JUMPI)
-     (* CT^INF_RDC IS_RDC)
-     (* CT^INF_CDL IS_CDL)
-     (* CT^INF_CALL IS_CALL)
-     (* CT^INF_CREATE IS_CREATE)
-     (* CT^INF_SSTORE IS_SSTORE)
-     (* CT^INF_RETURN IS_RETURN)))
+  (+ (* CT_MAX_JUMP IS_JUMP)
+     (* CT_MAX_JUMPI IS_JUMPI)
+     (* CT_MAX_RDC IS_RDC)
+     (* CT_MAX_CDL IS_CDL)
+     (* CT_MAX_CALL IS_CALL)
+     (* CT_MAX_CREATE IS_CREATE)
+     (* CT_MAX_SSTORE IS_SSTORE)
+     (* CT_MAX_RETURN IS_RETURN)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                     ;;
@@ -54,11 +54,11 @@
 (defconstraint first-row (:domain {0})
   (vanishes! STAMP))
 
-(defconstraint h2 ()
+(defconstraint padding-vanishing ()
   (if-zero STAMP
-           (all! (vanishes! CT)
-                 (vanishes! CT_MAX)
-                 (vanishes! (+ WCP ADD (flag_sum))))))
+           (begin (vanishes! CT)
+                  (vanishes! CT_MAX)
+                  (vanishes! (+ WCP ADD (flag_sum))))))
 
 (defconstraint stamp-increments ()
   (any! (remained-constant! STAMP) (did-inc! STAMP 1)))
@@ -68,7 +68,7 @@
                (vanishes! CT)))
 
 (defconstraint ct-max ()
-  (= CT_MAX (maxct_sum)))
+  (eq! CT_MAX (maxct_sum)))
 
 (defconstraint non-trivial-instruction-counter-cycle (:domain {-1})
   (if-not-zero STAMP
@@ -76,7 +76,7 @@
 
 (defconstraint final-row (:domain {-1})
   (if-not-zero STAMP
-               (= CT CT_MAX)))
+               (eq! CT CT_MAX)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                             ;;
@@ -85,10 +85,20 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defconstraint counter-constancy ()
   (begin (counter-constancy CT STAMP)
+         (debug (counter-constancy CT CT_MAX))
          (for i [2] (counter-constancy CT [OOB_EVENT i]))
          (for i [6] (counter-constancy CT [INCOMING_DATA i]))
-         (counter-constancy CT INCOMING_INST)))
+         (counter-constancy CT INCOMING_INST)
+         (debug (counter-constancy CT IS_JUMP))
+         (debug (counter-constancy CT IS_JUMPI))
+         (debug (counter-constancy CT IS_RDC))
+         (debug (counter-constancy CT IS_CDL))
+         (debug (counter-constancy CT IS_CALL))
+         (debug (counter-constancy CT IS_CREATE))
+         (debug (counter-constancy CT IS_SSTORE))
+         (debug (counter-constancy CT IS_RETURN))))
 
+;; TODO: write all contraints and run the non-implied ones only in debug mode
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                             ;;
 ;;    2.4 binary constraints   ;;
@@ -115,5 +125,7 @@
 (defconstraint is-create-oob-event ()
   (if-zero IS_CREATE
            (vanishes! OOB_EVENT_2)))
+
+;; for lookups check commented code in mxp and bin/hub_into_bin.lisp
 
 

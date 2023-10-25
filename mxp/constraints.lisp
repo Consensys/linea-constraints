@@ -136,7 +136,7 @@
 (defconstraint stamp-increment-when-roob-or-noop ()
   (if-not-zero (+ ROOB NOOP)
                (begin (will-inc! STAMP 1)
-                      (= MXPX ROOB))))
+                      (eq! MXPX ROOB))))
 
 (defconstraint non-trivial-instruction-counter-cycle ()
   (if-not-zero STAMP
@@ -153,9 +153,9 @@
 (defconstraint final-row (:domain {-1})
   (if-not-zero STAMP
                (if-zero (force-bool (+ ROOB NOOP))
-                        (= CT (if-zero MXPX
-                                    SHORTCYCLE
-                                    LONGCYCLE)))))
+                        (eq! CT (if-zero MXPX
+                                      SHORTCYCLE
+                                      LONGCYCLE)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                               ;;
