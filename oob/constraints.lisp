@@ -27,7 +27,7 @@
   ADD_OPCODE    0x01
   GT            0x11
   EQ            0x14
-  G_CALLSTIPEND 0xFEED) ;; TODO: missing
+  G_CALLSTIPEND 2300)
 
 (defun (flag_sum)
   (+ IS_JUMP IS_JUMPI IS_RDC IS_CDL IS_CALL IS_CREATE IS_SSTORE IS_RETURN))
@@ -426,6 +426,27 @@
 
 (defconstraint set-oob-event-sstore (:guard (and! (standing-hypothesis) (sstore-hypothesis)))
   (begin (eq! [OOB_EVENT 1] (- 1 OUTGOING_RES_LO))
+         (vanishes! [OOB_EVENT 2])))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                       ;;
+;; 3.9 For               ;;
+;; RETURN                ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun (return-hypothesis)
+  (eq! IS_RETURN 1))
+
+(defconstraint valid-return (:guard (and! (standing-hypothesis) (return-hypothesis)))
+  (begin (eq! WCP 1)
+         (vanishes! ADD)
+         (eq! OUTGOING_INST LT)
+         (vanishes! [OUTGOING_DATA 1])
+         (eq! [OUTGOING_DATA 2] 24576)
+         (eq! [OUTGOING_DATA 3] (size_hi))
+         (eq! [OUTGOING_DATA 4] (size_lo))))
+
+(defconstraint set-oob-event-return (:guard (and! (standing-hypothesis) (return-hypothesis)))
+  (begin (eq! [OOB_EVENT 1] OUTGOING_RES_LO)
          (vanishes! [OOB_EVENT 2])))
 
 
