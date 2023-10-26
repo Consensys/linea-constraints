@@ -25,7 +25,8 @@
   LT            0x10
   ISZERO        0x15
   ADD_OPCODE    0x01
-  GT            0x11)
+  GT            0x11
+  EQ            0x14)
 
 (defun (flag_sum)
   (+ IS_JUMP IS_JUMPI IS_RDC IS_CDL IS_CALL IS_CREATE IS_SSTORE IS_RETURN))
@@ -302,6 +303,51 @@
 
 (defconstraint set-oob-event-cdl (:guard (and! (standing-hypothesis) (cdl-hypothesis)))
   (begin (eq! [OOB_EVENT 1] (- 1 OUTGOING_RES_LO))
+         (vanishes! [OOB_EVENT 2])))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                       ;;
+;;    3.6 For CALL's     ;;
+;;                       ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun (call-hypothesis)
+  (eq! IS_CALL 1))
+
+(defun (val_hi)
+  [INCOMING_DATA 1])
+
+(defun (val_lo)
+  [INCOMING_DATA 2])
+
+(defun (bal)
+  [INCOMING_DATA 3])
+
+(defun (csd)
+  [INCOMING_DATA 6])
+
+(defconstraint valid-call (:guard (and! (standing-hypothesis) (call-hypothesis)))
+  (begin (eq! WCP 1)
+         (vanishes! ADD)
+         (eq! OUTGOING_INST LT)
+         (vanishes! [OUTGOING_DATA 1])
+         (eq! [OUTGOING_DATA 2] (bal))
+         (eq! [OUTGOING_DATA 3] (val_hi))
+         (eq! [OUTGOING_DATA 4] (val_lo))))
+
+(defconstraint valid-call-future (:guard (and! (standing-hypothesis) (call-hypothesis)))
+  (begin (eq! (next WCP) 1)
+         (vanishes! (next ADD))
+         (eq! OUTGOING_INST EQ)
+         (vanishes! (next [OUTGOING_DATA 1]))
+         (eq! (next [OUTGOING_DATA 2]) (csd))
+         (vanishes! (next [OUTGOING_DATA 3]))
+         (eq! (next [OUTGOING_DATA 4] 1024))))
+
+(defconstraint set-oob-event-call (:guard (and! (standing-hypothesis) (call-hypothesis)))
+  (begin (eq! [OOB_EVENT 1]
+              (+ OUTGOING_RES_LO
+                 (* (- 1 OUTGOING_RES_LO)
+                    (- 1 (next OUTGOING_RES_LO)))))
          (vanishes! [OOB_EVENT 2])))
 
 
