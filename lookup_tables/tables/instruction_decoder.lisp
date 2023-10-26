@@ -98,4 +98,12 @@
     (MXP_TYPE_2 :boolean)
     (MXP_TYPE_3 :boolean)
     (MXP_TYPE_4 :boolean)
-    (MXP_TYPE_5 :boolean))
+    (MXP_TYPE_5 :boolean)
+
+    ;;
+    ;; ROM columns
+    ;;
+
+    (IS_PUSH     :boolean)
+    (IS_JUMPDEST :boolean)
+    )
