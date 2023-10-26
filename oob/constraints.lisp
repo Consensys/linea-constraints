@@ -26,7 +26,8 @@
   ISZERO        0x15
   ADD_OPCODE    0x01
   GT            0x11
-  EQ            0x14)
+  EQ            0x14
+  G_CALLSTIPEND 0xFEED) ;; TODO: missing
 
 (defun (flag_sum)
   (+ IS_JUMP IS_JUMPI IS_RDC IS_CDL IS_CALL IS_CREATE IS_SSTORE IS_RETURN))
@@ -402,5 +403,29 @@
                  (+ (has_code)
                     (* (- 1 (has_code))
                        (- 1 (shift OUTGOING_RES_LO 2))))))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                       ;;
+;; 3.8 For               ;;
+;; SSTORE                ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun (sstore-hypothesis)
+  (eq! IS_SSTORE 1))
+
+(defun (gas)
+  [INCOMING_DATA 5])
+
+(defconstraint valid-sstore (:guard (and! (standing-hypothesis) (sstore-hypothesis)))
+  (begin (eq! WCP 1)
+         (vanishes! ADD)
+         (eq! OUTGOING_INST LT)
+         (vanishes! [OUTGOING_DATA 1])
+         (eq! [OUTGOING_DATA 2] G_CALLSTIPEND)
+         (vanishes! [OUTGOING_DATA 3])
+         (eq! [OUTGOING_DATA 4] (gas))))
+
+(defconstraint set-oob-event-sstore (:guard (and! (standing-hypothesis) (sstore-hypothesis)))
+  (begin (eq! [OOB_EVENT 1] (- 1 OUTGOING_RES_LO))
+         (vanishes! [OOB_EVENT 2])))
 
 
