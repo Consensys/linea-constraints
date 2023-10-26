@@ -92,9 +92,8 @@
     ;;
     ;; Billing settings
     ;;
-    PER_UNIT
-    (BILLING_BY_WORD :boolean)
-    (BILLING_BY_BYTE :boolean)
+    BILLING_PER_WORD
+    BILLING_PER_BYTE
     (MXP_TYPE_1 :boolean)
     (MXP_TYPE_2 :boolean)
     (MXP_TYPE_3 :boolean)
