@@ -24,7 +24,7 @@
   CT_MAX_RETURN 0
   LT            0x10
   ISZERO        0x15
-  ADD           0x01
+  ADD_OPCODE    0x01
   GT            0x11)
 
 (defun (flag_sum)
@@ -248,7 +248,7 @@
 (defun (rds)
   [INCOMING_DATA 5])
 
-(defconstraint valid-rds (:guard (and! (standing-hypothesis) (rds-hypothesis)))
+(defconstraint valid-rds (:guard (and! (standing-hypothesis) (rdc-hypothesis)))
   (begin (eq! WCP 1)
          (vanishes! ADD)
          (eq! OUTGOING_INST ISZERO)
@@ -257,23 +257,23 @@
          (vanishes! [OUTGOING_DATA 3])
          (vanishes! [OUTGOING_DATA 4])))
 
-(defconstraint valid-rds-future (:guard (and! (standing-hypothesis) (rds-hypothesis)))
+(defconstraint valid-rds-future (:guard (and! (standing-hypothesis) (rdc-hypothesis)))
   (begin (vanishes! (next WCP))
          (eq! (next ADD) OUTGOING_RES_LO)
-         (eq! (next OUTGOING_INST) ADD)
+         (eq! (next OUTGOING_INST) ADD_OPCODE)
          (vanishes! (next [OUTGOING_DATA 1]))
          (eq! (next [OUTGOING_DATA 2]) (offset_lo))
          (vanishes! (next [OUTGOING_DATA 3]))
          (eq! (next [OUTGOING_DATA 4]) (size_lo))))
 
-(defconstraint valid-rds-future-future (:guard (and! (standing-hypothesis) (rds-hypothesis)))
+(defconstraint valid-rds-future-future (:guard (and! (standing-hypothesis) (rdc-hypothesis)))
   (begin (eq! (shift WCP 2) OUTGOING_RES_LO)
          (vanishes! (shift ADD 2))
          (eq! (shift OUTGOING_INST 2) GT)
          (vanishes! (shift [OUTGOING_DATA 3] 2))
          (eq! (shift [OUTGOING_DATA 4] 2) (rds))))
 
-(defconstraint set-oob-event-rds (:guard (and! (standing-hypothesis) (rds-hypothesis)))
+(defconstraint set-oob-event-rds (:guard (and! (standing-hypothesis) (rdc-hypothesis)))
   (begin (eq! [OOB_EVENT 1]
               (+ (- 1 OUTGOING_RES_LO)
                  (+ OUTGOING_RES_LO (shift OUTGOING_RES_LO 2))))
