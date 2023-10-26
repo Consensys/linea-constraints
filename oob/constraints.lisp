@@ -341,7 +341,7 @@
          (vanishes! (next [OUTGOING_DATA 1]))
          (eq! (next [OUTGOING_DATA 2]) (csd))
          (vanishes! (next [OUTGOING_DATA 3]))
-         (eq! (next [OUTGOING_DATA 4] 1024))))
+         (eq! (next [OUTGOING_DATA 4]) 1024)))
 
 (defconstraint set-oob-event-call (:guard (and! (standing-hypothesis) (call-hypothesis)))
   (begin (eq! [OOB_EVENT 1]
@@ -349,5 +349,58 @@
                  (* (- 1 OUTGOING_RES_LO)
                     (- 1 (next OUTGOING_RES_LO)))))
          (vanishes! [OOB_EVENT 2])))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                       ;;
+;; 3.7 For               ;;
+;; CREATE's              ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun (create-hypothesis)
+  (eq! IS_CREATE 1))
+
+;; Here we re-use some aliases from the previous section
+(defun (nonce)
+  [INCOMING_DATA 4])
+
+(defun (has_code)
+  [INCOMING_DATA 5])
+
+(defconstraint valid-create (:guard (and! (standing-hypothesis) (create-hypothesis)))
+  (begin (eq! WCP 1)
+         (vanishes! ADD)
+         (eq! OUTGOING_INST LT)
+         (vanishes! [OUTGOING_DATA 1])
+         (eq! [OUTGOING_DATA 2] (bal))
+         (eq! [OUTGOING_DATA 3] (val_hi))
+         (eq! [OUTGOING_DATA 4] (val_lo))))
+
+(defconstraint valid-create-future (:guard (and! (standing-hypothesis) (create-hypothesis)))
+  (begin (eq! (next WCP) 1)
+         (vanishes! (next ADD))
+         (eq! (next OUTGOING_INST) LT)
+         (vanishes! (next [OUTGOING_DATA 1]))
+         (eq! (next [OUTGOING_DATA 2]) (csd))
+         (vanishes! (next [OUTGOING_DATA 3]))
+         (eq! (next [OUTGOING_DATA 4]) 1024)))
+
+(defconstraint valid-create-future-future (:guard (and! (standing-hypothesis) (create-hypothesis)))
+  (begin (eq! (shift WCP 2) 1)
+         (vanishes! (shift ADD 2))
+         (eq! (shift OUTGOING_INST 2) ISZERO)
+         (vanishes! (shift [OUTGOING_DATA 1] 2))
+         (eq! (shift [OUTGOING_DATA 2] 2) (nonce))
+         (vanishes! (shift [OUTGOING_DATA 3] 2))
+         (vanishes! (shift [OUTGOING_DATA 4] 2))))
+
+(defconstraint set-oob-event-create (:guard (and! (standing-hypothesis) (create-hypothesis)))
+  (begin (eq! [OOB_EVENT 1]
+              (+ OUTGOING_RES_LO
+                 (* (- 1 OUTGOING_RES_LO)
+                    (- 1 (next OUTGOING_RES_LO)))))
+         (eq! [OOB_EVENT 2]
+              (* (- 1 [OOB_EVENT 1])
+                 (+ (has_code)
+                    (* (- 1 (has_code))
+                       (- 1 (shift OUTGOING_RES_LO 2))))))))
 
 
