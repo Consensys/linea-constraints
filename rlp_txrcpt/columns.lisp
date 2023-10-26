@@ -10,7 +10,7 @@
   (LIMB_CONSTRUCTED :boolean)
   INDEX
   INDEX_LOCAL
-  (PHASE :boolean :array [1:5])
+  (PHASE :boolean :array [5])
   (PHASE_END :boolean)
   COUNTER
   nSTEP

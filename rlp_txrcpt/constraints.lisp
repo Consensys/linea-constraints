@@ -20,7 +20,7 @@
          (is-binary IS_TOPIC)
          (is-binary IS_DATA)
          (is-binary BIT)
-         (for k [1 : 5] (is-binary [PHASE k]))))
+         (for k [5] (is-binary [PHASE k]))))
 
 ;;    4.1.1 Constancy columns  ;;
 ;; Def block-constant
@@ -94,9 +94,9 @@
 
 (defconstraint phase-exclusion ()
   (if-zero ABS_TX_NUM
-           (vanishes! (reduce + (for i [1 : 5] [PHASE i])))
+           (vanishes! (reduce + (for i [5] [PHASE i])))
            (eq! 1
-                (reduce + (for i [1 : 5] [PHASE i])))))
+                (reduce + (for i [5] [PHASE i])))))
 
 (defconstraint ABS_TX_NUM-evolution ()
   (eq! ABS_TX_NUM
@@ -119,10 +119,10 @@
 (defconstraint no-end-no-changephase (:guard ABS_TX_NUM)
   (if-zero PHASE_END
            (eq! (reduce +
-                        (for i [1 : 5] (* i [PHASE i])))
+                        (for i [5] (* i [PHASE i])))
                 (reduce +
                         (for i
-                             [1 : 5]
+                             [5]
                              (* i (next [PHASE i])))))))
 
 (defconstraint phase-transition ()
@@ -222,7 +222,7 @@
          (begin (eq! nSTEP 1)
                 (if-zero [INPUT 1]
                          (eq! LIMB
-                              (* int_short (^ 256 LLARGEMO)))
+                              (* INT_SHORT (^ 256 LLARGEMO)))
                          (eq! LIMB
                               (* [INPUT 1] (^ 256 LLARGEMO))))
                 (eq! nBYTES 1)
@@ -244,7 +244,7 @@
                   (eq! PHASE_SIZE 256)
                   (eq! nSTEP 1)
                   (eq! LIMB
-                       (+ (* (+ int_long 2) (^ 256 LLARGEMO))
+                       (+ (* (+ INT_LONG 2) (^ 256 LLARGEMO))
                           (* PHASE_SIZE (^ 256 13))))
                   (eq! nBYTES 3)
                   (vanishes! INDEX_LOCAL))))
@@ -280,7 +280,7 @@
                   (if-zero [INPUT 1]
                            (begin (eq! nSTEP 1)
                                   (eq! LIMB
-                                       (* list_short (^ 256 LLARGEMO)))
+                                       (* LIST_SHORT (^ 256 LLARGEMO)))
                                   (eq! nBYTES 1)
                                   (eq! PHASE_END 1))
                            (begin (eq! nSTEP 8)
@@ -305,7 +305,7 @@
                   (eq! LC 1)
                   (if-eq DONE 1
                          (begin (eq! (shift LIMB -2)
-                                     (* (+ int_short 20) (^ 256 LLARGEMO)))
+                                     (* (+ INT_SHORT 20) (^ 256 LLARGEMO)))
                                 (eq! (shift nBYTES -2) 1)
                                 (eq! (prev LIMB)
                                      (* [INPUT 1] (^ 256 12)))
@@ -322,7 +322,7 @@
                 (eq! nSTEP 1)
                 (if-zero LOCAL_SIZE
                          (begin (eq! LIMB
-                                     (* list_short (^ 256 LLARGEMO)))
+                                     (* LIST_SHORT (^ 256 LLARGEMO)))
                                 (eq! nBYTES 1)
                                 (eq! (next [INPUT 2]) INDEX_LOCAL)
                                 (vanishes! (+ (- 1 (next IS_PREFIX))
@@ -330,10 +330,10 @@
                                               (- 1 (next IS_DATA)))))
                          (begin (if-eq-else LOCAL_SIZE 33
                                             (begin (eq! LIMB
-                                                        (* (+ list_short LOCAL_SIZE) (^ 256 LLARGEMO)))
+                                                        (* (+ LIST_SHORT LOCAL_SIZE) (^ 256 LLARGEMO)))
                                                    (eq! nBYTES 1))
                                             (begin (eq! LIMB
-                                                        (+ (* (+ list_long 1) (^ 256 LLARGEMO))
+                                                        (+ (* (+ LIST_LONG 1) (^ 256 LLARGEMO))
                                                            (* LOCAL_SIZE (^ 256 14))))
                                                    (eq! nBYTES 2)))
                                 (vanishes! (+ (next IS_PREFIX)
@@ -349,7 +349,7 @@
                                      (* 2
                                         (+ (shift INDEX_LOCAL -3) 1)))
                                 (eq! (shift LIMB -2)
-                                     (* (+ int_short 32) (^ 256 LLARGEMO)))
+                                     (* (+ INT_SHORT 32) (^ 256 LLARGEMO)))
                                 (eq! (shift nBYTES -2) 1)
                                 (eq! (prev LIMB) [INPUT 1])
                                 (eq! (prev nBYTES) LLARGE)
@@ -371,7 +371,7 @@
                          (begin (eq! nSTEP 1)
                                 (vanishes! LC_CORRECTION)
                                 (eq! LIMB
-                                     (* int_short (^ 256 LLARGEMO)))
+                                     (* INT_SHORT (^ 256 LLARGEMO)))
                                 (eq! nBYTES 1)
                                 (vanishes! LOG_ENTRY_SIZE)
                                 (if-zero PHASE_SIZE

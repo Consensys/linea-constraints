@@ -1,24 +1,24 @@
 (defconst 
-  int_short                         128  ;;RLP prefix of a short integer (<56 bytes), defined in the EYP.
-  int_long                          183  ;;RLP prefix of a long integer (>55 bytes), defined in the EYP.
-  list_short                        192  ;;RLP prefix of a short list (<56 bytes), defined in the EYP.
-  list_long                         247  ;;RLP prefix of a long list (>55 bytes), defined in the EYP.
-  LLARGE                            16
-  LLARGEMO                          15
-  G_txdatazero                      4    ;;Gas cost for a zero data byte, defined in the EYP.
-  G_txdatanonzero                   16   ;;Gas cost for a non-zero data byte, defined in the EYP.
-  create2_shift                     0xff ;; create2 first byte
-  const_recipe_1                    1    ;; for RlpAddr, used to discriminate between recipe for create
-  const_recipe_2                    2    ;; for RlpAddr, used to discriminate between recipe for create
-  rlp_txnrcpt_subPhaseId_Type       7
-  rlp_txnrcpt_subPhaseId_StatusCode 2
-  rlp_txnrcpt_subPhaseId_CumulGas   3
-  rlp_txnrcpt_subPhaseId_NoLogEntry 11
-  rlp_txnrcpt_subPhaseId_Addr       53
-  rlp_txnrcpt_subPhaseId_TopicBase  65
-  rlp_txnrcpt_subPhaseId_DataLimb   77
-  rlp_txnrcpt_subPhaseId_DataSize   83
-  rlp_txnrcpt_subPhaseId_TopicDelta 96)
+  INT_SHORT                           128  ;;RLP prefix of a short integer (<56 bytes), defined in the EYP.
+  INT_LONG                            183  ;;RLP prefix of a long integer (>55 bytes), defined in the EYP.
+  LIST_SHORT                          192  ;;RLP prefix of a short list (<56 bytes), defined in the EYP.
+  LIST_LONG                           247  ;;RLP prefix of a long list (>55 bytes), defined in the EYP.
+  LLARGE                              16
+  LLARGEMO                            15
+  G_TXDATA_ZERO                       4    ;;Gas cost for a zero data byte, defined in the EYP.
+  G_TXDATA_NONZERO                    16   ;;Gas cost for a non-zero data byte, defined in the EYP.
+  CREATE2_SHIFT                       0xff ;; create2 first byte
+  RLPADDR_CONST_RECIPE_1              1    ;; for RlpAddr, used to discriminate between recipe for create
+  RLPADDR_CONST_RECIPE_2              2    ;; for RlpAddr, used to discriminate between recipe for create
+  RLPRECEIPT_SUBPHASE_ID_TYPE         7
+  RLPRECEIPT_SUBPHASE_ID_STATUS_CODE  2
+  RLPRECEIPT_SUBPHASE_ID_CUMUL_GAS    3
+  RLPRECEIPT_SUBPHASE_ID_NO_LOG_ENTRY 11
+  RLPRECEIPT_SUBPHASE_ID_ADDR         53
+  RLPRECEIPT_SUBPHASE_ID_TOPIC_BASE   65
+  RLPRECEIPT_SUBPHASE_ID_DATA_LIMB    77
+  RLPRECEIPT_SUBPHASE_ID_DATA_SIZE    83
+  RLPRECEIPT_SUBPHASE_ID_TOPIC_DELTA  96)
 
 ;;  Comparaison to 55 ;;
 (defpurefun (compTo55 length comp acc)
@@ -58,7 +58,7 @@
                                 (begin (eq! (+ (shift lc -2) (prev lc))
                                             1)
                                        (eq! (prev limb)
-                                            (* (+ int_short byteSize) (^ 256 LLARGEMO)))
+                                            (* (+ INT_SHORT byteSize) (^ 256 LLARGEMO)))
                                        (eq! (prev nBytes) 1)))))))
 
 ;;  RLP prefix for a byte string ;;
@@ -71,16 +71,16 @@
                                 (begin (eq! (+ (prev lc) lc)
                                             1)
                                        (eq! limb
-                                            (* (+ (* int_short (- 1 isList))
-                                                  (* list_short isList)
+                                            (* (+ (* INT_SHORT (- 1 isList))
+                                                  (* LIST_SHORT isList)
                                                   length)
                                                (^ 256 LLARGEMO)))
                                        (eq! nBytes 1))
                                 (begin (eq! (+ (shift lc -2) (prev lc))
                                             1)
                                        (eq! (prev limb)
-                                            (* (+ (* int_long (- 1 isList))
-                                                  (* list_long isList)
+                                            (* (+ (* INT_LONG (- 1 isList))
+                                                  (* LIST_LONG isList)
                                                   byteSize)
                                                (^ 256 LLARGEMO)))
                                        (eq! (prev nBytes) 1)

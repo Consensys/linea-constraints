@@ -315,14 +315,14 @@
                                                 (begin (eq! 1
                                                             (+ (shift lc -2) (prev lc)))
                                                        (eq! (prev limb)
-                                                            (* (+ int_short byteSize) (^ 256 LLARGEMO)))
+                                                            (* (+ INT_SHORT byteSize) (^ 256 LLARGEMO)))
                                                        (eq! (prev nBytes) 1)
                                                        (eq! limb (* input_lo power))
                                                        (eq! nBytes byteSize))))
                                 (begin (eq! (+ (shift lc -3) (shift lc -2))
                                             1)
                                        (eq! (shift limb -2)
-                                            (* (+ int_short LLARGE byteSize) (^ 256 LLARGEMO)))
+                                            (* (+ INT_SHORT LLARGE byteSize) (^ 256 LLARGEMO)))
                                        (eq! (shift nBytes -2) 1)
                                        (eq! (prev limb) (* input_hi power))
                                        (eq! (prev nBytes) byteSize)
@@ -338,7 +338,7 @@
   (if-eq-else nSTEP 1
               (begin  ;; 1
                      (eq! LIMB
-                          (* int_short (^ 256 LLARGEMO)))
+                          (* INT_SHORT (^ 256 LLARGEMO)))
                      (eq! nBYTES 1))
               (begin  ;; 2
                      (eq! nSTEP 16)
@@ -348,7 +348,7 @@
                                    (eq! [ACC 2] input_lo)
                                    (did-change! (shift LC -2))
                                    (eq! (shift LIMB -2)
-                                        (* (+ int_short 20) (^ 256 LLARGEMO)))
+                                        (* (+ INT_SHORT 20) (^ 256 LLARGEMO)))
                                    (eq! (shift nBYTES -2) 1)
                                    (eq! (prev LIMB)
                                         (* input_hi (^ 256 12)))
@@ -368,7 +368,7 @@
                        (eq! [ACC 2] input_lo)
                        (did-change! (shift LC -2))
                        (eq! (shift LIMB -2)
-                            (* (+ int_short 32) (^ 256 LLARGEMO)))
+                            (* (+ INT_SHORT 32) (^ 256 LLARGEMO)))
                        (eq! (shift nBYTES -2) 1)
                        (eq! (prev LIMB) input_hi)
                        (eq! (prev nBYTES) LLARGE)
@@ -430,7 +430,7 @@
   (begin (if-zero [INPUT 1]
                   (begin (eq! nSTEP 1)
                          (eq! LIMB
-                              (* int_short (^ 256 LLARGEMO)))
+                              (* INT_SHORT (^ 256 LLARGEMO)))
                          (eq! nBYTES 1))
                   (begin (eq! nSTEP
                               (+ (* 8
@@ -493,7 +493,7 @@
 (defconstraint phase9-trivialcase (:guard [PHASE 9])
   (if-not-zero (* IS_PREFIX (- 8 nSTEP))
                (begin (eq! LIMB
-                           (* int_short (^ 256 LLARGEMO)))
+                           (* INT_SHORT (^ 256 LLARGEMO)))
                       (eq! nBYTES 1)
                       (vanishes! (+ LC_CORRECTION
                                     (next IS_PREFIX)
@@ -551,8 +551,8 @@
                   (if-not-zero PHASE_SIZE
                                (begin (will-dec! PHASE_SIZE 1)
                                       (if-zero [BYTE 1]
-                                               (will-dec! DATAGASCOST G_txdatazero)
-                                               (will-dec! DATAGASCOST G_txdatanonzero)))
+                                               (will-dec! DATAGASCOST G_TXDATA_ZERO)
+                                               (will-dec! DATAGASCOST G_TXDATA_NONZERO)))
                                (begin (will-remain-constant! PHASE_SIZE)
                                       (will-remain-constant! DATAGASCOST)))
                   (if-zero CT
@@ -597,7 +597,7 @@
                   (if-zero nADDR
                            (begin (eq! nSTEP 1)
                                   (eq! LIMB
-                                       (* list_short (^ 256 LLARGEMO)))
+                                       (* LIST_SHORT (^ 256 LLARGEMO)))
                                   (eq! nBYTES 1))
                            (eq! nSTEP 8)))))
 
@@ -634,7 +634,7 @@
                (if-zero nKEYS_PER_ADDR
                         (begin (eq! nSTEP 1)
                                (eq! LIMB
-                                    (* list_short (^ 256 LLARGEMO)))
+                                    (* LIST_SHORT (^ 256 LLARGEMO)))
                                (eq! nBYTES 1))
                         (begin (eq! nSTEP 8)
                                (eq! [INPUT 1] (* 33 nKEYS_PER_ADDR))
@@ -750,8 +750,8 @@
                                                               (next LC_CORRECTION)))
                                                 (eq! (next nSTEP) 1)
                                                 (eq! (next LIMB)
-                                                     (+ (* int_short (^ 256 LLARGEMO))
-                                                        (* int_short (^ 256 14))))
+                                                     (+ (* INT_SHORT (^ 256 LLARGEMO))
+                                                        (* INT_SHORT (^ 256 14))))
                                                 (eq! (next nBYTES) 2)))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -763,7 +763,7 @@
   (begin (eq! nSTEP 1)
          (if-zero [INPUT 1]
                   (eq! LIMB
-                       (* int_short (^ 256 LLARGEMO)))
+                       (* INT_SHORT (^ 256 LLARGEMO)))
                   (eq! LIMB
                        (* [INPUT 1] (^ 256 LLARGEMO))))
          (eq! nBYTES 1)
@@ -778,7 +778,7 @@
   (begin (if-zero (+ (~ [INPUT 1]) (~ [INPUT 2]))
                   (begin (eq! nSTEP 1)
                          (eq! LIMB
-                              (* int_short (^ 256 LLARGEMO)))
+                              (* INT_SHORT (^ 256 LLARGEMO)))
                          (eq! nBYTES 1))
                   (begin (eq! nSTEP 16)
                          (rlpPrefixLongInt [INPUT 1] [INPUT 2] CT nSTEP DONE [BYTE 1] [BYTE 1] [ACC 1] [ACC 2] ACC_BYTESIZE POWER BIT BIT_ACC LIMB LC nBYTES)))
