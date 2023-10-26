@@ -104,7 +104,6 @@
          (debug (counter-constancy CT IS_SSTORE))
          (debug (counter-constancy CT IS_RETURN))))
 
-;; TODO: write all contraints and run the non-implied ones only in debug mode
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                             ;;
 ;;    2.4 binary constraints   ;;
@@ -127,12 +126,10 @@
 (defconstraint wcp-add-are-exclusive ()
   (vanishes! (* WCP ADD)))
 
-;; IS_CREATE = 0 => OOB_EVENT_2 = 0
 (defconstraint is-create-oob-event ()
   (if-zero IS_CREATE
            (vanishes! [OOB_EVENT 2])))
 
-;; for lookups check commented code in mxp and bin/hub_into_bin.lisp
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                             ;;
 ;;    2.5 instruction decoding ;;
@@ -214,7 +211,7 @@
 (defconstraint valid-jumpi-future (:guard (and! (standing-hypothesis) (jumpi-hypothesis)))
   (begin (eq! (next WCP) 1)
          (vanishes! (next ADD))
-         (eq! OUTGOING_INST ISZERO)
+         (eq! (next OUTGOING_INST) ISZERO)
          (eq! (next [OUTGOING_DATA 1]) (jump_condition_hi))
          (eq! (next [OUTGOING_DATA 2]) (jump_condition_lo))
          (vanishes! (next [OUTGOING_DATA 3]))
@@ -278,7 +275,7 @@
 (defconstraint set-oob-event-rds (:guard (and! (standing-hypothesis) (rdc-hypothesis)))
   (begin (eq! [OOB_EVENT 1]
               (+ (- 1 OUTGOING_RES_LO)
-                 (+ OUTGOING_RES_LO (shift OUTGOING_RES_LO 2))))
+                 (* OUTGOING_RES_LO (shift OUTGOING_RES_LO 2))))
          (vanishes! [OOB_EVENT 2])))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -338,7 +335,7 @@
 (defconstraint valid-call-future (:guard (and! (standing-hypothesis) (call-hypothesis)))
   (begin (eq! (next WCP) 1)
          (vanishes! (next ADD))
-         (eq! OUTGOING_INST EQ)
+         (eq! (next OUTGOING_INST) EQ)
          (vanishes! (next [OUTGOING_DATA 1]))
          (eq! (next [OUTGOING_DATA 2]) (csd))
          (vanishes! (next [OUTGOING_DATA 3]))
