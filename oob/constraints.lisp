@@ -279,4 +279,29 @@
                  (+ OUTGOING_RES_LO (shift OUTGOING_RES_LO 2))))
          (vanishes! [OOB_EVENT 2])))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                       ;;
+;; 3.5 For               ;;
+;; CALLDATALOAD          ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun (cdl-hypothesis)
+  (eq! IS_CDL 1))
+
+;; Here we re-use some aliases from the previous section
+(defun (cds)
+  [INCOMING_DATA 5])
+
+(defconstraint valid-cdl (:guard (and! (standing-hypothesis) (cdl-hypothesis)))
+  (begin (eq! WCP 1)
+         (vanishes! ADD)
+         (eq! OUTGOING_INST LT)
+         (eq! [OUTGOING_DATA 1] (offset_hi))
+         (eq! [OUTGOING_DATA 2] (offset_lo))
+         (vanishes! [OUTGOING_DATA 3])
+         (eq! [OUTGOING_DATA 4] (cds))))
+
+(defconstraint set-oob-event-cdl (:guard (and! (standing-hypothesis) (cdl-hypothesis)))
+  (begin (eq! [OOB_EVENT 1] (- 1 OUTGOING_RES_LO))
+         (vanishes! [OOB_EVENT 2])))
+
 
