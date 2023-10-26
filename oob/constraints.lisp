@@ -449,49 +449,4 @@
   (begin (eq! [OOB_EVENT 1] OUTGOING_RES_LO)
          (vanishes! [OOB_EVENT 2])))
 
-;; lookups
-(defplookup 
-  oob-into-wcp
-  ;source columns
-  (
-    [oob.OUTGOING_DATA 1]
-    [oob.OUTGOING_DATA 2]
-    [oob.OUTGOING_DATA 3]
-    [oob.OUTGOING_DATA 4]
-    oob.OUTGOING_RES_LO
-    oob.OUTGOING_INST
-  )
-  ;target columns
-  (
-    wcp.ARG_1_HI
-    wcp.ARG_1_LO
-    wcp.ARG_2_HI
-    wcp.ARG_3_LO
-    wcp.RES_LO
-    wcp.INST
-  ))
-
-(defplookup 
-  oob-into-add
-  ;source columns
-  (
-    [oob.OUTGOING_DATA 1]
-    [oob.OUTGOING_DATA 2]
-    [oob.OUTGOING_DATA 3]
-    [oob.OUTGOING_DATA 4]
-    (next [oob.OUTGOING_DATA 1])
-    (next [oob.OUTGOING_DATA 2])
-    oob.OUTGOING_INST
-  )
-  ;target columns
-  (
-    add.ARG_1_HI
-    add.ARG_1_LO
-    add.ARG_2_HI
-    add.ARG_2_LO
-    add.RES_HI
-    add.RES_LO
-    add.INST
-  ))
-
 
