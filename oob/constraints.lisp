@@ -192,7 +192,7 @@
 (defun (jumpi-hypothesis)
   (eq! IS_JUMP 1))
 
-;; Here we re-use some aliases from the previous section
+;; Here we re-use some functions from the previous section
 (defun (jump_condition_hi)
   [INCOMING_DATA 3])
 
@@ -286,7 +286,7 @@
 (defun (cdl-hypothesis)
   (eq! IS_CDL 1))
 
-;; Here we re-use some aliases from the previous section
+;; Here we re-use some functions from the previous section
 (defun (cds)
   [INCOMING_DATA 5])
 
@@ -356,7 +356,7 @@
 (defun (create-hypothesis)
   (eq! IS_CREATE 1))
 
-;; Here we re-use some aliases from the previous section
+;; Here we re-use some functions from the previous section
 (defun (nonce)
   [INCOMING_DATA 4])
 
