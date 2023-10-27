@@ -38,22 +38,15 @@
 (defconstraint last-row (:domain {-1})
                (if-not-zero STAMP  (= CT LLARGEMO)))
 
-(defun (efficient-stamp-constancy stamp column)
-  (if-not-zero
-    ;; condition
-    (- (stamp) (+ 1 (prev stamp)))
-    ;; conclusion
-    (eq! column (prev column))))
-
 (defconstraint stamp-constancies ()
                (begin
-                 (efficient-stamp-constancy STAMP ARG_1_HI)
-                 (efficient-stamp-constancy STAMP ARG_1_LO)
-                 (efficient-stamp-constancy STAMP ARG_2_HI)
-                 (efficient-stamp-constancy STAMP ARG_2_LO)
-                 (efficient-stamp-constancy STAMP RES_HI)
-                 (efficient-stamp-constancy STAMP RES_LO)
-                 (efficient-stamp-constancy STAMP INST)))
+                 (stamp-constancy STAMP ARG_1_HI)
+                 (stamp-constancy STAMP ARG_1_LO)
+                 (stamp-constancy STAMP ARG_2_HI)
+                 (stamp-constancy STAMP ARG_2_LO)
+                 (stamp-constancy STAMP RES_HI)
+                 (stamp-constancy STAMP RES_LO)
+                 (stamp-constancy STAMP INST)))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
