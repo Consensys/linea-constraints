@@ -1,8 +1,7 @@
 (module trm)
 
 (defconst 
-  MAX_PREC_ADDR 9
-  LLARGEMO      15)
+  LLARGEMO 15)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                     ;;
@@ -27,7 +26,7 @@
 (defconstraint heartbeat ()
   (begin  ;; 2
          (or! (will-remain-constant! STAMP) (will-inc! STAMP 1))
-         ;; 4 
+         ;; 4
          (if-not-zero (- (next STAMP) STAMP)
                       (vanishes! (next CT)))
          ;; 5
@@ -47,8 +46,8 @@
 (defconstraint stamp-constancies ()
   (begin (stamp-constancy STAMP ADDR_HI)
          (stamp-constancy STAMP ADDR_LO)
-         (stamp-constancy STAMP TRM_ADDR_HI)
-         (stamp-constancy STAMP IS_PREC)))
+         (stamp-constancy STAMP IS_PREC)
+         (stamp-constancy STAMP TRM_ADDR_HI)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                           ;;
@@ -62,16 +61,6 @@
          (if-eq CT 12
                 (begin (vanishes! (prev PBIT))
                        (eq! PBIT 1)))))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;                                                   ;;
-;;    2.4 binary, bytehood and byte decompositions   ;;
-;;                                                   ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defconstraint binary-and-byte-decompositions ()
-  (begin (byte-decomposition CT ACC_HI BYTE_HI)
-         (byte-decomposition CT ACC_LO BYTE_LO)
-         (byte-decomposition CT ACC_T (* PBIT BYTE_HI))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                                   ;;
@@ -100,6 +89,11 @@
                 (eq! ADDR_LO ACC_LO)
                 (eq! TRM_ADDR_HI ACC_T))))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                  ;;
+;;    2.4 Identifying precompiles   ;;
+;;                                  ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defconstraint is-prec-constraint ()
   (if-eq CT 15
          (if-zero (+ TRM_ADDR_HI (- ADDR_LO BYTE_LO))
