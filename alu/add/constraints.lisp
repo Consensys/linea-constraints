@@ -22,12 +22,12 @@
                           (begin
                             (vanishes! CT)
                             (vanishes! INST)
-                            (debug (vanishes!ARG_1_HI))
-                            (debug (vanishes!ARG_1_LO))
-                            (debug (vanishes!ARG_2_HI))
-                            (debug (vanishes!ARG_2_LO))
-                            (debug (vanishes!RES_HI))
-                            (debug (vanishes!RES_LO))))
+                            (debug (vanishes! ARG_1_HI))
+                            (debug (vanishes! ARG_1_LO))
+                            (debug (vanishes! ARG_2_HI))
+                            (debug (vanishes! ARG_2_LO))
+                            (debug (vanishes! RES_HI))
+                            (debug (vanishes! RES_LO))))
                  (* (will-remain-constant! STAMP) (will-inc! STAMP 1))
                  (if-not-zero (will-remain-constant! STAMP) (vanishes! (next CT)))
                  (if-not-zero STAMP
