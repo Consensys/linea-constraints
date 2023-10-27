@@ -87,6 +87,25 @@ ZKEVM_MODULES := ${ALU} \
 	${TABLES} \
 	${WCP}
 
+ZKEVM_MODULES := ${ALU} \
+	${BIN} \
+	${EC_DATA} \
+	${LIBRARY} \
+	${MEMORY} \
+	${MXP} \
+	${PUB_DATA} \
+	${RLP_ADDR} \
+	${RLP_TXN} \
+	${RLP_TXRCPT} \
+	${ROM} \
+	${ROM_LEX} \
+	${SHIFT} \
+	${STACK} \
+	${TABLES} \
+	${WCP} \
+	${LIBRARY} \
+	${TXN_DATA}
+
 define.go: ${ZKEVM_MODULES}
 	${CORSET} wizard-iop -vv -P define -o $@ ${ZKEVM_MODULES}
 
