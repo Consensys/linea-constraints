@@ -1,5 +1,5 @@
 (defun (add-activation-flag)
-  ADD)
+  ADD_FLAG)
 
 (defplookup 
   oob-into-add
