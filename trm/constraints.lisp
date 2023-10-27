@@ -72,17 +72,11 @@
          (byte-decomposition CT ACC_LO BYTE_LO)
          (byte-decomposition CT ACC_T (* BYTE_HI PBIT))))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;                                 ;;
-;;    2.5 Target constraints       ;;
-;;                                 ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defconstraint target-constraints ()
-  (if-eq CT LLARGEMO
-         (begin (= ADDR_HI ACC_HI)
-                (= ADDR_LO ACC_LO)
-                (= TRM_ADDR_HI ACC_T))))
-
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                       ;;
+;;    1.5 target constraints    ;;
+;;                       ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;)
 (defconstraint target-constraint ()
   (if-eq CT 15
          (begin (eq! ADDR_HI ACC_HI)
