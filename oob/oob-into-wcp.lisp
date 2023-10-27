@@ -1,5 +1,5 @@
 (defun (wcp-activation-flag)
-  WCP)
+  WCP_FLAG)
 
 (defplookup 
   oob-into-wcp
