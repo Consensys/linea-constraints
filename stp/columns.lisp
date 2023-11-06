@@ -21,8 +21,8 @@
   (TO_WARM :binary)
   (OUT_OF_GAS_EXCEPTION :binary)
   ;;
-  (ABORT :boolean)
-  (FCOND :boolean)
+  (ABORT :binary)
+  (FCOND :binary)
   CALL_STACK_DEPTH
   FROM_BALANCE
   TO_NONCE
@@ -34,9 +34,7 @@
   ARG_1_HI
   ARG_1_LO
   ARG_2_LO
-  RES_LO
-  ;; TODO find solution for this hack
-  ZERO)
+  RES_LO)
 
 (defalias 
   INST_TYPE INSTRUCTION_TYPE
