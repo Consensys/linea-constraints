@@ -1,7 +1,7 @@
 (defun (add-activation-flag)
-  ADD_FLAG)
+  oob.ADD_FLAG)
 
-(defplookup 
+(deflookup 
   oob-into-add
   ;source columns
   (

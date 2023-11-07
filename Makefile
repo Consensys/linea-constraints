@@ -76,7 +76,10 @@ BLAKE2f_MODEXP_DATA := blake2f_modexp_data/
 
 EXP := exp
 
-ZKEVM_MODULES := ${ALU} \
+OOB := oob/columns.lisp oob/constraints.lisp  # oob/oob-into-add.lisp oob/oob-into-wcp.lisp
+
+ZKEVM_MODULES := ${LIBRARY} \
+	${ALU} \
 	${BIN} \
 	${BLAKE2f_MODEXP_DATA} \
 	${CONSTANTS} \
@@ -89,6 +92,7 @@ ZKEVM_MODULES := ${ALU} \
 	${MMU} \
 	${MMIO} \
 	${MXP} \
+	${OOB} \
 	${PUB_DATA} \
 	${RIPSHA} \
 	${RLP_ADDR} \
