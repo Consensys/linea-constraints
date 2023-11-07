@@ -76,7 +76,7 @@
 (defconstraint ct-max ()
   (eq! CT_MAX (maxct_sum)))
 
-(defconstraint non-trivial-instruction-counter-cycle (:domain {-1})
+(defconstraint non-trivial-instruction-counter-cycle ()
   (if-not-zero STAMP
                (if-eq-else CT CT_MAX (will-inc! STAMP 1) (will-inc! CT 1))))
 
