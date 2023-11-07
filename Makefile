@@ -48,6 +48,8 @@ MMIO := mmio/columns.lisp #TODO enable the MMIO constraint and lookup
 
 MXP := mxp
 
+OOB := oob/columns.lisp oob/constraints.lisp  # oob/oob-into-add.lisp oob/oob-into-wcp.lisp
+
 PUB_DATA := $(shell find pub/ -iname '*.lisp')
 
 SHAKIRA := shakira_data
@@ -81,7 +83,8 @@ TXN_DATA := txn_data
 
 WCP := wcp
 
-ZKEVM_MODULES := ${ALU} \
+ZKEVM_MODULES := ${LIBRARY} \
+	${ALU} \
 	${BIN} \
 	${BLAKE2f_MODEXP_DATA} \
 	${CONSTANTS} \
@@ -95,6 +98,7 @@ ZKEVM_MODULES := ${ALU} \
 	${MMU} \
 	${MMIO} \
 	${MXP} \
+	${OOB} \
 	${PUB_DATA} \
 	${RIPSHA} \
 	${RLP_ADDR} \

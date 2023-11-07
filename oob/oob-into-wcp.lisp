@@ -1,7 +1,7 @@
 (defun (wcp-activation-flag)
-  WCP_FLAG)
+  oob.WCP_FLAG)
 
-(defplookup 
+(deflookup 
   oob-into-wcp
   ;source columns
   (
