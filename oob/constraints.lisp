@@ -126,7 +126,7 @@
 (defconstraint wcp-add-are-exclusive ()
   (vanishes! (* WCP_FLAG ADD_FLAG)))
 
-(defconstraint is-create-oob-event ()
+(defconstraint is-create-is-jump-oob-event ()
   (if-zero (+ IS_CREATE IS_JUMPI)
            (vanishes! [OOB_EVENT 2])))
 
