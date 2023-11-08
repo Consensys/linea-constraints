@@ -162,23 +162,23 @@
 (defun (jump-hypothesis)
   IS_JUMP)
 
-(defun (pc_new_hi)
+(defun (jump___pc_new_hi)
   [INCOMING_DATA 1])
 
-(defun (pc_new_lo)
+(defun (jump___pc_new_lo)
   [INCOMING_DATA 2])
 
-(defun (codesize)
+(defun (jump___codesize)
   [INCOMING_DATA 5])
 
 (defconstraint valid-jump (:guard (* (standing-hypothesis) (jump-hypothesis)))
   (begin (eq! WCP_FLAG 1)
          (vanishes! ADD_FLAG)
          (eq! OUTGOING_INST LT)
-         (eq! [OUTGOING_DATA 1] (pc_new_hi))
-         (eq! [OUTGOING_DATA 2] (pc_new_lo))
+         (eq! [OUTGOING_DATA 1] (jump___pc_new_hi))
+         (eq! [OUTGOING_DATA 2] (jump___pc_new_lo))
          (vanishes! [OUTGOING_DATA 3])
-         (eq! [OUTGOING_DATA 4] (codesize))))
+         (eq! [OUTGOING_DATA 4] (jump___codesize))))
 
 (defconstraint set-oob-event-jump (:guard (* (standing-hypothesis) (jump-hypothesis)))
   (begin (eq! [OOB_EVENT 1] (- 1 OUTGOING_RES_LO))
@@ -192,28 +192,36 @@
 (defun (jumpi-hypothesis)
   IS_JUMPI)
 
-;; Here we re-use some functions from the previous section
-(defun (jump_condition_hi)
+(defun (jumpi___pc_new_hi)
+  [INCOMING_DATA 1])
+
+(defun (jumpi___pc_new_lo)
+  [INCOMING_DATA 2])
+
+(defun (jumpi___jump_condition_hi)
   [INCOMING_DATA 3])
 
-(defun (jump_condition_lo)
+(defun (jumpi___jump_condition_lo)
   [INCOMING_DATA 4])
+
+(defun (jumpi___codesize)
+  [INCOMING_DATA 5])
 
 (defconstraint valid-jumpi (:guard (* (standing-hypothesis) (jumpi-hypothesis)))
   (begin (eq! WCP_FLAG 1)
          (vanishes! ADD_FLAG)
          (eq! OUTGOING_INST LT)
-         (eq! [OUTGOING_DATA 1] (pc_new_hi))
-         (eq! [OUTGOING_DATA 2] (pc_new_lo))
+         (eq! [OUTGOING_DATA 1] (jumpi___pc_new_hi))
+         (eq! [OUTGOING_DATA 2] (jumpi___pc_new_lo))
          (vanishes! [OUTGOING_DATA 3])
-         (eq! [OUTGOING_DATA 4] (codesize))))
+         (eq! [OUTGOING_DATA 4] (jumpi___codesize))))
 
 (defconstraint valid-jumpi-future (:guard (* (standing-hypothesis) (jumpi-hypothesis)))
   (begin (eq! (next WCP_FLAG) 1)
          (vanishes! (next ADD_FLAG))
          (eq! (next OUTGOING_INST) ISZERO)
-         (eq! (next [OUTGOING_DATA 1]) (jump_condition_hi))
-         (eq! (next [OUTGOING_DATA 2]) (jump_condition_lo))
+         (eq! (next [OUTGOING_DATA 1]) (jumpi___jump_condition_hi))
+         (eq! (next [OUTGOING_DATA 2]) (jumpi___jump_condition_lo))
          (vanishes! (next [OUTGOING_DATA 3]))
          (vanishes! (next [OUTGOING_DATA 4]))))
 
@@ -232,27 +240,27 @@
 (defun (rdc-hypothesis)
   IS_RDC)
 
-(defun (offset_hi)
+(defun (rdc___offset_hi)
   [INCOMING_DATA 1])
 
-(defun (offset_lo)
+(defun (rdc___offset_lo)
   [INCOMING_DATA 2])
 
-(defun (size_hi)
+(defun (rdc___size_hi)
   [INCOMING_DATA 3])
 
-(defun (size_lo)
+(defun (rdc___size_lo)
   [INCOMING_DATA 4])
 
-(defun (rds)
+(defun (rdc___rds)
   [INCOMING_DATA 5])
 
 (defconstraint valid-rdc (:guard (* (standing-hypothesis) (rdc-hypothesis)))
   (begin (eq! WCP_FLAG 1)
          (vanishes! ADD_FLAG)
          (eq! OUTGOING_INST ISZERO)
-         (eq! [OUTGOING_DATA 1] (offset_hi))
-         (eq! [OUTGOING_DATA 2] (size_hi))
+         (eq! [OUTGOING_DATA 1] (rdc___offset_hi))
+         (eq! [OUTGOING_DATA 2] (rdc___size_hi))
          (vanishes! [OUTGOING_DATA 3])
          (vanishes! [OUTGOING_DATA 4])))
 
@@ -261,16 +269,16 @@
          (eq! (next ADD_FLAG) OUTGOING_RES_LO)
          (eq! (next OUTGOING_INST) ADD)
          (vanishes! (next [OUTGOING_DATA 1]))
-         (eq! (next [OUTGOING_DATA 2]) (offset_lo))
+         (eq! (next [OUTGOING_DATA 2]) (rdc___offset_lo))
          (vanishes! (next [OUTGOING_DATA 3]))
-         (eq! (next [OUTGOING_DATA 4]) (size_lo))))
+         (eq! (next [OUTGOING_DATA 4]) (rdc___size_lo))))
 
 (defconstraint valid-rdc-future-future (:guard (* (standing-hypothesis) (rdc-hypothesis)))
   (begin (eq! (shift WCP_FLAG 2) OUTGOING_RES_LO)
          (vanishes! (shift ADD_FLAG 2))
          (eq! (shift OUTGOING_INST 2) GT)
          (vanishes! (shift [OUTGOING_DATA 3] 2))
-         (eq! (shift [OUTGOING_DATA 4] 2) (rds))))
+         (eq! (shift [OUTGOING_DATA 4] 2) (rdc___rds))))
 
 (defconstraint set-oob-event-rdc (:guard (* (standing-hypothesis) (rdc-hypothesis)))
   (begin (eq! [OOB_EVENT 1]
@@ -286,18 +294,23 @@
 (defun (cdl-hypothesis)
   IS_CDL)
 
-;; Here we re-use some functions from the previous section
-(defun (cds)
+(defun (cdl___offset_hi)
+  [INCOMING_DATA 1])
+
+(defun (cdl___offset_lo)
+  [INCOMING_DATA 2])
+
+(defun (cdl___cds)
   [INCOMING_DATA 5])
 
 (defconstraint valid-cdl (:guard (* (standing-hypothesis) (cdl-hypothesis)))
   (begin (eq! WCP_FLAG 1)
          (vanishes! ADD_FLAG)
          (eq! OUTGOING_INST LT)
-         (eq! [OUTGOING_DATA 1] (offset_hi))
-         (eq! [OUTGOING_DATA 2] (offset_lo))
+         (eq! [OUTGOING_DATA 1] (cdl___offset_hi))
+         (eq! [OUTGOING_DATA 2] (cdl___offset_lo))
          (vanishes! [OUTGOING_DATA 3])
-         (eq! [OUTGOING_DATA 4] (cds))))
+         (eq! [OUTGOING_DATA 4] (cdl___cds))))
 
 (defconstraint set-oob-event-cdl (:guard (* (standing-hypothesis) (cdl-hypothesis)))
   (begin (eq! [OOB_EVENT 1] (- 1 OUTGOING_RES_LO))
@@ -311,16 +324,16 @@
 (defun (call-hypothesis)
   IS_CALL)
 
-(defun (val_hi)
+(defun (call___val_hi)
   [INCOMING_DATA 1])
 
-(defun (val_lo)
+(defun (call___val_lo)
   [INCOMING_DATA 2])
 
-(defun (bal)
+(defun (call___bal)
   [INCOMING_DATA 3])
 
-(defun (csd)
+(defun (call___csd)
   [INCOMING_DATA 6])
 
 (defconstraint valid-call (:guard (* (standing-hypothesis) (call-hypothesis)))
@@ -328,16 +341,16 @@
          (vanishes! ADD_FLAG)
          (eq! OUTGOING_INST LT)
          (vanishes! [OUTGOING_DATA 1])
-         (eq! [OUTGOING_DATA 2] (bal))
-         (eq! [OUTGOING_DATA 3] (val_hi))
-         (eq! [OUTGOING_DATA 4] (val_lo))))
+         (eq! [OUTGOING_DATA 2] (call___bal))
+         (eq! [OUTGOING_DATA 3] (call___val_hi))
+         (eq! [OUTGOING_DATA 4] (call___val_lo))))
 
 (defconstraint valid-call-future (:guard (* (standing-hypothesis) (call-hypothesis)))
   (begin (eq! (next WCP_FLAG) 1)
          (vanishes! (next ADD_FLAG))
          (eq! (next OUTGOING_INST) EQ)
          (vanishes! (next [OUTGOING_DATA 1]))
-         (eq! (next [OUTGOING_DATA 2]) (csd))
+         (eq! (next [OUTGOING_DATA 2]) (call___csd))
          (vanishes! (next [OUTGOING_DATA 3]))
          (eq! (next [OUTGOING_DATA 4]) 1024)))
 
@@ -356,28 +369,39 @@
 (defun (create-hypothesis)
   IS_CREATE)
 
-;; Here we re-use some functions from the previous section
-(defun (nonce)
+(defun (create___val_hi)
+  [INCOMING_DATA 1])
+
+(defun (create___val_lo)
+  [INCOMING_DATA 2])
+
+(defun (create___bal)
+  [INCOMING_DATA 3])
+
+(defun (create___nonce)
   [INCOMING_DATA 4])
 
-(defun (has_code)
+(defun (create___has_code)
   [INCOMING_DATA 5])
+
+(defun (create___csd)
+  [INCOMING_DATA 6])
 
 (defconstraint valid-create (:guard (* (standing-hypothesis) (create-hypothesis)))
   (begin (eq! WCP_FLAG 1)
          (vanishes! ADD_FLAG)
          (eq! OUTGOING_INST LT)
          (vanishes! [OUTGOING_DATA 1])
-         (eq! [OUTGOING_DATA 2] (bal))
-         (eq! [OUTGOING_DATA 3] (val_hi))
-         (eq! [OUTGOING_DATA 4] (val_lo))))
+         (eq! [OUTGOING_DATA 2] (create___bal))
+         (eq! [OUTGOING_DATA 3] (create___val_hi))
+         (eq! [OUTGOING_DATA 4] (create___val_lo))))
 
 (defconstraint valid-create-future (:guard (* (standing-hypothesis) (create-hypothesis)))
   (begin (eq! (next WCP_FLAG) 1)
          (vanishes! (next ADD_FLAG))
          (eq! (next OUTGOING_INST) LT)
          (vanishes! (next [OUTGOING_DATA 1]))
-         (eq! (next [OUTGOING_DATA 2]) (csd))
+         (eq! (next [OUTGOING_DATA 2]) (create___csd))
          (vanishes! (next [OUTGOING_DATA 3]))
          (eq! (next [OUTGOING_DATA 4]) 1024)))
 
@@ -386,7 +410,7 @@
          (vanishes! (shift ADD_FLAG 2))
          (eq! (shift OUTGOING_INST 2) ISZERO)
          (vanishes! (shift [OUTGOING_DATA 1] 2))
-         (eq! (shift [OUTGOING_DATA 2] 2) (nonce))
+         (eq! (shift [OUTGOING_DATA 2] 2) (create___nonce))
          (vanishes! (shift [OUTGOING_DATA 3] 2))
          (vanishes! (shift [OUTGOING_DATA 4] 2))))
 
@@ -397,8 +421,8 @@
                     (- 1 (next OUTGOING_RES_LO)))))
          (eq! [OOB_EVENT 2]
               (* (- 1 [OOB_EVENT 1])
-                 (+ (has_code)
-                    (* (- 1 (has_code))
+                 (+ (create___has_code)
+                    (* (- 1 (create___has_code))
                        (- 1 (shift OUTGOING_RES_LO 2))))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -409,7 +433,7 @@
 (defun (sstore-hypothesis)
   IS_SSTORE)
 
-(defun (gas)
+(defun (sstore___gas)
   [INCOMING_DATA 5])
 
 (defconstraint valid-sstore (:guard (* (standing-hypothesis) (sstore-hypothesis)))
@@ -419,7 +443,7 @@
          (vanishes! [OUTGOING_DATA 1])
          (eq! [OUTGOING_DATA 2] G_CALLSTIPEND)
          (vanishes! [OUTGOING_DATA 3])
-         (eq! [OUTGOING_DATA 4] (gas))))
+         (eq! [OUTGOING_DATA 4] (sstore___gas))))
 
 (defconstraint set-oob-event-sstore (:guard (* (standing-hypothesis) (sstore-hypothesis)))
   (begin (eq! [OOB_EVENT 1] (- 1 OUTGOING_RES_LO))
