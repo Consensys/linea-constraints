@@ -433,14 +433,20 @@
 (defun (return-hypothesis)
   IS_RETURN)
 
+(defun (return___size_hi)
+  [INCOMING_DATA 1])
+
+(defun (return___size_lo)
+  [INCOMING_DATA 2])
+
 (defconstraint valid-return (:guard (* (standing-hypothesis) (return-hypothesis)))
   (begin (eq! WCP_FLAG 1)
          (vanishes! ADD_FLAG)
          (eq! OUTGOING_INST LT)
          (vanishes! [OUTGOING_DATA 1])
          (eq! [OUTGOING_DATA 2] 24576)
-         (eq! [OUTGOING_DATA 3] (size_hi))
-         (eq! [OUTGOING_DATA 4] (size_lo))))
+         (eq! [OUTGOING_DATA 3] (return___size_hi))
+         (eq! [OUTGOING_DATA 4] (return___size_lo))))
 
 (defconstraint set-oob-event-return (:guard (* (standing-hypothesis) (return-hypothesis)))
   (begin (eq! [OOB_EVENT 1] OUTGOING_RES_LO)
