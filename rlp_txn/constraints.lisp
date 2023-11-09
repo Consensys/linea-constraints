@@ -704,59 +704,50 @@
            (begin (vanishes! (+ (- 1 LT) LX))
                   (eq! nSTEP 8))))
 
+(defun (w-minus-two-seven)
+  (- [INPUT 1] 27))
+
 (defconstraint phase11-rlp-w (:guard [PHASE 11])
   (if-not-zero (* LT (- 1 LX))
                (begin (rlpPrefixInt [INPUT 1] CT nSTEP DONE [BYTE 1] [ACC 1] ACC_BYTESIZE POWER BIT BIT_ACC LIMB LC nBYTES)
                       (if-eq DONE 1
                              (begin (limbShifting [INPUT 1] POWER ACC_BYTESIZE LIMB nBYTES)
+                                    (vanishes! LC_CORRECTION)
+                                    (if-eq-else (^ (w-minus-two-seven) 2) (w-minus-two-seven)
+                                                (eq! PHASE_END 1)
+                                                (begin (vanishes! (+ (next PHASE_END)
+                                                                     (next LT)
+                                                                     (- 1 (next LX))
+                                                                     (- 1 (next IS_PREFIX)))))))))))
+
+(defconstraint phase11-rlp-beta (:guard [PHASE 11])
+  (if-not-zero (* LX IS_PREFIX)
+               (begin (eq! nSTEP 8)
+                      (rlpPrefixInt [INPUT 1] CT nSTEP DONE [BYTE 1] [ACC 1] ACC_BYTESIZE POWER BIT BIT_ACC LIMB LC nBYTES)
+                      (if-eq DONE 1
+                             (begin (limbShifting [INPUT 1] POWER ACC_BYTESIZE LIMB nBYTES)
                                     (vanishes! (+ LC_CORRECTION
                                                   PHASE_END
+                                                  (next IS_PREFIX)
                                                   (next LT)
                                                   (- 1 (next LX))
-                                                  (- 1 (next IS_PREFIX)))))))))
+                                                  (next LC_CORRECTION)
+                                                  (- 1 (next PHASE_END))
+                                                  (next LC_CORRECTION)))
+                                    (eq! (next nSTEP) 1)
+                                    (eq! (next LIMB)
+                                         (+ (* INT_SHORT (^ 256 LLARGEMO))
+                                            (* INT_SHORT (^ 256 14))))
+                                    (eq! (next nBYTES) 2))))))
 
-;;(defconstraint phase11-rlp-beta (:guard [PHASE 11])
-;;  (if-not-zero (* LX IS_PREFIX)
-;;               (if-eq-else (^ (- (prev [INPUT 1]) 27)
-;;                              2) (- (prev [INPUT 1]) 27)
-;;                           (begin (eq! nSTEP 1)
-;;                                  (eq! 2 (+ LC_CORRECTION PHASE_END)))
-;;                           (begin (eq! nSTEP 8)
-;;                                  (rlpPrefixInt [INPUT 1]
-;;                                                CT
-;;                                                nSTEP
-;;                                                DONE
-;;                                                [BYTE 1]
-;;                                                [ACC 1]
-;;                                                ACC_BYTESIZE
-;;                                                POWER
-;;                                                BIT
-;;                                                BIT_ACC
-;;                                                LIMB
-;;                                                LC
-;;                                                nBYTES)
-;;                                  (if-eq DONE 1
-;;                                         (begin (limbShifting [INPUT 1] POWER ACC_BYTESIZE LIMB nBYTES)
-;;                                                (vanishes! (+ LC_CORRECTION
-;;                                                              PHASE_END
-;;                                                              (next IS_PREFIX)
-;;                                                              (next LT)
-;;                                                              (- 1 (next LX))
-;;                                                              (next LC_CORRECTION)
-;;                                                              (- 1 (next PHASE_END))
-;;                                                              (next LC_CORRECTION)))
-;;                                                (eq! (next nSTEP) 1)
-;;                                                (eq! (next LIMB)
-;;                                                     (+ (* INT_SHORT (^ 256 LLARGEMO))
-;;                                                        (* INT_SHORT (^ 256 14))))
-;;                                                (eq! (next nBYTES) 2)))))))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                       ;;
 ;;    4.7 Phase 12 : y   ;;
 ;;                       ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defconstraint phase12 (:guard [PHASE 12])
-  (begin (eq! nSTEP 1)
+  (begin (is-binary [INPUT 1])
+         (eq! nSTEP 1)
          (if-zero [INPUT 1]
                   (eq! LIMB
                        (* INT_SHORT (^ 256 LLARGEMO)))
