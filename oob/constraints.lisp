@@ -348,7 +348,7 @@
 (defconstraint valid-call-future (:guard (* (standing-hypothesis) (call-hypothesis)))
   (begin (eq! (next WCP_FLAG) 1)
          (vanishes! (next ADD_FLAG))
-         (eq! (next OUTGOING_INST) EQ)
+         (eq! (next OUTGOING_INST) LT)
          (vanishes! (next [OUTGOING_DATA 1]))
          (eq! (next [OUTGOING_DATA 2]) (call___csd))
          (vanishes! (next [OUTGOING_DATA 3]))
