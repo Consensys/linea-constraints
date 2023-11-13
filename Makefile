@@ -78,7 +78,8 @@ LOG_DATA := logData/columns.lisp logData/constraints.lisp \
 LOG_INFO := logInfo/columns.lisp logInfo/constraints.lisp \
 	logInfo/lookups/loginfo-to-rlprcpt.lisp logInfo/lookups/loginfo-to-logdata.lisp
 	
-STP := stp/columns.lisp stp/constraints.lisp
+STP := stp/columns.lisp stp/constraints.lisp \
+	stp/lookups/stp_into_mod.lisp stp/lookups/stp_into_wcp.lisp
 
 ZKEVM_MODULES := ${LIBRARY} \
 	${ALU} \
