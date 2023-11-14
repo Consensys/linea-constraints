@@ -121,7 +121,8 @@
 ;;                                                    ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun (first-row-of-CREATE)
-  (* (remained-constant! STAMP) INST_TYPE))
+  (* (- STAMP (prev STAMP))
+     INST_TYPE))
 
 (defun (first-row-of-unexceptional-CREATE)
   (* (first-row-of-CREATE) (- 1 OOGX)))
