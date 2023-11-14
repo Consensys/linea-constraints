@@ -1,12 +1,13 @@
 (module log_data)
 
-(defcolumns
+(defcolumns 
   ABS_LOG_NUM_MAX
   ABS_LOG_NUM
-  (LOG_LOGS_DATA  :boolean)
+  (LOGS_DATA :binary)
   SIZE_TOTAL
   SIZE_ACC
   SIZE_LIMB
   LIMB
-  INDEX
-  )
+  INDEX)
+
+
