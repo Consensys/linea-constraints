@@ -72,9 +72,9 @@ LIBRARY := library/constant.lisp library/rlp_constraints_pattern.lisp
 
 TRM := trm/columns.lisp trm/constraints.lisp
 
-LOG_DATA := log_data/columns.lisp log_data/constraints.lisp
+LOG_DATA := logData/columns.lisp logData/constraints.lisp
 
-LOG_INFO := log_info/columns.lisp log_info/constraints.lisp
+LOG_INFO := logInfo/columns.lisp logInfo/constraints.lisp
 
 ZKEVM_MODULES := ${LIBRARY} \
 	${ALU} \
