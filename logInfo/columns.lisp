@@ -1,4 +1,4 @@
-(module log_info)
+(module logInfo)
 
 (defcolumns 
   ABS_TXN_NUM_MAX

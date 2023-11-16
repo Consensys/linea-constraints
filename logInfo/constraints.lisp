@@ -1,4 +1,4 @@
-(module log_info)
+(module logInfo)
 
 (defconst 
   LOG0 0xa0

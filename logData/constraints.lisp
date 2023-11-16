@@ -1,4 +1,4 @@
-(module log_data)
+(module logData)
 
 (defconst 
   LLARGE 16)
