@@ -48,8 +48,8 @@
                              (vanishes! (next INDEX))))))
 
 (defconstraint final-row (:domain {-1} :guard ABS_LOG_NUM)
-  (begin (= ABS_LOG_NUM ABS_LOG_NUM_MAX)
-         (if-eq LOGS_DATA 1 (= SIZE_ACC SIZE_TOTAL))))
+  (begin (eq! ABS_LOG_NUM ABS_LOG_NUM_MAX)
+         (if-eq LOGS_DATA 1 (eq! SIZE_ACC SIZE_TOTAL))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                       ;;
@@ -57,8 +57,8 @@
 ;;                       ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun (log-constancy X)
-  (if-not-zero (- ABS_LOG_NUM (prev ABS_LOG_NUM))
-               (remained-constant! X)))
+  (if-zero (- ABS_LOG_NUM (prev ABS_LOG_NUM))
+           (remained-constant! X)))
 
 (defconstraint log-constancies ()
   (begin (log-constancy SIZE_TOTAL)
