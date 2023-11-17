@@ -21,12 +21,8 @@
   (TO_WARM :binary)
   (OUT_OF_GAS_EXCEPTION :binary)
   ;;
-  (ABORT :binary)
-  (FCOND :binary)
   CALL_STACK_DEPTH
   FROM_BALANCE
-  TO_NONCE
-  (TO_HAS_CODE :binary)
   ;;
   (WCP_FLAG :binary)
   (MOD_FLAG :binary)

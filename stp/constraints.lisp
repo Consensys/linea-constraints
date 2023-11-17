@@ -75,8 +75,6 @@
          (debug (is-binary TO_WARM))
          (debug (is-binary OOGX))
          (debug (is-binary TO_HAS_CODE))
-         (debug (is-binary ABORT))
-         (debug (is-binary FCOND))
          (is-binary WCP_FLAG)
          (is-binary MOD_FLAG)))
 
@@ -105,10 +103,6 @@
          ;
          (counter-constancy CT CSD)
          (counter-constancy CT FROM_BALANCE)
-         (counter-constancy CT TO_HAS_CODE)
-         (counter-constancy CT TO_NONCE)
-         (counter-constancy CT ABORT)
-         (counter-constancy CT FCOND)
          ;
          (counter-constancy CT OOGX)
          (counter-constancy CT INST_TYPE)
@@ -145,10 +139,6 @@
 (defun (create-abortSum)
   (+ (- 1 (shift RES_LO 3)) ;; <- evaluates to 1 iff CSD >eq! 1024
      (shift RES_LO 4)))     ;; <- evaluates to 1 iff CALL_VALUE > FROM_BALANCE
-
-(defun (create-fCondSum)
-  (+ (- 1 (shift RES_LO 5)) ;; <- evaluates to 1 iff TO address has nonzero nonce
-     TO_HAS_CODE))          ;; <- evaluates to 1 iff TO address has nonempty code
 
 ;; common rows of all CREATE instructions
 (defconstraint CREATE-type-common (:guard (first-row-of-CREATE))
@@ -210,7 +200,6 @@
          ;;   ------------->   row i + 5   ;;
          ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
          (vanishes! (shift ARG_1_HI 5))
-         (eq! (shift ARG_1_LO 5) TO_NONCE)
          (vanishes! (shift ARG_2_LO 5))
          (eq! (shift EXO_INST 5) ISZERO)
          ;; (eq! (shift RES_LO 5) ...)
@@ -225,19 +214,10 @@
   (if-zero OOGX
            ;; OOGX eq!eq! 0
            (begin (eq! GAS_COST (+ (create-gPrelim) (create-LgDiff)))
-                  (eq! GAS_STIPEND (create-LgDiff))
-                  (if-zero (create-abortSum)
-                           (vanishes! ABORT)
-                           (eq! ABORT 1))
-                  (if-zero ABORT
-                           (if-zero (create-fCondSum)
-                                    (vanishes! FCOND)
-                                    (eq! FCOND 1))
-                           (vanishes! FCOND)))
+                  (eq! GAS_STIPEND (create-LgDiff)))
            ;; OOGX eq!eq! 1
            (begin (eq! GAS_COST (create-gPrelim))
-                  (vanishes! GAS_STIPEND)
-                  (vanishes! ABORT))))
+                  (vanishes! GAS_STIPEND))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                                  ;;
@@ -383,10 +363,7 @@
            (begin (eq! GAS_COST (+ (call-gPrelim) (call-gMin)))
                   (eq! GAS_STIPEND
                        (+ (call-gMin)
-                          (* CCTV (- 1 (call-valueIsZero)) G_callstipend)))
-                  (if-zero (call-abortSum)
-                           (vanishes! ABORT)
-                           (eq! ABORT 1)))
+                          (* CCTV (- 1 (call-valueIsZero)) G_callstipend))))
            ;; OOGX eq!eq! 1
            (begin (eq! GAS_COST (call-gPrelim))
                   (vanishes! GAS_STIPEND))))
