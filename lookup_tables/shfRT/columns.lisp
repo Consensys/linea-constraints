@@ -1,10 +1,10 @@
 (module shfRT)
 
 (defcolumns
-	BYTE
-	MSHP
-	LAS
-	RAP
-	ONES
-	IS_IN_RT; column populated with 1's while in reference table
+    (BYTE :byte)
+    (MSHP :byte)
+    (LAS :byte)
+    (RAP :byte)
+    (ONES :byte)
+    (IS_IN_RT :binary); column populated with 1's while in reference table
 )
