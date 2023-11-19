@@ -1,11 +1,11 @@
 (module rom)
 
-(defcolumns
+(defcolumns 
   (CODE_FRAGMENT_INDEX :i32)
   (CODE_FRAGMENT_INDEX_INFTY :i32)
   (CODE_SIZE :i32)
   (CODESIZE_REACHED :binary)
-  (PROGRAMME_COUNTER :i32)
+  (PROGRAM_COUNTER :i32)
   LIMB
   (nBYTES :byte)
   (nBYTES_ACC :byte)
@@ -25,8 +25,10 @@
   (OPCODE :byte :display :opcode)
   (VALID_JUMP_DESTINATION :binary))
 
-(defalias
-  PC   PROGRAMME_COUNTER
+(defalias 
+  PC   PROGRAM_COUNTER
   CFI  CODE_FRAGMENT_INDEX
   CT   COUNTER
   PBCB PADDED_BYTECODE_BYTE)
+
+

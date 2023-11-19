@@ -1,6 +1,6 @@
 (module rom)
 
-(defconst
+(defconst 
   PUSH_1         0x60
   JUMPDEST       0x5b
   LLARGE         16
@@ -9,8 +9,8 @@
   INVALID_OPCODE 0xfe)
 
 (defpurefun (if-not-eq A B then)
-            (if (neq A B)
-                then))
+  (if (neq A B)
+      then))
 
 ;; Binarity
 (defconstraint binarities ()
@@ -27,7 +27,8 @@
              (remained-constant! X)))
 
 (defun (cfi-incrementing X)
-  (if-not-eq CFI (+ (prev CFI) 1)
+  (if-not-eq CFI
+             (+ (prev CFI) 1)
              (or! (remained-constant! X) (did-inc! X 1))))
 
 (defpurefun (counter-constant X ct ctmax)
@@ -74,7 +75,7 @@
                   (debug (vanishes! IS_PUSH_DATA))
                   (debug (vanishes! COUNTER_PUSH))
                   (debug (vanishes! PUSH_PARAMETER))
-                  (debug (vanishes! PROGRAMME_COUNTER)))
+                  (debug (vanishes! PROGRAM_COUNTER)))
            (begin (debug (or! (eq! COUNTER_MAX LLARGEMO) (eq! COUNTER_MAX EVMWORDMO)))
                   (if-eq COUNTER_MAX LLARGEMO (will-remain-constant! CFI))
                   (if-not-eq COUNTER COUNTER_MAX (will-remain-constant! CFI))
@@ -201,3 +202,5 @@
                                              (vanishes! PUSH_VALUE_HIGH))
                                     (eq! PUSH_VALUE_ACC PUSH_VALUE_LOW)
                                     (vanishes! (next IS_PUSH_DATA)))))))
+
+
