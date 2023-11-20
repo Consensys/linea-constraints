@@ -1,11 +1,11 @@
 (module mxp)
 
 (defconst 
-  G_MEM      3 ;; 'G_memory' in Ethereum yellow paper ;; TODO: replace with GAS_CONST_G_XXX
+  G_MEM      3     ;; 'G_memory' in Ethereum yellow paper ;; TODO: replace with GAS_CONST_G_XXX
   SHORTCYCLE 3
   LONGCYCLE  16
   TWO_POW_32 4294967296
-  RETURN     0xf3)   ;; TODO: replace with EVM_INST_RETURN
+  RETURN     0xf3) ;; TODO: replace with EVM_INST_RETURN
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                             ;;
@@ -111,9 +111,9 @@
          (= C_MEM_NEW C_MEM)))
 
 ;;;;;;;;;;;;;;;;;;;;;;
-;;                  ;;                         
+;;                  ;;
 ;;    2.5 MTNTOP    ;;
-;;                  ;;                        
+;;                  ;;
 ;;;;;;;;;;;;;;;;;;;;;;
 (defconstraint setting-mtntop ()
   (if-not-zero [MXP_TYPE 4]
@@ -352,11 +352,10 @@
 
 (defconstraint consistency ()
   (if-not-zero CN_perm
-               (if-eq-else (next CN_perm) CN_perm
-                           (if-not-zero (will-remain-constant! STAMP_perm)
-                                        (begin (= (next WORDS_perm) WORDS_NEW_perm)
-                                               (= (next C_MEM_perm) C_MEM_NEW_perm)))
-                           (begin (vanishes! (next WORDS_perm))
-                                  (vanishes! (next C_MEM_perm))))))
-
+               (if-eq-else (prev CN_perm) CN_perm
+                           (if-not-zero (- (prev STAMP_perm) STAMP_perm)
+                                        (begin (= WORDS_perm (prev WORDS_NEW_perm))
+                                               (= C_MEM_perm (prev C_MEM_NEW_perm))))
+                           (begin (vanishes! WORDS_perm)
+                                  (vanishes! C_MEM_perm)))))
 
