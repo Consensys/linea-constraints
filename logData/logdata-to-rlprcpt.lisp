@@ -1,5 +1,5 @@
 (defpurefun (sel_logData_to_rlpRcpt)
-  (~ logData.ABS_LOG_NUM))
+  logData.LOGS_DATA)
 
 (deflookup 
   logData-into-rlpRcpt
@@ -13,7 +13,7 @@
   )
   ;source columns
   (
-    logData.ABS_LOG_NUM
+    (* logData.ABS_LOG_NUM (sel_logData_to_rlpRcpt))
     (* RLPRECEIPT_SUBPHASE_ID_DATA_LIMB (sel_logData_to_rlpRcpt))
     (* logData.INDEX (sel_logData_to_rlpRcpt))
     (* logData.LIMB (sel_logData_to_rlpRcpt))
