@@ -57,8 +57,8 @@
 ;;                       ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun (log-constancy X)
-  (if-zero (- ABS_LOG_NUM (prev ABS_LOG_NUM))
-           (remained-constant! X)))
+  (if (remained-constant! ABS_LOG_NUM)
+      (remained-constant! X)))
 
 (defconstraint log-constancies ()
   (begin (log-constancy SIZE_TOTAL)

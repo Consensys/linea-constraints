@@ -29,8 +29,8 @@
                   (vanishes! CT))))
 
 (defconstraint number-increments ()
-  (begin (vanishes! (* (will-remain-constant! ABS_TXN_NUM) (will-inc! ABS_TXN_NUM 1)))
-         (vanishes! (* (will-remain-constant! ABS_LOG_NUM) (will-inc! ABS_LOG_NUM 1)))))
+  (begin (any! (will-remain-constant! ABS_TXN_NUM) (will-inc! ABS_TXN_NUM 1))
+         (any! (will-remain-constant! ABS_LOG_NUM) (will-inc! ABS_LOG_NUM 1))))
 
 (defconstraint no-logs-transaction (:guard ABS_TXN_NUM)
   (if-zero TXN_EMITS_LOGS
@@ -44,12 +44,12 @@
                   (begin (did-inc! ABS_LOG_NUM 1)
                          (eq! CT_MAX
                               (+ 1 (- INST LOG0)))))
-         (if-zero (- CT CT_MAX)
-                  ;; CT == CT_MAX
-                  (begin (vanishes! (* (will-inc! ABS_TXN_NUM 1) (will-inc! ABS_LOG_NUM 1)))
-                         (will-inc! ABS_LOG_NUM (next TXN_EMITS_LOGS)))
-                  ;; CT != CT_MAX
-                  (will-inc! CT 1))))
+         (if (eq! CT CT_MAX)
+             ;; CT == CT_MAX
+             (begin (vanishes! (* (will-inc! ABS_TXN_NUM 1) (will-inc! ABS_LOG_NUM 1)))
+                    (will-inc! ABS_LOG_NUM (next TXN_EMITS_LOGS)))
+             ;; CT != CT_MAX
+             (will-inc! CT 1))))
 
 (defconstraint final-row (:domain {-1} :guard ABS_TXN_NUM)
   (begin (eq! ABS_TXN_NUM ABS_TXN_NUM_MAX)
@@ -114,9 +114,9 @@
                   (eq! DATA_HI DATA_SIZE)
                   (eq! DATA_LO (- INST LOG0))
                   ;;
-                  (eq! (shift PHASE 1) RLPRECEIPT_SUBPHASE_ID_ADDR)
-                  (eq! (shift DATA_HI 1) ADDR_HI)
-                  (eq! (shift DATA_LO 1) ADDR_LO))))
+                  (eq! (next PHASE) RLPRECEIPT_SUBPHASE_ID_ADDR)
+                  (eq! (next DATA_HI) ADDR_HI)
+                  (eq! (next DATA_LO) ADDR_LO))))
 
 (defconstraint verticalization-row-3 (:guard (reduce + (for k [1 : 4] [IS_LOG_X k])))
   (if-zero CT

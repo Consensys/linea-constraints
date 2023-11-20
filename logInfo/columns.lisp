@@ -10,8 +10,8 @@
   CT
   ADDR_HI
   ADDR_LO
-  (TOPIC_HI :array [1:4])
-  (TOPIC_LO :array [1:4])
+  (TOPIC_HI :array [4])
+  (TOPIC_LO :array [4])
   DATA_SIZE
   INST
   (IS_LOG_X :binary :array [0:4])
