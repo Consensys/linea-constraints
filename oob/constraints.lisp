@@ -6,31 +6,59 @@
 ;;     constants       ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 (defconst 
-  C_JUMP        0x56
-  C_JUMPI       0x57
-  C_RDC         0x3E
-  C_CDL         0x35
-  C_CALL        0xCA
-  C_CREATE      0xCE
-  C_SSTORE      0x55
-  C_RETURN      0xF3
-  CT_MAX_JUMP   0
-  CT_MAX_JUMPI  1
-  CT_MAX_RDC    2
-  CT_MAX_CDL    0
-  CT_MAX_CALL   1
-  CT_MAX_CREATE 2
-  CT_MAX_SSTORE 0
-  CT_MAX_RETURN 0
-  LT            0x10
-  ISZERO        0x15
-  ADD           0x01
-  GT            0x11
-  EQ            0x14
-  G_CALLSTIPEND 2300)
+  C_JUMP               0x56
+  C_JUMPI              0x57
+  C_RDC                0x3E
+  C_CDL                0x35
+  C_CALL               0xCA
+  C_CREATE             0xCE
+  C_SSTORE             0x55
+  C_RETURN             0xF3
+  C_PRC_ECRECOVER      0xFF01
+  C_PRC_SHA2           0xFF02
+  C_PRC_RIPEMD         0xFF03
+  C_PRC_IDENTITY       0xFF04
+  C_PRC_ECADD          0xFF06
+  C_PRC_ECMUL          0xFF07
+  C_PRC_ECPAIRING      0xFF08
+  CT_MAX_JUMP          0
+  CT_MAX_JUMPI         1
+  CT_MAX_RDC           2
+  CT_MAX_CDL           0
+  CT_MAX_CALL          1
+  CT_MAX_CREATE        2
+  CT_MAX_SSTORE        0
+  CT_MAX_RETURN        0
+  CT_MAX_PRC_ECRECOVER 0
+  CT_MAX_PRC_SHA2      1
+  CT_MAX_PRC_RIPEMD    1
+  CT_MAX_PRC_IDENTITY  1
+  CT_MAX_PRC_ECADD     0
+  CT_MAX_PRC_ECMUL     0
+  CT_MAX_PRC_ECPAIRING 2
+  LT                   0x10
+  ISZERO               0x15
+  ADD                  0x01
+  GT                   0x11
+  EQ                   0x14
+  G_CALLSTIPEND        2300)
 
 (defun (flag_sum)
-  (+ IS_JUMP IS_JUMPI IS_RDC IS_CDL IS_CALL IS_CREATE IS_SSTORE IS_RETURN))
+  (+ IS_JUMP
+     IS_JUMPI
+     IS_RDC
+     IS_CDL
+     IS_CALL
+     IS_CREATE
+     IS_SSTORE
+     IS_RETURN
+     PRC_ECRECOVER
+     PRC_SHA2
+     PRC_RIPEMD
+     PRC_IDENTITY
+     PRC_ECADD
+     PRC_ECMUL
+     PRC_ECPAIRING))
 
 (defun (wght_sum)
   (+ (* C_JUMP IS_JUMP)
@@ -40,7 +68,14 @@
      (* C_CALL IS_CALL)
      (* C_CREATE IS_CREATE)
      (* C_SSTORE IS_SSTORE)
-     (* C_RETURN IS_RETURN)))
+     (* C_RETURN IS_RETURN)
+     (* C_PRC_ECRECOVER PRC_ECRECOVER)
+     (* C_PRC_SHA2 PRC_SHA2)
+     (* C_PRC_RIPEMD PRC_RIPEMD)
+     (* C_PRC_IDENTITY PRC_IDENTITY)
+     (* C_PRC_ECADD PRC_ECADD)
+     (* C_PRC_ECMUL PRC_ECMUL)
+     (* C_PRC_ECPAIRING PRC_ECPAIRING)))
 
 (defun (maxct_sum)
   (+ (* CT_MAX_JUMP IS_JUMP)
@@ -50,7 +85,14 @@
      (* CT_MAX_CALL IS_CALL)
      (* CT_MAX_CREATE IS_CREATE)
      (* CT_MAX_SSTORE IS_SSTORE)
-     (* CT_MAX_RETURN IS_RETURN)))
+     (* CT_MAX_RETURN IS_RETURN)
+     (* CT_MAX_PRC_ECRECOVER PRC_ECRECOVER)
+     (* CT_MAX_PRC_SHA2 PRC_SHA2)
+     (* CT_MAX_PRC_RIPEMD PRC_RIPEMD)
+     (* CT_MAX_PRC_IDENTITY PRC_IDENTITY)
+     (* CT_MAX_PRC_ECADD PRC_ECADD)
+     (* CT_MAX_PRC_ECMUL PRC_ECMUL)
+     (* CT_MAX_PRC_ECPAIRING PRC_ECPAIRING)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                     ;;
@@ -64,7 +106,7 @@
   (if-zero STAMP
            (begin (vanishes! CT)
                   (vanishes! CT_MAX)
-                  (vanishes! (+ WCP_FLAG ADD_FLAG (flag_sum))))))
+                  (vanishes! (+ WCP_FLAG ADD_FLAG MOD_FLAG (flag_sum))))))
 
 (defconstraint stamp-increments ()
   (any! (remained-constant! STAMP) (did-inc! STAMP 1)))
@@ -121,10 +163,17 @@
          (is-binary IS_CREATE)
          (is-binary IS_SSTORE)
          (is-binary IS_RETURN)
-         (for i [2] (is-binary [OOB_EVENT i]))))
+         (for i [2] (is-binary [OOB_EVENT i]))
+         (is-binary PRC_ECRECOVER)
+         (is-binary PRC_SHA2)
+         (is-binary PRC_RIPEMD)
+         (is-binary PRC_IDENTITY)
+         (is-binary PRC_ECADD)
+         (is-binary PRC_ECMUL)
+         (is-binary PRC_ECPAIRING)))
 
-(defconstraint wcp-add-are-exclusive ()
-  (vanishes! (* WCP_FLAG ADD_FLAG)))
+(defconstraint wcp-add-mod-are-exclusive ()
+  (is-binary (+ WCP_FLAG ADD_FLAG MOD_FLAG)))
 
 (defconstraint is-create-is-jump-oob-event ()
   (if-zero (+ IS_CREATE IS_JUMPI)
