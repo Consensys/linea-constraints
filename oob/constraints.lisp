@@ -221,8 +221,9 @@
   [INCOMING_DATA 5])
 
 (defconstraint valid-jump (:guard (* (standing-hypothesis) (jump-hypothesis)))
-  (begin (eq! WCP_FLAG 1)
-         (vanishes! ADD_FLAG)
+  (begin (vanishes! ADD_FLAG)
+         (vanishes! MOD_FLAG)
+         (eq! WCP_FLAG 1)
          (eq! OUTGOING_INST LT)
          (eq! [OUTGOING_DATA 1] (jump___pc_new_hi))
          (eq! [OUTGOING_DATA 2] (jump___pc_new_lo))
@@ -257,8 +258,9 @@
   [INCOMING_DATA 5])
 
 (defconstraint valid-jumpi (:guard (* (standing-hypothesis) (jumpi-hypothesis)))
-  (begin (eq! WCP_FLAG 1)
-         (vanishes! ADD_FLAG)
+  (begin (vanishes! ADD_FLAG)
+         (vanishes! MOD_FLAG)
+         (eq! WCP_FLAG 1)
          (eq! OUTGOING_INST LT)
          (eq! [OUTGOING_DATA 1] (jumpi___pc_new_hi))
          (eq! [OUTGOING_DATA 2] (jumpi___pc_new_lo))
@@ -266,8 +268,9 @@
          (eq! [OUTGOING_DATA 4] (jumpi___codesize))))
 
 (defconstraint valid-jumpi-future (:guard (* (standing-hypothesis) (jumpi-hypothesis)))
-  (begin (eq! (next WCP_FLAG) 1)
-         (vanishes! (next ADD_FLAG))
+  (begin (vanishes! (next ADD_FLAG))
+         (vanishes! (next MOD_FLAG))
+         (eq! (next WCP_FLAG) 1)
          (eq! (next OUTGOING_INST) ISZERO)
          (eq! (next [OUTGOING_DATA 1]) (jumpi___jump_condition_hi))
          (eq! (next [OUTGOING_DATA 2]) (jumpi___jump_condition_lo))
@@ -305,8 +308,9 @@
   [INCOMING_DATA 5])
 
 (defconstraint valid-rdc (:guard (* (standing-hypothesis) (rdc-hypothesis)))
-  (begin (eq! WCP_FLAG 1)
-         (vanishes! ADD_FLAG)
+  (begin (vanishes! ADD_FLAG)
+         (vanishes! MOD_FLAG)
+         (eq! WCP_FLAG 1)
          (eq! OUTGOING_INST ISZERO)
          (eq! [OUTGOING_DATA 1] (rdc___offset_hi))
          (eq! [OUTGOING_DATA 2] (rdc___size_hi))
@@ -314,8 +318,9 @@
          (vanishes! [OUTGOING_DATA 4])))
 
 (defconstraint valid-rdc-future (:guard (* (standing-hypothesis) (rdc-hypothesis)))
-  (begin (vanishes! (next WCP_FLAG))
-         (eq! (next ADD_FLAG) OUTGOING_RES_LO)
+  (begin (eq! (next ADD_FLAG) OUTGOING_RES_LO)
+         (vanishes! (next MOD_FLAG))
+         (vanishes! (next WCP_FLAG))
          (eq! (next OUTGOING_INST) ADD)
          (vanishes! (next [OUTGOING_DATA 1]))
          (eq! (next [OUTGOING_DATA 2]) (rdc___offset_lo))
@@ -323,8 +328,9 @@
          (eq! (next [OUTGOING_DATA 4]) (rdc___size_lo))))
 
 (defconstraint valid-rdc-future-future (:guard (* (standing-hypothesis) (rdc-hypothesis)))
-  (begin (eq! (shift WCP_FLAG 2) OUTGOING_RES_LO)
-         (vanishes! (shift ADD_FLAG 2))
+  (begin (vanishes! (shift ADD_FLAG 2))
+         (vanishes! (shift MOD_FLAG 2))
+         (eq! (shift WCP_FLAG 2) OUTGOING_RES_LO)
          (eq! (shift OUTGOING_INST 2) GT)
          (vanishes! (shift [OUTGOING_DATA 3] 2))
          (eq! (shift [OUTGOING_DATA 4] 2) (rdc___rds))))
@@ -353,8 +359,9 @@
   [INCOMING_DATA 5])
 
 (defconstraint valid-cdl (:guard (* (standing-hypothesis) (cdl-hypothesis)))
-  (begin (eq! WCP_FLAG 1)
-         (vanishes! ADD_FLAG)
+  (begin (vanishes! ADD_FLAG)
+         (vanishes! MOD_FLAG)
+         (eq! WCP_FLAG 1)
          (eq! OUTGOING_INST LT)
          (eq! [OUTGOING_DATA 1] (cdl___offset_hi))
          (eq! [OUTGOING_DATA 2] (cdl___offset_lo))
@@ -386,8 +393,9 @@
   [INCOMING_DATA 6])
 
 (defconstraint valid-call (:guard (* (standing-hypothesis) (call-hypothesis)))
-  (begin (eq! WCP_FLAG 1)
-         (vanishes! ADD_FLAG)
+  (begin (vanishes! ADD_FLAG)
+         (vanishes! MOD_FLAG)
+         (eq! WCP_FLAG 1)
          (eq! OUTGOING_INST LT)
          (vanishes! [OUTGOING_DATA 1])
          (eq! [OUTGOING_DATA 2] (call___bal))
@@ -395,8 +403,9 @@
          (eq! [OUTGOING_DATA 4] (call___val_lo))))
 
 (defconstraint valid-call-future (:guard (* (standing-hypothesis) (call-hypothesis)))
-  (begin (eq! (next WCP_FLAG) 1)
-         (vanishes! (next ADD_FLAG))
+  (begin (vanishes! (next ADD_FLAG))
+         (vanishes! (next MOD_FLAG))
+         (eq! (next WCP_FLAG) 1)
          (eq! (next OUTGOING_INST) LT)
          (vanishes! (next [OUTGOING_DATA 1]))
          (eq! (next [OUTGOING_DATA 2]) (call___csd))
@@ -437,8 +446,9 @@
   [INCOMING_DATA 6])
 
 (defconstraint valid-create (:guard (* (standing-hypothesis) (create-hypothesis)))
-  (begin (eq! WCP_FLAG 1)
-         (vanishes! ADD_FLAG)
+  (begin (vanishes! ADD_FLAG)
+         (vanishes! MOD_FLAG)
+         (eq! WCP_FLAG 1)
          (eq! OUTGOING_INST LT)
          (vanishes! [OUTGOING_DATA 1])
          (eq! [OUTGOING_DATA 2] (create___bal))
@@ -446,8 +456,9 @@
          (eq! [OUTGOING_DATA 4] (create___val_lo))))
 
 (defconstraint valid-create-future (:guard (* (standing-hypothesis) (create-hypothesis)))
-  (begin (eq! (next WCP_FLAG) 1)
-         (vanishes! (next ADD_FLAG))
+  (begin (vanishes! (next ADD_FLAG))
+         (vanishes! (next MOD_FLAG))
+         (eq! (next WCP_FLAG) 1)
          (eq! (next OUTGOING_INST) LT)
          (vanishes! (next [OUTGOING_DATA 1]))
          (eq! (next [OUTGOING_DATA 2]) (create___csd))
@@ -455,8 +466,9 @@
          (eq! (next [OUTGOING_DATA 4]) 1024)))
 
 (defconstraint valid-create-future-future (:guard (* (standing-hypothesis) (create-hypothesis)))
-  (begin (eq! (shift WCP_FLAG 2) 1)
-         (vanishes! (shift ADD_FLAG 2))
+  (begin (vanishes! (shift ADD_FLAG 2))
+         (vanishes! (shift MOD_FLAG 2))
+         (eq! (shift WCP_FLAG 2) 1)
          (eq! (shift OUTGOING_INST 2) ISZERO)
          (vanishes! (shift [OUTGOING_DATA 1] 2))
          (eq! (shift [OUTGOING_DATA 2] 2) (create___nonce))
@@ -486,8 +498,9 @@
   [INCOMING_DATA 5])
 
 (defconstraint valid-sstore (:guard (* (standing-hypothesis) (sstore-hypothesis)))
-  (begin (eq! WCP_FLAG 1)
-         (vanishes! ADD_FLAG)
+  (begin (vanishes! ADD_FLAG)
+         (vanishes! MOD_FLAG)
+         (eq! WCP_FLAG 1)
          (eq! OUTGOING_INST LT)
          (vanishes! [OUTGOING_DATA 1])
          (eq! [OUTGOING_DATA 2] G_CALLSTIPEND)
@@ -513,8 +526,9 @@
   [INCOMING_DATA 2])
 
 (defconstraint valid-return (:guard (* (standing-hypothesis) (return-hypothesis)))
-  (begin (eq! WCP_FLAG 1)
-         (vanishes! ADD_FLAG)
+  (begin (vanishes! ADD_FLAG)
+         (vanishes! MOD_FLAG)
+         (eq! WCP_FLAG 1)
          (eq! OUTGOING_INST LT)
          (vanishes! [OUTGOING_DATA 1])
          (eq! [OUTGOING_DATA 2] 24576)
@@ -524,5 +538,44 @@
 (defconstraint set-oob-event-return (:guard (* (standing-hypothesis) (return-hypothesis)))
   (begin (eq! [OOB_EVENT 1] OUTGOING_RES_LO)
          (vanishes! [OOB_EVENT 2])))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                       ;;
+;; 3.10 For ECRECOVER,   ;;
+;; ECADD, ECMUL          ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; eq!?
+(defun (ecrecover-ecadd-ecmul-hypothesis)
+  (eq 1 (+ PRC_ECRECOVER PRC_ECADD PRC_ECMUL)))
+
+(defun (ecrecover-ecadd-ecmul___call_gas)
+  [INCOMING_DATA 1])
+
+(defun (ecrecover-ecadd-ecmul___remaining_gas)
+  [INCOMING_DATA 2])
+
+(defun (ecrecover-ecadd-ecmul___precompile_cost)
+  (+ (* 3000 PRC_ECRECOVER) (* 150 PRC_ECADD) (* 6000 PRC_ECMUL)))
+
+(defconstraint valid-ecrecover-ecadd-ecmul (:guard (* (standing-hypothesis) (ecrecover-ecadd-ecmul-hypothesis)))
+  (begin (vanishes! ADD_FLAG)
+         (vanishes! MOD_FLAG)
+         (eq! WCP_FLAG 1)
+         (eq! OUTGOING_INST LT)
+         (vanishes! [OUTGOING_DATA 1])
+         (eq! [OUTGOING_DATA 2] (ecrecover-ecadd-ecmul___call_gas))
+         (vanishes! [OUTGOING_DATA 3])
+         (eq! [OUTGOING_DATA 4] (ecrecover-ecadd-ecmul___precompile_cost))))
+
+(defconstraint set-oob-event-ecrecover-ecadd-ecmul (:guard (* (standing-hypothesis) (ecrecover-ecadd-ecmul-hypothesis)))
+  (begin (eq! [OOB_EVENT 1] OUTGOING_RES_LO)
+         (vanishes! [OOB_EVENT 2])))
+
+;; if-eq-else?
+(defconstraint constrain-remaining-gas-ecrecover-ecadd-ecmul (:guard (* (standing-hypothesis) (ecrecover-ecadd-ecmul-hypothesis)))
+  (if (vanishes! [OOB_EVENT 1])
+      (eq! (ecrecover-ecadd-ecmul___remaining_gas)
+           (- (ecrecover-ecadd-ecmul___call_gas) (ecrecover-ecadd-ecmul___precompile_cost)))
+      (vanishes! (ecrecover-ecadd-ecmul___remaining_gas))))
 
 
