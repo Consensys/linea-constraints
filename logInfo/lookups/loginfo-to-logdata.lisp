@@ -1,4 +1,4 @@
-(defpurefun (sel_logInfo_to_logData)
+(defpurefun (selLogInfoToLogData)
   logInfo.TXN_EMITS_LOGS)
 
 (deflookup 
@@ -11,9 +11,9 @@
   )
   ;source columns
   (
-    (* logInfo.ABS_LOG_NUM_MAX (sel_logInfo_to_logData))
-    (* logInfo.ABS_LOG_NUM (sel_logInfo_to_logData))
-    (* logInfo.DATA_SIZE (sel_logInfo_to_logData))
+    (* logInfo.ABS_LOG_NUM_MAX (selLogInfoToLogData))
+    (* logInfo.ABS_LOG_NUM (selLogInfoToLogData))
+    (* logInfo.DATA_SIZE (selLogInfoToLogData))
   ))
 
 
