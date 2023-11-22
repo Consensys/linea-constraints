@@ -1,4 +1,4 @@
-(defpurefun (selLogDataToRlpRcpt)
+(defpurefun (sel-logData-to-rlpRcpt)
   logData.LOGS_DATA)
 
 (deflookup 
@@ -13,11 +13,11 @@
   )
   ;source columns
   (
-    (* logData.ABS_LOG_NUM (selLogDataToRlpRcpt))
-    (* RLPRECEIPT_SUBPHASE_ID_DATA_LIMB (selLogDataToRlpRcpt))
-    (* logData.INDEX (selLogDataToRlpRcpt))
-    (* logData.LIMB (selLogDataToRlpRcpt))
-    (* logData.SIZE_LIMB (selLogDataToRlpRcpt))
+    (* logData.ABS_LOG_NUM (sel-logData-to-rlpRcpt))
+    (* RLPRECEIPT_SUBPHASE_ID_DATA_LIMB (sel-logData-to-rlpRcpt))
+    (* logData.INDEX (sel-logData-to-rlpRcpt))
+    (* logData.LIMB (sel-logData-to-rlpRcpt))
+    (* logData.SIZE_LIMB (sel-logData-to-rlpRcpt))
   ))
 
 
