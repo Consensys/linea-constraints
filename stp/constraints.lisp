@@ -207,7 +207,7 @@
          (vanishes! GAS_STIPEND)
          (if-zero OOGX
                   (eq! GAS_OOPKT
-                       (- (next ARG_2_LO) (shift RES_LO 2)))
+                       (- (shift ARG_1_LO 2) (shift RES_LO 2)))
                   (vanishes! GAS_OOPKT))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
