@@ -546,9 +546,8 @@
 ;; 3.10 For ECRECOVER,   ;;
 ;; ECADD, ECMUL          ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; eq!?
 (defun (prc-ecrecover-prc-ecadd-prc-ecmul-hypothesis)
-  (eq 1 (+ PRC_ECRECOVER PRC_ECADD PRC_ECMUL)))
+  (+ PRC_ECRECOVER PRC_ECADD PRC_ECMUL))
 
 (defun (prc-ecrecover-prc-ecadd-prc-ecmul___call_gas)
   [INCOMING_DATA 1])
@@ -586,9 +585,8 @@
 ;; 3.11 For SHA2-256,    ;;
 ;; RIPEMD-160, IDENTITY  ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; eq!?
 (defun (prc-sha2-prc-ripemd-prc-identity-hypothesis)
-  (eq 1 (+ PRC_SHA2 PRC_RIPEMD PRC_IDENTITY)))
+  (+ PRC_SHA2 PRC_RIPEMD PRC_IDENTITY))
 
 (defun (prc-sha2-prc-ripemd-prc-identity___call_gas)
   [INCOMING_DATA 1])
@@ -643,9 +641,8 @@
 ;; 3.12 For ECPAIRING    ;;
 ;;                       ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; eq!?
 (defun (prc-ecpairing-hypothesis)
-  (eq 1 PRC_ECPAIRING))
+  PRC_ECPAIRING)
 
 (defun (prc-ecpairing___call_gas)
   [INCOMING_DATA 1])
@@ -712,5 +709,9 @@
       (eq! (* (prc-ecpairing___remaining_gas) 192)
            (- (* (prc-ecpairing___call_gas) 192) (prc-ecpairing___precompile_cost192)))
       (vanishes! (prc-ecpairing___remaining_gas))))
+
+;; Temporary
+(defconstraint zero-col ()
+  (vanishes! MY_ZERO))
 
 
