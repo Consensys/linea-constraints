@@ -4,7 +4,7 @@
   STAMP
   CT
   CT_MAX
-  INSTRUCTION
+  (INSTRUCTION :byte :display :opcode)
   (IS_CREATE :binary)
   (IS_CREATE2 :binary)
   (IS_CALL :binary)
@@ -29,7 +29,7 @@
   ;;
   (WCP_FLAG :binary)
   (MOD_FLAG :binary)
-  (EXOGENOUS_MODULE_INSTRUCTION :byte)
+  (EXOGENOUS_MODULE_INSTRUCTION :byte :display :opcode)
   ARG_1_HI
   ARG_1_LO
   ARG_2_LO
