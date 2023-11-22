@@ -40,6 +40,7 @@
   ISZERO               0x15
   ADD                  0x01
   DIV                  0x04
+  MOD                  0x06
   GT                   0x11
   EQ                   0x14
   G_CALLSTIPEND        2300)
@@ -582,7 +583,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                       ;;
-;; 3.10 For SHA2-256,    ;;
+;; 3.11 For SHA2-256,    ;;
 ;; RIPEMD-160, IDENTITY  ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; eq!?
@@ -636,5 +637,80 @@
            (- (prc-sha2-prc-ripemd-prc-identity___call_gas)
               (prc-sha2-prc-ripemd-prc-identity___precompile_cost)))
       (vanishes! (prc-sha2-prc-ripemd-prc-identity___remaining_gas))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                       ;;
+;; 3.12 For ECPAIRING    ;;
+;;                       ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; eq!?
+(defun (prc-ecpairing-hypothesis)
+  (eq 1 PRC_ECPAIRING))
+
+(defun (prc-ecpairing___call_gas)
+  [INCOMING_DATA 1])
+
+(defun (prc-ecpairing___remaining_gas)
+  [INCOMING_DATA 2])
+
+(defun (prc-ecpairing___size_lo)
+  [INCOMING_DATA 3])
+
+(defun (prc-ecpairing___remainder)
+  OUTGOING_RES_LO)
+
+(defun (prc-ecpairing___is_multiple_192)
+  (next OUTGOING_RES_LO))
+
+(defun (prc-ecpairing___insufficient_gas)
+  (shift OUTGOING_RES_LO 2))
+
+(defun (prc-ecpairing___precompile_cost192)
+  (* (prc-ecpairing___is_multiple_192)
+     (+ (* 45000 192) (* 34000 (prc-ecpairing___size_lo)))))
+
+(defconstraint valid-prc-ecpairing (:guard (* (standing-hypothesis) (prc-ecpairing-hypothesis)))
+  (begin (vanishes! ADD_FLAG)
+         (eq! MOD_FLAG 1)
+         (vanishes! WCP_FLAG)
+         (eq! OUTGOING_INST MOD)
+         (vanishes! [OUTGOING_DATA 1])
+         (eq! [OUTGOING_DATA 2] (prc-ecpairing___size_lo))
+         (vanishes! [OUTGOING_DATA 3])
+         (eq! [OUTGOING_DATA 4] 192)))
+
+(defconstraint valid-prc-ecpairing-future (:guard (* (standing-hypothesis) (prc-ecpairing-hypothesis)))
+  (begin (vanishes! (next ADD_FLAG))
+         (vanishes! (next MOD_FLAG))
+         (eq! (next WCP_FLAG) 1)
+         (eq! (next OUTGOING_INST) ISZERO)
+         (vanishes! (next [OUTGOING_DATA 1]))
+         (eq! (next [OUTGOING_DATA 2]) (prc-ecpairing___remainder))
+         (vanishes! (next [OUTGOING_DATA 3]))
+         (vanishes! (next [OUTGOING_DATA 4]))))
+
+(defconstraint valid-prc-ecpairing-future-future (:guard (* (standing-hypothesis) (prc-ecpairing-hypothesis)))
+  (begin (vanishes! (shift ADD_FLAG 2))
+         (vanishes! (shift MOD_FLAG 2))
+         (eq! (shift WCP_FLAG 2) (prc-ecpairing___is_multiple_192))
+         (eq! (shift OUTGOING_INST 2) LT)
+         (vanishes! (shift [OUTGOING_DATA 1] 2))
+         (eq! (shift [OUTGOING_DATA 2] 2) (prc-ecpairing___call_gas))
+         (vanishes! (shift [OUTGOING_DATA 3] 2))
+         (eq! (* (shift [OUTGOING_DATA 4] 2) 192)
+              (prc-ecpairing___precompile_cost192))))
+
+(defconstraint set-oob-event-prc-ecpairing (:guard (* (standing-hypothesis) (prc-ecpairing-hypothesis)))
+  (begin (eq! [OOB_EVENT 1]
+              (+ (- 1 (prc-ecpairing___is_multiple_192))
+                 (* (prc-ecpairing___is_multiple_192) (prc-ecpairing___insufficient_gas))))
+         (vanishes! [OOB_EVENT 2])))
+
+;; if-eq-else?
+(defconstraint constrain-remaining-gas-prc-ecpairing (:guard (* (standing-hypothesis) (prc-ecpairing-hypothesis)))
+  (if (vanishes! [OOB_EVENT 1])
+      (eq! (* (prc-ecpairing___remaining_gas) 192)
+           (- (* (prc-ecpairing___call_gas) 192) (prc-ecpairing___precompile_cost192)))
+      (vanishes! (prc-ecpairing___remaining_gas))))
 
 
