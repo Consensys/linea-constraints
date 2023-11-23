@@ -710,8 +710,4 @@
            (- (* (prc-ecpairing___call_gas) 192) (prc-ecpairing___precompile_cost192)))
       (vanishes! (prc-ecpairing___remaining_gas))))
 
-;; Temporary
-(defconstraint zero-col ()
-  (vanishes! MY_ZERO))
-
 
