@@ -19,7 +19,7 @@
     (* [oob.OUTGOING_DATA 2] (add-activation-flag))
     (* [oob.OUTGOING_DATA 3] (add-activation-flag))
     (* [oob.OUTGOING_DATA 4] (add-activation-flag))
-    (* oob.MY_ZERO (add-activation-flag))
+    (* 0 (add-activation-flag))
     (* oob.OUTGOING_RES_LO (add-activation-flag))
     (* oob.OUTGOING_INST (add-activation-flag))
   ))
