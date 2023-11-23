@@ -262,7 +262,7 @@
   (+ (* (- 1 (call-stpComp)) (call-LgDiff))
      (* (call-stpComp) GAS_LO)))
 
-;; common rows of all CREATE instructions
+;; common rows of all CALL instructions
 (defconstraint CALL-type-common (:guard (first-row-of-CALL))
   (begin  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
          ;;   ------------->   row i   ;;
