@@ -181,6 +181,10 @@
   (if-zero (+ IS_CREATE IS_JUMPI)
            (vanishes! [OOB_EVENT 2])))
 
+(defconstraint outgoing-res-lo-binary ()
+  (if-zero MOD_FLAG
+           (vanishes! (* OUTGOING_RES_LO (- 1 OUTGOING_RES_LO)))))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                             ;;
 ;;    2.5 instruction decoding ;;
