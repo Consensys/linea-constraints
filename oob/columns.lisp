@@ -6,7 +6,7 @@
   CT_MAX
   (INCOMING_DATA :array [6])
   (OOB_EVENT :binary :array [2])
-  (INCOMING_INST :byte :display :opcode) ;; all calls and creates are grouped under the same instruction
+  INCOMING_INST
   (IS_JUMP :binary)
   (IS_JUMPI :binary)
   (IS_RDC :binary)

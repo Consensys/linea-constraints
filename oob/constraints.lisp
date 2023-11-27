@@ -576,13 +576,12 @@
   (begin (eq! [OOB_EVENT 1] OUTGOING_RES_LO)
          (vanishes! [OOB_EVENT 2])))
 
-;; if-eq-else?
 (defconstraint constrain-remaining-gas-prc-ecrecover-prc-ecadd-prc-ecmul (:guard (* (standing-hypothesis) (prc-ecrecover-prc-ecadd-prc-ecmul-hypothesis)))
-  (if (vanishes! [OOB_EVENT 1])
-      (eq! (prc-ecrecover-prc-ecadd-prc-ecmul___remaining_gas)
-           (- (prc-ecrecover-prc-ecadd-prc-ecmul___call_gas)
-              (prc-ecrecover-prc-ecadd-prc-ecmul___precompile_cost)))
-      (vanishes! (prc-ecrecover-prc-ecadd-prc-ecmul___remaining_gas))))
+  (if-zero [OOB_EVENT 1]
+           (eq! (prc-ecrecover-prc-ecadd-prc-ecmul___remaining_gas)
+                (- (prc-ecrecover-prc-ecadd-prc-ecmul___call_gas)
+                   (prc-ecrecover-prc-ecadd-prc-ecmul___precompile_cost)))
+           (vanishes! (prc-ecrecover-prc-ecadd-prc-ecmul___remaining_gas))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                       ;;
@@ -632,13 +631,12 @@
   (begin (eq! [OOB_EVENT 1] (next OUTGOING_RES_LO))
          (vanishes! [OOB_EVENT 2])))
 
-;; if-eq-else?
 (defconstraint constrain-remaining-gas-prc-sha2-prc-ripemd-prc-identity (:guard (* (standing-hypothesis) (prc-sha2-prc-ripemd-prc-identity-hypothesis)))
-  (if (vanishes! [OOB_EVENT 1])
-      (eq! (prc-sha2-prc-ripemd-prc-identity___remaining_gas)
-           (- (prc-sha2-prc-ripemd-prc-identity___call_gas)
-              (prc-sha2-prc-ripemd-prc-identity___precompile_cost)))
-      (vanishes! (prc-sha2-prc-ripemd-prc-identity___remaining_gas))))
+  (if-zero [OOB_EVENT 1]
+           (eq! (prc-sha2-prc-ripemd-prc-identity___remaining_gas)
+                (- (prc-sha2-prc-ripemd-prc-identity___call_gas)
+                   (prc-sha2-prc-ripemd-prc-identity___precompile_cost)))
+           (vanishes! (prc-sha2-prc-ripemd-prc-identity___remaining_gas))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                       ;;
@@ -707,11 +705,10 @@
                  (* (prc-ecpairing___is_multiple_192) (prc-ecpairing___insufficient_gas))))
          (vanishes! [OOB_EVENT 2])))
 
-;; if-eq-else?
 (defconstraint constrain-remaining-gas-prc-ecpairing (:guard (* (standing-hypothesis) (prc-ecpairing-hypothesis)))
-  (if (vanishes! [OOB_EVENT 1])
-      (eq! (* (prc-ecpairing___remaining_gas) 192)
-           (- (* (prc-ecpairing___call_gas) 192) (prc-ecpairing___precompile_cost192)))
-      (vanishes! (prc-ecpairing___remaining_gas))))
+  (if-zero [OOB_EVENT 1]
+           (eq! (* (prc-ecpairing___remaining_gas) 192)
+                (- (* (prc-ecpairing___call_gas) 192) (prc-ecpairing___precompile_cost192)))
+           (vanishes! (prc-ecpairing___remaining_gas))))
 
 
