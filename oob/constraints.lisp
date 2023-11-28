@@ -546,6 +546,46 @@
 (defun (prc-standing-hypothesis)
   (prc_flag_sum))
 
+(defun (prc___call_gas)
+  [INCOMING_DATA 1])
+
+(defun (prc___remaining_gas)
+  [INCOMING_DATA 2])
+
+(defun (prc___cds)
+  [INCOMING_DATA 3])
+
+(defun (prc___cds_is_zero)
+  [INCOMING_DATA 4])
+
+(defun (prc___r_at_c)
+  [INCOMING_DATA 5])
+
+(defun (prc___r_at_c_is_zero)
+  [INCOMING_DATA 6])
+
+(defconstraint valid-prc (:guard (* (standing-hypothesis) (prc-standing-hypothesis)))
+  (begin (vanishes! ADD_FLAG)
+         (vanishes! MOD_FLAG)
+         (eq! WCP_FLAG 1)
+         (eq! OUTGOING_INST ISZERO)
+         (vanishes! [OUTGOING_DATA 1])
+         (eq! [OUTGOING_DATA 2] (prc___cds))
+         (vanishes! [OUTGOING_DATA 3])
+         (vanishes! [OUTGOING_DATA 4])
+         (eq! OUTGOING_RES_LO (prc___cds_is_zero))))
+
+(defconstraint valid-prc-future (:guard (* (standing-hypothesis) (prc-standing-hypothesis)))
+  (begin (vanishes! (next ADD_FLAG))
+         (vanishes! (next MOD_FLAG))
+         (eq! (next WCP_FLAG) 1)
+         (eq! (next OUTGOING_INST) ISZERO)
+         (vanishes! (next [OUTGOING_DATA 1]))
+         (eq! (next [OUTGOING_DATA 2]) (prc___r_at_c))
+         (vanishes! (next [OUTGOING_DATA 3]))
+         (vanishes! (next [OUTGOING_DATA 4]))
+         (eq! (next OUTGOING_RES_LO) (prc___r_at_c_is_zero))))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                       ;;
 ;; 3.11 For ECRECOVER,   ;;
@@ -563,7 +603,7 @@
 (defun (prc-ecrecover-prc-ecadd-prc-ecmul___precompile_cost)
   (+ (* 3000 PRC_ECRECOVER) (* 150 PRC_ECADD) (* 6000 PRC_ECMUL)))
 
-(defconstraint valid-prc-ecrecover-prc-ecadd-prc-ecmul (:guard (* (standing-hypothesis) (prc-ecrecover-prc-ecadd-prc-ecmul-hypothesis)))
+(defconstraint valid-prc-ecrecover-prc-ecadd-prc-ecmul (:guard (* (standing-hypothesis) (prc-standing-hypothesis) (prc-ecrecover-prc-ecadd-prc-ecmul-hypothesis)))
   (begin (vanishes! ADD_FLAG)
          (vanishes! MOD_FLAG)
          (eq! WCP_FLAG 1)
@@ -573,11 +613,11 @@
          (vanishes! [OUTGOING_DATA 3])
          (eq! [OUTGOING_DATA 4] (prc-ecrecover-prc-ecadd-prc-ecmul___precompile_cost))))
 
-(defconstraint set-oob-event-prc-ecrecover-prc-ecadd-prc-ecmul (:guard (* (standing-hypothesis) (prc-ecrecover-prc-ecadd-prc-ecmul-hypothesis)))
+(defconstraint set-oob-event-prc-ecrecover-prc-ecadd-prc-ecmul (:guard (* (standing-hypothesis) (prc-standing-hypothesis) (prc-ecrecover-prc-ecadd-prc-ecmul-hypothesis)))
   (begin (eq! [OOB_EVENT 1] OUTGOING_RES_LO)
          (vanishes! [OOB_EVENT 2])))
 
-(defconstraint constrain-remaining-gas-prc-ecrecover-prc-ecadd-prc-ecmul (:guard (* (standing-hypothesis) (prc-ecrecover-prc-ecadd-prc-ecmul-hypothesis)))
+(defconstraint constrain-remaining-gas-prc-ecrecover-prc-ecadd-prc-ecmul (:guard (* (standing-hypothesis) (prc-standing-hypothesis) (prc-ecrecover-prc-ecadd-prc-ecmul-hypothesis)))
   (if-zero [OOB_EVENT 1]
            (eq! (prc-ecrecover-prc-ecadd-prc-ecmul___remaining_gas)
                 (- (prc-ecrecover-prc-ecadd-prc-ecmul___call_gas)
