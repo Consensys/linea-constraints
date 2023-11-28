@@ -594,35 +594,28 @@
 (defun (prc-ecrecover-prc-ecadd-prc-ecmul-hypothesis)
   (+ PRC_ECRECOVER PRC_ECADD PRC_ECMUL))
 
-(defun (prc-ecrecover-prc-ecadd-prc-ecmul___call_gas)
-  [INCOMING_DATA 1])
-
-(defun (prc-ecrecover-prc-ecadd-prc-ecmul___remaining_gas)
-  [INCOMING_DATA 2])
-
 (defun (prc-ecrecover-prc-ecadd-prc-ecmul___precompile_cost)
   (+ (* 3000 PRC_ECRECOVER) (* 150 PRC_ECADD) (* 6000 PRC_ECMUL)))
 
-(defconstraint valid-prc-ecrecover-prc-ecadd-prc-ecmul (:guard (* (standing-hypothesis) (prc-standing-hypothesis) (prc-ecrecover-prc-ecadd-prc-ecmul-hypothesis)))
-  (begin (vanishes! ADD_FLAG)
-         (vanishes! MOD_FLAG)
-         (eq! WCP_FLAG 1)
-         (eq! OUTGOING_INST LT)
-         (vanishes! [OUTGOING_DATA 1])
-         (eq! [OUTGOING_DATA 2] (prc-ecrecover-prc-ecadd-prc-ecmul___call_gas))
-         (vanishes! [OUTGOING_DATA 3])
-         (eq! [OUTGOING_DATA 4] (prc-ecrecover-prc-ecadd-prc-ecmul___precompile_cost))))
+(defconstraint valid-prc-ecrecover-prc-ecadd-prc-ecmul-future-future (:guard (* (standing-hypothesis) (prc-standing-hypothesis) (prc-ecrecover-prc-ecadd-prc-ecmul-hypothesis)))
+  (begin (vanishes! (shift ADD_FLAG 2))
+         (vanishes! (shift MOD_FLAG 2))
+         (eq! (shift WCP_FLAG 2) 1)
+         (eq! (shift OUTGOING_INST 2) LT)
+         (vanishes! (shift [OUTGOING_DATA 1] 2))
+         (eq! (shift [OUTGOING_DATA 2] 2) (prc___call_gas))
+         (vanishes! (shift [OUTGOING_DATA 3] 2))
+         (eq! (shift [OUTGOING_DATA 4] 2) (prc-ecrecover-prc-ecadd-prc-ecmul___precompile_cost))))
 
 (defconstraint set-oob-event-prc-ecrecover-prc-ecadd-prc-ecmul (:guard (* (standing-hypothesis) (prc-standing-hypothesis) (prc-ecrecover-prc-ecadd-prc-ecmul-hypothesis)))
-  (begin (eq! [OOB_EVENT 1] OUTGOING_RES_LO)
+  (begin (eq! [OOB_EVENT 1] (shift OUTGOING_RES_LO 2))
          (vanishes! [OOB_EVENT 2])))
 
 (defconstraint constrain-remaining-gas-prc-ecrecover-prc-ecadd-prc-ecmul (:guard (* (standing-hypothesis) (prc-standing-hypothesis) (prc-ecrecover-prc-ecadd-prc-ecmul-hypothesis)))
   (if-zero [OOB_EVENT 1]
-           (eq! (prc-ecrecover-prc-ecadd-prc-ecmul___remaining_gas)
-                (- (prc-ecrecover-prc-ecadd-prc-ecmul___call_gas)
-                   (prc-ecrecover-prc-ecadd-prc-ecmul___precompile_cost)))
-           (vanishes! (prc-ecrecover-prc-ecadd-prc-ecmul___remaining_gas))))
+           (eq! (prc___remaining_gas)
+                (- (prc___call_gas) (prc-ecrecover-prc-ecadd-prc-ecmul___precompile_cost)))
+           (vanishes! (prc___remaining_gas))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                       ;;
@@ -632,52 +625,42 @@
 (defun (prc-sha2-prc-ripemd-prc-identity-hypothesis)
   (+ PRC_SHA2 PRC_RIPEMD PRC_IDENTITY))
 
-(defun (prc-sha2-prc-ripemd-prc-identity___call_gas)
-  [INCOMING_DATA 1])
-
-(defun (prc-sha2-prc-ripemd-prc-identity___remaining_gas)
-  [INCOMING_DATA 2])
-
-(defun (prc-sha2-prc-ripemd-prc-identity___size_lo)
-  [INCOMING_DATA 3])
-
 (defun (prc-sha2-prc-ripemd-prc-identity___ceil)
-  OUTGOING_RES_LO)
+  (shift OUTGOING_RES_LO 2))
 
 (defun (prc-sha2-prc-ripemd-prc-identity___precompile_cost)
   (* (+ 5 (prc-sha2-prc-ripemd-prc-identity___ceil))
      (+ (* 12 PRC_SHA2) (* 120 PRC_RIPEMD) (* 3 PRC_IDENTITY))))
 
-(defconstraint valid-prc-sha2-prc-ripemd-prc-identity (:guard (* (standing-hypothesis) (prc-standing-hypothesis) (prc-sha2-prc-ripemd-prc-identity-hypothesis)))
-  (begin (vanishes! ADD_FLAG)
-         (eq! MOD_FLAG 1)
-         (vanishes! WCP_FLAG)
-         (eq! OUTGOING_INST DIV)
-         (vanishes! [OUTGOING_DATA 1])
-         (eq! [OUTGOING_DATA 2] (+ (prc-sha2-prc-ripemd-prc-identity___size_lo) 31))
-         (vanishes! [OUTGOING_DATA 3])
-         (eq! [OUTGOING_DATA 4] 32)))
+(defconstraint valid-prc-sha2-prc-ripemd-prc-identity-future-future (:guard (* (standing-hypothesis) (prc-standing-hypothesis) (prc-sha2-prc-ripemd-prc-identity-hypothesis)))
+  (begin (vanishes! (shift ADD_FLAG 2))
+         (eq! (shift MOD_FLAG 2) 1)
+         (vanishes! (shift WCP_FLAG 2))
+         (eq! (shift OUTGOING_INST 2) DIV)
+         (vanishes! (shift [OUTGOING_DATA 1] 2))
+         (eq! (shift [OUTGOING_DATA 2] 2) (+ (prc___cds) 31))
+         (vanishes! (shift [OUTGOING_DATA 3] 2))
+         (eq! (shift [OUTGOING_DATA 4] 2) 32)))
 
-(defconstraint valid-prc-sha2-prc-ripemd-prc-identity-future (:guard (* (standing-hypothesis) (prc-standing-hypothesis) (prc-sha2-prc-ripemd-prc-identity-hypothesis)))
-  (begin (vanishes! (next ADD_FLAG))
-         (vanishes! (next MOD_FLAG))
-         (eq! (next WCP_FLAG) 1)
-         (eq! (next OUTGOING_INST) LT)
-         (vanishes! (next [OUTGOING_DATA 1]))
-         (eq! (next [OUTGOING_DATA 2]) (prc-sha2-prc-ripemd-prc-identity___call_gas))
-         (vanishes! (next [OUTGOING_DATA 3]))
-         (eq! (next [OUTGOING_DATA 4]) (prc-sha2-prc-ripemd-prc-identity___precompile_cost))))
+(defconstraint valid-prc-sha2-prc-ripemd-prc-identity-future-future-future (:guard (* (standing-hypothesis) (prc-standing-hypothesis) (prc-sha2-prc-ripemd-prc-identity-hypothesis)))
+  (begin (vanishes! (shift ADD_FLAG 3))
+         (vanishes! (shift MOD_FLAG 3))
+         (eq! (shift WCP_FLAG 3) 1)
+         (eq! (shift OUTGOING_INST 3) LT)
+         (vanishes! (shift [OUTGOING_DATA 1] 3))
+         (eq! (shift [OUTGOING_DATA 2] 3) (prc___call_gas))
+         (vanishes! (shift [OUTGOING_DATA 3] 3))
+         (eq! (shift [OUTGOING_DATA 4] 3) (prc-sha2-prc-ripemd-prc-identity___precompile_cost))))
 
 (defconstraint set-oob-event-prc-sha2-prc-ripemd-prc-identity (:guard (* (standing-hypothesis) (prc-standing-hypothesis) (prc-sha2-prc-ripemd-prc-identity-hypothesis)))
-  (begin (eq! [OOB_EVENT 1] (next OUTGOING_RES_LO))
+  (begin (eq! [OOB_EVENT 1] (shift OUTGOING_RES_LO 3))
          (vanishes! [OOB_EVENT 2])))
 
 (defconstraint constrain-remaining-gas-prc-sha2-prc-ripemd-prc-identity (:guard (* (standing-hypothesis) (prc-standing-hypothesis) (prc-sha2-prc-ripemd-prc-identity-hypothesis)))
   (if-zero [OOB_EVENT 1]
-           (eq! (prc-sha2-prc-ripemd-prc-identity___remaining_gas)
-                (- (prc-sha2-prc-ripemd-prc-identity___call_gas)
-                   (prc-sha2-prc-ripemd-prc-identity___precompile_cost)))
-           (vanishes! (prc-sha2-prc-ripemd-prc-identity___remaining_gas))))
+           (eq! (prc___remaining_gas)
+                (- (prc___call_gas) (prc-sha2-prc-ripemd-prc-identity___precompile_cost)))
+           (vanishes! (prc___remaining_gas))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                       ;;
@@ -687,57 +670,48 @@
 (defun (prc-ecpairing-hypothesis)
   PRC_ECPAIRING)
 
-(defun (prc-ecpairing___call_gas)
-  [INCOMING_DATA 1])
-
-(defun (prc-ecpairing___remaining_gas)
-  [INCOMING_DATA 2])
-
-(defun (prc-ecpairing___size_lo)
-  [INCOMING_DATA 3])
-
 (defun (prc-ecpairing___remainder)
-  OUTGOING_RES_LO)
+  (shift OUTGOING_RES_LO 2))
 
 (defun (prc-ecpairing___is_multiple_192)
-  (next OUTGOING_RES_LO))
+  (shift OUTGOING_RES_LO 3))
 
 (defun (prc-ecpairing___insufficient_gas)
-  (shift OUTGOING_RES_LO 2))
+  (shift OUTGOING_RES_LO 4))
 
 (defun (prc-ecpairing___precompile_cost192)
   (* (prc-ecpairing___is_multiple_192)
-     (+ (* 45000 192) (* 34000 (prc-ecpairing___size_lo)))))
-
-(defconstraint valid-prc-ecpairing (:guard (* (standing-hypothesis) (prc-standing-hypothesis) (prc-ecpairing-hypothesis)))
-  (begin (vanishes! ADD_FLAG)
-         (eq! MOD_FLAG 1)
-         (vanishes! WCP_FLAG)
-         (eq! OUTGOING_INST MOD)
-         (vanishes! [OUTGOING_DATA 1])
-         (eq! [OUTGOING_DATA 2] (prc-ecpairing___size_lo))
-         (vanishes! [OUTGOING_DATA 3])
-         (eq! [OUTGOING_DATA 4] 192)))
-
-(defconstraint valid-prc-ecpairing-future (:guard (* (standing-hypothesis) (prc-standing-hypothesis) (prc-ecpairing-hypothesis)))
-  (begin (vanishes! (next ADD_FLAG))
-         (vanishes! (next MOD_FLAG))
-         (eq! (next WCP_FLAG) 1)
-         (eq! (next OUTGOING_INST) ISZERO)
-         (vanishes! (next [OUTGOING_DATA 1]))
-         (eq! (next [OUTGOING_DATA 2]) (prc-ecpairing___remainder))
-         (vanishes! (next [OUTGOING_DATA 3]))
-         (vanishes! (next [OUTGOING_DATA 4]))))
+     (+ (* 45000 192) (* 34000 (prc___cds)))))
 
 (defconstraint valid-prc-ecpairing-future-future (:guard (* (standing-hypothesis) (prc-standing-hypothesis) (prc-ecpairing-hypothesis)))
   (begin (vanishes! (shift ADD_FLAG 2))
-         (vanishes! (shift MOD_FLAG 2))
-         (eq! (shift WCP_FLAG 2) (prc-ecpairing___is_multiple_192))
-         (eq! (shift OUTGOING_INST 2) LT)
+         (eq! (shift MOD_FLAG 2) 1)
+         (vanishes! (shift WCP_FLAG 2))
+         (eq! (shift OUTGOING_INST 2) MOD)
          (vanishes! (shift [OUTGOING_DATA 1] 2))
-         (eq! (shift [OUTGOING_DATA 2] 2) (prc-ecpairing___call_gas))
+         (eq! (shift [OUTGOING_DATA 2] 2) (prc___cds))
          (vanishes! (shift [OUTGOING_DATA 3] 2))
-         (eq! (* (shift [OUTGOING_DATA 4] 2) 192)
+         (eq! (shift [OUTGOING_DATA 4] 2) 192)))
+
+(defconstraint valid-prc-ecpairing-future-future-future (:guard (* (standing-hypothesis) (prc-standing-hypothesis) (prc-ecpairing-hypothesis)))
+  (begin (vanishes! (shift ADD_FLAG 3))
+         (vanishes! (shift MOD_FLAG 3))
+         (eq! (shift WCP_FLAG 3) 1)
+         (eq! (shift OUTGOING_INST 3) ISZERO)
+         (vanishes! (shift [OUTGOING_DATA 1] 3))
+         (eq! (shift [OUTGOING_DATA 2] 3) (prc-ecpairing___remainder))
+         (vanishes! (shift [OUTGOING_DATA 3] 3))
+         (vanishes! (shift [OUTGOING_DATA 4] 3))))
+
+(defconstraint valid-prc-ecpairing-future-future-future-future (:guard (* (standing-hypothesis) (prc-standing-hypothesis) (prc-ecpairing-hypothesis)))
+  (begin (vanishes! (shift ADD_FLAG 4))
+         (vanishes! (shift MOD_FLAG 4))
+         (eq! (shift WCP_FLAG 4) (prc-ecpairing___is_multiple_192))
+         (eq! (shift OUTGOING_INST 4) LT)
+         (vanishes! (shift [OUTGOING_DATA 1] 4))
+         (eq! (shift [OUTGOING_DATA 2] 4) (prc___call_gas))
+         (vanishes! (shift [OUTGOING_DATA 3] 4))
+         (eq! (* (shift [OUTGOING_DATA 4] 4) 192)
               (prc-ecpairing___precompile_cost192))))
 
 (defconstraint set-oob-event-prc-ecpairing (:guard (* (standing-hypothesis) (prc-standing-hypothesis) (prc-ecpairing-hypothesis)))
@@ -748,8 +722,8 @@
 
 (defconstraint constrain-remaining-gas-prc-ecpairing (:guard (* (standing-hypothesis) (prc-standing-hypothesis) (prc-ecpairing-hypothesis)))
   (if-zero [OOB_EVENT 1]
-           (eq! (* (prc-ecpairing___remaining_gas) 192)
-                (- (* (prc-ecpairing___call_gas) 192) (prc-ecpairing___precompile_cost192)))
-           (vanishes! (prc-ecpairing___remaining_gas))))
+           (eq! (* (prc___remaining_gas) 192)
+                (- (* (prc___call_gas) 192) (prc-ecpairing___precompile_cost192)))
+           (vanishes! (prc___remaining_gas))))
 
 
