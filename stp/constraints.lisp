@@ -118,7 +118,7 @@
 (defconstraint counter-constancies ()
   (begin (counter-constancy CT GAS_ACTUAL)
          (counter-constancy CT GAS_MXP)
-         (counter-constancy CT GAS_COST)
+         (counter-constancy CT GAS_UPFRONT)
          (counter-constancy CT GAS_STIPEND)
          ;
          (counter-constancy CT GAS_HI)
@@ -200,10 +200,10 @@
          (eq! (shift MOD_FLAG 2) 1)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;   Setting GAS_COST and GAS_STPD   ;;
+;;   Setting GAS_UPFRONT and GAS_STPD   ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defconstraint CREATE-type-outputs (:guard (first-row-of-CREATE))
-  (begin (eq! GAS_COST (create-gPrelim))
+  (begin (eq! GAS_UPFRONT (create-gPrelim))
          (vanishes! GAS_STIPEND)
          (if-zero OOGX
                   (eq! GAS_OOPKT
@@ -312,10 +312,10 @@
          (eq! (shift WCP_FLAG 4) 1)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;   Setting GAS_COST and GAS_STPD   ;;
+;;   Setting GAS_UPFRONT and GAS_STPD   ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defconstraint CALL-type-outputs (:guard (first-row-of-CALL))
-  (begin (eq! GAS_COST (call-gPrelim))
+  (begin (eq! GAS_UPFRONT (call-gPrelim))
          (if-zero OOGX
                   (begin (eq! GAS_OOPKT (call-gMin))
                          (eq! GAS_STIPEND
