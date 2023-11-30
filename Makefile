@@ -78,6 +78,8 @@ LOG_DATA := logData/columns.lisp logData/constraints.lisp \
 LOG_INFO := logInfo/columns.lisp logInfo/constraints.lisp \
 	logInfo/lookups/loginfo-to-rlprcpt.lisp logInfo/lookups/loginfo-to-logdata.lisp
 
+GAS := gas/columns.lisp gas/constraints.lisp
+
 ZKEVM_MODULES := ${LIBRARY} \
 	${ALU} \
 	${BIN} \
@@ -97,7 +99,8 @@ ZKEVM_MODULES := ${LIBRARY} \
 	${WCP} \
 	${TRM} \
 	${LOG_DATA} \
-	${LOG_INFO}
+	${LOG_INFO} \
+	${GAS}
 
 define.go: ${ZKEVM_MODULES}
 	${CORSET} wizard-iop -vv -P define -o $@ ${ZKEVM_MODULES}
