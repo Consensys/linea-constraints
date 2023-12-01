@@ -403,7 +403,7 @@
          (vanishes! [OUTGOING_DATA 4])))
 
 (defconstraint val-xcall-prediction (:guard (* (standing-hypothesis) (xcall-hypothesis)))
-  (eq! (xcall___val_is_not_zero) (- 1 OUTGOING_RES_LO 2)))
+  (eq! (xcall___val_is_not_zero) (- 1 OUTGOING_RES_LO)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                       ;;
