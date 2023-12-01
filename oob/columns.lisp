@@ -12,6 +12,7 @@
   (IS_RDC :binary)
   (IS_CDL :binary)
   (IS_CALL :binary)
+  (IS_XCALL :binary)
   (IS_CREATE :binary)
   (IS_SSTORE :binary)
   (IS_RETURN :binary)

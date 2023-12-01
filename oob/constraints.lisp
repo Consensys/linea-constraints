@@ -10,6 +10,7 @@
   C_JUMPI              0x57
   C_RDC                0x3E
   C_CDL                0x35
+  C_XCALL              0xCC
   C_CALL               0xCA
   C_CREATE             0xCE
   C_SSTORE             0x55
@@ -25,7 +26,8 @@
   CT_MAX_JUMPI         1
   CT_MAX_RDC           2
   CT_MAX_CDL           0
-  CT_MAX_CALL          1
+  CT_MAX_XCALL         0
+  CT_MAX_CALL          2
   CT_MAX_CREATE        2
   CT_MAX_SSTORE        0
   CT_MAX_RETURN        0
@@ -46,7 +48,7 @@
   G_CALLSTIPEND        2300)
 
 (defun (inst_flag_sum)
-  (+ IS_JUMP IS_JUMPI IS_RDC IS_CDL IS_CALL IS_CREATE IS_SSTORE IS_RETURN))
+  (+ IS_JUMP IS_JUMPI IS_RDC IS_CDL IS_XCALL IS_CALL IS_CREATE IS_SSTORE IS_RETURN))
 
 (defun (prc_flag_sum)
   (+ PRC_ECRECOVER PRC_SHA2 PRC_RIPEMD PRC_IDENTITY PRC_ECADD PRC_ECMUL PRC_ECPAIRING))
@@ -59,6 +61,7 @@
      (* C_JUMPI IS_JUMPI)
      (* C_RDC IS_RDC)
      (* C_CDL IS_CDL)
+     (* C_XCALL IS_XCALL)
      (* C_CALL IS_CALL)
      (* C_CREATE IS_CREATE)
      (* C_SSTORE IS_SSTORE)
@@ -76,6 +79,7 @@
      (* CT_MAX_JUMPI IS_JUMPI)
      (* CT_MAX_RDC IS_RDC)
      (* CT_MAX_CDL IS_CDL)
+     (* CT_MAX_XCALL IS_XCALL)
      (* CT_MAX_CALL IS_CALL)
      (* CT_MAX_CREATE IS_CREATE)
      (* CT_MAX_SSTORE IS_SSTORE)
@@ -153,6 +157,7 @@
          (is-binary IS_JUMPI)
          (is-binary IS_RDC)
          (is-binary IS_CDL)
+         (is-binary IS_XCALL)
          (is-binary IS_CALL)
          (is-binary IS_CREATE)
          (is-binary IS_SSTORE)
@@ -372,7 +377,37 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                       ;;
-;;    3.6 For CALL's     ;;
+;;    3.6 For XCALL's    ;;
+;;                       ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun (xcall-hypothesis)
+  IS_XCALL)
+
+(defun (xcall___val_hi)
+  [INCOMING_DATA 1])
+
+(defun (xcall___val_lo)
+  [INCOMING_DATA 2])
+
+(defun (xcall___val_is_not_zero)
+  [INCOMING_DATA 4])
+
+(defconstraint valid-xcall (:guard (* (standing-hypothesis) (xcall-hypothesis)))
+  (begin (vanishes! ADD_FLAG)
+         (vanishes! MOD_FLAG)
+         (eq! WCP_FLAG 1)
+         (eq! OUTGOING_INST ISZERO)
+         (eq! [OUTGOING_DATA 1] (xcall___val_hi))
+         (eq! [OUTGOING_DATA 2] (xcall___val_lo))
+         (vanishes! [OUTGOING_DATA 3])
+         (vanishes! [OUTGOING_DATA 4])))
+
+(defconstraint val-xcall-prediction ()
+  (eq! (xcall___val_is_not_zero) (- 1 OUTGOING_RES_LO 2)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                       ;;
+;;    3.7 For CALL's     ;;
 ;;                       ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun (call-hypothesis)
@@ -386,6 +421,9 @@
 
 (defun (call___bal)
   [INCOMING_DATA 3])
+
+(defun (call___val_is_not_zero)
+  [INCOMING_DATA 4])
 
 (defun (call___csd)
   [INCOMING_DATA 6])
@@ -410,6 +448,20 @@
          (vanishes! (next [OUTGOING_DATA 3]))
          (eq! (next [OUTGOING_DATA 4]) 1024)))
 
+(defconstraint valid-call-future-future (:guard (* (standing-hypothesis) (call-hypothesis)))
+  (begin (vanishes! (shift ADD_FLAG 2))
+         (vanishes! (shift MOD_FLAG 2))
+         (eq! (shift WCP_FLAG 2) 1)
+         (eq! (shift OUTGOING_INST 2) ISZERO)
+         (eq! (shift [OUTGOING_DATA 1] 2) (call___val_hi))
+         (eq! (shift [OUTGOING_DATA 2] 2) (call___val_lo))
+         (vanishes! (shift [OUTGOING_DATA 3] 2))
+         (vanishes! (shift [OUTGOING_DATA 4] 2))))
+
+(defconstraint val-call-prediction ()
+  (eq! (call___val_is_not_zero)
+       (- 1 (shift OUTGOING_RES_LO 2))))
+
 (defconstraint set-oob-event-call (:guard (* (standing-hypothesis) (call-hypothesis)))
   (begin (eq! [OOB_EVENT 1]
               (+ OUTGOING_RES_LO
@@ -419,7 +471,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                       ;;
-;; 3.7 For               ;;
+;; 3.8 For               ;;
 ;; CREATE's              ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun (create-hypothesis)
@@ -486,7 +538,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                       ;;
-;; 3.8 For               ;;
+;; 3.9 For               ;;
 ;; SSTORE                ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun (sstore-hypothesis)
@@ -511,7 +563,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                       ;;
-;; 3.9 For               ;;
+;; 3.10 For              ;;
 ;; RETURN                ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun (return-hypothesis)
@@ -539,7 +591,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                       ;;
-;; 3.10 Common           ;;
+;; 3.11 Common           ;;
 ;; constraints for       ;; 
 ;; precompiles           ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -588,7 +640,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                       ;;
-;; 3.11 For ECRECOVER,   ;;
+;; 3.12 For ECRECOVER,   ;;
 ;; ECADD, ECMUL          ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun (prc-ecrecover-prc-ecadd-prc-ecmul-hypothesis)
@@ -619,7 +671,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                       ;;
-;; 3.11 For SHA2-256,    ;;
+;; 3.13 For SHA2-256,    ;;
 ;; RIPEMD-160, IDENTITY  ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun (prc-sha2-prc-ripemd-prc-identity-hypothesis)
@@ -664,7 +716,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                       ;;
-;; 3.12 For ECPAIRING    ;;
+;; 3.14 For ECPAIRING    ;;
 ;;                       ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun (prc-ecpairing-hypothesis)
