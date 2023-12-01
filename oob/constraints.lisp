@@ -402,7 +402,7 @@
          (vanishes! [OUTGOING_DATA 3])
          (vanishes! [OUTGOING_DATA 4])))
 
-(defconstraint val-xcall-prediction ()
+(defconstraint val-xcall-prediction (:guard (* (standing-hypothesis) (xcall-hypothesis)))
   (eq! (xcall___val_is_not_zero) (- 1 OUTGOING_RES_LO 2)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -458,7 +458,7 @@
          (vanishes! (shift [OUTGOING_DATA 3] 2))
          (vanishes! (shift [OUTGOING_DATA 4] 2))))
 
-(defconstraint val-call-prediction ()
+(defconstraint val-call-prediction (:guard (* (standing-hypothesis) (call-hypothesis)))
   (eq! (call___val_is_not_zero)
        (- 1 (shift OUTGOING_RES_LO 2))))
 
