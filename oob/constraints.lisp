@@ -837,7 +837,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                       ;;
-;; 4.4 For BLAKE2F_a     ;;
+;; 4.10 For BLAKE2F_a     ;;
 ;;                       ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun (prc-blake2f_a-hypothesis)
@@ -863,5 +863,80 @@
 (defconstraint set-oob-event-blake2f_a (:guard (* (standing-hypothesis) (prc-standing-hypothesis) (prc-blake2f_a-hypothesis)))
   (begin (eq! [OOB_EVENT 1] (- 1 (prc-blake2f_a___valid_cds)))
          (vanishes! [OOB_EVENT 2])))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                       ;;
+;; 4.11 For BLAKE2F_b    ;;
+;;                       ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun (prc-blake2f_b-hypothesis)
+  PRC_BLAKE2F_b)
+
+(defun (prc-blake2f_b___call_gas)
+  [INCOMING_DATA 1])
+
+(defun (prc-blake2f_b___remaining_gas)
+  [INCOMING_DATA 2])
+
+(defun (prc-blake2f_b___blake_r)
+  [INCOMING_DATA 3])
+
+(defun (prc-blake2f_b___blake_f)
+  [INCOMING_DATA 4])
+
+(defun (prc-blake2f_b___r_at_c)
+  [INCOMING_DATA 5])
+
+(defun (prc-blake2f_b___r_at_c_is_zero)
+  [INCOMING_DATA 6])
+
+(defun (prc-blake2f_b___insufficient_gas)
+  OUTGOING_RES_LO)
+
+(defun (prc-blake2f_b___f_is_not_a_bit)
+  (- 1 (next OUTGOING_RES_LO)))
+
+(defconstraint valid-prc-blake2f_b (:guard (* (standing-hypothesis) (prc-standing-hypothesis) (prc-blake2f_b-hypothesis)))
+  (begin (vanishes! ADD_FLAG)
+         (vanishes! MOD_FLAG)
+         (eq! WCP_FLAG 1)
+         (eq! OUTGOING_INST LT)
+         (vanishes! [OUTGOING_DATA 1])
+         (eq! [OUTGOING_DATA 2] (prc-blake2f_b___call_gas))
+         (vanishes! [OUTGOING_DATA 3])
+         (eq! [OUTGOING_DATA 4] (prc-blake2f_b___blake_r))))
+
+(defconstraint valid-prc-blake2f_b-future (:guard (* (standing-hypothesis) (prc-standing-hypothesis) (prc-blake2f_b-hypothesis)))
+  (begin (vanishes! (next ADD_FLAG))
+         (vanishes! (next MOD_FLAG))
+         (eq! (next WCP_FLAG) 1)
+         (eq! (next OUTGOING_INST) EQ)
+         (vanishes! (next [OUTGOING_DATA 1]))
+         (eq! (next [OUTGOING_DATA 2]) (prc-blake2f_b___blake_f))
+         (vanishes! (next [OUTGOING_DATA 3]))
+         (eq! (next [OUTGOING_DATA 4]) (* (prc-blake2f_b___blake_f) (prc-blake2f_b___blake_f)))))
+
+(defconstraint valid-prc-blake2f_b-future-future (:guard (* (standing-hypothesis) (prc-standing-hypothesis) (prc-blake2f_b-hypothesis)))
+  (begin (vanishes! (shift ADD_FLAG 2))
+         (vanishes! (shift MOD_FLAG 2))
+         (eq! (shift WCP_FLAG 2) 1)
+         (eq! (shift OUTGOING_INST 2) ISZERO)
+         (vanishes! (shift [OUTGOING_DATA 1] 2))
+         (eq! (shift [OUTGOING_DATA 2] 2) (prc-blake2f_b___r_at_c))
+         (vanishes! (shift [OUTGOING_DATA 3] 2))
+         (vanishes! (shift [OUTGOING_DATA 4] 2))
+         (eq! (shift OUTGOING_RES_LO 2) (prc-blake2f_b___r_at_c_is_zero))))
+
+(defconstraint set-oob-event-prc-blake2f_b (:guard (* (standing-hypothesis) (prc-standing-hypothesis) (prc-blake2f_b-hypothesis)))
+  (begin (eq! [OOB_EVENT 1]
+              (+ (prc-blake2f_b___insufficient_gas)
+                 (* (- 1 (prc-blake2f_b___insufficient_gas)) (prc-blake2f_b___f_is_not_a_bit))))
+         (vanishes! [OOB_EVENT 2])))
+
+(defconstraint constrain-remaining-gas-prc-blake2f_b (:guard (* (standing-hypothesis) (prc-standing-hypothesis) (prc-blake2f_b-hypothesis)))
+  (if-zero [OOB_EVENT 1]
+           (eq! (prc-blake2f_b___remaining_gas)
+                (- (prc-blake2f_b___call_gas) (prc-blake2f_b___remaining_gas)))
+           (vanishes! (prc-blake2f_b___remaining_gas))))
 
 
