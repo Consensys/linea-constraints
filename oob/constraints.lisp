@@ -242,6 +242,9 @@
 (defun (jump___codesize)
   [INCOMING_DATA 5])
 
+(defun (jump___invalid_pc_new)
+  (- 1 OUTGOING_RES_LO))
+
 (defconstraint valid-jump (:guard (* (standing-hypothesis) (jump-hypothesis)))
   (begin (vanishes! ADD_FLAG)
          (vanishes! MOD_FLAG)
@@ -253,7 +256,7 @@
          (eq! [OUTGOING_DATA 4] (jump___codesize))))
 
 (defconstraint set-oob-event-jump (:guard (* (standing-hypothesis) (jump-hypothesis)))
-  (begin (eq! [OOB_EVENT 1] (- 1 OUTGOING_RES_LO))
+  (begin (eq! [OOB_EVENT 1] (jump___invalid_pc_new))
          (vanishes! [OOB_EVENT 2])))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -279,6 +282,12 @@
 (defun (jumpi___codesize)
   [INCOMING_DATA 5])
 
+(defun (jumpi___invalid_pc_new)
+  (- 1 OUTGOING_RES_LO))
+
+(defun (jumpi___attempt_jump)
+  (- 1 (next OUTGOING_RES_LO)))
+
 (defconstraint valid-jumpi (:guard (* (standing-hypothesis) (jumpi-hypothesis)))
   (begin (vanishes! ADD_FLAG)
          (vanishes! MOD_FLAG)
@@ -300,11 +309,8 @@
          (vanishes! (next [OUTGOING_DATA 4]))))
 
 (defconstraint set-oob-event-jumpi (:guard (* (standing-hypothesis) (jumpi-hypothesis)))
-  (begin (eq! [OOB_EVENT 1]
-              (* (- 1 (next OUTGOING_RES_LO))
-                 (- 1 OUTGOING_RES_LO)))
-         (eq! [OOB_EVENT 2]
-              (- 1 (next OUTGOING_RES_LO)))))
+  (begin (eq! [OOB_EVENT 1] (* (jumpi___attempt_jump) (jumpi___invalid_pc_new)))
+         (eq! [OOB_EVENT 2] (jumpi___attempt_jump))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                       ;;
@@ -328,6 +334,12 @@
 
 (defun (rdc___rds)
   [INCOMING_DATA 5])
+
+(defun (rdc___rdc_roob)
+  (- 1 OUTGOING_RES_LO))
+
+(defun (rdc___rdc_soob)
+  (- 1 (shift OUTGOING_RES_LO 2)))
 
 (defconstraint valid-rdc (:guard (* (standing-hypothesis) (rdc-hypothesis)))
   (begin (vanishes! ADD_FLAG)
@@ -359,8 +371,8 @@
 
 (defconstraint set-oob-event-rdc (:guard (* (standing-hypothesis) (rdc-hypothesis)))
   (begin (eq! [OOB_EVENT 1]
-              (+ (- 1 OUTGOING_RES_LO)
-                 (* OUTGOING_RES_LO (shift OUTGOING_RES_LO 2))))
+              (+ (rdc___rdc_roob)
+                 (* (- 1 (rdc___rdc_roob)) (rdc___rdc_soob))))
          (vanishes! [OOB_EVENT 2])))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -380,6 +392,9 @@
 (defun (cdl___cds)
   [INCOMING_DATA 5])
 
+(defun (cdl___touches_ram)
+  OUTGOING_RES_LO)
+
 (defconstraint valid-cdl (:guard (* (standing-hypothesis) (cdl-hypothesis)))
   (begin (vanishes! ADD_FLAG)
          (vanishes! MOD_FLAG)
@@ -391,7 +406,7 @@
          (eq! [OUTGOING_DATA 4] (cdl___cds))))
 
 (defconstraint set-oob-event-cdl (:guard (* (standing-hypothesis) (cdl-hypothesis)))
-  (begin (eq! [OOB_EVENT 1] (- 1 OUTGOING_RES_LO))
+  (begin (eq! [OOB_EVENT 1] (- 1 (cdl___touches_ram)))
          (vanishes! [OOB_EVENT 2])))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -408,8 +423,11 @@
 (defun (xcall___val_lo)
   [INCOMING_DATA 2])
 
-(defun (xcall___val_is_not_zero)
+(defun (xcall___nonzero_value)
   [INCOMING_DATA 4])
+
+(defun (xcall___value_is_zero)
+  OUTGOING_RES_LO)
 
 (defconstraint valid-xcall (:guard (* (standing-hypothesis) (xcall-hypothesis)))
   (begin (vanishes! ADD_FLAG)
@@ -422,7 +440,7 @@
          (vanishes! [OUTGOING_DATA 4])))
 
 (defconstraint val-xcall-prediction (:guard (* (standing-hypothesis) (xcall-hypothesis)))
-  (eq! (xcall___val_is_not_zero) (- 1 OUTGOING_RES_LO)))
+  (eq! (xcall___nonzero_value) (- 1 (xcall___value_is_zero))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                       ;;
@@ -441,11 +459,20 @@
 (defun (call___bal)
   [INCOMING_DATA 3])
 
-(defun (call___val_is_not_zero)
+(defun (call___nonzero_value)
   [INCOMING_DATA 4])
 
 (defun (call___csd)
   [INCOMING_DATA 6])
+
+(defun (call___insufficient_balance_abort)
+  OUTGOING_RES_LO)
+
+(defun (call___call_stack_depth_abort)
+  (- 1 (next OUTGOING_RES_LO)))
+
+(defun (call___value_is_zero)
+  (shift OUTGOING_RES_LO 2))
 
 (defconstraint valid-call (:guard (* (standing-hypothesis) (call-hypothesis)))
   (begin (vanishes! ADD_FLAG)
@@ -478,14 +505,12 @@
          (vanishes! (shift [OUTGOING_DATA 4] 2))))
 
 (defconstraint val-call-prediction (:guard (* (standing-hypothesis) (call-hypothesis)))
-  (eq! (call___val_is_not_zero)
-       (- 1 (shift OUTGOING_RES_LO 2))))
+  (eq! (call___nonzero_value) (- 1 (call___value_is_zero))))
 
 (defconstraint set-oob-event-call (:guard (* (standing-hypothesis) (call-hypothesis)))
   (begin (eq! [OOB_EVENT 1]
-              (+ OUTGOING_RES_LO
-                 (* (- 1 OUTGOING_RES_LO)
-                    (- 1 (next OUTGOING_RES_LO)))))
+              (+ (call___insufficient_balance_abort)
+                 (* (- 1 (call___insufficient_balance_abort)) (call___call_stack_depth_abort))))
          (vanishes! [OOB_EVENT 2])))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -513,6 +538,15 @@
 
 (defun (create___csd)
   [INCOMING_DATA 6])
+
+(defun (create___insufficient_balance_abort)
+  OUTGOING_RES_LO)
+
+(defun (create___stack_depth_abort)
+  (- 1 (next OUTGOING_RES_LO)))
+
+(defun (create___nonzero_nonce)
+  (- 1 (shift OUTGOING_RES_LO 2)))
 
 (defconstraint valid-create (:guard (* (standing-hypothesis) (create-hypothesis)))
   (begin (vanishes! ADD_FLAG)
@@ -546,14 +580,12 @@
 
 (defconstraint set-oob-event-create (:guard (* (standing-hypothesis) (create-hypothesis)))
   (begin (eq! [OOB_EVENT 1]
-              (+ OUTGOING_RES_LO
-                 (* (- 1 OUTGOING_RES_LO)
-                    (- 1 (next OUTGOING_RES_LO)))))
+              (+ (create___insufficient_balance_abort)
+                 (* (- 1 (create___insufficient_balance_abort)) (create___stack_depth_abort))))
          (eq! [OOB_EVENT 2]
               (* (- 1 [OOB_EVENT 1])
                  (+ (create___has_code)
-                    (* (- 1 (create___has_code))
-                       (- 1 (shift OUTGOING_RES_LO 2))))))))
+                    (* (- 1 (create___has_code)) (create___nonzero_nonce)))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                       ;;
@@ -566,6 +598,9 @@
 (defun (sstore___gas)
   [INCOMING_DATA 5])
 
+(defun (sstore___sufficient_gas)
+  OUTGOING_RES_LO)
+
 (defconstraint valid-sstore (:guard (* (standing-hypothesis) (sstore-hypothesis)))
   (begin (vanishes! ADD_FLAG)
          (vanishes! MOD_FLAG)
@@ -577,7 +612,7 @@
          (eq! [OUTGOING_DATA 4] (sstore___gas))))
 
 (defconstraint set-oob-event-sstore (:guard (* (standing-hypothesis) (sstore-hypothesis)))
-  (begin (eq! [OOB_EVENT 1] (- 1 OUTGOING_RES_LO))
+  (begin (eq! [OOB_EVENT 1] (- 1 (sstore___sufficient_gas)))
          (vanishes! [OOB_EVENT 2])))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -594,6 +629,9 @@
 (defun (return___size_lo)
   [INCOMING_DATA 2])
 
+(defun (return___exceeds_max_code_size)
+  OUTGOING_RES_LO)
+
 (defconstraint valid-return (:guard (* (standing-hypothesis) (return-hypothesis)))
   (begin (vanishes! ADD_FLAG)
          (vanishes! MOD_FLAG)
@@ -605,7 +643,7 @@
          (eq! [OUTGOING_DATA 4] (return___size_lo))))
 
 (defconstraint set-oob-event-return (:guard (* (standing-hypothesis) (return-hypothesis)))
-  (begin (eq! [OOB_EVENT 1] OUTGOING_RES_LO)
+  (begin (eq! [OOB_EVENT 1] (return___exceeds_max_code_size))
          (vanishes! [OOB_EVENT 2])))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
