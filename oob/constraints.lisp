@@ -648,7 +648,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                       ;;
-;; 3.11 Common           ;;
+;; 4.1 Common           ;;
 ;; constraints for       ;; 
 ;; precompiles           ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -697,7 +697,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                       ;;
-;; 3.12 For ECRECOVER,   ;;
+;; 4.2 For ECRECOVER,   ;;
 ;; ECADD, ECMUL          ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun (prc-ecrecover-prc-ecadd-prc-ecmul-hypothesis)
@@ -728,7 +728,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                       ;;
-;; 3.13 For SHA2-256,    ;;
+;; 4.3 For SHA2-256,     ;;
 ;; RIPEMD-160, IDENTITY  ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun (prc-sha2-prc-ripemd-prc-identity-hypothesis)
@@ -773,7 +773,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                       ;;
-;; 3.14 For ECPAIRING    ;;
+;; 4.4 For ECPAIRING    ;;
 ;;                       ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun (prc-ecpairing-hypothesis)
@@ -834,5 +834,34 @@
            (eq! (* (prc___remaining_gas) 192)
                 (- (* (prc___call_gas) 192) (prc-ecpairing___precompile_cost192)))
            (vanishes! (prc___remaining_gas))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                       ;;
+;; 4.4 For BLAKE2F_a     ;;
+;;                       ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun (prc-blake2f_a-hypothesis)
+  PRC_BLAKE2F_a)
+
+(defun (prc-blake2f_a___cds)
+  [INCOMING_DATA 3])
+
+(defun (prc-blake2f_a___valid_cds)
+  OUTGOING_RES_LO)
+
+(defconstraint valid-prc-blake2f_a (:guard (* (standing-hypothesis) (prc-standing-hypothesis) (prc-blake2f_a-hypothesis)))
+  (begin (vanishes! ADD_FLAG)
+         (vanishes! MOD_FLAG)
+         (eq! WCP_FLAG 1)
+         (eq! OUTGOING_INST EQ)
+         (vanishes! [OUTGOING_DATA 1])
+         (eq! [OUTGOING_DATA 2] (prc-blake2f_a___cds))
+         (vanishes! [OUTGOING_DATA 3])
+         (eq! [OUTGOING_DATA 4] 213)
+         (eq! OUTGOING_RES_LO (prc___cds_is_zero))))
+
+(defconstraint set-oob-event-blake2f_a (:guard (* (standing-hypothesis) (prc-standing-hypothesis) (prc-blake2f_a-hypothesis)))
+  (begin (eq! [OOB_EVENT 1] (- 1 (prc-blake2f_a___valid_cds)))
+         (vanishes! [OOB_EVENT 2])))
 
 
