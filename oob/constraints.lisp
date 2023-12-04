@@ -22,6 +22,8 @@
   C_PRC_ECADD          0xFF06
   C_PRC_ECMUL          0xFF07
   C_PRC_ECPAIRING      0xFF08
+  C_PRC_BLAKE2F_a      0xFA09
+  C_PRC_BLAKE2F_b      0xFB09
   CT_MAX_JUMP          0
   CT_MAX_JUMPI         1
   CT_MAX_RDC           2
@@ -38,6 +40,8 @@
   CT_MAX_PRC_ECADD     2
   CT_MAX_PRC_ECMUL     2
   CT_MAX_PRC_ECPAIRING 4
+  CT_MAX_PRC_BLAKE2F_a 0
+  CT_MAX_PRC_BLAKE2F_b 2
   LT                   0x10
   ISZERO               0x15
   ADD                  0x01
@@ -51,7 +55,15 @@
   (+ IS_JUMP IS_JUMPI IS_RDC IS_CDL IS_XCALL IS_CALL IS_CREATE IS_SSTORE IS_RETURN))
 
 (defun (prc_flag_sum)
-  (+ PRC_ECRECOVER PRC_SHA2 PRC_RIPEMD PRC_IDENTITY PRC_ECADD PRC_ECMUL PRC_ECPAIRING))
+  (+ PRC_ECRECOVER
+     PRC_SHA2
+     PRC_RIPEMD
+     PRC_IDENTITY
+     PRC_ECADD
+     PRC_ECMUL
+     PRC_ECPAIRING
+     PRC_BLAKE2F_a
+     PRC_BLAKE2F_b))
 
 (defun (flag_sum)
   (+ (inst_flag_sum) (prc_flag_sum)))
@@ -72,7 +84,9 @@
      (* C_PRC_IDENTITY PRC_IDENTITY)
      (* C_PRC_ECADD PRC_ECADD)
      (* C_PRC_ECMUL PRC_ECMUL)
-     (* C_PRC_ECPAIRING PRC_ECPAIRING)))
+     (* C_PRC_ECPAIRING PRC_ECPAIRING)
+     (* C_PRC_BLAKE2F_a PRC_BLAKE2F_a)
+     (* C_PRC_BLAKE2F_b PRC_BLAKE2F_b)))
 
 (defun (maxct_sum)
   (+ (* CT_MAX_JUMP IS_JUMP)
@@ -90,7 +104,9 @@
      (* CT_MAX_PRC_IDENTITY PRC_IDENTITY)
      (* CT_MAX_PRC_ECADD PRC_ECADD)
      (* CT_MAX_PRC_ECMUL PRC_ECMUL)
-     (* CT_MAX_PRC_ECPAIRING PRC_ECPAIRING)))
+     (* CT_MAX_PRC_ECPAIRING PRC_ECPAIRING)
+     (* CT_MAX_PRC_BLAKE2F_a PRC_BLAKE2F_a)
+     (* CT_MAX_PRC_BLAKE2F_b PRC_BLAKE2F_b)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                     ;;
@@ -151,8 +167,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; These constraints will be auto-generated due to the type of the columns
 (defconstraint binary-constraints ()
-  (begin (is-binary WCP_FLAG)
-         (is-binary ADD_FLAG)
+  (begin (is-binary ADD_FLAG)
+         (is-binary MOD_FLAG)
+         (is-binary WCP_FLAG)
          (is-binary IS_JUMP)
          (is-binary IS_JUMPI)
          (is-binary IS_RDC)
@@ -162,14 +179,16 @@
          (is-binary IS_CREATE)
          (is-binary IS_SSTORE)
          (is-binary IS_RETURN)
-         (for i [2] (is-binary [OOB_EVENT i]))
          (is-binary PRC_ECRECOVER)
          (is-binary PRC_SHA2)
          (is-binary PRC_RIPEMD)
          (is-binary PRC_IDENTITY)
          (is-binary PRC_ECADD)
          (is-binary PRC_ECMUL)
-         (is-binary PRC_ECPAIRING)))
+         (is-binary PRC_ECPAIRING)
+         (is-binary PRC_BLAKE2F_a)
+         (is-binary PRC_BLAKE2F_b)
+         (for i [2] (is-binary [OOB_EVENT i]))))
 
 (defconstraint wcp-add-mod-are-exclusive ()
   (is-binary (+ WCP_FLAG ADD_FLAG MOD_FLAG)))

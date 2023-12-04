@@ -23,6 +23,8 @@
   (PRC_ECADD :binary)
   (PRC_ECMUL :binary)
   (PRC_ECPAIRING :binary)
+  (PRC_BLAKE2F_a :binary)
+  (PRC_BLAKE2F_b :binary)
   (WCP_FLAG :binary)
   (ADD_FLAG :binary)
   (MOD_FLAG :binary)
