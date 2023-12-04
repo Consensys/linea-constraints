@@ -339,7 +339,7 @@
   (- 1 OUTGOING_RES_LO))
 
 (defun (rdc___rdc_soob)
-  (- 1 (shift OUTGOING_RES_LO 2)))
+  (shift OUTGOING_RES_LO 2))
 
 (defconstraint valid-rdc (:guard (* (standing-hypothesis) (rdc-hypothesis)))
   (begin (vanishes! ADD_FLAG)
