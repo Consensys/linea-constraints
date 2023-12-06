@@ -655,7 +655,7 @@
 (defun (prc-standing-hypothesis)
   (prc_flag_sum))
 
-(defun (prc-common-constraints)
+(defun (prc-common-constraints-hypothesis)
   (+ PRC_ECRECOVER PRC_SHA2 PRC_RIPEMD PRC_IDENTITY PRC_ECADD PRC_ECMUL PRC_ECPAIRING))
 
 (defun (prc___call_gas)
@@ -676,7 +676,7 @@
 (defun (prc___r_at_c_is_zero)
   [INCOMING_DATA 6])
 
-(defconstraint valid-prc (:guard (* (standing-hypothesis) (prc-standing-hypothesis) (prc-common-constraints)))
+(defconstraint valid-prc (:guard (* (standing-hypothesis) (prc-standing-hypothesis) (prc-common-constraints-hypothesis)))
   (begin (vanishes! ADD_FLAG)
          (vanishes! MOD_FLAG)
          (eq! WCP_FLAG 1)
@@ -687,7 +687,7 @@
          (vanishes! [OUTGOING_DATA 4])
          (eq! OUTGOING_RES_LO (prc___cds_is_zero))))
 
-(defconstraint valid-prc-future (:guard (* (standing-hypothesis) (prc-standing-hypothesis) (prc-common-constraints)))
+(defconstraint valid-prc-future (:guard (* (standing-hypothesis) (prc-standing-hypothesis) (prc-common-constraints-hypothesis)))
   (begin (vanishes! (next ADD_FLAG))
          (vanishes! (next MOD_FLAG))
          (eq! (next WCP_FLAG) 1)
