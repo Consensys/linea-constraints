@@ -1087,4 +1087,65 @@
   (begin (vanishes! [OOB_EVENT 1])
          (vanishes! [OOB_EVENT 2])))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                         ;;
+;;   6.4 For MODEXP        ;;
+;;   - pricing             ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun (prc-modexp_pricing-hypothesis)
+  PRC_MODEXP_PRICING)
+
+(defun (prc-modexp_pricing___call_gas)
+  [INCOMING_DATA 1])
+
+(defun (prc-modexp_pricing___remaining_gas)
+  [INCOMING_DATA 2])
+
+(defun (prc-modexp_pricing___exponent_log)
+  [INCOMING_DATA 3])
+
+(defun (prc-modexp_pricing___max_mbs_bbs)
+  [INCOMING_DATA 4])
+
+(defun (prc-modexp_pricing___r_at_c)
+  [INCOMING_DATA 5])
+
+(defun (prc-modexp_pricing___r_at_c_is_zero)
+  [INCOMING_DATA 6])
+
+(defun (prc-modexp_pricing___exponent_log_is_zero)
+  (next OUTGOING_RES_LO))
+
+(defun (prc-modexp_pricing___f_of_max)
+  (shift OUTGOING_RES_LO 2))
+
+(defun (prc-modexp_pricing___big_quotient)
+  (shift OUTGOING_RES_LO 3))
+
+(defun (prc-modexp_pricing___big_quotient_lt_200)
+  (shift OUTGOING_RES_LO 4))
+
+(defun (prc-modexp_pricing___insufficient_gas)
+  (shift OUTGOING_RES_LO 5))
+
+(defconstraint valid-prc-modexp_pricing (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp_pricing-hypothesis)))
+  (begin (callToISZERO 0 0 (prc-modexp_pricing___r_at_c))
+         (eq! OUTGOING_RES_LO (prc-modexp_pricing___r_at_c_is_zero))))
+
+(defconstraint valid-prc-modexp_pricing-future (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp_pricing-hypothesis)))
+  (callToISZERO 1 0 (prc-modexp_pricing___exponent_log)))
+
+(defconstraint valid-prc-modexp_pricing-future-future (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp_pricing-hypothesis)))
+  (callToDIV 2
+             0
+             (+ (* (prc-modexp_pricing___max_mbs_bbs) (prc-modexp_pricing___max_mbs_bbs)) 7)
+             0
+             8))
+
+(defconstraint set-oob-event-prc-modexp_pricing (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp_pricing-hypothesis)))
+  (begin (eq! [OOB_EVENT 1] (prc-modexp_pricing___insufficient_gas))
+         (vanishes! [OOB_EVENT 2])))
+
+;; TODO: continue
+
 
