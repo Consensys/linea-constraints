@@ -2,6 +2,11 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                     ;;
+;;   2 Constraints     ;;
+;;                     ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                     ;;
 ;; 2.1 shorthands and  ;;
 ;;     constants       ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -256,11 +261,11 @@
   (if-zero MOD_FLAG
            (vanishes! (* OUTGOING_RES_LO (- 1 OUTGOING_RES_LO)))))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;                             ;;
-;;    2.5 instruction decoding ;;
-;;                             ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                               ;;
+;;    2.5 instruction decoding   ;;
+;;                               ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defconstraint flag-sum-vanishes ()
   (if-zero STAMP
            (vanishes! (flag_sum))))
@@ -328,11 +333,11 @@
 (defun (noCall k)
   (begin (eq! (wght_lookup_sum k) 0)))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;                               ;;
-;;   Populating lookup columns   ;;
-;;                               ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                           ;;
+;;  3 Populating opcodes     ;;
+;;                           ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun (standing-hypothesis)
   (- STAMP (prev STAMP)))
 
@@ -656,6 +661,11 @@
   (begin (eq! [OOB_EVENT 1] (return___exceeds_max_code_size))
          (vanishes! [OOB_EVENT 2])))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                               ;;
+;;   4 Populating common         ;;
+;;   precompiles                 ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                       ;;
 ;; 4.1 Common            ;;
@@ -696,7 +706,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                       ;;
-;; 4.2 For ECRECOVER,   ;;
+;; 4.2 For ECRECOVER,    ;;
 ;; ECADD, ECMUL          ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun (prc-ecrecover-prc-ecadd-prc-ecmul-hypothesis)
@@ -751,7 +761,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                       ;;
-;; 4.4 For ECPAIRING    ;;
+;; 4.4 For ECPAIRING     ;;
 ;;                       ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun (prc-ecpairing-hypothesis)
@@ -801,9 +811,14 @@
                 (- (* (prc___call_gas) 192) (prc-ecpairing___precompile_cost192)))
            (vanishes! (prc___remaining_gas))))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                         ;;
+;;   5 Populating BLAKE2F  ;;
+;;   precompiles           ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                       ;;
-;; 4.10 For BLAKE2F_a    ;;
+;; 5.1 For BLAKE2F_a     ;;
 ;;                       ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun (prc-blake2f_a-hypothesis)
@@ -815,17 +830,18 @@
 (defun (prc-blake2f_a___valid_cds)
   OUTGOING_RES_LO)
 
+;; TODO: double check if the second line is required
 (defconstraint valid-prc-blake2f_a (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-blake2f_a-hypothesis)))
-  (begin (callToEQ 0 0 (prc-blake2f_a___cds) 0 213)))
+  (begin (callToEQ 0 0 (prc-blake2f_a___cds) 0 213)
+         (eq! OUTGOING_RES_LO (prc___cds_is_zero))))
 
-;;(eq! OUTGOING_RES_LO (prc___cds_is_zero))))
 (defconstraint set-oob-event-blake2f_a (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-blake2f_a-hypothesis)))
   (begin (eq! [OOB_EVENT 1] (- 1 (prc-blake2f_a___valid_cds)))
          (vanishes! [OOB_EVENT 2])))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                       ;;
-;; 4.11 For BLAKE2F_b    ;;
+;; 5.2 For BLAKE2F_b    ;;
 ;;                       ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun (prc-blake2f_b-hypothesis)
@@ -876,5 +892,11 @@
            (eq! (prc-blake2f_b___remaining_gas)
                 (- (prc-blake2f_b___call_gas) (prc-blake2f_b___remaining_gas)))
            (vanishes! (prc-blake2f_b___remaining_gas))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                         ;;
+;;   6 Populating MODEXP   ;;
+;;   precompiles           ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
