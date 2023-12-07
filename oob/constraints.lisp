@@ -898,5 +898,47 @@
 ;;   6 Populating MODEXP   ;;
 ;;   precompiles           ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                         ;;
+;;   6.1 For MODEXP - CDS  ;;
+;;                         ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun (prc-modexp_cds-hypothesis)
+  PRC_MODEXP_CDS)
+
+(defun (prc-modexp_cds___cds)
+  [INCOMING_DATA 2])
+
+(defun (prc-modexp_cds___cds_is_zero)
+  [INCOMING_DATA 3])
+
+(defun (prc-modexp_cds___cds_leq_32)
+  [INCOMING_DATA 4])
+
+(defun (prc-modexp_cds___cds_leq_64)
+  [INCOMING_DATA 5])
+
+(defun (prc-modexp_cds___cds_leq_96)
+  [INCOMING_DATA 6])
+
+(defconstraint valid-prc-modexp_cds (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp_cds-hypothesis)))
+  (begin (callToISZERO 0 0 (prc-modexp_cds___cds))
+         (eq! OUTGOING_RES_LO (prc-modexp_cds___cds_is_zero))))
+
+(defconstraint valid-prc-modexp_cds-future (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp_cds-hypothesis)))
+  (begin (callToLT 1 0 (prc-modexp_cds___cds) 0 33)
+         (eq! OUTGOING_RES_LO (prc-modexp_cds___cds_leq_32))))
+
+(defconstraint valid-prc-modexp_cds-future-future (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp_cds-hypothesis)))
+  (begin (callToLT 2 0 (prc-modexp_cds___cds) 0 65)
+         (eq! OUTGOING_RES_LO (prc-modexp_cds___cds_leq_64))))
+
+(defconstraint valid-prc-modexp_cds-future-future-future (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp_cds-hypothesis)))
+  (begin (callToLT 3 0 (prc-modexp_cds___cds) 0 97)
+         (eq! OUTGOING_RES_LO (prc-modexp_cds___cds_leq_96))))
+
+(defconstraint set-oob-event-prc-modexp_cds (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp_cds-hypothesis)))
+  (begin (vanishes! [OOB_EVENT 1])
+         (vanishes! [OOB_EVENT 2])))
 
 
