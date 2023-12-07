@@ -991,4 +991,53 @@
   (begin (vanishes! [OOB_EVENT 1])
          (vanishes! [OOB_EVENT 2])))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                         ;;
+;;   6.3 For MODEXP        ;;
+;;   - exponent            ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun (prc-modexp_exponent-hypothesis)
+  PRC_MODEXP_EXPONENT)
+
+(defun (prc-modexp_exponent___ebs)
+  [INCOMING_DATA 2])
+
+(defun (prc-modexp_exponent___ebs_is_zero)
+  [INCOMING_DATA 3])
+
+(defun (prc-modexp_exponent___ebs_lt_32)
+  [INCOMING_DATA 4])
+
+(defun (prc-modexp_exponent___min_ebs_32)
+  [INCOMING_DATA 5])
+
+(defun (prc-modexp_exponent___ebs_sub_32)
+  [INCOMING_DATA 6])
+
+(defun (prc-modexp_exponent___comp_to_512)
+  OUTGOING_RES_LO)
+
+(defconstraint justify-hub-predictions (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp_exponent-hypothesis)))
+  (if-zero (prc-modexp_exponent___ebs_lt_32)
+           (begin (eq! (prc-modexp_exponent___min_ebs_32) 32)
+                  (eq! (prc-modexp_exponent___ebs_sub_32) (- (prc-modexp_exponent___ebs) 32)))
+           (begin (eq! (prc-modexp_exponent___min_ebs_32) (prc-modexp_exponent___ebs))
+                  (vanishes! (prc-modexp_exponent___ebs_sub_32)))))
+
+(defconstraint valid-prc-modexp_exponent (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp_exponent-hypothesis)))
+  (begin (callToLT 0 0 (prc-modexp_exponent___ebs) 0 513)
+         (eq! 1 (prc-modexp_exponent___comp_to_512))))
+
+(defconstraint valid-prc-modexp_exponent-future (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp_exponent-hypothesis)))
+  (begin (callToISZERO 1 0 (prc-modexp_exponent___ebs))
+         (eq! (next OUTGOING_RES_LO) (prc-modexp_exponent___ebs_is_zero))))
+
+(defconstraint valid-prc-modexp_exponent-future-future (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp_exponent-hypothesis)))
+  (begin (callToLT 2 0 (prc-modexp_exponent___ebs) 0 32)
+         (eq! (shift OUTGOING_RES_LO 2) (prc-modexp_exponent___ebs_lt_32))))
+
+(defconstraint set-oob-event-prc-modexp_exponent (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp_exponent-hypothesis)))
+  (begin (vanishes! [OOB_EVENT 1])
+         (vanishes! [OOB_EVENT 2])))
+
 
