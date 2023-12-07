@@ -898,6 +898,7 @@
 ;;   6 Populating MODEXP   ;;
 ;;   precompiles           ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; TODO make justify-hub-predictions consistent with specs
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                         ;;
 ;;   6.1 For MODEXP - CDS  ;;
@@ -1017,7 +1018,7 @@
 (defun (prc-modexp_exponent___comp_to_512)
   OUTGOING_RES_LO)
 
-(defconstraint justify-hub-predictions (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp_exponent-hypothesis)))
+(defconstraint justify-hub-predictions-prc-modexp_exponent (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp_exponent-hypothesis)))
   (if-zero (prc-modexp_exponent___ebs_lt_32)
            (begin (eq! (prc-modexp_exponent___min_ebs_32) 32)
                   (eq! (prc-modexp_exponent___ebs_sub_32) (- (prc-modexp_exponent___ebs) 32)))
@@ -1037,6 +1038,52 @@
          (eq! (shift OUTGOING_RES_LO 2) (prc-modexp_exponent___ebs_lt_32))))
 
 (defconstraint set-oob-event-prc-modexp_exponent (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp_exponent-hypothesis)))
+  (begin (vanishes! [OOB_EVENT 1])
+         (vanishes! [OOB_EVENT 2])))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                         ;;
+;;   6.4 For MODEXP        ;;
+;;   - modulus             ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun (prc-modexp_modulus-hypothesis)
+  PRC_MODEXP_MODULUS)
+
+(defun (prc-modexp_modulus___bbs)
+  [INCOMING_DATA 1])
+
+(defun (prc-modexp_modulus___mbs)
+  [INCOMING_DATA 2])
+
+(defun (prc-modexp_modulus___mbs_is_zero)
+  [INCOMING_DATA 3])
+
+(defun (prc-modexp_modulus___max_mbs_bbs)
+  [INCOMING_DATA 4])
+
+(defun (prc-modexp_modulus___comp_to_512)
+  OUTGOING_RES_LO)
+
+(defun (prc-modexp_modulus___mbs_lt_bbs)
+  (next OUTGOING_RES_LO))
+
+(defconstraint justify-hub-predictions-prc-modexp_modulus (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp_modulus-hypothesis)))
+  (if-zero (prc-modexp_modulus___mbs_lt_bbs)
+           (begin (eq! (prc-modexp_modulus___max_mbs_bbs) (prc-modexp_modulus___bbs)))
+           (begin (eq! (prc-modexp_modulus___max_mbs_bbs) (prc-modexp_modulus___mbs)))))
+
+(defconstraint valid-prc-modexp_modulus (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp_modulus-hypothesis)))
+  (begin (callToLT 0 0 (prc-modexp_modulus___mbs) 0 513)
+         (eq! 1 (prc-modexp_modulus___comp_to_512))))
+
+(defconstraint valid-prc-modexp_modulus-future (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp_modulus-hypothesis)))
+  (begin (callToISZERO 1 0 (prc-modexp_modulus___mbs))
+         (eq! (next OUTGOING_RES_LO) (prc-modexp_modulus___mbs_is_zero))))
+
+(defconstraint valid-prc-modexp_modulus-future-future (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp_modulus-hypothesis)))
+  (callToLT 2 0 (prc-modexp_modulus___mbs) 0 (prc-modexp_modulus___bbs)))
+
+(defconstraint set-oob-event-prc-modexp_modulus (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp_modulus-hypothesis)))
   (begin (vanishes! [OOB_EVENT 1])
          (vanishes! [OOB_EVENT 2])))
 
