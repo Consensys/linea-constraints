@@ -512,14 +512,14 @@
 (defun (xcall___nonzero_value)
   [INCOMING_DATA 4])
 
-(defun (xcall___value_is_zero)
+(defun (xcall___value_ISZERO)
   OUTGOING_RES_LO)
 
 (defconstraint valid-xcall (:guard (* (standing-hypothesis) (xcall-hypothesis)))
   (callToISZERO 0 (xcall___val_hi) (xcall___val_lo)))
 
 (defconstraint val-xcall-prediction (:guard (* (standing-hypothesis) (xcall-hypothesis)))
-  (eq! (xcall___nonzero_value) (- 1 (xcall___value_is_zero))))
+  (eq! (xcall___nonzero_value) (- 1 (xcall___value_ISZERO))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                       ;;
@@ -550,11 +550,11 @@
 (defun (call___call_stack_depth_abort)
   (- 1 (next OUTGOING_RES_LO)))
 
-(defun (call___value_is_zero)
+(defun (call___value_ISZERO)
   (shift OUTGOING_RES_LO 2))
 
 (defconstraint justify-hub-predictions-call (:guard (* (standing-hypothesis) (call-hypothesis)))
-  (eq! (call___nonzero_value) (- 1 (call___value_is_zero))))
+  (eq! (call___nonzero_value) (- 1 (call___value_ISZERO))))
 
 (defconstraint valid-call (:guard (* (standing-hypothesis) (call-hypothesis)))
   (callToLT 0 0 (call___bal) (call___val_hi) (call___val_lo)))
@@ -695,18 +695,18 @@
 (defun (prc___cds)
   [INCOMING_DATA 3])
 
-(defun (prc___cds_is_zero)
+(defun (prc___cds_ISZERO)
   [INCOMING_DATA 4])
 
 (defun (prc___r_at_c)
   [INCOMING_DATA 5])
 
-(defun (prc___r_at_c_is_zero)
+(defun (prc___r_at_c_ISZERO)
   [INCOMING_DATA 6])
 
 (defconstraint justify-hub-predictions-prc (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-common-hypothesis)))
-  (begin (eq! (prc___cds_is_zero) OUTGOING_RES_LO)
-         (eq! (prc___r_at_c_is_zero) (next OUTGOING_RES_LO))))
+  (begin (eq! (prc___cds_ISZERO) OUTGOING_RES_LO)
+         (eq! (prc___r_at_c_ISZERO) (next OUTGOING_RES_LO))))
 
 (defconstraint valid-prc (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-common-hypothesis)))
   (callToISZERO 0 0 (prc___cds)))
@@ -842,7 +842,7 @@
 
 ;; TODO: double check if this is necessary
 (defconstraint justify-hub-predictions-prc-blake2f_a (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-blake2f_a-hypothesis)))
-  (eq! OUTGOING_RES_LO (prc___cds_is_zero)))
+  (eq! OUTGOING_RES_LO (prc___cds_ISZERO)))
 
 (defconstraint valid-prc-blake2f_a (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-blake2f_a-hypothesis)))
   (callToEQ 0 0 (prc-blake2f_a___cds) 0 213))
@@ -874,7 +874,7 @@
 (defun (prc-blake2f_b___r_at_c)
   [INCOMING_DATA 5])
 
-(defun (prc-blake2f_b___r_at_c_is_zero)
+(defun (prc-blake2f_b___r_at_c_ISZERO)
   [INCOMING_DATA 6])
 
 (defun (prc-blake2f_b___insufficient_gas)
@@ -884,7 +884,7 @@
   (- 1 (next OUTGOING_RES_LO)))
 
 (defconstraint justify-hub-predictions-prc-blake2f_b (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-blake2f_b-hypothesis)))
-  (eq! (shift OUTGOING_RES_LO 2) (prc-blake2f_b___r_at_c_is_zero)))
+  (eq! (shift OUTGOING_RES_LO 2) (prc-blake2f_b___r_at_c_ISZERO)))
 
 (defconstraint valid-prc-blake2f_b (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-blake2f_b-hypothesis)))
   (callToLT 0 0 (prc-blake2f_b___call_gas) 0 (prc-blake2f_b___blake_r)))
@@ -1043,10 +1043,10 @@
 (defun (prc-modexp_exponent___ebs)
   [INCOMING_DATA 2])
 
-(defun (prc-modexp_exponent___ebs_is_zero)
+(defun (prc-modexp_exponent___ebs_ISZERO)
   [INCOMING_DATA 3])
 
-(defun (prc-modexp_exponent___ebs_lt_32)
+(defun (prc-modexp_exponent___ebs_LT_32)
   [INCOMING_DATA 4])
 
 (defun (prc-modexp_exponent___min_ebs_32)
@@ -1059,9 +1059,9 @@
   OUTGOING_RES_LO)
 
 (defconstraint justify-hub-predictions-prc-modexp_exponent (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp_exponent-hypothesis)))
-  (begin (eq! (prc-modexp_exponent___ebs_is_zero) (next OUTGOING_RES_LO))
-         (eq! (prc-modexp_exponent___ebs_lt_32) (shift OUTGOING_RES_LO 2))
-         (if-zero (prc-modexp_exponent___ebs_lt_32)
+  (begin (eq! (prc-modexp_exponent___ebs_ISZERO) (next OUTGOING_RES_LO))
+         (eq! (prc-modexp_exponent___ebs_LT_32) (shift OUTGOING_RES_LO 2))
+         (if-zero (prc-modexp_exponent___ebs_LT_32)
                   (begin (eq! (prc-modexp_exponent___min_ebs_32) 32)
                          (eq! (prc-modexp_exponent___ebs_sub_32) (- (prc-modexp_exponent___ebs) 32)))
                   (begin (eq! (prc-modexp_exponent___min_ebs_32) (prc-modexp_exponent___ebs))
@@ -1095,7 +1095,7 @@
 (defun (prc-modexp_modulus___mbs)
   [INCOMING_DATA 2])
 
-(defun (prc-modexp_modulus___mbs_is_zero)
+(defun (prc-modexp_modulus___mbs_ISZERO)
   [INCOMING_DATA 3])
 
 (defun (prc-modexp_modulus___max_mbs_bbs)
@@ -1104,12 +1104,12 @@
 (defun (prc-modexp_modulus___comp_to_512)
   OUTGOING_RES_LO)
 
-(defun (prc-modexp_modulus___mbs_lt_bbs)
+(defun (prc-modexp_modulus___mbs_LT_bbs)
   (next OUTGOING_RES_LO))
 
 (defconstraint justify-hub-predictions-prc-modexp_modulus (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp_modulus-hypothesis)))
-  (begin (eq! (prc-modexp_modulus___mbs_is_zero) (next OUTGOING_RES_LO))
-         (if-zero (prc-modexp_modulus___mbs_lt_bbs)
+  (begin (eq! (prc-modexp_modulus___mbs_ISZERO) (next OUTGOING_RES_LO))
+         (if-zero (prc-modexp_modulus___mbs_LT_bbs)
                   (begin (eq! (prc-modexp_modulus___max_mbs_bbs) (prc-modexp_modulus___bbs)))
                   (begin (eq! (prc-modexp_modulus___max_mbs_bbs) (prc-modexp_modulus___mbs))))))
 
@@ -1150,10 +1150,10 @@
 (defun (prc-modexp_pricing___r_at_c)
   [INCOMING_DATA 5])
 
-(defun (prc-modexp_pricing___r_at_c_is_zero)
+(defun (prc-modexp_pricing___r_at_c_ISZERO)
   [INCOMING_DATA 6])
 
-(defun (prc-modexp_pricing___exponent_log_is_zero)
+(defun (prc-modexp_pricing___exponent_log_ISZERO)
   (next OUTGOING_RES_LO))
 
 (defun (prc-modexp_pricing___f_of_max)
@@ -1162,14 +1162,14 @@
 (defun (prc-modexp_pricing___big_quotient)
   (shift OUTGOING_RES_LO 3))
 
-(defun (prc-modexp_pricing___big_quotient_lt_200)
+(defun (prc-modexp_pricing___big_quotient_LT_200)
   (shift OUTGOING_RES_LO 4))
 
 (defun (prc-modexp_pricing___insufficient_gas)
   (shift OUTGOING_RES_LO 5))
 
 (defconstraint justify-hub-predictions-prc-modexp_pricing (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp_pricing-hypothesis)))
-  (eq! OUTGOING_RES_LO (prc-modexp_pricing___r_at_c_is_zero)))
+  (eq! OUTGOING_RES_LO (prc-modexp_pricing___r_at_c_ISZERO)))
 
 (defconstraint valid-prc-modexp_pricing (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp_pricing-hypothesis)))
   (callToISZERO 0 0 (prc-modexp_pricing___r_at_c)))
