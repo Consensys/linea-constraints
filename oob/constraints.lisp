@@ -841,9 +841,6 @@
 (defun (prc-blake2f_a___valid_cds)
   OUTGOING_RES_LO)
 
-(defconstraint justify-hub-predictions-prc-blake2f_a (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-blake2f_a-hypothesis)))
-  (eq! (prc___cds_ISZERO) OUTGOING_RES_LO))
-
 (defconstraint valid-prc-blake2f_a (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-blake2f_a-hypothesis)))
   (callToEQ 0 0 (prc-blake2f_a___cds) 0 213))
 
