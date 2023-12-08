@@ -841,9 +841,8 @@
 (defun (prc-blake2f_a___valid_cds)
   OUTGOING_RES_LO)
 
-;; TODO: double check if this is necessary
 (defconstraint justify-hub-predictions-prc-blake2f_a (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-blake2f_a-hypothesis)))
-  (eq! OUTGOING_RES_LO (prc___cds_ISZERO)))
+  (eq! (prc___cds_ISZERO) OUTGOING_RES_LO))
 
 (defconstraint valid-prc-blake2f_a (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-blake2f_a-hypothesis)))
   (callToEQ 0 0 (prc-blake2f_a___cds) 0 213))
@@ -885,7 +884,7 @@
   (- 1 (next OUTGOING_RES_LO)))
 
 (defconstraint justify-hub-predictions-prc-blake2f_b (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-blake2f_b-hypothesis)))
-  (eq! (shift OUTGOING_RES_LO 2) (prc-blake2f_b___r_at_c_ISZERO)))
+  (eq! (prc-blake2f_b___r_at_c_ISZERO) (shift OUTGOING_RES_LO 2)))
 
 (defconstraint valid-prc-blake2f_b (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-blake2f_b-hypothesis)))
   (callToLT 0 0 (prc-blake2f_b___call_gas) 0 (prc-blake2f_b___blake_r)))
