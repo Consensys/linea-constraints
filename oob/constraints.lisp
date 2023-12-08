@@ -545,6 +545,9 @@
 (defun (call___value_is_zero)
   (shift OUTGOING_RES_LO 2))
 
+(defconstraint justify-hub-predictions-call (:guard (* (standing-hypothesis) (call-hypothesis)))
+  (eq! (call___nonzero_value) (- 1 (call___value_is_zero))))
+
 (defconstraint valid-call (:guard (* (standing-hypothesis) (call-hypothesis)))
   (callToLT 0 0 (call___bal) (call___val_hi) (call___val_lo)))
 
@@ -553,9 +556,6 @@
 
 (defconstraint valid-call-future-future (:guard (* (standing-hypothesis) (call-hypothesis)))
   (callToISZERO 2 (call___val_hi) (call___val_lo)))
-
-(defconstraint val-call-prediction (:guard (* (standing-hypothesis) (call-hypothesis)))
-  (eq! (call___nonzero_value) (- 1 (call___value_is_zero))))
 
 (defconstraint set-oob-event-call (:guard (* (standing-hypothesis) (call-hypothesis)))
   (begin (eq! [OOB_EVENT 1]
@@ -696,13 +696,15 @@
 (defun (prc___r_at_c_is_zero)
   [INCOMING_DATA 6])
 
+(defconstraint justify-hub-predictions-prc (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-common-hypothesis)))
+  (begin (eq! (prc___cds_is_zero) OUTGOING_RES_LO)
+         (eq! (prc___r_at_c_is_zero) (next OUTGOING_RES_LO))))
+
 (defconstraint valid-prc (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-common-hypothesis)))
-  (begin (callToISZERO 0 0 (prc___cds))
-         (eq! OUTGOING_RES_LO (prc___cds_is_zero))))
+  (callToISZERO 0 0 (prc___cds)))
 
 (defconstraint valid-prc-future (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-common-hypothesis)))
-  (begin (callToISZERO 1 0 (prc___r_at_c))
-         (eq! (next OUTGOING_RES_LO) (prc___r_at_c_is_zero))))
+  (callToISZERO 1 0 (prc___r_at_c)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                       ;;
@@ -830,10 +832,12 @@
 (defun (prc-blake2f_a___valid_cds)
   OUTGOING_RES_LO)
 
-;; TODO: double check if the second line is required
+;; TODO: double check if this is necessary
+(defconstraint justify-hub-predictions-prc-blake2f_a (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-blake2f_a-hypothesis)))
+  (eq! OUTGOING_RES_LO (prc___cds_is_zero)))
+
 (defconstraint valid-prc-blake2f_a (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-blake2f_a-hypothesis)))
-  (begin (callToEQ 0 0 (prc-blake2f_a___cds) 0 213)
-         (eq! OUTGOING_RES_LO (prc___cds_is_zero))))
+  (callToEQ 0 0 (prc-blake2f_a___cds) 0 213))
 
 (defconstraint set-oob-event-blake2f_a (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-blake2f_a-hypothesis)))
   (begin (eq! [OOB_EVENT 1] (- 1 (prc-blake2f_a___valid_cds)))
@@ -871,6 +875,9 @@
 (defun (prc-blake2f_b___f_is_not_a_bit)
   (- 1 (next OUTGOING_RES_LO)))
 
+(defconstraint justify-hub-predictions-prc-blake2f_b (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-blake2f_b-hypothesis)))
+  (eq! (shift OUTGOING_RES_LO 2) (prc-blake2f_b___r_at_c_is_zero)))
+
 (defconstraint valid-prc-blake2f_b (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-blake2f_b-hypothesis)))
   (callToLT 0 0 (prc-blake2f_b___call_gas) 0 (prc-blake2f_b___blake_r)))
 
@@ -878,8 +885,7 @@
   (callToEQ 1 0 (prc-blake2f_b___blake_f) 0 (* (prc-blake2f_b___blake_f) (prc-blake2f_b___blake_f))))
 
 (defconstraint valid-prc-blake2f_b-future-future (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-blake2f_b-hypothesis)))
-  (begin (callToISZERO 2 0 (prc-blake2f_b___r_at_c))
-         (eq! (shift OUTGOING_RES_LO 2) (prc-blake2f_b___r_at_c_is_zero))))
+  (callToISZERO 2 0 (prc-blake2f_b___r_at_c)))
 
 (defconstraint set-oob-event-prc-blake2f_b (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-blake2f_b-hypothesis)))
   (begin (eq! [OOB_EVENT 1]
@@ -922,21 +928,23 @@
 (defun (prc-modexp_cds___cds_leq_96)
   [INCOMING_DATA 6])
 
+(defconstraint justify-hub-predictions-prc-modexp_cds (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp_cds-hypothesis)))
+  (begin (eq! (prc-modexp_cds___cds_is_zero) OUTGOING_RES_LO)
+         (eq! (prc-modexp_cds___cds_leq_32) (next OUTGOING_RES_LO))
+         (eq! (prc-modexp_cds___cds_leq_64) (shift OUTGOING_RES_LO 2))
+         (eq! (prc-modexp_cds___cds_leq_96) (shift OUTGOING_RES_LO 3))))
+
 (defconstraint valid-prc-modexp_cds (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp_cds-hypothesis)))
-  (begin (callToISZERO 0 0 (prc-modexp_cds___cds))
-         (eq! OUTGOING_RES_LO (prc-modexp_cds___cds_is_zero))))
+  (callToISZERO 0 0 (prc-modexp_cds___cds)))
 
 (defconstraint valid-prc-modexp_cds-future (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp_cds-hypothesis)))
-  (begin (callToLT 1 0 (prc-modexp_cds___cds) 0 33)
-         (eq! (next OUTGOING_RES_LO) (prc-modexp_cds___cds_leq_32))))
+  (callToLT 1 0 (prc-modexp_cds___cds) 0 33))
 
 (defconstraint valid-prc-modexp_cds-future-future (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp_cds-hypothesis)))
-  (begin (callToLT 2 0 (prc-modexp_cds___cds) 0 65)
-         (eq! (shift OUTGOING_RES_LO 2) (prc-modexp_cds___cds_leq_64))))
+  (callToLT 2 0 (prc-modexp_cds___cds) 0 65))
 
 (defconstraint valid-prc-modexp_cds-future-future-future (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp_cds-hypothesis)))
-  (begin (callToLT 3 0 (prc-modexp_cds___cds) 0 97)
-         (eq! (shift OUTGOING_RES_LO 3) (prc-modexp_cds___cds_leq_96))))
+  (callToLT 3 0 (prc-modexp_cds___cds) 0 97))
 
 (defconstraint set-oob-event-prc-modexp_cds (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp_cds-hypothesis)))
   (begin (vanishes! [OOB_EVENT 1])
@@ -968,25 +976,27 @@
 (defun (prc-modexp_base___compo_to_512)
   OUTGOING_RES_LO)
 
+(defconstraint justify-hub-predictions-prc-modexp_base (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp_base-hypothesis)))
+  (begin (eq! (prc-modexp_base___bbs_is_zero) (next OUTGOING_RES_LO))
+         (eq! (prc-modexp_base___call_data_extends_beyond_base) (shift OUTGOING_RES_LO 2))
+         (eq! (prc-modexp_base___by_less_than_an_EVM_word) (shift OUTGOING_RES_LO 3))))
+
 (defconstraint valid-prc-modexp_base (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp_base-hypothesis)))
   (begin (callToLT 0 0 (prc-modexp_base___bbs) 0 513)
-         (eq! 1 (prc-modexp_base___compo_to_512))))
+         (eq! (prc-modexp_base___compo_to_512) 1)))
 
 (defconstraint valid-prc-modexp_base-future (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp_base-hypothesis)))
-  (begin (callToISZERO 1 0 (prc-modexp_base___bbs))
-         (eq! (next OUTGOING_RES_LO) (prc-modexp_base___bbs_is_zero))))
+  (callToISZERO 1 0 (prc-modexp_base___bbs)))
 
 (defconstraint valid-prc-modexp_base-future-future (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp_base-hypothesis)))
-  (begin (callToLT 2 0 (+ 96 (prc-modexp_base___bbs)) 0 (prc-modexp_base___cds))
-         (eq! (shift OUTGOING_RES_LO 2) (prc-modexp_base___call_data_extends_beyond_base))))
+  (callToLT 2 0 (+ 96 (prc-modexp_base___bbs)) 0 (prc-modexp_base___cds)))
 
 (defconstraint valid-prc-modexp_base-future-future-future (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp_base-hypothesis)))
-  (begin (callToLT 3
-                   0
-                   (- (prc-modexp_base___cds) (+ 96 (prc-modexp_base___bbs)))
-                   0
-                   32)
-         (eq! (shift OUTGOING_RES_LO 3) (prc-modexp_base___by_less_than_an_EVM_word))))
+  (callToLT 3
+            0
+            (- (prc-modexp_base___cds) (+ 96 (prc-modexp_base___bbs)))
+            0
+            32))
 
 (defconstraint set-oob-event-prc-modexp_base (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp_base-hypothesis)))
   (begin (vanishes! [OOB_EVENT 1])
@@ -1019,23 +1029,23 @@
   OUTGOING_RES_LO)
 
 (defconstraint justify-hub-predictions-prc-modexp_exponent (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp_exponent-hypothesis)))
-  (if-zero (prc-modexp_exponent___ebs_lt_32)
-           (begin (eq! (prc-modexp_exponent___min_ebs_32) 32)
-                  (eq! (prc-modexp_exponent___ebs_sub_32) (- (prc-modexp_exponent___ebs) 32)))
-           (begin (eq! (prc-modexp_exponent___min_ebs_32) (prc-modexp_exponent___ebs))
-                  (vanishes! (prc-modexp_exponent___ebs_sub_32)))))
+  (begin (eq! (prc-modexp_exponent___ebs_is_zero) (next OUTGOING_RES_LO))
+         (eq! (prc-modexp_exponent___ebs_lt_32) (shift OUTGOING_RES_LO 2))
+         (if-zero (prc-modexp_exponent___ebs_lt_32)
+                  (begin (eq! (prc-modexp_exponent___min_ebs_32) 32)
+                         (eq! (prc-modexp_exponent___ebs_sub_32) (- (prc-modexp_exponent___ebs) 32)))
+                  (begin (eq! (prc-modexp_exponent___min_ebs_32) (prc-modexp_exponent___ebs))
+                         (vanishes! (prc-modexp_exponent___ebs_sub_32))))))
 
 (defconstraint valid-prc-modexp_exponent (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp_exponent-hypothesis)))
   (begin (callToLT 0 0 (prc-modexp_exponent___ebs) 0 513)
-         (eq! 1 (prc-modexp_exponent___comp_to_512))))
+         (eq! (prc-modexp_exponent___comp_to_512) 1)))
 
 (defconstraint valid-prc-modexp_exponent-future (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp_exponent-hypothesis)))
-  (begin (callToISZERO 1 0 (prc-modexp_exponent___ebs))
-         (eq! (next OUTGOING_RES_LO) (prc-modexp_exponent___ebs_is_zero))))
+  (callToISZERO 1 0 (prc-modexp_exponent___ebs)))
 
 (defconstraint valid-prc-modexp_exponent-future-future (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp_exponent-hypothesis)))
-  (begin (callToLT 2 0 (prc-modexp_exponent___ebs) 0 32)
-         (eq! (shift OUTGOING_RES_LO 2) (prc-modexp_exponent___ebs_lt_32))))
+  (callToLT 2 0 (prc-modexp_exponent___ebs) 0 32))
 
 (defconstraint set-oob-event-prc-modexp_exponent (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp_exponent-hypothesis)))
   (begin (vanishes! [OOB_EVENT 1])
@@ -1068,17 +1078,17 @@
   (next OUTGOING_RES_LO))
 
 (defconstraint justify-hub-predictions-prc-modexp_modulus (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp_modulus-hypothesis)))
-  (if-zero (prc-modexp_modulus___mbs_lt_bbs)
-           (begin (eq! (prc-modexp_modulus___max_mbs_bbs) (prc-modexp_modulus___bbs)))
-           (begin (eq! (prc-modexp_modulus___max_mbs_bbs) (prc-modexp_modulus___mbs)))))
+  (begin (eq! (prc-modexp_modulus___mbs_is_zero) (next OUTGOING_RES_LO))
+         (if-zero (prc-modexp_modulus___mbs_lt_bbs)
+                  (begin (eq! (prc-modexp_modulus___max_mbs_bbs) (prc-modexp_modulus___bbs)))
+                  (begin (eq! (prc-modexp_modulus___max_mbs_bbs) (prc-modexp_modulus___mbs))))))
 
 (defconstraint valid-prc-modexp_modulus (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp_modulus-hypothesis)))
   (begin (callToLT 0 0 (prc-modexp_modulus___mbs) 0 513)
-         (eq! 1 (prc-modexp_modulus___comp_to_512))))
+         (eq! (prc-modexp_modulus___comp_to_512) 1)))
 
 (defconstraint valid-prc-modexp_modulus-future (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp_modulus-hypothesis)))
-  (begin (callToISZERO 1 0 (prc-modexp_modulus___mbs))
-         (eq! (next OUTGOING_RES_LO) (prc-modexp_modulus___mbs_is_zero))))
+  (callToISZERO 1 0 (prc-modexp_modulus___mbs)))
 
 (defconstraint valid-prc-modexp_modulus-future-future (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp_modulus-hypothesis)))
   (callToLT 2 0 (prc-modexp_modulus___mbs) 0 (prc-modexp_modulus___bbs)))
@@ -1128,9 +1138,11 @@
 (defun (prc-modexp_pricing___insufficient_gas)
   (shift OUTGOING_RES_LO 5))
 
+(defconstraint justify-hub-predictions-prc-modexp_pricing (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp_pricing-hypothesis)))
+  (eq! OUTGOING_RES_LO (prc-modexp_pricing___r_at_c_is_zero)))
+
 (defconstraint valid-prc-modexp_pricing (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp_pricing-hypothesis)))
-  (begin (callToISZERO 0 0 (prc-modexp_pricing___r_at_c))
-         (eq! OUTGOING_RES_LO (prc-modexp_pricing___r_at_c_is_zero))))
+  (callToISZERO 0 0 (prc-modexp_pricing___r_at_c)))
 
 (defconstraint valid-prc-modexp_pricing-future (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp_pricing-hypothesis)))
   (callToISZERO 1 0 (prc-modexp_pricing___exponent_log)))
