@@ -64,7 +64,8 @@
   MOD                        0x06
   GT                         0x11
   EQ                         0x14
-  G_CALLSTIPEND              2300)
+  G_CALLSTIPEND              2300
+  G_QUADDIVISOR              3)
 
 (defun (flag_sum_inst)
   (+ IS_JUMP IS_JUMPI IS_RDC IS_CDL IS_XCALL IS_CALL IS_CREATE IS_SSTORE IS_RETURN))
@@ -1168,6 +1169,15 @@
 (defun (prc-modexp_pricing___insufficient_gas)
   (shift OUTGOING_RES_LO 5))
 
+(defun (prc-modexp_pricing___big_numerator)
+  (if-zero (prc-modexp_pricing___exponent_log_ISZERO)
+           (* (prc-modexp_pricing___f_of_max) (prc-modexp_pricing___exponent_log))
+           (prc-modexp_pricing___f_of_max)))
+
+(defun (prc-modexp_pricing___precompile_cost)
+  (+ (* 200 (prc-modexp_pricing___big_quotient_LT_200))
+     (* (prc-modexp_pricing___big_quotient) (- 1 (prc-modexp_pricing___big_quotient_LT_200)))))
+
 (defconstraint justify-hub-predictions-prc-modexp_pricing (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp_pricing-hypothesis)))
   (eq! OUTGOING_RES_LO (prc-modexp_pricing___r_at_c_ISZERO)))
 
@@ -1184,10 +1194,23 @@
              0
              8))
 
+(defconstraint valid-prc-modexp_pricing-future-future-future (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp_pricing-hypothesis)))
+  (callToDIV 3 0 (prc-modexp_pricing___big_numerator) 0 G_QUADDIVISOR))
+
+(defconstraint valid-prc-modexp_pricing-future-future-future-future (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp_pricing-hypothesis)))
+  (callToLT 4 0 (prc-modexp_pricing___big_quotient) 0 200))
+
+(defconstraint valid-prc-modexp_pricing-future-future-future-future-future (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp_pricing-hypothesis)))
+  (callToLT 5 0 (prc-modexp_pricing___call_gas) 0 (prc-modexp_pricing___precompile_cost)))
+
 (defconstraint set-oob-event-prc-modexp_pricing (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp_pricing-hypothesis)))
   (begin (eq! [OOB_EVENT 1] (prc-modexp_pricing___insufficient_gas))
          (vanishes! [OOB_EVENT 2])))
 
-;; TODO: continue
+(defconstraint constrain-remaining-gas-prc-modexp_pricing (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp_pricing-hypothesis)))
+  (if-zero [OOB_EVENT 1]
+           (eq! (prc-modexp_pricing___remaining_gas)
+                (- (prc-modexp_pricing___call_gas) (prc-modexp_pricing___precompile_cost)))
+           (vanishes! (prc-modexp_pricing___remaining_gas))))
 
 
