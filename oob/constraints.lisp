@@ -986,7 +986,7 @@
 (defun (prc-modexp_base___bbs)
   [INCOMING_DATA 2])
 
-(defun (prc-modexp_base___bbs_is_zero)
+(defun (prc-modexp_base___bbs_ISZERO)
   [INCOMING_DATA 3])
 
 (defun (prc-modexp_base___call_data_extends_beyond_base)
@@ -995,13 +995,21 @@
 (defun (prc-modexp_base___by_less_than_an_EVM_word)
   [INCOMING_DATA 5])
 
+(defun (prc-modexp_base___N_call_data_bytes)
+  [INCOMING_DATA 6])
+
 (defun (prc-modexp_base___compo_to_512)
   OUTGOING_RES_LO)
 
 (defconstraint justify-hub-predictions-prc-modexp_base (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp_base-hypothesis)))
-  (begin (eq! (prc-modexp_base___bbs_is_zero) (next OUTGOING_RES_LO))
+  (begin (eq! (prc-modexp_base___bbs_ISZERO) (next OUTGOING_RES_LO))
          (eq! (prc-modexp_base___call_data_extends_beyond_base) (shift OUTGOING_RES_LO 2))
-         (eq! (prc-modexp_base___by_less_than_an_EVM_word) (shift OUTGOING_RES_LO 3))))
+         (eq! (prc-modexp_base___by_less_than_an_EVM_word) (shift OUTGOING_RES_LO 3))
+         (if-zero (prc-modexp_base___call_data_extends_beyond_base)
+                  (vanishes! (prc-modexp_base___N_call_data_bytes))
+                  (if-zero (prc-modexp_base___by_less_than_an_EVM_word)
+                           (eq! (prc-modexp_base___N_call_data_bytes) 32)
+                           (eq! (prc-modexp_base___N_call_data_bytes) (- (prc-modexp_base___cds) 32))))))
 
 (defconstraint valid-prc-modexp_base (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp_base-hypothesis)))
   (begin (callToLT 0 0 (prc-modexp_base___bbs) 0 513)
