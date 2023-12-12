@@ -60,16 +60,6 @@
 (defconstraint stamp-increments ()
   (vanishes! (* (will-inc! STAMP 0) (will-inc! STAMP 1))))
 
-(defconstraint zero-row ()
-  (if-zero STAMP
-           (begin (vanishes! CT)
-                  (vanishes! ARG_1_HI)
-                  (vanishes! ARG_1_LO)
-                  (vanishes! ARG_2_HI)
-                  (vanishes! ARG_2_LO)
-                  (vanishes! RES_HI)
-                  (vanishes! RES_LO))))
-
 (defconstraint countereset ()
   (if-not-zero (will-remain-constant! STAMP)
                (vanishes! (next CT))))
@@ -80,24 +70,22 @@
 (defconstraint mli-incrementation (:guard MLI)
   (if-eq-else CT LLARGEMO (will-inc! STAMP 1) (will-inc! CT 1)))
 
-(defconstraint last-row (:domain {-1} :guard STAMP)
+(defconstraint last-row (:domain {-1})
   (if-eq MLI 1 (eq! CT LLARGEMO)))
 
-;; TODO
-;; (defconstraint counter-constancies ()
-;;   (begin (counter-constancy CT PIVOT)
-;;          (counter-constancy CT BIT_B_4)
-;;          (counter-constancy CT LOW_4)
-;;          (counter-constancy CT NEG)))
-;; 
-;; (defconstraint stamp-constancies ()
-;;   (begin (stamp-constancy STAMP ARG_1_HI)
-;;          (stamp-constancy STAMP ARG_1_LO)
-;;          (stamp-constancy STAMP ARG_2_HI)
-;;          (stamp-constancy STAMP ARG_2_LO)
-;;          (stamp-constancy STAMP RES_HI)
-;;          (stamp-constancy STAMP RES_LO)
-;;          (stamp-constancy STAMP INST)))
+(defconstraint counter-constancies ()
+  (begin (counter-constancy CT ARG_1_HI)
+         (counter-constancy CT ARG_1_LO)
+         (counter-constancy CT ARG_2_HI)
+         (counter-constancy CT ARG_2_LO)
+         (counter-constancy CT RES_HI)
+         (counter-constancy CT RES_LO)
+         (counter-constancy CT INST)
+         (counter-constancy CT PIVOT)
+         (counter-constancy CT BIT_B_4)
+         (counter-constancy CT LOW_4)
+         (counter-constancy CT NEG)))
+
 ;;    2.6 byte decompositions   
 (defconstraint byte_decompositions ()
   (begin (byte-decomposition CT ACC_1 BYTE_1)
@@ -135,7 +123,16 @@
 ;; 2.8.2 BITS and related columns
 (defconstraint bits-and-related ()
   (if-eq CT LLARGEMO
-         (begin (eq! BYTE_2
+         (begin (eq! PIVOT
+                     (+ (* 128 (shift BITS -15))
+                        (* 64 (shift BITS -14))
+                        (* 32 (shift BITS -13))
+                        (* 16 (shift BITS -12))
+                        (* 8 (shift BITS -11))
+                        (* 4 (shift BITS -10))
+                        (* 2 (shift BITS -9))
+                        (shift BITS -8)))
+                (eq! BYTE_2
                      (+ (* 128 (shift BITS -7))
                         (* 64 (shift BITS -6))
                         (* 32 (shift BITS -5))
@@ -150,15 +147,6 @@
                         (* 2 (shift BITS -1))
                         BITS))
                 (eq! BIT_B_4 (shift BITS -4))
-                (eq! PIVOT
-                     (+ (* 128 (shift BITS -15))
-                        (* 64 (shift BITS -14))
-                        (* 32 (shift BITS -13))
-                        (* 16 (shift BITS -12))
-                        (* 8 (shift BITS -11))
-                        (* 4 (shift BITS -10))
-                        (* 2 (shift BITS -9))
-                        (shift BITS -8)))
                 (eq! NEG (shift BITS -15)))))
 
 ;; 2.8.3 [[1]] constraints
@@ -216,8 +204,8 @@
 
 (defconstraint is-signextend-result (:guard IS_SIGNEXTEND)
   (if-eq-else OLI 1
-              (begin (eq! RES_HI ARG_1_HI)
-                     (eq! RES_LO ARG_1_LO))
+              (begin (eq! RES_HI ARG_2_HI)
+                     (eq! RES_LO ARG_2_LO))
               (if-zero SMALL
                        ;; SMALL == 0
                        (begin (eq! RES_HI ARG_2_HI)
