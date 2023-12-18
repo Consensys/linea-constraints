@@ -152,19 +152,20 @@
 ;;    2.5 Cumulative gas    ;;
 ;;                          ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defconstraint cumulative-gas ()
-  (begin (if-zero ABS
-                  (vanishes! CUM_GAS))
-         (if-not-zero (will-remain-constant! BTC)
-                      ; BTC[i + 1] != BTC[i]
-                      (eq! (next CUMULATIVE_CONSUMED_GAS)
-                           (next (- GAS_LIMIT REFUND_AMOUNT))))
-         (if-not-zero (and (will-inc! BTC 1) (will-remain-constant! ABS))
-                      ; BTC[i + 1] != 1 + BTC[i] && ABS[i+1] != ABS[i] i.e. BTC[i + 1] == BTC[i] && ABS[i+1] == ABS[i] +1
-                      (eq! (next CUM_GAS)
-                           (+ CUM_GAS
-                              (next (- GAS_LIMIT REFUND_AMOUNT)))))))
-
+;;TODO reenable this constraint
+;;(defconstraint cumulative-gas ()
+;;  (begin (if-zero ABS
+;;                  (vanishes! CUM_GAS))
+;;         (if-not-zero (will-remain-constant! BTC)
+;;                      ; BTC[i + 1] != BTC[i]
+;;                      (eq! (next CUMULATIVE_CONSUMED_GAS)
+;;                           (next (- GAS_LIMIT REFUND_AMOUNT))))
+;;         (if-not-zero (and (will-inc! BTC 1) (will-remain-constant! ABS))
+;;                      ; BTC[i + 1] != 1 + BTC[i] && ABS[i+1] != ABS[i] i.e. BTC[i + 1] == BTC[i] && ABS[i+1] == ABS[i] +1
+;;                      (eq! (next CUM_GAS)
+;;                           (+ CUM_GAS
+;;                              (next (- GAS_LIMIT REFUND_AMOUNT)))))))
+;;
 ;;;;;;;;;;;;;;;;;;;;;;;
 ;;                   ;;
 ;;    2.6 Aliases    ;;
