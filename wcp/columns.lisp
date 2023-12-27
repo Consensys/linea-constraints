@@ -2,14 +2,25 @@
 
 (defcolumns 
   WORD_COMPARISON_STAMP
-  (ONE_LINE_INSTRUCTION :binary)
   (COUNTER :byte)
+  (CT_MAX :byte)
   (INST :display :opcode)
   ARGUMENT_1_HI
   ARGUMENT_1_LO
   ARGUMENT_2_HI
   ARGUMENT_2_LO
   (RESULT :binary)
+  (IS_LT :binary)
+  (IS_GT :binary)
+  (IS_SLT :binary)
+  (IS_SGT :binary)
+  (IS_EQ :binary)
+  (IS_ISZERO :binary)
+  (IS_GEQ :binary)
+  (IS_LEQ :binary)
+  (ONE_LINE_INSTRUCTION :binary)
+  (MULTI_LINE_INSTRUCTION :binary)
+  (VARIABLE_LENGTH_INSTRUCTION :binary)
   (BITS :binary)
   (NEG_1 :binary)
   (NEG_2 :binary)
@@ -28,12 +39,15 @@
   (BIT_1 :binary)
   (BIT_2 :binary)
   (BIT_3 :binary)
-  (BIT_4 :binary))
+  (BIT_4 :binary)
+  WITNESS)
 
 ;; aliases
 (defalias 
   STAMP    WORD_COMPARISON_STAMP
   OLI      ONE_LINE_INSTRUCTION
+  MLI      MULTI_LINE_INSTRUCTION
+  VLI      VARIABLE_LENGTH_INSTRUCTION
   CT       COUNTER
   ARG_1_HI ARGUMENT_1_HI
   ARG_1_LO ARGUMENT_1_LO
