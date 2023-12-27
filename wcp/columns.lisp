@@ -3,14 +3,13 @@
 (defcolumns 
   WORD_COMPARISON_STAMP
   (ONE_LINE_INSTRUCTION :binary)
-  COUNTER
+  (COUNTER :byte)
   (INST :display :opcode)
   ARGUMENT_1_HI
   ARGUMENT_1_LO
   ARGUMENT_2_HI
   ARGUMENT_2_LO
-  RESULT_HI
-  RESULT_LO
+  (RESULT :binary)
   (BITS :binary)
   (NEG_1 :binary)
   (NEG_2 :binary)
@@ -40,7 +39,6 @@
   ARG_1_LO ARGUMENT_1_LO
   ARG_2_HI ARGUMENT_2_HI
   ARG_2_LO ARGUMENT_2_LO
-  RES_HI   RESULT_HI
-  RES_LO   RESULT_LO)
+  RES      RESULT)
 
 
