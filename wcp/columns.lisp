@@ -4,7 +4,7 @@
   WORD_COMPARISON_STAMP
   (COUNTER :byte)
   (CT_MAX :byte)
-  (INST :display :opcode)
+  (INST :byte :display :opcode)
   ARGUMENT_1_HI
   ARGUMENT_1_LO
   ARGUMENT_2_HI
