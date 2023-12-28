@@ -125,8 +125,10 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defconstraint bits_and_negs (:guard MLI)
   (if-eq CT CT_MAX
-         (begin (eq! BYTE_1 (first-eight-bits-bit-dec))
-                (eq! BYTE_3 (last-eight-bits-bit-dec))
+         (begin (eq! (shift BYTE_1 (- 0 LLARGEMO))
+                     (first-eight-bits-bit-dec))
+                (eq! (shift BYTE_3 (- 0 LLARGEMO))
+                     (last-eight-bits-bit-dec))
                 (eq! NEG_1
                      (shift BITS (- 0 LLARGEMO)))
                 (eq! NEG_2
@@ -201,6 +203,6 @@
          (if-eq IS_SLT 1
                 (if-eq-else NEG_1 NEG_2 (eq! RES (lt_)) (eq! RES NEG_1)))
          (if-eq IS_SGT 1
-                (if-eq-else NEG_1 NEG_2 (eq! RES (lt_)) (eq! RES NEG_1)))))
+                (if-eq-else NEG_1 NEG_2 (eq! RES (gt_)) (eq! RES NEG_2)))))
 
 
