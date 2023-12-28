@@ -128,9 +128,9 @@
          (begin (eq! BYTE_1 (first-eight-bits-bit-dec))
                 (eq! BYTE_3 (last-eight-bits-bit-dec))
                 (eq! NEG_1
-                     (shift BITS (- LLARGEMO)))
+                     (shift BITS (- 0 LLARGEMO)))
                 (eq! NEG_2
-                     (shift BITS (- 7))))))
+                     (shift BITS (- 0 7))))))
 
 (defun (first-eight-bits-bit-dec)
   (reduce +
@@ -138,14 +138,14 @@
                [0 :7]
                (* (^ 2 i)
                   (shift BITS
-                         (- (+ i 8)))))))
+                         (- 0 (+ i 8)))))))
 
 (defun (last-eight-bits-bit-dec)
   (reduce +
           (for i
                [0 :7]
                (* (^ 2 i)
-                  (shift BITS (- i))))))
+                  (shift BITS (- 0 i))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                              ;;
