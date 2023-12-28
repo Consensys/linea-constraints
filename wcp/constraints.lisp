@@ -98,9 +98,8 @@
 
 (defconstraint heartbeat (:guard STAMP)
   (begin (if-eq-else CT CT_MAX (will-inc! STAMP 1) (will-inc! CT 1))
-         ;;(eq! (* WITNESS (- LLARGE CT))
-         ;;     1)))
-         ))
+         (eq! (~ (- LLARGE CT))
+              1)))
 
 (defconstraint lastRow (:domain {-1})
   (eq! CT CT_MAX))
@@ -131,7 +130,7 @@
                 (eq! NEG_1
                      (shift BITS (- LLARGEMO)))
                 (eq! NEG_2
-                     (shift BITS (- 8))))))
+                     (shift BITS (- 7))))))
 
 (defun (first-eight-bits-bit-dec)
   (+ (* 128
