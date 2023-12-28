@@ -39,8 +39,7 @@
   (BIT_1 :binary)
   (BIT_2 :binary)
   (BIT_3 :binary)
-  (BIT_4 :binary)
-  WITNESS)
+  (BIT_4 :binary))
 
 ;; aliases
 (defalias 

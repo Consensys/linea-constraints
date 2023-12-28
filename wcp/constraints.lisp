@@ -98,8 +98,9 @@
 
 (defconstraint heartbeat (:guard STAMP)
   (begin (if-eq-else CT CT_MAX (will-inc! STAMP 1) (will-inc! CT 1))
-         (eq! (* WITNESS (- LLARGE CT))
-              1)))
+         ;;(eq! (* WITNESS (- LLARGE CT))
+         ;;     1)))
+         ))
 
 (defconstraint lastRow (:domain {-1})
   (eq! CT CT_MAX))
@@ -173,22 +174,22 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defconstraint target-constraints ()
   (begin (if-not-zero STAMP
-                      (begin (if-eq-else ARG_1_HI ARG_2_HI (= BIT_1 1) (= BIT_1 0))
-                             (if-eq-else ARG_1_LO ARG_2_LO (= BIT_2 1) (= BIT_2 0))))
+                      (begin (if-eq-else ARG_1_HI ARG_2_HI (eq! BIT_1 1) (vanishes! BIT_1))
+                             (if-eq-else ARG_1_LO ARG_2_LO (eq! BIT_2 1) (vanishes! BIT_2))))
          (if-eq (+ MLI VLI) 1
                 (if-eq CT CT_MAX
-                       (begin (= ACC_1 ARG_1_HI)
-                              (= ACC_2 ARG_1_LO)
-                              (= ACC_3 ARG_2_HI)
-                              (= ACC_4 ARG_2_LO)
-                              (= ACC_5
-                                 (- (* (- (* 2 BIT_3) 1)
-                                       (- ARG_1_HI ARG_2_HI))
-                                    BIT_3))
-                              (= ACC_6
-                                 (- (* (- (* 2 BIT_4) 1)
-                                       (- ARG_1_LO ARG_2_LO))
-                                    BIT_4)))))))
+                       (begin (eq! ACC_1 ARG_1_HI)
+                              (eq! ACC_2 ARG_1_LO)
+                              (eq! ACC_3 ARG_2_HI)
+                              (eq! ACC_4 ARG_2_LO)
+                              (eq! ACC_5
+                                   (- (* (- (* 2 BIT_3) 1)
+                                         (- ARG_1_HI ARG_2_HI))
+                                      BIT_3))
+                              (eq! ACC_6
+                                   (- (* (- (* 2 BIT_4) 1)
+                                         (- ARG_1_LO ARG_2_LO))
+                                      BIT_4)))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                              ;;
