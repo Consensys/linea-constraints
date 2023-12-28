@@ -133,38 +133,19 @@
                      (shift BITS (- 7))))))
 
 (defun (first-eight-bits-bit-dec)
-  (+ (* 128
-        (shift BITS (- 15)))
-     (* 64
-        (shift BITS (- 14)))
-     (* 32
-        (shift BITS (- 13)))
-     (* 16
-        (shift BITS (- 12)))
-     (* 8
-        (shift BITS (- 11)))
-     (* 4
-        (shift BITS (- 10)))
-     (* 2
-        (shift BITS (- 9)))
-     (shift BITS (- 8))))
+  (reduce +
+          (for i
+               [0 :7]
+               (* (^ 2 i)
+                  (shift BITS
+                         (- (+ i 8)))))))
 
 (defun (last-eight-bits-bit-dec)
-  (+ (* 128
-        (shift BITS (- 7)))
-     (* 64
-        (shift BITS (- 6)))
-     (* 32
-        (shift BITS (- 5)))
-     (* 16
-        (shift BITS (- 4)))
-     (* 8
-        (shift BITS (- 3)))
-     (* 4
-        (shift BITS (- 2)))
-     (* 2
-        (shift BITS (- 1)))
-     BITS))
+  (reduce +
+          (for i
+               [0 :7]
+               (* (^ 2 i)
+                  (shift BITS (- i))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                              ;;
