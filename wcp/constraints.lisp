@@ -37,7 +37,7 @@
          (is-binary IS_SGT)))
 
 (defun (flag-sum)
-  (+ IS_LT IS_GT IS_SLT IS_SGT IS_EQ IS_ISZERO IS_GEQ IS_LEQ))
+  (+ (one-line-inst) (variable-length-inst)))
 
 (defun (weight-sum)
   (+ (* LT IS_LT)
@@ -52,11 +52,8 @@
 (defun (one-line-inst)
   (+ IS_EQ IS_ISZERO))
 
-(defun (multi-line-inst)
-  (+ IS_SLT IS_SGT))
-
 (defun (variable-length-inst)
-  (+ IS_LT IS_GT IS_LEQ IS_GEQ))
+  (+ IS_LT IS_GT IS_LEQ IS_GEQ IS_SLT IS_SGT))
 
 (defconstraint inst-decoding ()
   (if-zero STAMP
@@ -66,7 +63,6 @@
 (defconstraint setting-flag ()
   (begin (eq! INST (weight-sum))
          (eq! OLI (one-line-inst))
-         (eq! MLI (multi-line-inst))
          (eq! VLI (variable-length-inst))))
 
 (defconstraint counter-constancies ()
@@ -93,13 +89,14 @@
                (vanishes! (next CT))))
 
 (defconstraint setting-ct-max ()
-  (begin (if-eq OLI 1 (vanishes! CT_MAX))
-         (if-eq MLI 1 (eq! CT_MAX LLARGEMO))))
+  (if-eq OLI 1 (vanishes! CT_MAX)))
 
 (defconstraint heartbeat (:guard STAMP)
-  (begin (if-eq-else CT CT_MAX (will-inc! STAMP 1) (will-inc! CT 1))
-         (eq! (~ (- LLARGE CT))
-              1)))
+  (if-eq-else CT CT_MAX (will-inc! STAMP 1) (will-inc! CT 1)))
+
+(defconstraint ct-upper-bond ()
+  (eq! (~ (- LLARGE CT))
+       1))
 
 (defconstraint lastRow (:domain {-1})
   (eq! CT CT_MAX))
@@ -123,8 +120,8 @@
 ;;    2.7 BITS and sign bit constraints    ;;
 ;;                                         ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defconstraint bits_and_negs (:guard MLI)
-  (if-eq CT CT_MAX
+(defconstraint bits-and-negs (:guard (+ IS_SLT IS_SGT))
+  (if-eq CT LLARGEMO
          (begin (eq! (shift BYTE_1 (- 0 LLARGEMO))
                      (first-eight-bits-bit-dec))
                 (eq! (shift BYTE_3 (- 0 LLARGEMO))
@@ -133,6 +130,11 @@
                      (shift BITS (- 0 LLARGEMO)))
                 (eq! NEG_2
                      (shift BITS (- 0 7))))))
+
+(defconstraint no-neg-if-small ()
+  (if-not-zero (- CT_MAX LLARGEMO)
+               (begin (vanishes! NEG_1)
+                      (vanishes! NEG_2))))
 
 (defun (first-eight-bits-bit-dec)
   (reduce +
@@ -158,7 +160,7 @@
   (begin (if-not-zero STAMP
                       (begin (if-eq-else ARG_1_HI ARG_2_HI (eq! BIT_1 1) (vanishes! BIT_1))
                              (if-eq-else ARG_1_LO ARG_2_LO (eq! BIT_2 1) (vanishes! BIT_2))))
-         (if-eq (+ MLI VLI) 1
+         (if-eq VLI 1
                 (if-eq CT CT_MAX
                        (begin (eq! ACC_1 ARG_1_HI)
                               (eq! ACC_2 ARG_1_LO)
@@ -171,7 +173,10 @@
                               (eq! ACC_6
                                    (- (* (- (* 2 BIT_4) 1)
                                          (- ARG_1_LO ARG_2_LO))
-                                      BIT_4)))))))
+                                      BIT_4)))))
+         (debug (if-eq IS_ISZERO 1
+                       (begin (vanishes! ARG_2_HI)
+                              (vanishes! ARG_2_LO))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                              ;;
