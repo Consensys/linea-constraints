@@ -83,8 +83,7 @@ TXN_DATA := txn_data
 
 WCP := wcp
 
-ZKEVM_MODULES := ${LIBRARY} \
-	${ALU} \
+ZKEVM_MODULES := ${ALU} \
 	${BIN} \
 	${BLAKE2f_MODEXP_DATA} \
 	${CONSTANTS} \
@@ -98,7 +97,7 @@ ZKEVM_MODULES := ${LIBRARY} \
 	${MMU} \
 	${MMIO} \
 	${MXP} \
-	${OOB} \
+    ${OOB} \
 	${PUB_DATA} \
 	${RIPSHA} \
 	${RLP_ADDR} \
