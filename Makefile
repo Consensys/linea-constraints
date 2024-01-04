@@ -73,6 +73,9 @@ STP := stp/columns.lisp stp/constraints.lisp \
 
 TABLES := $(wildcard lookup_tables/tables/*lisp)
 
+TEUC := teuc/columns.lisp teuc/constraints.lisp #\
+	# lookup
+
 TRM := trm/columns.lisp trm/constraints.lisp
 
 TXN_DATA := txn_data/columns.lisp txn_data/constraints.lisp \
@@ -100,6 +103,7 @@ ZKEVM_MODULES := ${ALU} \
 	${STACK} \
 	${STP} \
 	${TABLES} \
+	${TEUC} \
 	${TRM} \
 	${TXN_DATA} \
 	${WCP}
