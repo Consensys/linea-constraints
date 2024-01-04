@@ -1,4 +1,4 @@
-(module teuc)
+(module euc)
 
 (defconst 
   MAX_INPUT_LENGTH 8)
@@ -22,18 +22,22 @@
        1))
 
 (defconstraint last-row (:domain {-1})
-  (eq! DONE 1))
+  (if-not-zero IOMF
+               (eq! DONE 1)))
+
+(defconstraint counter-constancies ()
+  (counter-constancy CT CT_MAX))
 
 (defconstraint byte-decomposition ()
   (begin (byte-decomposition CT DIVIDEND DIVIDEND_BYTE)
          (byte-decomposition CT DIVISOR DIVISOR_BYTE)
          (byte-decomposition CT QUOTIENT QUOTIENT_BYTE)
-         (byte-decomposition CT REST REST_BYTE)))
+         (byte-decomposition CT REMAINDER REMAINDER_BYTE)))
 
 (defconstraint result (:guard DONE)
   (begin (eq! DIVIDEND
-              (+ (* DIVISOR QUOTIENT) REST))
-         (if-zero REST
+              (+ (* DIVISOR QUOTIENT) REMAINDER))
+         (if-zero REMAINDER
                   (eq! CEIL QUOTIENT)
                   (eq! CEIL (+ QUOTIENT 1)))))
 
