@@ -18,8 +18,8 @@
     (* euc.REMAINDER euc.DONE)
     0
     (* euc.DIVISOR euc.DONE)
-    1
-    LT
+    (* 1 euc.DONE)
+    (* LT euc.DONE)
   ))
 
 
