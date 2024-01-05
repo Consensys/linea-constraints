@@ -73,8 +73,8 @@ STP := stp/columns.lisp stp/constraints.lisp \
 
 TABLES := $(wildcard lookup_tables/tables/*lisp)
 
-EUC := euc/columns.lisp euc/constraints.lisp \
-	euc/euc_into_wcp.lisp
+EUC := euc \
+	euc/lookup/euc_into_wcp.lisp
 
 TRM := trm/columns.lisp trm/constraints.lisp
 
