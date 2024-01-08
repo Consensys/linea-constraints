@@ -2,8 +2,7 @@
 
 (defcolumns 
   STAMP
-  (ONE_LINE_INSTRUCTION :binary)
-  (MLI :binary)
+  (CT_MAX :byte)
   (COUNTER :byte)
   (INST :byte :display :opcode)
   ARGUMENT_1_HI
@@ -43,7 +42,6 @@
 
 ;; aliases
 (defalias 
-  OLI      ONE_LINE_INSTRUCTION
   CT       COUNTER
   ARG_1_HI ARGUMENT_1_HI
   ARG_1_LO ARGUMENT_1_LO
