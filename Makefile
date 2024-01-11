@@ -34,8 +34,8 @@ LOG_DATA := logData/columns.lisp logData/constraints.lisp \
 LOG_INFO := logInfo/columns.lisp logInfo/constraints.lisp \
 	logInfo/lookups/loginfo-to-rlprcpt.lisp logInfo/lookups/loginfo-to-logdata.lisp
 
-MEMORY := $(wildcard hub/mmio/columns.lisp) \
-		  $(wildcard hub/mmu/columns.lisp) \
+MEMORY := $(wildcard mmio/columns.lisp) \
+		  $(wildcard mmu/columns.lisp) \
 		  lookup_tables/mmuID/columns.lisp
 
 MXP := mxp/columns.lisp \
