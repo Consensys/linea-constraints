@@ -2,7 +2,7 @@
 
 (defcolumns
     STAMP
-    (OLI :BOOLEAN)
+    (OLI :binary)
     CT
     INST
     ;
@@ -15,15 +15,15 @@
     RES_HI
     RES_LO
     ;
-    (CMP    :BOOLEAN)
-    (OF_I   :BOOLEAN)
-    (OF_J   :BOOLEAN)
-    (OF_H   :BOOLEAN)
-    (OF_RES :BOOLEAN) 
+    (CMP    :binary)
+    (OF_I   :binary)
+    (OF_J   :binary)
+    (OF_H   :binary)
+    (OF_RES :binary) 
     ;
-    (BIT_1 :BOOLEAN)
-    (BIT_2 :BOOLEAN)
-    (BIT_3 :BOOLEAN)
+    (BIT_1 :binary)
+    (BIT_2 :binary)
+    (BIT_3 :binary)
     ;
     (BYTE_A_3 :BYTE)        ACC_A_3
     (BYTE_A_2 :BYTE)        ACC_A_2

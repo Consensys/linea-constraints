@@ -2,11 +2,11 @@
 
 (defcolumns
     STAMP
-    (OLI :BOOLEAN)
+    (OLI :binary)
     CT
     INST
-    (DEC_SIGNED :BOOLEAN) ;while instruction decoded this provides better If-zero etc stuff 
-    (DEC_OUTPUT :BOOLEAN) ;
+    (DEC_SIGNED :binary) ;while instruction decoded this provides better If-zero etc stuff 
+    (DEC_OUTPUT :binary) ;
     ;
     ARG_1_HI
     ARG_1_LO
@@ -44,9 +44,9 @@
     (BYTE_H_1 :BYTE)        ACC_H_1
     (BYTE_H_0 :BYTE)        ACC_H_0
     ;
-    (CMP_1 :BOOLEAN)
-    (CMP_2 :BOOLEAN)
+    (CMP_1 :binary)
+    (CMP_2 :binary)
     ;
-    (MSB_1 :BOOLEAN)
-    (MSB_2 :BOOLEAN)
+    (MSB_1 :binary)
+    (MSB_2 :binary)
 )

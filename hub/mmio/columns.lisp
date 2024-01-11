@@ -31,7 +31,7 @@
 	CONTEXT_SOURCE
 	CONTEXT_TARGET
 
-	(IS_INIT :BOOLEAN)
+	(IS_INIT :binary)
 
 	SOURCE_LIMB_OFFSET
 	TARGET_LIMB_OFFSET
@@ -39,8 +39,8 @@
 	TARGET_BYTE_OFFSET
 
 	SIZE
-	(FAST :BOOLEAN)
-	(ERF :BOOLEAN)
+	(FAST :binary)
+	(ERF :binary)
 	
 	STACK_VALUE_HIGH
 	STACK_VALUE_LOW
@@ -51,10 +51,10 @@
 	ACC_VAL_HI
 	ACC_VAL_LO
 
-	(EXO_IS_ROM :BOOLEAN)
-	(EXO_IS_LOG :BOOLEAN)
-	(EXO_IS_HASH :BOOLEAN)		;previously EXO_IS_SHA3
-	(EXO_IS_TXCD :BOOLEAN)
+	(EXO_IS_ROM :binary)
+	(EXO_IS_LOG :binary)
+	(EXO_IS_HASH :binary)		;previously EXO_IS_SHA3
+	(EXO_IS_TXCD :binary)
 
 	INDEX_X
 	VAL_X
@@ -64,11 +64,11 @@
 	TX_NUM
 	LOG_NUM ;to be replaced with a single NUM column
 
-	(BIN_1 :BOOLEAN)
-	(BIN_2 :BOOLEAN)
-	(BIN_3 :BOOLEAN)
-	(BIN_4 :BOOLEAN)
-	(BIN_5 :BOOLEAN)
+	(BIN_1 :binary)
+	(BIN_2 :binary)
+	(BIN_3 :binary)
+	(BIN_4 :binary)
+	(BIN_5 :binary)
 
 	ACC_1
 	ACC_2

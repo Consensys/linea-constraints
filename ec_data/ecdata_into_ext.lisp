@@ -1,4 +1,4 @@
-(defplookup plookup-ec_data-into-ext
+(deflookup plookup-ec_data-into-ext
     ;source columns
     (
         ext.ARG_1_HI

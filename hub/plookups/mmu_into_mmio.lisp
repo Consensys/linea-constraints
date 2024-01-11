@@ -1,4 +1,4 @@
-(defplookup plookup-mmu-into-mmio
+(deflookup plookup-mmu-into-mmio
     ;source columns 
     (
         (* mmu.MICRO_STAMP mmu.IS_MICRO)
@@ -22,19 +22,19 @@
         mmio.FAST
         mmio.SIZE))
 
-;; (defplookup plookup-mmio-into-rom
+;; (deflookup plookup-mmio-into-rom
 ;;                 ()
 ;;                 ())
 ;; ; data: (address_hi, address_lo, deployment_number, limb_index, datalimb) <- we don't have the dep# as of
-;; (defplookup plookup-mmio-into-log
+;; (deflookup plookup-mmio-into-log
 ;;                 ()
 ;;                 ())
 ;; ; data: (logNum, limb_index, datalimb) <- logNum grows by 1 with every LOG0, LOG1, LOG2, LOG3, LOG4
-;; (defplookup plookup-mmio-into-hash
+;; (deflookup plookup-mmio-into-hash
 ;;                 ()
 ;;                 ())
 ;; ; data: (hashNum, limb_index, datalimb) <- hashNum grows by 1 with every SHA3 and CREATE2
-;; (defplookup plookup-mmio-into-txcd
+;; (deflookup plookup-mmio-into-txcd
 ;;                 ()
 ;;                 ())
 ;; ; data: (txnum, limb_index, datalimb)

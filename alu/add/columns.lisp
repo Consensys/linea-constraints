@@ -14,5 +14,5 @@
     (BYTE_2 :BYTE)
     ACC_1
     ACC_2
-    (OVERFLOW :BOOLEAN)
+    (OVERFLOW :binary)
 )

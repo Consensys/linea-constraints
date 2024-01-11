@@ -3,10 +3,10 @@
 (defcolumns
     MUL_STAMP
     COUNTER
-    (OLI :BOOLEAN)
-    (TINY_BASE          :BOOLEAN)
-    (TINY_EXPONENT      :BOOLEAN)
-    (RESULT_VANISHES    :BOOLEAN)
+    (OLI :binary)
+    (TINY_BASE          :binary)
+    (TINY_EXPONENT      :binary)
+    (RESULT_VANISHES    :binary)
     INSTRUCTION
     ARG_1_HI
     ARG_1_LO
@@ -14,7 +14,7 @@
     ARG_2_LO
     RES_HI
     RES_LO
-    (BITS :BOOLEAN)
+    (BITS :binary)
     ;==========================
     (BYTE_A_3 :BYTE)    ACC_A_3
     (BYTE_A_2 :BYTE)    ACC_A_2
@@ -36,10 +36,10 @@
     (BYTE_H_1 :BYTE)    ACC_H_1
     (BYTE_H_0 :BYTE)    ACC_H_0
     ;==========================
-    (EXPONENT_BIT               :BOOLEAN)
+    (EXPONENT_BIT               :binary)
     EXPONENT_BIT_ACCUMULATOR
-    (EXPONENT_BIT_SOURCE        :BOOLEAN)
-    (SQUARE_AND_MULTIPLY        :BOOLEAN)
+    (EXPONENT_BIT_SOURCE        :binary)
+    (SQUARE_AND_MULTIPLY        :binary)
     BIT_NUM
 )
 

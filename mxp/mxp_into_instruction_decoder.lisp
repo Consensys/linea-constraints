@@ -1,4 +1,4 @@
-(defplookup plookup-mxp-into-instruction-decoder
+(deflookup plookup-mxp-into-instruction-decoder
     ;source columns
     (
         instruction-decoder.MXP_TYPE_1
