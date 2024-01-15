@@ -18,12 +18,12 @@
     LOW_4
     (BIT_1 :binary)
     PIVOT
-    (BYTE_1 :BYTE)
-    (BYTE_2 :BYTE)
-    (BYTE_3 :BYTE)
-    (BYTE_4 :BYTE)
-    (BYTE_5 :BYTE)
-    (BYTE_6 :BYTE)
+    (BYTE_1 :byte)
+    (BYTE_2 :byte)
+    (BYTE_3 :byte)
+    (BYTE_4 :byte)
+    (BYTE_5 :byte)
+    (BYTE_6 :byte)
     ACC_1
     ACC_2
     ACC_3

@@ -32,8 +32,8 @@
   (PUSH_FUNNEL_BIT	:binary)
 
   ;; related to bytecode itself and padding
-  (PADDED_BYTECODE_BYTE		:BYTE)
-  (OPCODE					:BYTE)
+  (PADDED_BYTECODE_BYTE		:byte)
+  (OPCODE					:byte)
   (PADDING_BIT		:binary)
   PC
   (CODESIZE_REACHED	:binary)

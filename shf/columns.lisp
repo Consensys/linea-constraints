@@ -31,11 +31,11 @@
     (BIT_B_5 :binary)
     (BIT_B_6 :binary)
     (BIT_B_7 :binary)
-    (BYTE_1 :BYTE)
-    (BYTE_2 :BYTE)
-    (BYTE_3 :BYTE)
-    (BYTE_4 :BYTE)
-    (BYTE_5 :BYTE)
+    (BYTE_1 :byte)
+    (BYTE_2 :byte)
+    (BYTE_3 :byte)
+    (BYTE_4 :byte)
+    (BYTE_5 :byte)
     ACC_1
     ACC_2
     ACC_3

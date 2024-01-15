@@ -17,9 +17,9 @@
 	VAL_B_NEW
 	VAL_C_NEW
 
-	(BYTE_A :BYTE)
-	(BYTE_B :BYTE)
-	(BYTE_C :BYTE)
+	(BYTE_A :byte)
+	(BYTE_B :byte)
+	(BYTE_C :byte)
 
 	ACC_A
 	ACC_B
@@ -45,8 +45,8 @@
 	STACK_VALUE_HIGH
 	STACK_VALUE_LOW
 
-	(STACK_VALUE_LO_BYTE :BYTE)
-	(STACK_VALUE_HI_BYTE :BYTE)
+	(STACK_VALUE_LO_BYTE :byte)
+	(STACK_VALUE_HI_BYTE :byte)
 
 	ACC_VAL_HI
 	ACC_VAL_LO
@@ -58,7 +58,7 @@
 
 	INDEX_X
 	VAL_X
-	(BYTE_X :BYTE)
+	(BYTE_X :byte)
 	ACC_X
 
 	TX_NUM
