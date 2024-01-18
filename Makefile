@@ -84,7 +84,7 @@ TXN_DATA := txn_data/columns.lisp txn_data/constraints.lisp \
 WCP := wcp/columns.lisp wcp/constraints.lisp \
 	   # wcp/hub_into_wcp.lisp \
 
-MODEXP := modexp/
+MODEXP_DATA := modexpdata/
 
 ZKEVM_MODULES := ${ALU} \
 	${BIN} \
@@ -94,7 +94,7 @@ ZKEVM_MODULES := ${ALU} \
 	${LOG_DATA} \
 	${LOG_INFO} \
 	${MEMORY} \
-	${MODEXP} \
+	${MODEXP_DATA} \
 	${MXP} \
 	${PUB_DATA} \
 	${RLP_ADDR} \
