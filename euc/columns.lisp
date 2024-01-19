@@ -9,7 +9,7 @@
   (QUOTIENT :i8)
   (REMAINDER :i8)
   (CEIL :i8)
-  (DONE :binary@prove)
+  (DONE :binary)
   (DIVIDEND_BYTE :byte)
   (DIVISOR_BYTE :byte)
   (QUOTIENT_BYTE :byte)
