@@ -1,7 +1,7 @@
 (module euc)
 
 (defcolumns 
-  (IOMF :binary)
+  (IOMF :binary@prove)
   (CT :byte)
   (CT_MAX :byte)
   (DIVIDEND :i8)
@@ -9,7 +9,7 @@
   (QUOTIENT :i8)
   (REMAINDER :i8)
   (CEIL :i8)
-  (DONE :binary)
+  (DONE :binary@prove)
   (DIVIDEND_BYTE :byte)
   (DIVISOR_BYTE :byte)
   (QUOTIENT_BYTE :byte)
