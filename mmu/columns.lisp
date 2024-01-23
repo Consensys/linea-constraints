@@ -1,125 +1,110 @@
 (module mmu)
 
-(defcolumns
-	RAM_STAMP 
-	MICRO_INSTRUCTION_STAMP
-	(IS_MICRO_INSTRUCTION :binary) 
+(defcolumns 
 
-	OFF_1_LO
-	OFF_2_HI
-	OFF_2_LO
+;;shared columns
+(STAMP :i16)
+(MMIO_STAMP :i24)
 
-	SIZE_IMPORTED
+;; PERSPECTIVE SELECTOR
+(MACRO :binary@prove)
+(PRPRC :binary@prove)
+(MICRO :binary@prove)
 
-	VAL_HI
-	VAL_LO
+;; OUTPUT OF THE PREPROCESSING
+TOT
+TOTLZ
+TOTNT
+TOTRZ
+(OUT :array [5]) ;;TODO put right limit
+(BIN :binary@prove :array [5]) ;;TODO put right limit
 
-	CONTEXT_NUMBER
-	CALLER
-	RETURNER
-	CONTEXT_SOURCE
-	CONTEXT_TARGET
+;; MMU INSTRUCTION FLAG
+(IS_MLOAD :binary@prove)
+(IS_MSTORE :binary@prove)
+(IS_MSTORE8 :binary@prove)
+(IS_INVALID_CODE_PREFIX :binary@prove)
+(IS_RIGHT_PADDED_WORD_EXTRACTION :binary@prove)
+(IS_RAM_TO_EXO_WITH_PADDING :binary@prove)
+(IS_EXO_TO-RAM_TRANSPLANTS :binary@prove)
+(IS_RAM_TO_RAM_SANS_PADDING :binary@prove)
+(IS_ANY_TO_RAM_WITH_PADDING :binary@prove)
+(IS_MODEXP_ZERO :binary@prove)
+(IS_MODEXP_DATA :binary@prove)
+(IS_BLAKE_PARAM :binary@prove)
 
-	COUNTER
-	(OFFSET_OUT_OF_BOUNDS :binary)
 
-	PRECOMPUTATION
-	TERNARY
-	MICRO_INSTRUCTION
-	(EXO_IS_ROM :binary)
-	(EXO_IS_LOG :binary)
-	(EXO_IS_HASH :binary)
-	(EXO_IS_TXCD :binary)
+;; USED ONLY IN MICRO ROW BUT ARE SHARED 
+LZRO
+NT_ONLY
+NT_FIRST
+NT_MDDL
+NT_LAST
+RZ_ONLY
+RZ_FIRST
+RZ_MDDL
+RZ_LAST)
 
-	SOURCE_LIMB_OFFSET
-	SOURCE_BYTE_OFFSET
-	TARGET_LIMB_OFFSET
-	TARGET_BYTE_OFFSET
-	SIZE
-  
-	(NIB_1 :nibble)
-	(NIB_2 :nibble)
-	(NIB_3 :nibble)
-	(NIB_4 :nibble)
-	(NIB_5 :nibble)
-	(NIB_6 :nibble)
-	(NIB_7 :nibble)
-	(NIB_8 :nibble)
-	(NIB_9 :nibble)
-
-    (BYTE_1 :byte)
-	(BYTE_2 :byte)
-	(BYTE_3 :byte)
-	(BYTE_4 :byte)
-	(BYTE_5 :byte)
-	(BYTE_6 :byte)
-	(BYTE_7 :byte)
-	(BYTE_8 :byte)
-
-    ACC_1
-    ACC_2
-    ACC_3
-    ACC_4
-    ACC_5
-    ACC_6
-    ACC_7
-    ACC_8
-
-    (BIT_1 :binary)
-	(BIT_2 :binary)
-	(BIT_3 :binary)
-	(BIT_4 :binary)
-	(BIT_5 :binary)
-	(BIT_6 :binary)
-	(BIT_7 :binary)
-	(BIT_8 :binary)
-
-	ALIGNED
-	FAST
-
-	MIN
-
-	CALL_STACK_DEPTH
-	CALL_DATA_SIZE
-	CALL_DATA_OFFSET
-	INSTRUCTION
+(defperspective macro 
+	;; selector
+	MACRO
 	
-	TOTAL_NUMBER_OF_MICRO_INSTRUCTIONS
-	TOTAL_NUMBER_OF_READS
-	TOTAL_NUMBER_OF_PADDINGS
+	(
+	 (INST :i16)
+	 SRC_ID
+	 TGT_ID
+	 AUX_ID
+	 (SRC_OFFSET_HI :i128)
+	 (SRC_OFFSET_LO :i128)
+	 (TGT_OFFSET_LO :i64)
+	 (SIZE :i64)
+	 (REF_OFFSET :i64)
+	 (REF_SIZE :i64)
+	 (SUCCESS_BIT :binary)
+	 (LIMB_1 :i128)
+	 (LIMB_2 :i128)
+	 PHASE
+	 EXO_SUM)
+	)
 
-	(TO_RAM :binary)
-	(ERF    :binary)
+(defperspective prprc 
+	;; selector
+	PRPRC
+	
+	(
+		CT
+		(EUC_FLAG :binary)
+		(EUC_A :i64)
+		(EUC_B :i64)
+		(EUC_QUOT :i64)
+		(EUC_REM :i64)
+		(EUC_CEIL :i64)
+		(WCP_FLAG :binary)
+		(WCP_ARG_1_HI :i128)
+		(WCP_ARG_1_LO :i128)
+		(WCP_ARG_2_HI :i128)
+		(WCP_ARG_2_LO :i128)
+		(WCP_RES :binary)
+		(WCP_INST :byte :display :opcode))
+	)
 
-	RETURN_OFFSET
-	RETURN_CAPACITY
-
-	REFS
-	REFO
-
-	INFO
-
-	(IS_DATA :binary))
-
-(defalias 
-	CSD				CALL_STACK_DEPTH
-	CDS				CALL_DATA_SIZE
-	CDO				CALL_DATA_OFFSET
-	INST			INSTRUCTION
-	CN				CONTEXT_NUMBER
-	CN_S			CONTEXT_SOURCE
-	CN_T			CONTEXT_TARGET
-	TERN			TERNARY
-	TOT				TOTAL_NUMBER_OF_MICRO_INSTRUCTIONS
-	TOTRD			TOTAL_NUMBER_OF_READS
-	TOTPD			TOTAL_NUMBER_OF_PADDINGS
-	OFFOOB			OFFSET_OUT_OF_BOUNDS
-	IS_MICRO		IS_MICRO_INSTRUCTION
-	PRE				PRECOMPUTATION
-	CT				COUNTER
-	MICRO_STAMP		MICRO_INSTRUCTION_STAMP
-	MICRO_INST		MICRO_INSTRUCTION
-	SLO				SOURCE_LIMB_OFFSET
-	SBO				SOURCE_BYTE_OFFSET
-	TLO				TARGET_LIMB_OFFSET
-	TBO				TARGET_BYTE_OFFSET)
+	(defperspective micro 
+	;; selector
+	MICRO
+	
+	(
+	INST
+	(SIZE :byte)
+	(SLO :i56)
+	(SBO :i5)
+	(TLO :i56)
+	(TBO :i5)
+	(LIMB_1 :i128)
+	(LIMB_2 :i128)
+	CN_S
+	CN_T
+	(SUCCESS_BIT :binary)
+	EXO_SUM
+	PHASE
+	ID_1
+	ID_2))

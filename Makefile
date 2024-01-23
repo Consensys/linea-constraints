@@ -36,6 +36,8 @@ MEMORY := $(wildcard hub/mmio/columns.lisp) \
 		  $(wildcard hub/mmu/columns.lisp) \
 		  lookup_tables/mmuID/columns.lisp
 
+MMU := mmu
+
 MXP := mxp/columns.lisp \
 	mxp/constraints.lisp \
 	mxp/lookups/mxp_into_instruction_decoder.lisp
@@ -85,13 +87,14 @@ EXP := exp/columns.lisp exp/constraints.lisp exp/constants.lisp exp/exp-into-wcp
 
 ZKEVM_MODULES := ${ALU} \
 	${BIN} \
+	${BLAKE2f_MODEXP_DATA} \
 	${EC_DATA} \
 	${EUC} \
 	${LIBRARY} \
 	${LOG_DATA} \
 	${LOG_INFO} \
 	${MEMORY} \
-	${BLAKE2f_MODEXP_DATA} \
+	${MMU} \
 	${MXP} \
 	${PUB_DATA} \
 	${RLP_ADDR} \
