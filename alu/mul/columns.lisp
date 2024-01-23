@@ -1,7 +1,7 @@
 (module mul)
 
 (defcolumns
-    (MUL_STAMP :i24)
+    (MUL_STAMP :i32)
     (COUNTER :byte)
     (OLI :binary@prove)
     (TINY_BASE          :binary@prove)

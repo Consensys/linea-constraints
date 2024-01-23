@@ -1,7 +1,7 @@
 (module add)
 
 (defcolumns 
-  (STAMP :i24)
+  (STAMP :i32)
   (CT_MAX :byte)
   (CT :byte)
   (INST :byte :display :opcode)

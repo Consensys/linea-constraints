@@ -1,7 +1,7 @@
 (module ec_data)
 
 (defcolumns 
-  (STAMP :i128)
+  (STAMP :i32)
   (INDEX :byte)
   (CT_MIN :byte)
   (LIMB :i128)
