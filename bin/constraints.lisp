@@ -17,21 +17,6 @@
            THEN
            ELSE))
 
-;;   2.1 binary constraints   
-;; binary constraints
-(defconstraint binary_constraints ()
-  (begin (is-binary IS_AND)
-         (is-binary IS_OR)
-         (is-binary IS_XOR)
-         (is-binary IS_NOT)
-         (is-binary IS_BYTE)
-         (is-binary IS_SIGNEXTEND)
-         (is-binary SMALL)
-         (is-binary BITS)
-         (is-binary NEG)
-         (is-binary BIT_B_4)
-         (is-binary BIT_1)))
-
 ;; 2.2  Shorthands
 (defun (flag-sum)
   (+ IS_AND IS_OR IS_XOR IS_NOT IS_BYTE IS_SIGNEXTEND))
