@@ -5,7 +5,7 @@
   (RECIPE :byte)
   (RECIPE_1 :binary@prove)
   (RECIPE_2 :binary@prove)
-  (ADDR_HI :i242)     ;; hi part (4B)  of the creator address
+  (ADDR_HI :i32)     ;; hi part (4B)  of the creator address
   (ADDR_LO :i128)     ;; lo part (16B) "
   (DEP_ADDR_HI :i242) ;; hi part of the deploed addr
   (DEP_ADDR_LO :i128) ;; lo part of "
