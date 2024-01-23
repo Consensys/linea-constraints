@@ -1,46 +1,46 @@
 (module txnData)
 
 (defcolumns 
-  ABS_TX_NUM_MAX
-  ABS_TX_NUM
-  BTC_NUM_MAX
-  BTC_NUM
-  REL_TX_NUM_MAX
-  REL_TX_NUM
+  (ABS_TX_NUM_MAX :i2)
+  (ABS_TX_NUM :i2)
+  (BTC_NUM_MAX :i2)
+  (BTC_NUM :i2)
+  (REL_TX_NUM_MAX :i2)
+  (REL_TX_NUM :i2)
   (CT :byte)
-  FROM_HI
-  FROM_LO
-  NONCE
-  INITIAL_BALANCE
-  VALUE
-  TO_HI
-  TO_LO
-  (IS_DEP :binary)
-  GAS_LIMIT
-  INITIAL_GAS
-  GAS_PRICE
-  BASEFEE
-  COINBASE_HI
-  COINBASE_LO
-  CALL_DATA_SIZE
-  INIT_CODE_SIZE
-  (TYPE0 :binary)
-  (TYPE1 :binary)
-  (TYPE2 :binary)
-  (REQUIRES_EVM_EXECUTION :binary)
+  (FROM_HI :i4)
+  (FROM_LO :i16)
+  (NONCE :i8)
+  (INITIAL_BALANCE :i8)
+  (VALUE :i16)
+  (TO_HI :i4)
+  (TO_LO :i16)
+  (IS_DEP :binary@prove)
+  (GAS_LIMIT :i8)
+  (INITIAL_GAS :i16)
+  (GAS_PRICE :i8)
+  (BASEFEE :i16)
+  (COINBASE_HI :i16)
+  (COINBASE_LO :i16)
+  (CALL_DATA_SIZE :i4)
+  (INIT_CODE_SIZE :i4)
+  (TYPE0 :binary@prove)
+  (TYPE1 :binary@prove)
+  (TYPE2 :binary@prove)
+  (REQUIRES_EVM_EXECUTION :binary@prove)
   LEFTOVER_GAS
   REFUND_COUNTER
   REFUND_AMOUNT
   CUMULATIVE_CONSUMED_GAS
-  (STATUS_CODE :binary)
+  (STATUS_CODE :binary@prove)
   (PHASE_RLP_TXN :byte)
   (PHASE_RLP_TXNRCPT :byte)
-  CODE_FRAGMENT_INDEX
-  OUTGOING_HI
-  OUTGOING_LO
+  (CODE_FRAGMENT_INDEX :i3)
+  (OUTGOING_HI :i16)
+  (OUTGOING_LO :i16)
   OUTGOING_RLP_TXNRCPT
-  WCP_ARG_ONE_LO
-  WCP_ARG_TWO_LO
+  (WCP_ARG_ONE_LO :i16)
+  (WCP_ARG_TWO_LO :i16)
   (WCP_RES :binary)
   (WCP_INST :byte :display :opcode))
 
