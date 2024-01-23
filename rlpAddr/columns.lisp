@@ -5,25 +5,25 @@
   (RECIPE :byte)
   (RECIPE_1 :binary@prove)
   (RECIPE_2 :binary@prove)
-  (ADDR_HI :i4)     ;; hi part (4B)  of the creator address
-  (ADDR_LO :i16)     ;; lo part (16B) "
-  (DEP_ADDR_HI :i4) ;; hi part of the deploed addr
-  (DEP_ADDR_LO :i16) ;; lo part of "
-  (NONCE :i8)       ;; nonce (1-8B)  "
-  (SALT_HI :i16)
-  (SALT_LO :i16)
-  (KEC_HI :i16)
-  (KEC_LO :i16)
+  (ADDR_HI :i242)     ;; hi part (4B)  of the creator address
+  (ADDR_LO :i128)     ;; lo part (16B) "
+  (DEP_ADDR_HI :i242) ;; hi part of the deploed addr
+  (DEP_ADDR_LO :i128) ;; lo part of "
+  (NONCE :i64)       ;; nonce (1-8B)  "
+  (SALT_HI :i128)
+  (SALT_LO :i128)
+  (KEC_HI :i128)
+  (KEC_LO :i128)
   ;; OUTPUTS
-  (LIMB :i16)        ;; bytes of the output
+  (LIMB :i128)        ;; bytes of the output
   (LC :binary@prove)
   (nBYTES :byte)      ;; the number of bytes to read
   (INDEX :byte)
   ;; Register columns
-  (STAMP :i3)
+  (STAMP :i24)
   (COUNTER :byte)
   (BYTE1 :byte@prove)
-  (ACC :i8)
+  (ACC :i64)
   (ACC_BYTESIZE :byte)
   POWER
   (BIT1 :binary@prove)

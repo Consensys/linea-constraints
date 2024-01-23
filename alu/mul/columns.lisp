@@ -1,19 +1,19 @@
 (module mul)
 
 (defcolumns
-    (MUL_STAMP :i3)
+    (MUL_STAMP :i17)
     (COUNTER :byte)
     (OLI :binary@prove)
     (TINY_BASE          :binary@prove)
     (TINY_EXPONENT      :binary@prove)
     (RESULT_VANISHES    :binary@prove)
     (INSTRUCTION :byte :display :opcode)
-    (ARG_1_HI  :i16)
-    (ARG_1_LO :i16)
-    (ARG_2_HI :i16)
-    (ARG_2_LO :i16)
-    (RES_HI :i16)
-    (RES_LO :i16)
+    (ARG_1_HI  :i128)
+    (ARG_1_LO :i128)
+    (ARG_2_HI :i128)
+    (ARG_2_LO :i128)
+    (RES_HI :i128)
+    (RES_LO :i128)
     (BITS :binary@prove)
     ;==========================
     (BYTE_A_3 :byte@prove)    ACC_A_3

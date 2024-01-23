@@ -1,7 +1,7 @@
 (module stp)
 
 (defcolumns 
-  (STAMP :i3)
+  (STAMP :i24)
   (CT :byte)
   (CT_MAX :byte)
   (INSTRUCTION :byte :display :opcode)
@@ -12,10 +12,10 @@
   (IS_DELEGATECALL :binary@prove)
   (IS_STATICCALL :binary@prove)
   ;;
-  (GAS_HI :i16)
-  (GAS_LO :i16)
-  (VAL_HI :i16)
-  (VAL_LO :i16)
+  (GAS_HI :i128)
+  (GAS_LO :i128)
+  (VAL_HI :i128)
+  (VAL_LO :i128)
   ;;
   (EXISTS :binary)
   (WARM :binary)
@@ -30,10 +30,10 @@
   (WCP_FLAG :binary)
   (MOD_FLAG :binary)
   (EXOGENOUS_MODULE_INSTRUCTION :byte :display :opcode)
-  (ARG_1_HI :i16)
-  (ARG_1_LO :i16)
-  (ARG_2_LO :i16)
-  (RES_LO :i16))
+  (ARG_1_HI :i128)
+  (ARG_1_LO :i128)
+  (ARG_2_LO :i128)
+  (RES_LO :i128))
 
 (defalias 
   OOGX     OUT_OF_GAS_EXCEPTION
