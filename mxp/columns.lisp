@@ -7,7 +7,7 @@
   (ROOB :binary@prove)
   (NOOP :binary@prove)
   (MXPX :binary@prove)
-  (INST :byte@prove :display :opcode)
+  (INST :byte :display :opcode)
   (MXP_TYPE :binary@prove :array [5])
   (GBYTE :i64)
   (GWORD :i64)
