@@ -1,9 +1,9 @@
 (module bin)
 
 (defcolumns 
-  (STAMP :i24)
-  (CT_MAX :i4)
-  (COUNTER :i4)
+  (STAMP :i32)
+  (CT_MAX :byte)
+  (COUNTER :byte)
   (INST :byte :display :opcode)
   (ARGUMENT_1_HI :i128)
   (ARGUMENT_1_LO :i128)
