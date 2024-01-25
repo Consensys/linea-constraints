@@ -26,7 +26,7 @@
 
   ;; computation-row columns
   ((PLT_BIT :binary@prove)
-   (PLT_JUMP :i6)
+   (PLT_JMP :i6)
    (RAW_BYTE :byte@prove)
    (RAW_ACC :i128)
    (TRIM_BYTE :byte@prove)

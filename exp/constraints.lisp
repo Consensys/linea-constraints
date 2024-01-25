@@ -59,7 +59,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                               ;;
-;;    2.3 Instruction decoding   ;;
+;;    2.4 Instruction decoding   ;;
 ;;                               ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defconstraint instruction-decoding-padding-non-padding ()
@@ -69,6 +69,29 @@
 
 (defconstraint instruction-decoding-exp-inst (:perspective macro-instruction)
   (eq! EXP_INST (wght_sum_macro)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                             ;;
+;;    2.5 Constancies          ;;
+;;                             ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defconstraint stamp-constancy ()
+  (begin (stamp-constancy STAMP IS_EXP_LOG)
+         (stamp-constancy STAMP IS_MODEXP_LOG)))
+
+(defconstraint counter-constancy ()
+  (begin (counter-constancy CT CMPTN)
+         (counter-constancy CT MACRO)
+         (counter-constancy CT PRPRC)))
+
+;; perspective constancy constraint (TODO: add to stdlib.lisp)
+(defpurefun ((perspective-constancy :@loob) PERSPECTIVE_SELECTOR X)
+  (if-not-zero (and PERSPECTIVE_SELECTOR (prev PERSPECTIVE_SELECTOR))
+               (remained-constant! X)))
+
+(defconstraint computation-constancy (:perspective computation)
+  (begin (perspective-constancy CMPTN PLT_JMP)
+         (perspective-constancy CMPTN MSNZB)))
 
 ;; deprecated
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -121,16 +144,6 @@
 (defconstraint final-row (:domain {-1})
   (if-not-zero NZEXP
                (eq! CT 15)))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;                             ;;
-;;    2.3 counter constancy    ;;
-;;                             ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defconstraint counter-constancy ()
-  (begin (counter-constancy CT EXPNT_HI)
-         (counter-constancy CT EXPNT_LO)
-         (counter-constancy CT DYNCOST)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                             ;;
