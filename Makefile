@@ -26,6 +26,8 @@ EC_DATA := ec_data/columns.lisp \
 	ec_data/ecdata_into_wcp.lisp \
 	ec_data/hub_into_ecdata.lisp \
 
+EUC := euc
+
 LIBRARY := library/constant.lisp library/rlp_constraints_pattern.lisp
 
 LOG_DATA := logData
@@ -71,8 +73,6 @@ STP := stp/columns.lisp stp/constraints.lisp \
 	stp/lookups/stp_into_mod.lisp stp/lookups/stp_into_wcp.lisp
 
 TABLES := $(wildcard lookup_tables/tables/*lisp)
-
-EUC := euc
 
 TRM := trm/columns.lisp trm/constraints.lisp
 
