@@ -93,19 +93,6 @@
   (begin (perspective-constancy CMPTN PLT_JMP)
          (perspective-constancy CMPTN MSNZB)))
 
-;; deprecated
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;                             ;;
-;;    2.1 The NZEXP column     ;;
-;;                             ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defconstraint nzexp ()
-  (if-not-zero EXPNT_HI
-               (eq! NZEXP 1)
-               (if-not-zero EXPNT_HI
-                            (eq! NZEXP 1)
-                            (vanishes! NZEXP))))
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                     ;;
 ;;    3.2 heartbeat    ;;
@@ -118,32 +105,35 @@
 ;; 2
 (defconstraint stamp-vanishing-values ()
   (if-zero STAMP
-           (begin (vanishes! CT)
-                  (vanishes! DYNCOST)
-                  (vanishes! NZEXP)
-                  (vanishes! EXPNT_HI)
-                  (vanishes! EXPNT_LO))))
+           (vanishes! CT)))
 
 ;; 3
 (defconstraint stamp-increments ()
-  (any! (will-remain-constant! STAMP) (will-inc! STAMP 1)))
+  (eq! (next STAMP)
+       (+ STAMP
+          (* (next CMPTN) (- 1 CMPTN)))))
 
 ;; 4
-(defconstraint counter-reset ()
-  (if-not-zero (will-remain-constant! STAMP)
-               (vanishes! (next CT))))
+(defconstraint maxct ()
+  (eq! CT_MAX (maxct_sum)))
 
-;; 5
-(defconstraint instruction-counter-cycle ()
-  (if-not-zero STAMP
-               (if-zero NZEXP
-                        (will-inc! STAMP 1)
-                        (if-eq-else CT 15 (will-inc! STAMP 1) (will-inc! CT 1)))))
-
-;; 6
-(defconstraint final-row (:domain {-1})
-  (if-not-zero NZEXP
-               (eq! CT 15)))
+;; 7
+;;(defconstraint instruction-counter-cycle ()
+;;  (if-eq-else CT CT_MAX
+;;              (eq! (next CT) 0)
+;;              (will-inc! CT)))
+;; deprecated
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                             ;;
+;;    2.1 The NZEXP column     ;;
+;;                             ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defconstraint nzexp ()
+  (if-not-zero EXPNT_HI
+               (eq! NZEXP 1)
+               (if-not-zero EXPNT_HI
+                            (eq! NZEXP 1)
+                            (vanishes! NZEXP))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                             ;;
