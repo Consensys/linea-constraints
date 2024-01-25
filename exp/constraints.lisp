@@ -1,9 +1,39 @@
-;; deprecated
 (module exp)
 
 (defconst 
-  G_EXPBYTES 50)
+  G_EXPBYTES              50
+  EXP_EXPLOG              1
+  EXP_MODEXPLOG           2
+  MAX_CT_CMPTN_EXP_LOG    15
+  MAX_CT_MACRO_EXP_LOG    0
+  MAX_CT_PRPRC_EXP_LOG    0
+  MAX_CT_CMPTN_MODEXP_LOG 15
+  MAX_CT_MACRO_MODEXP_LOG 0
+  MAX_CT_PRPRC_MODEXP_LOG 3) ;; decide values
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                             ;;
+;;    2.1 Shorthands           ;;
+;;                             ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun (flag_sum_perspective)
+  (+ CMPTN MACRO PRPRC))
+
+(defun (flag_sum_macro)
+  (+ IS_EXP_LOG IS_MODEXP_LOG))
+
+(defun (wght_sum_macro)
+  (+ (* EXP_EXPLOG IS_EXP_LOG) (* EXP_MODEXPLOG IS_MODEXP_LOG)))
+
+(defun (maxct_sum)
+  (+ (* CMPTN
+        (+ (* MAX_CT_CMPTN_EXP_LOG IS_EXP_LOG) (* MAX_CT_CMPTN_MODEXP_LOG IS_MODEXP_LOG)))
+     (* MACRO
+        (+ (* MAX_CT_MACRO_EXP_LOG IS_EXP_LOG) (* MAX_CT_MACRO_MODEXP_LOG IS_MODEXP_LOG)))
+     (* PRPRC
+        (+ (* MAX_CT_PRPRC_EXP_LOG IS_EXP_LOG) (* MAX_CT_PRPRC_MODEXP_LOG IS_MODEXP_LOG)))))
+
+;; deprecated
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                             ;;
 ;;    2.1 The NZEXP column     ;;

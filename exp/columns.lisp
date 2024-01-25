@@ -1,4 +1,3 @@
-;; deprecated
 (module exp)
 
 (defcolumns 
