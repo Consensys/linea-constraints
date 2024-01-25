@@ -33,6 +33,43 @@
      (* PRPRC
         (+ (* MAX_CT_PRPRC_EXP_LOG IS_EXP_LOG) (* MAX_CT_PRPRC_MODEXP_LOG IS_MODEXP_LOG)))))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                             ;;
+;;    2.2 binary constraints   ;;
+;;                             ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defconstraint binary-constraints ()
+  (begin (is-binary IS_EXP_LOG)
+         (is-binary IS_MODEXP_LOG)
+         (is-binary CMPTN)
+         (is-binary MACRO)
+         (is-binary PRPRC)
+         (is-binary (flag_sum_perspective))
+         (is-binary (flag_sum_macro))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                               ;;
+;;    2.3 Flag sum perspectives  ;;
+;;                               ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defconstraint flag-sum-perspective-padding-non-padding ()
+  (if-zero STAMP
+           (vanishes! (flag_sum_perspective))
+           (eq! (flag_sum_perspective) 1)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                               ;;
+;;    2.3 Instruction decoding   ;;
+;;                               ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defconstraint instruction-decoding-padding-non-padding ()
+  (if-zero STAMP
+           (vanishes! (flag_sum_macro))
+           (eq! (flag_sum_macro) 1)))
+
+(defconstraint instruction-decoding-exp-inst (:perspective macro-instruction)
+  (eq! EXP_INST (wght_sum_macro)))
+
 ;; deprecated
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                             ;;
