@@ -285,6 +285,11 @@
          (if-zero (expn_hi_is_0)
                   (eq! (shift computation/RAW_ACC -1) (exponent_lo)))))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                         ;;
+;;    4.5 Justify          ;;
+;;        hub prediction   ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defconstraint justify-hub-prediction-exp-log (:perspective macro-instruction :guard IS_EXP_LOG)
   (begin (if-zero (expn_hi_is_0)
                   (eq! (dyn_cost)
