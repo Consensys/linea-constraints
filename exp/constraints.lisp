@@ -172,6 +172,36 @@
 (defconstraint plateau-constraints (:perspective computation)
   (plateau-constraint CT PLT_BIT PLT_JMP))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                               ;;
+;;    3.10 Counting nonzeroness  ;;
+;;         constraints           ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; non zero bit constraint (TODO: add to stdlib.lisp)
+(defpurefun (non-zero-bit x nzb)
+  (if-zero x
+           (vanishes! nzb)
+           (eq! nzb 1)))
+
+;; counting nonzeroness constraint (TODO: add to stdlib.lisp)
+(defpurefun (counting-nonzeroness ct nzb_acc nzb)
+  (if-zero ct
+           (eq! nzb_acc nzb)
+           (eq! nzb_acc
+                (+ (prev nzb_acc) nzb))))
+
+(defconstraint filter-raw (:perspective computation)
+  (eq! TRIM_BYTE
+       (* RAW_BYTE (- 1 PLT_BIT))))
+
+(defconstraint counting-nonzeroness-trim (:perspective computation)
+  (begin (non-zero-bit TRIM_ACC TANZB)
+         (counting-nonzeroness CT TANZB_ACC TANZB)))
+
+(defconstraint counting-nonzeroness-msnzb (:perspective computation)
+  (begin (non-zero-bit ACC_MSNZB MANZB)
+         (counting-nonzeroness CT MANZB_ACC MANZB)))
+
 ;; deprecated
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                             ;;
