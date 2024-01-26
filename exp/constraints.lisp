@@ -174,13 +174,13 @@
 ;;    3.10 Counting nonzeroness  ;;
 ;;         constraints           ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; non zero bit constraint (TODO: add to stdlib.lisp)
+;; non zero bit constraint 
 (defpurefun (non-zero-bit x nzb)
   (if-zero x
            (vanishes! nzb)
            (eq! nzb 1)))
 
-;; counting nonzeroness constraint (TODO: add to stdlib.lisp)
+;; counting nonzeroness constraint 
 (defpurefun (counting-nonzeroness ct nzb_acc nzb)
   (if-zero ct
            (eq! nzb_acc nzb)
@@ -267,7 +267,7 @@
 ;;    4.3 Preprocessing ;;
 ;;                      ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defconstraint p (:perspective macro-instruction :guard IS_EXP_LOG)
+(defconstraint preprocessing-1-exp-log (:perspective macro-instruction :guard IS_EXP_LOG)
   (callToISZERO 1 0 (exponent_hi)))
 
 (defun (expn_hi_is_0)
@@ -298,5 +298,39 @@
          (if-not-zero (expn_hi_is_0)
                       (eq! (dyn_cost)
                            (* G_EXPBYTES (shift computation/TANZB_ACC -1))))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;
+;;                    ;;
+;;    4 MODEXP_LOG    ;;
+;;                    ;;
+;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;
+;;                    ;;
+;;    4.2 Shorthands  ;;
+;;                    ;;
+;;;;;;;;;;;;;;;;;;;;;;;;
+(defun (raw_lead_hi)
+  [macro-instruction/DATA 1])
+
+(defun (raw_lead_lo)
+  [macro-instruction/DATA 2])
+
+(defun (cds_cutoff)
+  [macro-instruction/DATA 3])
+
+(defun (ebs_cutoff)
+  [macro-instruction/DATA 4])
+
+(defun (lead_log)
+  [macro-instruction/DATA 5])
+
+(defun (trim_acc)
+  (shift computation/TRIM_ACC -1))
+
+(defun (used_bytes)
+  (shift computation/TANZB_ACC -2))
+
+(defun (used_bits)
+  (shift computation/MANZB_ACC -2))
 
 
