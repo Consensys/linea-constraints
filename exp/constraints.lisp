@@ -2,14 +2,17 @@
 
 (defconst 
   G_EXPBYTES              50
-  EXP_EXPLOG              1
-  EXP_MODEXPLOG           2
+  EXP_EXPLOG              1 ;; ?
+  EXP_MODEXPLOG           2 ;; ?
   MAX_CT_CMPTN_EXP_LOG    15
   MAX_CT_MACRO_EXP_LOG    0
   MAX_CT_PRPRC_EXP_LOG    0
   MAX_CT_CMPTN_MODEXP_LOG 15
   MAX_CT_MACRO_MODEXP_LOG 0
-  MAX_CT_PRPRC_MODEXP_LOG 3) ;; decide values
+  MAX_CT_PRPRC_MODEXP_LOG 3
+  LT                      0x10
+  EQ                      0x14
+  ISZERO                  0x15)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                             ;;
@@ -210,5 +213,34 @@
              (eq! MSNZB TRIM_BYTE))
          (if (and (neq CT 0) (eq TANZB_ACC 0))
              (vanishes! MSNZB))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                    ;;
+;;    3.12 Word comparisons utilities ;;
+;;                                    ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun (callToLT k a b c d)
+  (begin (eq! (shift WCP_FLAG k) 1)
+         (eq! (shift WCP_INST k) LT)
+         (eq! (shift WCP_ARG_1_HI k) a)
+         (eq! (shift WCP_ARG_1_LO k) b)
+         (eq! (shift WCP_ARG_2_HI k) c)
+         (eq! (shift WCP_ARG_2_LO k) d)))
+
+(defun (callToEQ k a b c d)
+  (begin (eq! (shift WCP_FLAG k) 1)
+         (eq! (shift WCP_INST k) EQ)
+         (eq! (shift WCP_ARG_1_HI k) a)
+         (eq! (shift WCP_ARG_1_LO k) b)
+         (eq! (shift WCP_ARG_2_HI k) c)
+         (eq! (shift WCP_ARG_2_LO k) d)))
+
+(defun (callToISZERO k a b)
+  (begin (eq! (shift WCP_FLAG k) 1)
+         (eq! (shift WCP_INST k) ISZERO)
+         (eq! (shift WCP_ARG_1_HI k) a)
+         (eq! (shift WCP_ARG_1_LO k) b)
+         (debug (vanishes! (shift WCP_ARG_2_HI k)))
+         (debug (vanishes! (shift WCP_ARG_2_LO k)))))
 
 
