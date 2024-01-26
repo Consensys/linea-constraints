@@ -150,7 +150,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                             ;;
-;;    3.8 Byte decomposition   ;;
+;;    3.8 Bit decomposition   ;;
 ;;        constraints          ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; bit decomposition constraint (TODO: add to stdlib.lisp)
@@ -161,7 +161,7 @@
                 (+ (* 2 (prev acc))
                    bits))))
 
-(defconstraint bit-decompositions (:perspective computation)
+(defconstraint bit-decompositions (:perspective computation :guard IS_MODEXP_LOG)
   (bit-decomposition CT ACC_MSNZB BIT_MSNZB))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -169,7 +169,7 @@
 ;;    3.9 Plateau bit          ;;
 ;;        constraints          ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defconstraint plateau-constraints (:perspective computation)
+(defconstraint plateau-constraints (:perspective computation :guard IS_MODEXP_LOG)
   (plateau-constraint CT PLT_BIT PLT_JMP))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
