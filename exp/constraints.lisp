@@ -84,11 +84,6 @@
          (counter-constancy CT MACRO)
          (counter-constancy CT PRPRC)))
 
-;; perspective constancy constraint (TODO: add to stdlib.lisp)
-(defpurefun ((perspective-constancy :@loob) PERSPECTIVE_SELECTOR X)
-  (if-not-zero (and PERSPECTIVE_SELECTOR (prev PERSPECTIVE_SELECTOR))
-               (remained-constant! X)))
-
 (defconstraint computation-constancy (:perspective computation)
   (begin (perspective-constancy CMPTN PLT_JMP)
          (perspective-constancy CMPTN MSNZB)))
@@ -119,19 +114,18 @@
 
 ;; 5
 (defconstraint unallowed-transitions ()
-  (+ (* CMPTN (next PRPRC))
-     (* MACRO
-        (+ (next MACRO) (next CMPTN)))
-     (* PRPRC (next MACRO))))
+  (vanishes! (+ (* CMPTN (next PRPRC))
+                (* MACRO
+                   (+ (next MACRO) (next CMPTN)))
+                (* PRPRC (next MACRO)))))
 
 ;; 6
 (defconstraint allowed-transitions ()
-  (if-not-zero STAMP
-               (if-eq CT CT_MAX
-                      (eq! (+ (* CMPTN (next MACRO))
-                              (* MACRO (next PRPRC))
-                              (* PRPRC (next CMPTN)))
-                           1))))
+  (if (and (neq STAMP 0) (eq CT CT_MAX))
+      (eq! (+ (* CMPTN (next MACRO))
+              (* MACRO (next PRPRC))
+              (* PRPRC (next CMPTN)))
+           1)))
 
 ;; 7
 (defconstraint instruction-counter-cycle ()
@@ -202,47 +196,19 @@
   (begin (non-zero-bit ACC_MSNZB MANZB)
          (counting-nonzeroness CT MANZB_ACC MANZB)))
 
-;; deprecated
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;                             ;;
-;;    2.1 The NZEXP column     ;;
-;;                             ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defconstraint nzexp ()
-  (if-not-zero EXPNT_HI
-               (eq! NZEXP 1)
-               (if-not-zero EXPNT_HI
-                            (eq! NZEXP 1)
-                            (vanishes! NZEXP))))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;                             ;;
-;;    2.4 PBIT and PACC        ;;
-;;        constraints          ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defconstraint pacc-pbit ()
-  (if-zero PACC
-           (vanishes! PBIT)
-           (eq! PBIT 1)))
-
-(defconstraint pbit-pacc-counting ()
-  (if-zero CT
-           (eq! PACC PBIT)
-           (eq! PACC
-                (+ (+ (prev PACC) PBIT)))))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;                               ;;
-;;    2.6 Target constraints     ;;
-;;                               ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defconstraint target-1 ()
-  (if-eq CT 15
-         (if-not-zero EXPNT_HI
-                      (begin (eq! EXPNT_HI ACC)
-                             (eq! DYNCOST
-                                  (* G_EXPBYTES (+ PACC 16))))
-                      (begin (eq! EXPNT_LO ACC)
-                             (eq! DYNCOST (* G_EXPBYTES PACC))))))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                    ;;
+;;    3.11 Most significant           ;;
+;;         non-zero byte constraints  ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defconstraint most-significant-non-zero-byte (:perspective computation :guard IS_MODEXP_LOG)
+  (begin (if (and (eq CT 0) (neq TANZB_ACC 0))
+             (eq! MSNZB TRIM_BYTE))
+         (if (and (neq CT 0)
+                  (and (neq TANZB_ACC 0)
+                       (eq (prev TANZB_ACC) 0)))
+             (eq! MSNZB TRIM_BYTE))
+         (if (and (neq CT 0) (eq TANZB_ACC 0))
+             (vanishes! MSNZB))))
 
 

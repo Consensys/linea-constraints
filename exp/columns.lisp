@@ -1,15 +1,6 @@
 (module exp)
 
 (defcolumns 
-  EXPNT_HI
-  EXPNT_LO
-  DYNCOST
-  (NZEXP :binary)
-  (BYTE :byte)
-  ACC
-  (PBIT :binary)
-  PACC
-  ;; deprecated stuff above
   (CMPTN :binary@prove)
   (MACRO :binary@prove)
   (PRPRC :binary@prove)
