@@ -245,22 +245,53 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                    ;;
-;;    3.4 EXP_LOG     ;;
+;;    4 EXP_LOG       ;;
+;;                    ;;
+;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;
+;;                    ;;
+;;    4.2 Shorthands  ;;
 ;;                    ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;
 (defun (exponent_hi)
-  [DATA 1])
+  [macro-instruction/DATA 1])
 
 (defun (exponent_lo)
-  [DATA 2])
+  [macro-instruction/DATA 2])
 
 (defun (dyn_cost)
-  [DATA 5])
+  [macro-instruction/DATA 5])
 
-(defun (expn_hi_is_0)
-  (shift WCP_RES 1))
-
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                      ;;
+;;    4.3 Preprocessing ;;
+;;                      ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defconstraint p (:perspective macro-instruction :guard IS_EXP_LOG)
   (callToISZERO 1 0 (exponent_hi)))
+
+(defun (expn_hi_is_0)
+  (shift preprocessing/WCP_RES 1))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                      ;;
+;;    4.4 Linking       ;;
+;;        constraints   ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defconstraint linking-constraints-exp-log (:perspective macro-instruction :guard IS_EXP_LOG)
+  (begin (eq! (shift computation/PLT_JMP -1) 16)
+         (if-not-zero (expn_hi_is_0)
+                      (eq! (shift computation/RAW_ACC -1) (exponent_hi)))
+         (if-zero (expn_hi_is_0)
+                  (eq! (shift computation/RAW_ACC -1) (exponent_lo)))))
+
+(defconstraint justify-hub-prediction-exp-log (:perspective macro-instruction :guard IS_EXP_LOG)
+  (begin (if-zero (expn_hi_is_0)
+                  (eq! (dyn_cost)
+                       (* G_EXPBYTES
+                          (+ (shift computation/TANZB_ACC -1) 16))))
+         (if-not-zero (expn_hi_is_0)
+                      (eq! (dyn_cost)
+                           (* G_EXPBYTES (shift computation/TANZB_ACC -1))))))
 
 
