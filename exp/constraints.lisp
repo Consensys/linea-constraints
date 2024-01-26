@@ -381,4 +381,39 @@
 (defun (trivial_trim)
   (shift preprocessing/WCP_RES 5))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                      ;;
+;;    5.4 Linking       ;;
+;;        constraints   ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defconstraint linking-constraints-modexp-log (:perspective macro-instruction :guard IS_MODEXP_LOG)
+  (begin (if-not-zero (min_cutoff_leq_16)
+                      (eq! (shift computation/RAW_ACC -1) (raw_lead_hi))
+                      (begin (if-zero (raw_hi_part_is_zero)
+                                      (eq! (shift computation/RAW_ACC -1) (raw_lead_hi))
+                                      (eq! (shift computation/RAW_ACC -1) (raw_lead_lo)))))
+         (eq! (shift computation/PLT_JMP -1)
+              (- (min_cutoff)
+                 (* (- 1 (min_cutoff_leq_16)) 16)))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                         ;;
+;;    5.5 Justify          ;;
+;;        hub prediction   ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defconstraint justify-hub-prediction-modexp-log (:perspective macro-instruction :guard IS_MODEXP_LOG)
+  (begin (if-not-zero (trivial_trim)
+                      (vanishes! (lead_log))
+                      (if-not-zero (ebs_cutoff_leq_16)
+                                   (eq! (lead_log)
+                                        (- (padded_base_2_log)
+                                           (* 8 (- 16 (ebs_cutoff)))))
+                                   (if-not-zero (raw_hi_part_is_zero)
+                                                (eq! (lead_log)
+                                                     (- (padded_base_2_log)
+                                                        (* 8 (- 32 (ebs_cutoff)))))
+                                                (eq! (lead_log)
+                                                     (+ (padded_base_2_log)
+                                                        (* 8 (- (ebs_cutoff) 16)))))))))
+
 
