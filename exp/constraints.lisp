@@ -220,27 +220,47 @@
 ;;                                    ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun (callToLT k a b c d)
-  (begin (eq! (shift WCP_FLAG k) 1)
-         (eq! (shift WCP_INST k) LT)
-         (eq! (shift WCP_ARG_1_HI k) a)
-         (eq! (shift WCP_ARG_1_LO k) b)
-         (eq! (shift WCP_ARG_2_HI k) c)
-         (eq! (shift WCP_ARG_2_LO k) d)))
+  (begin (eq! (shift preprocessing/WCP_FLAG k) 1)
+         (eq! (shift preprocessing/WCP_INST k) LT)
+         (eq! (shift preprocessing/WCP_ARG_1_HI k) a)
+         (eq! (shift preprocessing/WCP_ARG_1_LO k) b)
+         (eq! (shift preprocessing/WCP_ARG_2_HI k) c)
+         (eq! (shift preprocessing/WCP_ARG_2_LO k) d)))
 
 (defun (callToEQ k a b c d)
-  (begin (eq! (shift WCP_FLAG k) 1)
-         (eq! (shift WCP_INST k) EQ)
-         (eq! (shift WCP_ARG_1_HI k) a)
-         (eq! (shift WCP_ARG_1_LO k) b)
-         (eq! (shift WCP_ARG_2_HI k) c)
-         (eq! (shift WCP_ARG_2_LO k) d)))
+  (begin (eq! (shift preprocessing/WCP_FLAG k) 1)
+         (eq! (shift preprocessing/WCP_INST k) EQ)
+         (eq! (shift preprocessing/WCP_ARG_1_HI k) a)
+         (eq! (shift preprocessing/WCP_ARG_1_LO k) b)
+         (eq! (shift preprocessing/WCP_ARG_2_HI k) c)
+         (eq! (shift preprocessing/WCP_ARG_2_LO k) d)))
 
 (defun (callToISZERO k a b)
-  (begin (eq! (shift WCP_FLAG k) 1)
-         (eq! (shift WCP_INST k) ISZERO)
-         (eq! (shift WCP_ARG_1_HI k) a)
-         (eq! (shift WCP_ARG_1_LO k) b)
-         (debug (vanishes! (shift WCP_ARG_2_HI k)))
-         (debug (vanishes! (shift WCP_ARG_2_LO k)))))
+  (begin (eq! (shift preprocessing/WCP_FLAG k) 1)
+         (eq! (shift preprocessing/WCP_INST k) ISZERO)
+         (eq! (shift preprocessing/WCP_ARG_1_HI k) a)
+         (eq! (shift preprocessing/WCP_ARG_1_LO k) b)
+         (debug (vanishes! (shift preprocessing/WCP_ARG_2_HI k)))
+         (debug (vanishes! (shift preprocessing/WCP_ARG_2_LO k)))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;
+;;                    ;;
+;;    3.4 EXP_LOG     ;;
+;;                    ;;
+;;;;;;;;;;;;;;;;;;;;;;;;
+(defun (exponent_hi)
+  [DATA 1])
+
+(defun (exponent_lo)
+  [DATA 2])
+
+(defun (dyn_cost)
+  [DATA 5])
+
+(defun (expn_hi_is_0)
+  (shift WCP_RES 1))
+
+(defconstraint p (:perspective macro-instruction :guard IS_EXP_LOG)
+  (callToISZERO 1 0 (exponent_hi)))
 
 
