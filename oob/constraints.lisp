@@ -328,8 +328,8 @@
          (eq! (shift OUTGOING_INST k) ISZERO)
          (eq! (shift [OUTGOING_DATA 1] k) arg_1_hi)
          (eq! (shift [OUTGOING_DATA 2] k) arg_1_lo)
-         (vanishes! (shift [OUTGOING_DATA 3] k))
-         (vanishes! (shift [OUTGOING_DATA 4] k))))
+         (debug (vanishes! (shift [OUTGOING_DATA 3] k)))
+         (debug (vanishes! (shift [OUTGOING_DATA 4] k)))))
 
 (defun (callToEQ k arg_1_hi arg_1_lo arg_2_hi arg_2_lo)
   (begin (eq! (wght_lookup_sum k) 3)
