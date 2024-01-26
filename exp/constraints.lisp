@@ -164,6 +164,14 @@
 (defconstraint bit-decompositions (:perspective computation)
   (bit-decomposition CT ACC_MSNZB BIT_MSNZB))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                             ;;
+;;    3.9 Plateau bit          ;;
+;;        constraints          ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defconstraint plateau-constraints (:perspective computation)
+  (plateau-constraint CT PLT_BIT PLT_JMP))
+
 ;; deprecated
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                             ;;
