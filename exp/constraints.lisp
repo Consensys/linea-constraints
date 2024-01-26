@@ -267,6 +267,7 @@
 ;;    4.3 Preprocessing ;;
 ;;                      ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 1
 (defconstraint preprocessing-1-exp-log (:perspective macro-instruction :guard IS_EXP_LOG)
   (callToISZERO 1 0 (exponent_hi)))
 
@@ -301,12 +302,12 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                    ;;
-;;    4 MODEXP_LOG    ;;
+;;    5 MODEXP_LOG    ;;
 ;;                    ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                    ;;
-;;    4.2 Shorthands  ;;
+;;    5.2 Shorthands  ;;
 ;;                    ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;
 (defun (raw_lead_hi)
@@ -332,5 +333,52 @@
 
 (defun (used_bits)
   (shift computation/MANZB_ACC -2))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                      ;;
+;;    5.3 Preprocessing ;;
+;;                      ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 1 
+(defconstraint preprocessing-1-modexp-log (:perspective macro-instruction :guard IS_MODEXP_LOG)
+  (callToLT 1 0 (cds_cutoff) 0 (ebs_cutoff)))
+
+(defun (comp)
+  (shift preprocessing/WCP_RES 1))
+
+(defun (min_cutoff)
+  (+ (* (cds_cutoff) (comp))
+     (* (ebs_cutoff) (- 1 (comp)))))
+
+;; 2
+(defconstraint preprocessing-2-modexp-log (:perspective macro-instruction :guard IS_MODEXP_LOG)
+  (callToLT 2 0 (min_cutoff) 0 17))
+
+(defun (min_cutoff_leq_16)
+  (shift preprocessing/WCP_RES 2))
+
+;; 3
+(defconstraint preprocessing-3-modexp-log (:perspective macro-instruction :guard IS_MODEXP_LOG)
+  (callToLT 3 0 (ebs_cutoff) 0 17))
+
+(defun (ebs_cutoff_leq_16)
+  (shift preprocessing/WCP_RES 3))
+
+;; 4
+(defconstraint preprocessing-4-modexp-log (:perspective macro-instruction :guard IS_MODEXP_LOG)
+  (callToISZERO 4 0 (raw_lead_hi)))
+
+(defun (raw_hi_part_is_zero)
+  (shift preprocessing/WCP_RES 4))
+
+;; 5
+(defconstraint preprocessing-5-modexp-log (:perspective macro-instruction :guard IS_MODEXP_LOG)
+  (callToISZERO 5 0 (padded_base_2_log)))
+
+(defun (padded_base_2_log)
+  (+ (* 8 (used_bytes) (used_bits))))
+
+(defun (trivial_trim)
+  (shift preprocessing/WCP_RES 5))
 
 
