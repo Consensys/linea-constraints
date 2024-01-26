@@ -117,11 +117,28 @@
 (defconstraint maxct ()
   (eq! CT_MAX (maxct_sum)))
 
+;; 5
+(defconstraint unallowed-transitions ()
+  (+ (* CMPTN (next PRPRC))
+     (* MACRO
+        (+ (next MACRO) (next CMPTN)))
+     (* PRPRC (next MACRO))))
+
+;; 6
+(defconstraint allowed-transitions ()
+  (if-not-zero STAMP
+               (if-eq CT CT_MAX
+                      (eq! (+ (* CMPTN (next MACRO))
+                              (* MACRO (next PRPRC))
+                              (* PRPRC (next CMPTN)))
+                           1))))
+
 ;; 7
-;;(defconstraint instruction-counter-cycle ()
-;;  (if-eq-else CT CT_MAX
-;;              (eq! (next CT) 0)
-;;              (will-inc! CT)))
+(defconstraint instruction-counter-cycle ()
+  (if-eq-else CT CT_MAX
+              (eq! (next CT) 0)
+              (will-inc! CT 1)))
+
 ;; deprecated
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                             ;;
