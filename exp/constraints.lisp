@@ -139,6 +139,31 @@
               (eq! (next CT) 0)
               (will-inc! CT 1)))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                             ;;
+;;    3.7 Byte decomposition   ;;
+;;        constraints          ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defconstraint byte-decompositions (:perspective computation)
+  (begin (byte-decomposition CT RAW_ACC RAW_BYTE)
+         (byte-decomposition CT TRIM_ACC TRIM_BYTE)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                             ;;
+;;    3.8 Byte decomposition   ;;
+;;        constraints          ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; bit decomposition constraint (TODO: add to stdlib.lisp)
+(defpurefun (bit-decomposition ct acc bits)
+  (if-zero ct
+           (eq! acc bits)
+           (eq! acc
+                (+ (* 2 (prev acc))
+                   bits))))
+
+(defconstraint bit-decompositions (:perspective computation)
+  (bit-decomposition CT ACC_MSNZB BIT_MSNZB))
+
 ;; deprecated
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                             ;;
@@ -152,23 +177,6 @@
                             (eq! NZEXP 1)
                             (vanishes! NZEXP))))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;                             ;;
-;;    2.4 BYTE and ACC         ;;
-;;        constraints          ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defconstraint nzexp-byte ()
-  (if-zero NZEXP
-           (vanishes! BYTE)))
-
-(defconstraint acc-byte ()
-  (if-zero CT
-           (eq! ACC BYTE)
-           (eq! ACC
-                (+ (* 256 (prev ACC) BYTE)))))
-
-;; (defconstraint byte-decompositions ()
-;;  (byte-decomposition CT ACC BYTE))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                             ;;
 ;;    2.4 PBIT and PACC        ;;
