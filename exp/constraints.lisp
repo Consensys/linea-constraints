@@ -87,6 +87,11 @@
          (counter-constancy CT MACRO)
          (counter-constancy CT PRPRC)))
 
+;; perspective constancy constraint (TODO: in stdlib.lisp)
+(defpurefun ((perspective-constancy :@loob) PERSPECTIVE_SELECTOR X)
+  (if-not-zero (and PERSPECTIVE_SELECTOR (prev PERSPECTIVE_SELECTOR))
+               (remained-constant! X)))
+
 (defconstraint computation-constancy (:perspective computation)
   (begin (perspective-constancy CMPTN PLT_JMP)
          (perspective-constancy CMPTN MSNZB)))
