@@ -216,7 +216,7 @@
                   (and (neq TANZB_ACC 0)
                        (eq (prev TANZB_ACC) 0)))
              (eq! MSNZB TRIM_BYTE))
-         (if (and (neq CT 0) (eq TANZB_ACC 0))
+         (if (and (eq CT 15) (eq TANZB_ACC 0))
              (vanishes! MSNZB))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -276,7 +276,7 @@
 (defconstraint preprocessing-1-exp-log (:perspective macro-instruction :guard IS_EXP_LOG)
   (callToISZERO 1 0 (exponent_hi)))
 
-(defun (expn_hi_is_0)
+(defun (expn_hi_is_zero)
   (shift preprocessing/WCP_RES 1))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -286,9 +286,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defconstraint linking-constraints-exp-log (:perspective macro-instruction :guard IS_EXP_LOG)
   (begin (eq! (shift computation/PLT_JMP -1) 16)
-         (if-not-zero (expn_hi_is_0)
+         (if-not-zero (expn_hi_is_zero)
                       (eq! (shift computation/RAW_ACC -1) (exponent_hi)))
-         (if-zero (expn_hi_is_0)
+         (if-zero (expn_hi_is_zero)
                   (eq! (shift computation/RAW_ACC -1) (exponent_lo)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -297,11 +297,11 @@
 ;;        hub prediction   ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defconstraint justify-hub-prediction-exp-log (:perspective macro-instruction :guard IS_EXP_LOG)
-  (begin (if-zero (expn_hi_is_0)
+  (begin (if-zero (expn_hi_is_zero)
                   (eq! (dyn_cost)
                        (* G_EXPBYTES
                           (+ (shift computation/TANZB_ACC -1) 16))))
-         (if-not-zero (expn_hi_is_0)
+         (if-not-zero (expn_hi_is_zero)
                       (eq! (dyn_cost)
                            (* G_EXPBYTES (shift computation/TANZB_ACC -1))))))
 
