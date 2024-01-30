@@ -1,0 +1,60 @@
+(module oob)
+
+(defconst 
+  OOB_INST_jump              0x56
+  OOB_INST_jumpi             0x57
+  OOB_INST_rdc               0x3E
+  OOB_INST_cdl               0x35
+  OOB_INST_xcall             0xCC
+  OOB_INST_call              0xCA
+  OOB_INST_create            0xCE
+  OOB_INST_sstore            0x55
+  OOB_INST_return            0xF3
+  OOB_INST_ecrecover         0xFF01
+  OOB_INST_sha2              0xFF02
+  OOB_INST_ripemd            0xFF03
+  OOB_INST_identity          0xFF04
+  OOB_INST_ecadd             0xFF06
+  OOB_INST_ecmul             0xFF07
+  OOB_INST_ecpairing         0xFF08
+  OOB_INST_blake2f_cds       0xFA09
+  OOB_INST_blake2f_params    0xFB09
+  OOB_INST_modexp_cds        0xFA05
+  OOB_INST_modexp_base       0xFB05
+  OOB_INST_modexp_exponent   0xFC05
+  OOB_INST_modexp_modulus    0xFD05
+  OOB_INST_modexp_pricing    0xFE05
+
+  CT_MAX_JUMP                0
+  CT_MAX_JUMPI               1
+  CT_MAX_RDC                 2
+  CT_MAX_CDL                 0
+  CT_MAX_XCALL               0
+  CT_MAX_CALL                2
+  CT_MAX_CREATE              2
+  CT_MAX_SSTORE              0
+  CT_MAX_RETURN              0
+  CT_MAX_PRC_ECRECOVER       2
+  CT_MAX_PRC_SHA2            3
+  CT_MAX_PRC_RIPEMD          3
+  CT_MAX_PRC_IDENTITY        3
+  CT_MAX_PRC_ECADD           2
+  CT_MAX_PRC_ECMUL           2
+  CT_MAX_PRC_ECPAIRING       4
+  CT_MAX_PRC_BLAKE2F_a       0
+  CT_MAX_PRC_BLAKE2F_b       2
+  CT_MAX_PRC_MODEXP_CDS      3
+  CT_MAX_PRC_MODEXP_BASE     3
+  CT_MAX_PRC_MODEXP_EXPONENT 2
+  CT_MAX_PRC_MODEXP_MODULUS  2
+  CT_MAX_PRC_MODEXP_PRICING  5
+
+  LT                         0x10
+  ISZERO                     0x15
+  ADD                        0x01
+  DIV                        0x04
+  MOD                        0x06
+  GT                         0x11
+  EQ                         0x14
+  G_CALLSTIPEND              2300
+  G_QUADDIVISOR              3)
