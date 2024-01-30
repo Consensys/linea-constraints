@@ -4,9 +4,9 @@
   STAMP
   CT
   CT_MAX
-  (INCOMING_DATA :array [6])
-  (OOB_EVENT :binary :array [2])
-  INCOMING_INST
+  (DATA :array [8])
+  INST
+
   (IS_JUMP :binary)
   (IS_JUMPI :binary)
   (IS_RDC :binary)
@@ -16,6 +16,7 @@
   (IS_CREATE :binary)
   (IS_SSTORE :binary)
   (IS_RETURN :binary)
+
   (PRC_ECRECOVER :binary)
   (PRC_SHA2 :binary)
   (PRC_RIPEMD :binary)
@@ -23,18 +24,20 @@
   (PRC_ECADD :binary)
   (PRC_ECMUL :binary)
   (PRC_ECPAIRING :binary)
-  (PRC_BLAKE2F_a :binary)
-  (PRC_BLAKE2F_b :binary)
-  (PRC_MODEXP_CDS :binary)
-  (PRC_MODEXP_BASE :binary)
-  (PRC_MODEXP_EXPONENT :binary)
-  (PRC_MODEXP_MODULUS :binary)
-  (PRC_MODEXP_PRICING :binary)
+  (PRC_BLAKE2F_cds :binary)
+  (PRC_BLAKE2F_params :binary)
+  (PRC_MODEXP_cds :binary)
+  (PRC_MODEXP_base :binary)
+  (PRC_MODEXP_exponent :binary)
+  (PRC_MODEXP_modulus :binary)
+  (PRC_MODEXP_pricing :binary)
+
   (WCP_FLAG :binary)
   (ADD_FLAG :binary)
   (MOD_FLAG :binary)
   (OUTGOING_INST :byte :display :opcode)
   (OUTGOING_DATA :array [4])
-  OUTGOING_RES_LO)
+  OUTGOING_RES_LO
+  )
 
 
