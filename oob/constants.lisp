@@ -20,10 +20,10 @@
   OOB_INST_blake2f_cds       0xFA09
   OOB_INST_blake2f_params    0xFB09
   OOB_INST_modexp_cds        0xFA05
-  OOB_INST_modexp_base       0xFB05
-  OOB_INST_modexp_exponent   0xFC05
-  OOB_INST_modexp_modulus    0xFD05
-  OOB_INST_modexp_pricing    0xFE05
+  OOB_INST_modexp_xbs        0xFB05
+  OOB_INST_modexp_lead       0xFC05
+  OOB_INST_modexp_pricing    0xFD05
+  OOB_INST_modexp_extract    0xFE05
 
   CT_MAX_JUMP                0
   CT_MAX_JUMPI               1
