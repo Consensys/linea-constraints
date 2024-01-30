@@ -36,7 +36,7 @@
   MACRO
 
   ;; macro-instruction-row columns
-  ((EXP_INST :byte@prove)
+  ((EXP_INST :i16)
    (DATA :i128 :array [5])))
 
 (defperspective preprocessing
