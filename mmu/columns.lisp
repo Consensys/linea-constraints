@@ -89,14 +89,14 @@
    (SBO :byte)
    (TLO :i32)
    (TBO :byte)
-   (LIMB_1 :i128)
-   (LIMB_2 :i128)
+   (LIMB :i128)
    (CN_S :i32)
    (CN_T :i32)
    (SUCCESS_BIT :binary)
    (EXO_SUM :i32)
    (PHASE :i32)
    (ID_1 :i32)
-   (ID_2 :i32)))
+   (ID_2 :i32)
+   (TOTAL_SIZE :i32)))
 
 
