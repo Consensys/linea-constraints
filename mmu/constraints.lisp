@@ -129,4 +129,12 @@
      (* MMU_INST_MODEXP_DATA IS_MODEXP_DATA)
      (* MMU_INST_BLAKE_PARAM IS_BLAKE_PARAM)))
 
+(defconstraint inst-flag-is-one ()
+  (if-zero STAMP
+           (vanishes! (inst-flag-sum))
+           (eq! (inst-flag-sum) 1)))
+
+(defconstraint set-inst-flag (:guard MACRO)
+  (eq! (weight-flag-sum) macro/INST))
+
 
