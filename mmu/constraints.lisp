@@ -92,8 +92,7 @@
 (defconstraint stamp-constancies ()
   (begin (for i [5] (stamp-constant [OUT 1]))
          (for i [5] (stamp-constant [BIN 1]))
-         (stamp-constant (weight-flag-sum))
-         (stamp-constant IS_ANY_TO_RAM_WITH_PADDING_SOME_DATA)))
+         (stamp-constant (bin-flag-sum))))
 
 (defun (micro-instruction-writing-constant X)
   (if-eq MICRO 1
@@ -112,6 +111,21 @@
 ;;
 ;; Instruction Decoding
 ;;
+(defun (bin-flag-sum)
+  (+ (* 1 IS_MLOAD)
+     (* 2 IS_MSTORE)
+     (* 3 IS_MSTORE8)
+     (* 4 IS_INVALID_CODE_PREFIX)
+     (* 5 IS_RIGHT_PADDED_WORD_EXTRACTION)
+     (* 6 IS_RAM_TO_EXO_WITH_PADDING)
+     (* 7 IS_EXO_TO_RAM_TRANSPLANTS)
+     (* 8 IS_RAM_TO_RAM_SANS_PADDING)
+     (* 9 IS_ANY_TO_RAM_WITH_PADDING_SOME_DATA)
+     (* 10 IS_ANY_TO_RAM_WITH_PADDING_PURE_PADDING)
+     (* 11 IS_MODEXP_ZERO)
+     (* 12 IS_MODEXP_DATA)
+     (* 13 IS_BLAKE_PARAM)))
+
 (defun (is-any-to-ram-with-padding)
   (+ IS_ANY_TO_RAM_WITH_PADDING_SOME_DATA IS_ANY_TO_RAM_WITH_PADDING_PURE_PADDING))
 
@@ -206,5 +220,25 @@
 (defconstraint is-rz-last-row (:guard RZ_LAST)
   (begin (eq! (shift TOTRZ -2) 2)
          (vanishes! TOTRZ)))
+
+;;
+;; Setting nb of preprocessing rows
+;;
+(defconstraint set-prprc-ct-init (:guard MACRO)
+  (will-eq! prprc/CT
+            (+ (* MMU_INST_NB_PP_ROWS_MLOAD IS_MLOAD)
+               (* MMU_INST_NB_PP_ROWS_MSTORE IS_MSTORE)
+               (* MMU_INST_NB_PP_ROWS_MSTORE8 IS_MSTORE8)
+               (* MMU_INST_NB_PP_ROWS_INVALID_CODE_PREFIX IS_INVALID_CODE_PREFIX)
+               (* MMU_INST_NB_PP_ROWS_RIGHT_PADDED_WORD_EXTRACTION IS_RIGHT_PADDED_WORD_EXTRACTION)
+               (* MMU_INST_NB_PP_ROWS_RAM_TO_EXO_WITH_PADDING IS_RAM_TO_EXO_WITH_PADDING)
+               (* MMU_INST_NB_PP_ROWS_EXO_TO_RAM_TRANSPLANTS IS_EXO_TO_RAM_TRANSPLANTS)
+               (* MMU_INST_NB_PP_ROWS_RAM_TO_RAM_SANS_PADDING IS_RAM_TO_RAM_SANS_PADDING)
+               (* MMU_INST_NB_PP_ROWS_ANY_TO_RAM_WITH_PADDING_SOME_DATA IS_ANY_TO_RAM_WITH_PADDING_SOME_DATA)
+               (* MMU_INST_NB_PP_ROWS_ANY_TO_RAM_WITH_PADDING_PURE_PADDING
+                  IS_ANY_TO_RAM_WITH_PADDING_PURE_PADDING)
+               (* MMU_INST_NB_PP_ROWS_MODEXP_ZERO IS_MODEXP_ZERO)
+               (* MMU_INST_NB_PP_ROWS_MODEXP_DATA IS_MODEXP_DATA)
+               (* MMU_INST_NB_PP_ROWS_BLAKE_PARAM IS_BLAKE_PARAM))))
 
 
