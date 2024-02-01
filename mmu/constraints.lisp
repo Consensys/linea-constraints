@@ -570,9 +570,7 @@
 ;; TODO finish microinstruction writing
 
 (defconstraint inst-flag-is-one ()
-  (if-zero STAMP
-           (vanishes! (inst-flag-sum))
-           (eq! (inst-flag-sum) 1)))
+  (eq! (inst-flag-sum) (flag-sum)))
 
 (defconstraint set-inst-flag (:guard MACRO)
   (eq! (weight-flag-sum) macro/INST))
