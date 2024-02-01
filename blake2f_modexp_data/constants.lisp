@@ -1,4 +1,4 @@
-(module modexpdata)
+(module blake2f_modexp_data)
 
 (defconst 
   PHASE_BASE     1
