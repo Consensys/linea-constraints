@@ -95,6 +95,20 @@
          (stamp-constant (weight-flag-sum))
          (stamp-constant IS_ANY_TO_RAM_WITH_PADDING_SOME_DATA)))
 
+(defun (micro-instruction-writing-constant X)
+  (if-eq MICRO 1
+         (if-eq (prev MICRO) 1 (remained-constant! X))))
+
+(defconstraint mmio-row-constancies ()
+  (begin (micro-instruction-writing-constant micro/CN_S)
+         (micro-instruction-writing-constant micro/CN_T)
+         (micro-instruction-writing-constant micro/SUCCESS_BIT)
+         (micro-instruction-writing-constant micro/EXO_SUM)
+         (micro-instruction-writing-constant micro/PHASE)
+         (micro-instruction-writing-constant micro/ID_1)
+         (micro-instruction-writing-constant micro/ID_2)
+         (micro-instruction-writing-constant micro/TOTAL_SIZE)))
+
 ;;
 ;; Instruction Decoding
 ;;
@@ -134,5 +148,63 @@
 
 (defconstraint set-inst-flag (:guard MACRO)
   (eq! (weight-flag-sum) macro/INST))
+
+;;
+;; Micro Instruction writing row types
+;;
+(defun (ntrv-row)
+  (+ NT_ONLY NT_FIRST NT_MDDL NT_LAST))
+
+(defun (rzro-row)
+  (+ RZ_ONLY RZ_FIRST RZ_MDDL RZ_LAST))
+
+(defun (zero-row)
+  (+ LZRO (rzro-row)))
+
+(defconstraint sum-row-flag ()
+  (eq! (+ LZRO (ntrv-row) (rzro-row)) MICRO))
+
+(defconstraint left-zero-decrements ()
+  (if-eq LZRO 1 (did-dec! TOTLZ 1)))
+
+(defconstraint nt-decrements ()
+  (if-eq (ntrv-row) 1 (did-dec! TOTNT 1)))
+
+(defconstraint right-zero-decrements ()
+  (if-eq (rzro-row) 1 (did-dec! TOTRZ 1)))
+
+(defconstraint is-nt-only-row (:guard NT_ONLY)
+  (begin (eq! (shift TOTNT -2) 1)
+         (vanishes! TOTNT)))
+
+(defconstraint is-nt-first-row (:guard NT_FIRST)
+  (begin (eq! (shift TOTNT -2) (prev TOTNT))
+         (did-dec! TOTNT 1)
+         (eq! (~ TOTNT) 1)))
+
+(defconstraint is-nt-middle-row (:guard NT_MDDL)
+  (begin (eq! (prev (ntrv-row)) 1)
+         (eq! (~ TOTNT) 1)))
+
+(defconstraint is-nt-last-row (:guard NT_LAST)
+  (begin (eq! (shift TOTNT -2) 2)
+         (vanishes! TOTNT)))
+
+(defconstraint is-rz-only-row (:guard RZ_ONLY)
+  (begin (eq! (shift TOTRZ -2) 1)
+         (vanishes! TOTRZ)))
+
+(defconstraint is-rz-first-row (:guard RZ_FIRST)
+  (begin (eq! (shift TOTRZ -2) (prev TOTRZ))
+         (did-dec! TOTRZ 1)
+         (eq! (~ TOTRZ) 1)))
+
+(defconstraint is-rz-middle-row (:guard RZ_MDDL)
+  (begin (eq! (prev (rzro-row)) 1)
+         (eq! (~ TOTRZ) 1)))
+
+(defconstraint is-rz-last-row (:guard RZ_LAST)
+  (begin (eq! (shift TOTRZ -2) 2)
+         (vanishes! TOTRZ)))
 
 
