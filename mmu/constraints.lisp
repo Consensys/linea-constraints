@@ -582,7 +582,6 @@
                 4)))
 
 ;; TODO finish microinstruction writing
-
 (defconstraint inst-flag-is-one ()
   (eq! (inst-flag-sum) (flag-sum)))
 
@@ -646,5 +645,25 @@
 (defconstraint is-rz-last-row (:guard RZ_LAST)
   (begin (eq! (shift TOTRZ -2) 2)
          (vanishes! TOTRZ)))
+
+;;
+;; Setting nb of preprocessing rows
+;;
+(defconstraint set-prprc-ct-init (:guard MACRO)
+  (will-eq! prprc/CT
+            (+ (* MMU_INST_NB_PP_ROWS_MLOAD IS_MLOAD)
+               (* MMU_INST_NB_PP_ROWS_MSTORE IS_MSTORE)
+               (* MMU_INST_NB_PP_ROWS_MSTORE8 IS_MSTORE8)
+               (* MMU_INST_NB_PP_ROWS_INVALID_CODE_PREFIX IS_INVALID_CODE_PREFIX)
+               (* MMU_INST_NB_PP_ROWS_RIGHT_PADDED_WORD_EXTRACTION IS_RIGHT_PADDED_WORD_EXTRACTION)
+               (* MMU_INST_NB_PP_ROWS_RAM_TO_EXO_WITH_PADDING IS_RAM_TO_EXO_WITH_PADDING)
+               (* MMU_INST_NB_PP_ROWS_EXO_TO_RAM_TRANSPLANTS IS_EXO_TO_RAM_TRANSPLANTS)
+               (* MMU_INST_NB_PP_ROWS_RAM_TO_RAM_SANS_PADDING IS_RAM_TO_RAM_SANS_PADDING)
+               (* MMU_INST_NB_PP_ROWS_ANY_TO_RAM_WITH_PADDING_SOME_DATA IS_ANY_TO_RAM_WITH_PADDING_SOME_DATA)
+               (* MMU_INST_NB_PP_ROWS_ANY_TO_RAM_WITH_PADDING_PURE_PADDING
+                  IS_ANY_TO_RAM_WITH_PADDING_PURE_PADDING)
+               (* MMU_INST_NB_PP_ROWS_MODEXP_ZERO IS_MODEXP_ZERO)
+               (* MMU_INST_NB_PP_ROWS_MODEXP_DATA IS_MODEXP_DATA)
+               (* MMU_INST_NB_PP_ROWS_BLAKE_PARAM IS_BLAKE_PARAM))))
 
 
