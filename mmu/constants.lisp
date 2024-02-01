@@ -4,8 +4,8 @@
   ;;
   ;;MMU Instructions
   ;;
-  MMU_INST_MLOAD                                           0x51
-  MMU_INST_MSTORE                                          0x52
+  MMU_INST_MLOAD                                           0xfe01
+  MMU_INST_MSTORE                                          0xfe02
   MMU_INST_MSTORE8                                         0x53
   MMU_INST_INVALID_CODE_PREFIX                             0xfe00
   MMU_INST_RIGHT_PADDED_WORD_EXTRACTION                    0xfe10
@@ -78,7 +78,11 @@
   MMIO_INST_RAM_TO_RAM_SLIDE_OVERLAPPING_CHUNK             0xff52
   ;RAM
   MMIO_INST_RAM_EXCISION                                   0xff60
-  MMIO_INST_RAM_LIMB_VANISHES                              0xff61)
+  MMIO_INST_RAM_LIMB_VANISHES                              0xff61
+  ;;
+  ;; Misc constant
+  ;;
+  LLARGE                                                   16)
 
 ;; OLD MMIO INST, TO DELETE
 ;;
