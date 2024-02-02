@@ -674,7 +674,7 @@
 
 (defun (callToLt arg1hi arg1lo arg2hi arg2lo)
   (begin (eq! prprc/WCP_FLAG 1)
-         (eq! prpprc/WCP_INST LT)
+         (eq! prprc/WCP_INST LT)
          (eq! prprc/WCP_ARG_1_HI arg1hi)
          (eq! prprc/WCP_ARG_1_LO arg1lo)
          (eq! prprc/WCP_ARG_2_HI arg2hi)
@@ -682,7 +682,7 @@
 
 (defun (callToEq arg1hi arg1lo arg2hi arg2lo)
   (begin (eq! prprc/WCP_FLAG 1)
-         (eq! prpprc/WCP_INST EQ_)
+         (eq! prprc/WCP_INST EQ_)
          (eq! prprc/WCP_ARG_1_HI arg1hi)
          (eq! prprc/WCP_ARG_1_LO arg1lo)
          (eq! prprc/WCP_ARG_2_HI arg2hi)
@@ -735,7 +735,7 @@
          (eq! (shift micro/SLO MMU_INST_NB_PP_ROWS_MLOAD_PO) (mload-slo))
          (eq! (shift micro/SBO MMU_INST_NB_PP_ROWS_MLOAD_PO) (mload-sbo))
          (eq! (shift micro/LIMB MMU_INST_NB_PP_ROWS_MLOAD_PO) macro/LIMB_1)
-         ;; setting first mmio inst
+         ;; setting second mmio inst
          (if-zero (mload-aligned)
                   (eq! (shift micro/INST MMU_INST_NB_PP_ROWS_MLOAD_PT) MMIO_INST_RAM_TO_LIMB_TRANSPLANT)
                   (eq! (shift micro/INST MMU_INST_NB_PP_ROWS_MLOAD_PT) MMIO_INST_PADDED_LIMB_FROM_TWO_RAM))
@@ -764,20 +764,187 @@
          (next (callToEuc macro/TGT_OFFSET_LO LLARGE))
          (next (callToIszero 0 (mstore-tbo)))
          ;;setting mmio constant values
-         (eq! (shift micro/CN_S MMU_INST_NB_PP_ROWS_MSTORE_PO) macro/TGT_ID)
+         (eq! (shift micro/CN_T MMU_INST_NB_PP_ROWS_MSTORE_PO) macro/TGT_ID)
          ;; setting first mmio inst
          (if-zero (mstore-aligned)
                   (eq! (shift micro/INST MMU_INST_NB_PP_ROWS_MSTORE_PO) MMIO_INST_LIMB_TO_RAM_OVERLAP)
                   (eq! (shift micro/INST MMU_INST_NB_PP_ROWS_MSTORE_PO) MMIO_INST_LIMB_TO_RAM_TRANSPLANT))
-         (eq! (shift micro/SLO MMU_INST_NB_PP_ROWS_MSTORE_PO) (mstore-tlo))
-         (eq! (shift micro/SBO MMU_INST_NB_PP_ROWS_MSTORE_PO) (mstore-tbo))
+         (eq! (shift micro/TLO MMU_INST_NB_PP_ROWS_MSTORE_PO) (mstore-tlo))
+         (eq! (shift micro/TBO MMU_INST_NB_PP_ROWS_MSTORE_PO) (mstore-tbo))
          (eq! (shift micro/LIMB MMU_INST_NB_PP_ROWS_MSTORE_PO) macro/LIMB_1)
-         ;; setting first mmio inst
+         ;; setting second mmio inst
          (if-zero (mstore-aligned)
                   (eq! (shift micro/INST MMU_INST_NB_PP_ROWS_MSTORE_PT) MMIO_INST_LIMB_TO_RAM_OVERLAP)
                   (eq! (shift micro/INST MMU_INST_NB_PP_ROWS_MSTORE_PT) MMIO_INST_LIMB_TO_RAM_TRANSPLANT))
-         (eq! (shift micro/SLO MMU_INST_NB_PP_ROWS_MSTORE_PT) (+ (mstore-tlo) 1))
-         (eq! (shift micro/SBO MMU_INST_NB_PP_ROWS_MSTORE_PT) (mstore-tbo))
+         (eq! (shift micro/TLO MMU_INST_NB_PP_ROWS_MSTORE_PT) (+ (mstore-tlo) 1))
+         (eq! (shift micro/TBO MMU_INST_NB_PP_ROWS_MSTORE_PT) (mstore-tbo))
          (eq! (shift micro/LIMB MMU_INST_NB_PP_ROWS_MSTORE_PT) macro/LIMB_2)))
+
+;;
+;; MSTORE8
+;;
+(defun (mstore8-tlo)
+  (next prprc/EUC_QUOT))
+
+(defun (mstore8-tbo)
+  (next prprc/EUC_REM))
+
+(defconstraint mstore8-pre-processing (:guard (* MACRO IS_MSTORE8))
+  (begin  ;; setting tot nb of mmio inst
+         (eq! TOTNT 1)
+         (vanishes! TOTLZ)
+         (vanishes! TOTRZ)
+         ;; setting prprc row n°1
+         (next (callToEuc macro/TGT_OFFSET_LO LLARGE))
+         ;; setting first mmio inst
+         (eq! (shift micro/INST MMU_INST_NB_PP_ROWS_MSTORE8_PO) MMIO_INST_LIMB_TO_RAM_WRITE_LSB)
+         (eq! (shift micro/TLO MMU_INST_NB_PP_ROWS_MSTORE8_PO) (mstore8-tlo))
+         (eq! (shift micro/TBO MMU_INST_NB_PP_ROWS_MSTORE8_PO) (mstore8-tbo))
+         (eq! (shift micro/LIMB MMU_INST_NB_PP_ROWS_MSTORE8_PO) macro/LIMB_2)
+         (eq! (shift micro/CN_T MMU_INST_NB_PP_ROWS_MSTORE8_PO) macro/TGT_ID)))
+
+;;
+;; INVALID CODE PREFIX
+;;
+(defun (invalid-code-prefix-slo)
+  (next prprc/EUC_QUOT))
+
+(defun (invalid-code-prefix-sbo)
+  (next prprc/EUC_REM))
+
+(defconstraint invalid-code-prefix-pre-processing (:guard (* MACRO IS_INVALID_CODE_PREFIX))
+  (begin  ;; setting tot nb of mmio inst
+         (eq! TOTNT 1)
+         (vanishes! TOTLZ)
+         (vanishes! TOTRZ)
+         ;; setting prprc row n°1
+         (next (callToEuc macro/SRC_OFFSET_LO LLARGE))
+         (next (callToEq 0 (shift micro/LIMB 2) 0 INVALID_CODE_PREFIX_VALUE))
+         ;; setting the success bit
+         (eq! macro/SUCCESS_BIT
+              (- 1 (next prprc/WCP_RES)))
+         ;; setting first mmio inst
+         (eq! (shift micro/INST MMU_INST_NB_PP_ROWS_INVALID_CODE_PREFIX_PO)
+              MMIO_INST_PADDED_LIMB_FROM_ONE_RAM)
+         (eq! (shift micro/SIZE MMU_INST_NB_PP_ROWS_INVALID_CODE_PREFIX_PO) 1)
+         (eq! (shift micro/SLO MMU_INST_NB_PP_ROWS_INVALID_CODE_PREFIX_PO) (invalid-code-prefix-slo))
+         (eq! (shift micro/SBO MMU_INST_NB_PP_ROWS_INVALID_CODE_PREFIX_PO) (invalid-code-prefix-sbo))
+         (eq! (shift micro/TBO MMU_INST_NB_PP_ROWS_INVALID_CODE_PREFIX_PO) LLARGEMO)
+         (eq! (shift micro/CN_S MMU_INST_NB_PP_ROWS_INVALID_CODE_PREFIX_PO) macro/SRC_ID)))
+
+;;
+;; RIGHT PADDED WORD EXTRACTION
+;;
+(defun (right-pad-word-extract-second-limb-padded)
+  (- 1 (next prprc/WCP_RES)))
+
+(defun (right-pad-word-extract-extract-size)
+  (+ (* (right-pad-word-extract-second-limb-padded) (- macro/REF_SIZE macro/SRC_OFFSET_LO))
+     (* (- 1 (right-pad-word-extract-second-limb-padded)) WORD_SIZE)))
+
+(defun (right-pad-word-extract-first-limb-padded)
+  (shift prprc/WCP_RES 2))
+
+(defun (right-pad-word-extract-second-limb-byte-size)
+  (+ (* (- 1 (right-pad-word-extract-second-limb-padded)) LLARGE)
+     (* (right-pad-word-extract-second-limb-padded)
+        (+ (* (- 1 (right-pad-word-extract-first-limb-padded))
+              (- (right-pad-word-extract-extract-size) LLARGE))
+           (* (right-pad-word-extract-first-limb-padded) 0)))))
+
+(defun (right-pad-word-extract-first-limb-byte-size)
+  (+ (* (- 1 (right-pad-word-extract-first-limb-padded)) LLARGE)
+     (* (right-pad-word-extract-first-limb-padded) (right-pad-word-extract-extract-size))))
+
+(defun (right-pad-word-extract-first-limb-is-full)
+  (shift prprc/EUC_QUOT 2))
+
+(defun (right-pad-word-extract-aligned)
+  (next prprc/WCP_RES))
+
+(defun (right-pad-word-extract-slo)
+  (shift prprc/EUC_QUOT 3))
+
+(defun (right-pad-word-extract-sbo)
+  (shift prprc/EUC_REM 3))
+
+(defun (right-pad-word-extract-first-limb-single-source)
+  (shift prprc/WCP_RES 3))
+
+(defun (right-pad-word-extract-second-limb-single-source)
+  (shift prprc/WCP_RES 4))
+
+(defun (right-pad-word-extract-second-limb-void)
+  (shift prprc/WCP_RES 5))
+
+(defconstraint right-pad-word-extract-pre-processing (:guard (* MACRO IS_RIGHT_PADDED_WORD_EXTRACTION))
+  (begin  ;; setting tot nb of mmio inst
+         (eq! TOTNT 2)
+         (vanishes! TOTLZ)
+         (vanishes! TOTRZ)
+         ;; setting prprc row n°1
+         (next (callToLt 0 (+ macro/SRC_OFFSET_LO WORD_SIZE) 0 macro/REF_SIZE))
+         ;; setting prprc row n°2
+         (shift (callToLt 0 (right-pad-word-extract-extract-size) 0 LLARGE) 2)
+         (shift (callToEuc (right-pad-word-extract-first-limb-byte-size) LLARGE) 2)
+         ;; setting prprc row n°3
+         (shift (callToEuc (+ macro/SRC_OFFSET_LO macro/REF_OFFSET) LLARGE)
+                3)
+         (shift (callToLt 0
+                          (+ (right-pad-word-extract-sbo) (right-pad-word-extract-first-limb-byte-size))
+                          0
+                          LLARGEPO)
+                3)
+         ;; setting prprc row n°4
+         (shift (callToLt 0
+                          (+ (right-pad-word-extract-sbo) (right-pad-word-extract-second-limb-byte-size))
+                          0
+                          LLARGEPO)
+                4)
+         ;; setting prprc row n°5
+         (shift (callToIszero 0 (right-pad-word-extract-second-limb-byte-size)) 5)
+         ;;setting mmio constant values
+         (eq! (shift micro/CN_S MMU_INST_NB_PP_ROWS_RIGHT_PADDED_WORD_EXTRACTION_PO) macro/SRC_ID)
+         (vanishes! (shift micro/EXO_SUM MMU_INST_NB_PP_ROWS_RIGHT_PADDED_WORD_EXTRACTION_PO))
+         ;; setting first mmio inst
+         (if-zero (right-pad-word-extract-first-limb-single-source)
+                  (eq! (shift micro/INST MMU_INST_NB_PP_ROWS_RIGHT_PADDED_WORD_EXTRACTION_PO)
+                       MMIO_INST_PADDED_LIMB_FROM_TWO_RAM)
+                  (if-zero (right-pad-word-extract-first-limb-is-full)
+                           (eq! (shift micro/INST MMU_INST_NB_PP_ROWS_RIGHT_PADDED_WORD_EXTRACTION_PO)
+                                MMIO_INST_PADDED_LIMB_FROM_ONE_RAM)
+                           (eq! (shift micro/INST MMU_INST_NB_PP_ROWS_RIGHT_PADDED_WORD_EXTRACTION_PO)
+                                MMIO_INST_RAM_TO_LIMB_TRANSPLANT)))
+         (eq! (shift micro/SIZE MMU_INST_NB_PP_ROWS_RIGHT_PADDED_WORD_EXTRACTION_PO)
+              (right-pad-word-extract-first-limb-byte-size))
+         (eq! (shift micro/SLO MMU_INST_NB_PP_ROWS_RIGHT_PADDED_WORD_EXTRACTION_PO)
+              (right-pad-word-extract-slo))
+         (eq! (shift micro/SBO MMU_INST_NB_PP_ROWS_RIGHT_PADDED_WORD_EXTRACTION_PO)
+              (right-pad-word-extract-sbo))
+         (vanishes! (shift micro/TBO MMU_INST_NB_PP_ROWS_RIGHT_PADDED_WORD_EXTRACTION_PO))
+         (eq! (shift micro/LIMB MMU_INST_NB_PP_ROWS_RIGHT_PADDED_WORD_EXTRACTION_PO) macro/LIMB_1)
+         ;; setting second mmio inst
+         (if-zero (right-pad-word-extract-second-limb-void)
+                  (if-zero (right-pad-word-extract-second-limb-single-source)
+                           (eq! (shift micro/INST MMU_INST_NB_PP_ROWS_RIGHT_PADDED_WORD_EXTRACTION_PT)
+                                MMIO_INST_PADDED_LIMB_FROM_TWO_RAM)
+                           (if-zero (right-pad-word-extract-second-limb-padded)
+                                    (eq! (shift micro/INST
+                                                MMU_INST_NB_PP_ROWS_RIGHT_PADDED_WORD_EXTRACTION_PT)
+                                         MMIO_INST_RAM_TO_LIMB_TRANSPLANT)
+                                    (eq! (shift micro/INST
+                                                MMU_INST_NB_PP_ROWS_RIGHT_PADDED_WORD_EXTRACTION_PT)
+                                         MMIO_INST_PADDED_LIMB_FROM_ONE_RAM)))
+                  (begin (eq! (shift micro/INST MMU_INST_NB_PP_ROWS_RIGHT_PADDED_WORD_EXTRACTION_PT)
+                              MMIO_INST_EXO_LIMB_VANISHES)
+                         (vanishes! macro/LIMB_2)))
+         (eq! (shift micro/SIZE MMU_INST_NB_PP_ROWS_RIGHT_PADDED_WORD_EXTRACTION_PT)
+              (right-pad-word-extract-second-limb-byte-size))
+         (eq! (shift micro/SLO MMU_INST_NB_PP_ROWS_RIGHT_PADDED_WORD_EXTRACTION_PT)
+              (+ (right-pad-word-extract-slo) 1))
+         (eq! (shift micro/SBO MMU_INST_NB_PP_ROWS_RIGHT_PADDED_WORD_EXTRACTION_PT)
+              (right-pad-word-extract-sbo))
+         (vanishes! (shift micro/TBO MMU_INST_NB_PP_ROWS_RIGHT_PADDED_WORD_EXTRACTION_PT))
+         (eq! (shift micro/LIMB MMU_INST_NB_PP_ROWS_RIGHT_PADDED_WORD_EXTRACTION_PT) macro/LIMB_1)))
 
 
