@@ -617,8 +617,7 @@
          (vanishes! TOTNT)))
 
 (defconstraint is-nt-first-row (:guard NT_FIRST)
-  (begin (eq! (shift TOTNT -2) (prev TOTNT))
-         (did-dec! TOTNT 1)
+  (begin (vanishes! (prev (ntrv-row)))
          (eq! (~ TOTNT) 1)))
 
 (defconstraint is-nt-middle-row (:guard NT_MDDL)
@@ -626,16 +625,15 @@
          (eq! (~ TOTNT) 1)))
 
 (defconstraint is-nt-last-row (:guard NT_LAST)
-  (begin (eq! (shift TOTNT -2) 2)
+  (begin (eq! (prev (ntrv-row)) 1)
          (vanishes! TOTNT)))
 
 (defconstraint is-rz-only-row (:guard RZ_ONLY)
-  (begin (eq! (shift TOTRZ -2) 1)
+  (begin (vanishes! (prev (rzro-row)))
          (vanishes! TOTRZ)))
 
 (defconstraint is-rz-first-row (:guard RZ_FIRST)
-  (begin (eq! (shift TOTRZ -2) (prev TOTRZ))
-         (did-dec! TOTRZ 1)
+  (begin (vanishes! (prev (rzro-row)))
          (eq! (~ TOTRZ) 1)))
 
 (defconstraint is-rz-middle-row (:guard RZ_MDDL)
@@ -643,7 +641,7 @@
          (eq! (~ TOTRZ) 1)))
 
 (defconstraint is-rz-last-row (:guard RZ_LAST)
-  (begin (eq! (shift TOTRZ -2) 2)
+  (begin (eq! (prev (rzro-row)) 1)
          (vanishes! TOTRZ)))
 
 ;;
@@ -665,5 +663,121 @@
                (* MMU_INST_NB_PP_ROWS_MODEXP_ZERO IS_MODEXP_ZERO)
                (* MMU_INST_NB_PP_ROWS_MODEXP_DATA IS_MODEXP_DATA)
                (* MMU_INST_NB_PP_ROWS_BLAKE_PARAM IS_BLAKE_PARAM))))
+
+;;
+;; Utilities
+;;
+(defun (callToEuc dividend divisor)
+  (begin (eq! prprc/EUC_FLAG 1)
+         (eq! prprc/EUC_A dividend)
+         (eq! prprc/EUC_B divisor)))
+
+(defun (callToLt arg1hi arg1lo arg2hi arg2lo)
+  (begin (eq! prprc/WCP_FLAG 1)
+         (eq! prpprc/WCP_INST LT)
+         (eq! prprc/WCP_ARG_1_HI arg1hi)
+         (eq! prprc/WCP_ARG_1_LO arg1lo)
+         (eq! prprc/WCP_ARG_2_HI arg2hi)
+         (eq! prprc/WCP_ARG_2_LO arg2lo)))
+
+(defun (callToEq arg1hi arg1lo arg2hi arg2lo)
+  (begin (eq! prprc/WCP_FLAG 1)
+         (eq! prpprc/WCP_INST EQ_)
+         (eq! prprc/WCP_ARG_1_HI arg1hi)
+         (eq! prprc/WCP_ARG_1_LO arg1lo)
+         (eq! prprc/WCP_ARG_2_HI arg2hi)
+         (eq! prprc/WCP_ARG_2_LO arg2lo)))
+
+(defun (callToIszero arg1hi arg1lo)
+  (begin (eq! prprc/WCP_FLAG 1)
+         (eq! prprc/WCP_INST ISZERO)
+         (eq! prprc/WCP_ARG_1_HI arg1hi)
+         (eq! prprc/WCP_ARG_1_LO arg1lo)
+         (debug (vanishes! prprc/WCP_ARG_2_HI))
+         (debug (vanishes! prprc/WCP_ARG_2_LO))))
+
+(defun (stdProgression C)
+  (eq! C
+       (* (prev MICRO)
+          (+ (prev X) 1))))
+
+;;;;;;;;;;;;;;;;;;;;;;;
+;;                   ;;
+;;  MMU Instruction  ;;
+;;                   ;;
+;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; MLOAD
+;;
+(defun (mload-aligned)
+  (next prprc/WCP_RES))
+
+(defun (mload-slo)
+  (next prprc/EUC_QUOT))
+
+(defun (mload-sbo)
+  (next prprc/EUC_REM))
+
+(defconstraint mload-pre-processing (:guard (* MACRO IS_MLOAD))
+  (begin  ;; setting tot nb of mmio inst
+         (eq! TOTNT 2)
+         (vanishes! TOTLZ)
+         (vanishes! TOTRZ)
+         ;; setting prprc row n°1
+         (next (callToEuc macro/SRC_OFFSET_LO LLARGE))
+         (next (callToIszero 0 (mload-sbo)))
+         ;;setting mmio constant values
+         (eq! (shift micro/CN_S MMU_INST_NB_PP_ROWS_MLOAD_PO) macro/SRC_ID)
+         ;; setting first mmio inst
+         (if-zero (mload-aligned)
+                  (eq! (shift micro/INST MMU_INST_NB_PP_ROWS_MLOAD_PO) MMIO_INST_RAM_TO_LIMB_TRANSPLANT)
+                  (eq! (shift micro/INST MMU_INST_NB_PP_ROWS_MLOAD_PO) MMIO_INST_PADDED_LIMB_FROM_TWO_RAM))
+         (eq! (shift micro/SLO MMU_INST_NB_PP_ROWS_MLOAD_PO) (mload-slo))
+         (eq! (shift micro/SBO MMU_INST_NB_PP_ROWS_MLOAD_PO) (mload-sbo))
+         (eq! (shift micro/LIMB MMU_INST_NB_PP_ROWS_MLOAD_PO) macro/LIMB_1)
+         ;; setting first mmio inst
+         (if-zero (mload-aligned)
+                  (eq! (shift micro/INST MMU_INST_NB_PP_ROWS_MLOAD_PT) MMIO_INST_RAM_TO_LIMB_TRANSPLANT)
+                  (eq! (shift micro/INST MMU_INST_NB_PP_ROWS_MLOAD_PT) MMIO_INST_PADDED_LIMB_FROM_TWO_RAM))
+         (eq! (shift micro/SLO MMU_INST_NB_PP_ROWS_MLOAD_PT) (+ (mload-slo) 1))
+         (eq! (shift micro/SBO MMU_INST_NB_PP_ROWS_MLOAD_PT) (mload-sbo))
+         (eq! (shift micro/LIMB MMU_INST_NB_PP_ROWS_MLOAD_PT) macro/LIMB_2)))
+
+;;
+;; MSTORE
+;;
+(defun (mstore-aligned)
+  (next prprc/WCP_RES))
+
+(defun (mstore-tlo)
+  (next prprc/EUC_QUOT))
+
+(defun (mstore-tbo)
+  (next prprc/EUC_REM))
+
+(defconstraint mstore-pre-processing (:guard (* MACRO IS_MSTORE))
+  (begin  ;; setting tot nb of mmio inst
+         (eq! TOTNT 2)
+         (vanishes! TOTLZ)
+         (vanishes! TOTRZ)
+         ;; setting prprc row n°1
+         (next (callToEuc macro/TGT_OFFSET_LO LLARGE))
+         (next (callToIszero 0 (mstore-tbo)))
+         ;;setting mmio constant values
+         (eq! (shift micro/CN_S MMU_INST_NB_PP_ROWS_MSTORE_PO) macro/TGT_ID)
+         ;; setting first mmio inst
+         (if-zero (mstore-aligned)
+                  (eq! (shift micro/INST MMU_INST_NB_PP_ROWS_MSTORE_PO) MMIO_INST_LIMB_TO_RAM_OVERLAP)
+                  (eq! (shift micro/INST MMU_INST_NB_PP_ROWS_MSTORE_PO) MMIO_INST_LIMB_TO_RAM_TRANSPLANT))
+         (eq! (shift micro/SLO MMU_INST_NB_PP_ROWS_MSTORE_PO) (mstore-tlo))
+         (eq! (shift micro/SBO MMU_INST_NB_PP_ROWS_MSTORE_PO) (mstore-tbo))
+         (eq! (shift micro/LIMB MMU_INST_NB_PP_ROWS_MSTORE_PO) macro/LIMB_1)
+         ;; setting first mmio inst
+         (if-zero (mstore-aligned)
+                  (eq! (shift micro/INST MMU_INST_NB_PP_ROWS_MSTORE_PT) MMIO_INST_LIMB_TO_RAM_OVERLAP)
+                  (eq! (shift micro/INST MMU_INST_NB_PP_ROWS_MSTORE_PT) MMIO_INST_LIMB_TO_RAM_TRANSPLANT))
+         (eq! (shift micro/SLO MMU_INST_NB_PP_ROWS_MSTORE_PT) (+ (mstore-tlo) 1))
+         (eq! (shift micro/SBO MMU_INST_NB_PP_ROWS_MSTORE_PT) (mstore-tbo))
+         (eq! (shift micro/LIMB MMU_INST_NB_PP_ROWS_MSTORE_PT) macro/LIMB_2)))
 
 
