@@ -55,6 +55,7 @@
   ;;
   MMU_INST_NB_PP_ROWS_MLOAD_PT                                (+ MMU_INST_NB_PP_ROWS_MLOAD 2)
   MMU_INST_NB_PP_ROWS_MSTORE_PT                               (+ MMU_INST_NB_PP_ROWS_MSTORE 2)
+  MMU_INST_NB_PP_ROWS_RIGHT_PADDED_WORD_EXTRACTION_PT         (+ MMU_INST_NB_PP_ROWS_RIGHT_PADDED_WORD_EXTRACTION 2)
   ;;
   ;; MMU NB OF micro-processing rows
   ;;
@@ -108,7 +109,9 @@
   ISZERO                                                      21
   LLARGEMO                                                    15
   LLARGE                                                      16
-  LLARGEPO                                                    17)
+  LLARGEPO                                                    17
+  WORD_SIZE                                                   32
+  INVALID_CODE_PREFIX_VALUE                                   0xEF)
 
 ;; OLD MMIO INST, TO DELETE
 ;;
