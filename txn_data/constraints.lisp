@@ -318,7 +318,7 @@
 ;; row i + 4
 (defun (is-zero-call-data)
   (begin (eq! (shift WCP_ARG_ONE_LO 4) CALL_DATA_SIZE)
-         (eq! (shift WCP_INST 3) ISZERO)
+         (eq! (shift WCP_INST 4) ISZERO)
          (eq! TX_COPY_TXCD
               (* REQUIRES_EVM_EXECUTION
                  (- 1 (shift WCP_RES 4))))))
