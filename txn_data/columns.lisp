@@ -28,7 +28,7 @@
   (TYPE1 :binary@prove)
   (TYPE2 :binary@prove)
   (REQUIRES_EVM_EXECUTION :binary@prove)
-  (TX_COPY_TXCD :binary)
+  (COPY_TXCD_AT_INITIALISATION :binary)
   LEFTOVER_GAS
   REFUND_COUNTER
   REFUND_AMOUNT

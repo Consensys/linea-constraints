@@ -96,7 +96,7 @@
          (transaction-constant TYPE1)
          (transaction-constant TYPE2)
          (transaction-constant REQ_EVM)
-         (transaction-constant TX_COPY_TXCD)
+         (transaction-constant COPY_TXCD_AT_INITIALISATION)
          (transaction-constant LEFTOVER_GAS)
          (transaction-constant REF_CNT)
          (transaction-constant REF_AMT)
@@ -319,7 +319,7 @@
 (defun (is-zero-call-data)
   (begin (eq! (shift WCP_ARG_ONE_LO 4) CALL_DATA_SIZE)
          (eq! (shift WCP_INST 4) ISZERO)
-         (eq! TX_COPY_TXCD
+         (eq! COPY_TXCD_AT_INITIALISATION
               (* REQUIRES_EVM_EXECUTION
                  (- 1 (shift WCP_RES 4))))))
 
