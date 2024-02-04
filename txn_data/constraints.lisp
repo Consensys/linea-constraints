@@ -376,7 +376,7 @@
          ;; constraining GAS_PRICE
          (if-zero TYPE2
                   (= GAS_PRICE (gas_price))
-                  (if-zero (shift WCP_RES 6)
+                  (if-zero (shift WCP_RES 7)
                            (= GAS_PRICE (+ (max_priority_fee) BASEFEE))
                            (= GAS_PRICE (max_fee))))))
 
