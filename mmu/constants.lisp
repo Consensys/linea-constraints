@@ -17,7 +17,7 @@
   MMU_INST_ANY_TO_RAM_WITH_PADDING_PURE_PADDING               0xfe52
   MMU_INST_MODEXP_ZERO                                        0xfe60
   MMU_INST_MODEXP_DATA                                        0xfe70
-  MMU_INST_BLAKE_PARAM                                        0xfe80
+  MMU_INST_BLAKE                                              0xfe80
   ;;
   ;; MMU NB OF PP ROWS
   ;;
