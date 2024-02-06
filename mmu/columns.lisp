@@ -28,7 +28,7 @@
   (IS_ANY_TO_RAM_WITH_PADDING_PURE_PADDING :binary@prove)
   (IS_MODEXP_ZERO :binary@prove)
   (IS_MODEXP_DATA :binary@prove)
-  (IS_BLAKE_PARAM :binary@prove)
+  (IS_BLAKE :binary@prove)
   ;; USED ONLY IN MICRO ROW BUT ARE SHARED 
   (LZRO :binary@prove)
   (NT_ONLY :binary@prove)

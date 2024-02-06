@@ -124,7 +124,7 @@
      (* 10 IS_ANY_TO_RAM_WITH_PADDING_PURE_PADDING)
      (* 11 IS_MODEXP_ZERO)
      (* 12 IS_MODEXP_DATA)
-     (* 13 IS_BLAKE_PARAM)))
+     (* 13 IS_BLAKE)))
 
 (defun (is-any-to-ram-with-padding)
   (+ IS_ANY_TO_RAM_WITH_PADDING_SOME_DATA IS_ANY_TO_RAM_WITH_PADDING_PURE_PADDING))
@@ -141,7 +141,7 @@
      (is-any-to-ram-with-padding)
      IS_MODEXP_ZERO
      IS_MODEXP_DATA
-     IS_BLAKE_PARAM))
+     IS_BLAKE))
 
 (defun (weight-flag-sum)
   (+ (* MMU_INST_MLOAD IS_MLOAD)
@@ -155,7 +155,7 @@
      (* MMU_INST_ANY_TO_RAM_WITH_PADDING (is-any-to-ram-with-padding))
      (* MMU_INST_MODEXP_ZERO IS_MODEXP_ZERO)
      (* MMU_INST_MODEXP_DATA IS_MODEXP_DATA)
-     (* MMU_INST_BLAKE_PARAM IS_BLAKE_PARAM)))
+     (* MMU_INST_BLAKE IS_BLAKE)))
 
 (defconstraint inst-flag-is-one ()
   (eq! (inst-flag-sum) (flag-sum)))
@@ -237,7 +237,7 @@
                   IS_ANY_TO_RAM_WITH_PADDING_PURE_PADDING)
                (* MMU_INST_NB_PP_ROWS_MODEXP_ZERO IS_MODEXP_ZERO)
                (* MMU_INST_NB_PP_ROWS_MODEXP_DATA IS_MODEXP_DATA)
-               (* MMU_INST_NB_PP_ROWS_BLAKE_PARAM IS_BLAKE_PARAM))))
+               (* MMU_INST_NB_PP_ROWS_BLAKE IS_BLAKE))))
 
 ;;
 ;; Utilities

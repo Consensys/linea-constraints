@@ -33,7 +33,7 @@
   MMU_INST_NB_PP_ROWS_ANY_TO_RAM_WITH_PADDING_SOME_DATA       1
   MMU_INST_NB_PP_ROWS_MODEXP_ZERO                             1
   MMU_INST_NB_PP_ROWS_MODEXP_DATA                             6
-  MMU_INST_NB_PP_ROWS_BLAKE_PARAM                             2
+  MMU_INST_NB_PP_ROWS_BLAKE                                   2
   ;;
   ;; MMU NB OF PP ROWS + 1
   ;;
@@ -49,7 +49,7 @@
   MMU_INST_NB_PP_ROWS_ANY_TO_RAM_WITH_PADDING_SOME_DATA_PO    (+ MMU_INST_NB_PP_ROWS_ANY_TO_RAM_WITH_PADDING_SOME_DATA 1)
   MMU_INST_NB_PP_ROWS_MODEXP_ZERO_PO                          (+ MMU_INST_NB_PP_ROWS_MODEXP_ZERO 1)
   MMU_INST_NB_PP_ROWS_MODEXP_DATA_PO                          (+ MMU_INST_NB_PP_ROWS_MODEXP_DATA 1)
-  MMU_INST_NB_PP_ROWS_BLAKE_PARAM_PO                          (+ MMU_INST_NB_PP_ROWS_BLAKE_PARAM 1)
+  MMU_INST_NB_PP_ROWS_BLAKE_PO                                (+ MMU_INST_NB_PP_ROWS_BLAKE 1)
   ;;
   ;; MMU NB OF PP ROWS + 2
   ;;
@@ -71,7 +71,7 @@
   ;;MMU_INST_NB_MICRO_ROWS_TOT_ANY_TO_RAM_WITH_PADDING_SOME_DATA    variable
   MMU_INST_NB_MICRO_ROWS_TOT_MODEXP_ZERO                      32
   MMU_INST_NB_MICRO_ROWS_TOT_MODEXP_DATA                      32
-  MMU_INST_NB_MICRO_ROWS_TOT_BLAKE_PARAM                      2
+  MMU_INST_NB_MICRO_ROWS_TOT_BLAKE                            2
   ;;
   ;; MMIO Instructions
   ;;
