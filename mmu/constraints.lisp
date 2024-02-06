@@ -662,7 +662,7 @@
                   IS_ANY_TO_RAM_WITH_PADDING_PURE_PADDING)
                (* MMU_INST_NB_PP_ROWS_MODEXP_ZERO IS_MODEXP_ZERO)
                (* MMU_INST_NB_PP_ROWS_MODEXP_DATA IS_MODEXP_DATA)
-               (* MMU_INST_NB_PP_ROWS_BLAKE_PARAM IS_BLAKE_PARAM))))
+               (* MMU_INST_NB_PP_ROWS_BLAKE IS_BLAKE))))
 
 ;;
 ;; Utilities
