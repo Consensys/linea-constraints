@@ -79,11 +79,11 @@
   (eq! PHASE_ID
        (+ (reduce +
                   (for k [1 : 5] (* k [PHASE k])))
-          (* subPhaseIdWeightIsPrefix IS_PREFIX)
-          (* subPhaseIdWeightIsOt IS_TOPIC)
-          (* subPhaseIdWeightIsOd IS_DATA)
-          (* subPhaseIdWeightDepth DEPTH_1)
-          (* subPhaseIdWeightIndexLocal IS_TOPIC INDEX_LOCAL))))
+          (* SUBPHASE_ID_WEIGHT_IS_PREFIX IS_PREFIX)
+          (* SUBPHASE_ID_WEIGHT_IS_OT IS_TOPIC)
+          (* SUBPHASE_ID_WEIGHT_IS_OD IS_DATA)
+          (* SUBPHASE_ID_WEIGHT_DEPTH DEPTH_1)
+          (* SUBPHASE_ID_WEIGHT_INDEX_LOCAL IS_TOPIC INDEX_LOCAL))))
 
 (defconstraint initial-stamp (:domain {0})
   (begin (vanishes! ABS_TX_NUM)
