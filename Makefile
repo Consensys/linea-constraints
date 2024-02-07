@@ -47,10 +47,9 @@ PUB_DATA := $(shell find pub/ -iname '*.lisp')
 
 RLP_ADDR := rlpAddr/columns.lisp rlpAddr/constraints.lisp
 
-RLP_TXN := rlp_txn/columns.lisp rlp_txn/constraints.lisp \
-			rlp_txn/rlpTxn_into_rom.lisp
+RLP_TXN := rlp_txn
 
-RLP_TXRCPT := rlp_txrcpt/columns.lisp rlp_txrcpt/constraints.lisp			
+RLP_TXRCPT := rlp_txrcpt			
 
 ROM := rom/columns.lisp \
 	rom/constraints.lisp \

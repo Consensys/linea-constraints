@@ -94,6 +94,11 @@
 ;;    2.3.2 Global Phase Constraints    ;;
 ;;                                      ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defconstraint phase-id-to-phase-flag ()
+  (eq! PHASE_ID
+       (reduce +
+               (for k [0 : 14] (* k [PHASE k])))))
+
 ;; 2.3.2.1
 (defconstraint initial-stamp (:domain {0})
   (vanishes! ABS_TX_NUM))
@@ -101,13 +106,9 @@
 ;; 2.3.2.2
 (defconstraint ABS_TX_NUM-is-zero ()
   (if-zero ABS_TX_NUM
-           (vanishes! (reduce + (for i [0 : 14] [PHASE i])))))
-
-;; 2.3.2.3
-(defconstraint ABS_TX_NUM-is-nonzero ()
-  (if-not-zero ABS_TX_NUM
-               (eq! 1
-                    (reduce + (for i [0 : 14] [PHASE i])))))
+           (vanishes! (reduce + (for i [0 : 14] [PHASE i])))
+           (eq! 1
+                (reduce + (for i [0 : 14] [PHASE i])))))
 
 ;; 2.3.2.4
 (defconstraint ABS_TX_NUM-evolution ()
