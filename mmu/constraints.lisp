@@ -303,17 +303,20 @@
          (next (callToIszero 0 (mload-sbo)))
          ;;setting mmio constant values
          (eq! (shift micro/CN_S MMU_INST_NB_PP_ROWS_MLOAD_PO) macro/SRC_ID)
+         (vanishes! (shift micro/EXO_SUM MMU_INST_NB_PP_ROWS_MLOAD_PO))
          ;; setting first mmio inst
          (if-zero (mload-aligned)
                   (eq! (shift micro/INST MMU_INST_NB_PP_ROWS_MLOAD_PO) MMIO_INST_RAM_TO_LIMB_TRANSPLANT)
-                  (eq! (shift micro/INST MMU_INST_NB_PP_ROWS_MLOAD_PO) MMIO_INST_PADDED_LIMB_FROM_TWO_RAM))
+                  (eq! (shift micro/INST MMU_INST_NB_PP_ROWS_MLOAD_PO)
+                       MMIO_INST_PADDED_LIMB_FROM_RAM_TWO_SOURCE))
          (eq! (shift micro/SLO MMU_INST_NB_PP_ROWS_MLOAD_PO) (mload-slo))
          (eq! (shift micro/SBO MMU_INST_NB_PP_ROWS_MLOAD_PO) (mload-sbo))
          (eq! (shift micro/LIMB MMU_INST_NB_PP_ROWS_MLOAD_PO) macro/LIMB_1)
          ;; setting second mmio inst
          (if-zero (mload-aligned)
                   (eq! (shift micro/INST MMU_INST_NB_PP_ROWS_MLOAD_PT) MMIO_INST_RAM_TO_LIMB_TRANSPLANT)
-                  (eq! (shift micro/INST MMU_INST_NB_PP_ROWS_MLOAD_PT) MMIO_INST_PADDED_LIMB_FROM_TWO_RAM))
+                  (eq! (shift micro/INST MMU_INST_NB_PP_ROWS_MLOAD_PT)
+                       MMIO_INST_PADDED_LIMB_FROM_RAM_TWO_SOURCE))
          (eq! (shift micro/SLO MMU_INST_NB_PP_ROWS_MLOAD_PT) (+ (mload-slo) 1))
          (eq! (shift micro/SBO MMU_INST_NB_PP_ROWS_MLOAD_PT) (mload-sbo))
          (eq! (shift micro/LIMB MMU_INST_NB_PP_ROWS_MLOAD_PT) macro/LIMB_2)))
@@ -400,11 +403,12 @@
               (- 1 (next prprc/WCP_RES)))
          ;; setting first mmio inst
          (eq! (shift micro/INST MMU_INST_NB_PP_ROWS_INVALID_CODE_PREFIX_PO)
-              MMIO_INST_PADDED_LIMB_FROM_ONE_RAM)
+              MMIO_INST_PADDED_LIMB_FROM_RAM_ONE_SOURCE)
          (eq! (shift micro/SIZE MMU_INST_NB_PP_ROWS_INVALID_CODE_PREFIX_PO) 1)
          (eq! (shift micro/SLO MMU_INST_NB_PP_ROWS_INVALID_CODE_PREFIX_PO) (invalid-code-prefix-slo))
          (eq! (shift micro/SBO MMU_INST_NB_PP_ROWS_INVALID_CODE_PREFIX_PO) (invalid-code-prefix-sbo))
          (eq! (shift micro/TBO MMU_INST_NB_PP_ROWS_INVALID_CODE_PREFIX_PO) LLARGEMO)
+         (vanishes! (shift micro/EXO_SUM MMU_INST_NB_PP_ROWS_INVALID_CODE_PREFIX_PO))
          (eq! (shift micro/CN_S MMU_INST_NB_PP_ROWS_INVALID_CODE_PREFIX_PO) macro/SRC_ID)))
 
 ;;
@@ -484,10 +488,10 @@
          ;; setting first mmio inst
          (if-zero (right-pad-word-extract-first-limb-single-source)
                   (eq! (shift micro/INST MMU_INST_NB_PP_ROWS_RIGHT_PADDED_WORD_EXTRACTION_PO)
-                       MMIO_INST_PADDED_LIMB_FROM_TWO_RAM)
+                       MMIO_INST_PADDED_LIMB_FROM_RAM_TWO_SOURCE)
                   (if-zero (right-pad-word-extract-first-limb-is-full)
                            (eq! (shift micro/INST MMU_INST_NB_PP_ROWS_RIGHT_PADDED_WORD_EXTRACTION_PO)
-                                MMIO_INST_PADDED_LIMB_FROM_ONE_RAM)
+                                MMIO_INST_PADDED_LIMB_FROM_RAM_ONE_SOURCE)
                            (eq! (shift micro/INST MMU_INST_NB_PP_ROWS_RIGHT_PADDED_WORD_EXTRACTION_PO)
                                 MMIO_INST_RAM_TO_LIMB_TRANSPLANT)))
          (eq! (shift micro/SIZE MMU_INST_NB_PP_ROWS_RIGHT_PADDED_WORD_EXTRACTION_PO)
@@ -502,14 +506,14 @@
          (if-zero (right-pad-word-extract-second-limb-void)
                   (if-zero (right-pad-word-extract-second-limb-single-source)
                            (eq! (shift micro/INST MMU_INST_NB_PP_ROWS_RIGHT_PADDED_WORD_EXTRACTION_PT)
-                                MMIO_INST_PADDED_LIMB_FROM_TWO_RAM)
+                                MMIO_INST_PADDED_LIMB_FROM_RAM_TWO_SOURCE)
                            (if-zero (right-pad-word-extract-second-limb-padded)
                                     (eq! (shift micro/INST
                                                 MMU_INST_NB_PP_ROWS_RIGHT_PADDED_WORD_EXTRACTION_PT)
                                          MMIO_INST_RAM_TO_LIMB_TRANSPLANT)
                                     (eq! (shift micro/INST
                                                 MMU_INST_NB_PP_ROWS_RIGHT_PADDED_WORD_EXTRACTION_PT)
-                                         MMIO_INST_PADDED_LIMB_FROM_ONE_RAM)))
+                                         MMIO_INST_PADDED_LIMB_FROM_RAM_ONE_SOURCE)))
                   (begin (eq! (shift micro/INST MMU_INST_NB_PP_ROWS_RIGHT_PADDED_WORD_EXTRACTION_PT)
                               MMIO_INST_EXO_LIMB_VANISHES)
                          (vanishes! macro/LIMB_2)))

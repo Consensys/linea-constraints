@@ -84,20 +84,22 @@
   MMIO_INST_PADDED_EXO_FROM_TWO_RAM                           0xff13
   ;;Exo to Ram
   MMIO_INST_EXO_TO_RAM_LIMB_TRANSPLANT                        0xff20
-  MMIO_INST_EXO_TO_RAM_SLIDE_CHUNK                            0xff21
-  MMIO_INST_EXO_TO_RAM_SLIDE_OVERLAPPING_CHUNK                0xff22
+  MMIO_INST_EXO_TO_RAM_SLIDE_CHUNK_ONE_TARGET                 0xff21
+  MMIO_INST_EXO_TO_RAM_SLIDE_CHUNK_TWO_TARGET                 0xff22
   ;;limbs to RAM
   MMIO_INST_LIMB_TO_RAM_WRITE_LSB                             0xff30
   MMIO_INST_LIMB_TO_RAM_TRANSPLANT                            0xff31
   MMIO_INST_LIMB_TO_RAM_OVERLAP                               0xff32
   ;;RAM to limbs
   MMIO_INST_RAM_TO_LIMB_TRANSPLANT                            0xff40
-  MMIO_INST_PADDED_LIMB_FROM_ONE_RAM                          0xff41
-  MMIO_INST_PADDED_LIMB_FROM_TWO_RAM                          0xff42
+  MMIO_INST_PADDED_LIMB_FROM_RAM_ONE_SOURCE                   0xff41
+  MMIO_INST_PADDED_LIMB_FROM_RAM_TWO_SOURCE                   0xff42
+  MMIO_INST_PADDED_LIMB_FROM_RAM_ONE_TARGET                   0xff43
+  MMIO_INST_PADDED_LIMB_FROM_RAM_TWO_TARGET                   0xff44
   ;;RAM to RAM
   MMIO_INST_RAM_TO_RAM_LIMB_TRANSPLANT                        0xff50
-  MMIO_INST_RAM_TO_RAM_SLIDE_CHUNK                            0xff51
-  MMIO_INST_RAM_TO_RAM_SLIDE_OVERLAPPING_CHUNK                0xff52
+  MMIO_INST_RAM_TO_RAM_SLIDE_CHUNK_ONE_TARGET                 0xff51
+  MMIO_INST_RAM_TO_RAM_SLIDE_CHUNK_TWO_TARGET                 0xff52
   ;RAM
   MMIO_INST_RAM_EXCISION                                      0xff60
   MMIO_INST_RAM_LIMB_VANISHES                                 0xff61
