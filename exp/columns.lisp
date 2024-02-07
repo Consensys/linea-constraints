@@ -24,9 +24,9 @@
    (TRIM_ACC :i128)
    (TANZB :binary@prove)
    (TANZB_ACC :i5)
-   (MSNZB :byte@prove)
-   (BIT_MSNZB :binary@prove)
-   (ACC_MSNZB :byte@prove)
+   (MSB :byte@prove)
+   (MSB_BIT :binary@prove)
+   (MSB_ACC :byte@prove)
    (MANZB :binary@prove)
    (MANZB_ACC :i4)))
 

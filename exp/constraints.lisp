@@ -80,7 +80,7 @@
 
 (defconstraint computation-constancy (:perspective computation)
   (begin (perspective-constancy CMPTN PLT_JMP)
-         (perspective-constancy CMPTN MSNZB)))
+         (perspective-constancy CMPTN MSB)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                     ;;
@@ -150,7 +150,7 @@
                    bits))))
 
 (defconstraint bit-decompositions (:perspective computation :guard IS_MODEXP_LOG)
-  (bit-decomposition CT ACC_MSNZB BIT_MSNZB))
+  (bit-decomposition CT MSB_ACC MSB_BIT))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                             ;;
@@ -186,24 +186,24 @@
   (begin (non-zero-bit TRIM_ACC TANZB)
          (counting-nonzeroness CT TANZB_ACC TANZB)))
 
-(defconstraint counting-nonzeroness-msnzb (:perspective computation)
-  (begin (non-zero-bit ACC_MSNZB MANZB)
+(defconstraint counting-nonzeroness-msb (:perspective computation)
+  (begin (non-zero-bit MSB_ACC MANZB)
          (counting-nonzeroness CT MANZB_ACC MANZB)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                    ;;
 ;;    3.11 Most significant           ;;
-;;         non-zero byte constraints  ;;
+;;         byte constraints           ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defconstraint most-significant-non-zero-byte (:perspective computation :guard IS_MODEXP_LOG)
+(defconstraint most-significant-byte (:perspective computation :guard IS_MODEXP_LOG)
   (begin (if (and (eq CT 0) (neq TANZB_ACC 0))
-             (eq! MSNZB TRIM_BYTE))
+             (eq! MSB TRIM_BYTE))
          (if (and (neq CT 0)
                   (and (neq TANZB_ACC 0)
                        (eq (prev TANZB_ACC) 0)))
-             (eq! MSNZB TRIM_BYTE))
+             (eq! MSB TRIM_BYTE))
          (if (and (eq CT 15) (eq TANZB_ACC 0))
-             (vanishes! MSNZB))))
+             (vanishes! MSB))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                    ;;
@@ -253,6 +253,9 @@
 (defun (dyn_cost)
   [macro-instruction/DATA 5])
 
+(defun (expoennt_byte_length)
+  (shift computation/TANZB_ACC -1))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                      ;;
 ;;    4.3 Preprocessing ;;
@@ -285,11 +288,9 @@
 (defconstraint justify-hub-prediction-exp-log (:perspective macro-instruction :guard IS_EXP_LOG)
   (begin (if-zero (expn_hi_is_zero)
                   (eq! (dyn_cost)
-                       (* G_EXPBYTES
-                          (+ (shift computation/TANZB_ACC -1) 16))))
+                       (* G_EXPBYTES (+ (expoennt_byte_length) 16))))
          (if-not-zero (expn_hi_is_zero)
-                      (eq! (dyn_cost)
-                           (* G_EXPBYTES (shift computation/TANZB_ACC -1))))))
+                      (eq! (dyn_cost) (* G_EXPBYTES (expoennt_byte_length))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                    ;;
@@ -319,10 +320,10 @@
 (defun (trim_acc)
   (shift computation/TRIM_ACC -1))
 
-(defun (used_bytes)
+(defun (nbytes_excluding_leading_byte)
   (shift computation/TANZB_ACC -2))
 
-(defun (used_bits)
+(defun (nbits_of_leading_byte_excluding_leading_bit)
   (shift computation/MANZB_ACC -2))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -367,7 +368,7 @@
   (callToISZERO 5 0 (padded_base_2_log)))
 
 (defun (padded_base_2_log)
-  (+ (* 8 (used_bytes) (used_bits))))
+  (+ (* 8 (nbytes_excluding_leading_byte) (nbits_of_leading_byte_excluding_leading_bit))))
 
 (defun (trivial_trim)
   (shift preprocessing/WCP_RES 5))
