@@ -119,13 +119,14 @@
 ;; 2.3.2.6
 (defconstraint LT-and-LX ()
   (if-eq (reduce + (for i [1 : 10] [PHASE i])) 1
-         (eq! (+ LT LX) 2)))
+         (begin (eq! LT 1)
+                (eq! LX 1))))
 
 ;; 2.3.2.7
 (defconstraint LT-only ()
   (if-eq (reduce + (for i [12 : 14] [PHASE i])) 1
-         (eq! 1
-              (+ LT (* 2 LX)))))
+         (begin (eq! 1 LT)
+                (vanishes! LX))))
 
 ;; 2.3.2.8
 (defconstraint no-done-no-end ()
