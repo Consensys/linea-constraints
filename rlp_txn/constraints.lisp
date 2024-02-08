@@ -64,7 +64,7 @@
   (counter-incrementing CT LC_CORRECTION))
 
 (defconstraint counter-incrementing-except-data-prefix ()
-  (if-zero (* [PHASE 9] IS_PREFIX)
+  (if-zero (* [PHASE PHASE_DATA_VALUE] IS_PREFIX)
            (counter-incrementing CT LIMB_CONSTRUCTED)))
 
 (defconstraint phase0-constancy ()
@@ -97,7 +97,9 @@
 (defconstraint phase-id-to-phase-flag ()
   (eq! PHASE_ID
        (reduce +
-               (for k [0 : 14] (* k [PHASE k])))))
+               (for k
+                    [0 : 14]
+                    (* (+ k 1) [PHASE k])))))
 
 ;; 2.3.2.1
 (defconstraint initial-stamp (:domain {0})
