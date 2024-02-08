@@ -14,7 +14,7 @@
   (DATA_LO :i128)
   (CODE_FRAGMENT_INDEX :i32)
   (REQUIRES_EVM_EXECUTION :binary)
-  (PHASE :binary@prove :array [0:14])
+  (PHASE :binary@prove :array [1:15])
   (PHASE_END :binary)
   (TYPE :i3)
   (COUNTER :i5)
