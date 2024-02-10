@@ -74,7 +74,6 @@
    (WCP_FLAG :binary)
    (WCP_ARG_1_HI :i128)
    (WCP_ARG_1_LO :i128)
-   (WCP_ARG_2_HI :i128)
    (WCP_ARG_2_LO :i128)
    (WCP_RES :binary)
    (WCP_INST :byte :display :opcode)))

@@ -247,20 +247,18 @@
          (eq! prprc/EUC_A dividend)
          (eq! prprc/EUC_B divisor)))
 
-(defun (callToLt arg1hi arg1lo arg2hi arg2lo)
+(defun (callToLt arg1hi arg1lo arg2lo)
   (begin (eq! prprc/WCP_FLAG 1)
          (eq! prprc/WCP_INST LT)
          (eq! prprc/WCP_ARG_1_HI arg1hi)
          (eq! prprc/WCP_ARG_1_LO arg1lo)
-         (eq! prprc/WCP_ARG_2_HI arg2hi)
          (eq! prprc/WCP_ARG_2_LO arg2lo)))
 
-(defun (callToEq arg1hi arg1lo arg2hi arg2lo)
+(defun (callToEq arg1hi arg1lo arg2lo)
   (begin (eq! prprc/WCP_FLAG 1)
          (eq! prprc/WCP_INST EQ_)
          (eq! prprc/WCP_ARG_1_HI arg1hi)
          (eq! prprc/WCP_ARG_1_LO arg1lo)
-         (eq! prprc/WCP_ARG_2_HI arg2hi)
          (eq! prprc/WCP_ARG_2_LO arg2lo)))
 
 (defun (callToIszero arg1hi arg1lo)
@@ -397,7 +395,7 @@
          (vanishes! TOTRZ)
          ;; setting prprc row n°1
          (next (callToEuc macro/SRC_OFFSET_LO LLARGE))
-         (next (callToEq 0 (shift micro/LIMB 2) 0 INVALID_CODE_PREFIX_VALUE))
+         (next (callToEq 0 (shift micro/LIMB 2) INVALID_CODE_PREFIX_VALUE))
          ;; setting the success bit
          (eq! macro/SUCCESS_BIT
               (- 1 (next prprc/WCP_RES)))
@@ -462,22 +460,20 @@
          (vanishes! TOTLZ)
          (vanishes! TOTRZ)
          ;; setting prprc row n°1
-         (next (callToLt 0 (+ macro/SRC_OFFSET_LO WORD_SIZE) 0 macro/REF_SIZE))
+         (next (callToLt 0 (+ macro/SRC_OFFSET_LO WORD_SIZE) macro/REF_SIZE))
          ;; setting prprc row n°2
-         (shift (callToLt 0 (right-pad-word-extract-extract-size) 0 LLARGE) 2)
+         (shift (callToLt 0 (right-pad-word-extract-extract-size) LLARGE) 2)
          (shift (callToEuc (right-pad-word-extract-first-limb-byte-size) LLARGE) 2)
          ;; setting prprc row n°3
          (shift (callToEuc (+ macro/SRC_OFFSET_LO macro/REF_OFFSET) LLARGE)
                 3)
          (shift (callToLt 0
                           (+ (right-pad-word-extract-sbo) (right-pad-word-extract-first-limb-byte-size))
-                          0
                           LLARGEPO)
                 3)
          ;; setting prprc row n°4
          (shift (callToLt 0
                           (+ (right-pad-word-extract-sbo) (right-pad-word-extract-second-limb-byte-size))
-                          0
                           LLARGEPO)
                 4)
          ;; setting prprc row n°5
