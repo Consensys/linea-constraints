@@ -286,11 +286,10 @@
 ;;        hub prediction   ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defconstraint justify-hub-prediction-exp-log (:perspective macro-instruction :guard IS_EXP_LOG)
-  (begin (if-zero (expn_hi_is_zero)
-                  (eq! (dyn_cost)
-                       (* G_EXPBYTES (+ (expoennt_byte_length) 16))))
-         (if-not-zero (expn_hi_is_zero)
-                      (eq! (dyn_cost) (* G_EXPBYTES (expoennt_byte_length))))))
+  (if-zero (expn_hi_is_zero)
+           (eq! (dyn_cost)
+                (* G_EXPBYTES (+ (expoennt_byte_length) 16)))
+           (eq! (dyn_cost) (* G_EXPBYTES (expoennt_byte_length)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                    ;;
