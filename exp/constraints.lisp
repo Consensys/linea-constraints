@@ -276,9 +276,9 @@
 (defconstraint linking-constraints-exp-log (:perspective macro-instruction :guard IS_EXP_LOG)
   (begin (eq! (shift computation/PLT_JMP -1) 16)
          (if-not-zero (expn_hi_is_zero)
-                      (eq! (shift computation/RAW_ACC -1) (exponent_hi)))
+                      (eq! (shift computation/RAW_ACC -1) (exponent_lo)))
          (if-zero (expn_hi_is_zero)
-                  (eq! (shift computation/RAW_ACC -1) (exponent_lo)))))
+                  (eq! (shift computation/RAW_ACC -1) (exponent_hi)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                         ;;
