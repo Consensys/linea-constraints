@@ -254,7 +254,7 @@
   [macro-instruction/DATA 5])
 
 (defun (expoennt_byte_length)
-  (shift computation/TANZB_ACC -1))
+  (prev computation/TANZB_ACC))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                      ;;
@@ -265,8 +265,8 @@
 (defconstraint preprocessing-1-exp-log (:perspective macro-instruction :guard IS_EXP_LOG)
   (callToISZERO 1 0 (exponent_hi)))
 
-(defun (expn_hi_is_zero)
-  (shift preprocessing/WCP_RES 1))
+(defun ((expn_hi_is_zero :@loobean))
+  (vanishes! (next preprocessing/WCP_RES)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                      ;;
@@ -286,10 +286,10 @@
 ;;        hub prediction   ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defconstraint justify-hub-prediction-exp-log (:perspective macro-instruction :guard IS_EXP_LOG)
-  (if-zero (expn_hi_is_zero)
-           (eq! (dyn_cost)
-                (* G_EXPBYTES (+ (expoennt_byte_length) 16)))
-           (eq! (dyn_cost) (* G_EXPBYTES (expoennt_byte_length)))))
+               (if (expn_hi_is_zero)
+                   (eq! (dyn_cost)
+                        (* G_EXPBYTES (+ (expoennt_byte_length) 16)))
+                   (eq! (dyn_cost) (* G_EXPBYTES (expoennt_byte_length)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                    ;;
