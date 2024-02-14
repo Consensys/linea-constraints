@@ -265,8 +265,8 @@
 (defconstraint preprocessing-1-exp-log (:perspective macro-instruction :guard IS_EXP_LOG)
   (callToISZERO 1 0 (exponent_hi)))
 
-(defun ((expn_hi_is_zero :@loobean))
-  (vanishes! (next preprocessing/WCP_RES)))
+(defun (expn_hi_is_zero)
+  (next preprocessing/WCP_RES))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                      ;;
@@ -286,10 +286,10 @@
 ;;        hub prediction   ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defconstraint justify-hub-prediction-exp-log (:perspective macro-instruction :guard IS_EXP_LOG)
-               (if (expn_hi_is_zero)
-                   (eq! (dyn_cost)
-                        (* G_EXPBYTES (+ (expoennt_byte_length) 16)))
-                   (eq! (dyn_cost) (* G_EXPBYTES (expoennt_byte_length)))))
+  (if-zero (expn_hi_is_zero)
+           (eq! (dyn_cost)
+                (* G_EXPBYTES (+ (expoennt_byte_length) 16)))
+           (eq! (dyn_cost) (* G_EXPBYTES (expoennt_byte_length)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                    ;;
