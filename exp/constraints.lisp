@@ -394,7 +394,12 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defconstraint justify-hub-prediction-modexp-log (:perspective macro-instruction :guard IS_MODEXP_LOG)
   (if-not-zero (trivial_trim)
-               (vanishes! (lead_log))
+               (if-not-zero (raw_hi_part_is_zero)
+                            (vanishes! (lead_log))
+                            (if-not-zero (ebs_cutoff_leq_16)
+                                         (vanishes! (lead_log))
+                                         (eq! (lead_log)
+                                              (* 8 (- (ebs_cutoff) 16)))))
                (if-not-zero (ebs_cutoff_leq_16)
                             (eq! (lead_log)
                                  (- (padded_base_2_log)
