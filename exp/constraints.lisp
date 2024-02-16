@@ -367,7 +367,7 @@
   (callToISZERO 5 0 (padded_base_2_log)))
 
 (defun (padded_base_2_log)
-  (+ (* 8 (nbytes_excluding_leading_byte) (nbits_of_leading_byte_excluding_leading_bit))))
+  (+ (* 8 (nbytes_excluding_leading_byte)) (nbits_of_leading_byte_excluding_leading_bit)))
 
 (defun (trivial_trim)
   (shift preprocessing/WCP_RES 5))
