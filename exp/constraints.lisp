@@ -379,13 +379,13 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defconstraint linking-constraints-modexp-log (:perspective macro-instruction :guard IS_MODEXP_LOG)
   (begin (if-not-zero (min_cutoff_leq_16)
-                      (eq! (shift computation/RAW_ACC -1) (raw_lead_hi))
+                      (begin (eq! (shift computation/RAW_ACC -1) (raw_lead_hi))
+                             (eq! (shift computation/PLT_JMP -1) (min_cutoff)))
                       (begin (if-zero (raw_hi_part_is_zero)
-                                      (eq! (shift computation/RAW_ACC -1) (raw_lead_hi))
-                                      (eq! (shift computation/RAW_ACC -1) (raw_lead_lo)))))
-         (eq! (shift computation/PLT_JMP -1)
-              (- (min_cutoff)
-                 (* (- 1 (min_cutoff_leq_16)) 16)))))
+                                      (begin (eq! (shift computation/RAW_ACC -1) (raw_lead_hi))
+                                             (eq! (shift computation/PLT_JMP -1) 16))
+                                      (begin (eq! (shift computation/RAW_ACC -1) (raw_lead_lo))
+                                             (eq! (shift computation/PLT_JMP -1) (- (min_cutoff) 16))))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                         ;;
