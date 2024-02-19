@@ -1,12 +1,12 @@
 (module gas)
 
 (defcolumns 
-  STAMP
-  CT
-  GAS_ACTL
-  GAS_COST
-  (OOGX :binary)
+  (STAMP :i32)
+  (CT :i3)
+  (GAS_ACTL :i32)
+  (GAS_COST :i64)
+  (OOGX :binary@prove)
   (BYTE :byte :array [2])
-  (ACC :array [2]))
+  (ACC :i64 :array [2]))
 
 
