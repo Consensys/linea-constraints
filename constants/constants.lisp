@@ -56,7 +56,7 @@
   EVM_INST_COINBASE                             0x41
   EVM_INST_TIMESTAMP                            0x42
   EVM_INST_NUMBER                               0x43
-  EVM_INST_DIFFICULTY                           0x44 ;; PREVRANDAO comes after London
+  EVM_INST_DIFFICULTY                           0x44                              ;; PREVRANDAO comes after London
   EVM_INST_GASLIMIT                             0x45
   EVM_INST_CHAINID                              0x46
   EVM_INST_SELFBALANCE                          0x47
@@ -159,7 +159,6 @@
   EVM_INST_INVALID                              0xFE
   EVM_INST_SELFDESTRUCT                         0xFF
   INVALID_CODE_PREFIX_VALUE                     0xEF
-
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;               ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; SIZE / LENGTH ;;
@@ -172,7 +171,6 @@
   LLARGEPO                                      (+ LLARGE 1)
   WORD_SIZE_MO                                  31
   WORD_SIZE                                     32
-
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;                        ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; MXP FLAG SUM CONSTANTS ;;
@@ -183,44 +181,41 @@
   MISC_MXP_WEIGHT                               4
   MISC_OOB_WEIGHT                               8
   MISC_STP_WEIGHT                               16
-
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;                  ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; EXP instructions ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;                  ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  EXP_INST_EXPLOG                              0xEE0A
-  EXP_INST_MODEXPLOG                           0xEE05
-
+  EXP_INST_EXPLOG                               0xEE0A
+  EXP_INST_MODEXPLOG                            0xEE05
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;                  ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; OOB instructions ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;                  ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  OOB_INST_jump                                0x56
-  OOB_INST_jumpi                               0x57
-  OOB_INST_rdc                                 0x3E
-  OOB_INST_cdl                                 0x35
-  OOB_INST_xcall                               0xCC
-  OOB_INST_call                                0xCA
-  OOB_INST_create                              0xCE
-  OOB_INST_sstore                              0x55
-  OOB_INST_deployment                          0xF3
-  OOB_INST_ecrecover                           0xFF01
-  OOB_INST_sha2                                0xFF02
-  OOB_INST_ripemd                              0xFF03
-  OOB_INST_identity                            0xFF04
-  OOB_INST_ecadd                               0xFF06
-  OOB_INST_ecmul                               0xFF07
-  OOB_INST_ecpairing                           0xFF08
-  OOB_INST_blake_cds                           0xFA09
-  OOB_INST_blake_params                        0xFB09
-  OOB_INST_modexp_cds                          0xFA05
-  OOB_INST_modexp_xbs                          0xFB05
-  OOB_INST_modexp_lead                         0xFC05
-  OOB_INST_modexp_pricing                      0xFD05
-  OOB_INST_modexp_extract                      0xFE05
-
+  OOB_INST_jump                                 0x56
+  OOB_INST_jumpi                                0x57
+  OOB_INST_rdc                                  0x3E
+  OOB_INST_cdl                                  0x35
+  OOB_INST_xcall                                0xCC
+  OOB_INST_call                                 0xCA
+  OOB_INST_create                               0xCE
+  OOB_INST_sstore                               0x55
+  OOB_INST_deployment                           0xF3
+  OOB_INST_ecrecover                            0xFF01
+  OOB_INST_sha2                                 0xFF02
+  OOB_INST_ripemd                               0xFF03
+  OOB_INST_identity                             0xFF04
+  OOB_INST_ecadd                                0xFF06
+  OOB_INST_ecmul                                0xFF07
+  OOB_INST_ecpairing                            0xFF08
+  OOB_INST_blake_cds                            0xFA09
+  OOB_INST_blake_params                         0xFB09
+  OOB_INST_modexp_cds                           0xFA05
+  OOB_INST_modexp_xbs                           0xFB05
+  OOB_INST_modexp_lead                          0xFC05
+  OOB_INST_modexp_pricing                       0xFD05
+  OOB_INST_modexp_extract                       0xFE05
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;         ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; EXO SUM ;;
@@ -229,7 +224,7 @@
   EXO_SUM_INDEX_ROM                             0
   EXO_SUM_INDEX_KEC                             1
   EXO_SUM_INDEX_LOG                             2
-  EXO_SUM_INDEX_TXCD                            3    ;; for the transaction call data as found in RLP_TXN
+  EXO_SUM_INDEX_TXCD                            3                                 ;; for the transaction call data as found in RLP_TXN
   EXO_SUM_INDEX_ECDATA                          4
   EXO_SUM_INDEX_RIPSHA                          5
   EXO_SUM_INDEX_BLAKEMODEXP                     6
@@ -240,7 +235,6 @@
   EXO_SUM_WEIGHT_ECDATA                         (^ 2 EXO_SUM_INDEX_ECDATA)
   EXO_SUM_WEIGHT_RIPSHA                         (^ 2 EXO_SUM_INDEX_RIPSHA)
   EXO_SUM_WEIGHT_BLAKEMODEXP                    (^ 2 EXO_SUM_INDEX_BLAKEMODEXP)
-
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;                     ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; BLAKE MODEXP MODULE ;;
@@ -259,7 +253,6 @@
   PHASE_SHA2_RESULT                             11
   PHASE_RIPEMD_DATA                             12
   PHASE_RIPEMD_RESULT                           13
-
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;            ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; MMU MODULE ;;
@@ -282,7 +275,6 @@
   MMU_INST_MODEXP_ZERO                          0xfe60
   MMU_INST_MODEXP_DATA                          0xfe70
   MMU_INST_BLAKE                                0xfe80
-
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;             ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; MMIO MODULE ;;
@@ -309,7 +301,6 @@
   ;; RAM
   MMIO_INST_RAM_EXCISION                        0xfe41
   MMIO_INST_RAM_VANISHES                        0xfe42
-
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;             ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; RLP* MODULE ;;
@@ -318,10 +309,10 @@
   ;;
   ;; RLP prefix
   ;;
-  RLP_PREFIX_INT_SHORT                          128  ;;RLP prefix of a short integer (<56 bytes), defined in the EYP.
-  RLP_PREFIX_INT_LONG                           183  ;;RLP prefix of a long integer (>55 bytes), defined in the EYP.
-  RLP_PREFIX_LIST_SHORT                         192  ;;RLP prefix of a short list (<56 bytes), defined in the EYP.
-  RLP_PREFIX_LIST_LONG                          247  ;;RLP prefix of a long list (>55 bytes), defined in the EYP.
+  RLP_PREFIX_INT_SHORT                          128                               ;;RLP prefix of a short integer (<56 bytes), defined in the EYP.
+  RLP_PREFIX_INT_LONG                           183                               ;;RLP prefix of a long integer (>55 bytes), defined in the EYP.
+  RLP_PREFIX_LIST_SHORT                         192                               ;;RLP prefix of a short list (<56 bytes), defined in the EYP.
+  RLP_PREFIX_LIST_LONG                          247                               ;;RLP prefix of a long list (>55 bytes), defined in the EYP.
   ;;
   ;; RLP_TXN Phase
   ;;
@@ -355,8 +346,8 @@
   ;;
   ;; RLP_ADDR 
   ;;
-  RLP_ADDR_RECIPE_1                             1    ;; for RlpAddr, used to discriminate between recipe for create
-  RLP_ADDR_RECIPE_2                             2    ;; for RlpAddr, used to discriminate between recipe for create
+  RLP_ADDR_RECIPE_1                             1                                 ;; for RlpAddr, used to discriminate between recipe for create
+  RLP_ADDR_RECIPE_2                             2                                 ;; for RlpAddr, used to discriminate between recipe for create
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;            ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; WCP MODULE ;;
@@ -364,19 +355,17 @@
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   WCP_INST_GEQ                                  0x0E
   WCP_INST_LEQ                                  0x0F
-
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;                ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; HASH CONSTANTS ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;                ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  EMPTY_KECCAK_HI                               0xc5d2460186f7233c927e7db2dcc703c         ;; high part of KECCAK(())
-  EMPTY_KECCAK_LO                               0xe500b653ca82273b7bfad8045d85a47         ;; low  part of KECCAK(())
-  EMPTY_SHA2_HI                                 0xe3b0c44298fc1c149afbf4c8996fb92         ;; high part of SHA2-256(())
-  EMPTY_SHA2_LO                                 0x27ae41e4649b934ca495991b7852b85         ;; low  part of SHA2-256(())
-  EMPTY_RIPEMD_HI                               0x0000000000000000000000009c1185a         ;; high part of RIPEMD-160(())
-  EMPTY_RIPEMD_LO                               0xc5e9fc54612808977ee8f548b2258d3         ;; low  part of RIPEMD-160(())
-
+  EMPTY_KECCAK_HI                               0xc5d2460186f7233c927e7db2dcc703c ;; high part of KECCAK(())
+  EMPTY_KECCAK_LO                               0xe500b653ca82273b7bfad8045d85a47 ;; low  part of KECCAK(())
+  EMPTY_SHA2_HI                                 0xe3b0c44298fc1c149afbf4c8996fb92 ;; high part of SHA2-256(())
+  EMPTY_SHA2_LO                                 0x27ae41e4649b934ca495991b7852b85 ;; low  part of SHA2-256(())
+  EMPTY_RIPEMD_HI                               0x0000000000000000000000009c1185a ;; high part of RIPEMD-160(())
+  EMPTY_RIPEMD_LO                               0xc5e9fc54612808977ee8f548b2258d3 ;; low  part of RIPEMD-160(())
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;               ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; GAS CONSTANTS ;;
