@@ -20,6 +20,8 @@ BIN := bin/columns.lisp \
 	   lookup_tables/lookups/bin_into_binRT.lisp \
 	   # bin/hub_into_bin.lisp \
 
+CONSTANTS := constants/constants.lisp
+
 EC_DATA := ec_data/columns.lisp \
 	ec_data/constraints.lisp \
 	ec_data/ecdata_into_ext.lisp \
@@ -90,6 +92,7 @@ ZKEVM_MODULES := ${ALU} \
 	${BLAKE2f_MODEXP_DATA} \
 	${EC_DATA} \
 	${EUC} \
+	${CONSTANTS} \
 	${LIBRARY} \
 	${LOG_DATA} \
 	${LOG_INFO} \
