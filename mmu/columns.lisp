@@ -94,8 +94,8 @@
    (SUCCESS_BIT :binary)
    (EXO_SUM :i32)
    (PHASE :i32)
-   (ID_1 :i32)
-   (ID_2 :i32)
+   (EXO_ID :i32)
+   (KEC_ID :i32)
    (TOTAL_SIZE :i32)))
 
 

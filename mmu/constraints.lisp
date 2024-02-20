@@ -104,8 +104,8 @@
          (micro-instruction-writing-constant micro/SUCCESS_BIT)
          (micro-instruction-writing-constant micro/EXO_SUM)
          (micro-instruction-writing-constant micro/PHASE)
-         (micro-instruction-writing-constant micro/ID_1)
-         (micro-instruction-writing-constant micro/ID_2)
+         (micro-instruction-writing-constant micro/EXO_ID)
+         (micro-instruction-writing-constant micro/KEC_ID)
          (micro-instruction-writing-constant micro/TOTAL_SIZE)))
 
 ;;
