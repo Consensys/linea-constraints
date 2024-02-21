@@ -90,9 +90,9 @@ EXP := exp/columns.lisp exp/constraints.lisp exp/constants.lisp exp/exp-into-wcp
 ZKEVM_MODULES := ${ALU} \
 	${BIN} \
 	${BLAKE2f_MODEXP_DATA} \
+	${CONSTANTS} \
 	${EC_DATA} \
 	${EUC} \
-	${CONSTANTS} \
 	${LIBRARY} \
 	${LOG_DATA} \
 	${LOG_INFO} \
