@@ -76,7 +76,7 @@ BLAKE2f_MODEXP_DATA := blake2f_modexp_data/
 
 EXP := exp
 
-OOB := oob/columns.lisp oob/constraints.lisp  oob/oob-into-add.lisp oob/oob-into-wcp.lisp
+OOB := oob/columns.lisp oob/constants.lisp oob/constraints.lisp  oob/oob-into-add.lisp oob/oob-into-mod.lisp oob/oob-into-wcp.lisp 
 
 ZKEVM_MODULES := ${ALU} \
 	${BIN} \
