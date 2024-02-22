@@ -2,7 +2,7 @@
 
 (defcolumns 
   (IOMF :binary)
-  (BYTE :byte)
+  (BYTE1 :byte)
   (MSHP :i8)
   (LAS :i128)
   (RAP :i128)

@@ -2,7 +2,7 @@
   shf-into-shfRT-hi
   ;reference columns
   (
-    shfRT.BYTE
+    shfRT.BYTE1
     shfRT.MSHP
     shfRT.LAS
     shfRT.RAP
@@ -23,7 +23,7 @@
   shf-into-shfRT-lo
   ;reference columns
   (
-    shfRT.BYTE
+    shfRT.BYTE1
     shfRT.MSHP
     shfRT.LAS
     shfRT.RAP
