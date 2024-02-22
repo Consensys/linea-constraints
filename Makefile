@@ -93,6 +93,7 @@ ZKEVM_MODULES := ${ALU} \
 	${CONSTANTS} \
 	${EC_DATA} \
 	${EUC} \
+	${EXP} \
 	${LIBRARY} \
 	${LOG_DATA} \
 	${LOG_INFO} \
@@ -111,9 +112,8 @@ ZKEVM_MODULES := ${ALU} \
 	${TABLES} \
 	${TRM} \
 	${TXN_DATA} \
-	${WCP} \
-	${EXP}
-
+	${WCP}
+	
 define.go: ${ZKEVM_MODULES}
 	${CORSET} wizard-iop -vv -P define -o $@ ${ZKEVM_MODULES}
 
