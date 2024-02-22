@@ -36,11 +36,9 @@ LOG_DATA := logData
 
 LOG_INFO := logInfo
 
-MEMORY := $(wildcard hub/mmio/columns.lisp) \
-		  $(wildcard hub/mmu/columns.lisp) \
-		  lookup_tables/mmuID/columns.lisp
-
 MMU := mmu
+
+MMIO := mmio
 
 MXP := mxp/columns.lisp \
 	mxp/constraints.lisp \
@@ -97,8 +95,8 @@ ZKEVM_MODULES := ${ALU} \
 	${LIBRARY} \
 	${LOG_DATA} \
 	${LOG_INFO} \
-	${MEMORY} \
 	${MMU} \
+	${MMIO} \
 	${MXP} \
 	${PUB_DATA} \
 	${RLP_ADDR} \
