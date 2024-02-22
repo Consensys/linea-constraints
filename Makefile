@@ -14,11 +14,7 @@ ALU := alu/add/columns.lisp \
 #       alu/mod/hub_into_mod.lisp \
 #       alu/mul/hub_into_mul.lisp
 
-BIN := bin/columns.lisp \
-	   bin/constraints.lisp \
-	   $(wildcard lookup_tables/binRT/*lisp) \
-	   lookup_tables/lookups/bin_into_binRT.lisp \
-	   # bin/hub_into_bin.lisp \
+BIN := bin   
 
 CONSTANTS := constants/constants.lisp
 
@@ -60,11 +56,7 @@ ROM := rom/columns.lisp \
 ROM_LEX := romLex/columns.lisp romLex/constraints.lisp \
 	romLex/romLex_into_rom.lisp
 
-SHIFT :=  shf/columns.lisp \
-	shf/constraints.lisp \
-	$(wildcard lookup_tables/shfRT/*lisp) \
-	lookup_tables/lookups/shf_into_shfRT.lisp \
-	# shf/hub_into_shf.lisp \	
+SHIFT :=  shf
 
 STACK := hub/columns.lisp \
 	hub/constraints.lisp
@@ -72,7 +64,7 @@ STACK := hub/columns.lisp \
 STP := stp/columns.lisp stp/constraints.lisp \
 	stp/lookups/stp_into_mod.lisp stp/lookups/stp_into_wcp.lisp
 
-TABLES := $(wildcard lookup_tables/tables/*lisp)
+TABLES := reference_tables/binRT.lisp reference_tables/shfRT.lisp reference_tables/instruction_decoder.lisp 
 
 TRM := trm/columns.lisp trm/constraints.lisp
 
