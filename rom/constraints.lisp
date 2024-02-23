@@ -170,7 +170,7 @@
   (if-not-zero IS_PUSH_DATA
                (begin (eq! (+ (prev IS_PUSH) (prev IS_PUSH_DATA))
                            1)
-                      (eq! OPCODE INVALID_CODE_PREFIX_VALUE)
+                      (eq! OPCODE INVALID_OPCODE)
                       (did-inc! COUNTER_PUSH 1)
                       (if-zero (- (+ COUNTER_PUSH LLARGE) PUSH_PARAMETER)
                                (begin (will-inc! PUSH_FUNNEL_BIT 1)

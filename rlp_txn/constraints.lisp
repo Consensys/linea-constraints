@@ -587,7 +587,7 @@
                   (if-zero nADDR
                            (begin (eq! nSTEP 1)
                                   (eq! LIMB
-                                       (* RLP_PREFIX_INT_LONG (^ 256 LLARGEMO)))
+                                       (* RLP_PREFIX_LIST_SHORT (^ 256 LLARGEMO)))
                                   (eq! nBYTES 1))
                            (eq! nSTEP 8)))))
 
@@ -624,7 +624,7 @@
                (if-zero nKEYS_PER_ADDR
                         (begin (eq! nSTEP 1)
                                (eq! LIMB
-                                    (* RLP_PREFIX_INT_LONG (^ 256 LLARGEMO)))
+                                    (* RLP_PREFIX_LIST_SHORT (^ 256 LLARGEMO)))
                                (eq! nBYTES 1))
                         (begin (eq! nSTEP 8)
                                (eq! [INPUT 1] (* 33 nKEYS_PER_ADDR))

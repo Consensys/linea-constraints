@@ -130,7 +130,7 @@
                 (eq! (+ (shift LC -4) (shift LC -3))
                      1)
                 (eq! (shift LIMB -3)
-                     (* (+ RLP_PREFIX_INT_LONG 1 20 ACC_BYTESIZE (- 1 TINY_NON_ZERO_NONCE))
+                     (* (+ RLP_PREFIX_LIST_SHORT 1 20 ACC_BYTESIZE (- 1 TINY_NON_ZERO_NONCE))
                         (^ 256 15)))
                 (eq! (shift nBYTES -3) 1)
                 (vanishes! (shift INDEX -3))

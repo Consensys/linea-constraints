@@ -277,7 +277,7 @@
                   (if-zero [INPUT 1]
                            (begin (eq! nSTEP 1)
                                   (eq! LIMB
-                                       (* RLP_PREFIX_INT_LONG (^ 256 LLARGEMO)))
+                                       (* RLP_PREFIX_LIST_SHORT (^ 256 LLARGEMO)))
                                   (eq! nBYTES 1)
                                   (eq! PHASE_END 1))
                            (begin (eq! nSTEP 8)
@@ -319,7 +319,7 @@
                 (eq! nSTEP 1)
                 (if-zero LOCAL_SIZE
                          (begin (eq! LIMB
-                                     (* RLP_PREFIX_INT_LONG (^ 256 LLARGEMO)))
+                                     (* RLP_PREFIX_LIST_SHORT (^ 256 LLARGEMO)))
                                 (eq! nBYTES 1)
                                 (eq! (next [INPUT 2]) INDEX_LOCAL)
                                 (vanishes! (+ (- 1 (next IS_PREFIX))
@@ -327,11 +327,11 @@
                                               (- 1 (next IS_DATA)))))
                          (begin (if-eq-else LOCAL_SIZE 33
                                             (begin (eq! LIMB
-                                                        (* (+ RLP_PREFIX_INT_LONG LOCAL_SIZE)
+                                                        (* (+ RLP_PREFIX_LIST_SHORT LOCAL_SIZE)
                                                            (^ 256 LLARGEMO)))
                                                    (eq! nBYTES 1))
                                             (begin (eq! LIMB
-                                                        (+ (* (+ RLP_PREFIX_INT_LONG 1) (^ 256 LLARGEMO))
+                                                        (+ (* (+ RLP_PREFIX_LIST_LONG 1) (^ 256 LLARGEMO))
                                                            (* LOCAL_SIZE (^ 256 14))))
                                                    (eq! nBYTES 2)))
                                 (vanishes! (+ (next IS_PREFIX)
