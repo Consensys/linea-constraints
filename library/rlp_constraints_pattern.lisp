@@ -1,8 +1,3 @@
-(defconst 
-  G_TXDATA_ZERO    4     ;;Gas cost for a zero data byte, defined in the EYP.
-  G_TXDATA_NONZERO 16    ;;Gas cost for a non-zero data byte, defined in the EYP.
-  CREATE2_SHIFT    0xff) ;; create2 first byte
-
 ;;  Comparaison to 55 ;;
 (defpurefun (compTo55 length comp acc)
   (eq! acc
