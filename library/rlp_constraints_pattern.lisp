@@ -55,7 +55,7 @@
                                             1)
                                        (eq! limb
                                             (* (+ (* RLP_PREFIX_INT_SHORT (- 1 isList))
-                                                  (* RLP_PREFIX_INT_LONG isList)
+                                                  (* RLP_PREFIX_LIST_SHORT isList)
                                                   length)
                                                (^ 256 LLARGEMO)))
                                        (eq! nBytes 1))
@@ -63,7 +63,7 @@
                                             1)
                                        (eq! (prev limb)
                                             (* (+ (* RLP_PREFIX_INT_LONG (- 1 isList))
-                                                  (* RLP_PREFIX_INT_LONG isList)
+                                                  (* RLP_PREFIX_LIST_LONG isList)
                                                   byteSize)
                                                (^ 256 LLARGEMO)))
                                        (eq! (prev nBytes) 1)
