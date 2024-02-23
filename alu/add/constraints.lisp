@@ -30,7 +30,7 @@
          (if-not-zero (will-remain-constant! STAMP)
                       (vanishes! (next CT)))
          (if-not-zero STAMP
-                      (begin (vanishes! (any! (eq! INST ADD) (eq! INST SUB)))
+                      (begin (vanishes! (any! (eq! INST EVM_INST_ADD) (eq! INST EVM_INST_SUB)))
                              (if (eq CT CT_MAX)
                                  (will-inc! STAMP 1)
                                  (will-inc! CT 1))
