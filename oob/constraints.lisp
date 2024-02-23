@@ -147,6 +147,7 @@
 (defconstraint counter-constancy ()
   (begin (counter-constancy CT STAMP)
          (debug (counter-constancy CT CT_MAX))
+         ;;(for i [2] (counter-constancy CT [OOB_EVENT i]))
          (for i [6] (counter-constancy CT [DATA i]))
          (counter-constancy CT INCOMING_INST)
          (debug (counter-constancy CT IS_JUMP))
@@ -192,9 +193,13 @@
          (is-binary IS_MODEXP_extract)
          (is-binary IS_MODEXP_pricing)))
 
+;;(for i [2] (is-binary [OOB_EVENT i]))))
 (defconstraint wcp-add-mod-are-exclusive ()
   (is-binary (lookup_sum 0)))
 
+;; (defconstraint is-create-is-jump-oob-event ()
+;;   (if-zero (+ IS_CREATE IS_JUMPI)
+;;            (vanishes! [OOB_EVENT 2])))
 (defconstraint outgoing-res-lo-binary ()
   (if-zero MOD_FLAG
            (vanishes! (* OUTGOING_RES_LO (- 1 OUTGOING_RES_LO)))))
@@ -310,6 +315,9 @@
 (defconstraint valid-jump (:guard (* (standing-hypothesis) (jump-hypothesis)))
   (callToLT 0 (jump___pc_new_hi) (jump___pc_new_lo) 0 (jump___codesize)))
 
+;; (defconstraint set-oob-event-jump (:guard (* (standing-hypothesis) (jump-hypothesis)))
+;;   (begin (eq! [OOB_EVENT 1] (jump___invalid_pc_new))
+;;          (vanishes! [OOB_EVENT 2])))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                       ;;
 ;;    3.3 For JUMPI      ;;
@@ -345,6 +353,9 @@
 (defconstraint valid-jumpi-future (:guard (* (standing-hypothesis) (jumpi-hypothesis)))
   (callToISZERO 1 (jumpi___jump_condition_hi) (jumpi___jump_condition_lo)))
 
+;; (defconstraint set-oob-event-jumpi (:guard (* (standing-hypothesis) (jumpi-hypothesis)))
+;;   (begin (eq! [OOB_EVENT 1] (* (jumpi___attempt_jump) (jumpi___invalid_pc_new)))
+;;          (eq! [OOB_EVENT 2] (jumpi___attempt_jump))))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                       ;;
 ;; 3.4 For               ;;
@@ -392,6 +403,11 @@
                   (eq! (shift [OUTGOING_DATA 4] 2) (rdc___rds)))
            (noCall 2)))
 
+;; (defconstraint set-oob-event-rdc (:guard (* (standing-hypothesis) (rdc-hypothesis)))
+;;   (begin (eq! [OOB_EVENT 1]
+;;               (+ (rdc___rdc_roob)
+;;                  (* (- 1 (rdc___rdc_roob)) (rdc___rdc_soob))))
+;;          (vanishes! [OOB_EVENT 2])))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                       ;;
 ;; 3.5 For               ;;
@@ -415,6 +431,9 @@
 (defconstraint valid-cdl (:guard (* (standing-hypothesis) (cdl-hypothesis)))
   (callToLT 0 (cdl___offset_hi) (cdl___offset_lo) 0 (cdl___cds)))
 
+;; (defconstraint set-oob-event-cdl (:guard (* (standing-hypothesis) (cdl-hypothesis)))
+;;   (begin (eq! [OOB_EVENT 1] (- 1 (cdl___touches_ram)))
+;;          (vanishes! [OOB_EVENT 2])))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                       ;;
 ;;    3.6 For XCALL's    ;;
@@ -485,6 +504,11 @@
 (defconstraint valid-call-future-future (:guard (* (standing-hypothesis) (call-hypothesis)))
   (callToISZERO 2 (call___val_hi) (call___val_lo)))
 
+;; (defconstraint set-oob-event-call (:guard (* (standing-hypothesis) (call-hypothesis)))
+;;   (begin (eq! [OOB_EVENT 1]
+;;               (+ (call___insufficient_balance_abort)
+;;                  (* (- 1 (call___insufficient_balance_abort)) (call___call_stack_depth_abort))))
+;;          (vanishes! [OOB_EVENT 2])))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                       ;;
 ;; 3.8 For               ;;
@@ -529,6 +553,14 @@
 (defconstraint valid-create-future-future (:guard (* (standing-hypothesis) (create-hypothesis)))
   (callToISZERO 2 0 (create___nonce)))
 
+;; (defconstraint set-oob-event-create (:guard (* (standing-hypothesis) (create-hypothesis)))
+;;   (begin (eq! [OOB_EVENT 1]
+;;               (+ (create___insufficient_balance_abort)
+;;                  (* (- 1 (create___insufficient_balance_abort)) (create___stack_depth_abort))))
+;;          (eq! [OOB_EVENT 2]
+;;               (* (- 1 [OOB_EVENT 1])
+;;                  (+ (create___has_code)
+;;                     (* (- 1 (create___has_code)) (create___nonzero_nonce)))))))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                       ;;
 ;; 3.9 For               ;;
@@ -546,6 +578,9 @@
 (defconstraint valid-sstore (:guard (* (standing-hypothesis) (sstore-hypothesis)))
   (callToLT 0 0 G_CALLSTIPEND 0 (sstore___gas)))
 
+;; (defconstraint set-oob-event-sstore (:guard (* (standing-hypothesis) (sstore-hypothesis)))
+;;   (begin (eq! [OOB_EVENT 1] (- 1 (sstore___sufficient_gas)))
+;;          (vanishes! [OOB_EVENT 2])))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                       ;;
 ;; 3.10 For              ;;
@@ -566,6 +601,9 @@
 (defconstraint valid-return (:guard (* (standing-hypothesis) (return-hypothesis)))
   (callToLT 0 0 24576 (return___size_hi) (return___size_lo)))
 
+;; (defconstraint set-oob-event-return (:guard (* (standing-hypothesis) (return-hypothesis)))
+;;   (begin (eq! [OOB_EVENT 1] (return___exceeds_max_code_size))
+;;          (vanishes! [OOB_EVENT 2])))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                               ;;
 ;;   4 Populating common         ;;
@@ -625,7 +663,11 @@
 (defconstraint valid-prc-ecrecover-prc-ecadd-prc-ecmul-future-future (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-ecrecover-prc-ecadd-prc-ecmul-hypothesis)))
   (callToLT 2 0 (prc___call_gas) 0 (prc-ecrecover-prc-ecadd-prc-ecmul___precompile_cost)))
 
+;; (defconstraint set-oob-event-prc-ecrecover-prc-ecadd-prc-ecmul (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-ecrecover-prc-ecadd-prc-ecmul-hypothesis)))
+;;   (begin (eq! [OOB_EVENT 1] (shift OUTGOING_RES_LO 2))
+;;          (vanishes! [OOB_EVENT 2])))
 (defconstraint constrain-remaining-gas-prc-ecrecover-prc-ecadd-prc-ecmul (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-ecrecover-prc-ecadd-prc-ecmul-hypothesis)))
+  ;;   (if-zero [OOB_EVENT 1]
   (if-zero 0
            (eq! (prc___remaining_gas)
                 (- (prc___call_gas) (prc-ecrecover-prc-ecadd-prc-ecmul___precompile_cost)))
@@ -652,7 +694,11 @@
 (defconstraint valid-prc-sha2-prc-ripemd-prc-identity-future-future-future (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-sha2-prc-ripemd-prc-identity-hypothesis)))
   (callToLT 3 0 (prc___call_gas) 0 (prc-sha2-prc-ripemd-prc-identity___precompile_cost)))
 
+;; (defconstraint set-oob-event-prc-sha2-prc-ripemd-prc-identity (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-sha2-prc-ripemd-prc-identity-hypothesis)))
+;;   (begin (eq! [OOB_EVENT 1] (shift OUTGOING_RES_LO 3))
+;;          (vanishes! [OOB_EVENT 2])))
 (defconstraint constrain-remaining-gas-prc-sha2-prc-ripemd-prc-identity (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-sha2-prc-ripemd-prc-identity-hypothesis)))
+  ;;   (if-zero [OOB_EVENT 1]
   (if-zero 0
            (eq! (prc___remaining_gas)
                 (- (prc___call_gas) (prc-sha2-prc-ripemd-prc-identity___precompile_cost)))
@@ -698,7 +744,13 @@
                   (eq! (* (shift [OUTGOING_DATA 4] 4) 192)
                        (prc-ecpairing___precompile_cost192)))))
 
+;; (defconstraint set-oob-event-prc-ecpairing (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-ecpairing-hypothesis)))
+;;   (begin (eq! [OOB_EVENT 1]
+;;               (+ (- 1 (prc-ecpairing___is_multiple_192))
+;;                  (* (prc-ecpairing___is_multiple_192) (prc-ecpairing___insufficient_gas))))
+;;          (vanishes! [OOB_EVENT 2])))
 (defconstraint constrain-remaining-gas-prc-ecpairing (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-ecpairing-hypothesis)))
+  ;;   (if-zero [OOB_EVENT 1]
   (if-zero 0
            (eq! (* (prc___remaining_gas) 192)
                 (- (* (prc___call_gas) 192) (prc-ecpairing___precompile_cost192)))
@@ -711,7 +763,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                       ;;
-;; 5.1 For BLAKE2F_cds     ;;
+;; 5.1 For BLAKE2F_cds   ;;
 ;;                       ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun (prc-blake_cds-hypothesis)
@@ -726,11 +778,14 @@
 (defconstraint valid-prc-blake_cds (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-blake_cds-hypothesis)))
   (callToEQ 0 0 (prc-blake_cds___cds) 0 213))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;                       ;;
-;; 5.2 For BLAKE2F_params    ;;
-;;                       ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; (defconstraint set-oob-event-blake2f_a (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-blake2f_a-hypothesis)))
+;;   (begin (eq! [OOB_EVENT 1] (- 1 (prc-blake2f_a___valid_cds)))
+;;          (vanishes! [OOB_EVENT 2])))
+;;;;;;;;;;;;;;;;;;;;;;;;;::;;
+;;                         ;;
+;; 5.2 For BLAKE2F_params  ;;
+;;                         ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun (prc-blake_params-hypothesis)
   IS_BLAKE2F_params)
 
@@ -774,7 +829,13 @@
 (defconstraint valid-prc-blake_params-future-future (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-blake_params-hypothesis)))
   (callToISZERO 2 0 (prc-blake_params___r_at_c)))
 
+;; (defconstraint set-oob-event-prc-blake2f_b (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-blake2f_b-hypothesis)))
+;;   (begin (eq! [OOB_EVENT 1]
+;;               (+ (prc-blake2f_b___insufficient_gas)
+;;                  (* (- 1 (prc-blake2f_b___insufficient_gas)) (prc-blake2f_b___f_is_not_a_bit))))
+;;          (vanishes! [OOB_EVENT 2])))
 (defconstraint constrain-remaining-gas-prc-blake_params (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-blake_params-hypothesis)))
+  ;;   (if-zero [OOB_EVENT 1]
   (if-zero 0
            (eq! (prc-blake_params___remaining_gas)
                 (- (prc-blake_params___call_gas) (prc-blake_params___remaining_gas)))
@@ -813,6 +874,7 @@
   [DATA 6])
 
 (defun (prc-modexp_cds___cds_LT_96)
+  ;;   [OOB_EVENT 1])
   0)
 
 (defconstraint justify-hub-predictions-prc-modexp_cds (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp_cds-hypothesis)))
@@ -841,6 +903,9 @@
 (defconstraint valid-prc-modexp_cds-future-future-future-future-future (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp_cds-hypothesis)))
   (callToLT 5 0 (prc-modexp_cds___cds) 0 96))
 
+;; ;; OOB_EVENT_1 is already constrained
+;; (defconstraint set-oob-event-prc-modexp_cds (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp_cds-hypothesis)))
+;;   (vanishes! [OOB_EVENT 2]))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                         ;;
 ;;   6.2 For MODEXP - base ;;
@@ -897,6 +962,9 @@
             0
             32))
 
+;; (defconstraint set-oob-event-prc-modexp_base (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp_base-hypothesis)))
+;;   (begin (vanishes! [OOB_EVENT 1])
+;;          (vanishes! [OOB_EVENT 2])))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                         ;;
 ;;   6.3 For MODEXP        ;;
@@ -942,6 +1010,9 @@
 (defconstraint valid-prc-modexp_exponent-future-future (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp_exponent-hypothesis)))
   (callToLT 2 0 (prc-modexp_exponent___ebs) 0 32))
 
+;; (defconstraint set-oob-event-prc-modexp_exponent (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp_exponent-hypothesis)))
+;;   (begin (vanishes! [OOB_EVENT 1])
+;;          (vanishes! [OOB_EVENT 2])))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                         ;;
 ;;   6.4 For MODEXP        ;;
@@ -984,6 +1055,9 @@
 (defconstraint valid-prc-modexp_modulus-future-future (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp_modulus-hypothesis)))
   (callToLT 2 0 (prc-modexp_modulus___mbs) 0 (prc-modexp_modulus___bbs)))
 
+;; (defconstraint set-oob-event-prc-modexp_modulus (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp_modulus-hypothesis)))
+;;   (begin (vanishes! [OOB_EVENT 1])
+;;          (vanishes! [OOB_EVENT 2])))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                         ;;
 ;;   6.4 For MODEXP        ;;
@@ -1059,7 +1133,11 @@
 (defconstraint valid-prc-modexp_pricing-future-future-future-future-future (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp_pricing-hypothesis)))
   (callToLT 5 0 (prc-modexp_pricing___call_gas) 0 (prc-modexp_pricing___precompile_cost)))
 
+;; (defconstraint set-oob-event-prc-modexp_pricing (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp_pricing-hypothesis)))
+;;   (begin (eq! [OOB_EVENT 1] (prc-modexp_pricing___insufficient_gas))
+;;          (vanishes! [OOB_EVENT 2])))
 (defconstraint constrain-remaining-gas-prc-modexp_pricing (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp_pricing-hypothesis)))
+  ;;   (if-zero [OOB_EVENT 1]
   (if-zero 0
            (eq! (prc-modexp_pricing___remaining_gas)
                 (- (prc-modexp_pricing___call_gas) (prc-modexp_pricing___precompile_cost)))
