@@ -1,12 +1,5 @@
 (module logInfo)
 
-(defconst 
-  LOG0 0xa0
-  LOG1 0xa1
-  LOG2 0xa2
-  LOG3 0xa3
-  LOG4 0xa4)
-
 (defun (if-not-eq A B then)
   (if-not-zero (- A B)
                then))

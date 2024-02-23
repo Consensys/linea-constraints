@@ -4,6 +4,16 @@
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; EVM INSTRUCTION ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;                 ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ADD                                           1
+  MUL                                           2
+  SUB                                           3
+  DIV                                           4
+  SDIV                                          5
+  MOD                                           6
+  SMOD                                          7
+  ADDMOD                                        8
+  MULMOD                                        9
+  EXP                                           10
   SIGNEXTEND                                    11
   LT                                            16
   GT                                            17
@@ -19,6 +29,11 @@
   SHL                                           27
   SHR                                           28
   SAR                                           29
+  LOG0                                          0xa0
+  LOG1                                          0xa1
+  LOG2                                          0xa2
+  LOG3                                          0xa3
+  LOG4                                          0xa4
   INVALID_CODE_PREFIX_VALUE                     0xEF
   JUMPDEST                                      0x5b
   PUSH_1                                        0x60
@@ -27,11 +42,25 @@
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; SIZE / LENGTH ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;               ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  MMEDIUMMO                                     7
+  MMEDIUM                                       8
   LLARGEMO                                      15
   LLARGE                                        16
   LLARGEPO                                      (+ LLARGE 1)
   WORD_SIZE_MO                                  31
   WORD_SIZE                                     32
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;                     ;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; BLAKE MODEXP MODULE ;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;                     ;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  MODEXP_PHASE_BASE                             1
+  MODEXP_PHASE_EXPONENT                         2
+  MODEXP_PHASE_MODULUS                          3
+  MODEXP_PHASE_RESULT                           4
+  BLAKE_PHASE_DATA                              5
+  BLAKE_PHASE_PARAMS                            6
+  BLAKE_PHASE_RESULT                            7
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;            ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; MMU MODULE ;;
@@ -86,6 +115,13 @@
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;             ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;
+  ;; RLP prefix
+  ;;
+  RLP_PREFIX_INT_SHORT                          128 ;;RLP prefix of a short integer (<56 bytes), defined in the EYP.
+  RLP_PREFIX_INT_LONG                           183 ;;RLP prefix of a long integer (>55 bytes), defined in the EYP.
+  RLP_PREFIX_INT_LONG                           192 ;;RLP prefix of a short list (<56 bytes), defined in the EYP.
+  RLP_PREFIX_INT_LONG                           247 ;;RLP prefix of a long list (>55 bytes), defined in the EYP.
+  ;;
   ;; RLP_TXN Phase
   ;;
   RLP_TXN_PHASE_RLP_PREFIX_VALUE                1
@@ -118,8 +154,8 @@
   ;;
   ;; RLP_ADDR 
   ;;
-  RLP_ADDR_RECIPE_1                             1 ;; for RlpAddr, used to discriminate between recipe for create
-  RLP_ADDR_RECIPE_2                             2 ;; for RlpAddr, used to discriminate between recipe for create
+  RLP_ADDR_RECIPE_1                             1   ;; for RlpAddr, used to discriminate between recipe for create
+  RLP_ADDR_RECIPE_2                             2   ;; for RlpAddr, used to discriminate between recipe for create
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;            ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; WCP MODULE ;;

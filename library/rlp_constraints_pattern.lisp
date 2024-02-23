@@ -1,8 +1,4 @@
 (defconst 
-  INT_SHORT        128   ;;RLP prefix of a short integer (<56 bytes), defined in the EYP.
-  INT_LONG         183   ;;RLP prefix of a long integer (>55 bytes), defined in the EYP.
-  LIST_SHORT       192   ;;RLP prefix of a short list (<56 bytes), defined in the EYP.
-  LIST_LONG        247   ;;RLP prefix of a long list (>55 bytes), defined in the EYP.
   G_TXDATA_ZERO    4     ;;Gas cost for a zero data byte, defined in the EYP.
   G_TXDATA_NONZERO 16    ;;Gas cost for a non-zero data byte, defined in the EYP.
   CREATE2_SHIFT    0xff) ;; create2 first byte
@@ -45,7 +41,7 @@
                                 (begin (eq! (+ (shift lc -2) (prev lc))
                                             1)
                                        (eq! (prev limb)
-                                            (* (+ INT_SHORT byteSize) (^ 256 LLARGEMO)))
+                                            (* (+ RLP_PREFIX_INT_SHORT byteSize) (^ 256 LLARGEMO)))
                                        (eq! (prev nBytes) 1)))))))
 
 ;;  RLP prefix for a byte string ;;
@@ -58,16 +54,16 @@
                                 (begin (eq! (+ (prev lc) lc)
                                             1)
                                        (eq! limb
-                                            (* (+ (* INT_SHORT (- 1 isList))
-                                                  (* LIST_SHORT isList)
+                                            (* (+ (* RLP_PREFIX_INT_SHORT (- 1 isList))
+                                                  (* RLP_PREFIX_INT_LONG isList)
                                                   length)
                                                (^ 256 LLARGEMO)))
                                        (eq! nBytes 1))
                                 (begin (eq! (+ (shift lc -2) (prev lc))
                                             1)
                                        (eq! (prev limb)
-                                            (* (+ (* INT_LONG (- 1 isList))
-                                                  (* LIST_LONG isList)
+                                            (* (+ (* RLP_PREFIX_INT_LONG (- 1 isList))
+                                                  (* RLP_PREFIX_INT_LONG isList)
                                                   byteSize)
                                                (^ 256 LLARGEMO)))
                                        (eq! (prev nBytes) 1)
