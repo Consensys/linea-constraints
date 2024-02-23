@@ -1,24 +1,11 @@
 (defconst 
-  INT_SHORT                           128  ;;RLP prefix of a short integer (<56 bytes), defined in the EYP.
-  INT_LONG                            183  ;;RLP prefix of a long integer (>55 bytes), defined in the EYP.
-  LIST_SHORT                          192  ;;RLP prefix of a short list (<56 bytes), defined in the EYP.
-  LIST_LONG                           247  ;;RLP prefix of a long list (>55 bytes), defined in the EYP.
-  LLARGE                              16
-  LLARGEMO                            15
-  G_TXDATA_ZERO                       4    ;;Gas cost for a zero data byte, defined in the EYP.
-  G_TXDATA_NONZERO                    16   ;;Gas cost for a non-zero data byte, defined in the EYP.
-  CREATE2_SHIFT                       0xff ;; create2 first byte
-  RLPADDR_CONST_RECIPE_1              1    ;; for RlpAddr, used to discriminate between recipe for create
-  RLPADDR_CONST_RECIPE_2              2    ;; for RlpAddr, used to discriminate between recipe for create
-  RLPRECEIPT_SUBPHASE_ID_TYPE         7
-  RLPRECEIPT_SUBPHASE_ID_STATUS_CODE  2
-  RLPRECEIPT_SUBPHASE_ID_CUMUL_GAS    3
-  RLPRECEIPT_SUBPHASE_ID_NO_LOG_ENTRY 11
-  RLPRECEIPT_SUBPHASE_ID_ADDR         53
-  RLPRECEIPT_SUBPHASE_ID_TOPIC_BASE   65
-  RLPRECEIPT_SUBPHASE_ID_DATA_LIMB    77
-  RLPRECEIPT_SUBPHASE_ID_DATA_SIZE    83
-  RLPRECEIPT_SUBPHASE_ID_TOPIC_DELTA  96)
+  INT_SHORT        128   ;;RLP prefix of a short integer (<56 bytes), defined in the EYP.
+  INT_LONG         183   ;;RLP prefix of a long integer (>55 bytes), defined in the EYP.
+  LIST_SHORT       192   ;;RLP prefix of a short list (<56 bytes), defined in the EYP.
+  LIST_LONG        247   ;;RLP prefix of a long list (>55 bytes), defined in the EYP.
+  G_TXDATA_ZERO    4     ;;Gas cost for a zero data byte, defined in the EYP.
+  G_TXDATA_NONZERO 16    ;;Gas cost for a non-zero data byte, defined in the EYP.
+  CREATE2_SHIFT    0xff) ;; create2 first byte
 
 ;;  Comparaison to 55 ;;
 (defpurefun (compTo55 length comp acc)

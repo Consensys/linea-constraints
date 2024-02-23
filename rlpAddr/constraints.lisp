@@ -97,7 +97,7 @@
 
 (defconstraint setting-recipe-flag ()
   (eq! RECIPE
-       (+ (* RLPADDR_CONST_RECIPE_1 RECIPE_1) (* RLPADDR_CONST_RECIPE_2 RECIPE_2))))
+       (+ (* RLP_ADDR_RECIPE_1 RECIPE_1) (* RLP_ADDR_RECIPE_2 RECIPE_2))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                              ;;

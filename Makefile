@@ -26,7 +26,7 @@ EC_DATA := ec_data/columns.lisp \
 
 EUC := euc
 
-LIBRARY := library/constant.lisp library/rlp_constraints_pattern.lisp
+LIBRARY := library/rlp_constraints_pattern.lisp
 
 LOG_DATA := logData
 

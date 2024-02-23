@@ -6,6 +6,9 @@
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   SIGNEXTEND                                    11
   LT                                            16
+  GT                                            17
+  SLT                                           18
+  SGT                                           19
   EQ_                                           20
   ISZERO                                        21
   AND                                           22
@@ -16,6 +19,9 @@
   SHL                                           27
   SHR                                           28
   SAR                                           29
+  INVALID_CODE_PREFIX_VALUE                     0xEF
+  JUMPDEST                                      0x5b
+  PUSH_1                                        0x60
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;               ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; SIZE / LENGTH ;;
@@ -24,13 +30,8 @@
   LLARGEMO                                      15
   LLARGE                                        16
   LLARGEPO                                      (+ LLARGE 1)
+  WORD_SIZE_MO                                  31
   WORD_SIZE                                     32
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;git stat
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;             ;;
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; MISC SHARED ;;
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;             ;;
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  INVALID_CODE_PREFIX_VALUE                     0xEF
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;            ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; MMU MODULE ;;
@@ -78,6 +79,53 @@
   MMIO_INST_RAM_TO_RAM_TWO_SOURCE               0xfe34
   ;; RAM
   MMIO_INST_RAM_EXCISION                        0xfe41
-  MMIO_INST_RAM_VANISHES                        0xfe42)
+  MMIO_INST_RAM_VANISHES                        0xfe42
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;             ;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; RLP* MODULE ;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;             ;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;;
+  ;; RLP_TXN Phase
+  ;;
+  RLP_TXN_PHASE_RLP_PREFIX_VALUE                1
+  RLP_TXN_PHASE_CHAIN_ID_VALUE                  2
+  RLP_TXN_PHASE_NONCE_VALUE                     3
+  RLP_TXN_PHASE_GAS_PRICE_VALUE                 4
+  RLP_TXN_PHASE_MAX_PRIORITY_FEE_PER_GAS_VALUE  5
+  RLP_TXN_PHASE_MAX_FEE_PER_GAS_VALUE           6
+  RLP_TXN_PHASE_GAS_LIMIT_VALUE                 7
+  RLP_TXN_PHASE_TO_VALUE                        8
+  RLP_TXN_PHASE_VALUE_VALUE                     9
+  RLP_TXN_PHASE_DATA_VALUE                      10
+  RLP_TXN_PHASE_ACCESS_LIST_VALUE               11
+  RLP_TXN_PHASE_BETA_VALUE                      12
+  RLP_TXN_PHASE_Y_VALUE                         13
+  RLP_TXN_PHASE_R_VALUE                         14
+  RLP_TXN_PHASE_S_VALUE                         15
+  ;;
+  ;; RLP_RCPT Phase
+  ;;
+  RLP_RCPT_SUBPHASE_ID_TYPE                     7
+  RLP_RCPT_SUBPHASE_ID_STATUS_CODE              2
+  RLP_RCPT_SUBPHASE_ID_CUMUL_GAS                3
+  RLP_RCPT_SUBPHASE_ID_NO_LOG_ENTRY             11
+  RLP_RCPT_SUBPHASE_ID_ADDR                     53
+  RLP_RCPT_SUBPHASE_ID_TOPIC_BASE               65
+  RLP_RCPT_SUBPHASE_ID_DATA_LIMB                77
+  RLP_RCPT_SUBPHASE_ID_DATA_SIZE                83
+  RLP_RCPT_SUBPHASE_ID_TOPIC_DELTA              96
+  ;;
+  ;; RLP_ADDR 
+  ;;
+  RLP_ADDR_RECIPE_1                             1 ;; for RlpAddr, used to discriminate between recipe for create
+  RLP_ADDR_RECIPE_2                             2 ;; for RlpAddr, used to discriminate between recipe for create
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;            ;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; WCP MODULE ;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;            ;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  LEQ                                           0x0E
+  GEQ                                           0x0F)
 
 

@@ -9,9 +9,6 @@
   G_txcreate                    32000
   G_accesslistaddress           2400
   G_accessliststorage           1900
-  ;;
-  LT                            0x10
-  ISZERO                        21
   ;; the following should be taken from rlpTxn constant
   common_rlp_txn_phase_number_0 1
   common_rlp_txn_phase_number_1 8
@@ -387,11 +384,11 @@
 ;;                                           ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defconstraint verticalisation-rlp-txn-rcpt (:guard (first-row-trigger))
-  (begin (eq! PHASE_RLP_TXNRCPT RLPRECEIPT_SUBPHASE_ID_TYPE)
+  (begin (eq! PHASE_RLP_TXNRCPT RLP_RCPT_SUBPHASE_ID_TYPE)
          (eq! OUTGOING_RLP_TXNRCPT (tx_type))
-         (eq! (next PHASE_RLP_TXNRCPT) RLPRECEIPT_SUBPHASE_ID_STATUS_CODE)
+         (eq! (next PHASE_RLP_TXNRCPT) RLP_RCPT_SUBPHASE_ID_STATUS_CODE)
          (eq! (next OUTGOING_RLP_TXNRCPT) STATUS_CODE)
-         (eq! (shift PHASE_RLP_TXNRCPT 2) RLPRECEIPT_SUBPHASE_ID_CUMUL_GAS)
+         (eq! (shift PHASE_RLP_TXNRCPT 2) RLP_RCPT_SUBPHASE_ID_CUMUL_GAS)
          (eq! (shift OUTGOING_RLP_TXNRCPT 2) CUMULATIVE_CONSUMED_GAS)))
 
 
