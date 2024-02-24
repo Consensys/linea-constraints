@@ -46,15 +46,15 @@
 
                 ;; precompile related
                 ;; precompile flags
-                ( ECRECOVER                                                 :binary@prove )
-                ( SHA2-256                                                  :binary@prove )
-                ( RIPEMD-160                                                :binary@prove )
-                ( IDENTITY                                                  :binary@prove )
-                ( MODEXP                                                    :binary@prove )
-                ( ECADD                                                     :binary@prove )
-                ( ECMUL                                                     :binary@prove )
-                ( ECPAIRING                                                 :binary@prove )
-                ( BLAKE2f                                                   :binary@prove )
+                ( PRC_ECRECOVER                                                 :binary@prove )
+                ( PRC_SHA2-256                                                  :binary@prove )
+                ( PRC_RIPEMD-160                                                :binary@prove )
+                ( PRC_IDENTITY                                                  :binary@prove )
+                ( PRC_MODEXP                                                    :binary@prove )
+                ( PRC_ECADD                                                     :binary@prove )
+                ( PRC_ECMUL                                                     :binary@prove )
+                ( PRC_ECPAIRING                                                 :binary@prove )
+                ( PRC_BLAKE2f                                                   :binary@prove )
                 ;; execution paths
                 ( PRC_SUCCESS_WILL_REVERT                                   :binary@prove )
                 ( PRC_SUCCESS_WONT_REVERT                                   :binary@prove )

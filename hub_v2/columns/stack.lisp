@@ -6,10 +6,6 @@
   PEEK_AT_STACK
 
   (
-   ;; stack height columns
-   HEIGHT_UNDER
-   HEIGHT_OVER
-
    ;; stack items
    ( STACK_ITEM_HEIGHT       :array [4] )
    ( STACK_ITEM_VALUE_HI     :array [4] )
@@ -20,31 +16,31 @@
    ;; instruction and instruction decoded flags
    ( INSTRUCTION             :display :opcode )
    STATIC_GAS
-   ( ACC_FLAG                :binary )           
-   ( ADD_FLAG                :binary )           
-   ( BIN_FLAG                :binary )           
-   ( BTC_FLAG                :binary )           
-   ( CALL_FLAG               :binary )          
-   ( CON_FLAG                :binary )           
-   ( COPY_FLAG               :binary )          
-   ( CREATE_FLAG             :binary )        
-   ( DUP_FLAG                :binary )           
-   ( EXT_FLAG                :binary )           
-   ( HALT_FLAG               :binary )          
-   ( INVALID_FLAG            :binary )       
-   ( JUMP_FLAG               :binary )          
-   ( KEC_FLAG                :binary )           
-   ( LOG_FLAG                :binary )           
-   ( MACHINE_STATE_FLAG      :binary ) 
-   ( MOD_FLAG                :binary )           
-   ( MUL_FLAG                :binary )           
-   ( PUSHPOP_FLAG            :binary )       
-   ( SHF_FLAG                :binary )           
-   ( STACKRAM_FLAG           :binary )      
-   ( STO_FLAG                :binary )           
-   ( SWAP_FLAG               :binary )          
-   ( TXN_FLAG                :binary )           
-   ( WCP_FLAG                :binary )           
+   ( ACC_FLAG                :binary )
+   ( ADD_FLAG                :binary )
+   ( BIN_FLAG                :binary )
+   ( BTC_FLAG                :binary )
+   ( CALL_FLAG               :binary )
+   ( CON_FLAG                :binary )
+   ( COPY_FLAG               :binary )
+   ( CREATE_FLAG             :binary )
+   ( DUP_FLAG                :binary )
+   ( EXT_FLAG                :binary )
+   ( HALT_FLAG               :binary )
+   ( INVALID_FLAG            :binary )
+   ( JUMP_FLAG               :binary )
+   ( KEC_FLAG                :binary )
+   ( LOG_FLAG                :binary )
+   ( MACHINE_STATE_FLAG      :binary )
+   ( MOD_FLAG                :binary )
+   ( MUL_FLAG                :binary )
+   ( PUSHPOP_FLAG            :binary )
+   ( SHF_FLAG                :binary )
+   ( STACKRAM_FLAG           :binary )
+   ( STO_FLAG                :binary )
+   ( SWAP_FLAG               :binary )
+   ( TXN_FLAG                :binary )
+   ( WCP_FLAG                :binary )
 
    ;; auxiliary flags to simplify constraints on exceptions
    ;; likely to disappear
