@@ -108,60 +108,9 @@
      (* 2 (shift MOD_FLAG k))
      (* 3 (shift WCP_FLAG k))))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;
-;;                     ;;
-;;    2.2 heartbeat    ;;
-;;                     ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;
-(defconstraint first-row (:domain {0})
-  (vanishes! STAMP))
-
-(defconstraint padding-vanishing ()
-  (if-zero STAMP
-           (begin (vanishes! CT)
-                  (vanishes! (+ (lookup_sum 0) (flag_sum))))))
-
-(defconstraint stamp-increments ()
-  (any! (remained-constant! STAMP) (did-inc! STAMP 1)))
-
-(defconstraint counter-reset ()
-  (if-not-zero (remained-constant! STAMP)
-               (vanishes! CT)))
-
-(defconstraint ct-max ()
-  (eq! CT_MAX (maxct_sum)))
-
-(defconstraint non-trivial-instruction-counter-cycle ()
-  (if-not-zero STAMP
-               (if-eq-else CT CT_MAX (will-inc! STAMP 1) (will-inc! CT 1))))
-
-(defconstraint final-row (:domain {-1})
-  (if-not-zero STAMP
-               (eq! CT CT_MAX)))
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                             ;;
-;;    2.3 counter constancy    ;;
-;;                             ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defconstraint counter-constancy ()
-  (begin (counter-constancy CT STAMP)
-         (debug (counter-constancy CT CT_MAX))
-         ;;(for i [2] (counter-constancy CT [OOB_EVENT i]))
-         (for i [6] (counter-constancy CT [DATA i]))
-         (counter-constancy CT INCOMING_INST)
-         (debug (counter-constancy CT IS_JUMP))
-         (debug (counter-constancy CT IS_JUMPI))
-         (debug (counter-constancy CT IS_RDC))
-         (debug (counter-constancy CT IS_CDL))
-         (debug (counter-constancy CT IS_CALL))
-         (debug (counter-constancy CT IS_CREATE))
-         (debug (counter-constancy CT IS_SSTORE))
-         (debug (counter-constancy CT IS_DEPLOYMENT))))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;                             ;;
-;;    2.4 binary constraints   ;;
+;;    2.2 binary constraints   ;;
 ;;                             ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; These constraints will be auto-generated due to the type of the columns
@@ -200,13 +149,12 @@
 ;; (defconstraint is-create-is-jump-oob-event ()
 ;;   (if-zero (+ IS_CREATE IS_JUMPI)
 ;;            (vanishes! [OOB_EVENT 2])))
-(defconstraint outgoing-res-lo-binary ()
-  (if-zero MOD_FLAG
-           (vanishes! (* OUTGOING_RES_LO (- 1 OUTGOING_RES_LO)))))
-
+;; (defconstraint outgoing-res-lo-binary ()
+;;   (if-zero MOD_FLAG
+;;            (vanishes! (* OUTGOING_RES_LO (- 1 OUTGOING_RES_LO)))))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                               ;;
-;;    2.5 instruction decoding   ;;
+;;    2.3 instruction decoding   ;;
 ;;                               ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defconstraint flag-sum-vanishes ()
@@ -218,7 +166,50 @@
                (eq! (flag_sum) 1)))
 
 (defconstraint decoding ()
-  (eq! INCOMING_INST (wght_sum)))
+  (eq! OOB_INST (wght_sum)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                             ;;
+;;    2.4 Constancy            ;;
+;;        constraints          ;;
+;;                             ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defconstraint counter-constancy ()
+  (begin (counter-constancy CT STAMP)
+         (debug (counter-constancy CT CT_MAX))
+         (for i [8] (counter-constancy CT [DATA i]))
+         (counter-constancy CT OOB_INST)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                     ;;
+;;    2.5 heartbeat    ;;
+;;                     ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;
+(defconstraint first-row (:domain {0})
+  (vanishes! STAMP))
+
+(defconstraint padding-vanishing ()
+  (if-zero STAMP
+           (begin (vanishes! CT)
+                  (vanishes! (+ (lookup_sum 0) (flag_sum))))))
+
+(defconstraint stamp-increments ()
+  (any! (remained-constant! STAMP) (did-inc! STAMP 1)))
+
+(defconstraint counter-reset ()
+  (if-not-zero (remained-constant! STAMP)
+               (vanishes! CT)))
+
+(defconstraint ct-max ()
+  (eq! CT_MAX (maxct_sum)))
+
+(defconstraint non-trivial-instruction-counter-cycle ()
+  (if-not-zero STAMP
+               (if-eq-else CT CT_MAX (will-inc! STAMP 1) (will-inc! CT 1))))
+
+(defconstraint final-row (:domain {-1})
+  (if-not-zero STAMP
+               (eq! CT CT_MAX)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                             ;;
