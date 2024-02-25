@@ -32,7 +32,6 @@
   (WCP_FLAG :binary@prove)
   (ADD_FLAG :binary@prove)
   (MOD_FLAG :binary@prove)
-  (INCOMING_INST :byte :display :opcode)
   (OUTGOING_INST :byte :display :opcode)
   (OUTGOING_DATA :array [4])
   OUTGOING_RES_LO)
