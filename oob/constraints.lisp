@@ -522,12 +522,12 @@
 ;; ;;          (vanishes! [OOB_EVENT 2])))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                               ;;
-;;   4 Populating common         ;;
+;;   5 Populating common         ;;
 ;;   precompiles                 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                       ;;
-;; 4.1 Common            ;;
+;; 5.1 Common            ;;
 ;; constraints for       ;; 
 ;; precompiles           ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -540,30 +540,44 @@
 (defun (prc___call_gas)
   [DATA 1])
 
-(defun (prc___remaining_gas)
+(defun (prc___cds)
   [DATA 2])
 
-(defun (prc___cds)
+(defun (prc___r_at_c)
   [DATA 3])
 
-(defun (prc___cds_ISZERO)
+(defun (prc___hub_success)
   [DATA 4])
 
-(defun (prc___r_at_c)
+(defun (prc___ram_success)
   [DATA 5])
 
-(defun (prc___r_at_c_ISZERO)
+(defun (prc___extract_call_data)
   [DATA 6])
 
-(defconstraint justify-hub-predictions-prc (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-common-hypothesis)))
-  (begin (eq! (prc___cds_ISZERO) OUTGOING_RES_LO)
-         (eq! (prc___r_at_c_ISZERO) (next OUTGOING_RES_LO))))
+(defun (prc___empty_call_data)
+  [DATA 7])
+
+(defun (prc___r_at_c_nonzero)
+  [DATA 8])
+
+(defun (prc___cds_is_zero)
+  OUTGOING_RES_LO)
+
+(defun (prc___r_at_c_is_zero)
+  (next OUTGOING_RES_LO))
 
 (defconstraint valid-prc (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-common-hypothesis)))
   (callToISZERO 0 0 (prc___cds)))
 
 (defconstraint valid-prc-future (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-common-hypothesis)))
   (callToISZERO 1 0 (prc___r_at_c)))
+
+(defconstraint justify-hub-predictions-prc (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-common-hypothesis)))
+  (begin (eq! (prc___extract_call_data)
+              (* (prc___hub_success) (- 1 (prc___cds_is_zero))))
+         (eq! (prc___empty_call_data) (* (prc___hub_success) (prc___cds_is_zero)))
+         (eq! (prc___r_at_c_nonzero) (- 1 (prc___r_at_c_is_zero)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                       ;;
