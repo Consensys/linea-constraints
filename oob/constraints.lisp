@@ -20,7 +20,7 @@
   (+ IS_BLAKE2F_cds IS_BLAKE2F_params))
 
 (defun (flag_sum_prc_modexp)
-  (+ IS_MODEXP_cds IS_MODEXP_xbs IS_MODEXP_lead IS_MODEXP_extract IS_MODEXP_pricing))
+  (+ IS_MODEXP_cds IS_MODEXP_xbs IS_MODEXP_lead IS_MODEXP_pricing IS_MODEXP_extract))
 
 (defun (flag_sum_prc)
   (+ (flag_sum_prc_common) (flag_sum_prc_blake) (flag_sum_prc_modexp)))
@@ -55,8 +55,8 @@
   (+ (* OOB_INST_modexp_cds IS_MODEXP_cds)
      (* OOB_INST_modexp_xbs IS_MODEXP_xbs)
      (* OOB_INST_modexp_lead IS_MODEXP_lead)
-     (* OOB_INST_modexp_extract IS_MODEXP_extract)
-     (* OOB_INST_modexp_pricing IS_MODEXP_pricing)))
+     (* OOB_INST_modexp_pricing IS_MODEXP_pricing)
+     (* OOB_INST_modexp_extract IS_MODEXP_extract)))
 
 (defun (wght_sum_prc)
   (+ (wght_sum_prc_common) (wght_sum_prc_blake) (wght_sum_prc_modexp)))
@@ -91,8 +91,8 @@
   (+ (* CT_MAX_MODEXP_cds IS_MODEXP_cds)
      (* CT_MAX_MODEXP_xbs IS_MODEXP_xbs)
      (* CT_MAX_MODEXP_lead IS_MODEXP_lead)
-     (* CT_MAX_MODEXP_extract IS_MODEXP_extract)
-     (* CT_MAX_MODEXP_pricing IS_MODEXP_pricing)))
+     (* CT_MAX_MODEXP_pricing IS_MODEXP_pricing)
+     (* CT_MAX_MODEXP_extract IS_MODEXP_extract)))
 
 (defun (maxct_sum_prc)
   (+ (maxct_sum_prc_common) (maxct_sum_prc_blake) (maxct_sum_prc_modexp)))
