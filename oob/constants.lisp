@@ -42,7 +42,7 @@
   CT_MAX_ECPAIRING        4
   CT_MAX_BLAKE2F_cds      1
   CT_MAX_BLAKE2F_params   1
-  CT_MAX_MODEXP_cds       3
+  CT_MAX_MODEXP_cds       2
   CT_MAX_MODEXP_xbs       2
   CT_MAX_MODEXP_lead      3
   CT_MAX_MODEXP_pricing   5
