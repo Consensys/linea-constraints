@@ -19,10 +19,10 @@ BIN := bin
 CONSTANTS := constants/constants.lisp
 
 EC_DATA := ec_data/columns.lisp \
-	ec_data/constraints.lisp \
-	ec_data/ecdata_into_ext.lisp \
-	ec_data/ecdata_into_wcp.lisp \
-	ec_data/hub_into_ecdata.lisp \
+	   ec_data/constraints.lisp \
+	   ec_data/ecdata_into_ext.lisp \
+	   ec_data/ecdata_into_wcp.lisp \
+	   ec_data/hub_into_ecdata.lisp \
 
 EUC := euc
 
@@ -43,6 +43,9 @@ MXP := mxp/columns.lisp \
 
 PUB_DATA := $(shell find pub/ -iname '*.lisp')
 
+RIPSHA := ripsha/columns.lisp \
+	  ripsha/constraints.lisp
+
 RLP_ADDR := rlpAddr
 
 RLP_TXN := rlp_txn
@@ -50,21 +53,23 @@ RLP_TXN := rlp_txn
 RLP_TXRCPT := rlp_txrcpt			
 
 ROM := rom/columns.lisp \
-	rom/constraints.lisp \
-	rom/rom_into_instructionDecoder.lisp
+       rom/constraints.lisp \
+       rom/rom_into_instructionDecoder.lisp
 
 ROM_LEX := romLex/columns.lisp romLex/constraints.lisp \
-	romLex/romLex_into_rom.lisp
+	   romLex/romLex_into_rom.lisp
 
 SHIFT :=  shf
 
 STACK := hub/columns.lisp \
-	hub/constraints.lisp
+	 hub/constraints.lisp
 
 STP := stp/columns.lisp stp/constraints.lisp \
-	stp/lookups/stp_into_mod.lisp stp/lookups/stp_into_wcp.lisp
+       stp/lookups/stp_into_mod.lisp stp/lookups/stp_into_wcp.lisp
 
-TABLES := reference_tables/binRT.lisp reference_tables/shfRT.lisp reference_tables/instruction_decoder.lisp 
+TABLES := reference_tables/binRT.lisp \
+	  reference_tables/shfRT.lisp \
+	  reference_tables/instruction_decoder.lisp 
 
 TRM := trm/columns.lisp trm/constraints.lisp
 
@@ -91,6 +96,7 @@ ZKEVM_MODULES := ${ALU} \
 	${MMIO} \
 	${MXP} \
 	${PUB_DATA} \
+	${RIPSHA} \
 	${RLP_ADDR} \
 	${RLP_TXN} \
 	${RLP_TXRCPT} \
