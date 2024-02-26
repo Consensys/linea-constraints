@@ -567,4 +567,6 @@
                           LLARGE)
                 4)))
 
+;; TODO finish microinstruction writing
+
 
