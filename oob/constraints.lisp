@@ -786,9 +786,6 @@
 (defun (prc-modexp_lead___bbs)
   [DATA 1])
 
-(defun (prc-modexp_lead___cds)
-  [DATA 2])
-
 (defun (prc-modexp_lead___ebs)
   [DATA 3])
 
@@ -914,6 +911,62 @@
                   (vanishes! (prc___return_gas))
                   (eq! (prc___return_gas) (- (prc___call_gas) (prc-modexp_pricing___precompile_cost))))
          (eq! (prc___r_at_c_is_zero) OUTGOING_RES_LO)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                         ;;
+;;   6.5 For MODEXP        ;;
+;;   - extract             ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun (prc-modexp_extract-hypothesis)
+  IS_MODEXP_extract)
+
+(defun (prc-modexp_extract___bbs)
+  [DATA 3])
+
+(defun (prc-modexp_extract___ebs)
+  [DATA 4])
+
+(defun (prc-modexp_extract___mbs)
+  [DATA 5])
+
+(defun (prc-modexp_extract___extract_base)
+  [DATA 6])
+
+(defun (prc-modexp_extract___extract_exponent)
+  [DATA 7])
+
+(defun (prc-modexp_extract___extract_modulus)
+  [DATA 8])
+
+(defun (prc-modexp_extract___bbs_is_zero)
+  OUTGOING_RES_LO)
+
+(defun (prc-modexp_extract___ebs_is_zero)
+  (next OUTGOING_RES_LO))
+
+(defun (prc-modexp_extract___mbs_is_zero)
+  (shift OUTGOING_RES_LO 2))
+
+(defun (prc-modexp_extract___call_data_extends_beyond_exponent)
+  (shift OUTGOING_RES_LO 3))
+
+(defconstraint valid-prc-modexp_extract (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp_extract-hypothesis)))
+  (callToISZERO 0 0 (prc-modexp_extract___bbs)))
+
+(defconstraint valid-prc-modexp_extract-future (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp_extract-hypothesis)))
+  (callToISZERO 1 0 (prc-modexp_extract___ebs)))
+
+(defconstraint valid-prc-modexp_extract-future-future (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp_extract-hypothesis)))
+  (callToISZERO 2 0 (prc-modexp_extract___mbs)))
+
+(defconstraint justify-hub-predictions-prc-modexp_extract (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp_extract-hypothesis)))
+  (begin (eq! (prc-modexp_extract___extract_modulus)
+              (* (prc-modexp_extract___call_data_extends_beyond_exponent)
+                 (- 1 (modexp_extract___mbs_is_zero))))
+         (eq! (prc-modexp_extract___extract_base)
+              (* (prc-modexp_extract___extract_modulus) (- 1 prc-modexp_extract___bbs_is_zero)))
+         (eq! (prc-modexp_extract___extract_exponent)
+              (* (prc-modexp_extract___extract_modulus) (- 1 prc-modexp_extract___ebs_is_zero)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                         ;;
