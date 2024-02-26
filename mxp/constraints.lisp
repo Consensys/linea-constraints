@@ -1,6 +1,6 @@
 (module mxp)
 
-(defconst
+(defconst 
   G_MEM      3 ;; 'G_memory' in Ethereum yellow paper
   SHORTCYCLE 3
   LONGCYCLE  16
@@ -107,6 +107,19 @@
          (vanishes! LIN_COST)
          (= WORDS_NEW WORDS)
          (= C_MEM_NEW C_MEM)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                           ;;
+;;    2.5 YIELDS_NONTRIVIAL_MMU_OPERATION    ;;
+;;                                           ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defconstraint yeld-nontrivial-mmu-operation ()
+  (if-not-zero [MXP_TYPE 4]
+               (begin (if-not-zero MXPX
+                                   (vanishes! YIELDS_NONTRIVIAL_MMU_OPERATION)
+                                   (if-zero SIZE_1_LO
+                                            (vanishes! YIELDS_NONTRIVIAL_MMU_OPERATION)
+                                            (eq! YIELDS_NONTRIVIAL_MMU_OPERATION 1))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                     ;;
@@ -310,16 +323,16 @@
 
 (defconstraint setting-gas-mxp (:guard (* (standing-hypothesis) (offsets-are-in-bounds)))
   (if (eq! INST RETURN)
-       (= GAS_MXP
-          (+ QUAD_COST (* DEPLOYS LIN_COST)))
-       (= GAS_MXP (+ QUAD_COST LIN_COST))))
+      (= GAS_MXP
+         (+ QUAD_COST (* DEPLOYS LIN_COST)))
+      (= GAS_MXP (+ QUAD_COST LIN_COST))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                    ;;
 ;;    2.12 Consistency Constraints    ;;
 ;;                                    ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defpermutation
+(defpermutation 
   (CN_perm
    STAMP_perm
    C_MEM_perm
@@ -343,3 +356,5 @@
                                                (= (next C_MEM_perm) C_MEM_NEW_perm)))
                            (begin (vanishes! (next WORDS_perm))
                                   (vanishes! (next C_MEM_perm))))))
+
+

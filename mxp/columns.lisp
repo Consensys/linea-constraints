@@ -41,4 +41,7 @@
   (QUAD_COST :i64)
   (LIN_COST :i64)
   (GAS_MXP :i64)
-  (EXPANDS :binary@prove))
+  (EXPANDS :binary@prove)
+  (YIELDS_NONTRIVIAL_MMU_OPERATION :binary@prove))
+
+
