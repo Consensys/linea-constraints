@@ -1,9 +1,9 @@
 (module shf)
 
 (defcolumns 
-  (SHIFT_STAMP :i3)
+  (SHIFT_STAMP :i32)
   (IOMF :binary)
-  (COUNTER :byte)
+  (COUNTER :i8)
   (ONE_LINE_INSTRUCTION :binary@prove)
   (ARG_1_HI :i128)
   (ARG_1_LO :i128)
@@ -16,11 +16,11 @@
   (BITS :binary@prove)
   (NEG :binary@prove)
   (KNOWN :binary@prove)
-  (LEFT_ALIGNED_SUFFIX_HIGH :i16)  ;decoded
-  (RIGHT_ALIGNED_PREFIX_HIGH :i16) ;decoded
-  (LEFT_ALIGNED_SUFFIX_LOW :i16)   ;decoded
-  (RIGHT_ALIGNED_PREFIX_LOW :i16)  ;decoded
-  (ONES :i16)                      ;decoded
+  (LEFT_ALIGNED_SUFFIX_HIGH :byte)  ;decoded
+  (RIGHT_ALIGNED_PREFIX_HIGH :byte) ;decoded
+  (LEFT_ALIGNED_SUFFIX_LOW :byte)   ;decoded
+  (RIGHT_ALIGNED_PREFIX_LOW :byte)  ;decoded
+  (ONES :byte)                      ;decoded
   (LOW_3 :i128)
   (MICRO_SHIFT_PARAMETER :i8)
   (BIT_1 :binary@prove)
