@@ -1,0 +1,21 @@
+(defun (hub-into-hash-info-trigger)
+  (*
+    hub.PEEK_AT_STACK
+    hub.stack/HASH_INFO_FLAG))
+
+(deflookup hub-into-hash-info
+           ;; target columns
+	   ( 
+	     hash-info.STAMP
+	     hash-info.TOTAL_SIZE
+	     hash-info.KEC_HI
+	     hash-info.KEC_LO
+           )
+           ;; source columns
+	   (
+	     (* hub.HASH_INFO_STAMP            (hub-into-hash-info-trigger))
+	     (* hub.stack/HASH_INFO_SIZE       (hub-into-hash-info-trigger))
+	     (* hub.stack/HASH_INFO_KEC_HI     (hub-into-hash-info-trigger))
+	     (* hub.stack/HASH_INFO_KEC_LO     (hub-into-hash-info-trigger))
+           )
+)
