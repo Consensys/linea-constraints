@@ -241,31 +241,31 @@
 ;;
 ;; Utilities
 ;;
-(defun (callToEuc dividend divisor)
-  (begin (eq! prprc/EUC_FLAG 1)
-         (eq! prprc/EUC_A dividend)
-         (eq! prprc/EUC_B divisor)))
+(defun (callToEuc row dividend divisor)
+  (begin (eq! (shift prprc/EUC_FLAG row) 1)
+         (eq! (shift prprc/EUC_A row) dividend)
+         (eq! (shift prprc/EUC_B row) divisor)))
 
-(defun (callToLt arg1hi arg1lo arg2lo)
-  (begin (eq! prprc/WCP_FLAG 1)
-         (eq! prprc/WCP_INST EVM_INST_LT)
-         (eq! prprc/WCP_ARG_1_HI arg1hi)
-         (eq! prprc/WCP_ARG_1_LO arg1lo)
-         (eq! prprc/WCP_ARG_2_LO arg2lo)))
+(defun (callToLt row arg1hi arg1lo arg2lo)
+  (begin (eq! (shift prprc/WCP_FLAG row) 1)
+         (eq! (shift prprc/WCP_INST row) EVM_INST_LT)
+         (eq! (shift prprc/WCP_ARG_1_HI row) arg1hi)
+         (eq! (shift prprc/WCP_ARG_1_LO row) arg1lo)
+         (eq! (shift prprc/WCP_ARG_2_LO row) arg2lo)))
 
-(defun (callToEq arg1hi arg1lo arg2lo)
-  (begin (eq! prprc/WCP_FLAG 1)
-         (eq! prprc/WCP_INST EVM_INST_EQ)
-         (eq! prprc/WCP_ARG_1_HI arg1hi)
-         (eq! prprc/WCP_ARG_1_LO arg1lo)
-         (eq! prprc/WCP_ARG_2_LO arg2lo)))
+(defun (callToEq row arg1hi arg1lo arg2lo)
+  (begin (eq! (shift prprc/WCP_FLAG row) 1)
+         (eq! (shift prprc/WCP_INST row) EVM_INST_EQ)
+         (eq! (shift prprc/WCP_ARG_1_HI row) arg1hi)
+         (eq! (shift prprc/WCP_ARG_1_LO row) arg1lo)
+         (eq! (shift prprc/WCP_ARG_2_LO row) arg2lo)))
 
-(defun (callToIszero arg1hi arg1lo)
-  (begin (eq! prprc/WCP_FLAG 1)
-         (eq! prprc/WCP_INST EVM_INST_ISZERO)
-         (eq! prprc/WCP_ARG_1_HI arg1hi)
-         (eq! prprc/WCP_ARG_1_LO arg1lo)
-         (debug (vanishes! prprc/WCP_ARG_2_LO))))
+(defun (callToIszero row arg1hi arg1lo)
+  (begin (eq! (shift prprc/WCP_FLAG row) 1)
+         (eq! (shift prprc/WCP_INST row) EVM_INST_ISZERO)
+         (eq! (shift prprc/WCP_ARG_1_HI row) arg1hi)
+         (eq! (shift prprc/WCP_ARG_1_LO row) arg1lo)
+         (debug (vanishes! (shift prprc/WCP_ARG_2_LO row)))))
 
 (defun (stdProgression C)
   (eq! C
@@ -295,8 +295,8 @@
          (eq! TOTNT NB_MICRO_ROWS_TOT_MLOAD)
          (vanishes! TOTRZ)
          ;; setting prprc row n°1
-         (next (callToEuc macro/SRC_OFFSET_LO LLARGE))
-         (next (callToIszero 0 (mload-sbo)))
+         (callToEuc 1 macro/SRC_OFFSET_LO LLARGE)
+         (callToIszero 1 0 (mload-sbo))
          ;;setting mmio constant values
          (eq! (shift micro/CN_S NB_PP_ROWS_MLOAD_PO) macro/SRC_ID)
          (vanishes! (shift micro/EXO_SUM NB_PP_ROWS_MLOAD_PO))
@@ -333,8 +333,8 @@
          (eq! TOTNT NB_MICRO_ROWS_TOT_MSTORE)
          (vanishes! TOTRZ)
          ;; setting prprc row n°1
-         (next (callToEuc macro/TGT_OFFSET_LO LLARGE))
-         (next (callToIszero 0 (mstore-tbo)))
+         (callToEuc 1 macro/TGT_OFFSET_LO LLARGE)
+         (callToIszero 1 0 (mstore-tbo))
          ;;setting mmio constant values
          (eq! (shift micro/CN_T NB_PP_ROWS_MSTORE_PO) macro/TGT_ID)
          ;; setting first mmio inst
@@ -367,7 +367,7 @@
          (eq! TOTNT NB_MICRO_ROWS_TOT_MSTORE_EIGHT)
          (vanishes! TOTRZ)
          ;; setting prprc row n°1
-         (next (callToEuc macro/TGT_OFFSET_LO LLARGE))
+         (callToEuc 1 macro/TGT_OFFSET_LO LLARGE)
          ;; setting first mmio inst
          (eq! (shift micro/INST NB_PP_ROWS_MSTORE8_PO) MMIO_INST_LIMB_TO_RAM_ONE_TARGET)
          (eq! (shift micro/TLO NB_PP_ROWS_MSTORE8_PO) (mstore8-tlo))
@@ -390,8 +390,8 @@
          (eq! TOTNT NB_MICRO_ROWS_TOT_INVALID_CODE_PREFIX)
          (vanishes! TOTRZ)
          ;; setting prprc row n°1
-         (next (callToEuc macro/SRC_OFFSET_LO LLARGE))
-         (next (callToEq 0 (shift micro/LIMB NB_PP_ROWS_INVALID_CODE_PREFIX_PO) INVALID_CODE_PREFIX_VALUE))
+         (callToEuc 1 macro/SRC_OFFSET_LO LLARGE)
+         (callToEq 1 0 (shift micro/LIMB NB_PP_ROWS_INVALID_CODE_PREFIX_PO) INVALID_CODE_PREFIX_VALUE)
          ;; setting the success bit
          (eq! macro/SUCCESS_BIT
               (- 1 (next prprc/WCP_RES)))
@@ -455,24 +455,23 @@
          (eq! TOTNT NB_MICRO_ROWS_TOT_RIGHT_PADDED_WORD_EXTRACTION)
          (vanishes! TOTRZ)
          ;; setting prprc row n°1
-         (next (callToLt 0 (+ macro/SRC_OFFSET_LO WORD_SIZE) macro/REF_SIZE))
+         (callToLt 1 0 (+ macro/SRC_OFFSET_LO WORD_SIZE) macro/REF_SIZE)
          ;; setting prprc row n°2
-         (shift (callToLt 0 (right-pad-word-extract-extract-size) LLARGE) 2)
-         (shift (callToEuc (right-pad-word-extract-first-limb-byte-size) LLARGE) 2)
+         (callToLt 2 0 (right-pad-word-extract-extract-size) LLARGE)
+         (callToEuc 2 (right-pad-word-extract-first-limb-byte-size) LLARGE)
          ;; setting prprc row n°3
-         (shift (callToEuc (+ macro/SRC_OFFSET_LO macro/REF_OFFSET) LLARGE)
-                3)
-         (shift (callToLt 0
-                          (+ (right-pad-word-extract-sbo) (right-pad-word-extract-first-limb-byte-size))
-                          LLARGEPO)
-                3)
+         (callToEuc 3 (+ macro/SRC_OFFSET_LO macro/REF_OFFSET) LLARGE)
+         (callToLt 3
+                   0
+                   (+ (right-pad-word-extract-sbo) (right-pad-word-extract-first-limb-byte-size))
+                   LLARGEPO)
          ;; setting prprc row n°4
-         (shift (callToLt 0
-                          (+ (right-pad-word-extract-sbo) (right-pad-word-extract-second-limb-byte-size))
-                          LLARGEPO)
-                4)
+         (callToLt 4
+                   0
+                   (+ (right-pad-word-extract-sbo) (right-pad-word-extract-second-limb-byte-size))
+                   LLARGEPO)
          ;; setting prprc row n°5
-         (shift (callToIszero 0 (right-pad-word-extract-second-limb-byte-size)) 5)
+         (callToIszero 5 0 (right-pad-word-extract-second-limb-byte-size))
          ;;setting mmio constant values
          (eq! (shift micro/CN_S NB_PP_ROWS_RIGHT_PADDED_WORD_EXTRACTION_PO) macro/SRC_ID)
          (vanishes! (shift micro/EXO_SUM NB_PP_ROWS_RIGHT_PADDED_WORD_EXTRACTION_PO))
@@ -553,19 +552,19 @@
          (eq! [BIN 2] (ram-exo-wpad-last-limb-single-source))
          (eq! [BIN 3] (ram-exo-wpad-last-limb-is-full))
          ;; setting prprc row n°1
-         (next (callToEuc macro/SRC_OFFSET_LO LLARGE))
-         (next (callToIszero 0 (ram-exo-wpad-initial-sbo)))
+         (callToEuc 1 macro/SRC_OFFSET_LO LLARGE)
+         (callToIszero 1 0 (ram-exo-wpad-initial-sbo))
          ;; setting prprc row n°2
-         (shift (callToLt 0 macro/SIZE macro/REF_SIZE) 2)
-         (shift (callToEuc (ram-exo-wpad-padding-size) LLARGE) 2)
+         (callToLt 2 0 macro/SIZE macro/REF_SIZE)
+         (callToEuc 2 (ram-exo-wpad-padding-size) LLARGE)
          ;; setting prprc row n°3
-         (shift (callToIszero 0 prprc/EUC_REM) 3)
-         (shift (callToEuc (ram-exo-wpad-extraction-size) LLARGE) 3)
+         (callToIszero 3 0 prprc/EUC_REM)
+         (callToEuc 3 (ram-exo-wpad-extraction-size) LLARGE)
          ;; setting prprc row n°4
-         (shift (callToLt 0
-                          (+ (ram-exo-wpad-initial-sbo) (- (ram-exo-wpad-last-limb-byte-size) 1))
-                          LLARGE)
-                4)
+         (callToLt 4
+                   0
+                   (+ (ram-exo-wpad-initial-sbo) (- (ram-exo-wpad-last-limb-byte-size) 1))
+                   LLARGE)
          ;; setting mmio constant values
          (eq! (shift micro/CN_S NB_PP_ROWS_RAM_TO_EXO_WITH_PADDING_PO) macro/SRC_ID)
          (eq! (shift micro/SUCCESS_BIT NB_PP_ROWS_RAM_TO_EXO_WITH_PADDING_PO) macro/SUCCESS_BIT)
@@ -590,7 +589,7 @@
 ;;
 (defconstraint exo-to-ram-preprocessing (:guard (* IS_EXO_TO_RAM_TRANSPLANTS MACRO))
   (begin  ;; setting prprc row n°1
-         (next (callToEuc macro/SIZE LLARGE))
+         (callToEuc 1 macro/SIZE LLARGE)
          ;; setting nb of rows
          (vanishes! TOTLZ)
          (eq! TOTNT (next prprc/EUC_CEIL))
