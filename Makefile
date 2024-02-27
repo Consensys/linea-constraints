@@ -1,10 +1,10 @@
 CORSET ?= corset
 
-HUB_V2 := $(wildcard hub_v2/columns/*lisp) \
-	  $(wildcard hub_v2/constraints/heartbeat/*lisp) \
-	  $(wildcard hub_v2/constraints/generalities/*lisp) \
-	  $(wildcard hub_v2/lookups/*lisp) \
-	  hub_v2/constants.lisp
+HUB := $(wildcard hub/columns/*lisp) \
+       $(wildcard hub/constraints/heartbeat/*lisp) \
+       $(wildcard hub/constraints/generalities/*lisp) \
+       $(wildcard hub/lookups/*lisp) \
+       hub/constants.lisp
 
 ALU := alu/add/columns.lisp \
        alu/add/constraints.lisp \
@@ -15,10 +15,6 @@ ALU := alu/add/columns.lisp \
        alu/mul/columns.lisp \
        alu/mul/constraints.lisp \
        alu/mul/helpers.lisp
-# alu/add/hub_into_add.lisp \
-	# alu/ext/hub_into_ext.lisp \
-	# alu/mod/hub_into_mod.lisp \
-	# alu/mul/hub_into_mul.lisp
 
 BIN := bin   
 
@@ -56,9 +52,6 @@ ROM_LEX := romLex
 
 SHIFT :=  shf
 
-STACK := hub/columns.lisp \
-	 hub/constraints.lisp
-
 STP := stp/columns.lisp stp/constraints.lisp \
        stp/lookups/stp_into_mod.lisp stp/lookups/stp_into_wcp.lisp
 
@@ -79,33 +72,34 @@ EXP := exp
 GAS := gas/columns.lisp gas/constraints.lisp
 
 ZKEVM_MODULES := ${ALU} \
-	${BIN} \
-	${BLAKE2f_MODEXP_DATA} \
-	${CONSTANTS} \
-	${EC_DATA} \
-	${EUC} \
-	${EXP} \
-	${GAS} \
-	${LIBRARY} \
-	${LOG_DATA} \
-	${LOG_INFO} \
-	${MMU} \
-	${MMIO} \
-	${MXP} \
-	${PUB_DATA} \
-	${RIPSHA} \
-	${RLP_ADDR} \
-	${RLP_TXN} \
-	${RLP_TXRCPT} \
-	${ROM} \
-	${ROM_LEX} \
-	${SHIFT} \
-	${STACK} \
-	${STP} \
-	${TABLES} \
-	${TRM} \
-	${TXN_DATA} \
-	${WCP}
+		 ${BIN} \
+		 ${BLAKE2f_MODEXP_DATA} \
+		 ${CONSTANTS} \
+		 ${EC_DATA} \
+		 ${EUC} \
+		 ${EXP} \
+		 ${GAS} \
+		 ${HUB} \
+		 ${LIBRARY} \
+		 ${LOG_DATA} \
+		 ${LOG_INFO} \
+		 ${MMU} \
+		 ${MMIO} \
+		 ${MXP} \
+		 ${PUB_DATA} \
+		 ${RIPSHA} \
+		 ${RLP_ADDR} \
+		 ${RLP_TXN} \
+		 ${RLP_TXRCPT} \
+		 ${ROM} \
+		 ${ROM_LEX} \
+		 ${SHIFT} \
+		 ${STP} \
+		 ${TABLES} \
+		 ${TRM} \
+		 ${TXN_DATA} \
+		 ${WCP}
+	
 
 define.go: ${ZKEVM_MODULES}
 	${CORSET} wizard-iop -vv -P define -o $@ ${ZKEVM_MODULES}
