@@ -108,22 +108,22 @@
          (= WORDS_NEW WORDS)
          (= C_MEM_NEW C_MEM)))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;                                           ;;
-;;    2.5 YIELDS_NONTRIVIAL_MMU_OPERATION    ;;
-;;                                           ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defconstraint yeld-nontrivial-mmu-operation ()
+;;;;;;;;;;;;;;;;;;;;;;
+;;                  ;;                         
+;;    2.5 MTNTOP    ;;
+;;                  ;;                        
+;;;;;;;;;;;;;;;;;;;;;;
+(defconstraint setting-mtntop ()
   (if-not-zero [MXP_TYPE 4]
                (begin (if-not-zero MXPX
-                                   (vanishes! YIELDS_NONTRIVIAL_MMU_OPERATION)
+                                   (vanishes! MTNTOP)
                                    (if-zero SIZE_1_LO
-                                            (vanishes! YIELDS_NONTRIVIAL_MMU_OPERATION)
-                                            (eq! YIELDS_NONTRIVIAL_MMU_OPERATION 1))))))
+                                            (vanishes! MTNTOP)
+                                            (eq! MTNTOP 1))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                     ;;
-;;    2.5 heartbeat    ;;
+;;    2.6 heartbeat    ;;
 ;;                     ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 (defconstraint first-row (:domain {0})
@@ -172,7 +172,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                               ;;
-;;    2.5 Byte decompositions    ;;
+;;    2.7 Byte decompositions    ;;
 ;;                               ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defconstraint byte-decompositions ()
