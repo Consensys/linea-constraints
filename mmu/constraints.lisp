@@ -565,8 +565,45 @@
          (shift (callToLt 0
                           (+ (ram-exo-wpad-initial-sbo) (- (ram-exo-wpad-last-limb-byte-size) 1))
                           LLARGE)
-                4)))
+                4)
+         ;; setting mmio constant values
+         (eq! (shift micro/CN_S NB_PP_ROWS_RAM_TO_EXO_WITH_PADDING_PO) macro/SRC_ID)
+         (eq! (shift micro/SUCCESS_BIT NB_PP_ROWS_RAM_TO_EXO_WITH_PADDING_PO) macro/SUCCESS_BIT)
+         (eq! (shift micro/EXO_SUM NB_PP_ROWS_RAM_TO_EXO_WITH_PADDING_PO) macro/EXO_SUM)
+         (eq! (shift micro/PHASE NB_PP_ROWS_RAM_TO_EXO_WITH_PADDING_PO) macro/PHASE)
+         (eq! (shift micro/EXO_ID NB_PP_ROWS_RAM_TO_EXO_WITH_PADDING_PO) macro/TGT_ID)
+         (eq! (shift micro/KEC_ID NB_PP_ROWS_RAM_TO_EXO_WITH_PADDING_PO) macro/AUX_ID)
+         (eq! (shift micro/TOTAL_SIZE NB_PP_ROWS_RAM_TO_EXO_WITH_PADDING_PO) macro/REF_SIZE)))
 
-;; TODO finish microinstruction writing
+(defconstraint ram-to-exo-with-padding-std-progression (:guard (* IS_RAM_TO_EXO_WITH_PADDING MICRO))
+  (begin (stdProgression micro/TLO)
+         (vanishes! micro/TBO)))
+
+(defconstraint ram-to-exo-with-padding-first-row (:guard (* IS_RAM_TO_EXO_WITH_PADDING NT_FIRST))
+  (begin (if-zero [BIN 1]
+                  (eq! micro/INST MMIO_INST_RAM_TO_LIMB_TWO_SOURCE)
+                  (eq! micro/INST MMIO_INST_RAM_TO_LIMB_TRANSPLANT))
+         (eq! micro/SIZE LLARGE))) ;; TODO finish the micro inst writing
+
+;;
+;; EXO TO RAM TRANSPLANT
+;;
+(defconstraint exo-to-ram-preprocessing (:guard (* IS_EXO_TO_RAM_TRANSPLANTS MACRO))
+  (begin  ;; setting prprc row n°1
+         (next (callToEuc macro/SIZE LLARGE))
+         ;; setting nb of rows
+         (vanishes! TOTLZ)
+         (eq! TOTNT (next prprc/EUC_CEIL))
+         (vanishes! TOTRZ)
+         ;; setting mmio constant values
+         (eq! (shift micro/CN_T NB_PP_ROWS_EXO_TO_RAM_TRANSPLANTS_PO) macro/TGT_ID)
+         (eq! (shift micro/EXO_SUM NB_PP_ROWS_EXO_TO_RAM_TRANSPLANTS_PO) macro/EXO_SUM)
+         (eq! (shift micro/PHASE NB_PP_ROWS_EXO_TO_RAM_TRANSPLANTS_PO) macro/PHASE)
+         (eq! (shift micro/EXO_ID NB_PP_ROWS_EXO_TO_RAM_TRANSPLANTS_PO) macro/SRC_ID)))
+
+(defconstraint exo-to-ram-micro-inst-writting (:guard (* IS_EXO_TO_RAM_TRANSPLANTS MICRO))
+  (begin (stdProgression micro/SLO)
+         (stdProgression micro/TLO)
+         (eq! micro/INST MMIO_INST_LIMB_TO_RAM_TRANSPLANT)))
 
 
