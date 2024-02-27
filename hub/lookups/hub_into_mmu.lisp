@@ -5,7 +5,7 @@
 (deflookup hub-into-mmu
            ;; target columns
            ( 
-             mmu.IS_MACRO
+             mmu.MACRO
              mmu.STAMP
              mmu.macro/INST
              mmu.macro/SRC_ID
