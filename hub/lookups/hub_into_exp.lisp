@@ -5,14 +5,14 @@
 (deflookup hub-into-exp
            ;; target columns
            ( 
-            exp.IS_MACRO
-            exp.macro/INST
-            [exp.macro/DATA 1]
-            [exp.macro/DATA 2]
-            [exp.macro/DATA 3]
-            [exp.macro/DATA 4]
-            [exp.macro/DATA 5]
-           )
+             exp.MACRO
+             exp.macro/EXP_INST
+             [exp.macro/DATA 1]
+             [exp.macro/DATA 2]
+             [exp.macro/DATA 3]
+             [exp.macro/DATA 4]
+             [exp.macro/DATA 5]
+             )
            ;; source columns
            (
             (* 1                                           (hub-into-exp-trigger))

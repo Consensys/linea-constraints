@@ -15,9 +15,9 @@
 	 )
 	 ;; source columns
 	 (
-	  (* PHASE_KECCAK_RESULT               (hub-into-ripsha-trigger))
+	  (* PHASE_KECCAK_RESULT            (hub-into-ripsha-trigger))
 	  (* (+ 1 hub.HUB_STAMP)            (hub-into-ripsha-trigger))
-	  (* 1                                 (hub-into-ripsha-trigger)) ;; we could just write (hub-into-ripsha-trigger)
+	  (* 1                              (hub-into-ripsha-trigger)) ;; we could just write (hub-into-ripsha-trigger)
 	  (* hub.stack/HASH_INFO_SIZE       (hub-into-ripsha-trigger))
 	  (* hub.stack/HASH_INFO_KEC_HI     (hub-into-ripsha-trigger))
 	  (* hub.stack/HASH_INFO_KEC_LO     (hub-into-ripsha-trigger))
