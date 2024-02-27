@@ -33,9 +33,8 @@
 
 (defconstraint hub-stamp-jumps-at-transaction-boundaries ()
                ;; corset doesn't like empty constraints
-               (begin (vanishes! 0)
                       (debug (if-not-zero (will-remain-constant! ABS_TX_NUM)
-                                          (will-inc!             HUB_STAMP 1)))))
+                                          (will-inc!             HUB_STAMP 1))))
 
 (defconstraint hub-stamp-increments-during-execution-phase ()
                (if-not-zero TX_EXEC
