@@ -1,4 +1,4 @@
-(defun (hub-into-stp-trigger) (* hub.PEEK_AT_MISCELLANEOUS hub_v2.misc/STP_FLAG))
+(defun (hub-into-stp-trigger) (* hub.PEEK_AT_MISCELLANEOUS hub.misc/STP_FLAG))
 
 (deflookup hub-into-stp
            ;; target columns
