@@ -17,8 +17,10 @@
          (is-binary NOOP)
          (is-binary MXPX)
          (is-binary DEPLOYS)
+         (for i [5] (is-binary [MXP_TYPE i]))
          (is-binary COMP)
-         (is-binary EXPANDS)))
+         (is-binary EXPANDS)
+         (is-binary MTNTOP)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                             ;;
