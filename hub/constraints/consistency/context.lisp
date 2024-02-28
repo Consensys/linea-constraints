@@ -69,35 +69,51 @@
   )
 )
 
+(defconstraint perm-cn-first-and-cn-again-constraints ()
+               (begin
+                 (is-binary perm_context_CN_FIRST)
+                 (is-binary perm_context_CN_AGAIN)
+                 (eq! (+ perm_context_CN_AGAIN
+                         perm_context_CN_FIRST) 
+                      perm_context_PEEK_AT_CONTEXT)
+                 (if-zero (force-bool perm_context_PEEK_AT_CONTEXT)
+                          (eq! (next perm_context_CN_FIRST)
+                               (next perm_context_PEEK_AT_CONTEXT))
+                          (begin
+                            (if-not-zero (next perm_context_CN_FIRST)
+                                         (is-not-zero! (- (next perm_context_CONTEXT_NUMBER)
+                                                          perm_context_CONTEXT_NUMBER)))
+                            (if-not-zero (next perm_context_CN_AGAIN)
+                                         (will-eq! perm_context_CONTEXT_NUMBER
+                                                   perm_context_CONTEXT_NUMBER))))))
+
 (defconstraint context-data-immutability ()
-               (if-eq (force-bool perm_context_PEEK_AT_CONTEXT) 1
-                      (if-eq (next perm_context_CONTEXT_NUMBER) perm_context_CONTEXT_NUMBER
-                             (begin
-                               (will-eq! perm_context_CALLER_CONTEXT_NUMBER         perm_context_CALLER_CONTEXT_NUMBER        )
-                               (will-eq! perm_context_CALL_STACK_DEPTH              perm_context_CALL_STACK_DEPTH             )
-                               (will-eq! perm_context_IS_ROOT                       perm_context_IS_ROOT                      )
-                               (will-eq! perm_context_IS_STATIC                     perm_context_IS_STATIC                    )
-                               (will-eq! perm_context_ACCOUNT_ADDRESS_HI            perm_context_ACCOUNT_ADDRESS_HI           )
-                               (will-eq! perm_context_ACCOUNT_ADDRESS_LO            perm_context_ACCOUNT_ADDRESS_LO           )
-                               (will-eq! perm_context_ACCOUNT_DEPLOYMENT_NUMBER     perm_context_ACCOUNT_DEPLOYMENT_NUMBER    )
-                               (will-eq! perm_context_BYTE_CODE_ADDRESS_HI          perm_context_BYTE_CODE_ADDRESS_HI         )
-                               (will-eq! perm_context_BYTE_CODE_ADDRESS_LO          perm_context_BYTE_CODE_ADDRESS_LO         )
-                               (will-eq! perm_context_BYTE_CODE_DEPLOYMENT_NUMBER   perm_context_BYTE_CODE_DEPLOYMENT_NUMBER  )
-                               (will-eq! perm_context_BYTE_CODE_DEPLOYMENT_STATUS   perm_context_BYTE_CODE_DEPLOYMENT_STATUS  )
-                               (will-eq! perm_context_BYTE_CODE_CODE_FRAGMENT_INDEX perm_context_BYTE_CODE_CODE_FRAGMENT_INDEX)
-                               (will-eq! perm_context_CALLER_ADDRESS_HI             perm_context_CALLER_ADDRESS_HI            )
-                               (will-eq! perm_context_CALLER_ADDRESS_LO             perm_context_CALLER_ADDRESS_LO            )
-                               (will-eq! perm_context_CALL_VALUE                    perm_context_CALL_VALUE                   )
-                               (will-eq! perm_context_CALL_DATA_OFFSET              perm_context_CALL_DATA_OFFSET             )
-                               (will-eq! perm_context_CALL_DATA_SIZE                perm_context_CALL_DATA_SIZE               )
-                               (will-eq! perm_context_RETURN_AT_OFFSET              perm_context_RETURN_AT_OFFSET             )
-                               (will-eq! perm_context_RETURN_AT_CAPACITY            perm_context_RETURN_AT_CAPACITY           )))))
+               (if-not-zero (next perm_context_CN_AGAIN)
+                            (begin
+                              ( will-eq! perm_context_CALLER_CONTEXT_NUMBER         perm_context_CALLER_CONTEXT_NUMBER         )
+                              ( will-eq! perm_context_CALL_STACK_DEPTH              perm_context_CALL_STACK_DEPTH              )
+                              ( will-eq! perm_context_IS_ROOT                       perm_context_IS_ROOT                       )
+                              ( will-eq! perm_context_IS_STATIC                     perm_context_IS_STATIC                     )
+                              ( will-eq! perm_context_ACCOUNT_ADDRESS_HI            perm_context_ACCOUNT_ADDRESS_HI            )
+                              ( will-eq! perm_context_ACCOUNT_ADDRESS_LO            perm_context_ACCOUNT_ADDRESS_LO            )
+                              ( will-eq! perm_context_ACCOUNT_DEPLOYMENT_NUMBER     perm_context_ACCOUNT_DEPLOYMENT_NUMBER     )
+                              ( will-eq! perm_context_BYTE_CODE_ADDRESS_HI          perm_context_BYTE_CODE_ADDRESS_HI          )
+                              ( will-eq! perm_context_BYTE_CODE_ADDRESS_LO          perm_context_BYTE_CODE_ADDRESS_LO          )
+                              ( will-eq! perm_context_BYTE_CODE_DEPLOYMENT_NUMBER   perm_context_BYTE_CODE_DEPLOYMENT_NUMBER   )
+                              ( will-eq! perm_context_BYTE_CODE_DEPLOYMENT_STATUS   perm_context_BYTE_CODE_DEPLOYMENT_STATUS   )
+                              ( will-eq! perm_context_BYTE_CODE_CODE_FRAGMENT_INDEX perm_context_BYTE_CODE_CODE_FRAGMENT_INDEX )
+                              ( will-eq! perm_context_CALLER_ADDRESS_HI             perm_context_CALLER_ADDRESS_HI             )
+                              ( will-eq! perm_context_CALLER_ADDRESS_LO             perm_context_CALLER_ADDRESS_LO             )
+                              ( will-eq! perm_context_CALL_VALUE                    perm_context_CALL_VALUE                    )
+                              ( will-eq! perm_context_CALL_DATA_OFFSET              perm_context_CALL_DATA_OFFSET              )
+                              ( will-eq! perm_context_CALL_DATA_SIZE                perm_context_CALL_DATA_SIZE                )
+                              ( will-eq! perm_context_RETURN_AT_OFFSET              perm_context_RETURN_AT_OFFSET              )
+                              ( will-eq! perm_context_RETURN_AT_CAPACITY            perm_context_RETURN_AT_CAPACITY            ))))
 
 (defconstraint context-data-return-data-constancy ()
-               (if-eq perm_context_PEEK_AT_CONTEXT 1
-                      (if-eq (next perm_context_CONTEXT_NUMBER) perm_context_CONTEXT_NUMBER
-                             (if-zero (force-bool (next perm_context_UPDATE))
-                                      (begin
-                                        (will-eq! perm_context_RETURNER_CONTEXT_NUMBER       perm_context_RETURNER_CONTEXT_NUMBER      )
-                                        (will-eq! perm_context_RETURN_DATA_OFFSET            perm_context_RETURN_DATA_OFFSET           )
-                                        (will-eq! perm_context_RETURN_DATA_SIZE              perm_context_RETURN_DATA_SIZE             ))))))
+               (if-not-zero (next perm_context_CN_AGAIN)
+                            (if-zero (force-bool (next perm_context_UPDATE))
+                                     (begin
+                                       (will-eq! perm_context_RETURNER_CONTEXT_NUMBER       perm_context_RETURNER_CONTEXT_NUMBER      )
+                                       (will-eq! perm_context_RETURN_DATA_OFFSET            perm_context_RETURN_DATA_OFFSET           )
+                                       (will-eq! perm_context_RETURN_DATA_SIZE              perm_context_RETURN_DATA_SIZE             )))))
