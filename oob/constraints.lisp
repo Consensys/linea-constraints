@@ -962,11 +962,11 @@
 (defconstraint justify-hub-predictions-prc-modexp_extract (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp_extract-hypothesis)))
   (begin (eq! (prc-modexp_extract___extract_modulus)
               (* (prc-modexp_extract___call_data_extends_beyond_exponent)
-                 (- 1 (modexp_extract___mbs_is_zero))))
+                 (- 1 (prc-modexp_extract___mbs_is_zero))))
          (eq! (prc-modexp_extract___extract_base)
-              (* (prc-modexp_extract___extract_modulus) (- 1 prc-modexp_extract___bbs_is_zero)))
+              (* (prc-modexp_extract___extract_modulus) (- 1 (prc-modexp_extract___bbs_is_zero))))
          (eq! (prc-modexp_extract___extract_exponent)
-              (* (prc-modexp_extract___extract_modulus) (- 1 prc-modexp_extract___ebs_is_zero)))))
+              (* (prc-modexp_extract___extract_modulus) (- 1 (prc-modexp_extract___ebs_is_zero))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                         ;;
