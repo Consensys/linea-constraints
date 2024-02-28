@@ -51,12 +51,12 @@
 ;;                  (debug (is-binary RETURN_DEPLOYMENT_NONEMPTY_CODE_WONT_REVERT      ))
 ;; ))
 
-(defconstraint only-one-active-scenario (:perspective)
+(defconstraint only-one-active-scenario (:perspective scenario)
                (is-binary
                  (+
-                   (scen-CALL-shorthand-sum)
-                   (scen-CREATE-shorthand-sum)
-                   (scen-PRC-shorthand-sum)
+                   (scen-shorthand-CALL-sum)
+                   (scen-shorthand-CREATE-sum)
+                   (scen-shorthand-PRC-sum)
                    ;; (scen-RETURN-shorthand-sum)
                    ;; (scen-SELFDESTRUCT-shorthand-sum)
                    )))
