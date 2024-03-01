@@ -9,20 +9,20 @@
 (defpermutation
   ;; permuted columns
   (
-   perm_exec_env_CN
-   perm_exec_env_HUB_STAMP
-   perm_exec_env_CFI
-   perm_exec_env_CALLER_CN
-   perm_exec_env_CN_WILL_REV
-   perm_exec_env_CN_GETS_REV
-   perm_exec_env_CN_SELF_REV
-   perm_exec_env_CN_REV_STAMP
-   perm_exec_env_PC
-   perm_exec_env_PC_NEW
-   perm_exec_env_HEIGHT
-   perm_exec_env_HEIGHT_NEW
-   perm_exec_env_GAS_EXPECTED
-   perm_exec_env_GAS_NEXT
+   exec_env_consistency_perm_CN
+   exec_env_consistency_perm_HUB_STAMP
+   exec_env_consistency_perm_CFI
+   exec_env_consistency_perm_CALLER_CN
+   exec_env_consistency_perm_CN_WILL_REV
+   exec_env_consistency_perm_CN_GETS_REV
+   exec_env_consistency_perm_CN_SELF_REV
+   exec_env_consistency_perm_CN_REV_STAMP
+   exec_env_consistency_perm_PC
+   exec_env_consistency_perm_PC_NEW
+   exec_env_consistency_perm_HEIGHT
+   exec_env_consistency_perm_HEIGHT_NEW
+   exec_env_consistency_perm_GAS_EXPECTED
+   exec_env_consistency_perm_GAS_NEXT
    )
   ;; original columns
   (
@@ -44,27 +44,27 @@
   )
 
 (defconstraint consistency-exec-env-constancies ()
-               (if-not-zero perm_exec_env_CN
-                            (if-eq (next perm_exec_env_CN) perm_exec_env_CN
+               (if-not-zero exec_env_consistency_perm_CN
+                            (if-eq (next exec_env_consistency_perm_CN) exec_env_consistency_perm_CN
                                    (begin
-                                     (will-eq! perm_exec_env_CFI          perm_exec_env_CFI)
-                                     (will-eq! perm_exec_env_CALLER_CN    perm_exec_env_CALLER_CN)
-                                     (will-eq! perm_exec_env_CN_WILL_REV  perm_exec_env_CN_WILL_REV)
-                                     (will-eq! perm_exec_env_CN_GETS_REV  perm_exec_env_CN_GETS_REV)
-                                     (will-eq! perm_exec_env_CN_SELF_REV  perm_exec_env_CN_SELF_REV)
-                                     (will-eq! perm_exec_env_CN_REV_STAMP perm_exec_env_CN_REV_STAMP)))))
+                                     (will-eq! exec_env_consistency_perm_CFI          exec_env_consistency_perm_CFI)
+                                     (will-eq! exec_env_consistency_perm_CALLER_CN    exec_env_consistency_perm_CALLER_CN)
+                                     (will-eq! exec_env_consistency_perm_CN_WILL_REV  exec_env_consistency_perm_CN_WILL_REV)
+                                     (will-eq! exec_env_consistency_perm_CN_GETS_REV  exec_env_consistency_perm_CN_GETS_REV)
+                                     (will-eq! exec_env_consistency_perm_CN_SELF_REV  exec_env_consistency_perm_CN_SELF_REV)
+                                     (will-eq! exec_env_consistency_perm_CN_REV_STAMP exec_env_consistency_perm_CN_REV_STAMP)))))
 
 (defconstraint consistency-exec-env-linking ()
-               (if-not-zero perm_exec_env_CN
-                            (if-eq (next perm_exec_env_CN) perm_exec_env_CN
-                                   (if-not-zero (will-remain-constant! perm_exec_env_HUB_STAMP)
+               (if-not-zero exec_env_consistency_perm_CN
+                            (if-eq (next exec_env_consistency_perm_CN) exec_env_consistency_perm_CN
+                                   (if-not-zero (will-remain-constant! exec_env_consistency_perm_HUB_STAMP)
                                                 (begin
-                                                  (will-eq! perm_exec_env_PC           perm_exec_env_PC_NEW)
-                                                  (will-eq! perm_exec_env_HEIGHT       perm_exec_env_HEIGHT_NEW)
-                                                  (will-eq! perm_exec_env_GAS_EXPECTED perm_exec_env_GAS_NEXT))))))
+                                                  (will-eq! exec_env_consistency_perm_PC           exec_env_consistency_perm_PC_NEW)
+                                                  (will-eq! exec_env_consistency_perm_HEIGHT       exec_env_consistency_perm_HEIGHT_NEW)
+                                                  (will-eq! exec_env_consistency_perm_GAS_EXPECTED exec_env_consistency_perm_GAS_NEXT))))))
                                                                        
 (defconstraint consistency-exec-env-initialization ()
-               (if-not-zero (will-remain-constant! perm_exec_env_HUB_STAMP)
+               (if-not-zero (will-remain-constant! exec_env_consistency_perm_HUB_STAMP)
                             (begin
-                              (vanishes! (next perm_exec_env_PC))
-                              (vanishes! (next perm_exec_env_HEIGHT)))))
+                              (vanishes! (next exec_env_consistency_perm_PC))
+                              (vanishes! (next exec_env_consistency_perm_HEIGHT)))))

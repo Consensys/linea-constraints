@@ -64,6 +64,12 @@
     ( COUNTER_TLI                       :binary@prove )
     NUMBER_OF_NON_STACK_ROWS
     COUNTER_NSR
+
+    ;; likely to be merged into two columns given the right permutation argument
+    ;; if we do merge them replace them with one pair of columns and make them aliases for that column
+    ( acc_FIRST :binary@prove )     ( acc_FINAL :binary@prove )
+    ( con_FIRST :binary@prove )     ( con_AGAIN :binary@prove )
+    ( sto_FIRST :binary@prove )     ( sto_FINAL :binary@prove )
 )
 
 

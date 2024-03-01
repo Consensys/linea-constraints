@@ -6,8 +6,8 @@
 ;;                                        ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(definterleaved PEEK_AT_STACK_POW_4   (PEEK_AT_STACK                 PEEK_AT_STACK                 PEEK_AT_STACK                 PEEK_AT_STACK       ))
-(definterleaved CN_POW_4              (CONTEXT_NUMBER                CONTEXT_NUMBER                CONTEXT_NUMBER                CONTEXT_NUMBER      ))
+(definterleaved PEEK_AT_STACK_POW_4   (PEEK_AT_STACK                     PEEK_AT_STACK                     PEEK_AT_STACK                     PEEK_AT_STACK                    ))
+(definterleaved CN_POW_4              (CONTEXT_NUMBER                    CONTEXT_NUMBER                    CONTEXT_NUMBER                    CONTEXT_NUMBER                   ))
 (definterleaved STACK_STAMP_1234      ([stack/STACK_ITEM_STAMP    1] [stack/STACK_ITEM_STAMP    2] [stack/STACK_ITEM_STAMP    3] [stack/STACK_ITEM_STAMP    4]))
 (definterleaved HEIGHT_1234           ([stack/STACK_ITEM_HEIGHT   1] [stack/STACK_ITEM_HEIGHT   2] [stack/STACK_ITEM_HEIGHT   3] [stack/STACK_ITEM_HEIGHT   4]))
 (definterleaved POP_1234              ([stack/STACK_ITEM_POP      1] [stack/STACK_ITEM_POP      2] [stack/STACK_ITEM_POP      3] [stack/STACK_ITEM_POP      4]))
@@ -17,89 +17,63 @@
 (defpermutation
   ;; row-permuted columns
   (
-   perm_stack_PEEK_AT_STACK_POW_4
-   perm_stack_CN_POW_4
-   perm_stack_HEIGHT_1234
-   perm_stack_STACK_STAMP_1234
-   perm_stack_POP_1234
-   perm_stack_VALUE_HI_1234
-   perm_stack_VALUE_LO_1234
+   stack_consistency_perm_PEEK_AT_STACK_POW_4
+   stack_consistency_perm_CN_POW_4
+   stack_consistency_perm_HEIGHT_1234
+   stack_consistency_perm_STACK_STAMP_1234
+   stack_consistency_perm_POP_1234
+   stack_consistency_perm_VALUE_HI_1234
+   stack_consistency_perm_VALUE_LO_1234
    )
   ;; underlying columns
   (
-	(↓ PEEK_AT_STACK_POW_4) 
-        (↓ CN_POW_4) 
-        (↓ HEIGHT_1234) 
-        (↓ STACK_STAMP_1234) 
-        POP_1234
-        VALUE_HI_1234
-        VALUE_LO_1234) 
+   (↓ PEEK_AT_STACK_POW_4) 
+   (↓ CN_POW_4) 
+   (↓ HEIGHT_1234) 
+   (↓ STACK_STAMP_1234) 
+   POP_1234
+   VALUE_HI_1234
+   VALUE_LO_1234
+   ) 
   )
 
+
+(defun (first-context-occurrence)  (first-occurrence-of  stack_consistency_perm_PEEK_AT_STACK_POW_4 stack_consistency_perm_CN_POW_4))
+(defun (first-height-occurrence)   (first-occurrence-of  stack_consistency_perm_PEEK_AT_STACK_POW_4 stack_consistency_perm_HEIGHT_1234))
+(defun (first-spot-occurrence)     (- (+ (first-context-occurrence)   (first-height-occurrence))
+                                      (* (first-context-occurrence)   (first-height-occurrence))))
+(defun (repeat-context-occurrence) (repeat-occurrence-of stack_consistency_perm_PEEK_AT_STACK_POW_4 stack_consistency_perm_CN_POW_4))
+(defun (repeat-height-occurrence)  (repeat-occurrence-of stack_consistency_perm_PEEK_AT_STACK_POW_4 stack_consistency_perm_HEIGHT_1234))
+(defun (repeat-spot-occurrence)    (*    (repeat-context-occurrence)  (repeat-height-occurrence)))
+
 (defconstraint stack-consistency-only-nontrivial-contexts ()
-               (if-not-zero perm_stack_PEEK_AT_STACK_POW_4
-                            (is-not-zero! perm_stack_CN_POW_4)))
+               (if-not-zero stack_consistency_perm_PEEK_AT_STACK_POW_4
+                            (is-not-zero! stack_consistency_perm_CN_POW_4)))
 
-(defconstraint setting-perm-stack-context-first-again ()
-               (begin
-                 (debug (is-binary perm_stack_CONTEXT_FIRST))
-                 (debug (is-binary perm_stack_CONTEXT_AGAIN))
-                 (eq! (+ perm_stack_CONTEXT_FIRST
-                         perm_stack_CONTEXT_AGAIN)
-                      perm_stack_PEEK_AT_STACK_POW_4)
-                 (if-zero (force-bool perm_stack_PEEK_AT_STACK_POW_4)
-                          (eq! (next perm_stack_CONTEXT_FIRST)
-                               (next perm_stack_PEEK_AT_STACK_POW_4))
-                          (begin
-                            (if-not-zero (next perm_stack_CONTEXT_FIRST)
-                                         (is-not-zero! (will-eq! perm_stack_CN_POW_4
-                                                                 perm_stack_CN_POW_4)))
-                            (if-not-zero (next perm_stack_CONTEXT_AGAIN)
-                                         (will-eq! perm_stack_CN_POW_4
-                                                   perm_stack_CN_POW_4))))))
+;; (defconstraint stack-consistency-sanity-checks ()
+;;                (begin
+;;                  (debug (is-binary (repeat-context-occurrence)))
+;;                  (debug (is-binary (first-context-occurrence)))
+;;                  (debug (is-binary (repeat-height-occurrence)))
+;;                  (debug (is-binary (first-height-occurrence)))))
 
-(defconstraint setting-perm-stack-height-first-again ()
+(defconstraint first-context-occurrence-constraints ()
                (begin
-                 (debug (is-binary perm_stack_HEIGHT_FIRST))
-                 (debug (is-binary perm_stack_HEIGHT_AGAIN))
-                 (eq! (+ perm_stack_HEIGHT_FIRST
-                         perm_stack_HEIGHT_AGAIN)
-                      perm_stack_PEEK_AT_STACK_POW_4)
-                 (if-zero (force-bool perm_stack_PEEK_AT_STACK_POW_4)
-                          (eq! (next perm_stack_HEIGHT_FIRST)
-                               (next perm_stack_PEEK_AT_STACK_POW_4))
-                          (begin
-                            (if-not-zero (next perm_stack_HEIGHT_FIRST)
-                                         (is-not-zero! (will-eq! perm_stack_HEIGHT_1234
-                                                                 perm_stack_HEIGHT_1234)))
-                            (if-not-zero (next perm_stack_HEIGHT_AGAIN)
-                                         (will-eq! perm_stack_HEIGHT_1234
-                                                   perm_stack_HEIGHT_1234))))))
+                 (if-not-zero (first-context-occurrence)
+                              (vanishes! stack_consistency_perm_HEIGHT_1234))
+                 (if-not-zero (repeat-context-occurrence)
+                              (any! (will-remain-constant! stack_consistency_perm_HEIGHT_1234)
+                                    (will-inc! stack_consistency_perm_HEIGHT_1234 1)))))
 
-(defconstraint setting-perm-stack-same-spot-first-again ()
+(defconstraint first-spot-occurrence-constraints ()
                (begin
-                 (debug (is-binary perm_stack_SAME_SPOT_FIRST))
-                 (debug (is-binary perm_stack_SAME_SPOT_AGAIN))
-                 (eq! perm_stack_SAME_SPOT_AGAIN (* perm_stack_CONTEXT_AGAIN
-                                                    perm_stack_HEIGHT_AGAIN))))
-
-(defconstraint first-context-encounter ()
-               (begin
-                 (if-not-zero perm_stack_CONTEXT_FIRST
-                              (vanishes! perm_stack_HEIGHT_1234))
-                 (if-not-zero perm_stack_CONTEXT_AGAIN
-                              (any! (will-remain-constant! perm_stack_HEIGHT_1234)
-                                    (will-inc! perm_stack_HEIGHT_1234 1)))))
-
-(defconstraint first-sport-encounter ()
-               (begin
-                 (if-not-zero perm_stack_SAME_SPOT_FIRST
-                              (vanishes! perm_stack_POP_1234))
-                 (if-not-zero perm_stack_SAME_SPOT_AGAIN
-                              (if-not-zero perm_stack_HEIGHT_1234
-                                           (begin
-                                             (eq! (+ perm_stack_POP_1234 (prev perm_stack_POP_1234)) 1)
-                                             (if-not-zero perm_stack_POP_1234
-                                                          (begin
-                                                            (remained-constant! perm_stack_VALUE_HI_1234)
-                                                            (remained-constant! perm_stack_VALUE_LO_1234))))))))
+                 (if-not-zero (first-spot-occurrence)
+                              (vanishes! stack_consistency_perm_POP_1234))))
+                 ;; (if-not-zero (repeat-spot-occurrence)
+                 ;;              (if-not-zero stack_consistency_perm_HEIGHT_1234
+                 ;;                           (begin
+                 ;;                             (eq! (+ stack_consistency_perm_POP_1234 (prev stack_consistency_perm_POP_1234)) 1)
+                 ;;                             (if-not-zero stack_consistency_perm_POP_1234
+                 ;;                                          (begin
+                 ;;                                            (remained-constant! stack_consistency_perm_VALUE_HI_1234)
+                 ;;                                            (remained-constant! stack_consistency_perm_VALUE_LO_1234))))))))

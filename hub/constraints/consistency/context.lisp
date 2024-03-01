@@ -71,24 +71,24 @@
 
 (defconstraint perm-cn-first-and-cn-again-constraints ()
                (begin
-                 (is-binary perm_context_CN_FIRST)
-                 (is-binary perm_context_CN_AGAIN)
-                 (eq! (+ perm_context_CN_AGAIN
-                         perm_context_CN_FIRST) 
+                 (is-binary con_FIRST)
+                 (is-binary con_AGAIN)
+                 (eq! (+ con_AGAIN
+                         con_FIRST) 
                       perm_context_PEEK_AT_CONTEXT)
                  (if-zero (force-bool perm_context_PEEK_AT_CONTEXT)
-                          (eq! (next perm_context_CN_FIRST)
+                          (eq! (next con_FIRST)
                                (next perm_context_PEEK_AT_CONTEXT))
                           (begin
-                            (if-not-zero (next perm_context_CN_FIRST)
+                            (if-not-zero (next con_FIRST)
                                          (is-not-zero! (- (next perm_context_CONTEXT_NUMBER)
                                                           perm_context_CONTEXT_NUMBER)))
-                            (if-not-zero (next perm_context_CN_AGAIN)
+                            (if-not-zero (next con_AGAIN)
                                          (will-eq! perm_context_CONTEXT_NUMBER
                                                    perm_context_CONTEXT_NUMBER))))))
 
 (defconstraint context-data-immutability ()
-               (if-not-zero (next perm_context_CN_AGAIN)
+               (if-not-zero (next con_AGAIN)
                             (begin
                               ( will-eq! perm_context_CALLER_CONTEXT_NUMBER         perm_context_CALLER_CONTEXT_NUMBER         )
                               ( will-eq! perm_context_CALL_STACK_DEPTH              perm_context_CALL_STACK_DEPTH              )
@@ -111,7 +111,7 @@
                               ( will-eq! perm_context_RETURN_AT_CAPACITY            perm_context_RETURN_AT_CAPACITY            ))))
 
 (defconstraint context-data-return-data-constancy ()
-               (if-not-zero (next perm_context_CN_AGAIN)
+               (if-not-zero (next con_AGAIN)
                             (if-zero (force-bool (next perm_context_UPDATE))
                                      (begin
                                        (will-eq! perm_context_RETURNER_CONTEXT_NUMBER       perm_context_RETURNER_CONTEXT_NUMBER      )
