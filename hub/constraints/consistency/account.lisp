@@ -28,6 +28,10 @@
       ;;
       acp_TRM_FLAG
       acp_IS_PRECOMPILE
+      acp_NONCE
+      acp_NONCE_NEW
+      acp_BALANCE
+      acp_BALANCE_NEW
       acp_WARM
       acp_WARM_NEW
       acp_CODE_SIZE
@@ -57,6 +61,10 @@
       ;;
       account/TRM_FLAG
       account/IS_PRECOMPILE
+      account/NONCE
+      account/NONCE_NEW
+      account/BALANCE
+      account/BALANCE_NEW
       account/WARM
       account/WARM_NEW
       account/CODE_SIZE
@@ -78,8 +86,8 @@
   )
 
 ;; we are guaranteed that this is a 20B integer
-(defun (full_address) (+ (* (^ 256 16) acp_ADDRESS_HI)
-                         acp_ADDRESS_LO)
+(defun (acp_full_address) (+ (* (^ 256 16) acp_ADDRESS_HI)
+                             acp_ADDRESS_LO))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -104,9 +112,9 @@
 (defconstraint account-consistency-FINAL-FIRST-repeat-encounter ()
                (if-not-zero (prev acp_PEEK_AT_ACCOUNT)
                             (if-not-zero acp_PEEK_AT_ACCOUNT
-                                         (if-eq (full_address) (prev (full_address))
-                                                (eq! (+ acc_FIRST (prev acc_FINAL)) 0)
-                                                (eq! (+ acc_FIRST (prev acc_FINAL)) 2)))))
+                                         (if-eq-else (acp_full_address) (prev (acp_full_address))
+                                                     (eq! (+ acc_FIRST (prev acc_FINAL)) 0)
+                                                     (eq! (+ acc_FIRST (prev acc_FINAL)) 2)))))
 
 (defconstraint account-consistency-FINAL-FIRST-final-row-1 ()
                (if-not-zero (prev acp_PEEK_AT_ACCOUNT)
@@ -134,7 +142,7 @@
 
 (defconstraint account-consistency-simple-linking-constraints ()
                (if-not-zero acp_PEEK_AT_ACCOUNT
-                            (if-zero FIRST
+                            (if-zero acc_FIRST
                                      (begin
                                        (was-eq! acp_NONCE_NEW               acp_NONCE                   )
                                        (was-eq! acp_BALANCE_NEW             acp_BALANCE                 )
@@ -150,7 +158,7 @@
 
 (defconstraint account-consistency-linking-and-resetting-constraints ()
                (if-not-zero acp_PEEK_AT_ACCOUNT
-                            (if-zero FIRST
+                            (if-zero acc_FIRST
                                      (if-eq-else acp_ABS_TX_NUM (prev acp_ABS_TX_NUM)
                                                  (begin
                                                    (was-eq! acp_WARM_NEW                    acp_WARM)
