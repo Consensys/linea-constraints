@@ -43,15 +43,18 @@
    (MXP_FLAG :binary)
    (STATIC_FLAG :binary)
    (DEC_FLAG :array [4] :binary)
+
    ;; stack popping / pushing parameters
    ALPHA
    DELTA
    NB_REMOVED
    NB_ADDED
+
    ;; jump and push related
    PUSH_VALUE_HI
    PUSH_VALUE_LO
    (JUMP_DESTINATION_VETTING_REQUIRED :binary)
+
    ;; exception flags
    (OPCX    :binary@prove)
    (SUX     :binary@prove)
@@ -64,6 +67,7 @@
    (SSTOREX :binary@prove)
    (ICPX    :binary@prove)
    (MAXCSX  :binary@prove)
+
    ;; hash info related
    (HASH_INFO_FLAG :binary@prove)
    HASH_INFO_SIZE

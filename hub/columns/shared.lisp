@@ -62,7 +62,7 @@
     ;; instruction related
     ( TWO_LINE_INSTRUCTION              :binary )        ;; is set by instruction decoding
     ( COUNTER_TLI                       :binary@prove )
-    NUMBER_OF_NON_STACK_ROWS
+    NON_STACK_ROWS
     COUNTER_NSR
 
     ;; likely to be merged into two columns given the right permutation argument
@@ -83,7 +83,7 @@
     GAS_XPCT            GAS_EXPECTED
     GAS_ACTL            GAS_ACTUAL
     TLI                 TWO_LINE_INSTRUCTION
-    NSR                 NUMBER_OF_NON_STACK_ROWS
+    NSR                 NON_STACK_ROWS
     CT_TLI              COUNTER_TLI
     CT_NSR              COUNTER_NSR
     CN                  CONTEXT_NUMBER
