@@ -910,7 +910,7 @@
          (if-zero (prc___ram_success)
                   (vanishes! (prc___return_gas))
                   (eq! (prc___return_gas) (- (prc___call_gas) (prc-modexp_pricing___precompile_cost))))
-         (eq! (prc___r_at_c_is_zero) OUTGOING_RES_LO)))
+         (eq! (prc___r_at_c_nonzero) (- 1 OUTGOING_RES_LO))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                         ;;
