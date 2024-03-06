@@ -8,8 +8,8 @@
   MISC_STP_WEIGHT 16
   )
 
-(defun (weighted-misc-flag-sum) (+ (*  MISC_EXP_WEIGHT  misc/EXP_FLAG)
-                                   (*  MISC_MMU_WEIGHT  misc/MMU_FLAG)
-                                   (*  MISC_MXP_WEIGHT  misc/MXP_FLAG)
-                                   (*  MISC_OOB_WEIGHT  misc/OOB_FLAG)
-                                   (*  MISC_STP_WEIGHT  misc/STP_FLAG)))
+(defun (weighted-MISC-flag-sum kappa) (+ (*  MISC_EXP_WEIGHT  (shift misc/EXP_FLAG kappa))
+                                         (*  MISC_MMU_WEIGHT  (shift misc/MMU_FLAG kappa))
+                                         (*  MISC_MXP_WEIGHT  (shift misc/MXP_FLAG kappa))
+                                         (*  MISC_OOB_WEIGHT  (shift misc/OOB_FLAG kappa))
+                                         (*  MISC_STP_WEIGHT  (shift misc/STP_FLAG kappa))))

@@ -96,14 +96,16 @@
 
 (defconstraint stateless-setting-miscellaneous-flags (:guard (stateless-precondition))
                (if-not-zero (classifier-stateless-instructions)
-                            (eq! (weighted-misc-flag-sum) 
+                            (eq! (weighted-MISC-flag-sum 1)
                                  (* (stateless-instruction-is-exp) MISC_EXP_WEIGHT))))
 
 (defconstraint stateless-setting-exp-arguments (:guard (stateless-precondition))
                (if-not-zero (stateless-instruction-is-exp)
-                            (begin
-                              (eq! (next (nth misc/EXP_DATA 1)) (nth stack/STACK_ITEM_VALUE_HI 2))
-                              (eq! (next (nth misc/EXP_DATA 2)) (nth stack/STACK_ITEM_VALUE_LO 2)))))
+                            (set-EXP-instruction-exp-log
+                              1                                  ;; row offset
+                              (nth stack/STACK_ITEM_VALUE_HI 2)  ;; exponent high
+                              (nth stack/STACK_ITEM_VALUE_LO 2)  ;; exponent low
+                              )))
 
 (defconstraint stateless-gas-cost (:guard (stateless-precondition)
                (begin

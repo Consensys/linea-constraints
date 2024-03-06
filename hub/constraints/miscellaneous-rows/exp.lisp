@@ -6,21 +6,21 @@
 ;;                              ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defun (set-exp-inst-exp-log
-         kappa
-         exponent_hi
-         exponent_lo
+(defun (set-EXP-instruction-exp-log
+         kappa          ;; row offset
+         exponent_hi    ;; exponent high
+         exponent_lo    ;; exponent low
          ) (begin
          (eq! (shift  misc/EXP_INST    kappa)    exp.EXP_INST_EXPLOG)
          (eq! (shift [misc/EXP_DATA 1] kappa)    exponent_hi )
          (eq! (shift [misc/EXP_DATA 2] kappa)    exponent_lo )))
 
-(defun (set-exp-inst-exp-log
-         kappa
-         raw_lead_hi
-         raw_lead_lo
-         cds_cutoff
-         ebs_cutoff
+(defun (set-EXP-instruction-exp-log
+         kappa          ;; row offset
+         raw_lead_hi    ;; raw leading word where exponent starts, high part
+         raw_lead_lo    ;; raw leading word where exponent starts, low  part
+         cds_cutoff     ;; min{max{cds - 96 - bbs, 0}, 32}
+         ebs_cutoff     ;; min{ebs, 32}
          ) (begin
          (eq! (shift  misc/EXP_INST    kappa)    exp.EXP_INST_MODEXPLOG)
          (eq! (shift [misc/EXP_DATA 1] kappa)    raw_lead_hi )

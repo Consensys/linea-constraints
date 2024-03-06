@@ -71,4 +71,3 @@
            (eq! (shift misc/MXP_OFFSET_2_LO kappa) r@o_lo)
            (eq! (shift misc/MXP_SIZE_2_HI   kappa) r@c_hi)
            (eq! (shift misc/MXP_SIZE_2_LO   kappa) r@c_lo))))
-
