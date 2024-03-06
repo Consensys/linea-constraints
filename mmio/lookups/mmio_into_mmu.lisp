@@ -18,7 +18,7 @@
   ;reference columns
   (
     mmu.MICRO
-    (* mmu.MMIO_STAMP mmu.MICRO)
+    mmu.MMIO_STAMP
     mmu.micro/INST
     mmu.micro/SIZE
     mmu.micro/SLO

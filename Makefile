@@ -36,7 +36,8 @@ LOG_INFO := logInfo
 
 MMU := mmu
 
-MMIO := mmio
+MMIO := mmio \
+mmio/consistency.lisp
 
 MXP := mxp
 
