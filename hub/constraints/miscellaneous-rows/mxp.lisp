@@ -5,10 +5,10 @@
 ;;   9.2 MISC/MXP constraints   ;;
 ;;                              ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defun (set-mxp-instruction-type-1 kappa)
+(defun (set-MXP-instruction-type-1 kappa)
   (eq! (shift misc/MXP_INST kappa) EVM_INST_MSIZE))
 
-(defun (set-mxp-instruction-type-2 kappa       ;; row offset kappa
+(defun (set-MXP-instruction-type-2 kappa       ;; row offset kappa
                                    instruction ;; instruction
                                    offset_hi   ;; source offset high
                                    offset_lo)  ;; source offset low
@@ -16,14 +16,14 @@
            (eq! (shift misc/MXP_OFFSET_1_HI kappa) offset_hi)
            (eq! (shift misc/MXP_OFFSET_1_LO kappa) offset_lo))))
 
-(defun (set-mxp-instruction-type-3 kappa      ;; row offset kappa
+(defun (set-MXP-instruction-type-3 kappa      ;; row offset kappa
                                    offset_hi  ;; source offset high
                                    offset_lo) ;; source offset low
   ((begin (eq! (shift misc/MXP_INST kappa) EVM_INST_MSTORE8)
            (eq! (shift misc/MXP_OFFSET_1_HI kappa) offset_hi)
            (eq! (shift misc/MXP_OFFSET_1_LO kappa) offset_lo))))
 
-(defun (set-mxp-instruction-type-4 kappa       ;; row offset kappa
+(defun (set-MXP-instruction-type-4 kappa       ;; row offset kappa
                                    instruction ;; instruction
                                    deploys     ;; bit modifying the behaviour of RETURN pricing
                                    offset_hi   ;; source offset high
