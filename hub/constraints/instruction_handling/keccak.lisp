@@ -27,9 +27,6 @@
 (defun (keccak-mxp-gas)        (next (misc/MXP_GAS_MXP)))
 (defun (keccak-mxp-MTNTOP)     (next (misc/MXP_MTNTOP)))
 
-(defun (keccak-trigger-MMU)
-  (* (- 1 XAHOY)
-     (keccak-mxp-MTNTOP)))
 
 
 (defun (keccak-no-stack-exceptions)
@@ -52,7 +49,61 @@
 (defconstraint keccak-MISC-flags (:guard (keccak-no-stack-exceptions))
                (eq! (weighted-MISC-flag-sum 1)
                     (+ MISC_MXP_WEIGHT
-                       (* MISC_MMU_WEIGHT (keccak-trigger-MMU))))
+                       (* MISC_MMU_WEIGHT (keccak-trigger-MMU)))))
+
+(defconstraint keccak-MXP-call (:guard (keccak-no-stack-exceptions))
+               (set-MXP-instruction-type-4
+                 1                         ;; row offset kappa
+                 EVM_INST_SHA3             ;; instruction
+                 0                         ;; deploys (bit modifying the behaviour of RETURN pricing)
+                 (keccak-offset-hi)        ;; source offset high
+                 (keccak-offset-lo)        ;; source offset low
+                 (keccak-size-hi)          ;; source size high
+                 (keccak-size-lo)          ;; source size low
+                 ))
+
+(defun (keccak-trigger-MMU)
+  (* (- 1 XAHOY)
+     (keccak-mxp-MTNTOP)))
+
+(defconstraint keccak-MMU-call (:guard (keccak-no-stack-exceptions))
+               (if-not-zero misc/MMU_FLAG
+                            (set-mmu-inst-ram-to-exo-with-padding
+                              1                      ;; offset
+                              CN                     ;; source ID
+                              0                      ;; target ID
+                              (+ 1 HUB_STAMP)        ;; auxiliary ID
+                              ;; src_offset_hi       ;; source offset high
+                              (keccak-offset-lo)     ;; source offset low
+                              ;; tgt_offset_lo       ;; target offset low
+                              (keccak-size-lo)       ;; size
+                              ;; ref_offset          ;; reference offset
+                              (keccak-size-lo)       ;; reference size
+                              0                      ;; success bit
+                              ;; limb_1              ;; limb 1
+                              ;; limb_2              ;; limb 2
+                              EXO_SUM_WEIGHT_KEC     ;; weighted exogenous module flag sum
+                              0                      ;; phase
+                              )))
+
+(defconstraint keccak-transferring-MXPX-to-stack (:guard (keccak-no-stack-exceptions))
+               (eq! stack/MXPX (keccak-mxpx)))
+
+(defconstraint keccak-setting-gas-cost (:guard (keccak-no-stack-exceptions))
+               (if-zero (force-bin (keccak-mxpx))
+                        (eq! GAS_COST (+ stack/STATIC_GAS (keccak-mxp-gas)))
+                        (vanishes! GAS_COST)))
+
+(defconstraint keccak-setting-HASH_INFO_FLAG (:guard (keccak-no-stack-exceptions))
+               (eq!
+                 stack/HASH_INFO_FLAG
+                 (keccak-trigger-MMU)))
+
+(defconstraint keccak-value-constraints (:guard (keccak-no-stack-exceptions))
+               (if-zero XAHOY
+                        (if-zero (force-bin (keccak-trigger-MMU))
+                                 (begin
+                                   (eq! (keccak-result-hi) 
 
 ;; (defconstraint keccak- (:guard (keccak-no-stack-exceptions))
 ;; (weighted-MISC-flag-sum 1)

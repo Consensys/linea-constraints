@@ -6,11 +6,11 @@
 ;;                              ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defun (set-mxp-instruction-type-1
+(defun (set-MXP-instruction-type-1
          kappa
          ) (eq! (shift misc/MXP_INST kappa) EVM_INST_MSIZE))
 
-(defun (set-mxp-instruction-type-2
+(defun (set-MXP-instruction-type-2
          kappa         ;; row offset kappa
          instruction   ;; instruction
          offset_hi     ;; source offset high
@@ -22,7 +22,7 @@
            (eq! (shift misc/MXP_OFFSET_1_LO kappa) offset_lo))))
 
 
-(defun (set-mxp-instruction-type-3
+(defun (set-MXP-instruction-type-3
          kappa         ;; row offset kappa
          offset_hi     ;; source offset high
          offset_lo     ;; source offset low
@@ -32,7 +32,7 @@
            (eq! (shift misc/MXP_OFFSET_1_HI kappa) offset_hi)
            (eq! (shift misc/MXP_OFFSET_1_LO kappa) offset_lo))))
 
-(defun (set-mxp-instruction-type-4
+(defun (set-MXP-instruction-type-4
          kappa         ;; row offset kappa
          instruction   ;; instruction
          deploys       ;; bit modifying the behaviour of RETURN pricing
@@ -49,7 +49,7 @@
            (eq! (shift misc/MXP_SIZE_1_HI   kappa) size_hi)
            (eq! (shift misc/MXP_SIZE_1_LO   kappa) size_lo))))
 
-(defun (set-mxp-instruction-type-5
+(defun (set-MXP-instruction-type-5
          kappa          ;; row offset kappa
          instruction    ;; instruction
          cdo_hi         ;; call data offset high
