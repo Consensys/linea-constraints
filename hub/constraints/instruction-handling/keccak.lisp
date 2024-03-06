@@ -15,31 +15,31 @@
 ;;  Shorthands  ;;
 ;;;;;;;;;;;;;;;;;;
 (defun (keccak-offset-hi)
-  ((nth stack/STACK_ITEM_VALUE_HI 1)))
+  [ stack/STACK_ITEM_VALUE_HI 1 ])
 
 (defun (keccak-offset-lo)
-  ((nth stack/STACK_ITEM_VALUE_LO 1)))
+  [ stack/STACK_ITEM_VALUE_LO 1 ])
 
 (defun (keccak-size-hi)
-  ((nth stack/STACK_ITEM_VALUE_HI 2)))
+  [ stack/STACK_ITEM_VALUE_HI 2 ])
 
 (defun (keccak-size-lo)
-  ((nth stack/STACK_ITEM_VALUE_LO 2)))
+  [ stack/STACK_ITEM_VALUE_LO 2 ])
 
 (defun (keccak-result-hi)
-  ((nth stack/STACK_ITEM_VALUE_HI 4)))
+  [ stack/STACK_ITEM_VALUE_HI 4 ])
 
 (defun (keccak-result-lo)
-  ((nth stack/STACK_ITEM_VALUE_LO 4)))
+  [ stack/STACK_ITEM_VALUE_LO 4 ])
 
 (defun (keccak-mxpx)
-  (next (misc/MXP_MXPX)))
+  (next misc/MXP_MXPX))
 
 (defun (keccak-mxp-gas)
-  (next (misc/MXP_GAS_MXP)))
+  (next misc/MXP_GAS_MXP))
 
 (defun (keccak-mxp-MTNTOP)
-  (next (misc/MXP_MTNTOP)))
+  (next misc/MXP_MTNTOP))
 
 (defun (keccak-trigger-MMU)
   (* (- 1 XAHOY) (keccak-mxp-MTNTOP)))
@@ -52,10 +52,10 @@
   (stack-pattern-2-1))
 
 (defconstraint keccak-NSR-and-peeking-flags (:guard (keccak-no-stack-exceptions))
-  (begin (eq! NON_STACK_ROWS (+ 1 CONTEXT_MAY_CHANGE_FLAG))
+  (begin (eq! NON_STACK_ROWS (+ 1 CONTEXT_MAY_CHANGE))
          (eq! NON_STACK_ROWS
               (+ (shift PEEK_AT_MISCELLANEOUS 1)
-                 (* (shift PEEK_AT_CONTEXT 2) CONTEXT_MAY_CHANGE_FLAG)))))
+                 (* (shift PEEK_AT_CONTEXT 2) CONTEXT_MAY_CHANGE)))))
 
 (defconstraint keccak-MISC-flags (:guard (keccak-no-stack-exceptions))
   (eq! (weighted-MISC-flag-sum 1)
@@ -69,9 +69,6 @@
                               (keccak-offset-lo) ;; source offset low
                               (keccak-size-hi)   ;; source size high
                               (keccak-size-lo))) ;; source size low
-
-(defun (keccak-trigger-MMU)
-  (* (- 1 XAHOY) (keccak-mxp-MTNTOP)))
 
 (defconstraint keccak-MMU-call (:guard (keccak-no-stack-exceptions))
   (if-not-zero misc/MMU_FLAG
@@ -95,7 +92,8 @@
   (eq! stack/MXPX (keccak-mxpx)))
 
 (defconstraint keccak-setting-gas-cost (:guard (keccak-no-stack-exceptions))
-  (if-zero (force-bin (keccak-mxpx))
+  ;; (if-zero (force-bin (keccak-mxpx))
+  (if-zero (keccak-mxpx)
            (eq! GAS_COST (+ stack/STATIC_GAS (keccak-mxp-gas)))
            (vanishes! GAS_COST)))
 
@@ -104,7 +102,8 @@
 
 (defconstraint keccak-value-constraints (:guard (keccak-no-stack-exceptions))
   (if-zero XAHOY
-           (if-zero (force-bin (keccak-trigger-MMU))
+           ;; (if-zero (force-bin (keccak-trigger-MMU))
+           (if-zero (keccak-trigger-MMU)
                     (begin (eq! (keccak-result-hi) EMPTY_KECCAK_HI)
                            (eq! (keccak-result-lo) EMPTY_KECCAK_LO))
                     (begin (eq! (keccak-result-hi) stack/HASH_INFO_KEC_HI)

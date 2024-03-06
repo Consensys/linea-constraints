@@ -17,13 +17,3 @@
 
 (defconstraint BTC_NUM-transaction-constancy ()
                (transaction-constancy BATCH_NUMBER))
-
-;; ;; TODO: 
-;; ;; Caused by:
-;; ;;     0: at line 22: (begin...
-;; ;;     1: expected at least 1 argument, but received 0
-;; ;; make: *** [Makefile:111: zkevm.bin] Error 1
-;; (defconstraint ABS-BTC-increments ()
-;;                (begin
-;;                  (debug (any! (will-remain-constant ABSOLUTE_TRANSACTION_NUMBER) (will-inc ABSOLUTE_TRANSACTION_NUMBER 1)))
-;;                  (debug (any! (will-remain-constant BATCH_NUMBER) (will-inc BATCH_NUMBER 1)))))

@@ -5,8 +5,10 @@ HUB :=        $(wildcard hub/columns/*lisp) \
 	      $(wildcard hub/constraints/context-rows/*lisp) \
 	      $(wildcard hub/constraints/generalities/*lisp) \
 	      $(wildcard hub/constraints/heartbeat/*lisp) \
+	      $(wildcard hub/constraints/instruction-handling/*lisp) \
 	      $(wildcard hub/constraints/miscellaneous-rows/*lisp) \
 	      $(wildcard hub/constraints/scenario-rows/*lisp) \
+	      $(wildcard hub/constraints/*lisp) \
 	      $(wildcard hub/lookups/*lisp) \
 	      hub/constants.lisp
 

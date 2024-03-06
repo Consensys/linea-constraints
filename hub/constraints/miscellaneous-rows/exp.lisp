@@ -11,7 +11,7 @@
          exponent_hi    ;; exponent high
          exponent_lo    ;; exponent low
          ) (begin
-         (eq! (shift  misc/EXP_INST    kappa)    exp.EXP_INST_EXPLOG)
+         (eq! (shift  misc/EXP_INST    kappa)    EXP_INST_EXPLOG)
          (eq! (shift [misc/EXP_DATA 1] kappa)    exponent_hi )
          (eq! (shift [misc/EXP_DATA 2] kappa)    exponent_lo )))
 

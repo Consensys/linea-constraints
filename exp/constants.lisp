@@ -2,8 +2,6 @@
 
 (defconst 
   G_EXPBYTES              50
-  EXP_INST_EXPLOG         0xEE0A
-  EXP_INST_MODEXPLOG      0xEE05
   MAX_CT_CMPTN_EXP_LOG    15
   MAX_CT_MACRO_EXP_LOG    0
   MAX_CT_PRPRC_EXP_LOG    0

@@ -21,10 +21,11 @@
                (eq! GAS_COST stack/STATIC_GAS))
 
 (defconstraint txn-setting-stack-values (:guard (txn-no-stack-exceptions))
-               (if-zero (force-bin (nth stack/DEC_FLAG 1))
+               ;; (if-zero force-bin [ stack/DEC_FLAG 1 ])
+               (if-zero [ stack/DEC_FLAG 1 ]
                         (begin
-                          (eq! (nth stack/STACK_ITEM_VALUE_HI 4) (next transaction/FROM_ADDRESS_HI))
-                          (eq! (nth stack/STACK_ITEM_VALUE_LO 4) (next transaction/FROM_ADDRESS_LO)))
+                          (eq! [ stack/STACK_ITEM_VALUE_HI 4 ] (next transaction/FROM_ADDRESS_HI))
+                          (eq! [ stack/STACK_ITEM_VALUE_LO 4 ] (next transaction/FROM_ADDRESS_LO)))
                         (begin
-                          (vanishes! (nth stack/STACK_ITEM_VALUE_HI 4))
-                          (eq!       (nth stack/STACK_ITEM_VALUE_LO 4) (next transaction/GAS_PRICE)))))
+                          (vanishes! [ stack/STACK_ITEM_VALUE_HI 4 ])
+                          (eq!       [ stack/STACK_ITEM_VALUE_LO 4 ] (next transaction/GAS_PRICE)))))

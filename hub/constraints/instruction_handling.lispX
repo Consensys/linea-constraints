@@ -31,7 +31,7 @@ G_warm_access 100)
      ;;setting the gas cost
      (eq! GAS_COST STATIC_GAS)
      ;; setting the nNSR
-     (eq! NON_STACK_ROWS CONTEXT_MAY_CHANGE_FLAG))))
+     (eq! NON_STACK_ROWS CONTEXT_MAY_CHANGE))))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -48,13 +48,13 @@ G_warm_access 100)
                         ;; setting the gas cost
                         (eq! GAS_COST STATIC_GAS)
                         ;; setting the nNSR
-                        (eq! NON_STACK_ROWS (+ 1 CONTEXT_MAY_CHANGE_FLAG))
+                        (eq! NON_STACK_ROWS (+ 1 CONTEXT_MAY_CHANGE))
                         ;;setting the peeking flags
                         (eq! (next CON_FLAG) 1)
                         (will-remain-constant! context/CONTEXT_NUMBER)
                         (vanihes! (next context/UPDATE))
                         ;; value constraints
-                        (if-zero CONTEXT_MAY_CHANGE_FLAG
+                        (if-zero CONTEXT_MAY_CHANGE
                                 (begin
                                         (if-zero (+ FLAG_1 FLAG_2)
                                                 (begin
@@ -92,8 +92,8 @@ G_warm_access 100)
                                 (stack_pattern_0_1))
                         ;;setting nNSR
                         (if-zero FLAG_1
-                                (eq! NON_STACK_ROWS (+ 1 CONTEXT_WILL_REVERT_FLAG CONTEXT_MAY_CHANGE_FLAG))
-                                (eq! NON_STACK_ROWS (+ 2 CONTEXT_MAY_CHANGE_FLAG)))
+                                (eq! NON_STACK_ROWS (+ 1 CONTEXT_WILL_REVERT_FLAG CONTEXT_MAY_CHANGE))
+                                (eq! NON_STACK_ROWS (+ 2 CONTEXT_MAY_CHANGE)))
                         ;; setting the peeking glags
                         (if-zero FLAG_1
                                 (begin
@@ -158,7 +158,7 @@ G_warm_access 100)
                         ;;setting the stack pattern
                         (copy_stack_pattern TRM_FLAG)
                         ;; setting the nNSR
-                        (eq! NON_STACK_ROWS (+ 1 CONTEXT_MAY_CHANGE_FLAG))
+                        (eq! NON_STACK_ROWS (+ 1 CONTEXT_MAY_CHANGE))
                         ;; setting the ReturnDataCopyException
                         (if-eq FLAG_3 1
                                 (eq! stack/RETURNDATACOPY_EXCEPTION OOB_FLAG))
