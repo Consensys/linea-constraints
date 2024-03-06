@@ -1,24 +1,8 @@
 (module rom)
 
-(defconst
-  PUSH_1         0x60
-  JUMPDEST       0x5b
-  LLARGE         16
-  LLARGEMO       15
-  EVMWORDMO      31
-  INVALID_OPCODE 0xfe)
-
 (defpurefun (if-not-eq A B then)
-            (if (neq A B)
-                then))
-
-;; Binarity
-(defconstraint binarities ()
-  (begin (is-binary CODESIZE_REACHED)
-         (is-binary IS_PUSH_DATA)
-         (is-binary PUSH_FUNNEL_BIT)
-         (debug (is-binary IS_PUSH))
-         (debug (is-binary VALID_JUMP_DESTINATION))))
+  (if (neq A B)
+      then))
 
 ;; Constancies
 (defun (cfi-constant X)
@@ -27,7 +11,8 @@
              (remained-constant! X)))
 
 (defun (cfi-incrementing X)
-  (if-not-eq CFI (+ (prev CFI) 1)
+  (if-not-eq CFI
+             (+ (prev CFI) 1)
              (or! (remained-constant! X) (did-inc! X 1))))
 
 (defpurefun (counter-constant X ct ctmax)
@@ -55,8 +40,8 @@
 
 (defconstraint push-constancies ()
   (begin (push-constant PUSH_PARAMETER)
-         (push-constant PUSH_VALUE_HIGH)
-         (push-constant PUSH_VALUE_LOW)))
+         (push-constant PUSH_VALUE_HI)
+         (push-constant PUSH_VALUE_LO)))
 
 ;; Heartbeat
 (defconstraint initialization (:domain {0})
@@ -74,11 +59,11 @@
                   (debug (vanishes! IS_PUSH_DATA))
                   (debug (vanishes! COUNTER_PUSH))
                   (debug (vanishes! PUSH_PARAMETER))
-                  (debug (vanishes! PROGRAMME_COUNTER)))
+                  (debug (vanishes! PROGRAM_COUNTER)))
            (begin (debug (or! (eq! COUNTER_MAX LLARGEMO) (eq! COUNTER_MAX EVMWORDMO)))
                   (if-eq COUNTER_MAX LLARGEMO (will-remain-constant! CFI))
                   (if-not-eq COUNTER COUNTER_MAX (will-remain-constant! CFI))
-                  (if-eq CT EVMWORDMO (will-inc! CFI 1)))))
+                  (if-eq CT WORD_SIZE_MO (will-inc! CFI 1)))))
 
 (defconstraint counter-evolution ()
   (if-eq-else CT COUNTER_MAX
@@ -88,7 +73,7 @@
 (defconstraint finalisation (:domain {-1})
   (if-not-zero CFI
                (begin (eq! CT COUNTER_MAX)
-                      (eq! COUNTER_MAX EVMWORDMO)
+                      (eq! COUNTER_MAX WORD_SIZE_MO)
                       (eq! CFI CODE_FRAGMENT_INDEX_INFTY))))
 
 (defconstraint cfi-infty ()
@@ -114,7 +99,7 @@
   (if-zero CT
            (if-zero CODESIZE_REACHED
                     (eq! COUNTER_MAX LLARGEMO)
-                    (eq! COUNTER_MAX EVMWORDMO))))
+                    (eq! COUNTER_MAX WORD_SIZE_MO))))
 
 ;; nBytes constraints
 (defconstraint nbytes-acc (:guard CFI)
@@ -177,7 +162,7 @@
   (if-not-zero IS_PUSH
                (begin (vanishes! IS_PUSH_DATA)
                       (eq! PUSH_PARAMETER
-                           (- OPCODE (- PUSH_1 1)))
+                           (- OPCODE (- EVM_INST_PUSH1 1)))
                       (vanishes! PUSH_VALUE_ACC)
                       (vanishes! (+ PUSH_FUNNEL_BIT (next PUSH_FUNNEL_BIT))))))
 
@@ -185,11 +170,11 @@
   (if-not-zero IS_PUSH_DATA
                (begin (eq! (+ (prev IS_PUSH) (prev IS_PUSH_DATA))
                            1)
-                      (eq! OPCODE INVALID_OPCODE)
+                      (eq! OPCODE EVM_INST_INVALID)
                       (did-inc! COUNTER_PUSH 1)
                       (if-zero (- (+ COUNTER_PUSH LLARGE) PUSH_PARAMETER)
                                (begin (will-inc! PUSH_FUNNEL_BIT 1)
-                                      (eq! PUSH_VALUE_HIGH PUSH_VALUE_ACC))
+                                      (eq! PUSH_VALUE_HI PUSH_VALUE_ACC))
                                (if-eq (next IS_PUSH_DATA) 1 (will-remain-constant! PUSH_FUNNEL_BIT)))
                       (if-zero (- (prev PUSH_FUNNEL_BIT) PUSH_FUNNEL_BIT)
                                (eq! PUSH_VALUE_ACC
@@ -198,6 +183,8 @@
                                (eq! PUSH_VALUE_ACC PBCB))
                       (if-eq COUNTER_PUSH PUSH_PARAMETER
                              (begin (if-zero PUSH_FUNNEL_BIT
-                                             (vanishes! PUSH_VALUE_HIGH))
-                                    (eq! PUSH_VALUE_ACC PUSH_VALUE_LOW)
+                                             (vanishes! PUSH_VALUE_HI))
+                                    (eq! PUSH_VALUE_ACC PUSH_VALUE_LO)
                                     (vanishes! (next IS_PUSH_DATA)))))))
+
+

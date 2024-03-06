@@ -9,19 +9,18 @@
   G_txcreate                    32000
   G_accesslistaddress           2400
   G_accessliststorage           1900
-  ;;
-  LT                            0x10
-  common_rlp_txn_phase_number_0 0
-  common_rlp_txn_phase_number_1 7
-  common_rlp_txn_phase_number_2 2
-  common_rlp_txn_phase_number_3 8
-  common_rlp_txn_phase_number_4 9
-  common_rlp_txn_phase_number_5 6
-  type_0_rlp_txn_phase_number_6 3
-  type_1_rlp_txn_phase_number_6 3
-  type_1_rlp_txn_phase_number_7 10
-  type_2_rlp_txn_phase_number_6 5
-  type_2_rlp_txn_phase_number_7 10)
+  ;; the following should be taken from rlpTxn constant
+  COMMON_RLP_TXN_PHASE_NUMBER_0 1
+  COMMON_RLP_TXN_PHASE_NUMBER_1 8
+  COMMON_RLP_TXN_PHASE_NUMBER_2 3
+  COMMON_RLP_TXN_PHASE_NUMBER_3 9
+  COMMON_RLP_TXN_PHASE_NUMBER_4 10
+  COMMON_RLP_TXN_PHASE_NUMBER_5 7
+  type_0_rlp_txn_phase_number_6 4
+  type_1_rlp_txn_phase_number_6 4
+  type_1_rlp_txn_phase_number_7 11
+  type_2_rlp_txn_phase_number_6 6
+  type_2_rlp_txn_phase_number_7 11)
 
 ;; sum of transaction type flags
 (defun (tx-type-sum)
@@ -95,25 +94,13 @@
          (transaction-constant TYPE1)
          (transaction-constant TYPE2)
          (transaction-constant REQ_EVM)
+         (transaction-constant COPY_TXCD_AT_INITIALISATION)
          (transaction-constant LEFTOVER_GAS)
          (transaction-constant REF_CNT)
          (transaction-constant REF_AMT)
          (transaction-constant CUM_GAS)
          (transaction-constant STATUS_CODE)
          (transaction-constant CFI)))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;                              ;;
-;;    2.3 Binary constraints    ;;
-;;                              ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defconstraint binarities ()
-  (begin (is-binary IS_DEP)
-         (is-binary TYPE0)
-         (is-binary TYPE1)
-         (is-binary TYPE2)
-         (is-binary REQUIRES_EVM_EXECUTION)
-         (is-binary STATUS_CODE)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                                ;;
@@ -145,26 +132,27 @@
                                             (begin (will-remain-constant! BTC)
                                                    (will-inc! REL 1))
                                             (begin (will-inc! BTC 1)
-                                                   (= REL 1)))))))
+                                                   (will-eq! REL 1)))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                          ;;
 ;;    2.5 Cumulative gas    ;;
 ;;                          ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defconstraint cumulative-gas ()
-  (begin (if-zero ABS
-                  (vanishes! CUM_GAS))
-         (if-not-zero (will-remain-constant! BTC)
-                      ; BTC[i + 1] != BTC[i]
-                      (eq! (next CUMULATIVE_CONSUMED_GAS)
-                           (next (- GAS_LIMIT REFUND_AMOUNT))))
-         (if-not-zero (and (will-inc! BTC 1) (will-remain-constant! ABS))
-                      ; BTC[i + 1] != 1 + BTC[i] && ABS[i+1] != ABS[i] i.e. BTC[i + 1] == BTC[i] && ABS[i+1] == ABS[i] +1
-                      (eq! (next CUM_GAS)
-                           (+ CUM_GAS
-                              (next (- GAS_LIMIT REFUND_AMOUNT)))))))
-
+;;TODO reenable this constraint
+;;(defconstraint cumulative-gas ()
+;;  (begin (if-zero ABS
+;;                  (vanishes! CUM_GAS))
+;;         (if-not-zero (will-remain-constant! BTC)
+;;                      ; BTC[i + 1] != BTC[i]
+;;                      (eq! (next CUMULATIVE_CONSUMED_GAS)
+;;                           (next (- GAS_LIMIT REFUND_AMOUNT))))
+;;         (if-not-zero (and (will-inc! BTC 1) (will-remain-constant! ABS))
+;;                      ; BTC[i + 1] != 1 + BTC[i] && ABS[i+1] != ABS[i] i.e. BTC[i + 1] == BTC[i] && ABS[i+1] == ABS[i] +1
+;;                      (eq! (next CUM_GAS)
+;;                           (+ CUM_GAS
+;;                              (next (- GAS_LIMIT REFUND_AMOUNT)))))))
+;;
 ;;;;;;;;;;;;;;;;;;;;;;;
 ;;                   ;;
 ;;    2.6 Aliases    ;;
@@ -218,12 +206,12 @@
 ;;                           ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun (setting_phase_numbers)
-  (begin (= (shift PHASE_RLP_TXN 0) common_rlp_txn_phase_number_0)
-         (= (shift PHASE_RLP_TXN 1) common_rlp_txn_phase_number_1)
-         (= (shift PHASE_RLP_TXN 2) common_rlp_txn_phase_number_2)
-         (= (shift PHASE_RLP_TXN 3) common_rlp_txn_phase_number_3)
-         (= (shift PHASE_RLP_TXN 4) common_rlp_txn_phase_number_4)
-         (= (shift PHASE_RLP_TXN 5) common_rlp_txn_phase_number_5)
+  (begin (= (shift PHASE_RLP_TXN 0) COMMON_RLP_TXN_PHASE_NUMBER_0)
+         (= (shift PHASE_RLP_TXN 1) COMMON_RLP_TXN_PHASE_NUMBER_1)
+         (= (shift PHASE_RLP_TXN 2) COMMON_RLP_TXN_PHASE_NUMBER_2)
+         (= (shift PHASE_RLP_TXN 3) COMMON_RLP_TXN_PHASE_NUMBER_3)
+         (= (shift PHASE_RLP_TXN 4) COMMON_RLP_TXN_PHASE_NUMBER_4)
+         (= (shift PHASE_RLP_TXN 5) COMMON_RLP_TXN_PHASE_NUMBER_5)
          ;;
          (if-not-zero TYPE0
                       (= (shift PHASE_RLP_TXN 6) type_0_rlp_txn_phase_number_6))
@@ -263,7 +251,11 @@
          (if-zero TYPE2
                   (vanishes! (shift OUTGOING_HI 6)))))
 
-(defconstraint verticalization (:guard (remained-constant! ABS))
+;; is non-zero for the first row of each tx
+(defun (first-row-trigger)
+  (- ABS (prev ABS)))
+
+(defconstraint verticalization (:guard (first-row-trigger))
   (begin (setting_phase_numbers)
          (data_transfer)
          (vanishing_data_cells)))
@@ -278,8 +270,8 @@
   (begin (= WCP_ARG_ONE_LO IBAL)
          (= WCP_ARG_TWO_LO
             (+ (value) (* (max_fee) (gas_limit))))
-         (= WCP_INST LT)
-         (vanishes! WCP_RES_LO)))
+         (= WCP_INST EVM_INST_LT)
+         (vanishes! WCP_RES)))
 
 (defun (upfront_gas_cost_of_transaction)
   (if-not-zero TYPE0
@@ -296,8 +288,8 @@
 (defun (sufficient_gas_limit)
   (begin (= (shift WCP_ARG_ONE_LO 1) (gas_limit))
          (= (shift WCP_ARG_TWO_LO 1) (upfront_gas_cost_of_transaction))
-         (= (shift WCP_INST 1) LT)
-         (vanishes! (shift WCP_RES_LO 1))))
+         (= (shift WCP_INST 1) EVM_INST_LT)
+         (vanishes! (shift WCP_RES 1))))
 
 ;; epsilon is the remainder in the euclidean division of [T_g - g'] by 2
 (defun (epsilon)
@@ -309,48 +301,57 @@
 (defun (upper_limit_for_refunds)
   (begin (= (shift WCP_ARG_ONE_LO 2) (- (gas_limit) LEFTOVER_GAS))
          ;;  (= (shift WCP_ARG_TWO_LO 2) ???) ;; unknown
-         (= (shift WCP_INST 2) LT)
-         (vanishes! (shift WCP_RES_LO 2))
+         (= (shift WCP_INST 2) EVM_INST_LT)
+         (vanishes! (shift WCP_RES 2))
          (is-binary (epsilon))))
 
 ;; row i + 3
 (defun (effective_refund)
   (begin (= (shift WCP_ARG_ONE_LO 3) REF_CNT)
          (= (shift WCP_ARG_TWO_LO 3) (shift WCP_ARG_TWO_LO 2))
-         (= (shift WCP_INST 3) LT)
-         ;;  (= (shift WCP_RES_LO     3) ???) ;; unknown
+         (= (shift WCP_INST 3) EVM_INST_LT)
+         ;;  (= (shift WCP_RES     3) ???) ;; unknown
          ))
+
+;; row i + 4
+(defun (is-zero-call-data)
+  (begin (eq! (shift WCP_ARG_ONE_LO 4) CALL_DATA_SIZE)
+         (eq! (shift WCP_INST 4) EVM_INST_ISZERO)
+         (eq! COPY_TXCD_AT_INITIALISATION
+              (* REQUIRES_EVM_EXECUTION
+                 (- 1 (shift WCP_RES 4))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; applicable only to type 2 transactions ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; row i + 4
-(defun (type_2_comparing_max_fee_and_basefee)
-  (begin (= (shift WCP_ARG_ONE_LO 4) (max_fee))
-         (= (shift WCP_ARG_TWO_LO 4) BASEFEE)
-         (= (shift WCP_INST 4) LT)
-         (= (shift WCP_RES_LO 4) 0)))
-
 ;; row i + 5
-(defun (type_2_comparing_max_fee_and_max_priority_fee)
+(defun (type_2_comparing_max_fee_and_basefee)
   (begin (= (shift WCP_ARG_ONE_LO 5) (max_fee))
-         (= (shift WCP_ARG_TWO_LO 5) (max_priority_fee))
-         (= (shift WCP_INST 5) LT)
-         (= (shift WCP_RES_LO 5) 0)))
+         (= (shift WCP_ARG_TWO_LO 5) BASEFEE)
+         (= (shift WCP_INST 5) EVM_INST_LT)
+         (= (shift WCP_RES 5) 0)))
 
 ;; row i + 6
-(defun (type_2_computing_the_effective_gas_price)
+(defun (type_2_comparing_max_fee_and_max_priority_fee)
   (begin (= (shift WCP_ARG_ONE_LO 6) (max_fee))
-         (= (shift WCP_ARG_TWO_LO 6) (+ (max_priority_fee) BASEFEE))
-         (= (shift WCP_INST 6) LT)
-         ;;  (= (shift WCP_RES_LO     6) ???) ;; unknown
+         (= (shift WCP_ARG_TWO_LO 6) (max_priority_fee))
+         (= (shift WCP_INST 6) EVM_INST_LT)
+         (= (shift WCP_RES 6) 0)))
+
+;; row i + 7
+(defun (type_2_computing_the_effective_gas_price)
+  (begin (= (shift WCP_ARG_ONE_LO 7) (max_fee))
+         (= (shift WCP_ARG_TWO_LO 7) (+ (max_priority_fee) BASEFEE))
+         (= (shift WCP_INST 7) EVM_INST_LT)
+         ;;  (= (shift WCP_RES     6) ???) ;; unknown
          ))
 
-(defconstraint comparisons (:guard (remained-constant! ABS))
+(defconstraint comparisons (:guard (first-row-trigger))
   (begin (sufficient_balance)
          (sufficient_gas_limit)
          (upper_limit_for_refunds)
          (effective_refund)
+         (is-zero-call-data)
          (if-not-zero TYPE2
                       (begin (type_2_comparing_max_fee_and_basefee)
                              (type_2_comparing_max_fee_and_max_priority_fee)
@@ -361,19 +362,19 @@
 ;;    2.11 Gas and gas price constraints    ;;
 ;;                                          ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defconstraint gas_and_gas_price (:guard (remained-constant! ABS))
+(defconstraint gas_and_gas_price (:guard (first-row-trigger))
   (begin  ;; constraining INIT_GAS
          (= IGAS
             (- (gas_limit) (shift WCP_ARG_TWO_LO 1)))
          ;; constraining REFUND_AMOUNT
-         (if-zero (shift WCP_RES_LO 3)
+         (if-zero (shift WCP_RES 3)
                   (= REF_AMT
                      (+ LEFTOVER_GAS (shift WCP_ARG_TWO_LO 2)))
                   (= REF_AMT (+ LEFTOVER_GAS REF_CNT)))
          ;; constraining GAS_PRICE
          (if-zero TYPE2
                   (= GAS_PRICE (gas_price))
-                  (if-zero (shift WCP_RES_LO 6)
+                  (if-zero (shift WCP_RES 7)
                            (= GAS_PRICE (+ (max_priority_fee) BASEFEE))
                            (= GAS_PRICE (max_fee))))))
 
@@ -382,12 +383,12 @@
 ;;    2.11 Verticalisation for RlpTxnRcpt    ;;
 ;;                                           ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defconstraint verticalisation-rlp-txn-rcpt (:guard (remained-constant! ABS))
-  (begin (eq! PHASE_RLP_TXNRCPT RLPRECEIPT_SUBPHASE_ID_TYPE)
+(defconstraint verticalisation-rlp-txn-rcpt (:guard (first-row-trigger))
+  (begin (eq! PHASE_RLP_TXNRCPT RLP_RCPT_SUBPHASE_ID_TYPE)
          (eq! OUTGOING_RLP_TXNRCPT (tx_type))
-         (eq! (next PHASE_RLP_TXNRCPT) RLPRECEIPT_SUBPHASE_ID_STATUS_CODE)
+         (eq! (next PHASE_RLP_TXNRCPT) RLP_RCPT_SUBPHASE_ID_STATUS_CODE)
          (eq! (next OUTGOING_RLP_TXNRCPT) STATUS_CODE)
-         (eq! (shift PHASE_RLP_TXNRCPT 2) RLPRECEIPT_SUBPHASE_ID_CUMUL_GAS)
+         (eq! (shift PHASE_RLP_TXNRCPT 2) RLP_RCPT_SUBPHASE_ID_CUMUL_GAS)
          (eq! (shift OUTGOING_RLP_TXNRCPT 2) CUMULATIVE_CONSUMED_GAS)))
 
 

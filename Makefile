@@ -1,109 +1,114 @@
-CORSET=corset
-ROM := rom/columns.lisp \
-	rom/constraints.lisp \
-	rom/rom_into_instructionDecoder.lisp
+CORSET ?= corset
 
-ROM_LEX := romLex/columns.lisp romLex/constraints.lisp \
-	romLex/romLex_into_rom.lisp
-
-STACK := hub/columns.lisp \
-	hub/constraints.lisp
+HUB_V2 := $(wildcard hub_v2/columns/*lisp) \
+	  $(wildcard hub_v2/constraints/heartbeat/*lisp) \
+	  $(wildcard hub_v2/constraints/generalities/*lisp) \
+	  $(wildcard hub_v2/lookups/*lisp) \
+	  hub_v2/constants.lisp
 
 ALU := alu/add/columns.lisp \
-	alu/add/constraints.lisp \
-	alu/ext/columns.lisp \
-	alu/ext/constraints.lisp \
-	alu/mod/columns.lisp \
-	alu/mod/constraints.lisp \
-	alu/mul/columns.lisp \
-	alu/mul/constraints.lisp \
-	alu/mul/helpers.lisp \
-#       alu/add/hub_into_add.lisp \
-#       alu/ext/hub_into_ext.lisp \
-#       alu/mod/hub_into_mod.lisp \
-#       alu/mul/hub_into_mul.lisp
+       alu/add/constraints.lisp \
+       alu/ext/columns.lisp \
+       alu/ext/constraints.lisp \
+       alu/mod/columns.lisp \
+       alu/mod/constraints.lisp \
+       alu/mul/columns.lisp \
+       alu/mul/constraints.lisp \
+       alu/mul/helpers.lisp
+# alu/add/hub_into_add.lisp \
+	# alu/ext/hub_into_ext.lisp \
+	# alu/mod/hub_into_mod.lisp \
+	# alu/mul/hub_into_mul.lisp
 
-BIN := bin/columns.lisp \
-	   bin/constraints.lisp \
-	   $(wildcard lookup_tables/binRT/*lisp) \
-	   lookup_tables/lookups/bin_into_binRT.lisp \
-	   # bin/hub_into_bin.lisp \
+BIN := bin   
 
-SHIFT :=  shf/columns.lisp \
-	  shf/constraints.lisp \
-	  $(wildcard lookup_tables/shfRT/*lisp) \
-	 lookup_tables/lookups/shf_into_shfRT.lisp \
-	  # shf/hub_into_shf.lisp \
+CONSTANTS := constants/constants.lisp
 
-WCP := wcp/columns.lisp \
-	wcp/constraints.lisp \
-	   # wcp/hub_into_wcp.lisp \
+EC_DATA := ec_data
 
-TRM := trm/columns.lisp \
-	trm/constraints.lisp
+EUC := euc
 
-MXP := mxp/columns.lisp \
-	mxp/constraints.lisp \
-	mxp/lookups/mxp_into_instruction_decoder.lisp
-		   # mxp/lookups/hub_into_mxp.lisp
+LIBRARY := library/rlp_constraints_pattern.lisp
 
-EC_DATA := ec_data/columns.lisp \
-	ec_data/constraints.lisp \
-	ec_data/ecdata_into_ext.lisp \
-	ec_data/ecdata_into_wcp.lisp \
-	ec_data/hub_into_ecdata.lisp \
+LOG_DATA := logData
 
-RLP_TXN := rlp_txn/columns.lisp rlp_txn/constraints.lisp \
-			rlp_txn/rlpTxn_into_rom.lisp
+LOG_INFO := logInfo
 
-TABLES := $(wildcard lookup_tables/tables/*lisp)
+MMU := mmu
+
+MMIO := mmio
+
+MXP := mxp
 
 PUB_DATA := $(shell find pub/ -iname '*.lisp')
 
-MEMORY := $(wildcard hub/mmio/columns.lisp) \
-		  $(wildcard hub/mmu/columns.lisp) \
-		  lookup_tables/mmuID/columns.lisp
+RIPSHA := ripsha
 
-RLP_ADDR := rlpAddr/columns.lisp rlpAddr/constraints.lisp
+RLP_ADDR := rlpAddr
 
-RLP_TXRCPT := rlp_txrcpt/columns.lisp rlp_txrcpt/constraints.lisp
+RLP_TXN := rlp_txn
 
-LIBRARY := library/constant.lisp library/rlp_constraints_pattern.lisp
+RLP_TXRCPT := rlp_txrcpt			
+
+ROM := rom
+
+ROM_LEX := romLex
+
+SHIFT :=  shf
+
+STACK := hub/columns.lisp \
+	 hub/constraints.lisp
+
+STP := stp/columns.lisp stp/constraints.lisp \
+       stp/lookups/stp_into_mod.lisp stp/lookups/stp_into_wcp.lisp
+
+TABLES := reference_tables/binRT.lisp \
+	  reference_tables/shfRT.lisp \
+	  reference_tables/instruction_decoder.lisp 
 
 TRM := trm/columns.lisp trm/constraints.lisp
 
-LOG_DATA := logData/columns.lisp logData/constraints.lisp \
-	logData/logdata-to-rlprcpt.lisp
+TXN_DATA := txn_data 
 
-LOG_INFO := logInfo/columns.lisp logInfo/constraints.lisp \
-	logInfo/lookups/loginfo-to-rlprcpt.lisp logInfo/lookups/loginfo-to-logdata.lisp
+WCP := wcp
+
+BLAKE2f_MODEXP_DATA := blake2f_modexp_data/
+
+EXP := exp
 
 GAS := gas/columns.lisp gas/constraints.lisp
 
-ZKEVM_MODULES := ${LIBRARY} \
-	${ALU} \
+ZKEVM_MODULES := ${ALU} \
 	${BIN} \
+	${BLAKE2f_MODEXP_DATA} \
+	${CONSTANTS} \
 	${EC_DATA} \
-	${MEMORY} \
+	${EUC} \
+	${EXP} \
+	${GAS} \
+	${LIBRARY} \
+	${LOG_DATA} \
+	${LOG_INFO} \
+	${MMU} \
+	${MMIO} \
 	${MXP} \
 	${PUB_DATA} \
+	${RIPSHA} \
 	${RLP_ADDR} \
 	${RLP_TXN} \
 	${RLP_TXRCPT} \
-	${ROM_LEX} \
 	${ROM} \
+	${ROM_LEX} \
 	${SHIFT} \
 	${STACK} \
+	${STP} \
 	${TABLES} \
-	${TXN_DATA} \
-	${WCP} \
 	${TRM} \
-	${LOG_DATA} \
-	${LOG_INFO} \
-	${GAS}
+	${TXN_DATA} \
+	${WCP}
 
 define.go: ${ZKEVM_MODULES}
 	${CORSET} wizard-iop -vv -P define -o $@ ${ZKEVM_MODULES}
-
+    
 zkevm.bin: ${ZKEVM_MODULES}
 	${CORSET} compile -vv -o $@ ${ZKEVM_MODULES}

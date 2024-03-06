@@ -1,57 +1,53 @@
 (module bin)
 
-(defcolumns
-    BINARY_STAMP
-    (ONE_LINE_INSTRUCTION :binary)
-    COUNTER
-    INST
-    ARGUMENT_1_HI
-    ARGUMENT_1_LO
-    ARGUMENT_2_HI
-    ARGUMENT_2_LO
-    RESULT_HI
-    RESULT_LO
-    (SMALL :binary)
-    (BITS :binary)
-    (BIT_B_4 :binary)
-    (NEG :binary)
-    LOW_4
-    (BIT_1 :binary)
-    PIVOT
-    (BYTE_1 :byte)
-    (BYTE_2 :byte)
-    (BYTE_3 :byte)
-    (BYTE_4 :byte)
-    (BYTE_5 :byte)
-    (BYTE_6 :byte)
-    ACC_1
-    ACC_2
-    ACC_3
-    ACC_4
-    ACC_5
-    ACC_6
-    ;; decoded bytes:
-    AND_BYTE_HI
-    AND_BYTE_LO
-    OR_BYTE_HI
-    OR_BYTE_LO
-    XOR_BYTE_HI
-    XOR_BYTE_LO
-    NOT_BYTE_HI
-    NOT_BYTE_LO
-    (IS_DATA :binary))
+(defcolumns 
+  (STAMP :i32)
+  (CT_MAX :byte)
+  (COUNTER :byte)
+  (INST :byte :display :opcode)
+  (ARGUMENT_1_HI :i128)
+  (ARGUMENT_1_LO :i128)
+  (ARGUMENT_2_HI :i128)
+  (ARGUMENT_2_LO :i128)
+  (RESULT_HI :i128)
+  (RESULT_LO :i128)
+  (IS_AND :binary@prove)
+  (IS_OR :binary@prove)
+  (IS_XOR :binary@prove)
+  (IS_NOT :binary@prove)
+  (IS_BYTE :binary@prove)
+  (IS_SIGNEXTEND :binary@prove)
+  (SMALL :binary@prove)
+  (BITS :binary@prove)
+  (BIT_B_4 :binary@prove)
+  (LOW_4 :byte@prove)
+  (NEG :binary@prove)
+  (BIT_1 :binary@prove)
+  (PIVOT :byte)
+  (BYTE_1 :byte@prove)
+  (BYTE_2 :byte@prove)
+  (BYTE_3 :byte@prove)
+  (BYTE_4 :byte@prove)
+  (BYTE_5 :byte@prove)
+  (BYTE_6 :byte@prove)
+  (ACC_1 :i128)
+  (ACC_2 :i128)
+  (ACC_3 :i128)
+  (ACC_4 :i128)
+  (ACC_5 :i128)
+  (ACC_6 :i128)
+  ;; decoded bytes:
+  (XXX_BYTE_HI :byte)
+  (XXX_BYTE_LO :byte))
 
 ;; aliases
-(defalias
-    STAMP BINARY_STAMP
-    OLI ONE_LINE_INSTRUCTION
-    CT COUNTER
-    ARG_1_HI ARGUMENT_1_HI
-    ARG_1_LO ARGUMENT_1_LO
-    ARG_2_HI ARGUMENT_2_HI
-    ARG_2_LO ARGUMENT_2_LO
-    RES_HI RESULT_HI
-    RES_LO RESULT_LO)
+(defalias 
+  CT       COUNTER
+  ARG_1_HI ARGUMENT_1_HI
+  ARG_1_LO ARGUMENT_1_LO
+  ARG_2_HI ARGUMENT_2_HI
+  ARG_2_LO ARGUMENT_2_LO
+  RES_HI   RESULT_HI
+  RES_LO   RESULT_LO)
 
 
-    
