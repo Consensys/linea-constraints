@@ -20,6 +20,7 @@
 	     mxp.SIZE_2_LO
 	     mxp.WORDS
 	     mxp.GAS_MXP
+	     mxp.MTNTOP
            )
            ;; source columns
 	   (
@@ -38,6 +39,7 @@
 	     (* hub.misc/MXP_SIZE_2_LO      (hub-into-mxp-trigger))
 	     (* hub.misc/MXP_WORDS          (hub-into-mxp-trigger))
 	     (* hub.misc/MXP_GAS_MXP        (hub-into-mxp-trigger))
+	     (* hub.misc/MXP_MTNTOP         (hub-into-mxp-trigger))
            )
 )
 

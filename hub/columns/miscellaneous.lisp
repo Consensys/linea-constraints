@@ -47,6 +47,7 @@
 		 MXP_SIZE_2_LO
 		 MXP_WORDS
 		 MXP_GAS_MXP
+		 MXP_MTNTOP               ;; MTNTOP ≡ MAY TRIGGER NONTRIVIAL OPERATION (in the MMU)
 
 		 ;; OOB columns (DONE)
 		 (OOB_INST                :i32)
