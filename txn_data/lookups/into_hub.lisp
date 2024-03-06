@@ -1,4 +1,4 @@
-(deflookup
+(deflookup txn_data_into_hub
  ;; target columns
  (
   hub.BATCH_NUMBER

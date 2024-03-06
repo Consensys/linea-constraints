@@ -4,7 +4,9 @@
 
   ;; selector
   PEEK_AT_STACK
-  (;; stack items
+
+  (
+   ;; stack items
    (STACK_ITEM_HEIGHT   :array [4])
    (STACK_ITEM_VALUE_HI :array [4])
    (STACK_ITEM_VALUE_LO :array [4])
