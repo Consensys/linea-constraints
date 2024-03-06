@@ -7,7 +7,7 @@
      (- 1 stack/SUX stack/SOX)))
 
 (defconstraint swap-stack-pattern (:guard (swap-no-stack-exceptions))
-               (swap-stack-pattern (- stack/INSTRUCTION EVM_INST_swap1)))
+               (swap-stack-pattern (- stack/INSTRUCTION (- EVM_INST_SWAP1 1))))
 
 (defconstraint swap-setting-NSR (:guard (swap-no-stack-exceptions))
                (eq! NSR CMC))
