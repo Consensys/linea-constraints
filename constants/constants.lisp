@@ -188,11 +188,11 @@
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   EXO_SUM_ROM                                   1
   EXO_SUM_KEC                                   2
-  EXO_SUM_LOG                                   3
-  EXO_SUM_TXCD                                  4    ;; it is RLP_TXN
-  EXO_SUM_ECDATA                                5
-  EXO_SUM_RIPSHA                                6
-  EXO_SUM_BLAKEMODEXP                           7
+  EXO_SUM_LOG                                   4
+  EXO_SUM_TXCD                                  8    ;; it is RLP_TXN
+  EXO_SUM_ECDATA                                16
+  EXO_SUM_RIPSHA                                32
+  EXO_SUM_BLAKEMODEXP                           64
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;                     ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; BLAKE MODEXP MODULE ;;
