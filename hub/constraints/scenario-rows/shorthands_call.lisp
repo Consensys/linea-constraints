@@ -8,7 +8,7 @@
 
 
 ;;  CALL/externally_owned_account
-(defun (scen-shorthand-CALL-externally-owne-account)
+(defun (scen-shorthand-CALL-externally-owned-account)
   (+ 
     ;; CALL_EXCEPTION
     ;; CALL_ABORT
@@ -71,14 +71,14 @@
     ))
 
 ;;  CALL/sum
-(defun (scen-shorthand-call)
+(defun (scen-shorthand-CALL-sum)
   (+ 
     CALL_EXCEPTION
-    (scen-shorthand-call)
+    (scen-shorthand-CALL-unexceptional)
     ))
 
 ;;  CALL/no_precompile
-(defun (scen-shorthand-CALL-entry)
+(defun (scen-shorthand-CALL-no-precompile)
   (+ 
     CALL_EXCEPTION
     CALL_ABORT
