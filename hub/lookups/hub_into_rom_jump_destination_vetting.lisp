@@ -2,7 +2,7 @@
   (and hub.PEEK_AT_STACK
        hub.stack/JUMP_DESTINATION_VETTING_REQUIRED))
 
-(deflookup hub-into-gas
+(deflookup hub-into-rom-jump-destination-vetting
            ;; target columns
 	   ( 
 	     rom.CFI
