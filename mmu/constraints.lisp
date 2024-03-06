@@ -281,7 +281,7 @@
 ;; MLOAD
 ;;
 (defun (mload-aligned)
-  (force-bool (next prprc/WCP_RES)))
+  (next prprc/WCP_RES))
 
 (defun (mload-slo)
   (next prprc/EUC_QUOT))
@@ -319,7 +319,7 @@
 ;; MSTORE
 ;;
 (defun (mstore-aligned)
-  (force-bool (next prprc/WCP_RES)))
+  (next prprc/WCP_RES))
 
 (defun (mstore-tlo)
   (next prprc/EUC_QUOT))
@@ -432,7 +432,7 @@
   (force-bool (shift prprc/EUC_QUOT 2)))
 
 (defun (right-pad-word-extract-aligned)
-  (force-bool (next prprc/WCP_RES)))
+  (next prprc/WCP_RES))
 
 (defun (right-pad-word-extract-slo)
   (shift prprc/EUC_QUOT 3))
@@ -441,13 +441,13 @@
   (shift prprc/EUC_REM 3))
 
 (defun (right-pad-word-extract-first-limb-single-source)
-  (force-bool (shift prprc/WCP_RES 3)))
+  (shift prprc/WCP_RES 3))
 
 (defun (right-pad-word-extract-second-limb-single-source)
-  (force-bool (shift prprc/WCP_RES 4)))
+  (shift prprc/WCP_RES 4))
 
 (defun (right-pad-word-extract-second-limb-void)
-  (force-bool (shift prprc/WCP_RES 5)))
+  (shift prprc/WCP_RES 5))
 
 (defconstraint right-pad-word-extract-pre-processing (:guard (* MACRO IS_RIGHT_PADDED_WORD_EXTRACTION))
   (begin  ;; setting tot nb of mmio inst
@@ -515,7 +515,7 @@
 ;; RAM TO EXO WITH PADDING
 ;;
 (defun (ram-exo-wpad-aligned)
-  (force-bool (next prprc/WCP_RES)))
+  (next prprc/WCP_RES))
 
 (defun (ram-exo-wpad-initial-slo)
   (next prprc/EUC_QUOT))
@@ -524,7 +524,7 @@
   (next prprc/EUC_REM))
 
 (defun (ram-exo-wpad-has-right-padding)
-  (force-bool (shift prprc/WCP_RES 2)))
+  (shift prprc/WCP_RES 2))
 
 (defun (ram-exo-wpad-padding-size)
   (* (ram-exo-wpad-has-right-padding) (- macro/REF_SIZE macro/SIZE)))
@@ -534,14 +534,14 @@
      (* (- 1 (ram-exo-wpad-has-right-padding)) macro/REF_SIZE)))
 
 (defun (ram-exo-wpad-last-limb-is-full)
-  (force-bool (shift prprc/WCP_RES 3)))
+  (shift prprc/WCP_RES 3))
 
 (defun (ram-exo-wpad-last-limb-byte-size)
   (+ (* (ram-exo-wpad-last-limb-is-full) LLARGE)
      (* (- 1 (ram-exo-wpad-last-limb-is-full)) (shift prprc/EUC_REM 3))))
 
 (defun (ram-exo-wpad-last-limb-single-source)
-  (force-bool (shift prprc/WCP_RES 4)))
+  (shift prprc/WCP_RES 4))
 
 (defconstraint ram-to-exo-with-padding-preprocessing (:guard (* MACRO IS_RAM_TO_EXO_WITH_PADDING))
   (begin  ;; setting nb of rows
@@ -649,16 +649,16 @@
   [OUT 2])
 
 (defun (ram-to-ram-sans-pad-aligned)
-  (force-bool [BIN 1]))
+  [BIN 1])
 
 (defun (ram-to-ram-sans-pad-last-limb-single-source)
-  (force-bool [BIN 2]))
+  [BIN 2])
 
 (defun (ram-to-ram-sans-pad-initial-slo-increment)
-  (force-bool [BIN 3]))
+  [BIN 3])
 
 (defun (ram-to-ram-sans-pad-last-limb-is-fast)
-  (force-bool [BIN 4]))
+  [BIN 4])
 
 (defun (ram-to-ram-sans-pad-rdo)
   macro/SRC_OFFSET_LO)
@@ -679,7 +679,7 @@
   (next prprc/EUC_REM))
 
 (defun (ram-to-ram-sans-pad-initial-cmp)
-  (force-bool (next prprc/WCP_RES)))
+  (next prprc/WCP_RES))
 
 (defun (ram-to-ram-sans-pad-initial-real-size)
   (+ (* (ram-to-ram-sans-pad-initial-cmp) (ram-to-ram-sans-pad-ratc))
@@ -695,17 +695,17 @@
   (shift prprc/EUC_QUOT 3))
 
 (defun (ram-to-ram-sans-pad-totnt-is-one)
-  (force-bool (shift prprc/WCP_RES 3)))
+  (shift prprc/WCP_RES 3))
 
 (defun (ram-to-ram-sans-pad-first-limb-byte-size)
   (+ (* (ram-to-ram-sans-pad-totnt-is-one) (ram-to-ram-sans-pad-initial-real-size))
      (* (- 1 (ram-to-ram-sans-pad-totnt-is-one)) (- LLARGE (ram-to-ram-sans-pad-initial-tbo)))))
 
 (defun (ram-to-ram-sans-pad-first-limb-single-source)
-  (force-bool (shift prprc/WCP_RES 4)))
+  (shift prprc/WCP_RES 4))
 
 (defun (ram-to-ram-sans-pad-init-tbo-is-zero)
-  (force-bool (shift prprc/WCP_RES 5)))
+  (shift prprc/WCP_RES 5))
 
 (defun (ram-to-ram-sans-pad-last-limb-is-full)
   (force-bool (shift prprc/EUC_QUOT 5)))
@@ -821,10 +821,10 @@
 ;;
 ;; ANY TO RAM WITH PADDING
 ;;
-(defun (any-to-ram-min-tgt-offest)
+(defun (any-to-ram-min-tgt-offset)
   macro/TGT_OFFSET_LO)
 
-(defun (any-to-ram-max-tgt-offest)
+(defun (any-to-ram-max-tgt-offset)
   (+ macro/TGT_OFFSET_LO (- macro/SIZE 1)))
 
 (defun (any-to-ram-pure-padd)
@@ -837,7 +837,7 @@
   (next prprc/EUC_REM))
 
 (defun (any-to-ram-max-src-offset-or-zero)
-  (* (- 1 (any-to-ram-pure-padd)) (any-to-ram-max-tgt-offest)))
+  (* (- 1 (any-to-ram-pure-padd)) (any-to-ram-max-tgt-offset)))
 
 (defun (any-to-ram-mixed)
   (force-bool (* (- 1 (any-to-ram-pure-padd))
@@ -864,10 +864,10 @@
 (defconstraint any-to-ram-prprc-common (:guard (* MACRO (is-any-to-ram-with-padding)))
   (begin  ;; preprocessing row n°1
          (callToLt 1 macro/SRC_OFFSET_HI macro/SRC_OFFSET_LO macro/REF_SIZE)
-         (callToEuc 1 (any-to-ram-min-tgt-offest) LLARGE)
+         (callToEuc 1 (any-to-ram-min-tgt-offset) LLARGE)
          ;; preprocessing row n°2
          (callToLt 2 0 (any-to-ram-max-src-offset-or-zero) macro/REF_SIZE)
-         (callToEuc 2 (any-to-ram-max-tgt-offest) LLARGE)
+         (callToEuc 2 (any-to-ram-max-tgt-offset) LLARGE)
          ;; justifyng the flag
          (eq! IS_ANY_TO_RAM_WITH_PADDING_PURE_PADDING (any-to-ram-pure-padd))
          (eq! IS_ANY_TO_RAM_WITH_PADDING_SOME_DATA (+ (any-to-ram-mixed) (any-to-ram-pure-padd)))))
@@ -876,16 +876,16 @@
 ;; PURE PADDING sub case
 ;;
 (defun (any-to-ram-pure-padding-last-padding-is-full)
-  (force-bool [BIN 1]))
+  [BIN 1])
 
 (defun (any-to-ram-pure-padding-last-padding-size)
   [OUT 1])
 
 (defun (any-to-ram-pure-padding-totrz-is-one)
-  (force-bool (shift prprc/WCP_RES 3)))
+  (shift prprc/WCP_RES 3))
 
 (defun (any-to-ram-pure-padding-first-padding-is-full)
-  (force-bool (shift prprc/WCP_RES 4)))
+  (shift prprc/WCP_RES 4))
 
 (defun (any-to-ram-pure-padding-only-padding-is-full)
   (* (any-to-ram-pure-padding-first-padding-is-full) (any-to-ram-pure-padding-last-padding-is-full)))
@@ -949,22 +949,22 @@
 ;; SOME DATA CASE
 ;;
 (defun (any-to-ram-some-data-tlo-increment-after-first-dt)
-  (force-bool [BIN 1]))
+  [BIN 1])
 
 (defun (any-to-ram-some-data-aligned)
-  (force-bool [BIN 2]))
+  [BIN 2])
 
 (defun (any-to-ram-some-data-middle-tbo)
   [OUT 1])
 
 (defun (any-to-ram-some-data-last-dt-single-target)
-  (force-bool [BIN 3]))
+  [BIN 3])
 
 (defun (any-to-ram-some-data-last-dt-size)
   [OUT 2])
 
 (defun (any-to-ram-some-data-tlo-increment-at-transition)
-  (force-bool [BIN 4]))
+  [BIN 4])
 
 (defun (any-to-ram-some-data-first-pbo)
   [OUT 3])
@@ -976,10 +976,10 @@
   [OUT 5])
 
 (defun (any-to-ram-some-data-data-src-is-ram)
-  (force-bool [BIN 5]))
+  [BIN 5])
 
 (defun (any-to-ram-some-data-totnt-is-one)
-  (force-bool (shift WCP_RES 4)))
+  (shift prprc/WCP_RES 4))
 
 (defun (any-to-ram-some-data-only-dt-size)
   (any-to-ram-trsf-size))
@@ -1009,19 +1009,19 @@
   (force-bool (- 1 (shift prprc/EUC_QUOT 7))))
 
 (defun (any-to-ram-some-data-only-dt-maxes-out-target)
-  (force-bool (shift prprc/WCP_RES 7)))
+  (shift prprc/WCP_RES 7))
 
 (defun (any-to-ram-some-data-first-dt-single-target)
   (force-bool (- 1 (shift prprc/EUC_QUOT 8))))
 
 (defun (any-to-ram-some-data-first-dt-maxes-out-target)
-  (force-bool (shift prprc/WCP_RES 8)))
+  (shift prprc/WCP_RES 8))
 
 (defun (any-to-ram-some-data-last-dt-maxes-out-target)
-  (force-bool (shift prprc/WCP_RES 9)))
+  (shift prprc/WCP_RES 9))
 
 (defun (any-to-ram-some-data-first-padding-offset)
-  (+ (any-to-ram-min-target-offset) (any-to-ram-some-trsf-size)))
+  (+ (any-to-ram-min-tgt-offset) (any-to-ram-trsf-size)))
 
 (defun (any-to-ram-some-data-first-plo)
   (shift prprc/EUC_QUOT 10))
@@ -1033,7 +1033,7 @@
   (any-to-ram-max-tbo))
 
 (defun (any-to-ram-some-data-totrz-is-one)
-  (force-bool (shift WCP_RES 10)))
+  (shift prprc/WCP_RES 10))
 
 (defun (any-to-ram-some-data-micro-cns)
   (* (any-to-ram-some-data-data-src-is-ram) macro/SRC_ID))
@@ -1044,17 +1044,17 @@
 (defconstraint any-to-ram-some-data-preprocessing (:guard (* MACRO IS_ANY_TO_RAM_WITH_PADDING_SOME_DATA))
   (begin  ;; preprocessing row n°3
          (callToIszero 3 0 macro/EXO_SUM)
-         (eq! (any-to-ram-some-data-data-src-is-ram) (shift WCP_RES 3))
+         (eq! (any-to-ram-some-data-data-src-is-ram) (shift prprc/WCP_RES 3))
          ;; setting nb of rows
          (vanishes! TOTLZ)
          (eq! TOTNT
-              (+ (- (any-o-ram-some-data-max-slo) (any-o-ram-some-data-min-slo)) 1))
+              (+ (- (any-to-ram-some-data-max-slo) (any-to-ram-some-data-min-slo)) 1))
          ;; preprocessing row n°4
          (callToEq 4 0 TOTNT 1)
          (eq! (any-to-ram-some-data-last-dt-size) (+ (any-to-ram-some-data-min-sbo) 1))
          ;; preprocessing row n°5
          (callToEuc 5 (any-to-ram-some-data-min-src-offset) LLARGE)
-         (callToEq 5 0 (any-to-ram-some-data-min-tbo) (any-to-ram-some-data-min-sbo))
+         (callToEq 5 0 (any-to-ram-min-tbo) (any-to-ram-some-data-min-sbo))
          (eq! (any-to-ram-some-data-aligned) (shift prprc/WCP_RES 5))
          ;; preprocessing row n°6
          (callToEuc 6 (any-to-ram-some-data-min-src-offset) LLARGE)
@@ -1077,33 +1077,34 @@
          ;; preprocessing row n°9
          (if-zero (any-to-ram-some-data-totnt-is-one)
                   (begin (callToEuc 9
-                                    (+ (any-to-ram-mddl-tbo) (- (any-to-ram-some-data-last-dt-size) 1))
+                                    (+ (any-to-ram-some-data-middle-tbo)
+                                       (- (any-to-ram-some-data-last-dt-size) 1))
                                     LLARGE)
-                         (callToEq 9 (shift prprc/EUC_REM 9) LLARGEMO)
+                         (callToEq 9 0 (shift prprc/EUC_REM 9) LLARGEMO)
                          (eq! (any-to-ram-some-data-last-dt-single-target)
                               (- 1 (shift prprc/EUC_QUOT 9)))
-                         (eq!)))
+                         (eq! (any-to-ram-some-data-last-dt-maxes-out-target) (shift prprc/WCP_RES 9))))
          ;; justifying tlo_increments_at_transition
-         (if-eq (any-to-ram-some-data-totnt-is-one) 1
-                (if-zero (any-to-ram-some-data-only-dt-single-target)
-                         (eq! (any-to-ram-some-data-tlo-increment-at-transition) 1)
-                         (eq! (any-to-ram-some-data-tlo-increment-at-transition)
-                              (any-to-ram-some-data-only-dt-maxes-out-target)))
-                (if-zero (any-to-ram-some-data-last-dt-single-target)
-                         (eq! (any-to-ram-some-data-tlo-increment-at-transition) 1)
-                         (eq! (any-to-ram-some-data-tlo-increment-at-transition)
-                              (any-to-ram-some-data-last-dt-maxes-out-target))))
+         (if-eq-else (any-to-ram-some-data-totnt-is-one) 1
+                     (if-zero (any-to-ram-some-data-only-dt-single-target)
+                              (eq! (any-to-ram-some-data-tlo-increment-at-transition) 1)
+                              (eq! (any-to-ram-some-data-tlo-increment-at-transition)
+                                   (any-to-ram-some-data-only-dt-maxes-out-target)))
+                     (if-zero (any-to-ram-some-data-last-dt-single-target)
+                              (eq! (any-to-ram-some-data-tlo-increment-at-transition) 1)
+                              (eq! (any-to-ram-some-data-tlo-increment-at-transition)
+                                   (any-to-ram-some-data-last-dt-maxes-out-target))))
          ;; preprocessing row n°10
          (callToEq 10 0 TOTRZ 1)
-         (callToEuc 10)
+         (callToEuc 10 (any-to-ram-some-data-first-padding-offset) LLARGE)
          (eq! (any-to-ram-some-data-first-pbo)
               (* (any-to-ram-mixed) (shift prprc/EUC_REM 10)))
-         (if-eq (any-to-ram-some-data-totrz-is-one) 1
-                (eq! (any-to-ram-some-data-first-padding-size) (any-to-ram-padd-size))
-                (begin (eq! (any-to-ram-some-data-first-padding-size)
-                            (* (any-to-ram-mixed) (- LLARGE (any-to-ram-some-data-first-pbo))))
-                       (eq! (any-to-ram-some-data-last-padding-size)
-                            (* (any-to-ram-mixed) (+ 1 (any-to-ram-some-data-first-pbo))))))
+         (if-eq-else (any-to-ram-some-data-totrz-is-one) 1
+                     (eq! (any-to-ram-some-data-first-padding-size) (any-to-ram-padd-size))
+                     (begin (eq! (any-to-ram-some-data-first-padding-size)
+                                 (* (any-to-ram-mixed) (- LLARGE (any-to-ram-some-data-first-pbo))))
+                            (eq! (any-to-ram-some-data-last-padding-size)
+                                 (* (any-to-ram-mixed) (+ 1 (any-to-ram-some-data-first-pbo))))))
          ;; initialisation
          (eq! (shift micro/CN_S NB_PP_ROWS_ANY_TO_RAM_WITH_PADDING_SOME_DATA_PO)
               (any-to-ram-some-data-micro-cns))
@@ -1116,48 +1117,100 @@
               (any-to-ram-some-data-min-slo))
          (eq! (shift micro/SBO NB_PP_ROWS_ANY_TO_RAM_WITH_PADDING_SOME_DATA_PO)
               (any-to-ram-some-data-min-sbo))
-         (eq! (shift micro/TLO NB_PP_ROWS_ANY_TO_RAM_WITH_PADDING_SOME_DATA_PO)
-              (any-to-ram-some-data-min-tlo))
-         (eq! (shift micro/TBO NB_PP_ROWS_ANY_TO_RAM_WITH_PADDING_SOME_DATA_PO)
-              (any-to-ram-some-data-min-tbo))
-         (if-eq (any-to-ram-some-data-totnt-is-one) 1
-                ;; ONLY mmio inst
-                (begin (if-eq (any-to-ram-some-data-data-src-is-ram) 1
-                              (if-zero (any-to-ram-some-data-only-dt-single-target)
-                                       (eq! (shift micro/INST
-                                                   NB_PP_ROWS_ANY_TO_RAM_WITH_PADDING_SOME_DATA_PO)
-                                            MMIO_INST_RAM_TO_RAM_TWO_TARGET)
-                                       (eq! (shift micro/INST
-                                                   NB_PP_ROWS_ANY_TO_RAM_WITH_PADDING_SOME_DATA_PO)
-                                            MMIO_INST_RAM_TO_RAM_PARTIAL))
-                              (if-zero (any-to-ram-some-data-only-dt-single-target)
-                                       (eq! (shift micro/INST
-                                                   NB_PP_ROWS_ANY_TO_RAM_WITH_PADDING_SOME_DATA_PO)
-                                            MMIO_INST_LIMB_TO_RAM_TWO_TARGET)
-                                       (eq! (shift micro/INST
-                                                   NB_PP_ROWS_ANY_TO_RAM_WITH_PADDING_SOME_DATA_PO)
-                                            MMIO_INST_LIMB_TO_RAM_PARTIAL)))
-                       (eq! (shift micro/SIZE NB_PP_ROWS_ANY_TO_RAM_WITH_PADDING_SOME_DATA_PO)
-                            (any-to-ram-some-data-only-dt-size)))
-                ;; FIRST mmio inst
-                (begin (if-eq (any-to-ram-some-data-data-src-is-ram) 1
-                              (if-zero (any-to-ram-some-data-first-dt-single-target)
-                                       (eq! (shift micro/INST
-                                                   NB_PP_ROWS_ANY_TO_RAM_WITH_PADDING_SOME_DATA_PO)
-                                            MMIO_INST_RAM_TO_RAM_TWO_TARGET)
-                                       (eq! (shift micro/INST
-                                                   NB_PP_ROWS_ANY_TO_RAM_WITH_PADDING_SOME_DATA_PO)
-                                            MMIO_INST_RAM_TO_RAM_PARTIAL))
-                              (if-zero (any-to-ram-some-data-first-dt-single-target)
-                                       (eq! (shift micro/INST
-                                                   NB_PP_ROWS_ANY_TO_RAM_WITH_PADDING_SOME_DATA_PO)
-                                            MMIO_INST_LIMB_TO_RAM_TWO_TARGET)
-                                       (eq! (shift micro/INST
-                                                   NB_PP_ROWS_ANY_TO_RAM_WITH_PADDING_SOME_DATA_PO)
-                                            MMIO_INST_LIMB_TO_RAM_PARTIAL)))
-                       (eq! (shift micro/SIZE NB_PP_ROWS_ANY_TO_RAM_WITH_PADDING_SOME_DATA_PO)
-                            (any-to-ram-some-data-first-dt-size))))))
+         (eq! (shift micro/TLO NB_PP_ROWS_ANY_TO_RAM_WITH_PADDING_SOME_DATA_PO) (any-to-ram-min-tlo))
+         (eq! (shift micro/TBO NB_PP_ROWS_ANY_TO_RAM_WITH_PADDING_SOME_DATA_PO) (any-to-ram-min-tbo))
+         (if-eq-else (any-to-ram-some-data-totnt-is-one) 1
+                     ;; ONLY mmio inst
+                     (begin (if-eq-else (any-to-ram-some-data-data-src-is-ram) 1
+                                        (if-zero (any-to-ram-some-data-only-dt-single-target)
+                                                 (eq! (shift micro/INST
+                                                             NB_PP_ROWS_ANY_TO_RAM_WITH_PADDING_SOME_DATA_PO)
+                                                      MMIO_INST_RAM_TO_RAM_TWO_TARGET)
+                                                 (eq! (shift micro/INST
+                                                             NB_PP_ROWS_ANY_TO_RAM_WITH_PADDING_SOME_DATA_PO)
+                                                      MMIO_INST_RAM_TO_RAM_PARTIAL))
+                                        (if-zero (any-to-ram-some-data-only-dt-single-target)
+                                                 (eq! (shift micro/INST
+                                                             NB_PP_ROWS_ANY_TO_RAM_WITH_PADDING_SOME_DATA_PO)
+                                                      MMIO_INST_LIMB_TO_RAM_TWO_TARGET)
+                                                 (eq! (shift micro/INST
+                                                             NB_PP_ROWS_ANY_TO_RAM_WITH_PADDING_SOME_DATA_PO)
+                                                      MMIO_INST_LIMB_TO_RAM_ONE_TARGET)))
+                            (eq! (shift micro/SIZE NB_PP_ROWS_ANY_TO_RAM_WITH_PADDING_SOME_DATA_PO)
+                                 (any-to-ram-some-data-only-dt-size)))
+                     ;; FIRST mmio inst
+                     (begin (if-eq-else (any-to-ram-some-data-data-src-is-ram) 1
+                                        (if-zero (any-to-ram-some-data-first-dt-single-target)
+                                                 (eq! (shift micro/INST
+                                                             NB_PP_ROWS_ANY_TO_RAM_WITH_PADDING_SOME_DATA_PO)
+                                                      MMIO_INST_RAM_TO_RAM_TWO_TARGET)
+                                                 (eq! (shift micro/INST
+                                                             NB_PP_ROWS_ANY_TO_RAM_WITH_PADDING_SOME_DATA_PO)
+                                                      MMIO_INST_RAM_TO_RAM_PARTIAL))
+                                        (if-zero (any-to-ram-some-data-first-dt-single-target)
+                                                 (eq! (shift micro/INST
+                                                             NB_PP_ROWS_ANY_TO_RAM_WITH_PADDING_SOME_DATA_PO)
+                                                      MMIO_INST_LIMB_TO_RAM_TWO_TARGET)
+                                                 (eq! (shift micro/INST
+                                                             NB_PP_ROWS_ANY_TO_RAM_WITH_PADDING_SOME_DATA_PO)
+                                                      MMIO_INST_LIMB_TO_RAM_ONE_TARGET)))
+                            (eq! (shift micro/SIZE NB_PP_ROWS_ANY_TO_RAM_WITH_PADDING_SOME_DATA_PO)
+                                 (any-to-ram-some-data-first-dt-size))))))
 
-;; make it compile and continue from 6.9.4.4
+(defconstraint any-to-ram-some-data-mmio-writting (:guard IS_ANY_TO_RAM_WITH_PADDING_SOME_DATA)
+  (begin (if-eq NT_FIRST 1
+                (begin (will-inc! micro/SLO 1)
+                       (vanishes! (next micro/SBO))
+                       (if-zero (any-to-ram-some-data-tlo-increment-after-first-dt)
+                                (will-remain-constant! micro/TLO)
+                                (will-inc! micro/TLO 1))
+                       (will-eq! micro/TBO (any-to-ram-some-data-middle-tbo))))
+         (if-eq NT_MDDL 1
+                (begin (if-eq-else (any-to-ram-some-data-data-src-is-ram) 1
+                                   (if-zero (any-to-ram-some-data-aligned)
+                                            (eq! micro/INST MMIO_INST_RAM_TO_RAM_TWO_TARGET)
+                                            (eq! micro/INST MMIO_INST_RAM_TO_RAM_TRANSPLANT))
+                                   (if-zero (any-to-ram-some-data-aligned)
+                                            (eq! micro/INST MMIO_INST_LIMB_TO_RAM_TWO_TARGET)
+                                            (eq! micro/INST MMIO_INST_LIMB_TO_RAM_TRANSPLANT)))
+                       (eq! micro/SIZE LLARGE)
+                       (will-inc! micro/SLO 1)
+                       (vanishes! (next micro/SBO))
+                       (will-inc! micro/TLO 1)
+                       (will-eq! micro/TBO (any-to-ram-some-data-middle-tbo))))
+         (if-eq NT_LAST 1
+                (begin (if-eq-else (any-to-ram-some-data-data-src-is-ram) 1
+                                   (if-zero (any-to-ram-some-data-last-dt-single-target)
+                                            (eq! micro/INST MMIO_INST_RAM_TO_RAM_TWO_TARGET)
+                                            (eq! micro/INST MMIO_INST_RAM_TO_RAM_PARTIAL))
+                                   (if-zero (any-to-ram-some-data-last-dt-single-target)
+                                            (eq! micro/INST MMIO_INST_LIMB_TO_RAM_TWO_TARGET)
+                                            (eq! micro/INST MMIO_INST_LIMB_TO_RAM_ONE_TARGET)))
+                       (eq! micro/SIZE (any-to-ram-some-data-last-dt-size))))
+         (if-eq (force-bool (+ RZ_FIRST RZ_ONLY)) 1
+                (begin (eq! micro/INST MMIO_INST_RAM_EXCISION)
+                       (eq! micro/SIZE (any-to-ram-some-data-first-padding-size))
+                       (did-inc! micro/TLO (any-to-ram-some-data-tlo-increment-at-transition))
+                       (eq! micro/TBO (any-to-ram-some-data-first-pbo))))
+         (if-eq (force-bool (+ RZ_FIRST RZ_MDDL)) 1
+                (begin (will-inc! micro/TLO 1)
+                       (vanishes! (next micro/TBO))))
+         (if-eq RZ_MDDL 1 (eq! micro/INST MMIO_INST_RAM_VANISHES))
+         (if-eq RZ_LAST 1
+                (begin (eq! micro/INST MMIO_INST_RAM_EXCISION)
+                       (eq! micro/SIZE (any-to-ram-some-data-last-padding-size))))))
+
+;;
+;; MODEXP ZERO
+;;
+;; TODO
+;;
+;; MODEXP DATA
+;;
+;; TODO
+;;
+;; BLAKE
+;;
+;; TODO
 
 

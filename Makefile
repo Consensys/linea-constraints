@@ -59,20 +59,19 @@ SHIFT :=  shf
 STACK := hub/columns.lisp \
 	 hub/constraints.lisp
 
-STP := stp/columns.lisp stp/constraints.lisp \
-       stp/lookups/stp_into_mod.lisp stp/lookups/stp_into_wcp.lisp
+STP := stp
 
 TABLES := reference_tables/binRT.lisp \
 	  reference_tables/shfRT.lisp \
 	  reference_tables/instruction_decoder.lisp 
 
-TRM := trm/columns.lisp trm/constraints.lisp
+TRM := trm
 
 TXN_DATA := txn_data 
 
 WCP := wcp
 
-BLAKE2f_MODEXP_DATA := blake2f_modexp_data/
+BLAKE2f_MODEXP_DATA := blake2f_modexp_data
 
 EXP := exp
 
