@@ -146,8 +146,19 @@
                                                                               (eq! GAS_COST (+ GAS_CONST_G_WARM_ACCESS (* (cold-slot) GAS_CONST_G_SSET      )))
                                                                               (eq! GAS_COST (+ GAS_CONST_G_WARM_ACCESS (* (cold-slot) GAS_CONST_G_COLD_SLOAD))))))))))
 
-;; (defconstraint storage-setting-the-refund (:guard (storage-no-stack-exceptions))
-;;                (if-not-zero [ stack/DEC_FLAG 1 ]
-;;                             (begin
-;;                               (eq! [ stack/STACK_ITEM_VALUE_HI 4 ] stack/PUSH_VALUE_HI )
-;;                               (eq! [ stack/STACK_ITEM_VALUE_LO 4 ] stack/PUSH_VALUE_LO ))))
+(defconstraint storage-setting-the-refund (:guard (storage-no-stack-exceptions))
+               (if-zero CONTEXT_WILL_REVERT
+                        (if-not-zero [ stack/DEC_FLAG 1 ]
+                                     (if-not-zero (force-bin (next-is-curr))
+                                                  (eq! REFGAS_NEW REFGAS)
+                                                  (if-zero (force-bin (curr-is-orig))
+                                                           (eq! REFGAS_NEW
+                                                                (+ REFGAS
+                                                                   (* (- 1 (orig-is-zero))    (- (next-is-zero) (curr-is-zero))    REFUND_CONST_R_SCLEAR                         )
+                                                                   (* (next-is-orig)          (orig-is-zero)                       (- GAS_CONST_G_SSET   GAS_CONST_G_WARM_ACCESS))
+                                                                   (* (next-is-orig)          (- 1 (orig-is-zero))                 (- GAS_CONST_G_SRESET GAS_CONST_G_WARM_ACCESS))))
+                                                           (if-zero (force-bin (next-is-zero))
+                                                                    (eq! REFGAS_NEW
+                                                                         REFGAS)
+                                                                    (eq! REFGAS_NEW
+                                                                         (+ REFGAS REFUND_CONST_R_SCLEAR))))))))
