@@ -93,29 +93,32 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-(defun (zero-dom-sub-stamps) (begin
-                               (vanishes! DOM_STAMP)
-                               (vanishes! SUB_STAMP)))
+(defun (zero-dom-sub-stamps kappa) (begin
+                                     (vanishes! (shift DOM_STAMP kappa))
+                                     (vanishes! (shift SUB_STAMP kappa))))
 
-(defun (standard-dom-sub-stamps c) (begin
-                                    (eq!       DOM_STAMP     (+ (* hub_lambda HUB_STAMP) c))
-                                    (vanishes! SUB_STAMP)))
+(defun (standard-dom-sub-stamps kappa c) (begin
+                                           (eq!       (shift DOM_STAMP kappa)     (+ (* hub_lambda HUB_STAMP) c))
+                                           (vanishes! (shift SUB_STAMP kappa))))
 
-(defun (undoing-dom-sub-stamps  rho epsilon c) (begin
-                                                 (eq!     DOM_STAMP     (+ (* hub_lambda rho      ) epsilon))
-                                                 (eq!     SUB_STAMP     (+ (* hub_lambda HUB_STAMP) c      ))))
+(defun (undoing-dom-sub-stamps kappa rho epsilon c) (begin
+                                                      (eq!  (shift DOM_STAMP kappa)  (+ (* hub_lambda rho      ) epsilon))
+                                                      (eq!  (shift SUB_STAMP kappa)  (+ (* hub_lambda HUB_STAMP) c      ))))
 
-(defun (revert-dom-sub-stamps c)   (undoing-dom-sub-stamp 
-                                     CN_REV_STAMP
-                                     epsilon_revert
-                                     c))
+(defun (revert-dom-sub-stamps kappa c)   (undoing-dom-sub-stamp 
+                                           kappa
+                                           CN_REV_STAMP
+                                           epsilon_revert
+                                           c))
 
-(defun (child-context-reverts-dom-sub-stamps c child_rev_stamp) (undoing-dom-sub-stamps
-                                                                     child_rev_stamp
-                                                                     epsilon_revert
-                                                                     c))
+(defun (child-context-reverts-dom-sub-stamps kappa c child_rev_stamp) (undoing-dom-sub-stamps
+                                                                        kappa
+                                                                        child_rev_stamp
+                                                                        epsilon_revert
+                                                                        c))
 
-(defun (selfdestruct-dom-sub-stamps) (undoing-dom-sub-stamps
-                                       TX_END_STAMP
-                                       epsilon_selfdestruct
-                                       0))
+(defun (selfdestruct-dom-sub-stamps kappa) (undoing-dom-sub-stamps
+                                             kappa
+                                             TX_END_STAMP
+                                             epsilon_selfdestruct
+                                             0))

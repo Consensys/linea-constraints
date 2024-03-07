@@ -24,6 +24,20 @@
          ;; (eq! (shift [ misc/OOB_DATA 8 ]    kappa) )
          ))
 
+(defun (set-oob-inst-sstore
+         kappa               ;; offset
+         gas_actual          ;; GAS_ACTUAL
+         ) (begin
+         (eq! (shift misc/OOB_INST          kappa) OOB_INST_sstore )
+         ;; (eq! (shift [ misc/OOB_DATA 1 ]    kappa) )
+         ;; (eq! (shift [ misc/OOB_DATA 2 ]    kappa) )
+         ;; (eq! (shift [ misc/OOB_DATA 3 ]    kappa) )
+         ;; (eq! (shift [ misc/OOB_DATA 4 ]    kappa) )
+         (eq! (shift [ misc/OOB_DATA 5 ]    kappa) gas_actual)
+         ;; (eq! (shift [ misc/OOB_DATA 6 ]    kappa) )
+         ;; (eq! (shift [ misc/OOB_DATA 7 ]    kappa) )
+         ;; (eq! (shift [ misc/OOB_DATA 8 ]    kappa) )
+         ))
 
 
 
@@ -161,7 +175,7 @@
          ))
 
 
-(defun (set-oob-inst-Z
+(defun (set-oob-inst-blake
          kappa                            ;; offset
          call_gas                         ;; call gas i.e. gas provided to the precompile
          blake_r                          ;; rounds parameter of the call data of BLAKE2f
