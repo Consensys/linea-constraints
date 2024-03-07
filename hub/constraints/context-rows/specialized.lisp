@@ -86,8 +86,8 @@
          kappa              ;; row offset
          context_number     ;; context to read
          ) (begin
-         (eq!      (shift context/CONTEXT_NUMBER kappa) context_number)
-         (vanishes (shift context/UPDATE         kappa)               )))
+         (eq!       (shift context/CONTEXT_NUMBER kappa) context_number)
+         (vanishes! (shift context/UPDATE         kappa)               )))
 
 (defun (provide-return-data 
          kappa                               ;; offset
