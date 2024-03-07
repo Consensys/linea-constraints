@@ -13,21 +13,21 @@
 		DEPLOYMENT_NUMBER_INFTY
 		STORAGE_KEY_HI
 		STORAGE_KEY_LO
-		VAL_ORIG_HI
-		VAL_ORIG_LO
-		VAL_CURR_HI
-		VAL_CURR_LO
-		VAL_NEXT_HI
-		VAL_NEXT_LO
+		VALUE_ORIG_HI
+		VALUE_ORIG_LO
+		VALUE_CURR_HI
+		VALUE_CURR_LO
+		VALUE_NEXT_HI
+		VALUE_NEXT_LO
 
 		( WARMTH                        :binary@prove )
 		( WARMTH_NEW                    :binary@prove )
 
-		( VAL_ORIG_IS_ZERO              :binary ) ;; @prove not required for any of these since set by hand
-		( VAL_CURR_IS_ORIG              :binary )
-		( VAL_CURR_IS_ZERO              :binary )
-		( VAL_NEXT_IS_CURR              :binary )
-		( VAL_NEXT_IS_ZERO              :binary )
-		( VAL_NEXT_IS_ORIG              :binary )
-		( VAL_CURR_CHANGES              :binary )
+		( VALUE_ORIG_IS_ZERO              :binary ) ;; @prove not required for any of these since set by hand
+		( VALUE_CURR_IS_ORIG              :binary )
+		( VALUE_CURR_IS_ZERO              :binary )
+		( VALUE_NEXT_IS_CURR              :binary )
+		( VALUE_NEXT_IS_ZERO              :binary )
+		( VALUE_NEXT_IS_ORIG              :binary )
+		( VALUE_CURR_CHANGES              :binary )
 	))

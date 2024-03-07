@@ -22,12 +22,12 @@
     scp_SUB_STAMP
     ;;
     scp_ABS_TX_NUM
-    scp_VAL_ORIG_HI
-    scp_VAL_ORIG_LO
-    scp_VAL_CURR_HI
-    scp_VAL_CURR_LO
-    scp_VAL_NEXT_HI
-    scp_VAL_NEXT_LO
+    scp_VALUE_ORIG_HI
+    scp_VALUE_ORIG_LO
+    scp_VALUE_CURR_HI
+    scp_VALUE_CURR_LO
+    scp_VALUE_NEXT_HI
+    scp_VALUE_NEXT_LO
     ;;
     scp_WARMTH
     scp_WARMTH_NEW
@@ -46,12 +46,12 @@
     (↑ SUB_STAMP )
     ;;
     ABS_TX_NUM
-    storage/VAL_ORIG_HI
-    storage/VAL_ORIG_LO
-    storage/VAL_CURR_HI
-    storage/VAL_CURR_LO
-    storage/VAL_NEXT_HI
-    storage/VAL_NEXT_LO
+    storage/VALUE_ORIG_HI
+    storage/VALUE_ORIG_LO
+    storage/VALUE_CURR_HI
+    storage/VALUE_CURR_LO
+    storage/VALUE_NEXT_HI
+    storage/VALUE_NEXT_LO
     ;;
     storage/WARMTH
     storage/WARMTH_NEW
@@ -131,36 +131,36 @@
 (defconstraint setting-original-storage-value ()
                (if-not-zero sto_FIRST
                             (begin
-                              (eq! scp_VAL_ORIG_HI scp_VAL_CURR_HI)
-                              (eq! scp_VAL_ORIG_LO scp_VAL_CURR_LO))))
+                              (eq! scp_VALUE_ORIG_HI scp_VALUE_CURR_HI)
+                              (eq! scp_VALUE_ORIG_LO scp_VALUE_CURR_LO))))
 
 (defconstraint perpetuating-and-resetting-original-storage-value ()
                (if-not-zero scp_PEEK_AT_STORAGE
                             (if-zero sto_FIRST
                                      (if-eq-else scp_ABS_TX_NUM (prev scp_ABS_TX_NUM)
                                                  (begin
-                                                   (remained-constant! scp_VAL_ORIG_HI)
-                                                   (remained-constant! scp_VAL_ORIG_LO))
+                                                   (remained-constant! scp_VALUE_ORIG_HI)
+                                                   (remained-constant! scp_VALUE_ORIG_LO))
                                                  (begin
-                                                   (eq!  scp_VAL_ORIG_HI  scp_VAL_CURR_HI)
-                                                   (eq!  scp_VAL_ORIG_LO  scp_VAL_CURR_LO))))))
+                                                   (eq!  scp_VALUE_ORIG_HI  scp_VALUE_CURR_HI)
+                                                   (eq!  scp_VALUE_ORIG_LO  scp_VALUE_CURR_LO))))))
 
 (defconstraint setting-and-resetting-storage-value ()
                (if-not-zero sto_FIRST
                             ;; FIRST = 1
                             (if-not-zero scp_DEPLOYMENT_NUMBER
                                          (begin
-                                           (vanishes! scp_VAL_CURR_HI)
-                                           (vanishes! scp_VAL_CURR_LO)))
+                                           (vanishes! scp_VALUE_CURR_HI)
+                                           (vanishes! scp_VALUE_CURR_LO)))
                             ;; FIRST = 0
                             (if-not-zero scp_PEEK_AT_STORAGE
                                          (if-not-zero (remained-constant! scp_DEPLOYMENT_NUMBER)
                                                       (begin
-                                                        (vanishes! scp_VAL_CURR_HI)
-                                                        (vanishes! scp_VAL_CURR_LO))
+                                                        (vanishes! scp_VALUE_CURR_HI)
+                                                        (vanishes! scp_VALUE_CURR_LO))
                                                       (begin
-                                                        (was-eq! scp_VAL_NEXT_HI scp_VAL_CURR_HI)
-                                                        (was-eq! scp_VAL_NEXT_LO scp_VAL_CURR_LO))))))
+                                                        (was-eq! scp_VALUE_NEXT_HI scp_VALUE_CURR_HI)
+                                                        (was-eq! scp_VALUE_NEXT_LO scp_VALUE_CURR_LO))))))
 
 (defconstraint setting-and-resetting-storage-key-warmth ()
                (if-not-zero sto_FIRST

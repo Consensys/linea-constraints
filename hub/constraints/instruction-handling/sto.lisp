@@ -119,7 +119,7 @@
                                            (begin
                                              (same-storage-slot                    4)
                                              (undo-storage-warmth-and-value-update 4)
-                                             (revert-dom-sub-stamp                 4         ;; kappa
+                                             (revert-dom-sub-stamps                4         ;; kappa
                                                                                    0))))))   ;; c
 
 (defun (orig-is-zero) (shift storage/VALUE_ORIG_IS_ZERO 3))

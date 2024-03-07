@@ -16,8 +16,8 @@
 
 (defun (storage-reading kappa) 
   (begin
-    (eq! (shift storage/VAL_CURR_HI kappa) (shift storage/VAL_NEXT_HI kappa))
-    (eq! (shift storage/VAL_CURR_LO kappa) (shift storage/VAL_NEXT_LO kappa))))
+    (eq! (shift storage/VALUE_CURR_HI kappa) (shift storage/VALUE_NEXT_HI kappa))
+    (eq! (shift storage/VALUE_CURR_LO kappa) (shift storage/VALUE_NEXT_LO kappa))))
 
 (defun (turn-on-storage-warmth kappa)
   (eq! (shift storage/WARMTH_NEW kappa) 1))
@@ -26,8 +26,8 @@
   (begin
     (remained-constant! (shift storage/ADDRESS_HI        kappa) )
     (remained-constant! (shift storage/ADDRESS_LO        kappa) )
-    (remained-constant! (shift storage/KEY_LO            kappa) )
-    (remained-constant! (shift storage/KEY_HI            kappa) )
+    (remained-constant! (shift storage/STORAGE_KEY_LO            kappa) )
+    (remained-constant! (shift storage/STORAGE_KEY_HI            kappa) )
     (remained-constant! (shift storage/DEPLOYMENT_NUMBER kappa) )))
 
 (defun (undo-storage-warmth-update kappa)
@@ -35,12 +35,12 @@
     (shift (was-eq! storage/WARMTH_NEW  storage/WARMTH    ) kappa)
     (shift (was-eq! storage/WARMTH      storage/WARMTH_NEW) kappa)))
 
-(defun (undo-storage-value-update)
+(defun (undo-storage-value-update kappa)
   (begin
-    (shift (was-eq! storage/VAL_NEXT_HI storage/VAL_CURR_HI) kappa)
-    (shift (was-eq! storage/VAL_NEXT_LO storage/VAL_CURR_LO) kappa)
-    (shift (was-eq! storage/VAL_CURR_HI storage/VAL_NEXT_HI) kappa)
-    (shift (was-eq! storage/VAL_CURR_LO storage/VAL_NEXT_LO) kappa)))
+    (shift (was-eq! storage/VALUE_NEXT_HI storage/VALUE_CURR_HI) kappa)
+    (shift (was-eq! storage/VALUE_NEXT_LO storage/VALUE_CURR_LO) kappa)
+    (shift (was-eq! storage/VALUE_CURR_HI storage/VALUE_NEXT_HI) kappa)
+    (shift (was-eq! storage/VALUE_CURR_LO storage/VALUE_NEXT_LO) kappa)))
 
 (defun (undo-storage-warmth-and-value-update kappa)
   (begin
@@ -57,58 +57,58 @@
 ;; ;; of the storage perspective makes this obsolete
 ;; (defconstraint storage-binarities (:perspective storage)
 ;;                (begin
-;;                  (is-binary VAL_ORIG_IS_ZERO)
-;;                  (is-binary VAL_NEXT_IS_ZERO)
-;;                  (is-binary VAL_NEXT_IS_CURR)
-;;                  (is-binary VAL_NEXT_IS_ORIG)
-;;                  (is-binary VAL_CURR_IS_ZERO)
-;;                  (is-binary VAL_CURR_IS_ORIG)
-;;                  (is-binary VAL_CURR_CHANGES)))
+;;                  (is-binary VALUE_ORIG_IS_ZERO)
+;;                  (is-binary VALUE_NEXT_IS_ZERO)
+;;                  (is-binary VALUE_NEXT_IS_CURR)
+;;                  (is-binary VALUE_NEXT_IS_ORIG)
+;;                  (is-binary VALUE_CURR_IS_ZERO)
+;;                  (is-binary VALUE_CURR_IS_ORIG)
+;;                  (is-binary VALUE_CURR_CHANGES)))
 
-(defconstraint setting-storage-binary-flag-VAL_ORIG_IS_ZERO (:perspective storage)
+(defconstraint setting-storage-binary-flag-VALUE_ORIG_IS_ZERO (:perspective storage)
                (begin
-                 (if-not-zero VAL_ORIG_HI
-                              (vanishes! VAL_ORIG_IS_ZERO)
-                              (if-not-zero VAL_ORIG_LO
-                                           (vanishes! VAL_ORIG_IS_ZERO)
-                                           (eq!       VAL_ORIG_IS_ZERO 1)))))
+                 (if-not-zero VALUE_ORIG_HI
+                              (vanishes! VALUE_ORIG_IS_ZERO)
+                              (if-not-zero VALUE_ORIG_LO
+                                           (vanishes! VALUE_ORIG_IS_ZERO)
+                                           (eq!       VALUE_ORIG_IS_ZERO 1)))))
 
-(defconstraint setting-storage-binary-flag-VAL_CURR_IS_ZERO (:perspective storage)
+(defconstraint setting-storage-binary-flag-VALUE_CURR_IS_ZERO (:perspective storage)
                (begin
-                 (if-not-zero VAL_CURR_HI
-                              (vanishes! VAL_CURR_IS_ZERO)
-                              (if-not-zero VAL_CURR_LO
-                                           (vanishes! VAL_CURR_IS_ZERO)
-                                           (eq!       VAL_CURR_IS_ZERO 1)))))
+                 (if-not-zero VALUE_CURR_HI
+                              (vanishes! VALUE_CURR_IS_ZERO)
+                              (if-not-zero VALUE_CURR_LO
+                                           (vanishes! VALUE_CURR_IS_ZERO)
+                                           (eq!       VALUE_CURR_IS_ZERO 1)))))
 
-(defconstraint setting-storage-binary-flag-VAL_NEXT_IS_ZERO (:perspective storage)
+(defconstraint setting-storage-binary-flag-VALUE_NEXT_IS_ZERO (:perspective storage)
                (begin
-                 (if-not-zero VAL_NEXT_HI
-                              (vanishes! VAL_NEXT_IS_ZERO)
-                              (if-not-zero VAL_NEXT_LO
-                                           (vanishes! VAL_NEXT_IS_ZERO)
-                                           (eq!       VAL_NEXT_IS_ZERO 1)))))
+                 (if-not-zero VALUE_NEXT_HI
+                              (vanishes! VALUE_NEXT_IS_ZERO)
+                              (if-not-zero VALUE_NEXT_LO
+                                           (vanishes! VALUE_NEXT_IS_ZERO)
+                                           (eq!       VALUE_NEXT_IS_ZERO 1)))))
 
-(defconstraint setting-storage-binary-flag-VAL_CURR_IS_ORIG (:perspective storage)
+(defconstraint setting-storage-binary-flag-VALUE_CURR_IS_ORIG (:perspective storage)
                (begin
-                 (if-not-zero (- VAL_CURR_HI VAL_ORIG_HI)
-                              (vanishes! VAL_CURR_IS_ORIG)
-                              (if-not-zero (- VAL_CURR_LO VAL_ORIG_LO)
-                                           (vanishes! VAL_CURR_IS_ORIG)
-                                           (eq!       VAL_CURR_IS_ORIG 1)))))
+                 (if-not-zero (- VALUE_CURR_HI VALUE_ORIG_HI)
+                              (vanishes! VALUE_CURR_IS_ORIG)
+                              (if-not-zero (- VALUE_CURR_LO VALUE_ORIG_LO)
+                                           (vanishes! VALUE_CURR_IS_ORIG)
+                                           (eq!       VALUE_CURR_IS_ORIG 1)))))
 
-(defconstraint setting-storage-binary-flag-VAL_NEXT_IS_CURR (:perspective storage)
+(defconstraint setting-storage-binary-flag-VALUE_NEXT_IS_CURR (:perspective storage)
                (begin
-                 (if-not-zero (- VAL_NEXT_HI VAL_CURR_HI)
-                              (vanishes! VAL_NEXT_IS_CURR)
-                              (if-not-zero (- VAL_NEXT_LO VAL_CURR_LO)
-                                           (vanishes! VAL_NEXT_IS_CURR)
-                                           (eq!       VAL_NEXT_IS_CURR 1)))))
+                 (if-not-zero (- VALUE_NEXT_HI VALUE_CURR_HI)
+                              (vanishes! VALUE_NEXT_IS_CURR)
+                              (if-not-zero (- VALUE_NEXT_LO VALUE_CURR_LO)
+                                           (vanishes! VALUE_NEXT_IS_CURR)
+                                           (eq!       VALUE_NEXT_IS_CURR 1)))))
 
-(defconstraint setting-storage-binary-flag-VAL_NEXT_IS_ORIG (:perspective storage)
+(defconstraint setting-storage-binary-flag-VALUE_NEXT_IS_ORIG (:perspective storage)
                (begin
-                 (if-not-zero (- VAL_NEXT_HI VAL_ORIG_HI)
-                              (vanishes! VAL_NEXT_IS_ORIG)
-                              (if-not-zero (- VAL_NEXT_LO VAL_ORIG_LO)
-                                           (vanishes! VAL_NEXT_IS_ORIG)
-                                           (eq!       VAL_NEXT_IS_ORIG 1)))))
+                 (if-not-zero (- VALUE_NEXT_HI VALUE_ORIG_HI)
+                              (vanishes! VALUE_NEXT_IS_ORIG)
+                              (if-not-zero (- VALUE_NEXT_LO VALUE_ORIG_LO)
+                                           (vanishes! VALUE_NEXT_IS_ORIG)
+                                           (eq!       VALUE_NEXT_IS_ORIG 1)))))

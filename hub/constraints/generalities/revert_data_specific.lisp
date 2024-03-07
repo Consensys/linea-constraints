@@ -98,14 +98,14 @@
                                      (vanishes! (shift SUB_STAMP kappa))))
 
 (defun (standard-dom-sub-stamps kappa c) (begin
-                                           (eq!       (shift DOM_STAMP kappa)     (+ (* hub_lambda HUB_STAMP) c))
-                                           (vanishes! (shift SUB_STAMP kappa))))
+                                           (eq!       (shift DOM_STAMP kappa) (+ (* hub_lambda HUB_STAMP) c))
+                                           (vanishes! (shift SUB_STAMP kappa)                               )))
 
 (defun (undoing-dom-sub-stamps kappa rho epsilon c) (begin
                                                       (eq!  (shift DOM_STAMP kappa)  (+ (* hub_lambda rho      ) epsilon))
                                                       (eq!  (shift SUB_STAMP kappa)  (+ (* hub_lambda HUB_STAMP) c      ))))
 
-(defun (revert-dom-sub-stamps kappa c)   (undoing-dom-sub-stamp 
+(defun (revert-dom-sub-stamps kappa c)   (undoing-dom-sub-stamps 
                                            kappa
                                            CN_REV_STAMP
                                            epsilon_revert
