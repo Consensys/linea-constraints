@@ -29,8 +29,8 @@
     scp_VAL_NEXT_HI
     scp_VAL_NEXT_LO
     ;;
-    scp_WARM
-    scp_WARM_NEW
+    scp_WARMTH
+    scp_WARMTH_NEW
     scp_DEPLOYMENT_NUMBER
     scp_DEPLOYMENT_NUMBER_INFTY
   )
@@ -53,8 +53,8 @@
     storage/VAL_NEXT_HI
     storage/VAL_NEXT_LO
     ;;
-    storage/WARM
-    storage/WARM_NEW
+    storage/WARMTH
+    storage/WARMTH_NEW
     storage/DEPLOYMENT_NUMBER
     storage/DEPLOYMENT_NUMBER_INFTY
   )
@@ -79,6 +79,7 @@
                  (is-binary sto_FIRST)
                  (is-binary sto_FINAL)))
 
+;; TODO: remove when we migrate to the unified permutation argument
 (defconstraint sto-FIRST-FINAL-trivial ()
                (if-not-zero (- 1 scp_PEEK_AT_STORAGE)
                             (vanishes! (+ sto_FIRST sto_FINAL))))
@@ -116,6 +117,7 @@
                             (if-not-zero (- 1 scp_PEEK_AT_STORAGE)
                                          (eq! (prev sto_FINAL) 1))))
 
+;; TODO: remove when we migrate to the unified permutation argument
 (defconstraint sto-FIRST-FINAL-final-storage-row-2 (:domain {-1})
                (if-not-zero scp_PEEK_AT_STORAGE
                             (vanishes! sto_FINAL)))
@@ -132,23 +134,25 @@
                               (eq! scp_VAL_ORIG_HI scp_VAL_CURR_HI)
                               (eq! scp_VAL_ORIG_LO scp_VAL_CURR_LO))))
 
-(defconstraint perpetuating-original-storage-value ()
+(defconstraint perpetuating-and-resetting-original-storage-value ()
                (if-not-zero scp_PEEK_AT_STORAGE
-                            (if-not-zero (- 1 sto_FIRST)
-                                         (if-eq-else scp_ABS_TX_NUM (prev scp_ABS_TX_NUM)
-                                                     (begin
-                                                       (remained-constant! scp_VAL_ORIG_HI)
-                                                       (remained-constant! scp_VAL_ORIG_LO))
-                                                     (begin
-                                                       (eq!  scp_VAL_ORIG_HI  scp_VAL_CURR_HI)
-                                                       (eq!  scp_VAL_ORIG_LO  scp_VAL_CURR_LO))))))
+                            (if-zero sto_FIRST
+                                     (if-eq-else scp_ABS_TX_NUM (prev scp_ABS_TX_NUM)
+                                                 (begin
+                                                   (remained-constant! scp_VAL_ORIG_HI)
+                                                   (remained-constant! scp_VAL_ORIG_LO))
+                                                 (begin
+                                                   (eq!  scp_VAL_ORIG_HI  scp_VAL_CURR_HI)
+                                                   (eq!  scp_VAL_ORIG_LO  scp_VAL_CURR_LO))))))
 
 (defconstraint setting-and-resetting-storage-value ()
                (if-not-zero sto_FIRST
+                            ;; FIRST = 1
                             (if-not-zero scp_DEPLOYMENT_NUMBER
                                          (begin
                                            (vanishes! scp_VAL_CURR_HI)
                                            (vanishes! scp_VAL_CURR_LO)))
+                            ;; FIRST = 0
                             (if-not-zero scp_PEEK_AT_STORAGE
                                          (if-not-zero (remained-constant! scp_DEPLOYMENT_NUMBER)
                                                       (begin
@@ -159,6 +163,16 @@
                                                         (was-eq! scp_VAL_NEXT_LO scp_VAL_CURR_LO))))))
 
 (defconstraint setting-and-resetting-storage-key-warmth ()
+               (if-not-zero sto_FIRST
+                            ;; FIRST = 1
+                            (vanishes! scp_WARMTH)
+                            ;; FIRST = 0
+                            (if-not-zero scp_PEEK_AT_STORAGE
+                                         (if-eq-else scp_ABS_TX_NUM (prev scp_ABS_TX_NUM)
+                                                     (was-eq!   scp_WARMTH_NEW scp_WARMTH)
+                                                     (vanishes! scp_WARMTH)))))
+
+(defconstraint perpetuating-the-final-deployment-number ()
                (if-not-zero scp_PEEK_AT_STORAGE
                             (if-zero sto_FIRST
                                      (remained-constant! scp_DEPLOYMENT_NUMBER_INFTY))))

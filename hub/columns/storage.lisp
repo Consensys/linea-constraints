@@ -20,8 +20,8 @@
 		VAL_NEXT_HI
 		VAL_NEXT_LO
 
-		( WARM                          :binary@prove )
-		( WARM_NEW                      :binary@prove )
+		( WARMTH                        :binary@prove )
+		( WARMTH_NEW                    :binary@prove )
 
 		( VAL_ORIG_IS_ZERO              :binary ) ;; @prove not required for any of these since set by hand
 		( VAL_CURR_IS_ORIG              :binary )

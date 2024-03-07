@@ -32,8 +32,8 @@
 
 (defun (undo-storage-warmth-update kappa)
   (begin
-    (shift (was-eq! storage/WARMTH_NEW  storage/WARMTH    ) kappa))
-    (shift (was-eq! storage/WARMTH      storage/WARMTH_NEW) kappa))))
+    (shift (was-eq! storage/WARMTH_NEW  storage/WARMTH    ) kappa)
+    (shift (was-eq! storage/WARMTH      storage/WARMTH_NEW) kappa)))
 
 (defun (undo-storage-value-update)
   (begin
