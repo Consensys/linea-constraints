@@ -21,8 +21,7 @@
                (eq! GAS_COST stack/STATIC_GAS))
 
 (defconstraint txn-setting-stack-values (:guard (txn-no-stack-exceptions))
-               ;; (if-zero force-bin [ stack/DEC_FLAG 1 ])
-               (if-zero [ stack/DEC_FLAG 1 ]
+               (if-zero (force-bin [ stack/DEC_FLAG 1 ])
                         (begin
                           (eq! [ stack/STACK_ITEM_VALUE_HI 4 ] (next transaction/FROM_ADDRESS_HI))
                           (eq! [ stack/STACK_ITEM_VALUE_LO 4 ] (next transaction/FROM_ADDRESS_LO)))

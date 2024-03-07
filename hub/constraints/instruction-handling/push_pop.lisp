@@ -1,7 +1,7 @@
 (module hub)
 
 (defun (push-pop-no-stack-exceptions)
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   (* PEEK_AT_STACK
      stack/PUSHPOP_FLAG
      (- 1 stack/SUX stack/SOX)))
