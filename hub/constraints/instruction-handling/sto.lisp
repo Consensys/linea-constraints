@@ -85,7 +85,7 @@
                                                    GAS_ACTUAL ))))     ;; GAS_ACTUAL
 
 (defconstraint storage-justifying-SSTOREX (:guard (storage-no-stack-exceptions))
-               (if-not-zero (shift PEEK_AT_MISK 2)
+               (if-not-zero (shift PEEK_AT_MISCELLANEOUS 2)
                             (if-not-zero [ stack/DEC_FLAG 1 ]
                                          (eq! stack/SSTOREX
                                               (shift [ misc/OOB_DATA 7 ] 2)))))
@@ -98,8 +98,8 @@
                               (eq! (shift storage/ADDRESS_HI        3) (shift context/ACCOUNT_ADDRESS_HI        1))
                               (eq! (shift storage/ADDRESS_LO        3) (shift context/ACCOUNT_ADDRESS_LO        1))
                               (eq! (shift storage/DEPLOYMENT_NUMBER 3) (shift context/ACCOUNT_DEPLOYMENT_NUMBER 1))
-                              (eq! (shift storage/KEY_HI            3) [ stack/STACK_ITEM_VALUE_HI  1 ])
-                              (eq! (shift storage/KEY_LO            3) [ stack/STACK_ITEM_VALUE_LO  1 ])
+                              (eq! (shift storage/STORAGE_KEY_HI    3) [ stack/STACK_ITEM_VALUE_HI  1 ])
+                              (eq! (shift storage/STORAGE_KEY_LO    3) [ stack/STACK_ITEM_VALUE_LO  1 ])
                               (turn-on-storage-warmth               3)
                               (standard-dom-sub-stamps              3        ;; kappa
                                                                     0))))    ;; c
