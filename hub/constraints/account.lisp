@@ -47,15 +47,15 @@ kec_void_lo 0x0 ;;TODO
 
 ;; Warmth constraints
 (defun (same_account_warmth_h)
- (eq! WARM_NEW WARM))
+ (eq! WARMTH_NEW WARMTH))
 
 (defun (turn_on_account_warmth_h)
- (eq! WARM_NEW 1))
+ (eq! WARMTH_NEW 1))
 
 (defun (undo_account_warmth_update_v)
  (begin
-  (eq! WARM (prev WARM_NEW))
-  (eq! WARM_NEW (prev WARM))))
+  (eq! WARMTH (prev WARMTH_NEW))
+  (eq! WARMTH_NEW (prev WARMTH))))
 
 ;; Code constraints
 (defun (same_code_size_h)

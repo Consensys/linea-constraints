@@ -25,8 +25,8 @@
 		( ROM_LEX_FLAG                  :binary@prove )
 		( EXISTS 			:binary@prove ) ;; TODO: demote to debug constraint, both are fully constrained
 		( EXISTS_NEW                    :binary@prove ) ;; TODO: demote to debug constraint, both are fully constrained
-		( WARM                          :binary@prove ) ;; TODO: demote to debug constraint 
-		( WARM_NEW                      :binary@prove ) ;; TODO: demote to debug constraint 
+		( WARMTH                        :binary@prove ) ;; TODO: demote to debug constraint 
+		( WARMTH_NEW                    :binary@prove ) ;; TODO: demote to debug constraint 
 		( MARKED_FOR_SELFDESTRUCT       :binary@prove ) ;; TODO: demote to debug constraint 
 		( MARKED_FOR_SELFDESTRUCT_NEW   :binary@prove ) ;; TODO: demote to debug constraint 
 		DEPLOYMENT_NUMBER

@@ -32,8 +32,8 @@
       acp_NONCE_NEW
       acp_BALANCE
       acp_BALANCE_NEW
-      acp_WARM
-      acp_WARM_NEW
+      acp_WARMTH
+      acp_WARMTH_NEW
       acp_CODE_SIZE
       acp_CODE_SIZE_NEW
       acp_CODE_HASH_HI
@@ -65,8 +65,8 @@
       account/NONCE_NEW
       account/BALANCE
       account/BALANCE_NEW
-      account/WARM
-      account/WARM_NEW
+      account/WARMTH
+      account/WARMTH_NEW
       account/CODE_SIZE
       account/CODE_SIZE_NEW
       account/CODE_HASH_HI
@@ -135,7 +135,7 @@
                (if-not-zero acc_FIRST
                             (begin
                               (eq! acp_TRM_FLAG 1)
-                              (eq! acp_WARM acp_IS_PRECOMPILE)
+                              (eq! acp_WARMTH acp_IS_PRECOMPILE)
                               (vanishes! acp_MARKED_FOR_SELFDESTRUCT)
                               (vanishes! acp_DEPLOYMENT_NUMBER)
                               (vanishes! acp_DEPLOYMENT_STATUS))))
@@ -161,10 +161,10 @@
                             (if-zero acc_FIRST
                                      (if-eq-else acp_ABS_TX_NUM (prev acp_ABS_TX_NUM)
                                                  (begin
-                                                   (was-eq! acp_WARM_NEW                    acp_WARM)
+                                                   (was-eq! acp_WARMTH_NEW                    acp_WARMTH)
                                                    (was-eq! acp_MARKED_FOR_SELFDESTRUCT_NEW acp_MARKED_FOR_SELFDESTRUCT))
                                                  (begin
-                                                   (eq!       acp_WARM acp_IS_PRECOMPILE)
+                                                   (eq!       acp_WARMTH acp_IS_PRECOMPILE)
                                                    (vanishes! acp_MARKED_FOR_SELFDESTRUCT)
                                                    (debug (vanishes! acp_DEPLOYMENT_STATUS)))))))
 
