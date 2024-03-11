@@ -15,37 +15,32 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defun (storage-reading kappa) 
-  (begin
-    (eq! (shift storage/VALUE_CURR_HI kappa) (shift storage/VALUE_NEXT_HI kappa))
-    (eq! (shift storage/VALUE_CURR_LO kappa) (shift storage/VALUE_NEXT_LO kappa))))
+  (begin (eq! (shift storage/VALUE_CURR_HI kappa) (shift storage/VALUE_NEXT_HI kappa))
+         (eq! (shift storage/VALUE_CURR_LO kappa) (shift storage/VALUE_NEXT_LO kappa))))
 
 (defun (turn-on-storage-warmth kappa)
   (eq! (shift storage/WARMTH_NEW kappa) 1))
 
 (defun (same-storage-slot kappa)
-  (begin
-    (remained-constant! (shift storage/ADDRESS_HI        kappa) )
-    (remained-constant! (shift storage/ADDRESS_LO        kappa) )
-    (remained-constant! (shift storage/STORAGE_KEY_LO            kappa) )
-    (remained-constant! (shift storage/STORAGE_KEY_HI            kappa) )
-    (remained-constant! (shift storage/DEPLOYMENT_NUMBER kappa) )))
+  (begin (remained-constant! (shift storage/ADDRESS_HI        kappa) )
+         (remained-constant! (shift storage/ADDRESS_LO        kappa) )
+         (remained-constant! (shift storage/STORAGE_KEY_LO    kappa) )
+         (remained-constant! (shift storage/STORAGE_KEY_HI    kappa) )
+         (remained-constant! (shift storage/DEPLOYMENT_NUMBER kappa) )))
 
 (defun (undo-storage-warmth-update kappa)
-  (begin
-    (shift (was-eq! storage/WARMTH_NEW  storage/WARMTH    ) kappa)
-    (shift (was-eq! storage/WARMTH      storage/WARMTH_NEW) kappa)))
+  (begin (shift (was-eq! storage/WARMTH_NEW  storage/WARMTH    ) kappa)
+         (shift (was-eq! storage/WARMTH      storage/WARMTH_NEW) kappa)))
 
 (defun (undo-storage-value-update kappa)
-  (begin
-    (shift (was-eq! storage/VALUE_NEXT_HI storage/VALUE_CURR_HI) kappa)
-    (shift (was-eq! storage/VALUE_NEXT_LO storage/VALUE_CURR_LO) kappa)
-    (shift (was-eq! storage/VALUE_CURR_HI storage/VALUE_NEXT_HI) kappa)
-    (shift (was-eq! storage/VALUE_CURR_LO storage/VALUE_NEXT_LO) kappa)))
+  (begin (shift (was-eq! storage/VALUE_NEXT_HI storage/VALUE_CURR_HI) kappa)
+         (shift (was-eq! storage/VALUE_NEXT_LO storage/VALUE_CURR_LO) kappa)
+         (shift (was-eq! storage/VALUE_CURR_HI storage/VALUE_NEXT_HI) kappa)
+         (shift (was-eq! storage/VALUE_CURR_LO storage/VALUE_NEXT_LO) kappa)))
 
 (defun (undo-storage-warmth-and-value-update kappa)
-  (begin
-    (undo-storage-warmth-update kappa)
-    (undo-storage-value-update  kappa)))
+  (begin (undo-storage-warmth-update kappa)
+         (undo-storage-value-update  kappa)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                        ;;
