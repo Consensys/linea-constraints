@@ -64,6 +64,9 @@
    (PRC_CDO :i32)
    (PRC_CDS :i32)
    (PRC_RAO :i32)
-   (PRC_RAC :i32)))
-
-
+   (PRC_RAC :i32)
+   ;; SELFDESTRUCT related
+   (SELFDESTRUCT_EXCEPTION                    :binary@prove)
+   (SELFDESTRUCT_WILL_REVERT                  :binary@prove)
+   (SELFDESTRUCT_WONT_REVERT_ALREADY_MARKED   :binary@prove)
+   (SELFDESTRUCT_WONT_REVERT_NOT_YET_MARKED   :binary@prove)))
