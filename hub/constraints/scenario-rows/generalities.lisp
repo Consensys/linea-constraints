@@ -54,9 +54,9 @@
 (defconstraint only-one-active-scenario (:perspective scenario)
                (is-binary
                  (+
-                   (scen-shorthand-CALL-sum)
-                   (scen-shorthand-CREATE-sum)
-                   (scen-shorthand-PRC-sum)
+                   (scenario-shorthand-CALL-sum)
+                   (scenario-shorthand-CREATE-sum)
+                   (scenario-shorthand-PRC-sum)
                    ;; (scen-RETURN-shorthand-sum)
                    ;; (scen-SELFDESTRUCT-shorthand-sum)
                    )))

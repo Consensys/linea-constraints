@@ -7,7 +7,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;  CREATE/failure_condition
-(defun (scen-shorthand-CREATE-failure-condition)
+(defun (scenario-shorthand-CREATE-failure-condition)
   (+ 
     ;; CREATE_EXCEPTION
     ;; CREATE_ABORT
@@ -22,7 +22,7 @@
     ))
 
 ;;  CREATE/execution_will_revert
-(defun (scen-shorthand-CREATE-execution-will-revert)
+(defun (scenario-shorthand-CREATE-execution-will-revert)
   (+ 
     ;; CREATE_EXCEPTION
     ;; CREATE_ABORT
@@ -37,7 +37,7 @@
     ))
 
 ;;  CREATE/execution_wont_revert
-(defun (scen-shorthand-CREATE-execution-wont-revert)
+(defun (scenario-shorthand-CREATE-execution-wont-revert)
   (+ 
     ;; CREATE_EXCEPTION
     ;; CREATE_ABORT
@@ -52,7 +52,7 @@
     ))
 
 ;;  CREATE/empty_init_code
-(defun (scen-shorthand-CREATE-empty-init-code)
+(defun (scenario-shorthand-CREATE-empty-init-code)
   (+ 
     ;; CREATE_EXCEPTION
     ;; CREATE_ABORT
@@ -67,7 +67,7 @@
     ))
 
 ;;  CREATE/nonempty_init_code
-(defun (scen-shorthand-CREATE-nonempty-init-code)
+(defun (scenario-shorthand-CREATE-nonempty-init-code)
   (+ 
     ;; CREATE_EXCEPTION
     ;; CREATE_ABORT
@@ -82,10 +82,10 @@
     ))
 
 ;;  CREATE/execution
-(defun (scen-shorthand-CREATE-execution)
+(defun (scenario-shorthand-CREATE-execution)
   (+ 
-    (scen-shorthand-CREATE-nonempty-init-code)
-    (scen-shorthand-CREATE-empty-init-code)
+    (scenario-shorthand-CREATE-nonempty-init-code)
+    (scenario-shorthand-CREATE-empty-init-code)
     ;; CREATE_EXCEPTION
     ;; CREATE_ABORT
     ;; CREATE_FAILURE_CONDITION_WILL_REVERT
@@ -99,7 +99,7 @@
     ))
 
 ;;  CREATE/undo_account_operations
-(defun (scen-shorthand-CREATE-undo-account-operations)
+(defun (scenario-shorthand-CREATE-undo-account-operations)
   (+ 
     ;; CREATE_EXCEPTION
     ;; CREATE_ABORT
@@ -114,10 +114,10 @@
     ))
 
 ;;  CREATE/compute_deployment_address
-(defun (scen-shorthand-CREATE-compute-deployment-address)
+(defun (scenario-shorthand-CREATE-compute-deployment-address)
   (+ 
-    (scen-shorthand-CREATE-failure-condition)
-    (scen-shorthand-CREATE-execution)
+    (scenario-shorthand-CREATE-failure-condition)
+    (scenario-shorthand-CREATE-execution)
     ;; CREATE_EXCEPTION
     ;; CREATE_ABORT
     ;; CREATE_FAILURE_CONDITION_WILL_REVERT
@@ -131,7 +131,7 @@
     ))
 
 ;;  CREATE/unexceptional
-(defun (scen-shorthand-CREATE-unexceptional)
+(defun (scenario-shorthand-CREATE-unexceptional)
   (+ 
     ;; CREATE_EXCEPTION
     CREATE_ABORT
@@ -143,12 +143,12 @@
     ;; CREATE_NONEMPTY_INIT_CODE_FAILURE_WONT_REVERT
     ;; CREATE_NONEMPTY_INIT_CODE_SUCCESS_WILL_REVERT
     ;; CREATE_NONEMPTY_INIT_CODE_SUCCESS_WONT_REVERT
-    (scen-shorthand-CREATE-failure-condition)
-    (scen-shorthand-CREATE-execution)
+    (scenario-shorthand-CREATE-failure-condition)
+    (scenario-shorthand-CREATE-execution)
     ))
 
 ;;  CREATE/sum
-(defun (scen-shorthand-CREATE-sum)
+(defun (scenario-shorthand-CREATE-sum)
   (+ 
     CREATE_EXCEPTION
     ;; CREATE_ABORT
@@ -160,11 +160,11 @@
     ;; CREATE_NONEMPTY_INIT_CODE_FAILURE_WONT_REVERT
     ;; CREATE_NONEMPTY_INIT_CODE_SUCCESS_WILL_REVERT
     ;; CREATE_NONEMPTY_INIT_CODE_SUCCESS_WONT_REVERT
-    (scen-shorthand-CREATE-unexceptional)
+    (scenario-shorthand-CREATE-unexceptional)
     ))
 
 ;;  CREATE/no_context_change
-(defun (scen-shorthand-CREATE-no-context-change)
+(defun (scenario-shorthand-CREATE-no-context-change)
   (+ 
     ;; CREATE_EXCEPTION
     CREATE_ABORT
@@ -176,12 +176,12 @@
     ;; CREATE_NONEMPTY_INIT_CODE_FAILURE_WONT_REVERT
     ;; CREATE_NONEMPTY_INIT_CODE_SUCCESS_WILL_REVERT
     ;; CREATE_NONEMPTY_INIT_CODE_SUCCESS_WONT_REVERT
-    (scen-shorthand-CREATE-failure-condition)
-    (scen-shorthand-CREATE-empty-init-code)
+    (scenario-shorthand-CREATE-failure-condition)
+    (scenario-shorthand-CREATE-empty-init-code)
     ))
 
 ;;  CREATE/deployment_success
-(defun (scen-shorthand-CREATE-deployment-success)
+(defun (scenario-shorthand-CREATE-deployment-success)
   (+ 
     ;; CREATE_EXCEPTION
     ;; CREATE_ABORT
@@ -196,7 +196,7 @@
     ))
 
 ;;  CREATE/deployment_failure
-(defun (scen-shorthand-CREATE-deployment-failure)
+(defun (scenario-shorthand-CREATE-deployment-failure)
   (+ 
     ;; CREATE_EXCEPTION
     ;; CREATE_ABORT
@@ -212,7 +212,7 @@
 
 
 ;; ;;  CREATE/
-;; (defun (scen-shorthand-CREATE-)
+;; (defun (scenario-shorthand-CREATE-)
 ;;   (+ 
 ;;     CREATE_EXCEPTION
 ;;     CREATE_ABORT

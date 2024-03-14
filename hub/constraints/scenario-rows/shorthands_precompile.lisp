@@ -7,7 +7,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;  PRC/sum
-(defun (scen-shorthand-PRC-sum)
+(defun (scenario-shorthand-PRC-sum)
   (+ 
     PRC_ECRECOVER
     PRC_SHA2-256
@@ -25,7 +25,7 @@
     ))
 
 ;;  PRC/weighted_sum
-(defun (scen-shorthand-PRC-weighted-sum)
+(defun (scenario-shorthand-PRC-weighted-sum)
   (+ 
     (*  1  PRC_ECRECOVER  )
     (*  2  PRC_SHA2-256   )
@@ -43,7 +43,7 @@
     ))
 
 ;;  PRC/failure
-(defun (scen-shorthand-PRC-failure)
+(defun (scenario-shorthand-PRC-failure)
   (+ 
     ;; PRC_ECRECOVER
     ;; PRC_SHA2-256
@@ -61,7 +61,7 @@
     ))
 
 ;;  PRC/success
-(defun (scen-shorthand-PRC-success)
+(defun (scenario-shorthand-PRC-success)
   (+ 
     ;; PRC_ECRECOVER
     ;; PRC_SHA2-256
@@ -79,7 +79,7 @@
     ))
 
 ;;  PRC/scenario_sum
-(defun (scen-shorthand-PRC-scenario-sum)
+(defun (scenario-shorthand-PRC-scenario-sum)
   (+ 
     ;; PRC_ECRECOVER
     ;; PRC_SHA2-256
@@ -90,12 +90,12 @@
     ;; PRC_ECMUL
     ;; PRC_ECPAIRING
     ;; PRC_BLAKE2f
-    (scen-shorthand-PRC-failure)
-    (scen-shorthand-PRC-success)
+    (scenario-shorthand-PRC-failure)
+    (scenario-shorthand-PRC-success)
     ))
 
 ;; ;;  PRC/
-;; (defun (scen-shorthand-PRC-)
+;; (defun (scenario-shorthand-PRC-)
 ;;   (+ 
 ;;     PRC_ECRECOVER
 ;;     PRC_SHA2-256

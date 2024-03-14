@@ -8,7 +8,7 @@
 
 
 ;;  CALL/externally_owned_account
-(defun (scen-shorthand-CALL-externally-owned-account)
+(defun (scenario-shorthand-CALL-externally-owned-account)
   (+ 
     ;; CALL_EXCEPTION
     ;; CALL_ABORT
@@ -24,7 +24,7 @@
     ))
 
 ;;  CALL/smart_contract
-(defun (scen-shorthand-CALL-smart-contract)
+(defun (scenario-shorthand-CALL-smart-contract)
   (+ 
     ;; CALL_EXCEPTION
     ;; CALL_ABORT
@@ -40,7 +40,7 @@
     ))
 
 ;;  CALL/precompile
-(defun (scen-shorthand-CALL-precompile)
+(defun (scenario-shorthand-CALL-precompile)
   (+ 
     ;; CALL_EXCEPTION
     ;; CALL_ABORT
@@ -56,38 +56,38 @@
     ))
 
 ;;  CALL/entry
-(defun (scen-shorthand-CALL-entry)
+(defun (scenario-shorthand-CALL-entry)
   (+ 
-    (scen-shorthand-CALL-externally-owned-account)
-    (scen-shorthand-CALL-smart-contract)
-    (scen-shorthand-CALL-precompile)
+    (scenario-shorthand-CALL-externally-owned-account)
+    (scenario-shorthand-CALL-smart-contract)
+    (scenario-shorthand-CALL-precompile)
     ))
 
 ;;  CALL/unexceptional
-(defun (scen-shorthand-CALL-unexceptional)
+(defun (scenario-shorthand-CALL-unexceptional)
   (+ 
     CALL_ABORT
-    (scen-shorthand-CALL-entry)
+    (scenario-shorthand-CALL-entry)
     ))
 
 ;;  CALL/sum
-(defun (scen-shorthand-CALL-sum)
+(defun (scenario-shorthand-CALL-sum)
   (+ 
     CALL_EXCEPTION
-    (scen-shorthand-CALL-unexceptional)
+    (scenario-shorthand-CALL-unexceptional)
     ))
 
 ;;  CALL/no_precompile
-(defun (scen-shorthand-CALL-no-precompile)
+(defun (scenario-shorthand-CALL-no-precompile)
   (+ 
     CALL_EXCEPTION
     CALL_ABORT
-    (scen-shorthand-CALL-externally-owned-account)
-    (scen-shorthand-CALL-smart-contract)
+    (scenario-shorthand-CALL-externally-owned-account)
+    (scenario-shorthand-CALL-smart-contract)
     ))
 
 ;;  CALL/precompile_success
-(defun (scen-shorthand-CALL-precompile-success)
+(defun (scenario-shorthand-CALL-precompile-success)
   (+ 
     ;; CALL_EXCEPTION
     ;; CALL_ABORT
@@ -103,7 +103,7 @@
     ))
 
 ;;  CALL/execution_known_to_revert
-(defun (scen-shorthand-CALL-execution-known-to-revert)
+(defun (scenario-shorthand-CALL-execution-known-to-revert)
   (+ 
     ;; CALL_EXCEPTION
     ;; CALL_ABORT
@@ -119,7 +119,7 @@
     ))
 
 ;;  CALL/execution_known_to_not_revert
-(defun (scen-shorthand-CALL-execution-known-to-not-revert)
+(defun (scenario-shorthand-CALL-execution-known-to-not-revert)
   (+ 
     ;; CALL_EXCEPTION
     ;; CALL_ABORT
@@ -135,7 +135,7 @@
     ))
 
 ;;  CALL/success
-(defun (scen-shorthand-CALL-success)
+(defun (scenario-shorthand-CALL-success)
   (+ 
     ;; CALL_EXCEPTION
     ;; CALL_ABORT
@@ -151,7 +151,7 @@
     ))
 
 ;;  CALL/smc_success
-(defun (scen-shorthand-CALL-smc-success)
+(defun (scenario-shorthand-CALL-smc-success)
   (+ 
     ;; CALL_EXCEPTION
     ;; CALL_ABORT
@@ -167,7 +167,7 @@
     ))
 
 ;;  CALL/smc_failure
-(defun (scen-shorthand-CALL-smc-failure)
+(defun (scenario-shorthand-CALL-smc-failure)
   (+ 
     ;; CALL_EXCEPTION
     ;; CALL_ABORT
@@ -183,9 +183,9 @@
     ))
 
 ;;  CALL/failure
-(defun (scen-shorthand-CALL-failure)
+(defun (scenario-shorthand-CALL-failure)
   (+ 
-    (scen-shorthand-CALL-smc-failure)
+    (scenario-shorthand-CALL-smc-failure)
     ;; CALL_EXCEPTION
     ;; CALL_ABORT
     ;; CALL_EOA_SUCCESS_CALLER_WILL_REVERT
@@ -200,7 +200,7 @@
     ))
 
 ;;  CALL/no_context_change
-(defun (scen-shorthand-CALL-no-context-change)
+(defun (scenario-shorthand-CALL-no-context-change)
   (+ 
     ;; CALL_EXCEPTION
     CALL_ABORT
@@ -213,12 +213,12 @@
     ;; CALL_PRC_FAILURE
     ;; CALL_PRC_SUCCESS_CALLER_WILL_REVERT
     ;; CALL_PRC_SUCCESS_CALLER_WONT_REVERT
-    (scen-shorthand-CALL-externally-owned-account)
-    (scen-shorthand-CALL-precompile)
+    (scenario-shorthand-CALL-externally-owned-account)
+    (scenario-shorthand-CALL-precompile)
     ))
 
 ;;  CALL/requires_both_accounts_twice
-(defun (scen-shorthand-CALL-requires-both-accounts-twice)
+(defun (scenario-shorthand-CALL-requires-both-accounts-twice)
   (+ 
     ;; CALL_EXCEPTION
     ;; CALL_ABORT
@@ -234,11 +234,11 @@
     ))
 
 ;;  CALL/requires_balance_update
-(defun (scen-shorthand-CALL-requires-balance-update)
+(defun (scenario-shorthand-CALL-requires-balance-update)
   (+ 
-    (scen-shorthand-CALL-externally-owned-account)
-    (scen-shorthand-CALL-smart-contract)
-    (scen-shorthand-CALL-precompile-success)
+    (scenario-shorthand-CALL-externally-owned-account)
+    (scenario-shorthand-CALL-smart-contract)
+    (scenario-shorthand-CALL-precompile-success)
     ;; CALL_EXCEPTION
     ;; CALL_ABORT
     ;; CALL_EOA_SUCCESS_CALLER_WILL_REVERT
@@ -253,7 +253,7 @@
     ))
 
 ;;  CALL/undoes_balance_update_with_failure
-(defun (scen-shorthand-CALL-undoes-balance-update-with-failure)
+(defun (scenario-shorthand-CALL-undoes-balance-update-with-failure)
   (+ 
     ;; CALL_EXCEPTION
     ;; CALL_ABORT
@@ -269,7 +269,7 @@
     ))
 
 ;;  CALL/undoes_balance_update_with_revert
-(defun (scen-shorthand-CALL-undoes-balance-update-with-revert)
+(defun (scenario-shorthand-CALL-undoes-balance-update-with-revert)
   (+ 
     ;; CALL_EXCEPTION
     ;; CALL_ABORT
@@ -285,7 +285,7 @@
     ))
 
 ;; ;;  CALL/
-;; (defun (scen-shorthand-CALL-)
+;; (defun (scenario-shorthand-CALL-)
 ;;   (+ 
 ;;     CALL_EXCEPTION
 ;;     CALL_ABORT
