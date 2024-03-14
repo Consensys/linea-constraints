@@ -13,7 +13,7 @@
            ;; source columns
            (
             (* hub.account/ADDRESS_HI                    (hub-into-trm-trigger))
-            (* hub.account/TRM_RAW_ADDR_HI               (hub-into-trm-trigger))
+            (* hub.account/TRM_RAW_ADDRESS_HI            (hub-into-trm-trigger))
             (* hub.account/ADDRESS_LO                    (hub-into-trm-trigger))
             (* hub.account/IS_PRECOMPILE                 (hub-into-trm-trigger))
             )

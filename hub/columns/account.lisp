@@ -43,7 +43,7 @@
 		;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 		( TRM_FLAG                      :binary@prove )
 		( IS_PRECOMPILE                 :binary@prove ) ;; TODO: demote to debug constraint 
-		  TRM_RAW_ADDR_HI
+		  TRM_RAW_ADDRESS_HI
 
 		;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 		;;                                   ;;
