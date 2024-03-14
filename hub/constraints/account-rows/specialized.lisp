@@ -17,10 +17,10 @@
 ;;                                       ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defun (account-same-balance               relOffset)     (shift (eq! account/BALANCE_NEW account/BALANCE          ) relOffset))         ;; relOffset rows into the future
-(defun (account-increment-balance-by value relOffset)     (shift (eq! account/BALANCE_NEW (+ account/BALANCE value)) relOffset))         ;; relOffset rows into the future
-(defun (account-decrement-balance-by value relOffset)     (shift (eq! account/BALANCE_NEW (- account/BALANCE value)) relOffset))         ;; relOffset rows into the future
-(defun (account-undo-balance-update        undoAt doneAt) (begin (eq! (shift account/BALANCE_NEW undoAt) (shift     account/BALANCE doneAt))   ;; same as relOffset rows into the past
+(defun (account-same-balance           relOffset)          (shift (eq! account/BALANCE_NEW account/BALANCE          ) relOffset))         ;; relOffset rows into the future
+(defun (account-increment-balance-by   relOffset value)    (shift (eq! account/BALANCE_NEW (+ account/BALANCE value)) relOffset))         ;; relOffset rows into the future
+(defun (account-decrement-balance-by   relOffset value)    (shift (eq! account/BALANCE_NEW (- account/BALANCE value)) relOffset))         ;; relOffset rows into the future
+(defun (account-undo-balance-update    undoAt doneAt)      (begin (eq! (shift account/BALANCE_NEW undoAt) (shift     account/BALANCE doneAt))   ;; same as relOffset rows into the past
                                                                  (eq! (shift account/BALANCE     undoAt) (shift account/BALANCE_NEW doneAt)))) ;; same as relOffset rows into the past
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -72,21 +72,21 @@
                                                                           (eq! (shift account/DEPLOYMENT_STATUS_NEW  undoAt)  (shift account/DEPLOYMENT_STATUS     doneAt))
                                                                           (eq! (shift account/DEPLOYMENT_STATUS      undoAt)  (shift account/DEPLOYMENT_STATUS_NEW doneAt))))
 
-(defun (account-initiate-for-deployment  init_code_size  value)
+(defun (account-initiate-for-deployment  relOffset init_code_size  value)
   (begin
-    (debug (eq! account/NONCE     0 ) )
-    (eq! account/NONCE_NEW 1 )
-    (account-increment-balance-by value)
-    (debug (eq! account/CODE_SIZE 0 ) )
-    (eq! account/CODE_SIZE_NEW 0 )
-    (debug (eq! account/HAS_CODE 0 ) )
-    (debug (eq! account/CODE_HASH_HI     EMPTY_KECCAK_HI))
-    (debug (eq! account/CODE_HASH_LO     EMPTY_KECCAK_LO))
-    (eq! account/HAS_CODE_NEW 0 )
-    (debug (eq! account/CODE_HASH_HI_NEW     EMPTY_KECCAK_HI))
-    (debug (eq! account/CODE_HASH_LO_NEW     EMPTY_KECCAK_LO))
-    (account-increment-deployment-number)
-    (account-turn-on-deployment-status)))
+    (debug (eq! (shift account/NONCE              relOffset) 0 ) )
+    (eq!        (shift account/NONCE_NEW          relOffset) 1 )
+    (account-increment-balance-by                 relOffset  value)
+    (debug (eq! (shift account/CODE_SIZE          relOffset) 0 ) )
+    (eq!        (shift account/CODE_SIZE_NEW      relOffset) 0 )
+    (debug (eq! (shift account/HAS_CODE           relOffset) 0 ) )
+    (debug (eq! (shift account/CODE_HASH_HI       relOffset) EMPTY_KECCAK_HI))
+    (debug (eq! (shift account/CODE_HASH_LO       relOffset) EMPTY_KECCAK_LO))
+    (eq!        (shift account/HAS_CODE_NEW       relOffset) 0 )
+    (debug (eq! (shift account/CODE_HASH_HI_NEW   relOffset) EMPTY_KECCAK_HI))
+    (debug (eq! (shift account/CODE_HASH_LO_NEW   relOffset) EMPTY_KECCAK_LO))
+    (account-increment-deployment-number          relOffset)
+    (account-turn-on-deployment-status            relOffset)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                                       ;;
