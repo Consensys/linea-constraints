@@ -14,10 +14,6 @@
 ;;                     ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;  Shorthands  ;;
-;;;;;;;;;;;;;;;;;;
-
-
 ;; NOTE: bytes from the invalid instruction family
 ;; (ither not an opcode or the INVALID opcode)
 ;; can't raise stack exceptions
@@ -44,7 +40,7 @@
 (defconstraint invalid-setting-the-gas-cost      (:guard (invalid-instruction))
                (eq! GAS_COST stack/STATIC_GAS))
 
-(defconstraint invalid-debug-constraints         (:guard (invalid-instruction))
+(defconstraint invalid-debugging-constraints         (:guard (invalid-instruction))
                (begin
                  (eq! XAHOY CMC)
                  (debug (eq! XAHOY stack/OPCX))))
