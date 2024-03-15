@@ -10,6 +10,6 @@
                (begin
                  (transaction-constancy HUB_STAMP_TRANSACTION_END)
                  (if-not-zero TX_EXEC
-                              (if-not-zero TX_FINL
+                              (if-not-zero (next TX_FINL)
                                            (eq! HUB_STAMP_TRANSACTION_END
                                                 HUB_STAMP)))))

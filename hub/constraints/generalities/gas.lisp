@@ -12,7 +12,14 @@
 ;;                                   ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; hubStamp constancies were already immosed elsewhere
+(defconstraint gas-column-constancies ()
+               (begin (hub-stamp-constancy GAS_EXPECTED)
+                      (hub-stamp-constancy GAS_ACTUAL)
+                      (hub-stamp-constancy GAS_COST)
+                      (hub-stamp-constancy GAS_NEXT)
+                      (hub-stamp-constancy REFGAS)
+                      (hub-stamp-constancy REFGAS_NEW)))
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                      ;;

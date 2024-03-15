@@ -24,5 +24,3 @@
                   (eq! [stack/STACK_ITEM_VALUE_LO 4] (next transaction/FROM_ADDRESS_LO)))
            (begin (vanishes! [stack/STACK_ITEM_VALUE_HI 4])
                   (eq! [stack/STACK_ITEM_VALUE_LO 4] (next transaction/GAS_PRICE)))))
-
-

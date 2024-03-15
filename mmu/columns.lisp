@@ -1,14 +1,14 @@
 (module mmu)
 
 (defcolumns 
-  ;;shared columns
+  ;; shared columns
   (STAMP      :i32)
   (MMIO_STAMP :i32)
-  ;; PERSPECTIVE SELECTOR
+  ;; perspective selector
   (MACRO :binary@prove)
   (PRPRC :binary@prove)
   (MICRO :binary@prove)
-  ;; OUTPUT OF THE PREPROCESSING
+  ;; output of the preprocessing
   (TOT   :i16)
   (TOTLZ :i16)
   (TOTNT :i16)

@@ -6,13 +6,13 @@
 ;;                                        ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(definterleaved PEEK_AT_STACK_POW_4   (PEEK_AT_STACK                     PEEK_AT_STACK                     PEEK_AT_STACK                     PEEK_AT_STACK                 ))
-(definterleaved CN_POW_4              (CONTEXT_NUMBER                    CONTEXT_NUMBER                    CONTEXT_NUMBER                    CONTEXT_NUMBER                ))
-(definterleaved STACK_STAMP_1234      ([stack/STACK_ITEM_STAMP    1]     [stack/STACK_ITEM_STAMP    2]     [stack/STACK_ITEM_STAMP    3]     [stack/STACK_ITEM_STAMP    4] ))
-(definterleaved HEIGHT_1234           ([stack/STACK_ITEM_HEIGHT   1]     [stack/STACK_ITEM_HEIGHT   2]     [stack/STACK_ITEM_HEIGHT   3]     [stack/STACK_ITEM_HEIGHT   4] ))
-(definterleaved POP_1234              ([stack/STACK_ITEM_POP      1]     [stack/STACK_ITEM_POP      2]     [stack/STACK_ITEM_POP      3]     [stack/STACK_ITEM_POP      4] ))
-(definterleaved VALUE_HI_1234         ([stack/STACK_ITEM_VALUE_HI 1]     [stack/STACK_ITEM_VALUE_HI 2]     [stack/STACK_ITEM_VALUE_HI 3]     [stack/STACK_ITEM_VALUE_HI 4] ))
-(definterleaved VALUE_LO_1234         ([stack/STACK_ITEM_VALUE_LO 1]     [stack/STACK_ITEM_VALUE_LO 2]     [stack/STACK_ITEM_VALUE_LO 3]     [stack/STACK_ITEM_VALUE_LO 4] ))
+(definterleaved PEEK_AT_STACK_POW_4   (PEEK_AT_STACK                  PEEK_AT_STACK                  PEEK_AT_STACK                  PEEK_AT_STACK                 ))
+(definterleaved CN_POW_4              (CONTEXT_NUMBER                 CONTEXT_NUMBER                 CONTEXT_NUMBER                 CONTEXT_NUMBER                ))
+(definterleaved STACK_STAMP_1234      ([stack/STACK_ITEM_STAMP    1]  [stack/STACK_ITEM_STAMP    2]  [stack/STACK_ITEM_STAMP    3]  [stack/STACK_ITEM_STAMP    4] ))
+(definterleaved HEIGHT_1234           ([stack/STACK_ITEM_HEIGHT   1]  [stack/STACK_ITEM_HEIGHT   2]  [stack/STACK_ITEM_HEIGHT   3]  [stack/STACK_ITEM_HEIGHT   4] ))
+(definterleaved POP_1234              ([stack/STACK_ITEM_POP      1]  [stack/STACK_ITEM_POP      2]  [stack/STACK_ITEM_POP      3]  [stack/STACK_ITEM_POP      4] ))
+(definterleaved VALUE_HI_1234         ([stack/STACK_ITEM_VALUE_HI 1]  [stack/STACK_ITEM_VALUE_HI 2]  [stack/STACK_ITEM_VALUE_HI 3]  [stack/STACK_ITEM_VALUE_HI 4] ))
+(definterleaved VALUE_LO_1234         ([stack/STACK_ITEM_VALUE_LO 1]  [stack/STACK_ITEM_VALUE_LO 2]  [stack/STACK_ITEM_VALUE_LO 3]  [stack/STACK_ITEM_VALUE_LO 4] ))
 
 (defpermutation
   ;; row-permuted columns
@@ -65,15 +65,16 @@
                               (any! (will-remain-constant! stack_consistency_perm_HEIGHT_1234)
                                     (will-inc! stack_consistency_perm_HEIGHT_1234 1)))))
 
-(defconstraint first-spot-occurrence-constraints ()
-               (begin
-                 (if-not-zero (first-spot-occurrence)
-                              (vanishes! stack_consistency_perm_POP_1234))))
-                 ;; (if-not-zero (repeat-spot-occurrence)
-                 ;;              (if-not-zero stack_consistency_perm_HEIGHT_1234
-                 ;;                           (begin
-                 ;;                             (eq! (+ stack_consistency_perm_POP_1234 (prev stack_consistency_perm_POP_1234)) 1)
-                 ;;                             (if-not-zero stack_consistency_perm_POP_1234
-                 ;;                                          (begin
-                 ;;                                            (remained-constant! stack_consistency_perm_VALUE_HI_1234)
-                 ;;                                            (remained-constant! stack_consistency_perm_VALUE_LO_1234))))))))
+;; ;; TODO: finish!
+;; (defconstraint first-spot-occurrence-constraints ()
+;;                (begin
+;;                  (if-not-zero (first-spot-occurrence)
+;;                               (vanishes! stack_consistency_perm_POP_1234))))
+;;                  (if-not-zero (repeat-spot-occurrence)
+;;                               (if-not-zero stack_consistency_perm_HEIGHT_1234
+;;                                            (begin
+;;                                              (eq! (+ stack_consistency_perm_POP_1234 (prev stack_consistency_perm_POP_1234)) 1)
+;;                                              (if-not-zero stack_consistency_perm_POP_1234
+;;                                                           (begin
+;;                                                             (remained-constant! stack_consistency_perm_VALUE_HI_1234)
+;;                                                             (remained-constant! stack_consistency_perm_VALUE_LO_1234))))))))

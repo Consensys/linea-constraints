@@ -73,7 +73,7 @@
 
 (defconstraint automatic-exception-flag-vanishing (:perspective stack)
                (begin
-                 (if-zero        INVALID_FLAG                    (vanishes! OPCX))
+                 (eq!            INVALID_FLAG                    OPCX)
                  (if-zero        MXP_FLAG                        (vanishes! MXPX))
                  (if-zero        JUMP_FLAG                       (vanishes! JUMPX))
                  (if-zero        STATIC_FLAG                     (vanishes! STATICX))
@@ -88,8 +88,8 @@
 ;;                          ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;; we deal with those constraints in context.lisp along side CMC
 
-;; ;; we deal with these constraints in context.lisp
 ;; (defconstraint exception_ahoy ()
 ;;                (begin
 ;;                  (is-binary                             XAHOY)
@@ -97,6 +97,3 @@
 ;;                  (if-zero TX_EXEC            (vanishes! XAHOY))
 ;;                  (if-not-zero PEEK_AT_STACK
 ;;                               (eq! (exception_flag_sum) XAHOY))))
-
-
-;; TODO properly define (execution_provides_empty_return_data)

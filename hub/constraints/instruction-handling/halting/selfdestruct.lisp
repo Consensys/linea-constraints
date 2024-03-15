@@ -37,7 +37,7 @@
   sd-first-account-row-offset                 2
   sd-second-account-row-offset                3
   sd-first-account-row-undoing-offset         4
-  sd-second-account-row-undoing-offset 5
+  sd-second-account-row-undoing-offset        5
   sd-account-deletion-row-offset              4
   )
 
@@ -88,11 +88,11 @@
                  (eq! XAHOY scenario/SELFDESTRUCT_EXCEPTION)
                  (if-zero XAHOY
                           (begin
-                            (eq! scenario/SELFDESTRUCT_WILL_REVERT         CONTEXT_WILL_REVERT)
+                            (eq! scenario/SELFDESTRUCT_WILL_REVERT             CONTEXT_WILL_REVERT)
                             (eq! (scenario-shorthand-SELFDESTRUCT-wont-revert) (- 1 CONTEXT_WILL_REVERT))))
                  (if-zero CONTEXT_WILL_REVERT
                           (begin
-                            (eq! (scenario-shorthand-SELFDESTRUCT-wont-revert) 1)
+                            (eq! (scenario-shorthand-SELFDESTRUCT-wont-revert)    1)
                             (eq! scenario/SELFDESTRUCT_WONT_REVERT_ALREADY_MARKED (sd-is-marked))
                             (eq! scenario/SELFDESTRUCT_WONT_REVERT_NOT_YET_MARKED (- 1 (sd-is-marked)))))))
 
