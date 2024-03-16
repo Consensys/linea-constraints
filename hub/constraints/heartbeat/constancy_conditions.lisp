@@ -30,8 +30,8 @@
                (begin
                  (debug (hub-stamp-constancy CN))
                  (debug (hub-stamp-constancy CN_NEW))
-                 (hub-stamp-constancy PC)
-                 (hub-stamp-constancy PC_NEW)
+                 (debug (hub-stamp-constancy PC))
+                 (debug (hub-stamp-constancy PC_NEW))
                  (debug (hub-stamp-constancy GAS_EXPECTED))
                  (debug (hub-stamp-constancy GAS_ACTUAL))
                  (debug (hub-stamp-constancy GAS_COST))
