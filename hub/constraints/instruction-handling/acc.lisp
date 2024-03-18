@@ -23,21 +23,21 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-;; (defun (account-instruction-requires-trimming)        (+ [ stack/DEC_FLAG 1 ]
-;;                                                          [ stack/DEC_FLAG 2 ]
-;;                                                          [ stack/DEC_FLAG 3 ]))
-;; (defun (account-instruction-no-trimming)              (- stack/ACC_FLAG (account-instruction-requires-trimming))
-;; (defun (account-instruction-raw-address-hi)           [ stack/STACK_ITEM_VALUE_HI 1 ])
-;; (defun (account-instruction-raw-address-lo)           [ stack/STACK_ITEM_VALUE_LO 1 ])
-;; (defun (account-instruction-account-address-hi)       context/ACCOUNT_ADDRESS_HI)
-;; (defun (account-instruction-account-address-lo)       context/ACCOUNT_ADDRESS_LO)
-;; (defun (account-instruction-byte-code-address-hi)     context/BYTE_CODE_ADDRESS_HI)
-;; (defun (account-instruction-byte-code-address-lo)     context/BYTE_CODE_ADDRESS_LO)
-;; (defun (account-instruction-address-warmth)           account/WARMTH)
-;; (defun (account-instruction-decoded-flags-sum)        (+ [ stack/DEC_FLAG 1 ]
-;;                                                          [ stack/DEC_FLAG 2 ]
-;;                                                          [ stack/DEC_FLAG 3 ]
-;;                                                          [ stack/DEC_FLAG 4 ]))
+(defun (account-instruction-requires-trimming)        (+ [ stack/DEC_FLAG 1 ]
+                                                         [ stack/DEC_FLAG 2 ]
+                                                         [ stack/DEC_FLAG 3 ]))
+(defun (account-instruction-no-trimming)              (- stack/ACC_FLAG (account-instruction-requires-trimming)))
+(defun (account-instruction-raw-address-hi)           [ stack/STACK_ITEM_VALUE_HI 1 ])
+(defun (account-instruction-raw-address-lo)           [ stack/STACK_ITEM_VALUE_LO 1 ])
+(defun (account-instruction-account-address-hi)       context/ACCOUNT_ADDRESS_HI)
+(defun (account-instruction-account-address-lo)       context/ACCOUNT_ADDRESS_LO)
+(defun (account-instruction-byte-code-address-hi)     context/BYTE_CODE_ADDRESS_HI)
+(defun (account-instruction-byte-code-address-lo)     context/BYTE_CODE_ADDRESS_LO)
+(defun (account-instruction-address-warmth)           account/WARMTH)
+(defun (account-instruction-decoded-flags-sum)        (+ [ stack/DEC_FLAG 1 ]
+                                                         [ stack/DEC_FLAG 2 ]
+                                                         [ stack/DEC_FLAG 3 ]
+                                                         [ stack/DEC_FLAG 4 ]))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -57,7 +57,7 @@
 (defconstraint   account-instruction-setting-the-stack-pattern                              (:guard (account-instruction-standard-hypothesis))
                  (begin
                    (if-not-zero (account-instruction-requires-trimming) (stack-pattern-1-1))
-                   (if-not-zero (account-instruction-no-trimming)       (stack-pattern-0-1))
+                   (if-not-zero (account-instruction-no-trimming)       (stack-pattern-0-1))))
 
 (defconstraint   account-instruction-setting-allowable-exceptions                           (:guard (account-instruction-standard-hypothesis))
                  (eq! XAHOY stack/OOGX))
