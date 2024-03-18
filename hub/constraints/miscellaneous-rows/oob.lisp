@@ -13,12 +13,31 @@
          pc_new_lo           ;; low  part of proposed new program counter
          code_size           ;; code size of byte code currently executing
          ) (begin
-         (eq! (shift misc/OOB_INST            kappa) OOB_INST_jump )
-         (eq! (shift [ misc/OOB_DATA 1 ]    kappa) pc_new_hi)
-         (eq! (shift [ misc/OOB_DATA 2 ]    kappa) pc_new_lo)
+         (eq! (shift misc/OOB_INST             kappa) OOB_INST_jump )
+         (eq! (shift [ misc/OOB_DATA 1 ]       kappa) pc_new_hi)
+         (eq! (shift [ misc/OOB_DATA 2 ]       kappa) pc_new_lo)
          ;; (eq! (shift [ misc/OOB_DATA 3 ]    kappa) )
          ;; (eq! (shift [ misc/OOB_DATA 4 ]    kappa) )
-         (eq! (shift [ misc/OOB_DATA 5 ]    kappa) code_size)
+         (eq! (shift [ misc/OOB_DATA 5 ]       kappa) code_size)
+         ;; (eq! (shift [ misc/OOB_DATA 6 ]    kappa) )
+         ;; (eq! (shift [ misc/OOB_DATA 7 ]    kappa) )
+         ;; (eq! (shift [ misc/OOB_DATA 8 ]    kappa) )
+         ))
+
+(defun (set-oob-inst-jumpi
+         kappa               ;; offset
+         pc_new_hi           ;; high part of proposed new program counter
+         pc_new_lo           ;; low  part of proposed new program counter
+         jump_condition_hi   ;; high part of jump condition
+         jump_condition_lo   ;; low  part of jump condition
+         code_size           ;; code size of byte code currently executing
+         ) (begin
+         (eq! (shift misc/OOB_INST             kappa) OOB_INST_jumpi)
+         (eq! (shift [ misc/OOB_DATA 1 ]       kappa) pc_new_hi)
+         (eq! (shift [ misc/OOB_DATA 2 ]       kappa) pc_new_lo)
+         (eq! (shift [ misc/OOB_DATA 3 ]       kappa) jump_condition_hi)
+         (eq! (shift [ misc/OOB_DATA 4 ]       kappa) jump_condition_lo)
+         (eq! (shift [ misc/OOB_DATA 5 ]       kappa) code_size)
          ;; (eq! (shift [ misc/OOB_DATA 6 ]    kappa) )
          ;; (eq! (shift [ misc/OOB_DATA 7 ]    kappa) )
          ;; (eq! (shift [ misc/OOB_DATA 8 ]    kappa) )
