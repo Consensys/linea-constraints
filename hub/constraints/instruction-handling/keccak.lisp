@@ -59,7 +59,8 @@
 
 (defconstraint keccak-MISC-flags (:guard (keccak-no-stack-exceptions))
   (eq! (weighted-MISC-flag-sum 1)
-       (+ MISC_MXP_WEIGHT (* MISC_MMU_WEIGHT (keccak-trigger-MMU)))))
+       (+ MISC_WEIGHT_MXP
+          (* MISC_WEIGHT_MMU (keccak-trigger-MMU)))))
 
 (defconstraint keccak-MXP-call (:guard (keccak-no-stack-exceptions))
   (set-MXP-instruction-type-4 1                  ;; row offset kappa

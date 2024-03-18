@@ -99,7 +99,7 @@
 (defconstraint stateless-setting-miscellaneous-flags (:guard (stateless-precondition))
                (if-not-zero (classifier-stateless-instructions)
                             (eq! (weighted-MISC-flag-sum 1)
-                                 (* (stateless-instruction-is-exp) MISC_EXP_WEIGHT))))
+                                 (* (stateless-instruction-is-exp) MISC_WEIGHT_EXP))))
 
 (defconstraint stateless-setting-exp-arguments (:guard (stateless-precondition))
                (if-not-zero (stateless-instruction-is-exp)

@@ -80,7 +80,7 @@
                (if-not-zero (shift PEEK_AT_MISCELLANEOUS 2)
                             (begin
                               (eq! (weighted-MISC-flag-sum 2)
-                                   (* [ stack/DEC_FLAG 1 ] MISC_OOB_WEIGHT))
+                                   (* [ stack/DEC_FLAG 1 ] MISC_WEIGHT_OOB))
                               (set-oob-inst-sstore 2                   ;; offset
                                                    GAS_ACTUAL ))))     ;; GAS_ACTUAL
 
