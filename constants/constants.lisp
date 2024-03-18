@@ -159,6 +159,47 @@
   EVM_INST_INVALID                             0xFE
   EVM_INST_SELFDESTRUCT                        0xFF
   INVALID_CODE_PREFIX_VALUE                    0xEF
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;               ;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; GAS CONSTANTS ;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;               ;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  GAS_CONST_G_ZERO                             0
+  GAS_CONST_G_JUMPDEST                         1
+  GAS_CONST_G_BASE                             2
+  GAS_CONST_G_VERY_LOW                         3
+  GAS_CONST_G_LOW                              5
+  GAS_CONST_G_MID                              8
+  GAS_CONST_G_HIGH                             10
+  GAS_CONST_G_WARM_ACCESS                      100
+  GAS_CONST_G_ACCESS_LIST_ADRESS               2400
+  GAS_CONST_G_ACCESS_LIST_STORAGE              1900
+  GAS_CONST_G_COLD_ACCOUNT_ACCESS              2600
+  GAS_CONST_G_COLD_SLOAD                       2100
+  GAS_CONST_G_SSET                             20000
+  GAS_CONST_G_SRESET                           2900
+  REFUND_CONST_R_SCLEAR                        15000
+  REFUND_CONST_R_SELFDESTRUCT                  24000
+  GAS_CONST_G_SELFDESTRUCT                     5000
+  GAS_CONST_G_CREATE                           32000
+  GAS_CONST_G_CODE_DEPOSIT                     200
+  GAS_CONST_G_CALL_VALUE                       9000
+  GAS_CONST_G_CALL_STIPEND                     2300
+  GAS_CONST_G_NEW_ACCOUNT                      25000
+  GAS_CONST_G_EXP                              10
+  GAS_CONST_G_EXP_BYTE                         50
+  GAS_CONST_G_MEMORY                           3
+  GAS_CONST_G_TX_CREATE                        32000
+  GAS_CONST_G_TX_DATA_ZERO                     4
+  GAS_CONST_G_TX_DATA_NONZERO                  16
+  GAS_CONST_G_TRANSACTION                      21000
+  GAS_CONST_G_LOG                              375
+  GAS_CONST_G_LOG_DATA                         8
+  GAS_CONST_G_LOG_TOPIC                        375
+  GAS_CONST_G_KECCAK_256                       30
+  GAS_CONST_G_KECCAK_256_WORD                  6
+  GAS_CONST_G_COPY                             3
+  GAS_CONST_G_BLOCKHASH                        20
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;               ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; SIZE / LENGTH ;;
@@ -171,51 +212,6 @@
   LLARGEPO                                     (+ LLARGE 1)
   WORD_SIZE_MO                                 31
   WORD_SIZE                                    32
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;                        ;;
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; MXP FLAG SUM CONSTANTS ;;
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;                        ;;
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  MISC_EXP_WEIGHT                              1
-  MISC_MMU_WEIGHT                              2
-  MISC_MXP_WEIGHT                              4
-  MISC_OOB_WEIGHT                              8
-  MISC_STP_WEIGHT                              16
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;                  ;;
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; EXP instructions ;;
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;                  ;;
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  EXP_INST_EXPLOG                              0xEE0A
-  EXP_INST_MODEXPLOG                           0xEE05
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;                  ;;
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; OOB instructions ;;
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;                  ;;
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  OOB_INST_jump                                0x56
-  OOB_INST_jumpi                               0x57
-  OOB_INST_rdc                                 0x3E
-  OOB_INST_cdl                                 0x35
-  OOB_INST_xcall                               0xCC
-  OOB_INST_call                                0xCA
-  OOB_INST_create                              0xCE
-  OOB_INST_sstore                              0x55
-  OOB_INST_deployment                          0xF3
-  OOB_INST_ecrecover                           0xFF01
-  OOB_INST_sha2                                0xFF02
-  OOB_INST_ripemd                              0xFF03
-  OOB_INST_identity                            0xFF04
-  OOB_INST_ecadd                               0xFF06
-  OOB_INST_ecmul                               0xFF07
-  OOB_INST_ecpairing                           0xFF08
-  OOB_INST_blake_cds                           0xFA09
-  OOB_INST_blake_params                        0xFB09
-  OOB_INST_modexp_cds                          0xFA05
-  OOB_INST_modexp_xbs                          0xFB05
-  OOB_INST_modexp_lead                         0xFC05
-  OOB_INST_modexp_pricing                      0xFD05
-  OOB_INST_modexp_extract                      0xFE05
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;         ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; EXO SUM ;;
@@ -235,6 +231,17 @@
   EXO_SUM_WEIGHT_ECDATA                        (^ 2 EXO_SUM_INDEX_ECDATA)
   EXO_SUM_WEIGHT_RIPSHA                        (^ 2 EXO_SUM_INDEX_RIPSHA)
   EXO_SUM_WEIGHT_BLAKEMODEXP                   (^ 2 EXO_SUM_INDEX_BLAKEMODEXP)
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;                ;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; HASH CONSTANTS ;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;                ;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  EMPTY_KECCAK_HI                              0xc5d2460186f7233c927e7db2dcc703c ;; high part of KECCAK(())
+  EMPTY_KECCAK_LO                              0xe500b653ca82273b7bfad8045d85a47 ;; low  part of KECCAK(())
+  EMPTY_SHA2_HI                                0xe3b0c44298fc1c149afbf4c8996fb92 ;; high part of SHA2-256(())
+  EMPTY_SHA2_LO                                0x27ae41e4649b934ca495991b7852b85 ;; low  part of SHA2-256(())
+  EMPTY_RIPEMD_HI                              0x0000000000000000000000009c1185a ;; high part of RIPEMD-160(())
+  EMPTY_RIPEMD_LO                              0xc5e9fc54612808977ee8f548b2258d3 ;; low  part of RIPEMD-160(())
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;                     ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; BLAKE MODEXP MODULE ;;
@@ -253,6 +260,13 @@
   PHASE_SHA2_RESULT                            11
   PHASE_RIPEMD_DATA                            12
   PHASE_RIPEMD_RESULT                          13
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;            ;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; EXP MODULE ;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;            ;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  EXP_INST_EXPLOG                              0xEE0A
+  EXP_INST_MODEXPLOG                           0xEE05
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;            ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; MMU MODULE ;;
@@ -296,6 +310,44 @@
   MMIO_INST_RAM_TO_RAM_TWO_SOURCE              0xfe34
   MMIO_INST_RAM_EXCISION                       0xfe41
   MMIO_INST_RAM_VANISHES                       0xfe42
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;            ;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; MXP MODULE ;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;            ;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  MISC_EXP_WEIGHT                              1
+  MISC_MMU_WEIGHT                              2
+  MISC_MXP_WEIGHT                              4
+  MISC_OOB_WEIGHT                              8
+  MISC_STP_WEIGHT                              16
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;            ;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; OOB MODULE ;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;            ;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  OOB_INST_jump                                0x56
+  OOB_INST_jumpi                               0x57
+  OOB_INST_rdc                                 0x3E
+  OOB_INST_cdl                                 0x35
+  OOB_INST_xcall                               0xCC
+  OOB_INST_call                                0xCA
+  OOB_INST_create                              0xCE
+  OOB_INST_sstore                              0x55
+  OOB_INST_deployment                          0xF3
+  OOB_INST_ecrecover                           0xFF01
+  OOB_INST_sha2                                0xFF02
+  OOB_INST_ripemd                              0xFF03
+  OOB_INST_identity                            0xFF04
+  OOB_INST_ecadd                               0xFF06
+  OOB_INST_ecmul                               0xFF07
+  OOB_INST_ecpairing                           0xFF08
+  OOB_INST_blake_cds                           0xFA09
+  OOB_INST_blake_params                        0xFB09
+  OOB_INST_modexp_cds                          0xFA05
+  OOB_INST_modexp_xbs                          0xFB05
+  OOB_INST_modexp_lead                         0xFC05
+  OOB_INST_modexp_pricing                      0xFD05
+  OOB_INST_modexp_extract                      0xFE05
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;             ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; RLP* MODULE ;;
@@ -349,58 +401,6 @@
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;            ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   WCP_INST_GEQ                                 0x0E
-  WCP_INST_LEQ                                 0x0F
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;                ;;
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; HASH CONSTANTS ;;
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;                ;;
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  EMPTY_KECCAK_HI                              0xc5d2460186f7233c927e7db2dcc703c ;; high part of KECCAK(())
-  EMPTY_KECCAK_LO                              0xe500b653ca82273b7bfad8045d85a47 ;; low  part of KECCAK(())
-  EMPTY_SHA2_HI                                0xe3b0c44298fc1c149afbf4c8996fb92 ;; high part of SHA2-256(())
-  EMPTY_SHA2_LO                                0x27ae41e4649b934ca495991b7852b85 ;; low  part of SHA2-256(())
-  EMPTY_RIPEMD_HI                              0x0000000000000000000000009c1185a ;; high part of RIPEMD-160(())
-  EMPTY_RIPEMD_LO                              0xc5e9fc54612808977ee8f548b2258d3 ;; low  part of RIPEMD-160(())
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;               ;;
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; GAS CONSTANTS ;;
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;               ;;
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  GAS_CONST_G_ZERO                             0
-  GAS_CONST_G_JUMPDEST                         1
-  GAS_CONST_G_BASE                             2
-  GAS_CONST_G_VERY_LOW                         3
-  GAS_CONST_G_LOW                              5
-  GAS_CONST_G_MID                              8
-  GAS_CONST_G_HIGH                             10
-  GAS_CONST_G_WARM_ACCESS                      100
-  GAS_CONST_G_ACCESS_LIST_ADRESS               2400
-  GAS_CONST_G_ACCESS_LIST_STORAGE              1900
-  GAS_CONST_G_COLD_ACCOUNT_ACCESS              2600
-  GAS_CONST_G_COLD_SLOAD                       2100
-  GAS_CONST_G_SSET                             20000
-  GAS_CONST_G_SRESET                           2900
-  REFUND_CONST_R_SCLEAR                        15000
-  REFUND_CONST_R_SELFDESTRUCT                  24000
-  GAS_CONST_G_SELFDESTRUCT                     5000
-  GAS_CONST_G_CREATE                           32000
-  GAS_CONST_G_CODE_DEPOSIT                     200
-  GAS_CONST_G_CALL_VALUE                       9000
-  GAS_CONST_G_CALL_STIPEND                     2300
-  GAS_CONST_G_NEW_ACCOUNT                      25000
-  GAS_CONST_G_EXP                              10
-  GAS_CONST_G_EXP_BYTE                         50
-  GAS_CONST_G_MEMORY                           3
-  GAS_CONST_G_TX_CREATE                        32000
-  GAS_CONST_G_TX_DATA_ZERO                     4
-  GAS_CONST_G_TX_DATA_NONZERO                  16
-  GAS_CONST_G_TRANSACTION                      21000
-  GAS_CONST_G_LOG                              375
-  GAS_CONST_G_LOG_DATA                         8
-  GAS_CONST_G_LOG_TOPIC                        375
-  GAS_CONST_G_KECCAK_256                       30
-  GAS_CONST_G_KECCAK_256_WORD                  6
-  GAS_CONST_G_COPY                             3
-  GAS_CONST_G_BLOCKHASH                        20)
+  WCP_INST_LEQ                                 0x0F)
 
 
