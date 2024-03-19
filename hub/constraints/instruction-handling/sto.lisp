@@ -66,10 +66,12 @@
                                     (* CONTEXT_WILL_REVERT (shift PEEK_AT_STORAGE 4)))))))
 
 (defconstraint storage-first-context-row (:guard (storage-no-stack-exceptions))
-               (read-context-data
-                 1                  ;; row offset
-                 CONTEXT_NUMBER     ;; context to read
-                 ))
+               (begin
+                 (read-context-data 1                  ;; row offset
+                                    CONTEXT_NUMBER )   ;; context to read
+                 ;; sanity check
+                 (debug (eq! (shift context/CALLER_CONTEXT_NUMBER 1)
+                             CALLER_CONTEXT_NUMBER))))
 
 (defconstraint storage-justifying-STATICX (:guard (storage-no-stack-exceptions))
                (eq! stack/STATICX

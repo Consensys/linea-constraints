@@ -44,7 +44,10 @@
                (begin 
                  (eq! NSR (+ (shift PEEK_AT_CONTEXT 1)
                              (* CMC (shift PEEK_AT_CONTEXT 2))))
-                 (read-context-data 1 CONTEXT_NUMBER)))
+                 (read-context-data 1 CONTEXT_NUMBER)
+                 ;; sanity check
+                 (debug (eq! (shift context/CALLER_CONTEXT_NUMBER 1)
+                             CALLER_CONTEXT_NUMBER))))
                       
 (defconstraint context-value-constraints         (:guard (context-instruction-no-stack-exception))
                (if-zero CMC

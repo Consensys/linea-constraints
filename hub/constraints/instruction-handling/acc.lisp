@@ -151,7 +151,10 @@
                                                     ;; DEC_FLAG_4 = 1
                                                     (begin
                                                       (eq!  (shift account/ADDRESS_HI  2)  (account-instruction-byte-code-address-hi))
-                                                      (eq!  (shift account/ADDRESS_LO  2)  (account-instruction-byte-code-address-lo)))))))))
+                                                      (eq!  (shift account/ADDRESS_LO  2)  (account-instruction-byte-code-address-lo))))
+                                           ;; sanity check
+                                           (debug (eq! (shift context/CALLER_CONTEXT_NUMBER 1)
+                                                       CALLER_CONTEXT_NUMBER)))))))
 
 (defconstraint   account-instruction-value-constraints                                      (:guard (account-instruction-unexceptional))
                  (begin

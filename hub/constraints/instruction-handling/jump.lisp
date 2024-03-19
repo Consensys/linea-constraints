@@ -79,8 +79,12 @@
                             ;; OOGX = 1
                             (execution-provides-empty-return-data          jump-context-row-offset)
                             ;; OOGX = 0
-                            (read-context-data                             jump-context-row-offset
-                                                                           CONTEXT_NUMBER)))
+                            (begin
+                              (read-context-data                           jump-context-row-offset
+                                                                           CONTEXT_NUMBER)
+                              ;; sanity check
+                              (debug (eq! (shift context/CALLER_CONTEXT_NUMBER jump-context-row-offset)
+                                          CALLER_CONTEXT_NUMBER)))))
 
 
 ;; stronger preconditions start here

@@ -141,9 +141,12 @@
                                                    (shift PEEK_AT_CONTEXT  5)))))))
 
 (defconstraint selfdestruct-reading-context-data (:guard (selfdestruct-scenario-precondition))
-               (read-context-data
-                 sd-first-context-row-offset        ;; row offset
-                 CONTEXT_NUMBER))                   ;; context to read
+               (begin
+                 (read-context-data sd-first-context-row-offset       ;; row offset
+                                    CONTEXT_NUMBER)                   ;; context to read
+                 ;; sanity check
+                 (debug (eq! (shift context/CALLER_CONTEXT_NUMBER sd-first-context-row-offset)
+                             CALLER_CONTEXT_NUMBER))))
 
 
 (defconstraint selfdestruct-returning-empty-return-data (:guard (selfdestruct-scenario-precondition))
