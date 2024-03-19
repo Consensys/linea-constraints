@@ -61,6 +61,8 @@ ROM := rom
 
 ROM_LEX := romLex
 
+SHAKIRA := shakira
+
 SHIFT :=  shf
 
 STACK := hub/columns.lisp \
@@ -99,6 +101,7 @@ ZKEVM_MODULES := ${ALU} \
 	${RLP_TXRCPT} \
 	${ROM} \
 	${ROM_LEX} \
+	${SHAKIRA} \
 	${SHIFT} \
 	${STACK} \
 	${STP} \
