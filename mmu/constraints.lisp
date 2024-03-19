@@ -1203,14 +1203,250 @@
 ;;
 ;; MODEXP ZERO
 ;;
-;; TODO
+(defconstraint modexp-zero-preprocessing (:guard (* MACRO IS_MODEXP_ZERO))
+  (begin (vanishes! TOTLZ)
+         (eq! TOTNT NB_MICRO_ROWS_TOT_MODEXP_ZERO)
+         (vanishes! TOTRZ)
+         (eq! (shift micro/EXO_SUM NB_PP_ROWS_MODEXP_ZERO_PO) EXO_SUM_WEIGHT_BLAKEMODEXP)
+         (eq! (shift micro/PHASE NB_PP_ROWS_MODEXP_ZERO_PO) macro/PHASE)
+         (eq! (shift micro/EXO_ID NB_PP_ROWS_MODEXP_ZERO_PO) macro/TGT_ID)))
+
+(defconstraint modexp-zero-mmio-instruction-writting (:guard (* MICRO IS_MODEXP_ZERO))
+  (begin (stdProgression micro/TLO)
+         (eq! micro/INST MMIO_INST_LIMB_VANISHES)))
+
 ;;
 ;; MODEXP DATA
 ;;
-;; TODO
+(defun (modexp-initial-tbo)
+  [OUT 1])
+
+(defun (modexp-initial-slo)
+  [OUT 2])
+
+(defun (modexp-initial-sbo)
+  [OUT 3])
+
+(defun (modexp-first-limb-bytesize)
+  [OUT 4])
+
+(defun (modexp-last-limb-bytesize)
+  [OUT 5])
+
+(defun (modexp-first-limb-single-source)
+  [BIN 1])
+
+(defun (modexp-aligned)
+  [BIN 2])
+
+(defun (modexp-last-limb-single-source)
+  [BIN 3])
+
+(defun (modexp-src-id)
+  macro/SRC_ID)
+
+(defun (modexp-tgt-id)
+  macro/TGT_ID)
+
+(defun (modexp-src-offset)
+  macro/SRC_OFFSET_LO)
+
+(defun (modexp-size)
+  macro/SIZE)
+
+(defun (modexp-cdo)
+  macro/REF_OFFSET)
+
+(defun (modexp-cds)
+  macro/REF_SIZE)
+
+(defun (modexp-exo-sum)
+  macro/EXO_SUM)
+
+(defun (modexp-phase)
+  macro/PHASE)
+
+(defun (modexp-param-byte-size)
+  (modexp-size))
+
+(defun (modexp-param-offset)
+  (+ (modexp-cdo) (modexp-src-offset)))
+
+(defun (modexp-leftover-data-size)
+  (- (modexp-cds) (modexp-src-offset)))
+
+(defun (modexp-num-left-padding-bytes)
+  (- 512 (modexp-param-byte-size)))
+
+(defun (modexp-data-runs-out)
+  (shift prprc/WCP_RES 2))
+
+(defun (modexp-num-right-padding-bytes)
+  (* (- (modexp-param-byte-size) (modexp-leftover-data-size)) (modexp-data-runs-out)))
+
+(defun (modexp-right-padding-remainder)
+  (shift prprc/EUC_REM 2))
+
+(defun (modexp-totnt-is-one)
+  (shift prprc/WCP_RES 3))
+
+(defun (modexp-middle-sbo)
+  (shift prprc/EUC_REM 6))
+
+(defconstraint modexp-preprocessing (:guard (* MACRO IS_MODEXP_DATA))
+  (begin  ;; Setting total number of mmio inst
+         (eq! TOT NB_MICRO_ROWS_TOT_MODEXP_DATA)
+         ;; preprocessing row n°1
+         (callToEuc 1 (modexp-num-left-padding-bytes) LLARGE)
+         (eq! (modexp-initial-tbo) (next prprc/EUC_REM))
+         (eq! TOTLZ (next prprc/EUC_QUOT))
+         ;; preprocessing row n°2
+         (callToLt 2 0 (modexp-leftover-data-size) (modexp-param-byte-size))
+         (callToEuc 2 (modexp-num-right-padding-bytes) LLARGE)
+         (eq! TOTRZ (shift prprc/EUC_QUOT 2))
+         (debug (eq! TOTNT
+                     (- 32 (+ TOTLZ TOTRZ))))
+         ;; preprocessing row n°3
+         (callToEq 3 0 TOTNT 1)
+         (callToEuc 3 (modexp-param-offset) LLARGE)
+         (eq! (modexp-initial-slo) (shift prprc/EUC_QUOT 3))
+         (eq! (modexp-initial-sbo) (shift prprc/EUC_REM 3))
+         (if-zero (modexp-totnt-is-one)
+                  (eq! (modexp-first-limb-bytesize) (- LLARGE (modexp-initial-tbo)))
+                  (if-zero (modexp-data-runs-out)
+                           (eq! (modexp-first-limb-bytesize) (modexp-param-byte-size))
+                           (eq! (modexp-first-limb-bytesize) (modexp-leftover-data-size))))
+         (if-zero (modexp-data-runs-out)
+                  (eq! (modexp-last-limb-bytesize) LLARGE)
+                  (eq! (modexp-last-limb-bytesize) (- LLARGE (modexp-right-padding-remainder))))
+         ;; preprocessing row n°4
+         (callToLt 4
+                   0
+                   (+ (modexp-initial-slo) (- (modexp-first-limb-bytesize) 1))
+                   LLARGE)
+         (eq! (modexp-first-limb-single-source) (shift prprc/WCP_RES 4))
+         ;; preprocessing row n°5
+         (callToEq 5 0 (modexp-initial-sbo) (modexp-initial-tbo))
+         (eq! (modexp-aligned) (shift prprc/WCP_RES 5))
+         ;; preprocessing row n°6
+         (if-eq-else (modexp-aligned) 1
+                     (eq! (modexp-last-limb-single-source) (modexp-aligned))
+                     (begin (callToEuc 6 (+ (modexp-initial-sbo) (modexp-first-limb-bytesize)) LLARGE)
+                            (callToLt 6
+                                      0
+                                      (+ (modexp-middle-sbo) (- (modexp-last-limb-bytesize) 1))
+                                      LLARGE)
+                            (eq! (modexp-last-limb-single-source) (shift prprc/WCP_RES 6))))
+         ;; setting mmio constant values
+         (eq! (shift micro/CN_S NB_PP_ROWS_MODEXP_DATA_PO) (modexp-src-id))
+         (eq! (shift micro/EXO_SUM NB_PP_ROWS_MODEXP_DATA_PO) EXO_SUM_WEIGHT_BLAKEMODEXP)
+         (eq! (shift micro/PHASE NB_PP_ROWS_MODEXP_DATA_PO) (modexp-phase))
+         (eq! (shift micro/EXO_ID NB_PP_ROWS_MODEXP_DATA_PO) (modexp-tgt-id))))
+
+(defconstraint modexp-mmio-instruction-writting (:guard IS_MODEXP_DATA)
+  (begin (if-eq MICRO 1 (stdProgression micro/TLO))
+         (if-eq (zero-row) 1 (eq! micro/INST MMIO_INST_LIMB_VANISHES))
+         (if-eq (force-bool (+ NT_ONLY NT_FIRST)) 1
+                (begin (if-zero (modexp-first-limb-single-source)
+                                (eq! micro/INST MMIO_INST_RAM_TO_LIMB_TWO_SOURCE)
+                                (eq! micro/INST MMIO_INST_RAM_TO_LIMB_ONE_SOURCE))
+                       (eq! micro/SIZE (modexp-first-limb-bytesize))
+                       (eq! micro/SLO (modexp-initial-slo))
+                       (eq! micro/SBO (modexp-initial-sbo))
+                       (eq! micro/TBO (modexp-initial-tbo))))
+         (if-eq NT_FIRST 1
+                (begin (if-eq-else (modexp-aligned) 1
+                                   (will-inc! micro/SLO 1)
+                                   (if-zero (modexp-first-limb-single-source)
+                                            (begin (will-inc! micro/SLO 1)
+                                                   (will-eq! micro/SBO
+                                                             (- (+ micro/SBO micro/SIZE) LLARGE)))
+                                            (begin (will-remain-constant! micro/SLO)
+                                                   (will-eq! micro/SBO (+ micro/SBO micro/SIZE)))))
+                       (vanishes! (next micro/TBO))))
+         (if-eq NT_MDDL 1
+                (begin (if-zero (modexp-aligned)
+                                (eq! micro/INST MMIO_INST_RAM_TO_LIMB_TWO_SOURCE)
+                                (eq! micro/INST MMIO_INST_RAM_TO_LIMB_TRANSPLANT))
+                       (eq! micro/SIZE LLARGE)
+                       (will-inc! micro/SLO 1)
+                       (will-remain-constant! micro/SBO)
+                       (will-remain-constant! micro/TBO)))
+         (if-eq NT_LAST 1
+                (begin (if-zero (modexp-last-limb-single-source)
+                                (eq! micro/INST MMIO_INST_RAM_TO_LIMB_TWO_SOURCE)
+                                (eq! micro/INST MMIO_INST_RAM_TO_LIMB_ONE_SOURCE))
+                       (eq! micro/SIZE (modexp-last-limb-bytesize))))))
+
 ;;
 ;; BLAKE
 ;;
-;; TODO
+(defun (blake-cdo)
+  macro/SRC_OFFSET_LO)
+
+(defun (blake-success-bit)
+  macro/SUCCESS_BIT)
+
+(defun (blake-r-prediction)
+  macro/LIMB_1)
+
+(defun (blake-f-prediction)
+  macro/LIMB_2)
+
+(defun (blake-slo-r)
+  (next prprc/EUC_QUOT))
+
+(defun (blake-sbo-r)
+  (next prprc/EUC_REM))
+
+(defun (blake-r-single-source)
+  (next prprc/WCP_RES))
+
+(defun (blake-slo-f)
+  (shift prprc/EUC_QUOT 2))
+
+(defun (blake-sbo-f)
+  (shift prprc/EUC_REM 2))
+
+(defconstraint blake-preprocessing (:guard (* MACRO IS_BLAKE))
+  (begin  ;; setiing nb of mmio instruction
+         (vanishes! TOTLZ)
+         (eq! TOTNT 2)
+         (vanishes! TOTRZ)
+         ;; preprocessing row n°1
+         (callToEuc 1 (blake-cdo) LLARGE)
+         (callToLt 1
+                   0
+                   (+ (blake-sbo-r) (- 4 1))
+                   LLARGE)
+         ;; preprocessing row n°2
+         (callToEuc 2
+                    (+ (blake-cdo) (- 213 1))
+                    LLARGE)
+         ;; mmio constant values
+         (eq! (shift micro/CN_S NB_PP_ROWS_BLAKE_PO) macro/SRC_ID)
+         (eq! (shift micro/SUCCESS_BIT NB_PP_ROWS_BLAKE_PO) (blake-success-bit))
+         (eq! (shift micro/EXO_SUM NB_PP_ROWS_BLAKE_PO)
+              (* (blake-success-bit) EXO_SUM_WEIGHT_BLAKEMODEXP))
+         (eq! (shift micro/PHASE NB_PP_ROWS_BLAKE_PO) (* (blake-success-bit) PHASE_BLAKE_PARAMS))
+         (eq! (shift micro/EXO_ID NB_PP_ROWS_BLAKE_PO) (* (blake-success-bit) macro/TGT_ID))
+         ;; first mmio inst
+         (if-zero (blake-r-single-source)
+                  (eq! (shift micro/INST NB_PP_ROWS_BLAKE_PO) MMIO_INST_RAM_TO_LIMB_TWO_SOURCE)
+                  (eq! (shift micro/INST NB_PP_ROWS_BLAKE_PO) MMIO_INST_RAM_TO_LIMB_ONE_SOURCE))
+         (eq! (shift micro/SIZE NB_PP_ROWS_BLAKE_PO) 4)
+         (eq! (shift micro/SLO NB_PP_ROWS_BLAKE_PO) (blake-slo-r))
+         (eq! (shift micro/SBO NB_PP_ROWS_BLAKE_PO) (blake-sbo-r))
+         (vanishes! (shift micro/TLO NB_PP_ROWS_BLAKE_PO))
+         (eq! (shift micro/TBO NB_PP_ROWS_BLAKE_PO) (- LLARGE 4))
+         (eq! (shift micro/LIMB NB_PP_ROWS_BLAKE_PO) (blake-r-prediction))
+         ;; second mmio inst
+         (eq! (shift micro/INST NB_PP_ROWS_BLAKE_PT) MMIO_INST_RAM_TO_LIMB_ONE_SOURCE)
+         (eq! (shift micro/SIZE NB_PP_ROWS_BLAKE_PT) 1)
+         (eq! (shift micro/SLO NB_PP_ROWS_BLAKE_PT) (blake-slo-f))
+         (eq! (shift micro/SBO NB_PP_ROWS_BLAKE_PT) (blake-sbo-f))
+         (eq! (shift micro/TLO NB_PP_ROWS_BLAKE_PT) 1)
+         (eq! (shift micro/TBO NB_PP_ROWS_BLAKE_PT) (- LLARGE 1))
+         (eq! (shift micro/LIMB NB_PP_ROWS_BLAKE_PT) (blake-f-prediction))))
 
 

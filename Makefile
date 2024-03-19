@@ -22,11 +22,17 @@ ALU := alu/add/columns.lisp \
 
 BIN := bin   
 
+BLAKE2f_MODEXP_DATA := blake2f_modexp_data
+
 CONSTANTS := constants/constants.lisp
 
 EC_DATA := ec_data
 
 EUC := euc
+
+EXP := exp
+
+GAS := gas
 
 LIBRARY := library/rlp_constraints_pattern.lisp
 
@@ -71,12 +77,6 @@ TRM := trm
 TXN_DATA := txn_data 
 
 WCP := wcp
-
-BLAKE2f_MODEXP_DATA := blake2f_modexp_data
-
-EXP := exp
-
-GAS := gas/columns.lisp gas/constraints.lisp
 
 ZKEVM_MODULES := ${ALU} \
 	${BIN} \
