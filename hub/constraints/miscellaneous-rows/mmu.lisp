@@ -23,7 +23,7 @@
          ;; exo_sum             ;; weighted exogenous module flag sum
          ;; phase               ;; phase
          ) (begin
-         (eq! (shift misc/MMU_INST            kappa) MMU_INST_mload )
+         (eq! (shift misc/MMU_INST            kappa) MMU_INST_MLOAD )
          (eq! (shift misc/MMU_SRC_ID          kappa) src_id )
          ;; (eq! (shift misc/MMU_TGT_ID          kappa) )
          ;; (eq! (shift misc/MMU_AUX_ID          kappa) )
@@ -58,7 +58,7 @@
          ;; exo_sum             ;; weighted exogenous module flag sum
          ;; phase               ;; phase
          ) (begin
-         (eq! (shift misc/MMU_INST            kappa) MMU_INST_mstore)
+         (eq! (shift misc/MMU_INST            kappa) MMU_INST_MSTORE)
          ;; (eq! (shift misc/MMU_SRC_ID          kappa) )
          (eq! (shift misc/MMU_TGT_ID          kappa) tgt_id )
          ;; (eq! (shift misc/MMU_AUX_ID          kappa) )
@@ -93,7 +93,7 @@
          ;; exo_sum             ;; weighted exogenous module flag sum
          ;; phase               ;; phase
          ) (begin
-         (eq! (shift misc/MMU_INST            kappa) MMU_INST_mstore8)
+         (eq! (shift misc/MMU_INST            kappa) MMU_INST_MSTORE8)
          ;; (eq! (shift misc/MMU_SRC_ID          kappa) )
          (eq! (shift misc/MMU_TGT_ID          kappa) tgt_id )
          ;; (eq! (shift misc/MMU_AUX_ID          kappa) )
@@ -163,7 +163,7 @@
          ;; exo_sum             ;; weighted exogenous module flag sum
          ;; phase               ;; phase
          ) (begin
-         (eq! (shift misc/MMU_INST            kappa) MMU_INST_rightPaddedWordExtraction)
+         (eq! (shift misc/MMU_INST            kappa) MMU_INST_RIGHT_PADDED_WORD_EXTRACTION)
          (eq! (shift misc/MMU_SRC_ID          kappa) src_id )
          ;; (eq! (shift misc/MMU_TGT_ID          kappa) tgt_id )
          ;; (eq! (shift misc/MMU_AUX_ID          kappa) aux_id )

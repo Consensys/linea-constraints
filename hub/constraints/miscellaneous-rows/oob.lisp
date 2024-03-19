@@ -58,6 +58,22 @@
          ;; (eq! (shift [ misc/OOB_DATA 8 ]    kappa) )
          ))
 
+(defun (set-oob-inst-cdl
+         kappa               ;; row offset
+         offset_hi           ;; offset within call data, high part
+         offset_lo           ;; offset within call data, low  part
+         call_data_size      ;; call data size
+         ) (begin
+         (eq! (shift misc/OOB_INST          kappa) OOB_INST_cdl )
+         (eq! (shift [ misc/OOB_DATA 1 ]    kappa) offset_hi)
+         (eq! (shift [ misc/OOB_DATA 2 ]    kappa) offset_lo)
+         ;; (eq! (shift [ misc/OOB_DATA 3 ]    kappa) )
+         ;; (eq! (shift [ misc/OOB_DATA 4 ]    kappa) )
+         (eq! (shift [ misc/OOB_DATA 5 ]    kappa) call_data_size)
+         ;; (eq! (shift [ misc/OOB_DATA 6 ]    kappa) )
+         ;; (eq! (shift [ misc/OOB_DATA 7 ]    kappa) )
+         ;; (eq! (shift [ misc/OOB_DATA 8 ]    kappa) )
+         ))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
