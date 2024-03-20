@@ -31,11 +31,11 @@
 (defconstraint heartbeat (:guard ABS)
   (begin (= (tx-type-sum) 1)
          (if-not-zero TYPE0
-                      (if-eq-else CT NB_ROWS_TYPE_0 (will-inc! ABS 1) (will-inc! CT 1)))
+                      (if-eq-else CT (- NB_ROWS_TYPE_0 1) (will-inc! ABS 1) (will-inc! CT 1)))
          (if-not-zero TYPE1
-                      (if-eq-else CT NB_ROWS_TYPE_1 (will-inc! ABS 1) (will-inc! CT 1)))
+                      (if-eq-else CT (- NB_ROWS_TYPE_1 1) (will-inc! ABS 1) (will-inc! CT 1)))
          (if-not-zero TYPE2
-                      (if-eq-else CT NB_ROWS_TYPE_2 (will-inc! ABS 1) (will-inc! CT 1)))))
+                      (if-eq-else CT (- NB_ROWS_TYPE_2 1) (will-inc! ABS 1) (will-inc! CT 1)))))
 
 (defconstraint final-row (:domain {-1})
   (begin (= ABS ABS_MAX)

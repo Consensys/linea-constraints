@@ -1,9 +1,9 @@
 (module txnData)
 
 (defconst 
-  NB_ROWS_TYPE_0                6
-  NB_ROWS_TYPE_1                7
-  NB_ROWS_TYPE_2                7
+  NB_ROWS_TYPE_0                7
+  NB_ROWS_TYPE_1                8
+  NB_ROWS_TYPE_2                8
   ;;
   COMMON_RLP_TXN_PHASE_NUMBER_0 RLP_TXN_PHASE_RLP_PREFIX_VALUE
   COMMON_RLP_TXN_PHASE_NUMBER_1 RLP_TXN_PHASE_TO_VALUE
