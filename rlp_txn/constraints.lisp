@@ -541,8 +541,8 @@
                   (if-not-zero PHASE_SIZE
                                (begin (will-dec! PHASE_SIZE 1)
                                       (if-zero [BYTE 1]
-                                               (will-dec! DATAGASCOST G_TXDATA_ZERO)
-                                               (will-dec! DATAGASCOST G_TXDATA_NONZERO)))
+                                               (will-dec! DATAGASCOST GAS_CONST_G_TX_DATA_ZERO)
+                                               (will-dec! DATAGASCOST GAS_CONST_G_TX_DATA_NONZERO)))
                                (begin (will-remain-constant! PHASE_SIZE)
                                       (will-remain-constant! DATAGASCOST)))
                   (if-zero CT

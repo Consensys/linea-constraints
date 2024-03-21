@@ -14,7 +14,7 @@
   (DATA_LO :i128)
   (CODE_FRAGMENT_INDEX :i32)
   (REQUIRES_EVM_EXECUTION :binary)
-  (PHASE :binary@prove :array [1:15])
+  (PHASE :binary@prove :array [RLP_TXN_PHASE_RLP_PREFIX_VALUE :RLP_TXN_PHASE_S_VALUE ])
   (PHASE_END :binary@prove)
   (TYPE :i3)
   (COUNTER :i5)
