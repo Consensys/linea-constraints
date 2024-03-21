@@ -64,9 +64,12 @@
 
 (defconstraint necessary-conditions-for-LOG_INFO_FLAG-to-be-on (:perspective stack)
                (begin
-                 (debug (is-binary LOG_INFO_FLAG))
-                 (eq!  LOG_INFO_FLAG
-                       (* LOG_FLAG (- 1 CN_WILL_REV)))))
+                 (debug (is-binary   LOG_INFO_FLAG))
+                 (debug (if-not-zero XAHOY               (vanishes! LOG_INFO_FLAG)))
+                 (debug (if-not-zero CONTEXT_WILL_REVERT (vanishes! LOG_INFO_FLAG)))
+                 (debug (if-not-zero LOG_FLAG            (vanishes! LOG_INFO_FLAG)))
+                 (eq!   LOG_INFO_FLAG 
+                        (* LOG_FLAG (- 1 CONTEXT_WILL_REVERT)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                 ;;
