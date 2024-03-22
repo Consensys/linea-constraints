@@ -3,7 +3,7 @@
   ;reference columns
   (
     rlpTxn.ABS_TX_NUM
-    rlpTxn.PHASE
+    rlpTxn.PHASE_ID
     rlpTxn.INDEX_DATA
     rlpTxn.LIMB
     rlpTxn.nBYTES
