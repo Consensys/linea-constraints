@@ -24,10 +24,13 @@
      (- 1 stack/OOGX)))
 
 (defconst
-  jump-context-row-offset           1
-  jump-account-row-offset           2
-  jump-misc-row-offset              3
-  jump-context-row-offset-exception 4)
+  ;; OOGX case
+  ROW_OFFSET_FOR_JUMP_OOGX_CONTEXT_ROW                               1
+  ;; no OOGX case
+  ROW_OFFSET_FOR_JUMP_NO_OOGX_CURRENT_CONTEXT_ROW                    1
+  ROW_OFFSET_FOR_JUMP_NO_OOGX_ADDRESS_ROW                            2
+  ROW_OFFSET_FOR_JUMP_NO_OOGX_MISC_ROW                               3
+  ROW_OFFSET_FOR_JUMP_NO_OOGX_JUMPX_CALLER_CONTEXT_ROW               4)
 
 (defun (jump-instruction-new-pc-hi)                         [ stack/STACK_ITEM_VALUE_HI 1 ])
 (defun (jump-instruction-new-pc-lo)                         [ stack/STACK_ITEM_VALUE_LO 1 ])
@@ -36,22 +39,30 @@
 (defun (jump-instruction-is-jump)                           [ stack/DEC_FLAG 1 ])
 (defun (jump-instruction-is-jumpi)                          [ stack/DEC_FLAG 2 ])
 ;;
-(defun (jump-instruction-code-address-hi)                   (shift  context/BYTE_CODE_ADDRESS_HI  jump-context-row-offset))
-(defun (jump-instruction-code-address-lo)                   (shift  context/BYTE_CODE_ADDRESS_LO  jump-context-row-offset))
+(defun (jump-instruction-code-address-hi)                   (shift  context/BYTE_CODE_ADDRESS_HI  ROW_OFFSET_FOR_JUMP_NO_OOGX_CURRENT_CONTEXT_ROW))
+(defun (jump-instruction-code-address-lo)                   (shift  context/BYTE_CODE_ADDRESS_LO  ROW_OFFSET_FOR_JUMP_NO_OOGX_CURRENT_CONTEXT_ROW))
 ;;
-(defun (jump-instruction-code-size)                         (shift  account/CODE_SIZE             jump-account-row-offset))
+(defun (jump-instruction-code-size)                         (shift  account/CODE_SIZE             ROW_OFFSET_FOR_JUMP_NO_OOGX_ADDRESS_ROW))
 ;;
-(defun (jump-instruction-JUMP-guaranteed-exception)         (shift  [ misc/OOB_DATA 7 ]           jump-misc-row-offset))
-(defun (jump-instruction-JUMP-must-be-attempted)            (shift  [ misc/OOB_DATA 8 ]           jump-misc-row-offset))
+(defun (jump-instruction-JUMP-guaranteed-exception)         (shift  [ misc/OOB_DATA 7 ]           ROW_OFFSET_FOR_JUMP_NO_OOGX_MISC_ROW))
+(defun (jump-instruction-JUMP-must-be-attempted)            (shift  [ misc/OOB_DATA 8 ]           ROW_OFFSET_FOR_JUMP_NO_OOGX_MISC_ROW))
 ;;
-(defun (jump-instruction-JUMPI-jump-not-attempted)          (shift  [ misc/OOB_DATA 6 ]           jump-misc-row-offset))
-(defun (jump-instruction-JUMPI-guaranteed-exception)        (shift  [ misc/OOB_DATA 7 ]           jump-misc-row-offset))
-(defun (jump-instruction-JUMPI-must-be-attempted)           (shift  [ misc/OOB_DATA 8 ]           jump-misc-row-offset))
+(defun (jump-instruction-JUMPI-jump-not-attempted)          (shift  [ misc/OOB_DATA 6 ]           ROW_OFFSET_FOR_JUMP_NO_OOGX_MISC_ROW))
+(defun (jump-instruction-JUMPI-guaranteed-exception)        (shift  [ misc/OOB_DATA 7 ]           ROW_OFFSET_FOR_JUMP_NO_OOGX_MISC_ROW))
+(defun (jump-instruction-JUMPI-must-be-attempted)           (shift  [ misc/OOB_DATA 8 ]           ROW_OFFSET_FOR_JUMP_NO_OOGX_MISC_ROW))
 
 (defconstraint jump-instruction-setting-the-stack-pattern                   (:guard (jump-instruction-no-stack-exception))
                (begin
                  (if-not-zero (jump-instruction-is-jump)   (stack-pattern-1-0))
                  (if-not-zero (jump-instruction-is-jumpi)  (stack-pattern-2-0))))
+
+;; TODO: allow for debug only constraints
+;; TODO: remove ugly hack
+(defconstraint jump-instruction-allowable-exceptions                        (:guard (jump-instruction-no-stack-exception))
+               (begin
+                 (vanishes! 0)
+                 (debug (eq! XAHOY (+ stack/OOGX stack/JUMPX)))))
+
 
 (defconstraint jump-instruction-setting-the-gas-cost                        (:guard (jump-instruction-no-stack-exception))
                (eq! GAS_COST stack/STATIC_GAS))
@@ -67,23 +78,23 @@
 (defconstraint jump-instruction-setting-peeking-flags                       (:guard (jump-instruction-no-stack-exception))
                (if-not-zero (force-bin stack/OOGX)
                             ;; OOGX = 1
-                            (eq! NSR (shift PEEK_AT_CONTEXT  jump-context-row-offset)) ;; TODO: redundant, make debug
+                            (eq! NSR (shift PEEK_AT_CONTEXT  ROW_OFFSET_FOR_JUMP_OOGX_CONTEXT_ROW)) ;; TODO: redundant, make debug
                             ;; OOGX = 0
-                            (eq! NSR (+ (shift PEEK_AT_CONTEXT             jump-context-row-offset)
-                                        (shift PEEK_AT_ACCOUNT             jump-account-row-offset)
-                                        (shift PEEK_AT_MISCELLANEOUS       jump-misc-row-offset)
-                                        (* CMC (shift PEEK_AT_CONTEXT      jump-context-row-offset-exception))))))
+                            (eq! NSR (+ (shift PEEK_AT_CONTEXT             ROW_OFFSET_FOR_JUMP_NO_OOGX_CURRENT_CONTEXT_ROW)
+                                        (shift PEEK_AT_ACCOUNT             ROW_OFFSET_FOR_JUMP_NO_OOGX_ADDRESS_ROW)
+                                        (shift PEEK_AT_MISCELLANEOUS       ROW_OFFSET_FOR_JUMP_NO_OOGX_MISC_ROW)
+                                        (* CMC (shift PEEK_AT_CONTEXT      ROW_OFFSET_FOR_JUMP_NO_OOGX_JUMPX_CALLER_CONTEXT_ROW))))))
 
 (defconstraint jump-instruction-setting-the-first-context-row               (:guard (jump-instruction-no-stack-exception))
                (if-not-zero (force-bin stack/OOGX)
                             ;; OOGX = 1
-                            (execution-provides-empty-return-data          jump-context-row-offset)
+                            (execution-provides-empty-return-data          ROW_OFFSET_FOR_JUMP_NO_OOGX_CURRENT_CONTEXT_ROW)
                             ;; OOGX = 0
                             (begin
-                              (read-context-data                           jump-context-row-offset
+                              (read-context-data                           ROW_OFFSET_FOR_JUMP_NO_OOGX_CURRENT_CONTEXT_ROW
                                                                            CONTEXT_NUMBER)
                               ;; sanity check
-                              (debug (eq! (shift context/CALLER_CONTEXT_NUMBER jump-context-row-offset)
+                              (debug (eq! (shift context/CALLER_CONTEXT_NUMBER ROW_OFFSET_FOR_JUMP_NO_OOGX_CURRENT_CONTEXT_ROW)
                                           CALLER_CONTEXT_NUMBER)))))
 
 
@@ -92,29 +103,29 @@
 
 (defconstraint jump-instruction-the-account-row                            (:guard (jump-instruction-no-stack-exception-and-no-oogx))
                (begin
-                 (eq! (shift account/ADDRESS_HI  jump-account-row-offset)  (jump-instruction-code-address-hi))
-                 (eq! (shift account/ADDRESS_LO  jump-account-row-offset)  (jump-instruction-code-address-lo))
-                 (account-same-balance                           jump-account-row-offset)
-                 (account-same-nonce                             jump-account-row-offset)
-                 (account-same-code                              jump-account-row-offset)
-                 (account-same-deployment-number-and-status      jump-account-row-offset)
-                 (account-same-warmth                            jump-account-row-offset)
-                 (account-same-marked-for-selfdestruct           jump-account-row-offset)
-                 (standard-dom-sub-stamps                        jump-account-row-offset
+                 (eq! (shift account/ADDRESS_HI  ROW_OFFSET_FOR_JUMP_NO_OOGX_ADDRESS_ROW)  (jump-instruction-code-address-hi))
+                 (eq! (shift account/ADDRESS_LO  ROW_OFFSET_FOR_JUMP_NO_OOGX_ADDRESS_ROW)  (jump-instruction-code-address-lo))
+                 (account-same-balance                           ROW_OFFSET_FOR_JUMP_NO_OOGX_ADDRESS_ROW)
+                 (account-same-nonce                             ROW_OFFSET_FOR_JUMP_NO_OOGX_ADDRESS_ROW)
+                 (account-same-code                              ROW_OFFSET_FOR_JUMP_NO_OOGX_ADDRESS_ROW)
+                 (account-same-deployment-number-and-status      ROW_OFFSET_FOR_JUMP_NO_OOGX_ADDRESS_ROW)
+                 (account-same-warmth                            ROW_OFFSET_FOR_JUMP_NO_OOGX_ADDRESS_ROW)
+                 (account-same-marked-for-selfdestruct           ROW_OFFSET_FOR_JUMP_NO_OOGX_ADDRESS_ROW)
+                 (standard-dom-sub-stamps                        ROW_OFFSET_FOR_JUMP_NO_OOGX_ADDRESS_ROW
                                                                  0)))
 
 (defconstraint jump-instruction-the-miscellaneous-row-flags                 (:guard (jump-instruction-no-stack-exception-and-no-oogx))
-               (eq! (weighted-MISC-flag-sum   jump-misc-row-offset)    MISC_WEIGHT_OOB))
+               (eq! (weighted-MISC-flag-sum   ROW_OFFSET_FOR_JUMP_NO_OOGX_MISC_ROW)    MISC_WEIGHT_OOB))
 
 (defconstraint jump-instruction-the-miscellaneous-row-OOB-instruction       (:guard (jump-instruction-no-stack-exception-and-no-oogx))
                (begin
                  (if-not-zero (jump-instruction-is-jump)
-                              (set-oob-inst-jump    jump-misc-row-offset
+                              (set-oob-inst-jump    ROW_OFFSET_FOR_JUMP_NO_OOGX_MISC_ROW
                                                     (jump-instruction-new-pc-hi)
                                                     (jump-instruction-new-pc-lo)
                                                     (jump-instruction-code-size)))
                  (if-not-zero (jump-instruction-is-jumpi)
-                              (set-oob-inst-jumpi   jump-misc-row-offset
+                              (set-oob-inst-jumpi   ROW_OFFSET_FOR_JUMP_NO_OOGX_MISC_ROW
                                                     (jump-instruction-new-pc-hi)
                                                     (jump-instruction-new-pc-lo)
                                                     (jump-instruction-jump-condition-hi)
