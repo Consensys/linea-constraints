@@ -103,9 +103,9 @@
 ;;
 ;; Byte decompsition
 ;;
-(defun (byte-dec value byte acc ct)
-  (begin (byte-decomposition CT acc byte)
-         (if-eq CT LLARGEMO (eq! value acc))))
+(defpurefun (byte-dec value byte acc ct)
+  (begin (byte-decomposition ct acc byte)
+         (if-eq ct LLARGEMO (eq! value acc))))
 
 (defconstraint byte-decompositions ()
   (begin (byte-dec VAL_A BYTE_A ACC_A CT)
@@ -135,183 +135,226 @@
 ;; Specialized constraint
 ;;
 ;Plateau
-(defun (plateau X C CT)
-  (if-zero C
-           (eq! X 1)
-           (if-zero CT
-                    (vanishes! X)
-                    (if-eq-else CT C (eq! X 1) (remained-constant! X)))))
+(defpurefun (plateau x cst counter)
+  (if-zero cst
+           (eq! x 1)
+           (if-zero counter
+                    (vanishes! x)
+                    (if-eq-else counter cst (eq! x 1) (remained-constant! x)))))
 
 ;Power
-(defun (power P X CT)
-  (if-zero CT
-           (if-zero X
-                    (eq! P 1)
-                    (eq! P 256))
-           (if-zero X
-                    (remained-constant! P)
-                    (eq! P
-                         (* (prev P) 256)))))
+(defpurefun (power pow x counter)
+  (if-zero counter
+           (if-zero x
+                    (eq! pow 1)
+                    (eq! pow 256))
+           (if-zero x
+                    (remained-constant! pow)
+                    (eq! pow
+                         (* (prev pow) 256)))))
 
 ;AntiPower
-(defun (antipower P X CT)
-  (if-zero CT
-           (if-zero X
-                    (eq! P 256)
-                    (eq! P 1))
-           (if-zero X
-                    (eq! P
-                         (* (prev P) 256))
-                    (remained-constant! P))))
+(defpurefun (antipower pow x counter)
+  (if-zero counter
+           (if-zero x
+                    (eq! pow 256)
+                    (eq! pow 1))
+           (if-zero x
+                    (eq! pow
+                         (* (prev pow) 256))
+                    (remained-constant! pow))))
 
 ;IsolateSuffix
-(defun (isolate-suffix ACC B X CT)
-  (if-zero CT
-           (if-zero X
-                    (vanishes! ACC)
-                    (eq! ACC B))
-           (if-zero X
-                    (remained-constant! ACC)
-                    (eq! ACC
-                         (+ (* 256 (prev ACC))
-                            B)))))
+(defpurefun (isolate-suffix accumulator byte x counter)
+  (if-zero counter
+           (if-zero x
+                    (vanishes! accumulator)
+                    (eq! accumulator byte))
+           (if-zero x
+                    (remained-constant! accumulator)
+                    (eq! accumulator
+                         (+ (* 256 (prev accumulator))
+                            byte)))))
 
 ;IsolatePrefix
-(defun (isolate-prefix ACC B X CT)
-  (if-zero CT
-           (if-zero X
-                    (eq! ACC B)
-                    (vanishes! ACC))
-           (if-zero X
-                    (eq! ACC
-                         (+ (* 256 (prev ACC))
-                            B))
-                    (remained-constant! ACC))))
+(defpurefun (isolate-prefix accumulator byte x counter)
+  (if-zero counter
+           (if-zero x
+                    (eq! accumulator byte)
+                    (vanishes! accumulator))
+           (if-zero x
+                    (eq! accumulator
+                         (+ (* 256 (prev accumulator))
+                            byte))
+                    (remained-constant! accumulator))))
 
 ;IsolateChunk
-(defun (isolate-chunk ACC B X Y CT)
-  (if-zero CT
-           (if-zero X
-                    (vanishes! ACC)
-                    (eq! ACC B))
-           (if-zero X
-                    (vanishes! ACC)
-                    (if-zero Y
-                             (eq! ACC
-                                  (+ (* 256 (prev ACC))
-                                     B))
-                             (remained-constant! ACC)))))
+(defpurefun (isolate-chunk accumulator byte x y counter)
+  (if-zero counter
+           (if-zero x
+                    (vanishes! accumulator)
+                    (eq! accumulator byte))
+           (if-zero x
+                    (vanishes! accumulator)
+                    (if-zero y
+                             (eq! accumulator
+                                  (+ (* 256 (prev accumulator))
+                                     byte))
+                             (remained-constant! accumulator)))))
 
 ;;
 ;; Surgical Patterns
 ;; 
 ;Excision
-(defun (excision T T_NEW TB ACC P TM SIZE BIT1 BIT2 CT)
-  (begin (plateau BIT1 TM CT)
-         (plateau BIT2 (+ TM SIZE) CT)
-         (isolate-chunk ACC TB BIT1 BIT2 CT)
-         (power P BIT2 CT)
-         (if-eq CT LLARGEMO
-                (eq! T_NEW
-                     (- T (* ACC P))))))
+(defpurefun (excision target target_new target_byte accumulator pow target_marker size bit1 bit2 counter)
+  (begin (plateau bit1 target_marker counter)
+         (plateau bit2 (+ target_marker size) counter)
+         (isolate-chunk accumulator target_byte bit1 bit2 counter)
+         (power pow bit2 counter)
+         (if-eq counter LLARGEMO
+                (eq! target_new
+                     (- target (* accumulator pow))))))
 
 ;[1 => 1 Padded]
-(defun (one-to-one-padded S T SB ACC P SM SIZE BIT1 BIT2 BIT3 CT)
-  (begin (plateau BIT1 SM CT)
-         (plateau BIT2 (+ SM SIZE) CT)
-         (plateau BIT3 SIZE CT)
-         (isolate-chunk ACC SB BIT1 BIT2 CT)
-         (power P BIT3 CT)
-         (if-eq CT LLARGEMO
-                (eq! T (* ACC P)))))
+(defpurefun (one-to-one-padded target source_byte accumulator pow source_marker size bit1 bit2 bit3 counter)
+  (begin (plateau bit1 source_marker counter)
+         (plateau bit2 (+ source_marker size) counter)
+         (plateau bit3 size counter)
+         (isolate-chunk accumulator source_byte bit1 bit2 counter)
+         (power pow bit3 counter)
+         (if-eq counter LLARGEMO
+                (eq! target (* accumulator pow)))))
 
 ;[2 => 1 Padded]
-(defun (two-to-one-padded S1 S2 T S1B S2B ACC1 ACC2 P1 P2 S1M SIZE BIT1 BIT2 BIT3 BIT4 CT)
-  (begin (plateau BIT1 S1M CT)
-         (plateau BIT2
-                  (+ S1M (- SIZE LLARGE))
-                  CT)
-         (plateau BIT3 (- LLARGE S1M) CT)
-         (plateau BIT4 SIZE CT)
-         (isolate-suffix ACC1 S1B BIT1 CT)
-         (isolate-prefix ACC2 S2B BIT2 CT)
-         (power P1 BIT3 CT)
-         (power P2 BIT4 CT)
-         (if-eq CT LLARGEMO
-                (eq! T
-                     (+ (* ACC1 P1) (* ACC2 P2))))))
+(defpurefun (two-to-one-padded target
+                               source1_byte
+                               source2_byte
+                               accumulator1
+                               accumulator2
+                               pow1
+                               pow2
+                               source1_marker
+                               size
+                               bit1
+                               bit2
+                               bit3
+                               bit4
+                               counter)
+  (begin (plateau bit1 source1_marker counter)
+         (plateau bit2
+                  (+ source1_marker (- size LLARGE))
+                  counter)
+         (plateau bit3 (- LLARGE source1_marker) counter)
+         (plateau bit4 size counter)
+         (isolate-suffix accumulator1 source1_byte bit1 counter)
+         (isolate-prefix accumulator2 source2_byte bit2 counter)
+         (power pow1 bit3 counter)
+         (power pow2 bit4 counter)
+         (if-eq counter LLARGEMO
+                (eq! target
+                     (+ (* accumulator1 pow1) (* accumulator2 pow2))))))
 
 ;[1 Partial => 1]
-(defun (one-partial-to-one S T T_NEW SB TB ACC1 ACC2 P SM TM SIZE BIT1 BIT2 BIT3 BIT4 CT)
-  (begin (plateau BIT1 TM CT)
-         (plateau BIT2 (+ TM SIZE) CT)
-         (plateau BIT3 SM CT)
-         (plateau BIT4 (+ SM SIZE) CT)
-         (isolate-chunk ACC1 TB BIT1 BIT2 CT)
-         (isolate-chunk ACC2 SB BIT3 BIT4 CT)
-         (power P BIT2 CT)
-         (if-eq CT LLARGEMO
-                (eq! T_NEW
-                     (+ T
-                        (* (- ACC2 ACC1) P))))))
+(defpurefun (one-partial-to-one target
+                                target_new
+                                source_byte
+                                target_byte
+                                accumulator1
+                                accumulator2
+                                pow
+                                source_marker
+                                target_marker
+                                size
+                                bit1
+                                bit2
+                                bit3
+                                bit4
+                                counter)
+  (begin (plateau bit1 target_marker counter)
+         (plateau bit2 (+ target_marker size) counter)
+         (plateau bit3 source_marker counter)
+         (plateau bit4 (+ source_marker size) counter)
+         (isolate-chunk accumulator1 target_byte bit1 bit2 counter)
+         (isolate-chunk accumulator2 source_byte bit3 bit4 counter)
+         (power pow bit2 counter)
+         (if-eq counter LLARGEMO
+                (eq! target_new
+                     (+ target
+                        (* (- accumulator2 accumulator1) pow))))))
 
 ;[1 Partial => 2]
-(defun (one-partial-to-two S
-                           T1
-                           T2
-                           T1_NEW
-                           T2_NEW
-                           SB
-                           T1B
-                           T2B
-                           ACC1
-                           ACC2
-                           ACC3
-                           ACC4
-                           P
-                           SM
-                           T1M
-                           SIZE
-                           BIT1
-                           BIT2
-                           BIT3
-                           BIT4
-                           BIT5
-                           CT)
-  (begin (plateau BIT1 T1M CT)
-         (plateau BIT2
-                  (- (+ T1M SIZE) LLARGE)
-                  CT)
-         (plateau BIT3 SM CT)
-         (plateau BIT4
-                  (- (+ SM LLARGE) T1M)
-                  CT)
-         (plateau BIT5 (+ SM SIZE) CT)
-         (isolate-suffix ACC1 T1B BIT1 CT)
-         (isolate-prefix ACC2 T2B BIT2 CT)
-         (isolate-chunk ACC3 SB BIT3 BIT4 CT)
-         (isolate-chunk ACC4 SB BIT4 BIT5 CT)
-         (power P BIT2 CT)
-         (if-eq CT LLARGEMO
-                (begin (eq! T1_NEW
-                            (+ T1 (- ACC3 ACC1)))
-                       (eq! T2_NEW
-                            (+ T2
-                               (* (- ACC4 ACC2) P)))))))
+(defpurefun (one-partial-to-two target1
+                                target2
+                                target1_new
+                                target2_new
+                                source_byte
+                                target1_byte
+                                target2_byte
+                                accumulator1
+                                accumulator2
+                                accumulator3
+                                accumulator4
+                                pow
+                                source_marker
+                                target1_marker
+                                size
+                                bit1
+                                bit2
+                                bit3
+                                bit4
+                                bit5
+                                counter)
+  (begin (plateau bit1 target1_marker counter)
+         (plateau bit2
+                  (- (+ target1_marker size) LLARGE)
+                  counter)
+         (plateau bit3 source_marker counter)
+         (plateau bit4
+                  (- (+ source_marker LLARGE) target1_marker)
+                  counter)
+         (plateau bit5 (+ source_marker size) counter)
+         (isolate-suffix accumulator1 target1_byte bit1 counter)
+         (isolate-prefix accumulator2 target2_byte bit2 counter)
+         (isolate-chunk accumulator3 source_byte bit3 bit4 counter)
+         (isolate-chunk accumulator4 source_byte bit4 bit5 counter)
+         (power pow bit2 counter)
+         (if-eq counter LLARGEMO
+                (begin (eq! target1_new
+                            (+ target1 (- accumulator3 accumulator1)))
+                       (eq! target2_new
+                            (+ target2
+                               (* (- accumulator4 accumulator2) pow)))))))
 
 ;[2 Partial => 1]
-(defun (two-partial-to-one S1 S2 T T_NEW S1B S2B TB ACC1 ACC2 ACC3 P1 P2 SM TM SIZE BIT1 BIT2 BIT3 BIT4 CT)
-  (begin (plateau BIT1 SM CT)
-         (plateau BIT2
-                  (- (+ SM SIZE) LLARGE)
-                  CT)
-         (plateau BIT3 TM CT)
-         (plateau BIT4 (+ TM SIZE) CT)
-         (isolate-suffix ACC1 S1B BIT1 CT)
-         (isolate-prefix ACC2 S2B BIT2 CT)
-         (isolate-chunk ACC3 TB BIT3 BIT4 CT)
-         (power P1 BIT4 CT)
-         (antipower P2 BIT2 CT)))
+(defpurefun (two-partial-to-one target
+                                target_new
+                                source1_byte
+                                source2_byte
+                                target_byte
+                                accumulator1
+                                accumulator2
+                                accumulator3
+                                pow1
+                                pow2
+                                source_marker
+                                target_marker
+                                size
+                                bit1
+                                bit2
+                                bit3
+                                bit4
+                                counter)
+  (begin (plateau bit1 source_marker counter)
+         (plateau bit2
+                  (- (+ source_marker size) LLARGE)
+                  counter)
+         (plateau bit3 target_marker counter)
+         (plateau bit4 (+ target_marker size) counter)
+         (isolate-suffix accumulator1 source1_byte bit1 counter)
+         (isolate-prefix accumulator2 source2_byte bit2 counter)
+         (isolate-chunk accumulator3 target_byte bit3 bit4 counter)
+         (power pow1 bit4 counter)
+         (antipower pow2 bit2 counter)))
 
 ;;
 ;; MMIO INSTRUCTION CONSTRAINTS
@@ -337,7 +380,7 @@
          (vanishes! CN_C)
          (eq! INDEX_A TLO)
          (eq! INDEX_X SLO)
-         (one-partial-to-one LIMB VAL_A VAL_A_NEW BYTE_LIMB BYTE_A [ACC 1] [ACC 2] [POW_256 1] SBO TBO SIZE [BIT 1] [BIT 2] [BIT 3] [BIT 4] CT)))
+         (one-partial-to-one VAL_A VAL_A_NEW BYTE_LIMB BYTE_A [ACC 1] [ACC 2] [POW_256 1] SBO TBO SIZE [BIT 1] [BIT 2] [BIT 3] [BIT 4] CT)))
 
 (defconstraint limb-to-ram-two-target (:guard IS_LIMB_TO_RAM_TWO_TARGET)
   (begin (eq! CN_A CNT)
@@ -346,8 +389,7 @@
          (eq! INDEX_A TLO)
          (eq! INDEX_B (+ TLO 1))
          (eq! INDEX_X SLO)
-         (one-partial-to-two LIMB
-                             VAL_A
+         (one-partial-to-two VAL_A
                              VAL_B
                              VAL_A_NEW
                              VAL_B_NEW
@@ -385,7 +427,7 @@
          (eq! INDEX_A SLO)
          (eq! VAL_A_NEW VAL_A)
          (eq! INDEX_X TLO)
-         (one-to-one-padded VAL_A LIMB BYTE_A [ACC 1] [POW_256 1] SBO SIZE [BIT 1] [BIT 2] [BIT 3] CT)))
+         (one-to-one-padded LIMB BYTE_A [ACC 1] [POW_256 1] SBO SIZE [BIT 1] [BIT 2] [BIT 3] CT)))
 
 (defconstraint ram-to-limb-two-source (:guard IS_RAM_TO_LIMB_TWO_SOURCE)
   (begin (eq! CN_A CNS)
@@ -396,7 +438,7 @@
          (eq! VAL_A_NEW VAL_A)
          (eq! VAL_B_NEW VAL_B)
          (eq! INDEX_X TLO)
-         (two-to-one-padded VAL_A VAL_B LIMB BYTE_A BYTE_B [ACC 1] [ACC 2] [POW_256 1] [POW_256 2] SBO SIZE [BIT 1] [BIT 2] [BIT 3] [BIT 4] CT)))
+         (two-to-one-padded LIMB BYTE_A BYTE_B [ACC 1] [ACC 2] [POW_256 1] [POW_256 2] SBO SIZE [BIT 1] [BIT 2] [BIT 3] [BIT 4] CT)))
 
 (defconstraint ram-to-ram-transplant (:guard IS_RAM_TO_RAM_TRANSPLANT)
   (begin (eq! CN_A CNS)
@@ -414,7 +456,7 @@
          (eq! INDEX_A SLO)
          (eq! INDEX_B TLO)
          (eq! VAL_A_NEW VAL_A)
-         (one-partial-to-one VAL_A VAL_B VAL_B_NEW BYTE_A BYTE_B [ACC 1] [ACC 2] [POW_256 1] SBO TBO SIZE [BIT 1] [BIT 2] [BIT 3] [BIT 4] CT)))
+         (one-partial-to-one VAL_B VAL_B_NEW BYTE_A BYTE_B [ACC 1] [ACC 2] [POW_256 1] SBO TBO SIZE [BIT 1] [BIT 2] [BIT 3] [BIT 4] CT)))
 
 (defconstraint ram-to-ram-two-target (:guard IS_RAM_TO_RAM_TWO_TARGET)
   (begin (eq! CN_A CNS)
@@ -424,28 +466,7 @@
          (eq! INDEX_B TLO)
          (eq! INDEX_C (+ TLO 1))
          (eq! VAL_A_NEW VAL_A)
-         (one-partial-to-two VAL_A
-                             VAL_B
-                             VAL_C
-                             VAL_B_NEW
-                             VAL_C_NEW
-                             BYTE_A
-                             BYTE_B
-                             BYTE_C
-                             [ACC 1]
-                             [ACC 2]
-                             [ACC 3]
-                             [ACC 4]
-                             [POW_256 1]
-                             SBO
-                             TBO
-                             SIZE
-                             [BIT 1]
-                             [BIT 2]
-                             [BIT 3]
-                             [BIT 4]
-                             [BIT 5]
-                             CT)))
+         (one-partial-to-two VAL_B VAL_C VAL_B_NEW VAL_C_NEW BYTE_A BYTE_B BYTE_C [ACC 1] [ACC 2] [ACC 3] [ACC 4] [POW_256 1] SBO TBO SIZE [BIT 1] [BIT 2] [BIT 3] [BIT 4] [BIT 5] CT)))
 
 (defconstraint ram-to-ram-two-source (:guard IS_RAM_TO_RAM_TWO_SOURCE)
   (begin (eq! CN_A CNS)
@@ -456,7 +477,7 @@
          (eq! INDEX_C TLO)
          (eq! VAL_A_NEW VAL_A)
          (eq! VAL_B_NEW VAL_B)
-         (two-partial-to-one VAL_A VAL_B VAL_C VAL_C_NEW BYTE_A BYTE_B BYTE_C [ACC 1] [ACC 2] [ACC 3] [POW_256 1] [POW_256 2] SBO TBO SIZE [BIT 1] [BIT 2] [BIT 3] [BIT 4] CT)))
+         (two-partial-to-one VAL_C VAL_C_NEW BYTE_A BYTE_B BYTE_C [ACC 1] [ACC 2] [ACC 3] [POW_256 1] [POW_256 2] SBO TBO SIZE [BIT 1] [BIT 2] [BIT 3] [BIT 4] CT)))
 
 (defconstraint ram-excision (:guard IS_RAM_EXCISION)
   (begin (eq! CN_A CNT)
