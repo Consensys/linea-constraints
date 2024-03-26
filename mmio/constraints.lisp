@@ -103,11 +103,15 @@
 ;;
 ;; Byte decompsition
 ;;
+(defun (byte-dec value byte acc ct)
+  (begin (byte-decomposition CT acc byte)
+         (if-eq CT LLARGEMO (eq! value acc))))
+
 (defconstraint byte-decompositions ()
-  (begin (byte-decomposition CT VAL_A BYTE_A)
-         (byte-decomposition CT VAL_B BYTE_B)
-         (byte-decomposition CT VAL_C BYTE_C)
-         (byte-decomposition CT LIMB BYTE_LIMB)))
+  (begin (byte-dec VAL_A BYTE_A ACC_A CT)
+         (byte-dec VAL_B BYTE_B ACC_B CT)
+         (byte-dec VAL_C BYTE_C ACC_C CT)
+         (byte-dec LIMB BYTE_LIMB ACC_LIMB CT)))
 
 ;;
 ;; Counter constancies

@@ -11,12 +11,12 @@
   )
   ;source columns
   (
-    (* mmio.EXO_SUM_INDEX_TXCD mmio.EXO_ID)
-    (* mmio.EXO_SUM_INDEX_TXCD mmio.PHASE)
-    (* mmio.EXO_SUM_INDEX_TXCD mmio.INDEX_X)
-    (* mmio.EXO_SUM_INDEX_TXCD mmio.LIMB)
-    (* mmio.EXO_SUM_INDEX_TXCD mmio.SIZE)
-    (* mmio.EXO_SUM_INDEX_TXCD mmio.TOTAL_SIZE)
+    (* mmio.EXO_IS_TXCD mmio.EXO_ID)
+    (* mmio.EXO_IS_TXCD mmio.PHASE)
+    (* mmio.EXO_IS_TXCD mmio.INDEX_X)
+    (* mmio.EXO_IS_TXCD mmio.LIMB)
+    (* mmio.EXO_IS_TXCD mmio.SIZE)
+    (* mmio.EXO_IS_TXCD mmio.TOTAL_SIZE)
   ))
 
 
