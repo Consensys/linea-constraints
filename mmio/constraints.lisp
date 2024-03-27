@@ -401,8 +401,8 @@
                              [ACC 3]
                              [ACC 4]
                              [POW_256 1]
-                             SLO
-                             TLO
+                             SBO
+                             TBO
                              SIZE
                              [BIT 1]
                              [BIT 2]
