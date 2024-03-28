@@ -24,7 +24,7 @@
       perm_context_BYTE_CODE_DEPLOYMENT_NUMBER
       perm_context_BYTE_CODE_DEPLOYMENT_STATUS
       perm_context_BYTE_CODE_CODE_FRAGMENT_INDEX
-      perm_context_CALLER_CONTEXT_NUMBER
+      perm_context_CALL_DATA_CONTEXT_NUMBER
       perm_context_CALLER_ADDRESS_HI
       perm_context_CALLER_ADDRESS_LO
       perm_context_CALL_VALUE
@@ -54,7 +54,7 @@
     context/BYTE_CODE_DEPLOYMENT_NUMBER
     context/BYTE_CODE_DEPLOYMENT_STATUS
     context/BYTE_CODE_CODE_FRAGMENT_INDEX
-    context/CALLER_CONTEXT_NUMBER
+    context/CALL_DATA_CONTEXT_NUMBER
     context/CALLER_ADDRESS_HI
     context/CALLER_ADDRESS_LO
     context/CALL_VALUE
@@ -90,7 +90,7 @@
 (defconstraint context-data-immutability ()
                (if-not-zero (next con_AGAIN)
                             (begin
-                              ( will-eq! perm_context_CALLER_CONTEXT_NUMBER         perm_context_CALLER_CONTEXT_NUMBER         )
+                              ( will-eq! perm_context_CALL_DATA_CONTEXT_NUMBER      perm_context_CALL_DATA_CONTEXT_NUMBER      )
                               ( will-eq! perm_context_CALL_STACK_DEPTH              perm_context_CALL_STACK_DEPTH              )
                               ( will-eq! perm_context_IS_ROOT                       perm_context_IS_ROOT                       )
                               ( will-eq! perm_context_IS_STATIC                     perm_context_IS_STATIC                     )

@@ -28,7 +28,7 @@
 (defun (initialize-context
          kappa                                 ;; row offset
          cn                                    ;; context number
-         caller                                ;; caller context
+         call_data_context_number              ;; caller context
          csd                                   ;; call stack depth
          is_root                               ;; is root
          is_static                             ;; is static
@@ -50,7 +50,7 @@
          )
   (begin
     (eq!       (shift context/CONTEXT_NUMBER                    kappa)         cn                             )
-    (eq!       (shift context/CALLER_CONTEXT_NUMBER             kappa)         caller                         )
+    (eq!       (shift context/CALL_DATA_CONTEXT_NUMBER          kappa)         call_data_context_number       )
     (eq!       (shift context/CALL_STACK_DEPTH                  kappa)         csd                            )
     (eq!       (shift context/IS_ROOT                           kappa)         is_root                        )
     (eq!       (shift context/IS_STATIC                         kappa)         is_static                      )

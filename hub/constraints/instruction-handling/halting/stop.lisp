@@ -21,10 +21,7 @@
 (defconstraint stop-first-non-stack-row (:guard (stop-instruction))
                (begin
                  (will-eq!          PEEK_AT_CONTEXT 1)
-                 (read-context-data 1 CONTEXT_NUMBER)
-                 ;; sanity check
-                 (debug (eq! (shift context/CALLER_CONTEXT_NUMBER 1)
-                             CALLER_CONTEXT_NUMBER))))
+                 (read-context-data 1 CONTEXT_NUMBER)))
 
 (defconstraint stop-setting-NSR-and-peeking-flags (:guard (stop-instruction))
                (begin

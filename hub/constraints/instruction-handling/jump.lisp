@@ -90,13 +90,8 @@
                             ;; OOGX = 1
                             (execution-provides-empty-return-data          ROW_OFFSET_FOR_JUMP_NO_OOGX_CURRENT_CONTEXT_ROW)
                             ;; OOGX = 0
-                            (begin
-                              (read-context-data                           ROW_OFFSET_FOR_JUMP_NO_OOGX_CURRENT_CONTEXT_ROW
-                                                                           CONTEXT_NUMBER)
-                              ;; sanity check
-                              (debug (eq! (shift context/CALLER_CONTEXT_NUMBER ROW_OFFSET_FOR_JUMP_NO_OOGX_CURRENT_CONTEXT_ROW)
-                                          CALLER_CONTEXT_NUMBER)))))
-
+                            (read-context-data                             ROW_OFFSET_FOR_JUMP_NO_OOGX_CURRENT_CONTEXT_ROW
+                                                                           CONTEXT_NUMBER)))
 
 ;; stronger preconditions start here
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

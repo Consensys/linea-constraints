@@ -115,11 +115,7 @@
 
 (defconstraint stack-ram-inst-setting-context-row-for-CALLDATALOAD      (:guard (stack-ram-inst-std-hyp))
                (if-not-zero (stack-ram-inst-is-CDL)
-                            (begin
-                              (read-context-data stack-ram-context-row-offset CONTEXT_NUMBER)
-                              ;; sanity check
-                              (debug (eq! (shift context/CALLER_CONTEXT_NUMBER stack-ram-context-row-offset)
-                                          CALLER_CONTEXT_NUMBER)))))
+                            (read-context-data stack-ram-context-row-offset CONTEXT_NUMBER)))
 
 (defconstraint stack-ram-inst-setting-MXP-instruction                   (:guard (stack-ram-inst-std-hyp))
                (if-not-zero (shift misc/MXP_FLAG stack-ram-misc-row-offset)
