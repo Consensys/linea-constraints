@@ -19,6 +19,7 @@
   (GAS_LIMIT                   :i64)
   (INITIAL_GAS                 :i128)
   (GAS_PRICE                   :i64)
+  (PRIORITY_FEE_PER_GAS        :i64)          ;; TODO: constrain
   (BASEFEE                     :i128)
   (COINBASE_HI                 :i128)
   (COINBASE_LO                 :i128)
@@ -28,10 +29,10 @@
   (TYPE1                       :binary@prove)
   (TYPE2                       :binary@prove)
   (REQUIRES_EVM_EXECUTION      :binary@prove)
-  (COPY_TXCD_AT_INITIALISATION :binary)
+  (COPY_TXCD                   :binary)
   LEFTOVER_GAS
   REFUND_COUNTER
-  REFUND_AMOUNT
+  REFUND_EFFECTIVE
   CUMULATIVE_CONSUMED_GAS
   (STATUS_CODE         :binary@prove)
   (PHASE_RLP_TXN       :byte)
@@ -56,7 +57,7 @@
   CUM_GAS CUMULATIVE_CONSUMED_GAS
   CFI     CODE_FRAGMENT_INDEX
   REF_CNT REFUND_COUNTER
-  REF_AMT REFUND_AMOUNT
+  REF_EFF REFUND_EFFECTIVE
   IGAS    INITIAL_GAS
   IBAL    INITIAL_BALANCE
   GLIM    GAS_LIMIT

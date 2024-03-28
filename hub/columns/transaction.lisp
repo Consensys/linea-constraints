@@ -20,7 +20,7 @@
                 TO_ADDRESS_HI
                 TO_ADDRESS_LO
                 (REQUIRES_EVM_EXECUTION       :binary@prove ) ;; TODO: demote to debug constraint
-                (COPY_TXCD_AT_INITIALIZATION  :binary@prove ) ;; TODO: demote to debug constraint
+                (COPY_TXCD                    :binary@prove ) ;; TODO: demote to debug constraint
                 (IS_DEPLOYMENT                :binary )
                 (IS_TYPE2                     :binary )
 
@@ -28,6 +28,7 @@
                 GAS_LIMIT
                 INITIAL_GAS
                 GAS_PRICE
+                PRIORITY_FEE_PER_GAS
                 BASEFEE
 
                 ;; call data or init code
@@ -38,7 +39,7 @@
                 (STATUS_CODE                  :binary)
                 LEFTOVER_GAS
                 REFUND_COUNTER_INFINITY
-                REFUND_AMOUNT
+                REFUND_EFFECTIVE
                 
                 ;; coinbase related
                 COINBASE_ADDRESS_HI

@@ -94,10 +94,10 @@
          (transaction-constant TYPE1)
          (transaction-constant TYPE2)
          (transaction-constant REQ_EVM)
-         (transaction-constant COPY_TXCD_AT_INITIALISATION)
+         (transaction-constant COPY_TXCD)
          (transaction-constant LEFTOVER_GAS)
          (transaction-constant REF_CNT)
-         (transaction-constant REF_AMT)
+         (transaction-constant REF_EFF)
          (transaction-constant CUM_GAS)
          (transaction-constant STATUS_CODE)
          (transaction-constant CFI)))
@@ -146,12 +146,12 @@
 ;;         (if-not-zero (will-remain-constant! BTC)
 ;;                      ; BTC[i + 1] != BTC[i]
 ;;                      (eq! (next CUMULATIVE_CONSUMED_GAS)
-;;                           (next (- GAS_LIMIT REFUND_AMOUNT))))
+;;                           (next (- GAS_LIMIT REFUND_EFFECTIVE))))
 ;;         (if-not-zero (and (will-inc! BTC 1) (will-remain-constant! ABS))
 ;;                      ; BTC[i + 1] != 1 + BTC[i] && ABS[i+1] != ABS[i] i.e. BTC[i + 1] == BTC[i] && ABS[i+1] == ABS[i] +1
 ;;                      (eq! (next CUM_GAS)
 ;;                           (+ CUM_GAS
-;;                              (next (- GAS_LIMIT REFUND_AMOUNT)))))))
+;;                              (next (- GAS_LIMIT REFUND_EFFECTIVE)))))))
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;
 ;;                   ;;
@@ -317,7 +317,7 @@
 (defun (is-zero-call-data)
   (begin (eq! (shift WCP_ARG_ONE_LO 4) CALL_DATA_SIZE)
          (eq! (shift WCP_INST 4) EVM_INST_ISZERO)
-         (eq! COPY_TXCD_AT_INITIALISATION
+         (eq! COPY_TXCD
               (* REQUIRES_EVM_EXECUTION
                  (- 1 (shift WCP_RES 4))))))
 
@@ -366,11 +366,11 @@
   (begin  ;; constraining INIT_GAS
          (= IGAS
             (- (gas_limit) (shift WCP_ARG_TWO_LO 1)))
-         ;; constraining REFUND_AMOUNT
+         ;; constraining REFUND_EFFECTIVE
          (if-zero (shift WCP_RES 3)
-                  (= REF_AMT
+                  (= REF_EFF
                      (+ LEFTOVER_GAS (shift WCP_ARG_TWO_LO 2)))
-                  (= REF_AMT (+ LEFTOVER_GAS REF_CNT)))
+                  (= REF_EFF (+ LEFTOVER_GAS REF_CNT)))
          ;; constraining GAS_PRICE
          (if-zero TYPE2
                   (= GAS_PRICE (gas_price))

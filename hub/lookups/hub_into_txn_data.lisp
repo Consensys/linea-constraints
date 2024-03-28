@@ -17,6 +17,7 @@
             txnData.IS_DEP
             txnData.TYPE2
             txnData.GAS_PRICE
+            txnData.PRIORITY_FEE_PER_GAS
             txnData.BASEFEE
             txnData.CALL_DATA_SIZE
             txnData.INIT_CODE_SIZE
@@ -24,11 +25,11 @@
             txnData.INITIAL_GAS
             txnData.INITIAL_BALANCE
             txnData.REQUIRES_EVM_EXECUTION
-            ;; txnData.COPY_TXCD_AT_INITIALIZATION  ;; TODO: uncomment
+            txnData.COPY_TXCD
             txnData.STATUS_CODE
             txnData.LEFTOVER_GAS
             txnData.REFUND_COUNTER
-            txnData.REFUND_AMOUNT
+            txnData.REFUND_EFFECTIVE
             )
            ;; source columns
            (
@@ -46,6 +47,7 @@
             (* hub.transaction/IS_DEPLOYMENT                                        (hub-into-txn-data-trigger))
             (* hub.transaction/IS_TYPE2                                             (hub-into-txn-data-trigger))
             (* hub.transaction/GAS_PRICE                                            (hub-into-txn-data-trigger))
+            (* hub.transaction/PRIORITY_FEE_PER_GAS                                 (hub-into-txn-data-trigger))
             (* hub.transaction/BASEFEE                                              (hub-into-txn-data-trigger))
             (* hub.transaction/CALL_DATA_SIZE                                       (hub-into-txn-data-trigger))
             (* hub.transaction/INIT_CODE_SIZE                                       (hub-into-txn-data-trigger))
@@ -53,10 +55,10 @@
             (* hub.transaction/INITIAL_GAS                                          (hub-into-txn-data-trigger))
             (* hub.transaction/INITIAL_BALANCE                                      (hub-into-txn-data-trigger))
             (* hub.transaction/REQUIRES_EVM_EXECUTION                               (hub-into-txn-data-trigger))
-            ;; (* hub.transaction/COPY_TXCD_AT_INITIALIZATION                          (hub-into-txn-data-trigger))    ;; TODO: uncomment
+            (* hub.transaction/COPY_TXCD                                            (hub-into-txn-data-trigger))
             (* hub.transaction/STATUS_CODE                                          (hub-into-txn-data-trigger))
             (* hub.transaction/LEFTOVER_GAS                                         (hub-into-txn-data-trigger))
             (* hub.transaction/REFUND_COUNTER_INFINITY                              (hub-into-txn-data-trigger))
-            (* hub.transaction/REFUND_AMOUNT                                        (hub-into-txn-data-trigger))
+            (* hub.transaction/REFUND_EFFECTIVE                                     (hub-into-txn-data-trigger))
             )
            )
