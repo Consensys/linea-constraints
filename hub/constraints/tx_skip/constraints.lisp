@@ -31,9 +31,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-(defun (tx-skip-wei-cost-for-sender) (+ (shift transaction/VALUE                    TX_SKIP_TRANSACTION_ROW_OFFSET)
-                                        (* (shift transaction/GAS_PRICE             TX_SKIP_TRANSACTION_ROW_OFFSET)
-                                           (- (shift transaction/GAS_LIMIT          TX_SKIP_TRANSACTION_ROW_OFFSET)
+(defun (tx-skip-wei-cost-for-sender) (+ (shift transaction/VALUE                                TX_SKIP_TRANSACTION_ROW_OFFSET)
+                                        (* (shift transaction/GAS_PRICE                         TX_SKIP_TRANSACTION_ROW_OFFSET)
+                                           (- (shift transaction/GAS_LIMIT                      TX_SKIP_TRANSACTION_ROW_OFFSET)
                                               (shift transaction/GAS_INITIALLY_AVAILABLE        TX_SKIP_TRANSACTION_ROW_OFFSET)))))
 
 (defun (tx-skip-is-deployment)       (force-bin (shift transaction/IS_DEPLOYMENT            TX_SKIP_TRANSACTION_ROW_OFFSET)))
