@@ -17,7 +17,7 @@
   (TO_LO                       :i128)
   (IS_DEP                      :binary@prove)
   (GAS_LIMIT                   :i64)
-  (INITIAL_GAS                 :i128)
+  (GAS_INITIALLY_AVAILABLE     :i128)
   (GAS_PRICE                   :i64)
   (PRIORITY_FEE_PER_GAS        :i64)          ;; TODO: constrain
   (BASEFEE                     :i128)
@@ -58,7 +58,7 @@
   CFI     CODE_FRAGMENT_INDEX
   REF_CNT REFUND_COUNTER
   REF_EFF REFUND_EFFECTIVE
-  IGAS    INITIAL_GAS
+  IGAS    GAS_INITIALLY_AVAILABLE
   IBAL    INITIAL_BALANCE
   GLIM    GAS_LIMIT
   GPRC    GAS_PRICE)

@@ -26,7 +26,7 @@
 
                 ;; gas related
                 GAS_LIMIT
-                INITIAL_GAS
+                GAS_INITIALLY_AVAILABLE
                 GAS_PRICE
                 PRIORITY_FEE_PER_GAS
                 BASEFEE

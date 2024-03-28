@@ -28,7 +28,6 @@
 (defun (initialize-context
          kappa                                 ;; row offset
          cn                                    ;; context number
-         call_data_context_number              ;; caller context
          csd                                   ;; call stack depth
          is_root                               ;; is root
          is_static                             ;; is static
@@ -43,6 +42,7 @@
          caller_address_hi                     ;; caller address high
          caller_address_lo                     ;; caller address low
          call_value                            ;; call value
+         call_data_context_number              ;; caller context
          call_data_offset                      ;; call data offset
          call_data_size                        ;; call data size
          return_at_offset                      ;; return at offset

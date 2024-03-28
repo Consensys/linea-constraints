@@ -22,7 +22,7 @@
             txnData.CALL_DATA_SIZE
             txnData.INIT_CODE_SIZE
             ;;
-            txnData.INITIAL_GAS
+            txnData.GAS_INITIALLY_AVAILABLE
             txnData.INITIAL_BALANCE
             txnData.REQUIRES_EVM_EXECUTION
             txnData.COPY_TXCD
@@ -52,7 +52,7 @@
             (* hub.transaction/CALL_DATA_SIZE                                       (hub-into-txn-data-trigger))
             (* hub.transaction/INIT_CODE_SIZE                                       (hub-into-txn-data-trigger))
             ;;
-            (* hub.transaction/INITIAL_GAS                                          (hub-into-txn-data-trigger))
+            (* hub.transaction/GAS_INITIALLY_AVAILABLE                              (hub-into-txn-data-trigger))
             (* hub.transaction/INITIAL_BALANCE                                      (hub-into-txn-data-trigger))
             (* hub.transaction/REQUIRES_EVM_EXECUTION                               (hub-into-txn-data-trigger))
             (* hub.transaction/COPY_TXCD                                            (hub-into-txn-data-trigger))
