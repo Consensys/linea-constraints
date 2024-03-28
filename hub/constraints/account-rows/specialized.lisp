@@ -2,7 +2,9 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                     ;;
-;;   X.1.2 Account nonce constraints   ;;
+;;   X.1.1 Introduction                ;;
+;;   X.1.2 Conventions                 ;;
+;;   X.1.3 Account nonce constraints   ;;
 ;;                                     ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -13,7 +15,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                       ;;
-;;   X.1.3 Account balance constraints   ;;
+;;   X.1.4 Account balance constraints   ;;
 ;;                                       ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -25,7 +27,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                         ;;
-;;   X.1.4 Account byte code constraints   ;;
+;;   X.1.5 Account byte code constraints   ;;
 ;;                                         ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -46,7 +48,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                      ;;
-;;   X.1.5 Account warmth constraints   ;;
+;;   X.1.6 Account warmth constraints   ;;
 ;;                                      ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -57,7 +59,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                                 ;;
-;;   X.1.6 Account deployment status constraints   ;;
+;;   X.1.7 Account deployment status constraints   ;;
 ;;                                                 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -90,7 +92,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                                       ;;
-;;   X.1.7 Account MARKED_FOR_SELFDESTRUCT constraints   ;;
+;;   X.1.8 Account MARKED_FOR_SELFDESTRUCT constraints   ;;
 ;;                                                       ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -99,7 +101,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                          ;;
-;;   X.1.8 Account inspection constraints   ;;
+;;   X.1.9 Account inspection constraints   ;;
 ;;                                          ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -122,6 +124,34 @@
 
 (defun (account-same-address-and-deployment-number-as undoAt doneAt) (begin (account-same-address-as undoAt doneAt)
                                                                             (eq! (shift account/DEPLOYMENT_NUMBER undoAt) (shift account/DEPLOYMENT_NUMBER_NEW doneAt))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                             ;;
+;;   X.1.10 Code fragment index and trimming   ;;
+;;                                             ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defun (account-retrieve-code-fragment-index    kappa) (eq! (shift account/ROM_LEX_FLAG   kappa) 1))
+
+(defun (account-trim-address   kappa                   ;; row offset
+                               raw-address-hi          ;; high part of raw, potentially untrimmed address
+                               raw-address-lo          ;; low  part of raw, potentially untrimmed address
+                               ) (begin
+                               (eq! (shift   account/TRM_FLAG             kappa) 1)
+                               (eq! (shift   account/TRM_RAW_ADDRESS_HI   kappa) raw-address-hi)
+                               (eq! (shift   account/ADDRESS_LO           kappa) raw-address-lo)))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                    ;;
+;;   X.1.11 Precompile flag related   ;;
+;;                                    ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+(defun (account-isnt-precompile   kappa) (vanishes!   (shift    account/IS_PRECOMPILE    kappa)))
+(defun (account-is-precompile     kappa) (eq!         (shift    account/IS_PRECOMPILE    kappa) 1))
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                    ;;

@@ -233,7 +233,7 @@
          exo_sum             ;; weighted exogenous module flag sum
          phase               ;; phase
          ) (begin
-         (eq! (shift misc/MMU_INST            kappa) MMU_INST_exoToRamTransplants)
+         (eq! (shift misc/MMU_INST            kappa) MMU_INST_EXO_TO_RAM_TRANSPLANTS)
          (eq! (shift misc/MMU_SRC_ID          kappa) src_id )
          (eq! (shift misc/MMU_TGT_ID          kappa) tgt_id )
          ;; (eq! (shift misc/MMU_AUX_ID          kappa) aux_id )
