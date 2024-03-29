@@ -33,11 +33,17 @@ ALU := alu/add/columns.lisp \
 
 BIN := bin   
 
+BLAKE2f_MODEXP_DATA := blake2f_modexp_data
+
 CONSTANTS := constants/constants.lisp
 
 EC_DATA := ec_data
 
 EUC := euc
+
+EXP := exp
+
+GAS := gas
 
 LIBRARY := library/rlp_constraints_pattern.lisp
 
@@ -47,7 +53,8 @@ LOG_INFO := logInfo
 
 MMU := mmu
 
-MMIO := mmio
+MMIO := mmio \
+mmio/consistency.lisp
 
 MXP := mxp
 
@@ -65,26 +72,21 @@ ROM := rom
 
 ROM_LEX := romLex
 
+SHAKIRA := shakira
+
 SHIFT :=  shf
 
-STP := stp/columns.lisp stp/constraints.lisp \
-       stp/lookups/stp_into_mod.lisp stp/lookups/stp_into_wcp.lisp
+STP := stp
 
 TABLES := reference_tables/binRT.lisp \
 	  reference_tables/shfRT.lisp \
 	  reference_tables/instruction_decoder.lisp 
 
-TRM := trm/columns.lisp trm/constraints.lisp
+TRM := trm
 
 TXN_DATA := txn_data 
 
 WCP := wcp
-
-BLAKE2f_MODEXP_DATA := blake2f_modexp_data/
-
-EXP := exp
-
-GAS := gas/columns.lisp gas/constraints.lisp
 
 ZKEVM_MODULES := ${ALU} \
 		 ${BIN} \
@@ -101,12 +103,12 @@ ZKEVM_MODULES := ${ALU} \
 		 ${MMU} \
 		 ${MMIO} \
 		 ${MXP} \
-		 ${RIPSHA} \
 		 ${RLP_ADDR} \
 		 ${RLP_TXN} \
 		 ${RLP_TXRCPT} \
 		 ${ROM} \
 		 ${ROM_LEX} \
+		 ${SHAKIRA} \
 		 ${SHIFT} \
 		 ${STP} \
 		 ${TABLES} \
