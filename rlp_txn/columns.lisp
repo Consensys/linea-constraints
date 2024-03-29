@@ -33,7 +33,7 @@
   (IS_PREFIX :binary@prove)
   (PHASE_SIZE :i32)
   (INDEX_DATA :i32)
-  (DATAGASCOST :i32)
+  (DATA_GAS_COST :i32)
   (DEPTH :binary@prove :array [2])
   (ADDR_HI :i32)
   (ADDR_LO :i128)
