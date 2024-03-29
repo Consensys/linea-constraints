@@ -98,7 +98,7 @@
                               (eq! (shift storage/DEPLOYMENT_NUMBER 3) (shift context/ACCOUNT_DEPLOYMENT_NUMBER 1))
                               (eq! (shift storage/STORAGE_KEY_HI    3) [ stack/STACK_ITEM_VALUE_HI  1 ])
                               (eq! (shift storage/STORAGE_KEY_LO    3) [ stack/STACK_ITEM_VALUE_LO  1 ])
-                              (turn-on-storage-warmth               3)
+                              (storage-turn-on-warmth               3)
                               (standard-dom-sub-stamps              3        ;; kappa
                                                                     0))))    ;; c
 
@@ -115,7 +115,7 @@
                                          (eq! [ stack/STACK_ITEM_VALUE_LO 4 ] (shift storage/VALUE_NEXT_LO 3))))
                               (if-not-zero CONTEXT_WILL_REVERT
                                            (begin
-                                             (same-storage-slot                    4)
+                                             (storage-same-slot                    4)
                                              (undo-storage-warmth-and-value-update 4)
                                              (revert-dom-sub-stamps                4         ;; kappa
                                                                                    0))))))   ;; c
