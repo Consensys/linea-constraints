@@ -513,7 +513,7 @@
               (+ (right-pad-word-extract-slo) 1))
          (eq! (shift micro/SBO NB_PP_ROWS_RIGHT_PADDED_WORD_EXTRACTION_PT) (right-pad-word-extract-sbo))
          (vanishes! (shift micro/TBO NB_PP_ROWS_RIGHT_PADDED_WORD_EXTRACTION_PT))
-         (eq! (shift micro/LIMB NB_PP_ROWS_RIGHT_PADDED_WORD_EXTRACTION_PT) macro/LIMB_1)))
+         (eq! (shift micro/LIMB NB_PP_ROWS_RIGHT_PADDED_WORD_EXTRACTION_PT) macro/LIMB_2)))
 
 ;;
 ;; RAM TO EXO WITH PADDING
