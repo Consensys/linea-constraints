@@ -81,7 +81,7 @@
                (prev (stack-pattern-1-0)))
 
 (defconstraint selfdestruct-setting-refund (:guard (selfdestruct-scenario-precondition))
-               (eq! REFGAS_NEW (+ REFGAS
+               (eq! REFUND_COUNTER_NEW (+ REFUND_COUNTER
                                   (* REFUND_CONST_R_SELFDESTRUCT scenario/SELFDESTRUCT_WONT_REVERT_NOT_YET_MARKED))))
 
 (defconstraint selfdestruct-setting-the-right-scenario (:guard (selfdestruct-scenario-precondition))

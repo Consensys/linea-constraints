@@ -11,9 +11,10 @@ HUB :=        $(wildcard hub/columns/*lisp) \
 	      $(wildcard hub/constraints/miscellaneous-rows/*lisp) \
 	      $(wildcard hub/constraints/scenario-rows/*lisp) \
 	      $(wildcard hub/constraints/storage-rows/*lisp) \
-	      $(wildcard hub/constraints/tx_init/*lisp) \
-	      $(wildcard hub/constraints/tx_prewarm/*lisp) \
 	      $(wildcard hub/constraints/tx_skip/*lisp) \
+	      $(wildcard hub/constraints/tx_prewarm/*lisp) \
+	      $(wildcard hub/constraints/tx_init/*lisp) \
+	      $(wildcard hub/constraints/tx_finl/*lisp) \
 	      $(wildcard hub/constraints/*lisp) \
 	      $(wildcard hub/lookups/*lisp) \
 	      hub/constants.lisp

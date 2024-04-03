@@ -37,7 +37,7 @@
 
                 ;; end of transaction predictions
                 (STATUS_CODE                  :binary)
-                LEFTOVER_GAS
+                GAS_LEFTOVER
                 REFUND_COUNTER_INFINITY
                 REFUND_EFFECTIVE
                 

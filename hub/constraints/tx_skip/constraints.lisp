@@ -170,9 +170,9 @@
                         (shift   account/NONCE                       TX_SKIP_SENDER_ACCOUNT_ROW_OFFSET)))
 
 (defconstraint   tx-skip-transaction-row-justifying-left-over-gas                    (:guard (tx-skip-precondition))
-                 (eq!   (shift   transaction/LEFTOVER_GAS            TX_SKIP_TRANSACTION_ROW_OFFSET)
+                 (eq!   (shift   transaction/GAS_LEFTOVER            TX_SKIP_TRANSACTION_ROW_OFFSET)
                         (shift   transaction/GAS_INITIALLY_AVAILABLE             TX_SKIP_TRANSACTION_ROW_OFFSET)))
 
 (defconstraint   tx-skip-transaction-row-justifying-effective-refund                 (:guard (tx-skip-precondition))
                  (eq!   (shift   transaction/REFUND_EFFECTIVE        TX_SKIP_TRANSACTION_ROW_OFFSET)
-                        (shift   transaction/LEFTOVER_GAS            TX_SKIP_TRANSACTION_ROW_OFFSET)))
+                        (shift   transaction/GAS_LEFTOVER            TX_SKIP_TRANSACTION_ROW_OFFSET)))

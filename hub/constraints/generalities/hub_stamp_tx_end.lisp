@@ -12,4 +12,4 @@
                  (if-not-zero TX_EXEC
                               (if-not-zero (next TX_FINL)
                                            (eq! HUB_STAMP_TRANSACTION_END
-                                                HUB_STAMP)))))
+                                                (+ 1 HUB_STAMP))))))

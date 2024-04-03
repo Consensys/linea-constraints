@@ -148,15 +148,15 @@
                (if-zero CONTEXT_WILL_REVERT
                         (if-not-zero [ stack/DEC_FLAG 1 ]
                                      (if-not-zero (force-bin (next-is-curr))
-                                                  (eq! REFGAS_NEW REFGAS)
+                                                  (eq! REFUND_COUNTER_NEW REFUND_COUNTER)
                                                   (if-zero (force-bin (curr-is-orig))
-                                                           (eq! REFGAS_NEW
-                                                                (+ REFGAS
+                                                           (eq! REFUND_COUNTER_NEW
+                                                                (+ REFUND_COUNTER
                                                                    (* (- 1 (orig-is-zero))    (- (next-is-zero) (curr-is-zero))    REFUND_CONST_R_SCLEAR                         )
                                                                    (* (next-is-orig)          (orig-is-zero)                       (- GAS_CONST_G_SSET   GAS_CONST_G_WARM_ACCESS))
                                                                    (* (next-is-orig)          (- 1 (orig-is-zero))                 (- GAS_CONST_G_SRESET GAS_CONST_G_WARM_ACCESS))))
                                                            (if-zero (force-bin (next-is-zero))
-                                                                    (eq! REFGAS_NEW
-                                                                         REFGAS)
-                                                                    (eq! REFGAS_NEW
-                                                                         (+ REFGAS REFUND_CONST_R_SCLEAR))))))))
+                                                                    (eq! REFUND_COUNTER_NEW
+                                                                         REFUND_COUNTER)
+                                                                    (eq! REFUND_COUNTER_NEW
+                                                                         (+ REFUND_COUNTER REFUND_CONST_R_SCLEAR))))))))

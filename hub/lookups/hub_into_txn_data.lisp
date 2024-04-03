@@ -57,7 +57,7 @@
             (* hub.transaction/REQUIRES_EVM_EXECUTION                               (hub-into-txn-data-trigger))
             (* hub.transaction/COPY_TXCD                                            (hub-into-txn-data-trigger))
             (* hub.transaction/STATUS_CODE                                          (hub-into-txn-data-trigger))
-            (* hub.transaction/LEFTOVER_GAS                                         (hub-into-txn-data-trigger))
+            (* hub.transaction/GAS_LEFTOVER                                         (hub-into-txn-data-trigger))
             (* hub.transaction/REFUND_COUNTER_INFINITY                              (hub-into-txn-data-trigger))
             (* hub.transaction/REFUND_EFFECTIVE                                     (hub-into-txn-data-trigger))
             )

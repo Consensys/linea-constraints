@@ -36,8 +36,8 @@
                  (debug (hub-stamp-constancy GAS_ACTUAL))
                  (debug (hub-stamp-constancy GAS_COST))
                  (debug (hub-stamp-constancy GAS_NEXT))
-                 (debug (hub-stamp-constancy REFGAS))
-                 (debug (hub-stamp-constancy REFGAS_NEW))
+                 (debug (hub-stamp-constancy REFUND_COUNTER))
+                 (debug (hub-stamp-constancy REFUND_COUNTER_NEW))
 
                  (hub-stamp-constancy TLI)
                  (hub-stamp-constancy NSR)

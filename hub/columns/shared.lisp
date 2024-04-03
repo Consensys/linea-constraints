@@ -56,8 +56,8 @@
     GAS_ACTUAL
     GAS_COST
     GAS_NEXT
-    REFGAS
-    REFGAS_NEW
+    REFUND_COUNTER
+    REFUND_COUNTER_NEW
 
     ;; instruction related
     ( TWO_LINE_INSTRUCTION              :binary )        ;; is set by instruction decoding
