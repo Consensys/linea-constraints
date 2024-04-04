@@ -44,3 +44,9 @@
                                                           (if-eq CN_NEW CALLER_CN        (eq! (next GAS_ACTUAL) (+ (next GAS_EXPECTED) GAS_NEXT)))
                                                           (if-eq CN_NEW (+ 1 HUB_STAMP)  (eq! (next GAS_ACTUAL) (next GAS_EXPECTED)))))))))
                                                                                            ;; can't define GAS_EXPECTED at this level of generality
+
+;; WARNING
+;; this constraint will likely fail for exceptional instructions that only have static gas costs
+(defconstraint gas-cost-only-matters-in-case-of-OOGX-or-no-exceptions (:guard PEEK_AT_STACK)
+               (if-zero (force-bin (+ OOGX (- 1 XAHOY)))
+                        (vanishes! GAS_COST)))
