@@ -175,27 +175,27 @@
 (defconstraint   tx-init-initializing-context                                 (:guard (tx-init-precondition))
                  (begin
                    (initialize-context
-                     TX_INIT_CONTEXT_INITIALIZATION_ROW_OFFSET                                                                        ;; row offset
-                     CONTEXT_NUMBER_NEW                                                                                               ;; context number
-                     1                                                                                                                ;; call stack depth
-                     1                                                                                                                ;; is root
-                     0                                                                                                                ;; is static
-                     (shift     transaction/TO_ADDRESS_HI         TX_INIT_TRANSACTION_ROW_OFFSET)                                     ;; account address high
-                     (shift     transaction/TO_ADDRESS_LO         TX_INIT_TRANSACTION_ROW_OFFSET)                                     ;; account address low
-                     (shift     account/DEPLOYMENT_NUMBER_NEW     TX_INIT_RECIPIENT_ACCOUNT_ROW_OFFSET)                               ;; account deployment number
-                     (shift     transaction/TO_ADDRESS_HI         TX_INIT_TRANSACTION_ROW_OFFSET)                                     ;; byte code address high
-                     (shift     transaction/TO_ADDRESS_LO         TX_INIT_TRANSACTION_ROW_OFFSET)                                     ;; byte code address low
-                     (shift     account/DEPLOYMENT_NUMBER_NEW     TX_INIT_RECIPIENT_ACCOUNT_ROW_OFFSET)                               ;; byte code deployment number
-                     (shift     account/DEPLOYMENT_STATUS_NEW     TX_INIT_RECIPIENT_ACCOUNT_ROW_OFFSET)                               ;; byte code deployment status
-                     (shift     account/CODE_FRAGMENT_INDEX       TX_INIT_RECIPIENT_ACCOUNT_ROW_OFFSET)                               ;; byte code code fragment index
-                     (shift     transaction/FROM_ADDRESS_HI       TX_INIT_TRANSACTION_ROW_OFFSET)                                     ;; caller address high
-                     (shift     transaction/FROM_ADDRESS_LO       TX_INIT_TRANSACTION_ROW_OFFSET)                                     ;; caller address low
-                     (shift     transaction/VALUE                 TX_INIT_TRANSACTION_ROW_OFFSET)                                     ;; call value
-                     (tx-init-call-data-context-number)                                                                               ;; caller context
-                     0                                                                                                                ;; call data offset
-                     (tx-init-call-data-size)                                                                                         ;; call data size
-                     0                                                                                                                ;; return at offset
-                     0                                                                                                                ;; return at capacity
+                     TX_INIT_CONTEXT_INITIALIZATION_ROW_OFFSET                                                ;; row offset
+                     CONTEXT_NUMBER_NEW                                                                       ;; context number
+                     0                                                                                        ;; call stack depth
+                     1                                                                                        ;; is root
+                     0                                                                                        ;; is static
+                     (shift     transaction/TO_ADDRESS_HI         TX_INIT_TRANSACTION_ROW_OFFSET)             ;; account address high
+                     (shift     transaction/TO_ADDRESS_LO         TX_INIT_TRANSACTION_ROW_OFFSET)             ;; account address low
+                     (shift     account/DEPLOYMENT_NUMBER_NEW     TX_INIT_RECIPIENT_ACCOUNT_ROW_OFFSET)       ;; account deployment number
+                     (shift     transaction/TO_ADDRESS_HI         TX_INIT_TRANSACTION_ROW_OFFSET)             ;; byte code address high
+                     (shift     transaction/TO_ADDRESS_LO         TX_INIT_TRANSACTION_ROW_OFFSET)             ;; byte code address low
+                     (shift     account/DEPLOYMENT_NUMBER_NEW     TX_INIT_RECIPIENT_ACCOUNT_ROW_OFFSET)       ;; byte code deployment number
+                     (shift     account/DEPLOYMENT_STATUS_NEW     TX_INIT_RECIPIENT_ACCOUNT_ROW_OFFSET)       ;; byte code deployment status
+                     (shift     account/CODE_FRAGMENT_INDEX       TX_INIT_RECIPIENT_ACCOUNT_ROW_OFFSET)       ;; byte code code fragment index
+                     (shift     transaction/FROM_ADDRESS_HI       TX_INIT_TRANSACTION_ROW_OFFSET)             ;; caller address high
+                     (shift     transaction/FROM_ADDRESS_LO       TX_INIT_TRANSACTION_ROW_OFFSET)             ;; caller address low
+                     (shift     transaction/VALUE                 TX_INIT_TRANSACTION_ROW_OFFSET)             ;; call value
+                     (tx-init-call-data-context-number)                                                       ;; caller context
+                     0                                                                                        ;; call data offset
+                     (tx-init-call-data-size)                                                                 ;; call data size
+                     0                                                                                        ;; return at offset
+                     0                                                                                        ;; return at capacity
                      )
                    (debug (eq! CONTEXT_NUMBER_NEW (+ 1 HUB_STAMP)))))
 
