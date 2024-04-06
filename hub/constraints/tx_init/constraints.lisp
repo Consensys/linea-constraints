@@ -68,12 +68,13 @@
                    (eq!     (shift account/ADDRESS_HI             TX_INIT_RECIPIENT_ACCOUNT_ROW_OFFSET)     (shift transaction/TO_ADDRESS_HI     TX_INIT_TRANSACTION_ROW_OFFSET))
                    (eq!     (shift account/ADDRESS_LO             TX_INIT_RECIPIENT_ACCOUNT_ROW_OFFSET)     (shift transaction/TO_ADDRESS_LO     TX_INIT_TRANSACTION_ROW_OFFSET))
                    (account-increment-balance-by                  TX_INIT_RECIPIENT_ACCOUNT_ROW_OFFSET      (shift transaction/VALUE             TX_INIT_TRANSACTION_ROW_OFFSET))
-                   ;; (account-increment-nonce                       TX_INIT_RECIPIENT_ACCOUNT_ROW_OFFSET)
-                   ;; (account-same-code                             TX_INIT_RECIPIENT_ACCOUNT_ROW_OFFSET)
-                   ;; (account-same-deployment-number-and-status     TX_INIT_RECIPIENT_ACCOUNT_ROW_OFFSET)
+                   ;; (account-increment-nonce                       TX_INIT_RECIPIENT_ACCOUNT_ROW_OFFSET)  ;; message call tx vs deployment tx dependent
+                   ;; (account-same-code                             TX_INIT_RECIPIENT_ACCOUNT_ROW_OFFSET)  ;; message call tx vs deployment tx dependent
+                   ;; (account-same-deployment-number-and-status     TX_INIT_RECIPIENT_ACCOUNT_ROW_OFFSET)  ;; message call tx vs deployment tx dependent
                    (account-turn-on-warmth                        TX_INIT_RECIPIENT_ACCOUNT_ROW_OFFSET)
                    (account-same-marked-for-selfdestruct          TX_INIT_RECIPIENT_ACCOUNT_ROW_OFFSET)
                    (account-isnt-precompile                       TX_INIT_RECIPIENT_ACCOUNT_ROW_OFFSET)
+                   (account-retrieve-code-fragment-index          TX_INIT_RECIPIENT_ACCOUNT_ROW_OFFSET)
                    (standard-dom-sub-stamps                       TX_INIT_RECIPIENT_ACCOUNT_ROW_OFFSET
                                                                   1)))
 
@@ -132,10 +133,6 @@
                                 (account-increment-deployment-number                       TX_INIT_RECIPIENT_ACCOUNT_ROW_OFFSET)
                                 (debug (eq! (shift account/DEPLOYMENT_STATUS               TX_INIT_RECIPIENT_ACCOUNT_ROW_OFFSET) 0))
                                 (eq!        (shift account/DEPLOYMENT_STATUS_NEW           TX_INIT_RECIPIENT_ACCOUNT_ROW_OFFSET) 1))))
-
-(defconstraint   tx-init-recipient-retrieving-code-fragment-index                  (:guard (tx-init-precondition))
-                 ;; retrieving code fragment index
-                 (account-retrieve-code-fragment-index                      TX_INIT_RECIPIENT_ACCOUNT_ROW_OFFSET))
 
 ;; miscellaneous row
 ;;;;;;;;;;;;;;;;;;;;
