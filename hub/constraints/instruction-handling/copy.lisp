@@ -22,8 +22,8 @@
   ;;
   ROW_OFFSET_CALLDATACOPY_CONTEXT_ROW                        2
   ;;
-  ROW_OFFSET_RETURNDATACOPY_CONTEXT_ROW                      2
-  ROW_OFFSET_RETURNDATACOPY_NO_RDCX_ACCOUNT_ROW              3
+  ROW_OFFSET_RETURNDATACOPY_CURRENT_CONTEXT_ROW              2
+  ROW_OFFSET_RETURNDATACOPY_CALLER_CONTEXT_ROW               3
   ;;
   ROW_OFFSET_CODECOPY_XAHOY_CONTEXT_ROW                      2
   ROW_OFFSET_CODECOPY_NO_XAHOY_CONTEXT_ROW                   2
@@ -74,6 +74,11 @@
                                          stack/COPY_FLAG
                                          (- 1   stack/SUX   stack/SOX)))
 
+(defun (copy-inst-standard-CALLDATACOPY)     (*   (copy-inst-standard-precondition)    (copy-inst-is-CALLDATACOPY)))
+(defun (copy-inst-standard-RETURNDATACOPY)   (*   (copy-inst-standard-precondition)    (copy-inst-is-RETURNDATACOPY)))
+(defun (copy-inst-standard-CODECOPY)         (*   (copy-inst-standard-precondition)    (copy-inst-is-CODECOPY)))
+(defun (copy-inst-standard-EXTCODECOPY)      (*   (copy-inst-standard-precondition)    (copy-inst-is-EXTCODECOPY)))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                ;;
 ;;    X.Y.3 General constraints   ;;
@@ -82,19 +87,115 @@
 
 
 (defconstraint    copy-setting-the-stack-pattern                                             (:guard    (copy-inst-standard-precondition))
-(defconstraint    copy-allowable-exceptions                                                  (:guard    (copy-inst-standard-precondition))
-(defconstraint    copy-setting-NSR-and-peeking-flags-CALLDATACOPY-case                       (:guard    (copy-inst-standard-precondition))
-(defconstraint    copy-setting-NSR-and-peeking-flags-RETURNDATACOPY-case                     (:guard    (copy-inst-standard-precondition))
-(defconstraint    copy-setting-NSR-and-peeking-flags-CODECOPY-case                           (:guard    (copy-inst-standard-precondition))
-(defconstraint    copy-setting-NSR-and-peeking-flags-EXTCODECOPY-case                        (:guard    (copy-inst-standard-precondition))
+                  (copy-stack-pattern    (copy-inst-is-EXTCODECOPY)))
+
+(defconstraint    copy-allowable-exceptions                                                  (:guard    (copy-inst-standard-precondition))   ;; TODO: make debug
+                  (eq!    XAHOY    (+  (*  (copy-inst-is-RETURNDATACOPY) stack/RDCX)
+                                       stack/MXPX
+                                       stack/OOGX)))
+
+(defconstraint    copy-setting-NSR-and-peeking-flags-CALLDATACOPY-case                       (:guard    (copy-inst-standard-CALLDATACOPY))
+                  (begin
+                    (eq!  NSR  2)
+                    (eq!  NSR
+                          (+  (shift  PEEK_AT_MISCELLANEOUS  ROW_OFFSET_COPY_INST_MISCELLANEOUS_ROW)
+                              (shift  PEEK_AT_CONTEXT        ROW_OFFSET_CALLDATACOPY_CONTEXT_ROW)))))
+
+(defconstraint    copy-setting-NSR-and-peeking-flags-RETURNDATACOPY-case                     (:guard    (copy-inst-standard-RETURNDATACOPY))
+                  (begin
+                    (eq!  NSR  (+  2  stack/RDCX))
+                    (if-not-zero   stack/RDCX
+                                   ;; RDCX ≡ 1
+                                   (eq!  NSR
+                                         (+  (shift  PEEK_AT_MISCELLANEOUS  ROW_OFFSET_COPY_INST_MISCELLANEOUS_ROW)
+                                             (shift  PEEK_AT_CONTEXT        ROW_OFFSET_RETURNDATACOPY_CURRENT_CONTEXT_ROW)
+                                             (shift  PEEK_AT_CONTEXT        ROW_OFFSET_RETURNDATACOPY_CALLER_CONTEXT_ROW)))
+                                   ;; RDCX ≡ 0
+                                   (eq!  NSR
+                                         (+  (shift  PEEK_AT_MISCELLANEOUS  ROW_OFFSET_COPY_INST_MISCELLANEOUS_ROW)
+                                             (shift  PEEK_AT_CONTEXT        ROW_OFFSET_RETURNDATACOPY_CURRENT_CONTEXT_ROW))))))
+
+(defconstraint    copy-setting-NSR-and-peeking-flags-CODECOPY-case                           (:guard    (copy-inst-standard-CODECOPY))
+                  (begin
+                    (eq!  NSR  (-  3  stack/RDCX))
+                    (if-not-zero   XAHOY
+                                   ;; XAHOY ≡ 1
+                                   (eq!  NSR
+                                         (+  (shift  PEEK_AT_MISCELLANEOUS  ROW_OFFSET_COPY_INST_MISCELLANEOUS_ROW)
+                                             (shift  PEEK_AT_CONTEXT        ROW_OFFSET_CODECOPY_XAHOY_CONTEXT_ROW)))
+                                   ;; XAHOY ≡ 0
+                                   (eq!  NSR
+                                         (+  (shift  PEEK_AT_MISCELLANEOUS  ROW_OFFSET_COPY_INST_MISCELLANEOUS_ROW)
+                                             (shift  PEEK_AT_CONTEXT        ROW_OFFSET_CODECOPY_NO_XAHOY_CONTEXT_ROW)
+                                             (shift  PEEK_AT_ACCOUNT        ROW_OFFSET_CODECOPY_NO_XAHOY_ACCOUNT_ROW))))))
+
+(defconstraint    copy-setting-NSR-and-peeking-flags-EXTCODECOPY-case                        (:guard    (copy-inst-standard-EXTCODECOPY))
+                  (begin
+                    (eq!  NSR  (+  2
+                                   stack/OOGX
+                                   (*  (-  1  XAHOY) CONTEXT_WILL_REVERT)))
+                    (if-not-zero  stack/MXPX
+                                  (eq!  NSR
+                                        (+  (shift  PEEK_AT_MISCELLANEOUS  ROW_OFFSET_COPY_INST_MISCELLANEOUS_ROW)
+                                            (shift  PEEK_AT_CONTEXT        ROW_OFFSET_EXTCODECOPY_MXPX_CONTEXT_ROW))))
+                    (if-not-zero  stack/OOGX
+                                  (eq!  NSR
+                                        (+  (shift  PEEK_AT_MISCELLANEOUS  ROW_OFFSET_COPY_INST_MISCELLANEOUS_ROW)
+                                            (shift  PEEK_AT_CONTEXT        ROW_OFFSET_EXTCODECOPY_OOGX_CONTEXT_ROW)
+                                            (shift  PEEK_AT_ACCOUNT        ROW_OFFSET_EXTCODECOPY_OOGX_ACCOUNT_ROW))))
+                    (if-zero  XAHOY
+                              (if-not-zero  CONTEXT_WILL_REVERT
+                                            ;; CN_WILL_REV ≡ 1
+                                            (eq!  NSR
+                                                  (+  (shift  PEEK_AT_MISCELLANEOUS  ROW_OFFSET_COPY_INST_MISCELLANEOUS_ROW)
+                                                      (shift  PEEK_AT_ACCOUNT        ROW_OFFSET_EXTCODECOPY_NO_XAHOY_REVERT_ACCOUNT_DOING_ROW)
+                                                      (shift  PEEK_AT_ACCOUNT        ROW_OFFSET_EXTCODECOPY_NO_XAHOY_REVERT_ACCOUNT_UNDOING_ROW)))
+                                            ;; CN_WILL_REV ≡ 0
+                                            (eq!  NSR
+                                                  (+  (shift  PEEK_AT_MISCELLANEOUS  ROW_OFFSET_COPY_INST_MISCELLANEOUS_ROW)
+                                                      (shift  PEEK_AT_ACCOUNT        ROW_OFFSET_EXTCODECOPY_NO_XAHOY_NO_REVERT_ACCOUNT_ROW)))))))
+
+
 (defconstraint    copy-setting-misc-row-module-flags                                         (:guard    (copy-inst-standard-precondition))
-(defun            (copy-inst-trigger-OOB)
-(defun            (copy-inst-trigger-MXP)
-(defun            (copy-inst-trigger-MMU)
+                  (eq!  (weighted-MISC-flag-sum   ROW_OFFSET_COPY_INST_MISCELLANEOUS_ROW)
+                        (+  (*  MISC_WEIGHT_MMU   (copy-inst-trigger_MMU))
+                            (*  MISC_WEIGHT_MXP   (copy-inst-trigger_MXP))
+                            (*  MISC_WEIGHT_OOB   (copy-inst-trigger_OOB)))))
+
+(defun  (copy-inst-trigger_OOB)  (copy-inst-is-RETURNDATACOPY))
+(defun  (copy-inst-trigger_MXP)  (-  1  stack/RDCX))
+(defun  (copy-inst-trigger_MMU)  (*  (-  1  XAHOY) (shift  misc/MXP_MTNTOP  ROW_OFFSET_COPY_INST_MISCELLANEOUS_ROW)))
+
 (defconstraint    copy-misc-row-setting-OOB-instruction                                      (:guard    (copy-inst-standard-precondition))
+                  (if-not-zero  (shift  misc/OOB_FLAG  ROW_OFFSET_COPY_INST_MISCELLANEOUS_ROW)
+                                (set-OOB-inst-rdc  ROW_OFFSET_COPY_INST_MISCELLANEOUS_ROW
+                                                   (copy-inst-source-offset-hi)
+                                                   (copy-inst-source-offset-lo)
+                                                   (copy-inst-size-hi)
+                                                   (copy-inst-size-lo)
+                                                   (copy-inst-return-data-size))))
+
 (defconstraint    copy-misc-row-setting-RDCX                                                 (:guard    (copy-inst-standard-precondition))
+                  (if-not-zero  (shift  misc/OOB_FLAG  ROW_OFFSET_COPY_INST_MISCELLANEOUS_ROW)
+                                (eq!  stack/RDCX
+                                      (copy-inst-OOB-raises-return-data-exception))))
+
 (defconstraint    copy-misc-row-setting-MXP-instruction                                      (:guard    (copy-inst-standard-precondition))
+                  (if-not-zero  (shift  misc/MXP_FLAG  ROW_OFFSET_COPY_INST_MISCELLANEOUS_ROW)
+                                (set-MXP-instruction-type-4   ROW_OFFSET_COPY_INST_MISCELLANEOUS_ROW    ;; row offset kappa
+                                                              stack/INSTRUCTION                         ;; instruction
+                                                              0                                         ;; deploys (bit modifying the behaviour of RETURN pricing)
+                                                              (copy-inst-target-offset-hi)              ;; offset high
+                                                              (copy-inst-target-offset-lo)              ;; offset low
+                                                              (copy-inst-size-hi)                       ;; size high
+                                                              (copy-inst-size-lo))))                    ;; size low
+
 (defconstraint    copy-misc-row-setting-MXPX                                                 (:guard    (copy-inst-standard-precondition))
+                  (if-zero  (shift  misc/MXP_FLAG  ROW_OFFSET_COPY_INST_MISCELLANEOUS_ROW)
+                            (eq!  stack/RDCX  0)
+                            (eq!  stack/RDCX  (copy-inst-MXP-raises-memory-expansion-exception)
+
+
 (defconstraint    copy-misc-row-partially-setting-the-MMU-instruction                        (:guard    (copy-inst-standard-precondition))
 (defconstraint    copy-misc-row-finishing-setting-the-MMU-instruction-CALLDATACOPY-case      (:guard    (copy-inst-standard-precondition))
 (defconstraint    copy-misc-row-finishing-setting-the-MMU-instruction-RETURNDATACOPY-case    (:guard    (copy-inst-standard-precondition))
