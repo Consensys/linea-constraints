@@ -47,6 +47,6 @@
 
 ;; WARNING
 ;; this constraint will likely fail for exceptional instructions that only have static gas costs
-(defconstraint gas-cost-only-matters-in-case-of-OOGX-or-no-exceptions (:guard PEEK_AT_STACK)
+(defconstraint gas-cost-only-matters-in-case-of-OOGX-or-no-exceptions (:perspective stack)
                (if-zero (force-bin (+ OOGX (- 1 XAHOY)))
                         (vanishes! GAS_COST)))
