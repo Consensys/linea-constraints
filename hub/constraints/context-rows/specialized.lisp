@@ -70,7 +70,7 @@
     (eq!       (shift context/RETURN_AT_OFFSET                  kappa)         return_at_offset               )
     (eq!       (shift context/RETURN_AT_CAPACITY                kappa)         return_at_capacity             )
     (vanishes! (shift context/UPDATE                            kappa))
-    (vanishes! (shift context/RETURNER_CONTEXT_NUMBER           kappa))
+    (vanishes! (shift context/RETURN_DATA_CONTEXT_NUMBER        kappa))
     (vanishes! (shift context/RETURN_DATA_OFFSET                kappa))
     (vanishes! (shift context/RETURN_DATA_SIZE                  kappa))
     )
@@ -98,7 +98,7 @@
          ) (begin
          (eq! (shift context/UPDATE                      kappa)        1                            )
          (eq! (shift context/CONTEXT_NUMBER              kappa)        return_data_receiver_context )
-         (eq! (shift context/RETURNER_CONTEXT_NUMBER     kappa)        return_data_provider_context )
+         (eq! (shift context/RETURN_DATA_CONTEXT_NUMBER  kappa)        return_data_provider_context )
          (eq! (shift context/RETURN_DATA_OFFSET          kappa)        return_data_offset           )
          (eq! (shift context/RETURN_DATA_SIZE            kappa)        return_data_size             )))
 

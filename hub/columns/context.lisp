@@ -41,5 +41,5 @@
 		 ( UPDATE                       :binary@prove )
 		 RETURN_DATA_OFFSET
 		 RETURN_DATA_SIZE
-		 RETURNER_CONTEXT_NUMBER
+		 RETURN_DATA_CONTEXT_NUMBER
 		 ))

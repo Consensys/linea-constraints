@@ -35,7 +35,7 @@
       perm_context_UPDATE
       perm_context_RETURN_DATA_OFFSET
       perm_context_RETURN_DATA_SIZE
-      perm_context_RETURNER_CONTEXT_NUMBER
+      perm_context_RETURN_DATA_CONTEXT_NUMBER
   )
   ;; original columns
   ;;;;;;;;;;;;;;;;;;;
@@ -65,7 +65,7 @@
     context/UPDATE
     context/RETURN_DATA_OFFSET
     context/RETURN_DATA_SIZE
-    context/RETURNER_CONTEXT_NUMBER
+    context/RETURN_DATA_CONTEXT_NUMBER
   )
 )
 
@@ -114,6 +114,6 @@
                (if-not-zero (next con_AGAIN)
                             (if-zero (force-bool (next perm_context_UPDATE))
                                      (begin
-                                       (will-eq! perm_context_RETURNER_CONTEXT_NUMBER       perm_context_RETURNER_CONTEXT_NUMBER      )
+                                       (will-eq! perm_context_RETURN_DATA_CONTEXT_NUMBER    perm_context_RETURN_DATA_CONTEXT_NUMBER   )
                                        (will-eq! perm_context_RETURN_DATA_OFFSET            perm_context_RETURN_DATA_OFFSET           )
                                        (will-eq! perm_context_RETURN_DATA_SIZE              perm_context_RETURN_DATA_SIZE             )))))

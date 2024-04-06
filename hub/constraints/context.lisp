@@ -1,13 +1,17 @@
 (module hub)
 
-(defun (provide_return_data recipient provider is_prec offset size)
- (begin
-  (eq! CONTEXT_NUMBER recipient)
-  (eq! UPDATE 1)
-  (eq! RETURNER_CONTEXT_NUMBER provider)
-  (eq! RETURNER_IS_PRECOMPILE is_prec)
-  (eq! RETURN_DATA_OFFSET offset)
-  (eq! RETURN_DATA_SIZE size)))
+(defun (provide_return_data recipient
+                            provider
+                            is_prec
+                            offset
+                            size)
+  (begin
+    (eq!    CONTEXT_NUMBER                 recipient)
+    (eq!    UPDATE                         1        )
+    (eq!    RETURN_DATA_CONTEXT_NUMBER     provider )
+    (eq!    RETURNER_IS_PRECOMPILE         is_prec  )
+    (eq!    RETURN_DATA_OFFSET             offset   )
+    (eq!    RETURN_DATA_SIZE               size     )))
 
 (defun (execution_provides_empty_return_data)
  (provide_return_data CALLER_CONTEXT_NUMBER CONTEXT_NUMBER 0 0 0))
