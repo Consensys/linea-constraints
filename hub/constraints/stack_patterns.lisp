@@ -334,11 +334,11 @@
                     (will-eq! [ stack/STACK_ITEM_POP    4 ]          (b-sum-4))
                     (will-eq! [ stack/STACK_ITEM_STAMP  4 ]       (* (b-sum-4) (+ (* hub_tau HUB_STAMP) 5)))))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;                                 ;;
-;;  5.16 copyStoreStackPattern[b]  ;;
-;;                                 ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                            ;;
+;;  5.16 copyStackPattern[b]  ;;
+;;                            ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defun (copy-stack-pattern (b :binary))
                 (begin
@@ -362,11 +362,11 @@
                     (=  HEIGHT_NEW  (- HEIGHT  3 b))
                     ))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;                                 ;;
-;;  5.17 callStoreStackPattern[b]  ;;
-;;                                 ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                            ;;
+;;  5.17 callStackPattern[b]  ;;
+;;                            ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defun (call-stack-pattern (b :binary))
                 (begin
@@ -409,11 +409,11 @@
                     )
                 )
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;                                   ;;
-;;  5.18 createStoreStackPattern[b]  ;;
-;;                                   ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                              ;;
+;;  5.18 createStackPattern[b]  ;;
+;;                              ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defun (create-stack-pattern (b :binary))
                 (begin

@@ -101,7 +101,7 @@
 
 (defconstraint stack-ram-inst-setting-OOB-instruction                   (:guard (stack-ram-inst-std-hyp))
                (if-not-zero (stack-ram-inst-is-CDL)
-                            (set-oob-inst-cdl     stack-ram-misc-row-offset               ;; row offset
+                            (set-OOB-inst-cdl     stack-ram-misc-row-offset               ;; row offset
                                                   (stack-ram-inst-offset-hi)              ;; offset within call data, high part
                                                   (stack-ram-inst-offset-lo)              ;; offset within call data, low  part
                                                   (stack-ram-inst-call-data-size))))      ;; call data size

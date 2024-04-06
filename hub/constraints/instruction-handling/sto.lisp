@@ -79,7 +79,7 @@
                             (begin
                               (eq! (weighted-MISC-flag-sum 2)
                                    (* [ stack/DEC_FLAG 1 ] MISC_WEIGHT_OOB))
-                              (set-oob-inst-sstore 2                   ;; offset
+                              (set-OOB-inst-sstore 2                   ;; offset
                                                    GAS_ACTUAL ))))     ;; GAS_ACTUAL
 
 (defconstraint storage-justifying-SSTOREX (:guard (storage-no-stack-exceptions))

@@ -115,12 +115,12 @@
 (defconstraint jump-instruction-the-miscellaneous-row-OOB-instruction       (:guard (jump-instruction-no-stack-exception-and-no-oogx))
                (begin
                  (if-not-zero (jump-instruction-is-jump)
-                              (set-oob-inst-jump    ROW_OFFSET_FOR_JUMP_NO_OOGX_MISC_ROW
+                              (set-OOB-inst-jump    ROW_OFFSET_FOR_JUMP_NO_OOGX_MISC_ROW
                                                     (jump-instruction-new-pc-hi)
                                                     (jump-instruction-new-pc-lo)
                                                     (jump-instruction-code-size)))
                  (if-not-zero (jump-instruction-is-jumpi)
-                              (set-oob-inst-jumpi   ROW_OFFSET_FOR_JUMP_NO_OOGX_MISC_ROW
+                              (set-OOB-inst-jumpi   ROW_OFFSET_FOR_JUMP_NO_OOGX_MISC_ROW
                                                     (jump-instruction-new-pc-hi)
                                                     (jump-instruction-new-pc-lo)
                                                     (jump-instruction-jump-condition-hi)

@@ -26,10 +26,10 @@
 (defun (set-MXP-instruction-type-4 kappa       ;; row offset kappa
                                    instruction ;; instruction
                                    deploys     ;; bit modifying the behaviour of RETURN pricing
-                                   offset_hi   ;; source offset high
-                                   offset_lo   ;; source offset low
-                                   size_hi     ;; source size high
-                                   size_lo)    ;; source size low
+                                   offset_hi   ;; offset high
+                                   offset_lo   ;; offset low
+                                   size_hi     ;; size high
+                                   size_lo)    ;; size low
   (begin (eq! (shift misc/MXP_INST kappa) instruction)
          (eq! (shift misc/MXP_DEPLOYS kappa) deploys)
          (eq! (shift misc/MXP_OFFSET_1_HI kappa) offset_hi)

@@ -7,7 +7,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-(defun (set-oob-inst-jump
+(defun (set-OOB-inst-jump
          kappa               ;; offset
          pc_new_hi           ;; high part of proposed new program counter
          pc_new_lo           ;; low  part of proposed new program counter
@@ -24,7 +24,7 @@
          ;; (eq! (shift [ misc/OOB_DATA 8 ]    kappa) )
          ))
 
-(defun (set-oob-inst-jumpi
+(defun (set-OOB-inst-jumpi
          kappa               ;; offset
          pc_new_hi           ;; high part of proposed new program counter
          pc_new_lo           ;; low  part of proposed new program counter
@@ -43,7 +43,7 @@
          ;; (eq! (shift [ misc/OOB_DATA 8 ]    kappa) )
          ))
 
-(defun (set-oob-inst-sstore
+(defun (set-OOB-inst-sstore
          kappa               ;; offset
          gas_actual          ;; GAS_ACTUAL
          ) (begin
@@ -58,7 +58,7 @@
          ;; (eq! (shift [ misc/OOB_DATA 8 ]    kappa) )
          ))
 
-(defun (set-oob-inst-cdl
+(defun (set-OOB-inst-cdl
          kappa               ;; row offset
          offset_hi           ;; offset within call data, high part
          offset_lo           ;; offset within call data, low  part
@@ -75,6 +75,25 @@
          ;; (eq! (shift [ misc/OOB_DATA 8 ]    kappa) )
          ))
 
+(defun (set-OOB-inst-rdc
+         kappa                   ;; row offset
+         source_offset_hi        ;; offset within call data, high part
+         source_offset_lo        ;; offset within call data, low  part
+         size_hi                 ;; size of data to copy, high part
+         size_lo                 ;; size of data to copy, low  part
+         return_data_size        ;; return data size
+         ) (begin
+         (eq! (shift misc/OOB_INST          kappa) OOB_INST_rdc)
+         (eq! (shift [ misc/OOB_DATA 1 ]    kappa) offset_hi)
+         (eq! (shift [ misc/OOB_DATA 2 ]    kappa) offset_lo)
+         (eq! (shift [ misc/OOB_DATA 3 ]    kappa) size_hi)
+         (eq! (shift [ misc/OOB_DATA 4 ]    kappa) size_lo)
+         (eq! (shift [ misc/OOB_DATA 5 ]    kappa) return_data_size)
+         ;; (eq! (shift [ misc/OOB_DATA 6 ]    kappa) )
+         ;; (eq! (shift [ misc/OOB_DATA 7 ]    kappa) )
+         ;; (eq! (shift [ misc/OOB_DATA 8 ]    kappa) )
+         ))
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                           ;;
@@ -83,7 +102,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-(defun (set-oob-inst-common
+(defun (set-OOB-inst-common
          kappa                            ;; offset
          common_precompile_oob_inst       ;; relevant OOB instruction
          call_gas                         ;; call gas i.e. gas provided to the precompile
@@ -102,7 +121,7 @@
          ))
 
 
-(defun (set-oob-inst-modexp-cds
+(defun (set-OOB-inst-modexp-cds
          kappa                            ;; offset
          cds                              ;; call data size
          ) (begin
@@ -118,7 +137,7 @@
          ))
 
 
-(defun (set-oob-inst-modexp-xbs
+(defun (set-OOB-inst-modexp-xbs
          kappa                            ;; offset
          xbs_hi                           ;; high part of some {b,e,m}bs
          xbs_lo                           ;; low  part of some {b,e,m}bs
@@ -137,7 +156,7 @@
          ))
 
 
-(defun (set-oob-inst-modexp-lead
+(defun (set-OOB-inst-modexp-lead
          kappa                            ;; offset
          bbs_lo                           ;; low part of bbs (base     byte size)
          cds                              ;; call data size
@@ -155,7 +174,7 @@
          ))
 
 
-(defun (set-oob-inst-modexp-pricing
+(defun (set-OOB-inst-modexp-pricing
          kappa                            ;; offset
          call_gas                         ;; call gas i.e. gas provided to the precompile
          r@c                              ;; return at capacity, final argument of any CALL
@@ -174,7 +193,7 @@
          ))
 
 
-(defun (set-oob-inst-modexp-extract
+(defun (set-OOB-inst-modexp-extract
          kappa                            ;; offset
          cds                              ;; call data size
          bbs_lo                           ;; low part of bbs (base     byte size)
@@ -193,7 +212,7 @@
          ))
 
 
-(defun (set-oob-inst-blake-cds
+(defun (set-OOB-inst-blake-cds
          kappa                            ;; offset
          cds                              ;; call data size
          r@c                              ;; return at capacity, final argument of any CALL
@@ -210,7 +229,7 @@
          ))
 
 
-(defun (set-oob-inst-blake
+(defun (set-OOB-inst-blake
          kappa                            ;; offset
          call_gas                         ;; call gas i.e. gas provided to the precompile
          blake_r                          ;; rounds parameter of the call data of BLAKE2f
@@ -232,7 +251,7 @@
 
 
 
-;; (defun (set-oob-inst-Z
+;; (defun (set-OOB-inst-Z
 ;;          kappa                            ;; offset
 ;;          ) (begin
 ;;          (eq! (shift misc/OOB_INST            kappa) OOB_INST_ )

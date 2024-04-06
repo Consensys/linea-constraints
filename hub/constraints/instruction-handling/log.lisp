@@ -105,13 +105,13 @@
                        MISC_WEIGHT_MXP)))
 
 (defconstraint log-inst-MISC-row-setting-MXP-data                        (:guard (log-inst-standard-hypothesis))
-               (set-MXP-instruction-type-4 log-misc-row-offset      ;; row offset kappa
+               (set-MXP-instruction-type-4 log-misc-row-offset        ;; row offset kappa
                                            (log-inst-instruction)     ;; instruction
-                                           0                        ;; bit modifying the behaviour of RETURN pricing
-                                           (log-inst-offset-hi)       ;; source offset high
-                                           (log-inst-offset-lo)       ;; source offset low
-                                           (log-inst-size-hi)         ;; source size high
-                                           (log-inst-size-lo)))       ;; source size low
+                                           0                          ;; bit modifying the behaviour of RETURN pricing
+                                           (log-inst-offset-hi)       ;; offset high
+                                           (log-inst-offset-lo)       ;; offset low
+                                           (log-inst-size-hi)         ;; size high
+                                           (log-inst-size-lo)))       ;; size low
 
 (defun (trigger_MMU) (* (- 1 CONTEXT_WILL_REVERT)
                         (shift misc/MXP_MTNTOP log-misc-row-offset)))
