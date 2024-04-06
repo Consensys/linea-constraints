@@ -151,7 +151,7 @@
 
 (defconstraint   tx-init-copying-transaction-call-data                             (:guard (tx-init-precondition))
                  (if-not-zero    (shift misc/MMU_FLAG      TX_INIT_MISCELLANEOUS_ROW_OFFSET)
-                                 (set-mmu-inst-exo-to-ram-transplants
+                                 (set-MMU-inst-exo-to-ram-transplants
                                    TX_INIT_MISCELLANEOUS_ROW_OFFSET       ;; offset
                                    ABS_TX_NUM                             ;; source ID
                                    (tx-init-call-data-context-number)     ;; target ID

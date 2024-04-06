@@ -6,7 +6,7 @@
 ;;                              ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defun (set-mmu-inst-mload
+(defun (set-MMU-inst-mload
          kappa               ;; offset
          src_id              ;; source ID
          ;; tgt_id              ;; target ID
@@ -41,7 +41,7 @@
          ))
 
 
-(defun (set-mmu-inst-mstore
+(defun (set-MMU-inst-mstore
          kappa               ;; offset
          ;; src_id              ;; source ID
          tgt_id              ;; target ID
@@ -76,7 +76,7 @@
          ))
 
 
-(defun (set-mmu-inst-mstore8
+(defun (set-MMU-inst-mstore8
          kappa               ;; offset
          ;; src_id              ;; source ID
          tgt_id              ;; target ID
@@ -111,7 +111,7 @@
          ))
 
 
-(defun (set-mmu-inst-invalid-code-prefix
+(defun (set-MMU-inst-invalid-code-prefix
          kappa               ;; offset
          src_id              ;; source ID
          ;; tgt_id              ;; target ID
@@ -146,7 +146,7 @@
          ))
 
 
-(defun (set-mmu-inst-right-padded-word-extraction
+(defun (set-MMU-inst-right-padded-word-extraction
          kappa               ;; offset
          src_id              ;; source ID
          ;; tgt_id              ;; target ID
@@ -181,7 +181,7 @@
          ))
 
 
-(defun (set-mmu-inst-ram-to-exo-with-padding
+(defun (set-MMU-inst-ram-to-exo-with-padding
          kappa               ;; offset
          src_id              ;; source ID
          tgt_id              ;; target ID
@@ -216,7 +216,7 @@
          ))
 
 
-(defun (set-mmu-inst-exo-to-ram-transplants
+(defun (set-MMU-inst-exo-to-ram-transplants
          kappa               ;; offset
          src_id              ;; source ID
          tgt_id              ;; target ID
@@ -251,7 +251,7 @@
          ))
 
 
-(defun (set-mmu-inst-ram-to-ram-sans-padding
+(defun (set-MMU-inst-ram-to-ram-sans-padding
          kappa               ;; offset
          src_id              ;; source ID
          tgt_id              ;; target ID
@@ -286,7 +286,7 @@
          ))
 
 
-(defun (set-mmu-inst-any-to-ram-with-padding
+(defun (set-MMU-inst-any-to-ram-with-padding
          kappa               ;; offset
          src_id              ;; source ID
          tgt_id              ;; target ID
@@ -321,7 +321,7 @@
          ))
 
 
-(defun (set-mmu-inst-modexp-zero
+(defun (set-MMU-inst-modexp-zero
          kappa               ;; offset
          ;; src_id              ;; source ID
          tgt_id              ;; target ID
@@ -356,7 +356,7 @@
          ))
 
 
-(defun (set-mmu-inst-modexp-data
+(defun (set-MMU-inst-modexp-data
          kappa               ;; offset
          src_id              ;; source ID
          tgt_id              ;; target ID
@@ -391,7 +391,7 @@
          ))
 
 
-(defun (set-mmu-inst-blake
+(defun (set-MMU-inst-blake
          kappa               ;; offset
          src_id              ;; source ID
          ;; tgt_id              ;; target ID
@@ -426,7 +426,7 @@
          ))
 
 
-;; (defun (set-mmu-inst-Z
+;; (defun (set-MMU-inst-Z
 ;;          kappa               ;; offset
 ;;          ;; src_id              ;; source ID
 ;;          ;; tgt_id              ;; target ID

@@ -73,7 +73,7 @@
 
 (defconstraint keccak-MMU-call (:guard (keccak-no-stack-exceptions))
   (if-not-zero misc/MMU_FLAG
-               (set-mmu-inst-ram-to-exo-with-padding 1                  ;; offset
+               (set-MMU-inst-ram-to-exo-with-padding 1                  ;; offset
                                                      CN                 ;; source ID
                                                      0                  ;; target ID
                                                      (+ 1 HUB_STAMP)    ;; auxiliary ID
