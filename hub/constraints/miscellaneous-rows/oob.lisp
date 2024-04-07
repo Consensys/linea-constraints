@@ -84,8 +84,8 @@
          return_data_size        ;; return data size
          ) (begin
          (eq! (shift misc/OOB_INST          kappa) OOB_INST_rdc)
-         (eq! (shift [ misc/OOB_DATA 1 ]    kappa) offset_hi)
-         (eq! (shift [ misc/OOB_DATA 2 ]    kappa) offset_lo)
+         (eq! (shift [ misc/OOB_DATA 1 ]    kappa) source_offset_hi)
+         (eq! (shift [ misc/OOB_DATA 2 ]    kappa) source_offset_lo)
          (eq! (shift [ misc/OOB_DATA 3 ]    kappa) size_hi)
          (eq! (shift [ misc/OOB_DATA 4 ]    kappa) size_lo)
          (eq! (shift [ misc/OOB_DATA 5 ]    kappa) return_data_size)

@@ -119,8 +119,8 @@
                                        (shift (eq! account/CODE_HASH_HI EMPTY_KECCAK_HI)  kappa)
                                        (shift (eq! account/CODE_HASH_LO EMPTY_KECCAK_LO)  kappa)))
 
-(defun (account-same-address-as  undo-at
-                                 done-at)
+(defun (account-same-address-as  undoAt
+                                 doneAt)
   (begin (eq! (shift account/ADDRESS_HI undoAt) (shift account/ADDRESS_HI doneAt))   ;; action performed doneAt many rows from here
                                                       (eq! (shift account/ADDRESS_LO undoAt) (shift account/ADDRESS_LO doneAt)))) ;; action undone    undoAt many rows from here
 

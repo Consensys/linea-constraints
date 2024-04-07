@@ -39,46 +39,46 @@
   ROW_OFFSET_EXTCODECOPY_NO_XAHOY_ACCOUNT_ROW                2
   )
 
-;; (defun (copy-inst-instruction)                                  stack/INSTRUCTION    )
-;; ;;
-;; (defun (copy-inst-is-CALLDATACOPY)                              [ stack/DEC_FLAG 1 ] )
-;; (defun (copy-inst-is-RETURNDATACOPY)                            [ stack/DEC_FLAG 2 ] )
-;; (defun (copy-inst-is-CODECOPY)                                  [ stack/DEC_FLAG 3 ] )
-;; (defun (copy-inst-is-EXTCODECOPY)                               [ stack/DEC_FLAG 4 ] )
-;; ;;
-;; (defun (copy-inst-target-offset-hi)                             [ stack/STACK_ITEM_VALUE_HI 1 ] )
-;; (defun (copy-inst-target-offset-lo)                             [ stack/STACK_ITEM_VALUE_LO 1 ] )
-;; (defun (copy-inst-source-offset-hi)                             [ stack/STACK_ITEM_VALUE_HI 2 ] )
-;; (defun (copy-inst-source-offset-lo)                             [ stack/STACK_ITEM_VALUE_LO 2 ] )
-;; (defun (copy-inst-size-hi)                                      [ stack/STACK_ITEM_VALUE_HI 3 ] )
-;; (defun (copy-inst-size-lo)                                      [ stack/STACK_ITEM_VALUE_LO 3 ] )
-;; (defun (copy-inst-raw-address-hi)                               [ stack/STACK_ITEM_VALUE_HI 4 ] )
-;; (defun (copy-inst-raw-address-lo)                               [ stack/STACK_ITEM_VALUE_LO 4 ] )
-;; ;;
-;; (defun (copy-inst-OOB-raises-return-data-exception)             ( shift    [ misc/OOB_DATA 7 ]    ROW_OFFSET_COPY_INST_MISCELLANEOUS_ROW ))
-;; (defun (copy-inst-MXP-raises-memory-expansion-exception)        ( shift    misc/MXP_MXPX          ROW_OFFSET_COPY_INST_MISCELLANEOUS_ROW ))
-;; (defun (copy-inst-MXP-memory-expansion-gas)                     ( shift    misc/MXP_GAS_MXP       ROW_OFFSET_COPY_INST_MISCELLANEOUS_ROW ))
-;; ;;
-;; (defun (copy-inst-call-data-context)                            ( shift    context/CALL_DATA_CONTEXT_NUMBER      ROW_OFFSET_CALLDATACOPY_CONTEXT_ROW ))
-;; (defun (copy-inst-call-data-offset)                             ( shift    context/CALL_DATA_OFFSET              ROW_OFFSET_CALLDATACOPY_CONTEXT_ROW ))
-;; (defun (copy-inst-call-data-size)                               ( shift    context/CALL_DATA_SIZE                ROW_OFFSET_CALLDATACOPY_CONTEXT_ROW ))
-;; ;;
-;; (defun (copy-inst-return-data-context)                          ( shift    context/RETURN_DATA_CONTEXT_NUMBER    ROW_OFFSET_RETURNDATACOPY_CONTEXT_ROW ))
-;; (defun (copy-inst-return-data-offset)                           ( shift    context/RETURN_DATA_OFFSET            ROW_OFFSET_RETURNDATACOPY_CONTEXT_ROW ))
-;; (defun (copy-inst-return-data-size)                             ( shift    context/RETURN_DATA_SIZE              ROW_OFFSET_RETURNDATACOPY_CONTEXT_ROW ))
-;; ;;
-;; (defun (copy-inst-current-address-code-fragment-index)          ( shift    account/CODE_FRAGMENT_INDEX           ROW_OFFSET_CODECOPY_NO_XAHOY_ACCOUNT_ROW ))
-;; (defun (copy-inst-current-address-code-size)                    ( shift    account/CODE_SIZE                     ROW_OFFSET_CODECOPY_NO_XAHOY_ACCOUNT_ROW ))
-;; ;;
-;; (defun (copy-inst-exo-address-warmth)                               ( shift    account/WARMTH                 ROW_OFFSET_EXTCODECOPY_NO_XAHOY_ACCOUNT_ROW ))
-;; (defun (copy-inst-exo-address-has-code)                             ( shift    account/HAS_CODE               ROW_OFFSET_EXTCODECOPY_NO_XAHOY_ACCOUNT_ROW ))
-;; (defun (copy-inst-exo-address-code-size)                            ( shift    account/CODE_SIZE              ROW_OFFSET_EXTCODECOPY_NO_XAHOY_ACCOUNT_ROW ))
-;; (defun (copy-inst-exo-address-code-fragment-index)                  ( shift    account/CODE_FRAGMENT_INDEX    ROW_OFFSET_EXTCODECOPY_NO_XAHOY_ACCOUNT_ROW ))
+(defun (copy-inst-instruction)                                  stack/INSTRUCTION    )
+;;
+(defun (copy-inst-is-CALLDATACOPY)                              [ stack/DEC_FLAG 1 ] )
+(defun (copy-inst-is-RETURNDATACOPY)                            [ stack/DEC_FLAG 2 ] )
+(defun (copy-inst-is-CODECOPY)                                  [ stack/DEC_FLAG 3 ] )
+(defun (copy-inst-is-EXTCODECOPY)                               [ stack/DEC_FLAG 4 ] )
+;;
+(defun (copy-inst-target-offset-hi)                             [ stack/STACK_ITEM_VALUE_HI 1 ] )
+(defun (copy-inst-target-offset-lo)                             [ stack/STACK_ITEM_VALUE_LO 1 ] )
+(defun (copy-inst-source-offset-hi)                             [ stack/STACK_ITEM_VALUE_HI 2 ] )
+(defun (copy-inst-source-offset-lo)                             [ stack/STACK_ITEM_VALUE_LO 2 ] )
+(defun (copy-inst-size-hi)                                      [ stack/STACK_ITEM_VALUE_HI 3 ] )
+(defun (copy-inst-size-lo)                                      [ stack/STACK_ITEM_VALUE_LO 3 ] )
+(defun (copy-inst-raw-address-hi)                               [ stack/STACK_ITEM_VALUE_HI 4 ] )
+(defun (copy-inst-raw-address-lo)                               [ stack/STACK_ITEM_VALUE_LO 4 ] )
+;;
+(defun (copy-inst-OOB-raises-return-data-exception)             ( shift    [ misc/OOB_DATA 7 ]    ROW_OFFSET_COPY_INST_MISCELLANEOUS_ROW ))
+(defun (copy-inst-MXP-raises-memory-expansion-exception)        ( shift    misc/MXP_MXPX          ROW_OFFSET_COPY_INST_MISCELLANEOUS_ROW ))
+(defun (copy-inst-MXP-memory-expansion-gas)                     ( shift    misc/MXP_GAS_MXP       ROW_OFFSET_COPY_INST_MISCELLANEOUS_ROW ))
+;;
+(defun (copy-inst-call-data-context)                            ( shift    context/CALL_DATA_CONTEXT_NUMBER      ROW_OFFSET_CALLDATACOPY_CONTEXT_ROW ))
+(defun (copy-inst-call-data-offset)                             ( shift    context/CALL_DATA_OFFSET              ROW_OFFSET_CALLDATACOPY_CONTEXT_ROW ))
+(defun (copy-inst-call-data-size)                               ( shift    context/CALL_DATA_SIZE                ROW_OFFSET_CALLDATACOPY_CONTEXT_ROW ))
+;;
+(defun (copy-inst-return-data-context)                          ( shift    context/RETURN_DATA_CONTEXT_NUMBER    ROW_OFFSET_RETURNDATACOPY_CURRENT_CONTEXT_ROW ))
+(defun (copy-inst-return-data-offset)                           ( shift    context/RETURN_DATA_OFFSET            ROW_OFFSET_RETURNDATACOPY_CURRENT_CONTEXT_ROW ))
+(defun (copy-inst-return-data-size)                             ( shift    context/RETURN_DATA_SIZE              ROW_OFFSET_RETURNDATACOPY_CURRENT_CONTEXT_ROW ))
+;;
+(defun (copy-inst-current-address-code-fragment-index)          ( shift    account/CODE_FRAGMENT_INDEX           ROW_OFFSET_CODECOPY_NO_XAHOY_ACCOUNT_ROW ))
+(defun (copy-inst-current-address-code-size)                    ( shift    account/CODE_SIZE                     ROW_OFFSET_CODECOPY_NO_XAHOY_ACCOUNT_ROW ))
+;;
+(defun (copy-inst-exo-address-warmth)                               ( shift    account/WARMTH                 ROW_OFFSET_EXTCODECOPY_NO_XAHOY_ACCOUNT_ROW ))
+(defun (copy-inst-exo-address-has-code)                             ( shift    account/HAS_CODE               ROW_OFFSET_EXTCODECOPY_NO_XAHOY_ACCOUNT_ROW ))
+(defun (copy-inst-exo-address-code-size)                            ( shift    account/CODE_SIZE              ROW_OFFSET_EXTCODECOPY_NO_XAHOY_ACCOUNT_ROW ))
+(defun (copy-inst-exo-address-code-fragment-index)                  ( shift    account/CODE_FRAGMENT_INDEX    ROW_OFFSET_EXTCODECOPY_NO_XAHOY_ACCOUNT_ROW ))
 
 
 (defun (copy-inst-standard-precondition)  (*  PEEK_AT_STACK
-                                         stack/COPY_FLAG
-                                         (- 1   stack/SUX   stack/SOX)))
+                                              stack/COPY_FLAG
+                                              (- 1   stack/SUX   stack/SOX)))
 
 (defun (copy-inst-standard-CALLDATACOPY)     (*   (copy-inst-standard-precondition)    (copy-inst-is-CALLDATACOPY)))
 (defun (copy-inst-standard-RETURNDATACOPY)   (*   (copy-inst-standard-precondition)    (copy-inst-is-RETURNDATACOPY)))
@@ -254,14 +254,14 @@
 (defconstraint   copy-setting-the-gas-cost-for-CALLDATACOPY                      (:guard   (copy-inst-standard-CALLDATACOPY))
                  (begin
                    (if-not-zero  stack/MXPX  (vanishes!  GAS_COST))
-                   (if-not-zero  stack/OOGX  (eq!  GAS_COST (+  stack/STATIC_GAS  copy-inst-MXP-memory-expansion-gas)))
-                   (if-zero      XAHOY       (eq!  GAS_COST (+  stack/STATIC_GAS  copy-inst-MXP-memory-expansion-gas)))))
+                   (if-not-zero  stack/OOGX  (eq!  GAS_COST (+  stack/STATIC_GAS  (copy-inst-MXP-memory-expansion-gas))))
+                   (if-zero      XAHOY       (eq!  GAS_COST (+  stack/STATIC_GAS  (copy-inst-MXP-memory-expansion-gas))))))
 
 (defconstraint   copy-setting-context-row-for-exceptional-CALLDATACOPY           (:guard   (copy-inst-standard-CALLDATACOPY))
                  (if-not-zero  XAHOY
                                (execution-provides-empty-return-data  ROW_OFFSET_CALLDATACOPY_CONTEXT_ROW)
                                (read-context-data                     ROW_OFFSET_CALLDATACOPY_CONTEXT_ROW
-                                                                      CONTEXT_NUMBER)
+                                                                      CONTEXT_NUMBER)))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -275,8 +275,8 @@
                  (begin
                    (if-not-zero  stack/RDCX  (vanishes!  GAS_COST))
                    (if-not-zero  stack/MXPX  (vanishes!  GAS_COST))
-                   (if-not-zero  stack/OOGX  (eq!        GAS_COST (+  stack/STATIC_GAS  copy-inst-MXP-memory-expansion-gas)))
-                   (if-zero      XAHOY       (eq!        GAS_COST (+  stack/STATIC_GAS  copy-inst-MXP-memory-expansion-gas)))))
+                   (if-not-zero  stack/OOGX  (eq!        GAS_COST (+  stack/STATIC_GAS  (copy-inst-MXP-memory-expansion-gas))))
+                   (if-zero      XAHOY       (eq!        GAS_COST (+  stack/STATIC_GAS  (copy-inst-MXP-memory-expansion-gas))))))
 
 (defconstraint   copy-setting-the-context-row-for-RETURNDATACOPY                (:guard   (copy-inst-standard-RETURNDATACOPY))
                  (begin
@@ -297,8 +297,8 @@
 (defconstraint   copy-setting-the-gas-cost-for-CODECOPY                         (:guard  (copy-inst-standard-CODECOPY))
                  (begin
                    (if-not-zero  stack/MXPX  (vanishes!  GAS_COST))
-                   (if-not-zero  stack/OOGX  (eq!        GAS_COST (+  stack/STATIC_GAS  copy-inst-MXP-memory-expansion-gas)))
-                   (if-zero      XAHOY       (eq!        GAS_COST (+  stack/STATIC_GAS  copy-inst-MXP-memory-expansion-gas)))))
+                   (if-not-zero  stack/OOGX  (eq!        GAS_COST (+  stack/STATIC_GAS  (copy-inst-MXP-memory-expansion-gas))))
+                   (if-zero      XAHOY       (eq!        GAS_COST (+  stack/STATIC_GAS  (copy-inst-MXP-memory-expansion-gas))))))
 
 (defconstraint   copy-setting-the-context-row-for-exceptional-CODECOPY          (:guard  (copy-inst-standard-CODECOPY))
                  (if-not-zero  XAHOY  (execution-provides-empty-return-data  ROW_OFFSET_CODECOPY_XAHOY_CONTEXT_ROW)))
@@ -310,19 +310,19 @@
 (defconstraint   copy-setting-the-account-row-for-unexceptional-CODECOPY        (:guard  (copy-inst-standard-CODECOPY))
                  (if-zero  XAHOY
                            (begin
-                             (eq!  (shift  account/ADDRESS_HI           ROW_OFFSET_CODECOPY_NO_XAHOY_ACCOUNT_ROW)  (shift  context/BYTE_CODE_ADDRESS_HI           ROW_OFFSET_CODECOPY_NO_XAHOY_CONTEXT_ROW))
-                             (eq!  (shift  account/ADDRESS_LO           ROW_OFFSET_CODECOPY_NO_XAHOY_ACCOUNT_ROW)  (shift  context/BYTE_CODE_ADDRESS_LO           ROW_OFFSET_CODECOPY_NO_XAHOY_CONTEXT_ROW))
-                             (eq!  (shift  account/DEPLOYMENT_NUMBER    ROW_OFFSET_CODECOPY_NO_XAHOY_ACCOUNT_ROW)  (shift  context/BYTE_CODE_CODE_FRAGMENT_INDEX  ROW_OFFSET_CODECOPY_NO_XAHOY_CONTEXT_ROW))
-                             (eq!  (shift  account/CODE_FRAGMENT_INDEX  ROW_OFFSET_CODECOPY_NO_XAHOY_ACCOUNT_ROW)  CODE_FRAGMENT_INDEX)
-                             (eq!  (shift  account/ROM_LEX_FLAG         ROW_OFFSET_CODECOPY_NO_XAHOY_ACCOUNT_ROW)  1)
-                             (account-same-balance                      ROW_OFFSET_CODECOPY_NO_XAHOY_ACCOUNT_ROW)
-                             (account-same-nonce                        ROW_OFFSET_CODECOPY_NO_XAHOY_ACCOUNT_ROW)
-                             (account-same-code                         ROW_OFFSET_CODECOPY_NO_XAHOY_ACCOUNT_ROW)
-                             (account-same-deployment-and-status        ROW_OFFSET_CODECOPY_NO_XAHOY_ACCOUNT_ROW)
-                             (account-same-warmth                       ROW_OFFSET_CODECOPY_NO_XAHOY_ACCOUNT_ROW)
-                             (account-same-marked-for-selfdestruct      ROW_OFFSET_CODECOPY_NO_XAHOY_ACCOUNT_ROW)
-                             (standard-dom-sub-stamp                    ROW_OFFSET_CODECOPY_NO_XAHOY_ACCOUNT_ROW
-                                                                        0))))
+                             (eq!  (shift  account/ADDRESS_HI             ROW_OFFSET_CODECOPY_NO_XAHOY_ACCOUNT_ROW)  (shift  context/BYTE_CODE_ADDRESS_HI           ROW_OFFSET_CODECOPY_NO_XAHOY_CONTEXT_ROW))
+                             (eq!  (shift  account/ADDRESS_LO             ROW_OFFSET_CODECOPY_NO_XAHOY_ACCOUNT_ROW)  (shift  context/BYTE_CODE_ADDRESS_LO           ROW_OFFSET_CODECOPY_NO_XAHOY_CONTEXT_ROW))
+                             (eq!  (shift  account/DEPLOYMENT_NUMBER      ROW_OFFSET_CODECOPY_NO_XAHOY_ACCOUNT_ROW)  (shift  context/BYTE_CODE_CODE_FRAGMENT_INDEX  ROW_OFFSET_CODECOPY_NO_XAHOY_CONTEXT_ROW))
+                             (eq!  (shift  account/CODE_FRAGMENT_INDEX    ROW_OFFSET_CODECOPY_NO_XAHOY_ACCOUNT_ROW)  CODE_FRAGMENT_INDEX)
+                             (eq!  (shift  account/ROM_LEX_FLAG           ROW_OFFSET_CODECOPY_NO_XAHOY_ACCOUNT_ROW)  1)
+                             (account-same-balance                        ROW_OFFSET_CODECOPY_NO_XAHOY_ACCOUNT_ROW)
+                             (account-same-nonce                          ROW_OFFSET_CODECOPY_NO_XAHOY_ACCOUNT_ROW)
+                             (account-same-code                           ROW_OFFSET_CODECOPY_NO_XAHOY_ACCOUNT_ROW)
+                             (account-same-deployment-number-and-status   ROW_OFFSET_CODECOPY_NO_XAHOY_ACCOUNT_ROW)
+                             (account-same-warmth                         ROW_OFFSET_CODECOPY_NO_XAHOY_ACCOUNT_ROW)
+                             (account-same-marked-for-selfdestruct        ROW_OFFSET_CODECOPY_NO_XAHOY_ACCOUNT_ROW)
+                             (standard-dom-sub-stamps                     ROW_OFFSET_CODECOPY_NO_XAHOY_ACCOUNT_ROW
+                                                                          0))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                      ;;
@@ -358,7 +358,7 @@
                                  (account-same-deployment-number-and-status  ROW_OFFSET_EXTCODECOPY_OOGX_ACCOUNT_ROW)
                                  (account-same-warmth                        ROW_OFFSET_EXTCODECOPY_OOGX_ACCOUNT_ROW)
                                  (account-same-marked-for-selfdestruct       ROW_OFFSET_EXTCODECOPY_OOGX_ACCOUNT_ROW)
-                                 (standard-dom-sub-stamp                     ROW_OFFSET_EXTCODECOPY_OOGX_ACCOUNT_ROW
+                                 (standard-dom-sub-stamps                    ROW_OFFSET_EXTCODECOPY_OOGX_ACCOUNT_ROW
                                                                              0))
                                ;; context-row i + 3
                                (execution-provides-empty-return-data  ROW_OFFSET_EXTCODECOPY_OOGX_CONTEXT_ROW)))
@@ -367,6 +367,7 @@
 
 (defconstraint   copy-inst-unexceptional-reverted-EXTCODECOPY-doing-account-row                   (:guard   (copy-inst-standard-EXTCODECOPY))
                  (if-not-zero  (*  (- 1 XAHOY)  CONTEXT_WILL_REVERT)
+                               (begin
                                  (account-trim-address  ROW_OFFSET_EXTCODECOPY_OOGX_ACCOUNT_ROW
                                                         (copy-inst-raw-address-hi)
                                                         (copy-inst-raw-address-lo))
@@ -377,25 +378,27 @@
                                  (account-same-deployment-number-and-status  ROW_OFFSET_EXTCODECOPY_NO_XAHOY_REVERT_ACCOUNT_DOING_ROW)
                                  (account-turn-on-warmth                     ROW_OFFSET_EXTCODECOPY_NO_XAHOY_REVERT_ACCOUNT_DOING_ROW)
                                  (account-same-marked-for-selfdestruct       ROW_OFFSET_EXTCODECOPY_NO_XAHOY_REVERT_ACCOUNT_DOING_ROW)
-                                 (standard-dom-sub-stamp                     ROW_OFFSET_EXTCODECOPY_NO_XAHOY_REVERT_ACCOUNT_DOING_ROW
-                                                                             0))
+                                 (standard-dom-sub-stamps                    ROW_OFFSET_EXTCODECOPY_NO_XAHOY_REVERT_ACCOUNT_DOING_ROW
+                                                                             0))))
 
 (defconstraint   copy-inst-unexceptional-reverted-EXTCODECOPY-undoing-account-row                 (:guard   (copy-inst-standard-EXTCODECOPY))
                  (if-not-zero  (*  (- 1 XAHOY)  CONTEXT_WILL_REVERT)
+                               (begin
                                  (account-same-address-as ROW_OFFSET_EXTCODECOPY_NO_XAHOY_REVERT_ACCOUNT_UNDOING_ROW
                                                           ROW_OFFSET_EXTCODECOPY_NO_XAHOY_REVERT_ACCOUNT_DOING_ROW  )
-                                 (eq!          (shift  account/ROM_LEX_FLAG  ROW_OFFSET_EXTCODECOPY_NO_XAHOY_REVERT_ACCOUNT_UNDOING_ROW)  (copy-inst-trigger-CFI))
-                                 (account-undo-balance-update                       ROW_OFFSET_EXTCODECOPY_NO_XAHOY_REVERT_ACCOUNT_UNDOING_ROW   ROW_OFFSET_EXTCODECOPY_NO_XAHOY_REVERT_ACCOUNT_DOING_ROW)
-                                 (account-undo-nonce-update                         ROW_OFFSET_EXTCODECOPY_NO_XAHOY_REVERT_ACCOUNT_UNDOING_ROW   ROW_OFFSET_EXTCODECOPY_NO_XAHOY_REVERT_ACCOUNT_DOING_ROW)
-                                 (account-undo-code-update                          ROW_OFFSET_EXTCODECOPY_NO_XAHOY_REVERT_ACCOUNT_UNDOING_ROW   ROW_OFFSET_EXTCODECOPY_NO_XAHOY_REVERT_ACCOUNT_DOING_ROW)
-                                 (account-undo-deployment-number-and-status-update  ROW_OFFSET_EXTCODECOPY_NO_XAHOY_REVERT_ACCOUNT_UNDOING_ROW   ROW_OFFSET_EXTCODECOPY_NO_XAHOY_REVERT_ACCOUNT_DOING_ROW)
-                                 (account-undo-warmth-update                        ROW_OFFSET_EXTCODECOPY_NO_XAHOY_REVERT_ACCOUNT_UNDOING_ROW   ROW_OFFSET_EXTCODECOPY_NO_XAHOY_REVERT_ACCOUNT_DOING_ROW)
-                                 (account-same-marked-for-selfdestruct              ROW_OFFSET_EXTCODECOPY_NO_XAHOY_REVERT_ACCOUNT_UNDOING_ROW)
-                                 (revert-dom-sub-stamp                              ROW_OFFSET_EXTCODECOPY_NO_XAHOY_REVERT_ACCOUNT_UNDOING_ROW
-                                                                                    1))
+                                 (eq!          (shift  account/ROM_LEX_FLAG    ROW_OFFSET_EXTCODECOPY_NO_XAHOY_REVERT_ACCOUNT_UNDOING_ROW)  (copy-inst-trigger-CFI))
+                                 (account-undo-balance-update                  ROW_OFFSET_EXTCODECOPY_NO_XAHOY_REVERT_ACCOUNT_UNDOING_ROW   ROW_OFFSET_EXTCODECOPY_NO_XAHOY_REVERT_ACCOUNT_DOING_ROW)
+                                 (account-undo-nonce-update                    ROW_OFFSET_EXTCODECOPY_NO_XAHOY_REVERT_ACCOUNT_UNDOING_ROW   ROW_OFFSET_EXTCODECOPY_NO_XAHOY_REVERT_ACCOUNT_DOING_ROW)
+                                 (account-undo-code-update                     ROW_OFFSET_EXTCODECOPY_NO_XAHOY_REVERT_ACCOUNT_UNDOING_ROW   ROW_OFFSET_EXTCODECOPY_NO_XAHOY_REVERT_ACCOUNT_DOING_ROW)
+                                 (account-undo-deployment-status-update        ROW_OFFSET_EXTCODECOPY_NO_XAHOY_REVERT_ACCOUNT_UNDOING_ROW   ROW_OFFSET_EXTCODECOPY_NO_XAHOY_REVERT_ACCOUNT_DOING_ROW)
+                                 (account-undo-warmth-update                   ROW_OFFSET_EXTCODECOPY_NO_XAHOY_REVERT_ACCOUNT_UNDOING_ROW   ROW_OFFSET_EXTCODECOPY_NO_XAHOY_REVERT_ACCOUNT_DOING_ROW)
+                                 (account-same-marked-for-selfdestruct         ROW_OFFSET_EXTCODECOPY_NO_XAHOY_REVERT_ACCOUNT_UNDOING_ROW)
+                                 (revert-dom-sub-stamps                        ROW_OFFSET_EXTCODECOPY_NO_XAHOY_REVERT_ACCOUNT_UNDOING_ROW
+                                                                               1))))
 
 (defconstraint   copy-inst-unexceptional-unreverted-EXTCODECOPY-account-row                       (:guard   (copy-inst-standard-EXTCODECOPY))
                  (if-not-zero  (*  (- 1 XAHOY)  (- 1 CONTEXT_WILL_REVERT))
+                               (begin
                                  (account-trim-address  ROW_OFFSET_EXTCODECOPY_NO_XAHOY_NO_REVERT_ACCOUNT_ROW
                                                         (copy-inst-raw-address-hi)
                                                         (copy-inst-raw-address-lo))
@@ -406,5 +409,5 @@
                                  (account-same-deployment-number-and-status  ROW_OFFSET_EXTCODECOPY_NO_XAHOY_NO_REVERT_ACCOUNT_ROW)
                                  (account-turn-on-warmth                     ROW_OFFSET_EXTCODECOPY_NO_XAHOY_NO_REVERT_ACCOUNT_ROW)
                                  (account-same-marked-for-selfdestruct       ROW_OFFSET_EXTCODECOPY_NO_XAHOY_NO_REVERT_ACCOUNT_ROW)
-                                 (standard-dom-sub-stamp                     ROW_OFFSET_EXTCODECOPY_NO_XAHOY_NO_REVERT_ACCOUNT_ROW
-                                                                             0))
+                                 (standard-dom-sub-stamps                    ROW_OFFSET_EXTCODECOPY_NO_XAHOY_NO_REVERT_ACCOUNT_ROW
+                                                                             0))))

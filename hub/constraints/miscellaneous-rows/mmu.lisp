@@ -268,7 +268,7 @@
          ;; exo_sum             ;; weighted exogenous module flag sum
          ;; phase               ;; phase
          ) (begin
-         (eq! (shift misc/MMU_INST            kappa) MMU_INST_ramToRamSansPadding)
+         (eq! (shift misc/MMU_INST            kappa) MMU_INST_RAM_TO_RAM_SANS_PADDING)
          (eq! (shift misc/MMU_SRC_ID          kappa) src_id )
          (eq! (shift misc/MMU_TGT_ID          kappa) tgt_id )
          ;; (eq! (shift misc/MMU_AUX_ID          kappa) aux_id )
@@ -303,7 +303,7 @@
          exo_sum             ;; weighted exogenous module flag sum
          ;; phase               ;; phase
          ) (begin
-         (eq! (shift misc/MMU_INST            kappa) MMU_INST_anyToRamWithPadding)
+         (eq! (shift misc/MMU_INST            kappa) MMU_INST_ANY_TO_RAM_WITH_PADDING)
          (eq! (shift misc/MMU_SRC_ID          kappa) src_id )
          (eq! (shift misc/MMU_TGT_ID          kappa) tgt_id )
          ;; (eq! (shift misc/MMU_AUX_ID          kappa) aux_id )
