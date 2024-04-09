@@ -18,7 +18,9 @@
 
 (defconst
   ROW_OFFSET_REVERT_MISCELLANEOUS_ROW              1
+  ;;
   ROW_OFFSET_REVERT_XAHOY_CALLER_CONTEXT_ROW       2
+  ;;
   ROW_OFFSET_REVERT_NO_XAHOY_CURRENT_CONTEXT_ROW   2
   ROW_OFFSET_REVERT_NO_XAHOY_CALLER_CONTEXT_ROW    3)
 
@@ -76,7 +78,7 @@
                               (execution-provides-empty-return-data      ROW_OFFSET_REVERT_XAHOY_CALLER_CONTEXT_ROW)
                               ;; XAHOY ≡ 0
                               (begin
-                                (read-context-data                       ROW_OFFSET_REVERT_NO_XAHOY_CURRENT_CONTEXT_ROW   CONTEXT_NUMBER)
+                                (read-context-data                       ROW_OFFSET_REVERT_NO_XAHOY_CURRENT_CONTEXT_ROW   (revert-inst-current-context))
                                 (execution-provides-empty-return-data    ROW_OFFSET_REVERT_NO_XAHOY_CALLER_CONTEXT_ROW))))
 
 (defun  (revert-inst-trigger_MMU)  (*  (-  1  XAHOY)
@@ -90,7 +92,7 @@
 
 (defconstraint  revert-inst-setting-the-MXP-data                          (:guard (revert-inst-standard-precondition))
                 (set-MXP-instruction-type-4 ROW_OFFSET_REVERT_MISCELLANEOUS_ROW   ;; row offset kappa
-                                            stack/INSTRUCTION                     ;; instruction
+                                            (revert-inst-instruction)             ;; instruction
                                             0                                     ;; bit modifying the behaviour of RETURN pricing
                                             (revert-inst-offset-hi)               ;; offset high
                                             (revert-inst-offset-lo)               ;; offset low
@@ -103,8 +105,8 @@
 (defconstraint  revert-inst-setting-the-MMU-data                          (:guard (revert-inst-standard-precondition))
                 (if-not-zero  (shift  misc/MMU_FLAG  ROW_OFFSET_REVERT_MISCELLANEOUS_ROW)
                               (set-MMU-inst-ram-to-ram-sans-padding
-                                ROW_OFFSET_REVERT_MISCELLANEOUS_ROW  ;; offset
-                                CN                                   ;; source ID
+                                ROW_OFFSET_REVERT_MISCELLANEOUS_ROW  ;; row offset
+                                (revert-inst-current-context)        ;; source ID
                                 (revert-inst-caller-context)         ;; target ID
                                 ;; aux_id                               ;; auxiliary ID
                                 ;; src_offset_hi                        ;; source offset high
