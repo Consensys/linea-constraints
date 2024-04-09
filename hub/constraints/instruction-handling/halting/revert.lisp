@@ -34,6 +34,7 @@
 (defun  (revert-inst-current-context)            CONTEXT_NUMBER)
 (defun  (revert-inst-caller-context)             CALLER_CONTEXT_NUMBER)
 (defun  (revert-inst-MXP-memory-expansion-gas)   (shift  misc/MXP_GAS_MXP             ROW_OFFSET_REVERT_MISCELLANEOUS_ROW))
+(defun  (revert-inst-current-context-is-root)    (shift  context/IS_ROOT              ROW_OFFSET_REVERT_NO_XAHOY_CURRENT_CONTEXT_ROW))
 (defun  (revert-inst-r@o)                        (shift  context/RETURN_AT_OFFSET     ROW_OFFSET_REVERT_NO_XAHOY_CURRENT_CONTEXT_ROW))
 (defun  (revert-inst-r@c)                        (shift  context/RETURN_AT_CAPACITY   ROW_OFFSET_REVERT_NO_XAHOY_CURRENT_CONTEXT_ROW))
 
@@ -78,10 +79,22 @@
                               (execution-provides-empty-return-data      ROW_OFFSET_REVERT_XAHOY_CALLER_CONTEXT_ROW)
                               ;; XAHOY ≡ 0
                               (begin
-                                (read-context-data                       ROW_OFFSET_REVERT_NO_XAHOY_CURRENT_CONTEXT_ROW   (revert-inst-current-context))
-                                (execution-provides-empty-return-data    ROW_OFFSET_REVERT_NO_XAHOY_CALLER_CONTEXT_ROW))))
+                                (read-context-data   ROW_OFFSET_REVERT_NO_XAHOY_CURRENT_CONTEXT_ROW
+                                                     (revert-inst-current-context))
+                                (if-not-zero   (force-bin (revert-inst-current-context-is-root))
+                                               ;; current context IS root
+                                               (read-context-data    ROW_OFFSET_REVERT_NO_XAHOY_CALLER_CONTEXT_ROW
+                                                                     (revert-inst-caller-context)))
+                                ;; current context ISN'T root
+                                (provide-return-data   ROW_OFFSET_REVERT_NO_XAHOY_CALLER_CONTEXT_ROW      ;; row offset
+                                                       (revert-inst-caller-context)                       ;; receiver context
+                                                       (revert-inst-current-context)                      ;; provider context
+                                                       (revert-inst-offset-lo)                            ;; rdo
+                                                       (revert-inst-size-lo)                              ;; rds
+                                                       ))))
 
 (defun  (revert-inst-trigger_MMU)  (*  (-  1  XAHOY)
+                                       (-  1  (revert-inst-current-context-is-root))
                                        (is-not-zero (*  (revert-inst-size-lo)
                                                         (revert-inst-r@c)))))
 

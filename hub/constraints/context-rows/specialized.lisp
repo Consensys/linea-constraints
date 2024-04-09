@@ -90,7 +90,7 @@
          (vanishes! (shift context/UPDATE         kappa)               )))
 
 (defun (provide-return-data 
-         kappa                               ;; offset
+         kappa                               ;; row offset
          return_data_receiver_context        ;; receiver context
          return_data_provider_context        ;; provider context
          return_data_offset                  ;; rdo
