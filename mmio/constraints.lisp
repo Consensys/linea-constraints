@@ -70,10 +70,6 @@
                  IS_RAM_TO_LIMB_ONE_SOURCE
                  IS_RAM_TO_LIMB_TWO_SOURCE)))
 
-(defconstraint no-exo-when-not-needed ()
-  (if-zero (instruction-may-provide-exo-sum)
-           (vanishes! EXO_SUM)))
-
 ;;
 ;; Heartbeat
 ;;
