@@ -53,8 +53,9 @@ LOG_INFO := logInfo
 
 MMU := mmu
 
-MMIO := mmio \
-mmio/consistency.lisp
+MMIO := mmio/columns.lisp #TODO enable the MMIO constraint and lookup
+# MMIO := mmio \
+# mmio/consistency.lisp
 
 MXP := mxp
 

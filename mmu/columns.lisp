@@ -8,13 +8,13 @@
   (MACRO :binary@prove)
   (PRPRC :binary@prove)
   (MICRO :binary@prove)
-  ;; output of the preprocessing
-  (TOT   :i16)
-  (TOTLZ :i16)
-  (TOTNT :i16)
-  (TOTRZ :i16)
-  (OUT   :i32    :array [5])
-  (BIN   :binary :array [5])
+  ;; OUTPUT OF THE PREPROCESSING
+  (TOT :i32)
+  (TOTLZ :i32)
+  (TOTNT :i32)
+  (TOTRZ :i32)
+  (OUT :i64 :array [5])
+  (BIN :binary :array [5])
   ;; MMU INSTRUCTION FLAG
   (IS_MLOAD                                :binary@prove)
   (IS_MSTORE                               :binary@prove)
@@ -44,10 +44,10 @@
 
   ;; selector
   MACRO
-  ((INST          :i16)
-   (SRC_ID        :i32)
-   (TGT_ID        :i32)
-   (AUX_ID        :i32)
+  ((INST :i16)
+   (SRC_ID :i64)
+   (TGT_ID :i64)
+   (AUX_ID :i64)
    (SRC_OFFSET_HI :i128)
    (SRC_OFFSET_LO :i128)
    (TGT_OFFSET_LO :i64)
@@ -82,20 +82,20 @@
 
   ;; selector
   MICRO
-  ((INST        :i16)
-   (SIZE        :byte)
-   (SLO         :i32)
-   (SBO         :byte)
-   (TLO         :i32)
-   (TBO         :byte)
-   (LIMB        :i128)
-   (CN_S        :i32)
-   (CN_T        :i32)
+  ((INST :i16)
+   (SIZE :byte)
+   (SLO :i64)
+   (SBO :byte)
+   (TLO :i64)
+   (TBO :byte)
+   (LIMB :i128)
+   (CN_S :i64)
+   (CN_T :i64)
    (SUCCESS_BIT :binary)
-   (EXO_SUM     :i32)
-   (PHASE       :i32)
-   (EXO_ID      :i32)
-   (KEC_ID      :i32)
-   (TOTAL_SIZE  :i32)))
+   (EXO_SUM :i32)
+   (PHASE :i32)
+   (EXO_ID :i32)
+   (KEC_ID :i32)
+   (TOTAL_SIZE :i64)))
 
 
