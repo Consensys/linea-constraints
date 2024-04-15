@@ -17,7 +17,6 @@
   (IS_SHA2_RESULT :binary@prove)
   (IS_RIPEMD_DATA :binary@prove)
   (IS_RIPEMD_RESULT :binary@prove)
-  (IS_EXTRA :binary@prove)
-  (HASH_NUMBER :i48))
+  (IS_EXTRA :binary@prove))
 
 

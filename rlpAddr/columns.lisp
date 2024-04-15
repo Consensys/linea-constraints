@@ -28,8 +28,7 @@
   POWER
   (BIT1 :binary@prove)
   (BIT_ACC :byte)
-  (TINY_NON_ZERO_NONCE :binary@prove)
-  (HASH_NUMBER :i72))
+  (TINY_NON_ZERO_NONCE :binary@prove))
 
 ;; aliases
 (defalias 

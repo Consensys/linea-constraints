@@ -42,9 +42,6 @@
   (begin (if-eq RECIPE_1 1 (eq! ct 7))
          (if-eq RECIPE_2 1 (eq! ct 5))))
 
-(defconstraint shift-hash-number (:guard STAMP)
-  (eq! HASH_NUMBER (+ STAMP RLP_TXN_STAMP_MAX_VALUE SHAKIRA_STAMP_MAX_VALUE)))
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                              ;;
 ;;    3.2 Constancies    ;;
