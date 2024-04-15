@@ -379,6 +379,11 @@
   RLP_PREFIX_LIST_SHORT                        192                               ;;RLP prefix of a short list (<56 bytes), defined in the EYP.
   RLP_PREFIX_LIST_LONG                         247                               ;;RLP prefix of a long list (>55 bytes), defined in the EYP.
   ;;
+  ;; RLP_TXN STAMP
+  ;;
+  RLP_TXN_STAMP_BYTE_SIZE                      2
+  RLP_TXN_STAMP_MAX_VALUE                      (^ 256 RLP_TXN_STAMP_BYTE_SIZE)
+  ;;
   ;; RLP_TXN Phase
   ;;
   RLP_TXN_PHASE_RLP_PREFIX_VALUE               1
@@ -418,6 +423,14 @@
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; SHAKIRA MODULE ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;                ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;;
+  ;; SHAKIRA STAMP
+  ;;
+  SHAKIRA_STAMP_BYTE_SIZE                      4
+  SHAKIRA_STAMP_MAX_VALUE                      (^ 256 SHAKIRA_STAMP_BYTE_SIZE)
+  ;;
+  ;; SHAKIRA PHASE
+  ;;
   PHASE_SHA2_DATA                              1
   PHASE_SHA2_RESULT                            2
   PHASE_RIPEMD_DATA                            3

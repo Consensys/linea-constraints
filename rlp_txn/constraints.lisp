@@ -116,6 +116,9 @@
        (+ (prev ABS_TX_NUM)
           (* [PHASE RLP_TXN_PHASE_RLP_PREFIX_VALUE] (remained-constant! [PHASE RLP_TXN_PHASE_RLP_PREFIX_VALUE])))))
 
+(defconstraint set-to-hash-by-prover-flag ()
+  (eq! TO_HASH_BY_PROVER (* LC LX)))
+
 ;; 2.3.2.6
 (defconstraint LT-and-LX ()
   (if-eq (reduce + (for i [2 : 11] [PHASE i])) 1

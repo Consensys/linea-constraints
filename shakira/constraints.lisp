@@ -214,4 +214,12 @@
   (if-eq (prev (is-data)) 1
          (if-eq (is-result) 1 (eq! nBYTES_ACC TOTAL_SIZE))))
 
+;;;;;;;;;;;;;;;;;;;;;;
+;;                  ;;
+;;    X.3.7 MISC    ;;
+;;                  ;;
+;;;;;;;;;;;;;;;;;;;;;;         
+(defconstraint hash-number-shifting (:guard RIPSHA_STAMP)
+  (eq! HASH_NUMBER (+ RIPSHA_STAMP RLP_TXN_STAMP_MAX_VALUE)))
+
 
