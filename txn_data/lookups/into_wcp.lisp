@@ -12,11 +12,11 @@
   ; source columns
   (
     0
-    txnData.WCP_ARG_ONE_LO
+    txnData.ARG_ONE_LO
     0
-    txnData.WCP_ARG_TWO_LO
-    txnData.WCP_RES
-    txnData.WCP_INST
+    txnData.ARG_TWO_LO
+    txnData.RES
+    txnData.INST
   ))
 
 
