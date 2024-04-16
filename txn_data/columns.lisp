@@ -30,10 +30,10 @@
   (TYPE2 :binary@prove)
   (REQUIRES_EVM_EXECUTION :binary@prove)
   (COPY_TXCD :binary@prove)
-  GAS_LEFTOVER
-  REFUND_COUNTER
-  REFUND_EFFECTIVE
-  GAS_CUMULATIVE
+  (GAS_LEFTOVER :i128)
+  (REFUND_COUNTER :i128)
+  (REFUND_EFFECTIVE :i128)
+  (GAS_CUMULATIVE :i128)
   (STATUS_CODE :binary@prove)
   (PHASE_RLP_TXN :byte)
   (PHASE_RLP_TXNRCPT :byte)
@@ -41,11 +41,11 @@
   (OUTGOING_HI :i128)
   (OUTGOING_LO :i128)
   (OUTGOING_RLP_TXNRCPT :i128)
-  (EUC_FLAG :bnary@prove)
-  (WCP_FLAG :bnary@prove)
+  (EUC_FLAG :binary@prove)
+  (WCP_FLAG :binary@prove)
   (ARG_ONE_LO :i128)
   (ARG_TWO_LO :i128)
-  (RES :i128)
+  (RES :i64)
   (INST :byte :display :opcode))
 
 (defalias 
@@ -59,7 +59,6 @@
   CUM_GAS GAS_CUMULATIVE
   CFI     CODE_FRAGMENT_INDEX
   REF_CNT REFUND_COUNTER
-  REF_AMT REFUND_EFFECTIVE
   IGAS    GAS_INITIALLY_AVAILABLE
   IBAL    INITIAL_BALANCE
   GLIM    GAS_LIMIT
