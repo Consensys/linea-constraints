@@ -33,13 +33,13 @@
    (CREATE_NONEMPTY_INIT_CODE_SUCCESS_WILL_REVERT :binary@prove)
    (CREATE_NONEMPTY_INIT_CODE_SUCCESS_WONT_REVERT :binary@prove)
    ;; Return related
-   (RETURN_EXCEPTION :binary@prove)
-   (RETURN_MESSAGE_CALL_WILL_TOUCH_RAM :binary@prove)
-   (RETURN_MESSAGE_CALL_WONT_TOUCH_RAM :binary@prove)
-   (RETURN_DEPLOYMENT_EMPTY_CODE_WILL_REVERT :binary@prove)
-   (RETURN_DEPLOYMENT_EMPTY_CODE_WONT_REVERT :binary@prove)
-   (RETURN_DEPLOYMENT_NONEMPTY_CODE_WILL_REVERT :binary@prove)
-   (RETURN_DEPLOYMENT_NONEMPTY_CODE_WONT_REVERT :binary@prove)
+   (RETURN_EXCEPTION                                 :binary@prove)
+   (RETURN_FROM_MESSAGE_CALL_WILL_TOUCH_RAM          :binary@prove)
+   (RETURN_FROM_MESSAGE_CALL_WONT_TOUCH_RAM          :binary@prove)
+   (RETURN_FROM_DEPLOYMENT_EMPTY_CODE_WILL_REVERT    :binary@prove)
+   (RETURN_FROM_DEPLOYMENT_EMPTY_CODE_WONT_REVERT    :binary@prove)
+   (RETURN_FROM_DEPLOYMENT_NONEMPTY_CODE_WILL_REVERT :binary@prove)
+   (RETURN_FROM_DEPLOYMENT_NONEMPTY_CODE_WONT_REVERT :binary@prove)
    ;; precompile related
    ;; precompile flags
    (PRC_ECRECOVER :binary@prove)
