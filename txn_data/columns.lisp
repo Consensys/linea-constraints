@@ -45,7 +45,7 @@
   (WCP_FLAG :binary@prove)
   (ARG_ONE_LO :i128)
   (ARG_TWO_LO :i128)
-  (RES :i64)
+  (RES :binary)
   (INST :byte :display :opcode))
 
 (defalias 

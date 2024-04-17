@@ -21,6 +21,11 @@
 (defconstraint first-row (:domain {0})
   (vanishes! ABS))
 
+(defconstraint padding-is-padding ()
+  (if-zero ABS
+           (begin (debug (vanishes! CT))
+                  (vanishes! (weight_sum))))) ;;TODO: useless, but in the spec
+
 (defconstraint padding ()
   (if-zero ABS
            (begin (vanishes! CT)
