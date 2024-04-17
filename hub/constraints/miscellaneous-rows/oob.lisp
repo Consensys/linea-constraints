@@ -94,6 +94,21 @@
          ;; (eq! (shift [ misc/OOB_DATA 8 ]    kappa) )
          ))
 
+(defun (set-OOB-inst-deployment
+         kappa                            ;; offset
+         code_size_hi                     ;; code size hi
+         code_size_lo                     ;; code size lo
+         ) (begin
+         (eq! (shift misc/OOB_INST          kappa)   OOB_INST_deployment )
+         (eq! (shift [ misc/OOB_DATA 1 ]    kappa)   code_size_hi)
+         (eq! (shift [ misc/OOB_DATA 2 ]    kappa)   code_size_lo)
+         ;; (eq! (shift [ misc/OOB_DATA 3 ]    kappa) )
+         ;; (eq! (shift [ misc/OOB_DATA 4 ]    kappa) )
+         ;; (eq! (shift [ misc/OOB_DATA 5 ]    kappa) )
+         ;; (eq! (shift [ misc/OOB_DATA 6 ]    kappa) )
+         ;; (eq! (shift [ misc/OOB_DATA 7 ]    kappa) )    ;; max code size exception
+         ;; (eq! (shift [ misc/OOB_DATA 8 ]    kappa) )
+         ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                           ;;

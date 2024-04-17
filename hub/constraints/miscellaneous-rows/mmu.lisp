@@ -128,7 +128,7 @@
          ;; exo_sum             ;; weighted exogenous module flag sum
          ;; phase               ;; phase
          ) (begin
-         (eq! (shift misc/MMU_INST            kappa) MMU_INST_invalidCodePrefix )
+         (eq! (shift misc/MMU_INST            kappa) MMU_INST_INVALID_CODE_PREFIX )
          (eq! (shift misc/MMU_SRC_ID          kappa) src_id )
          ;; (eq! (shift misc/MMU_TGT_ID          kappa) )
          ;; (eq! (shift misc/MMU_AUX_ID          kappa) )
