@@ -67,8 +67,8 @@
    ;; hash info related
    (HASH_INFO_FLAG :binary@prove)
    HASH_INFO_SIZE
-   HASH_INFO_KEC_HI
-   HASH_INFO_KEC_LO
+   HASH_INFO_KECCAK_HI
+   HASH_INFO_KECCAK_LO
    ;; log info related
    (LOG_INFO_FLAG :binary@prove))
   (defalias
