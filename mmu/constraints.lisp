@@ -1324,7 +1324,7 @@
          ;; preprocessing row n°4
          (callToLt 4
                    0
-                   (+ (modexp-initial-slo) (- (modexp-first-limb-bytesize) 1))
+                   (+ (modexp-initial-sbo) (- (modexp-first-limb-bytesize) 1))
                    LLARGE)
          (eq! (modexp-first-limb-single-source) (shift prprc/WCP_RES 4))
          ;; preprocessing row n°5

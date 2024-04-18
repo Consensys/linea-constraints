@@ -11,12 +11,14 @@
   )
   ;source columns
   (
-    (* mmu.prprc/EUC_A mmu.prprc/EUC_FLAG)
-    (* mmu.prprc/EUC_B mmu.prprc/EUC_FLAG)
-    (* mmu.prprc/EUC_QUOT mmu.prprc/EUC_FLAG)
-    (* mmu.prprc/EUC_REM mmu.prprc/EUC_FLAG)
-    (* mmu.prprc/EUC_CEIL mmu.prprc/EUC_FLAG)
-    mmu.prprc/EUC_FLAG
+    (* mmu.PRPRC mmu.prprc/EUC_A mmu.prprc/EUC_FLAG)
+    (* mmu.PRPRC mmu.prprc/EUC_B mmu.prprc/EUC_FLAG)
+    (* mmu.PRPRC mmu.prprc/EUC_QUOT mmu.prprc/EUC_FLAG)
+    (* mmu.PRPRC mmu.prprc/EUC_REM mmu.prprc/EUC_FLAG)
+    (* mmu.PRPRC mmu.prprc/EUC_CEIL mmu.prprc/EUC_FLAG)
+    (* mmu.PRPRC mmu.prprc/EUC_FLAG)
   ))
+
+;; TODO remove *mmu.PRPRC as it should be done by corset itself
 
 
