@@ -113,7 +113,6 @@
 ;;    2.2 binary constraints   ;;
 ;;                             ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; These constraints will be auto-generated due to the type of the columns
 (defconstraint binary-constraints ()
   (begin (is-binary ADD_FLAG)
          (is-binary MOD_FLAG)
@@ -197,7 +196,7 @@
   (any! (remained-constant! STAMP) (did-inc! STAMP 1)))
 
 (defconstraint counter-reset ()
-  (if-not-zero (remained-constant! STAMP)
+  (if-not-zero (remained-constant! STAMP) ;; if it is false (not zero, in the case of loobean) that STAMP remained constant
                (vanishes! CT)))
 
 (defconstraint ct-max ()
@@ -564,6 +563,7 @@
 (defun (prc___r_at_c_nonzero)
   [DATA 8])
 
+;;
 (defun (prc___cds_is_zero)
   OUTGOING_RES_LO)
 
@@ -602,9 +602,9 @@
 (defconstraint justify-hub-predictions-prc-ecrecover-prc-ecadd-prc-ecmul (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-ecrecover-prc-ecadd-prc-ecmul-hypothesis)))
   (begin (eq! (prc___hub_success) (- 1 (prc-ecrecover-prc-ecadd-prc-ecmul___insufficient_gas)))
          (if-zero (prc___hub_success)
+                  (vanishes! (prc___return_gas))
                   (eq! (prc___return_gas)
-                       (- (prc___call_gas) (prc-ecrecover-prc-ecadd-prc-ecmul___precompile_cost)))
-                  (vanishes! (prc___return_gas)))))
+                       (- (prc___call_gas) (prc-ecrecover-prc-ecadd-prc-ecmul___precompile_cost))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                       ;;
@@ -633,9 +633,9 @@
 (defconstraint justify-hub-predictions-prc-sha2-prc-ripemd-prc-identity (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-sha2-prc-ripemd-prc-identity-hypothesis)))
   (begin (eq! (prc___hub_success) (- 1 (prc-sha2-prc-ripemd-prc-identity___insufficient_gas)))
          (if-zero (prc___hub_success)
+                  (vanishes! (prc___return_gas))
                   (eq! (prc___return_gas)
-                       (- (prc___call_gas) (prc-sha2-prc-ripemd-prc-identity___precompile_cost)))
-                  (vanishes! (prc___return_gas)))))
+                       (- (prc___call_gas) (prc-sha2-prc-ripemd-prc-identity___precompile_cost))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                       ;;
