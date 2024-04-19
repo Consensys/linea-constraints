@@ -679,11 +679,11 @@
 
 (defconstraint justify-hub-predictions-prc-ecpairing (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-ecpairing-hypothesis)))
   (begin (eq! (prc___hub_success)
-              (* (prc-ecpairing___insufficient_gas) (- 1 (prc-ecpairing___insufficient_gas))))
+              (* (prc-ecpairing___is_multiple_192) (- 1 (prc-ecpairing___insufficient_gas))))
          (if-zero (prc___hub_success)
+                  (vanishes! (prc___return_gas))
                   (eq! (* (prc___return_gas) 192)
-                       (- (* (prc___call_gas) 192) (prc-ecpairing___precompile_cost192)))
-                  (vanishes! (prc___return_gas)))))
+                       (- (* (prc___call_gas) 192) (prc-ecpairing___precompile_cost192))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                         ;;
@@ -708,7 +708,7 @@
   [DATA 5])
 
 (defconstraint valid-prc-modexp_cds (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp_cds-hypothesis)))
-  (callToLT 0 0 (prc___cds) 0 0))
+  (callToLT 0 0 0 0 (prc___cds)))
 
 (defconstraint valid-prc-modexp_cds-future (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp_cds-hypothesis)))
   (callToLT 1 0 32 0 (prc___cds)))
@@ -753,17 +753,18 @@
 (defun (prc-modexp_xbs___comp)
   (next OUTGOING_RES_LO))
 
-;; TODO: extract?
 (defconstraint valid-prc-modexp_xbs (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp_xbs-hypothesis)))
-  (begin (callToLT 0 (prc-modexp_xbs___xbs_hi) (prc-modexp_xbs___xbs_lo) 0 513)
-         (vanishes! (* (prc-modexp_xbs___compute_max) (- 1 (prc-modexp_xbs___compute_max))))
-         (eq! (prc-modexp_xbs___compo_to_512) 1)))
+  (callToLT 0 (prc-modexp_xbs___xbs_hi) (prc-modexp_xbs___xbs_lo) 0 513))
 
 (defconstraint valid-prc-modexp_xbs-future (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp_xbs-hypothesis)))
   (callToLT 1 0 (prc-modexp_xbs___xbs_lo) 0 (prc-modexp_xbs___ybs_lo)))
 
 (defconstraint valid-prc-modexp_xbs-future-future (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp_xbs-hypothesis)))
   (callToISZERO 2 0 (prc-modexp_xbs___xbs_lo)))
+
+(defconstraint additional-prc-modexp_xbs (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp_xbs-hypothesis)))
+  (begin (vanishes! (* (prc-modexp_xbs___compute_max) (- 1 (prc-modexp_xbs___compute_max))))
+         (eq! (prc-modexp_xbs___compo_to_512) 1)))
 
 (defconstraint justify-hub-predictions-prc-modexp_xbs (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp_xbs-hypothesis)))
   (if-zero (prc-modexp_xbs___compute_max)
