@@ -42,8 +42,7 @@
   (nADDR :i16)
   (nKEYS :i16)
   (nKEYS_PER_ADDR :i16)
-  (PHASE_ID :i5)
-  HELLOITSME)
+  (PHASE_ID :i5))
 
 ;; aliases
 (defalias 
