@@ -618,7 +618,7 @@
   (shift OUTGOING_RES_LO 2))
 
 (defun (prc-sha2-prc-ripemd-prc-identity___insufficient_gas)
-  (shift OUTGOING_RES_LO 2))
+  (shift OUTGOING_RES_LO 3))
 
 (defun (prc-sha2-prc-ripemd-prc-identity___precompile_cost)
   (* (+ 5 (prc-sha2-prc-ripemd-prc-identity___ceil))
