@@ -1,4 +1,4 @@
-(module rlpAddr)
+(module rlpaddr)
 
 (defcolumns 
   ;; INPUTS

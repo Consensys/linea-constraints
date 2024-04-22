@@ -1,4 +1,4 @@
-(module rlpTxn)
+(module rlptxn)
 
 (defcolumns 
   (ABS_TX_NUM :i16)
@@ -42,7 +42,8 @@
   (nADDR :i16)
   (nKEYS :i16)
   (nKEYS_PER_ADDR :i16)
-  (PHASE_ID :i5))
+  (PHASE_ID :i5)
+  HELLOITSME)
 
 ;; aliases
 (defalias 
