@@ -96,19 +96,34 @@
 ;;                             ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun (index_max_sum)
-  (+ (INDEX_MAX_ECRECOVER_DATA IS_ECRECOVER_DATA)
-     (INDEX_MAX_ECADD_DATA IS_ECADD_DATA)
-     (INDEX_MAX_ECMUL_DATA IS_ECMUL_DATA)
+  (+ (* INDEX_MAX_ECRECOVER_DATA IS_ECRECOVER_DATA)
+     (* INDEX_MAX_ECADD_DATA IS_ECADD_DATA)
+     (* INDEX_MAX_ECMUL_DATA IS_ECMUL_DATA)
      ;;
-     (INDEX_MAX_ECRECOVER_RESULT IS_ECRECOVER_RESULT)
-     (INDEX_MAX_ECADD_RESULT IS_ECADD_RESULT)
-     (INDEX_MAX_ECMUL_RESULT IS_ECMUL_RESULT)
-     (INDEX_MAX_ECPAIRING_RESULT IS_ECPAIRING_RESULT)))
+     (* INDEX_MAX_ECRECOVER_RESULT IS_ECRECOVER_RESULT)
+     (* INDEX_MAX_ECADD_RESULT IS_ECADD_RESULT)
+     (* INDEX_MAX_ECMUL_RESULT IS_ECMUL_RESULT)
+     (* INDEX_MAX_ECPAIRING_RESULT IS_ECPAIRING_RESULT)))
 
 (defconstraint set-index-max ()
   (eq! (* 16 INDEX_MAX)
-       (+ (* 16 index_max_sum)
+       (+ (* 16 (index_max_sum))
           (* IS_ECPAIRING_DATA (- TOTAL_SIZE 16)))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                             ;;
+;;  1.3.5 Setting TOTAL_SIZE   ;;
+;;                             ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defconstraint index_max_sum ()
+  (+ (* IS_ECRECOVER_DATA TOTAL_SIZE_ECRECOVER_DATA)
+     (* IS_ECADD_DATA TOTAL_SIZE_ECADD_DATA)
+     (* IS_ECMUL_DATA TOTAL_SIZE_ECMUL_DATA)
+     (* IS_ECPAIRING_DATA TOTAL_SIZE_ECPAIRING_DATA_MIN TOTAL_PAIRINGS)
+     (* IS_ECRECOVER_RESULT TOTAL_SIZE_ECRECOVER_RESULT SUCCESS_BIT)
+     (* IS_ECADD_RESULT TOTAL_SIZE_ECADD_RESULT SUCCESS_BIT)
+     (* IS_ECMUL_RESULT TOTAL_SIZE_ECMUL_RESULT SUCCESS_BIT)
+     (* IS_ECPAIRING_RESULT TOTAL_SIZE_ECPAIRING_RESULT SUCCESS_BIT)))
 
 ;; (defpurefun (if-not-eq X Y Z)
 ;;   (if-not-zero (- X Y)
