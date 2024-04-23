@@ -1,3 +1,71 @@
+(module ec_data)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                ;;
+;;    1.3.1 Binary constraints    ;;
+;;                                ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defconstraint binary-constraints ()
+  (begin (is-binary IS_ECRECOVER_DATA)
+         (is-binary IS_ECRECOVER_RESULT)
+         (is-binary IS_ECADD_DATA)
+         (is-binary IS_ECADD_RESULT)
+         (is-binary IS_ECMUL_DATA)
+         (is-binary IS_ECMUL_RESULT)
+         (is-binary IS_ECPAIRING_DATA)
+         (is-binary IS_ECPAIRING_RESULT)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                ;;
+;;    1.3.2 Macro instruction     ;;
+;;    decoding and shorthands     ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun (is_ecrecover)
+  (+ IS_ECRECOVER_DATA IS_ECRECOVER_RESULT))
+
+(defun (is_ecadd)
+  (+ IS_ECADD_DATA IS_ECADD_RESULT))
+
+(defun (is_ecmul)
+  (+ IS_ECMUL_DATA IS_ECMUL_RESULT))
+
+(defun (is_ecpairing)
+  (+ IS_ECPAIRING_DATA IS_ECPAIRING_RESULT))
+
+(defun (flag_sum)
+  (+ (is_ecrecover) (is_ecadd) (is_ecmul) (is_ecpairing)))
+
+;; TODO: use constants in the specs too
+(defun (address_sum)
+  (+ (* ECRECOVER_ADDRESS (is_ecrecover))
+     (* ECADD_ADDRESSS (is_ecadd))
+     (* ECMUL_ADDRESS (is_ecmul))
+     (* ECPAIRING_ADDRESS (is_ecpairing))))
+
+(defun (phase_sum)
+  (+ (* PHASE_ECRECOVER_DATA IS_ECRECOVER_DATA)
+     (* PHASE_ECRECOVER_RESULT IS_ECRECOVER_RESULT)
+     (* PHASE_ECADD_DATA IS_ECADD_DATA)
+     (* PHASE_ECADD_RESULT IS_ECADD_RESULT)
+     (* PHASE_ECMUL_DATA IS_ECMUL_DATA)
+     (* PHASE_ECMUL_RESULT IS_ECMUL_RESULT)
+     (* PHASE_ECPAIRING_DATA IS_ECPAIRING_DATA)
+     (* PHASE_ECPAIRING_RESULT IS_ECPAIRING_RESULT)))
+
+(defun (is_data)
+  (+ IS_ECRECOVER_DATA IS_ECADD_DATA IS_ECMUL_DATA IS_ECPAIRING_DATA))
+
+(defun (is_result)
+  (+ IS_ECRECOVER_RESULT IS_ECADD_RESULT IS_ECMUL_RESULT IS_ECPAIRING_RESULT))
+
+(defconstraint padding ()
+  (if-zero STAMP
+           (vanishes! (flag_sum))
+           (eq! (flag_sum) 1)))
+
+(defconstraint phase ()
+  (eq! PHASE (phase_sum)))
+
 ;; (defpurefun (if-not-eq X Y Z)
 ;;   (if-not-zero (- X Y)
 ;;                Z))
