@@ -19,7 +19,7 @@
   (IS_ECPAIRING_DATA :binary@prove)
   (IS_ECPAIRING_RESULT :binary@prove)
   TOTAL_PAIRINGS
-  PAIRING_COUNT
+  ACC_PAIRINGS
   (INTERNAL_CHECKS_PASSED :binary@prove)
   (HURDLE :binary@prove)
   (BYTE_DELTA :byte@prove)

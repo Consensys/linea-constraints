@@ -90,6 +90,26 @@
                (if (will-remain-constant! ACC_PAIRINGS)
                    (will-remain-constant! ACCPC))))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                             ;;
+;;  1.3.4 Setting INDEX_MAX    ;;
+;;                             ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun (index_max_sum)
+  (+ (INDEX_MAX_ECRECOVER_DATA IS_ECRECOVER_DATA)
+     (INDEX_MAX_ECADD_DATA IS_ECADD_DATA)
+     (INDEX_MAX_ECMUL_DATA IS_ECMUL_DATA)
+     ;;
+     (INDEX_MAX_ECRECOVER_RESULT IS_ECRECOVER_RESULT)
+     (INDEX_MAX_ECADD_RESULT IS_ECADD_RESULT)
+     (INDEX_MAX_ECMUL_RESULT IS_ECMUL_RESULT)
+     (INDEX_MAX_ECPAIRING_RESULT IS_ECPAIRING_RESULT)))
+
+(defconstraint set-index-max ()
+  (eq! (* 16 INDEX_MAX)
+       (+ (* 16 index_max_sum)
+          (* IS_ECPAIRING_DATA (- TOTAL_SIZE 16)))))
+
 ;; (defpurefun (if-not-eq X Y Z)
 ;;   (if-not-zero (- X Y)
 ;;                Z))
