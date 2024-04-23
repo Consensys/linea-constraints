@@ -8,9 +8,9 @@
   )
   ;source columns
   (
-    rlpAddr.RAW_ADDR_HI
-    rlpAddr.DEP_ADDR_HI
-    rlpAddr.DEP_ADDR_LO
+    rlpaddr.RAW_ADDR_HI
+    rlpaddr.DEP_ADDR_HI
+    rlpaddr.DEP_ADDR_LO
   ))
 
 
