@@ -2,6 +2,7 @@
 
 (defcolumns 
   (STAMP :i32)
+  (ID :i32)
   (INDEX :byte)
   (LIMB :i128)
   (TYPE :byte)
@@ -18,7 +19,7 @@
   (IS_ECPAIRING_DATA :binary@prove)
   (IS_ECPAIRING_RESULT :binary@prove)
   TOTAL_PAIRINGS
-  ACC_PAIRINGS
+  PAIRING_COUNT
   (INTERNAL_CHECKS_PASSED :binary@prove)
   (HURDLE :binary@prove)
   (BYTE_DELTA :byte@prove)

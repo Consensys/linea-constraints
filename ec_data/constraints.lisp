@@ -66,6 +66,30 @@
 (defconstraint phase ()
   (eq! PHASE (phase_sum)))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                             ;;
+;;  1.3.3 constancy conditions ;;
+;;                             ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defconstraint stamp-constancy ()
+  (begin (stamp-constancy STAMP ID)
+         (stamp-constancy STAMP SUCCESS_BIT)
+         (stamp-constancy STAMP TOTAL_PAIRINGS)
+         (stamp-constancy STAMP NOT_ON_G2_ACC_MAX)
+         (stamp-constancy STAMP ICP)))
+
+(defconstraint counter-constancy ()
+  (begin (counter-constancy CT CT_MAX)
+         (counter-constancy CT IS_INFINITY)
+         (counter-constancy CT ACC_PAIRINGS)
+         (counter-constancy CT TRIVIAL_PAIRING)
+         (counter-constancy CT G2MTR)))
+
+(defconstraint pair-of-points-constancy ()
+  (if-not-zero ACC_PAIRINGS
+               (if (will-remain-constant! ACC_PAIRINGS)
+                   (will-remain-constant! ACCPC))))
+
 ;; (defpurefun (if-not-eq X Y Z)
 ;;   (if-not-zero (- X Y)
 ;;                Z))
