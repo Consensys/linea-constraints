@@ -115,15 +115,65 @@
 ;;  1.3.5 Setting TOTAL_SIZE   ;;
 ;;                             ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defconstraint index_max_sum ()
-  (+ (* IS_ECRECOVER_DATA TOTAL_SIZE_ECRECOVER_DATA)
-     (* IS_ECADD_DATA TOTAL_SIZE_ECADD_DATA)
-     (* IS_ECMUL_DATA TOTAL_SIZE_ECMUL_DATA)
-     (* IS_ECPAIRING_DATA TOTAL_SIZE_ECPAIRING_DATA_MIN TOTAL_PAIRINGS)
-     (* IS_ECRECOVER_RESULT TOTAL_SIZE_ECRECOVER_RESULT SUCCESS_BIT)
-     (* IS_ECADD_RESULT TOTAL_SIZE_ECADD_RESULT SUCCESS_BIT)
-     (* IS_ECMUL_RESULT TOTAL_SIZE_ECMUL_RESULT SUCCESS_BIT)
-     (* IS_ECPAIRING_RESULT TOTAL_SIZE_ECPAIRING_RESULT SUCCESS_BIT)))
+(defconstraint set-total-size ()
+  (eq! TOTAL_SIZE
+       (+ (* IS_ECRECOVER_DATA TOTAL_SIZE_ECRECOVER_DATA)
+          (* IS_ECADD_DATA TOTAL_SIZE_ECADD_DATA)
+          (* IS_ECMUL_DATA TOTAL_SIZE_ECMUL_DATA)
+          (* IS_ECPAIRING_DATA TOTAL_SIZE_ECPAIRING_DATA_MIN TOTAL_PAIRINGS)
+          (* IS_ECRECOVER_RESULT TOTAL_SIZE_ECRECOVER_RESULT SUCCESS_BIT)
+          (* IS_ECADD_RESULT TOTAL_SIZE_ECADD_RESULT SUCCESS_BIT)
+          (* IS_ECMUL_RESULT TOTAL_SIZE_ECMUL_RESULT SUCCESS_BIT)
+          (* IS_ECPAIRING_RESULT TOTAL_SIZE_ECPAIRING_RESULT SUCCESS_BIT))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                    ;;
+;;  1.3.6 Setting CT, CT_MAX,         ;;
+;;  IS_SMALL_POINT and IS_LARGE_POINT ;;
+;;                                    ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defconstraint small-large-points-flags-sum ()
+  (eq! IS_ECPAIRING_DATA (+ IS_SMALL_POINT IS_LARGE_POINT)))
+
+(defconstraint set-ct-max ()
+  (eq! CT_MAX
+       (+ (* CT_MAX_SMALL_POINT IS_SMALL_POINT) (* CT_MAX_LARGE_POINT IS_LARGE_POINT))))
+
+(defun (transition_from_small_to_large)
+  (* IS_SMALL_POINT (next IS_LARGE_POINT)))
+
+(defun (transition_from_large_to_small)
+  (* IS_LARGE_POINT (next IS_SMALL_POINT)))
+
+(defconstraint set-transitions ()
+  (if-not-zero (and (eq IS_ECPAIRING_DATA 1)
+                    (and (eq (next IS_ECPAIRING_DATA) 1)
+                         (eq CT CT_MAX)))
+               (eq! (+ (transition_from_small_to_large) (transition_from_large_to_small)) 1)))
+
+(defconstraint set-ct-outside-ecpairing-data-and-first-row ()
+  (if-zero IS_ECPAIRING_DATA
+           (begin (vanishes! CT)
+                  (vanishes! (next CT)))))
+
+(defconstraint ct-increment-and-reset ()
+  (if-eq-else CT CT_MAX
+              (eq! (next CT) 0)
+              (will-inc! CT 1)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                             ;;
+;;  1.3.7 Setting ACC_PAIRINGS ;;
+;;                             ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defconstraint set-acc-pairings-init ()
+  (if-zero IS_ECPAIRING_DATA
+           (vanishes! ACC_PAIRINGS)
+           (eq! (next ACC_PAIRINGS) (next IS_ECPAIRING_DATA))))
+
+(defconstraint set-acc-pairings-increment ()
+  (if-not-zero IS_ECPAIRING_DATA
+               (eq! (next ACC_PAIRINGS) (+ ACC_PAIRINGS (transition_from_large_to_small)))))
 
 ;; (defpurefun (if-not-eq X Y Z)
 ;;   (if-not-zero (- X Y)
