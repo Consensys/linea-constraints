@@ -32,16 +32,14 @@
                (vanishes! ct)))
 
 (defconstraint ct-increment ()
-  (if-zero STAMP
-           (vanishes! ct)
-           (begin (if-eq RECIPE_1 1
-                         (if-eq-else ct 7 (will-inc! STAMP 1) (will-inc! ct 1)))
-                  (if-eq RECIPE_2 1
-                         (if-eq-else ct 5 (will-inc! STAMP 1) (will-inc! ct 1))))))
+  (begin (if-eq RECIPE_1 1
+                (if-eq-else ct MAX_CT_CREATE (will-inc! STAMP 1) (will-inc! ct 1)))
+         (if-eq RECIPE_2 1
+                (if-eq-else ct MAX_CT_CREATE2 (will-inc! STAMP 1) (will-inc! ct 1)))))
 
 (defconstraint last-row (:domain {-1})
-  (begin (if-eq RECIPE_1 1 (eq! ct 7))
-         (if-eq RECIPE_2 1 (eq! ct 5))))
+  (begin (if-eq RECIPE_1 1 (eq! ct MAX_CT_CREATE))
+         (if-eq RECIPE_2 1 (eq! ct MAX_CT_CREATE2))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                              ;;
@@ -103,7 +101,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                              ;;
-;;    4.1 RECIPE_1 constraints      ;;
+;;    4.1 RECIPE_1 constraints  ;;
 ;;                              ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defconstraint recipe1-byte-decomposition (:guard RECIPE_1)
@@ -121,7 +119,7 @@
                            (remained-constant! POWER)))))
 
 (defconstraint recipe1-last-row (:guard RECIPE_1)
-  (if-eq ct 7
+  (if-eq ct MAX_CT_CREATE
          (begin (vanishes! (shift INDEX -7))
                 (eq! ACC NONCE)
                 (eq! BIT_ACC BYTE1)
@@ -164,21 +162,21 @@
   (eq! INDEX ct))
 
 (defconstraint create2-last-row (:guard RECIPE_2)
-  (if-eq ct 5
+  (if-eq ct MAX_CT_CREATE2
          (begin (eq! (shift LC -5) 1)
                 (eq! (shift LIMB -5)
                      (+ (* CREATE2_SHIFT (^ 256 15))
                         (* ADDR_HI (^ 256 11))))
                 (eq! (shift nBYTES -5) 5)
                 (eq! (shift LIMB -4) ADDR_LO)
-                (eq! (shift nBYTES -4) 16)
+                (eq! (shift nBYTES -4) LLARGE)
                 (eq! (shift LIMB -3) SALT_HI)
-                (eq! (shift nBYTES -3) 16)
+                (eq! (shift nBYTES -3) LLARGE)
                 (eq! (shift LIMB -2) SALT_LO)
-                (eq! (shift nBYTES -2) 16)
+                (eq! (shift nBYTES -2) LLARGE)
                 (eq! (prev LIMB) KEC_HI)
-                (eq! (prev nBYTES) 16)
+                (eq! (prev nBYTES) LLARGE)
                 (eq! LIMB KEC_LO)
-                (eq! nBYTES 16))))
+                (eq! nBYTES LLARGE))))
 
 

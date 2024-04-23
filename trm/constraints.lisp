@@ -52,11 +52,12 @@
 ;;                           ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defconstraint pbit-constraint ()
-  (begin (or! (remained-constant! PBIT) (did-inc! PBIT 1))
+  (begin (if-not-zero CT
+                      (or! (remained-constant! PBIT) (did-inc! PBIT 1)))
          (if-eq CT LLARGEMO
                 (eq! 1
                      (+ (shift PBIT (- 0 4))
-                        (shift PBIT (- 0 4)))))))
+                        (shift PBIT (- 0 3)))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                                   ;;
@@ -74,7 +75,7 @@
 ;;                       ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;)
 (defconstraint target-constraint ()
-  (if-eq CT 15
+  (if-eq CT LLARGEMO
          (begin (eq! RAW_ADDRESS_HI ACC_HI)
                 (eq! RAW_ADDRESS_LO ACC_LO)
                 (eq! TRM_ADDRESS_HI ACC_T))))
