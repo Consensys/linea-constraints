@@ -13,7 +13,19 @@
          (is-binary IS_ECMUL_DATA)
          (is-binary IS_ECMUL_RESULT)
          (is-binary IS_ECPAIRING_DATA)
-         (is-binary IS_ECPAIRING_RESULT)))
+         (is-binary IS_ECPAIRING_RESULT)
+         (is-binary WCP_FLAG)
+         (is-binary EXT_FLAG)
+         (is-binary HURDLE)
+         (is-binary ICP)
+         (is-binary NOT_ON_G2)
+         (is-binary NOT_ON_G2_ACC)
+         (is-binary IS_INFINITY)
+         (is-binary NOT_ON_G2_ACC_MAX)
+         (is-binary IS_SMALL_POINT)
+         (is-binary IS_LARGE_POINT)
+         (is-binary G2MTR)
+         (is-binary TRIVIAL_PAIRING)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                ;;
@@ -175,15 +187,50 @@
   (if-not-zero IS_ECPAIRING_DATA
                (eq! (next ACC_PAIRINGS) (+ ACC_PAIRINGS (transition_from_large_to_small)))))
 
-;; (defpurefun (if-not-eq X Y Z)
-;;   (if-not-zero (- X Y)
-;;                Z))
-;; (defunalias 
-;;   if-zero-else if-zero)
-;; (defunalias 
-;;   doesnt-vanish is-zero)
-;; (defpurefun (differ X Y)
-;;   (doesnt-vanish (- X Y)))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                             ;;
+;;  1.3.8 Setting ICP          ;;
+;;                             ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defconstraint set-icp-padding ()
+  (if-zero (flag_sum)
+           (vanishes! ICP)))
+
+;; note: internal_checks_passed \def HURDLE
+(defconstraint set-icp ()
+  (if-not-zero (transition_to_result)
+               (eq! ICP HURDLE)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                             ;;
+;;  1.3.9 Setting G2MTR        ;;
+;;                             ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defconstraint set-g2mtr ()
+  (if-zero IS_LARGE_POINT
+           (vanishes! G2MTR)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                  ;;
+;;  1.3.10 Setting TRIVIAL_PAIRING  ;;
+;;                                  ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; ...
+;;;;;;;;;;;;;;;;;;;;;;;;
+;;                    ;;
+;;    1.3.11 Hearbeat ;;
+;;                    ;;
+;;;;;;;;;;;;;;;;;;;;;;;;
+(defun (transition_to_data)
+  (* (- 1 (is_data)) (next (is_data))))
+
+(defun (transition_to_result)
+  (* (- 1 (is_result)) (next (is_result))))
+
+(defun (transition_bit)
+  (+ (transition_to_data) (transition_to_result)))
+
+;; ...
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; ;;                                ;;
 ;; ;;    3.2 Constancy conditions    ;;
