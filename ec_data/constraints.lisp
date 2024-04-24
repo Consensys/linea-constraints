@@ -158,10 +158,9 @@
   (* IS_LARGE_POINT (next IS_SMALL_POINT)))
 
 (defconstraint set-transitions ()
-  (if-not-zero (and (eq IS_ECPAIRING_DATA 1)
-                    (and (eq (next IS_ECPAIRING_DATA) 1)
-                         (eq CT CT_MAX)))
-               (eq! (+ (transition_from_small_to_large) (transition_from_large_to_small)) 1)))
+  (if-not-zero (* IS_ECPAIRING_DATA (next IS_ECPAIRING_DATA))
+               (if-zero (- CT CT_MAX)
+                        (eq! (+ (transition_from_small_to_large) (transition_from_large_to_small)) 1))))
 
 (defconstraint set-ct-outside-ecpairing-data-and-first-row ()
   (if-zero IS_ECPAIRING_DATA
@@ -215,7 +214,19 @@
 ;;  1.3.10 Setting TRIVIAL_PAIRING  ;;
 ;;                                  ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; ...
+(defconstraint set-trivial-pairing-outside-ecpairing-data ()
+  (if-zero IS_ECPAIRING_DATA
+           (vanishes! TRIVIAL_PAIRING)))
+
+;; the constraint below is equivalent:
+;; (defconstraint set-trivial-pairing-init-using-expression ()
+;;   (if-zero (+ (prev IS_ECPAIRING_DATA) (- 1 IS_ECPAIRING_DATA))
+;;            (eq! TRIVIAL_PAIRING 1)))
+(defconstraint set-trivial-pairing-init ()
+  (if-zero (prev IS_ECPAIRING_DATA)
+           (if-not-zero IS_ECPAIRING_DATA
+                        (eq! TRIVIAL_PAIRING 1))))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                    ;;
 ;;    1.3.11 Hearbeat ;;
