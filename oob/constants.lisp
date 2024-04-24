@@ -56,5 +56,3 @@
   EQ                      0x14
   G_CALLSTIPEND           2300
   G_QUADDIVISOR           3)
-
-

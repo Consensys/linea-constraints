@@ -1037,5 +1037,3 @@
          (if-not-zero (prc___ram_success)
                       (eq! (prc___return_gas) (- (prc___call_gas) (prc-blake_params___blake_f)))
                       (vanishes! (prc___return_gas)))))
-
-

@@ -22,11 +22,17 @@ ALU := alu/add/columns.lisp \
 
 BIN := bin   
 
+BLAKE2f_MODEXP_DATA := blake2f_modexp_data
+
 CONSTANTS := constants/constants.lisp
 
 EC_DATA := ec_data
 
 EUC := euc
+
+EXP := exp
+
+GAS := gas
 
 LIBRARY := library/rlp_constraints_pattern.lisp
 
@@ -36,47 +42,47 @@ LOG_INFO := logInfo
 
 MMU := mmu
 
-MMIO := mmio
+MMIO := mmio/columns.lisp #TODO enable the MMIO constraint and lookup
+# MMIO := mmio \
+# mmio/consistency.lisp
 
 MXP := mxp
 
+OOB := oob/columns.lisp oob/constants.lisp oob/constraints.lisp  oob/oob-into-add.lisp oob/oob-into-mod.lisp oob/oob-into-wcp.lisp
+
 PUB_DATA := $(shell find pub/ -iname '*.lisp')
 
-RIPSHA := ripsha
+SHAKIRA := shakira_data
 
-RLP_ADDR := rlpAddr
+RLP_ADDR := rlpaddr
 
-RLP_TXN := rlp_txn
+RLP_TXN := rlptxn
 
-RLP_TXRCPT := rlp_txrcpt			
+RLP_TXRCPT := rlptxrcpt			
 
 ROM := rom
 
 ROM_LEX := romLex
+
+SHAKIRA := shakira
 
 SHIFT :=  shf
 
 STACK := hub/columns.lisp \
 	 hub/constraints.lisp
 
-STP := stp/columns.lisp stp/constraints.lisp \
-       stp/lookups/stp_into_mod.lisp stp/lookups/stp_into_wcp.lisp
+STP := stp
 
 TABLES := reference_tables/binRT.lisp \
 	  reference_tables/shfRT.lisp \
 	  reference_tables/instruction_decoder.lisp 
 
-TRM := trm/columns.lisp trm/constraints.lisp
+TRM := trm
 
 TXN_DATA := txn_data 
 
 WCP := wcp
 
-BLAKE2f_MODEXP_DATA := blake2f_modexp_data/
-
-EXP := exp
-
-OOB := oob/columns.lisp oob/constants.lisp oob/constraints.lisp  oob/oob-into-add.lisp oob/oob-into-mod.lisp oob/oob-into-wcp.lisp 
 
 ZKEVM_MODULES := ${ALU} \
 	${BIN} \
@@ -85,6 +91,7 @@ ZKEVM_MODULES := ${ALU} \
 	${EC_DATA} \
 	${EUC} \
 	${EXP} \
+	${GAS} \
 	${LIBRARY} \
 	${LOG_DATA} \
 	${LOG_INFO} \
@@ -99,6 +106,7 @@ ZKEVM_MODULES := ${ALU} \
 	${RLP_TXRCPT} \
 	${ROM} \
 	${ROM_LEX} \
+	${SHAKIRA} \
 	${SHIFT} \
 	${STACK} \
 	${STP} \
@@ -106,9 +114,9 @@ ZKEVM_MODULES := ${ALU} \
 	${TRM} \
 	${TXN_DATA} \
 	${WCP}
-	
+
 define.go: ${ZKEVM_MODULES}
 	${CORSET} wizard-iop -vv -P define -o $@ ${ZKEVM_MODULES}
-
+    
 zkevm.bin: ${ZKEVM_MODULES}
 	${CORSET} compile -vv -o $@ ${ZKEVM_MODULES}

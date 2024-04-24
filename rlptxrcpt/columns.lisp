@@ -1,4 +1,4 @@
-(module rlpTxRcpt)
+(module rlptxrcpt)
 
 (defcolumns 
   (ABS_TX_NUM :i32)
@@ -12,8 +12,8 @@
   (INDEX_LOCAL :i16)
   (PHASE :binary@prove :array [5])
   (PHASE_END :binary@prove)
-  (COUNTER :i5)
-  (nSTEP :i5)
+  (COUNTER :i32)
+  (nSTEP :i32)
   (DONE :binary)
   (TXRCPT_SIZE :i32)
   (INPUT :i128 :display :bytes :array [4])

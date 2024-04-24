@@ -319,7 +319,7 @@
 ;;    2.12 Consistency Constraints    ;;
 ;;                                    ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defpermutation 
+(defpermutation
   (CN_perm
    STAMP_perm
    C_MEM_perm
@@ -343,5 +343,3 @@
                                                (eq! C_MEM_perm (prev C_MEM_NEW_perm))))
                            (begin (vanishes! WORDS_perm)
                                   (vanishes! C_MEM_perm)))))
-
-
