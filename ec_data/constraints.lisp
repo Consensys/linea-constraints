@@ -70,6 +70,15 @@
 (defun (is_result)
   (+ IS_ECRECOVER_RESULT IS_ECADD_RESULT IS_ECMUL_RESULT IS_ECPAIRING_RESULT))
 
+(defun (transition_to_data)
+  (* (- 1 (is_data)) (next (is_data))))
+
+(defun (transition_to_result)
+  (* (- 1 (is_result)) (next (is_result))))
+
+(defun (transition_bit)
+  (+ (transition_to_data) (transition_to_result)))
+
 (defconstraint padding ()
   (if-zero STAMP
            (vanishes! (flag_sum))
@@ -232,15 +241,6 @@
 ;;    1.3.11 Hearbeat ;;
 ;;                    ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;
-(defun (transition_to_data)
-  (* (- 1 (is_data)) (next (is_data))))
-
-(defun (transition_to_result)
-  (* (- 1 (is_result)) (next (is_result))))
-
-(defun (transition_bit)
-  (+ (transition_to_data) (transition_to_result)))
-
 ;; ...
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; ;;                                ;;
