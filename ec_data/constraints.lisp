@@ -236,6 +236,27 @@
            (if-not-zero IS_ECPAIRING_DATA
                         (eq! TRIVIAL_PAIRING 1))))
 
+(defconstraint transition-large-to-small ()
+  (if-not-zero (transition_from_large_to_small)
+               (eq! (next TRIVIAL_PAIRING) TRIVIAL_PAIRING)))
+
+(defconstraint transition-small-to-large ()
+  (if-not-zero (transition_from_small_to_large)
+               (if-zero TRIVIAL_PAIRING
+                        (vanishes! (next TRIVIAL_PAIRING))
+                        (eq! (next TRIVIAL_PAIRING) (next IS_INFINITY)))))
+
+;; note: pairing_result_hi \def LIMB_{i+1}
+;; note: pairing_result_lo \def LIMB_{i+2}
+(defconstraint set-pairing-result-when-trivial-pairngs ()
+  (if-not-zero (transition_to_result)
+               (if-not-zero ICP
+                            (if-zero NOT_ON_G2_ACC_MAX
+                                     (if-not-zero TRIVIAL_PAIRING
+                                                  (begin (eq! SUCCESS_BIT 1)
+                                                         (vanishes! (next LIMB))
+                                                         (eq! (shift LIMB 2) 1)))))))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                    ;;
 ;;    1.3.11 Hearbeat ;;
