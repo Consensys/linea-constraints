@@ -48,7 +48,12 @@ MMIO := mmio/columns.lisp #TODO enable the MMIO constraint and lookup
 
 MXP := mxp
 
-OOB := oob/columns.lisp oob/constants.lisp oob/constraints.lisp  oob/oob-into-add.lisp oob/oob-into-mod.lisp oob/oob-into-wcp.lisp
+OOB := oob/columns.lisp \
+    oob/constants.lisp \
+    oob/constraints.lisp \
+    oob/oob-into-add.lisp \
+    oob/oob-into-mod.lisp \
+    oob/oob-into-wcp.lisp
 
 PUB_DATA := $(shell find pub/ -iname '*.lisp')
 
