@@ -543,6 +543,26 @@
 ;; 1.7 Elliptic curve  ;;
 ;;      circuit flags  ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                     ;;
+;; 1.7.3 Interface for ;;
+;;       Gnark         ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;
+(defconstraint ecrecover-circuit-selector ()
+  (eq! CS_ECRECOVER (* ICP (is_ecrecover))))
+
+(defconstraint ecadd-circuit-selector ()
+  (eq! CS_ECADD (* ICP (is_ecadd))))
+
+(defconstraint ecmul-circuit-selector ()
+  (eq! CS_ECMUL (* ICP (is_ecmul))))
+
+(defconstraint ecpairing-circuit-selector ()
+  (eq! CS_ECPAIRING ACCPC))
+
+(defconstraint g2-membership-circuit-selector ()
+  (eq! CS_G2_MEMBERSHIP G2MTR))
+
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;
 ;; ;;                    ;;
 ;; ;;    4 Lookups       ;;
