@@ -29,7 +29,7 @@
   (TYPE1 :binary@prove)
   (TYPE2 :binary@prove)
   (REQUIRES_EVM_EXECUTION :binary@prove)
-  (COPY_TXCD :binary@prove)
+  (COPY_TXCD :binary)
   (GAS_LEFTOVER :i128)
   (REFUND_COUNTER :i128)
   (REFUND_EFFECTIVE :i128)
@@ -46,7 +46,8 @@
   (ARG_ONE_LO :i128)
   (ARG_TWO_LO :i128)
   (RES :binary)
-  (INST :byte :display :opcode))
+  (INST :byte :display :opcode)
+  (IS_LAST_TX_OF_BLOCK :binary))
 
 (defalias 
   ABS_MAX ABS_TX_NUM_MAX

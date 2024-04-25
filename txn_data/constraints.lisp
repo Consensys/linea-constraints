@@ -41,8 +41,12 @@
 (defconstraint heartbeat (:guard ABS)
   (begin (eq! (tx-type-sum) 1)
          (if-zero TYPE0
-                  (if-eq-else CT (- NB_ROWS_TYPE_1 1) (will-inc! ABS 1) (will-inc! CT 1))
-                  (if-eq-else CT (- NB_ROWS_TYPE_0 1) (will-inc! ABS 1) (will-inc! CT 1)))))
+                  (if-eq-else CT (- (+ NB_ROWS_TYPE_1 IS_LAST_TX_OF_BLOCK) 1)
+                              (will-inc! ABS 1)
+                              (will-inc! CT 1))
+                  (if-eq-else CT (- (+ NB_ROWS_TYPE_0 IS_LAST_TX_OF_BLOCK) 1)
+                              (will-inc! ABS 1)
+                              (will-inc! CT 1)))))
 
 (defconstraint final-row (:domain {-1})
   (begin (eq! ABS ABS_MAX)
@@ -134,6 +138,11 @@
                                                  (will-inc! REL 1))
                                           (begin (will-inc! BTC 1)
                                                  (will-eq! REL 1)))))))
+
+(defconstraint set-last-tx-of-block-flag (:guard ABS_TX_NUM)
+  (if-eq-else REL_TX_NUM REL_TX_NUM_MAX
+              (eq! IS_LAST_TX_OF_BLOCK 1)
+              (vanishes! IS_LAST_TX_OF_BLOCK)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;
 ;;                   ;;
@@ -261,6 +270,12 @@
   (begin (eq! (shift EUC_FLAG row) 1)
          (eq! (shift ARG_ONE_LO row) arg1)
          (eq! (shift ARG_TWO_LO row) arg2)))
+
+(defun (small-call-to-LEQ row arg1 arg2)
+  (begin (eq! (shift WCP_FLAG row) 1)
+         (eq! (shift ARG_ONE_LO row) arg1)
+         (eq! (shift ARG_TWO_LO row) arg2)
+         (eq! (shift INST row) WCP_INST_LEQ)))
 
 (defun (result-must-be-false row)
   (vanishes! (shift RES row)))
@@ -424,5 +439,13 @@
                       (eq! (next GAS_CUMULATIVE)
                            (+ GAS_CUMULATIVE
                               (next (- GAS_LIMIT REFUND_EFFECTIVE)))))))
+
+(defconstraint cumulative-gas-comparaison (:guard IS_LAST_TX_OF_BLOCK)
+  (if-not-zero (- ABS_TX_NUM (prev ABS_TX_NUM))
+               (if-zero TYPE0
+                        (begin (small-call-to-LEQ NB_ROWS_TYPE_1 GAS_CUMULATIVE LINEA_BLOCK_GAS_LIMIT)
+                               (result-must-be-true NB_ROWS_TYPE_1))
+                        (begin (small-call-to-LEQ NB_ROWS_TYPE_0 GAS_CUMULATIVE LINEA_BLOCK_GAS_LIMIT)
+                               (result-must-be-true NB_ROWS_TYPE_0)))))
 
 
