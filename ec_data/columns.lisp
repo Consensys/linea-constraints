@@ -5,7 +5,6 @@
   (ID :i32)
   (INDEX :byte)
   (LIMB :i128)
-  (TYPE :byte)
   TOTAL_SIZE
   INDEX_MAX
   (PHASE :i3@prove)

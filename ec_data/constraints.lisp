@@ -97,7 +97,8 @@
          (stamp-constancy STAMP SUCCESS_BIT)
          (stamp-constancy STAMP TOTAL_PAIRINGS)
          (stamp-constancy STAMP NOT_ON_G2_ACC_MAX)
-         (stamp-constancy STAMP ICP)))
+         (stamp-constancy STAMP ICP)
+         (stamp-constancy STAMP (address_sum))))
 
 (defconstraint counter-constancy ()
   (begin (counter-constancy CT CT_MAX)
@@ -262,273 +263,96 @@
 ;;    1.3.11 Hearbeat ;;
 ;;                    ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;
-;; ...
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; ;;                                ;;
-;; ;;    3.2 Constancy conditions    ;;
-;; ;;                                ;;
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; (defun (stamp-consitency X)
-;;   (if-eq (next STAMP) STAMP (will-remain-constant! X)))
-;; ;; 3.2.1
-;; (defconstraint stamp-constancies ()
-;;   (begin (stamp-consitency TYPE)
-;;          (stamp-consitency PCP)
-;;          (stamp-consitency PRELIMINARY_CHECKS_PASSED)
-;;          (stamp-consitency SOMETHING_WASNT_ON_G2)
-;;          (stamp-consitency TOTAL_PAIRINGS)))
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; ;;                           ;;
-;; ;;    3.3 Type conditions    ;;
-;; ;;                           ;;
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; ;; 3.3.1
-;; (defconstraint exactly-one-type ()
-;;   (if-not-zero STAMP
-;;                (eq! (+ EC_RECOVER EC_ADD EC_MUL EC_PAIRING) 1)))
-;; ;; 3.3.2
-;; (defconstraint type-consistency ()
-;;   (begin (if-eq EC_RECOVER 1 (= TYPE 1))
-;;          (if-eq EC_ADD 1 (= TYPE 6))
-;;          (if-eq EC_MUL 1 (= TYPE 7))
-;;          (if-eq EC_PAIRING 1 (= TYPE 8))))
-;; ;;;;;;;;;;;;;;;;;;;;;;;;
-;; ;;                    ;;
-;; ;;    3.4 Monotony    ;;
-;; ;;                    ;;
-;; ;;;;;;;;;;;;;;;;;;;;;;;;
-;; ;; 3.4.1
-;; (defconstraint hurdle-non-increasing ()
-;;   (if-eq (next STAMP) STAMP
-;;          (if-not-eq (next HURDLE)
-;;                     HURDLE
-;;                     (= (next HURDLE) (- HURDLE 1)))))
-;; ;; 3.4.2
-;; (defconstraint notOnG2Acc-non-decreasing ()
-;;   (if-eq (next STAMP) STAMP
-;;          (if-not-eq (next THIS_IS_NOT_ON_G2_ACC)
-;;                     THIS_IS_NOT_ON_G2_ACC
-;;                     (= (next THIS_IS_NOT_ON_G2_ACC) (+ THIS_IS_NOT_ON_G2_ACC 1)))))
-;; ;; 3.4.3
-;; (defconstraint notOnG2-non-decreasing ()
-;;   (if-not-zero (next INDEX)
-;;                (if-not-eq (next THIS_IS_NOT_ON_G2)
-;;                           THIS_IS_NOT_ON_G2
-;;                           (= (next THIS_IS_NOT_ON_G2) (+ THIS_IS_NOT_ON_G2 1)))))
-;; ;; 3.4.4
-;; (defconstraint notOnG2-restarts-zero ()
-;;   (if-zero INDEX
-;;            (vanishes! THIS_IS_NOT_ON_G2)))
-;; ;;;;;;;;;;;;;;;;;;;;;;;;
-;; ;;                    ;;
-;; ;;    3.5 Hearbeat    ;;
-;; ;;                    ;;
-;; ;;;;;;;;;;;;;;;;;;;;;;;;
-;; ;; 3.5.1)
-;; (defconstraint first-row (:domain {0})
-;;   (vanishes! STAMP))
-;; ;; 3.5.2)
-;; (defconstraint everything-vanish-initially ()
-;;   (if-zero STAMP
-;;            (begin (vanishes! INDEX)
-;;                   (vanishes! TYPE)
-;;                   (vanishes! (+ EC_RECOVER
-;;                                 EC_ADD
-;;                                 EC_MUL
-;;                                 EC_PAIRING
-;;                                 PCP
-;;                                 PRELIMINARY_CHECKS_PASSED
-;;                                 SOMETHING_WASNT_ON_G2)))))
-;; ;; 3.5.3)
-;; (defconstraint first-index-vanishes! ()
-;;   (if-zero STAMP
-;;            (vanishes! (next INDEX))))
-;; ;; 3.5.4)
-;; (defconstraint ct-min-heartbeat (:guard STAMP)
-;;   (if-eq-else (next STAMP) STAMP
-;;               (if-eq-else CT_MIN 3
-;;                           (vanishes! (next CT_MIN))
-;;                           (= (next CT_MIN) (+ CT_MIN 1)))
-;;               (vanishes! (next CT_MIN))))
-;; ;; 3.5.5)
-;; (defconstraint index-heartbeat ()
-;;   (begin (if-eq EC_PAIRING 1
-;;                 (if-eq-else INDEX 11
-;;                             (vanishes! (next INDEX))
-;;                             (= (next INDEX) (+ INDEX 1))))
-;;          (if-eq (+ EC_ADD EC_RECOVER) 1
-;;                 (if-eq-else INDEX 7
-;;                             (vanishes! (next INDEX))
-;;                             (= (next INDEX) (+ INDEX 1))))
-;;          (if-eq EC_MUL 1
-;;                 (if-eq-else INDEX 5
-;;                             (vanishes! (next INDEX))
-;;                             (= (next INDEX) (+ INDEX 1))))))
-;; ;; 3.5.6)
-;; (defconstraint stamp-behaviour ()
-;;   (if-not-zero (next STAMP)
-;;                (if-zero-else (next INDEX)
-;;                              (if-eq-else EC_PAIRING 1
-;;                                          (if-eq-else TOTAL_PAIRINGS (+ ACC_PAIRINGS 1)
-;;                                                      (will-change! STAMP)
-;;                                                      (will-remain-constant! STAMP))
-;;                                          (will-change! STAMP))
-;;                              (will-remain-constant! STAMP))))
-;; ;; 3.5.7)
-;; (defconstraint acc-pairings-behaviour ()
-;;   (if-eq-else (next STAMP) STAMP
-;;               (if-eq-else INDEX 11
-;;                           (= (next ACC_PAIRINGS) (+ ACC_PAIRINGS 1))
-;;                           (= (next ACC_PAIRINGS) ACC_PAIRINGS))
-;;               (vanishes! (next ACC_PAIRINGS))))
-;; ;; 3.5.8)
-;; (defconstraint finalization-constraints (:domain {-1})
-;;   (begin (if-eq EC_PAIRING 1
-;;                 (begin (= INDEX 11)
-;;                        (= TOTAL_PAIRINGS (+ ACC_PAIRINGS 1))))
-;;          (if-eq (+ EC_ADD EC_RECOVER) 1 (= INDEX 7))
-;;          (if-eq EC_MUL 1 (= INDEX 5))))
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; ;;                               ;;
-;; ;;    3.6 Byte decompositions    ;;
-;; ;;                               ;;
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; ;; 3.6.1
-;; (defconstraint byte-decompositions ()
-;;   (if-eq-else (next STAMP) STAMP
-;;               (= (next ACC_DELTA)
-;;                  (+ (* 256 ACC_DELTA) (next BYTE_DELTA)))
-;;               (= (next ACC_DELTA) (next BYTE_DELTA))))
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; ;;                                  ;;
-;; ;;    3.7 Connection constraints    ;;
-;; ;;                                  ;;
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; ;; 3.7.1
-;; (defconstraint connection-constraints ()
-;;   (if-not-eq (next STAMP)
-;;              STAMP
-;;              (= (next STAMP)
-;;                 (+ STAMP 1 (shift ACC_DELTA 4)))))
-;; ;;;;;;;;;;;;;;;;;;;;;;
-;; ;;                  ;;
-;; ;;    3.8 Hurdle    ;;
-;; ;;                  ;;
-;; ;;;;;;;;;;;;;;;;;;;;;;
-;; ;; 3.8.1.a
-;; (defconstraint final-hurdle-is-passed-to-pcp ()
-;;   (if-not-eq (next STAMP) STAMP (= PCP HURDLE)))
-;; ;; 3.8.1.b
-;; (defconstraint final-pcp (:domain {-1})
-;;   (= PCP HURDLE))
-;; ;; 3.8.2
-;; (defconstraint initial-hurdle ()
-;;   (if-not-eq (next STAMP)
-;;              STAMP
-;;              (= (next HURDLE) (next COMPARISONS))))
-;; ;; 3.8.3
-;; (defconstraint hurdle-behaviour ()
-;;   (if-eq (next STAMP) STAMP
-;;          (begin (if-eq (next CT_MIN) 1
-;;                        (= (next HURDLE) HURDLE))
-;;                 (if-eq (next CT_MIN) 3
-;;                        (= (next HURDLE)
-;;                           (* HURDLE (next EQUALITIES))))
-;;                 (if-not-eq (next CT_MIN)
-;;                            1
-;;                            (if-not-eq (next CT_MIN)
-;;                                       3
-;;                                       (= (next HURDLE)
-;;                                          (* HURDLE (next COMPARISONS))))))))
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; ;;                       ;;
-;; ;;    3.9 Comaprisons    ;;
-;; ;;                       ;;
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; ;; 3.9.1
-;; (defconstraint hardcodec-comparison ()
-;;   (if-eq EC_MUL 1
-;;          (if-eq INDEX 4 (= COMPARISONS 1))))
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; ;;                       ;;
-;; ;;    3.10 Equalities    ;;
-;; ;;                       ;;
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; ;; 3.10.1
-;; (defconstraint first-equalities ()
-;;   (if-eq (shift INDEX 2) 3
-;;          (= (shift EQUALITIES 2)
-;;             (+ (next EQUALITIES) EQUALITIES))))
-;; ;; 3.10.2
-;; (defconstraint middle-equalities ()
-;;   (if-eq INDEX 7
-;;          (begin (if-eq (+ EC_PAIRING EC_RECOVER) 1 (= EQUALITIES 1))
-;;                 (if-eq EC_ADD 1
-;;                        (= EQUALITIES
-;;                           (+ (prev EQUALITIES) (shift EQUALITIES -2)))))))
-;; ;; 3.10.3
-;; (defconstraint last-equalities ()
-;;   (if-eq INDEX 11 (= EQUALITIES 1)))
-;; ;; 3.10.4.a
-;; (defconstraint point-infinity-a ()
-;;   (if-eq (+ EC_MUL EC_PAIRING) 1
-;;          (if-zero INDEX
-;;                   (if-zero-else (+ LIMB (next LIMB) (shift LIMB 2) (shift LIMB 3))
-;;                                 (= (shift EQUALITIES 2) 1)
-;;                                 (vanishes! (shift EQUALITIES 2))))))
-;; ;; 3.10.4.b
-;; (defconstraint point-infinity-b ()
-;;   (if-eq EC_ADD 1
-;;          (if-zero CT_MIN
-;;                   (if-zero-else (+ LIMB (next LIMB) (shift LIMB 2) (shift LIMB 3))
-;;                                 (= (shift EQUALITIES 2) 1)
-;;                                 (vanishes! (shift EQUALITIES 2))))))
-;; ;;;;;;;;;;;;;;;;;;;;;;
-;; ;;                  ;;
-;; ;;    3.11 Gnark    ;;
-;; ;;                  ;;
-;; ;;;;;;;;;;;;;;;;;;;;;;
-;; ;; 3.11.1
-;; (defconstraint initial-not-on-g2-acc ()
-;;   (if-not-eq (next STAMP)
-;;              STAMP
-;;              (vanishes! (next THIS_IS_NOT_ON_G2_ACC))))
-;; ;; 3.11.2
-;; (defconstraint not-on-g2-acc-activation-condition ()
-;;   (if-eq (next THIS_IS_NOT_ON_G2_ACC) (+ THIS_IS_NOT_ON_G2_ACC 1)
-;;          (begin (= (next INDEX) 11)
-;;                 (= (next THIS_IS_NOT_ON_G2) 1))))
-;; ;; 3.11.3
-;; (defconstraint not-on-g2-should-trigger-acc ()
-;;   (if-eq THIS_IS_NOT_ON_G2 1
-;;          (if-eq INDEX 11 (= THIS_IS_NOT_ON_G2_ACC 1))))
-;; ;; 3.11.4
-;; (defconstraint not-on-g2-triggering-condition ()
-;;   (if-eq (next THIS_IS_NOT_ON_G2) (+ THIS_IS_NOT_ON_G2 1)
-;;          (begin (= (next EC_PAIRING) 1)
-;;                 (= (next PCP) 1)
-;;                 (= (next INDEX) 4)
-;;                 (= (next THIS_IS_NOT_ON_G2_ACC) 0))))
-;; ;; 3.11.5
-;; (defconstraint not-on-g2-acc-final-value ()
-;;   (if-not-eq (next STAMP) STAMP (= SOMETHING_WASNT_ON_G2 THIS_IS_NOT_ON_G2_ACC)))
-;; ;; 3.11.5-bis
-;; (defconstraint not-on-g2-acc-final-value-if-last-row (:domain {-1})
-;;   (= SOMETHING_WASNT_ON_G2 THIS_IS_NOT_ON_G2_ACC))
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; ;;                               ;;
-;; ;;    3.12 AllChecksPassed       ;;
-;; ;;                               ;;
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; ;; 3.12.1
-;; (defconstraint all-checks-passed-not-pairing ()
-;;   (if-not-zero (+ EC_RECOVER EC_ADD EC_MUL)
-;;                (= ALL_CHECKS_PASSED PRELIMINARY_CHECKS_PASSED)))
-;; ;; 3.12.1
-;; (defconstraint all-checks-passed-pairing ()
-;;   (if-not-zero EC_PAIRING
-;;                (= ALL_CHECKS_PASSED
-;;                   (* PRELIMINARY_CHECKS_PASSED (- 1 SOMETHING_WASNT_ON_G2)))))
+(defconstraint first-row (:domain {0})
+  (vanishes! STAMP))
+
+(defconstraint vanishing-values ()
+  (if-zero (flag_sum)
+           (begin (vanishes! INDEX)
+                  (vanishes! ID))))
+
+(defconstraint stamp-increments ()
+  (any! (will-remain-constant! STAMP) (will-inc! STAMP 1)))
+
+(defconstraint stamp-increment ()
+  (eq! (next STAMP) (+ STAMP (transition_to_data))))
+
+(defconstraint allowed-transitions ()
+  (if-not-zero STAMP
+               (eq! (+ (* IS_ECRECOVER_DATA (next (is_ecrecover)))
+                       (* IS_ECADD_DATA (next (is_ecadd)))
+                       (* IS_ECMUL_DATA (next (is_ecmul)))
+                       (* IS_ECPAIRING_DATA (next (is_ecpairing)))
+                       (* IS_ECRECOVER_RESULT (next IS_ECRECOVER_RESULT))
+                       (* IS_ECADD_RESULT (next IS_ECADD_RESULT))
+                       (* IS_ECMUL_RESULT (next IS_ECMUL_RESULT))
+                       (* IS_ECPAIRING_RESULT (next IS_ECPAIRING_RESULT))
+                       (transition_to_data))
+                    1)))
+
+(defconstraint index-reset ()
+  (if-not-zero (transition_bit)
+               (vanishes! (next INDEX))))
+
+(defconstraint index-increment ()
+  (if-not-zero STAMP
+               (if-eq-else INDEX INDEX_MAX
+                           (eq! (transition_bit) 1)
+                           (eq! (next INDEX) (+ 1 INDEX)))))
+
+(defconstraint final-row (:domain {-1})
+  (if-not-zero STAMP
+               (begin (eq! (is_result) 1)
+                      (eq! INDEX INDEX_MAX))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                             ;;
+;;  1.3.13 ID increment        ;;
+;;         constraints         ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defconstraint id-increment ()
+  (if-not-zero (- (next STAMP) STAMP)
+               (eq! (next ID)
+                    (+ ID
+                       1
+                       (+ (* 256 256 256 (next BYTE_DELTA))
+                          (* 256 256 (shift BYTE_DELTA 2))
+                          (* 256 (shift BYTE_DELTA 3))
+                          (shift BYTE_DELTA 4))))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                             ;;
+;;  1.3.14 Setting NOT_ON_G2   ;;
+;;         and NOT_ON_G2_ACC   ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defconstraint large-point-necessary-condition-not-on-g2 ()
+  (if-not-zero IS_LARGE_POINT
+               (eq! NOT_ON_G2 1)))
+
+(defconstraint set-not-on-g2-not-on-g2-acc ()
+  (if-zero IS_ECPAIRING_DATA
+           (begin (vanishes! NOT_ON_G2_ACC)
+                  (vanishes! (next NOT_ON_G2_ACC)))))
+
+(defconstraint set-not-on-g2-acc-during-transition-small-to-large ()
+  (if-not-zero (transition_from_small_to_large)
+               (eq! (next NOT_ON_G2_ACC)
+                    (+ NOT_ON_G2_ACC (next NOT_ON_G2)))))
+
+(defconstraint set-not-on-g2-acc-during-transition-large-to-small ()
+  (if-not-zero (transition_from_large_to_small)
+               (will-remain-constant! NOT_ON_G2_ACC)))
+
+(defconstraint ecpairing-data-icp-necessary-conditions-not-on-g2-acc-max ()
+  (if-not-zero NOT_ON_G2_ACC_MAX
+               (begin (eq! IS_ECPAIRING_DATA 1)
+                      (eq! ICP 1))))
+
+(defconstraint set-not-on-g2-acc-max ()
+  (if-not-zero IS_ECPAIRING_DATA
+               (if-not-zero (next IS_ECPAIRING_RESULT)
+                            (eq! NOT_ON_G2_ACC_MAX NOT_ON_G2_ACC))))
+
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;
 ;; ;;                    ;;
 ;; ;;    4 Lookups       ;;
