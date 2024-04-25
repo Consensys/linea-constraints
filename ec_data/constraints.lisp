@@ -2,6 +2,11 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                ;;
+;;    1.3 Constraints             ;;
+;;                                ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                ;;
 ;;    1.3.1 Binary constraints    ;;
 ;;                                ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -353,6 +358,86 @@
                (if-not-zero (next IS_ECPAIRING_RESULT)
                             (eq! NOT_ON_G2_ACC_MAX NOT_ON_G2_ACC))))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                     ;;
+;; 1.4 Utilities       ;;
+;;                     ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                     ;;
+;; 1.4.1 WCP utilities ;;
+;;                     ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun (callToLT k a b c d)
+  (begin (eq! (shift WCP_FLAG k) 1)
+         (eq! (shift WCP_INST k) LT)
+         (eq! (shift WCP_ARG_1_HI k) a)
+         (eq! (shift WCP_ARG_1_LO k) b)
+         (eq! (shift WCP_ARG_2_HI k) c)
+         (eq! (shift WCP_ARG_2_LO k) d)))
+
+(defun (callToEQ k a b c d)
+  (begin (eq! (shift WCP_FLAG k) 1)
+         (eq! (shift WCP_INST k) EQ)
+         (eq! (shift WCP_ARG_1_HI k) a)
+         (eq! (shift WCP_ARG_1_LO k) b)
+         (eq! (shift WCP_ARG_2_HI k) c)
+         (eq! (shift WCP_ARG_2_LO k) d)))
+
+(defun (callToISZERO k a b)
+  (begin (eq! (shift WCP_FLAG k) 1)
+         (eq! (shift WCP_INST k) ISZERO)
+         (eq! (shift WCP_ARG_1_HI k) a)
+         (eq! (shift WCP_ARG_1_LO k) b)
+         (debug (vanishes! (shift WCP_ARG_2_HI k)))
+         (debug (vanishes! (shift WCP_ARG_2_LO k)))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                     ;;
+;; 1.4.2 EXT utilities ;;
+;;                     ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun (callToADDMOD k a b c d e f)
+  (begin (eq! (shift EXT_FLAG k) 1)
+         (eq! (shift EXT_INST k) ADDMOD)
+         (eq! (shift EXT_ARG_1_HI k) a)
+         (eq! (shift EXT_ARG_1_LO k) b)
+         (eq! (shift EXT_ARG_2_HI k) c)
+         (eq! (shift EXT_ARG_2_LO k) d)
+         (eq! (shift EXT_ARG_3_HI k) e)
+         (eq! (shift EXT_ARG_3_LO k) f)))
+
+(defun (callToMULMOD k a b c d e f)
+  (begin (eq! (shift EXT_FLAG k) 1)
+         (eq! (shift EXT_INST k) MULMOD)
+         (eq! (shift EXT_ARG_1_HI k) a)
+         (eq! (shift EXT_ARG_1_LO k) b)
+         (eq! (shift EXT_ARG_2_HI k) c)
+         (eq! (shift EXT_ARG_2_LO k) d)
+         (eq! (shift EXT_ARG_3_HI k) e)
+         (eq! (shift EXT_ARG_3_LO k) f)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                     ;;
+;; 1.4.3 C1 membership ;;
+;;       utilities     ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                     ;;
+;; 1.4.4 Well formed   ;;
+;;       coordinates   ;;
+;;       utilities     ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                     ;;
+;; 1.6 Specialized     ;;
+;;     constraints     ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                     ;;
+;; 1.6 The ECRECOVER   ;;
+;;     case            ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;
 ;; ;;                    ;;
 ;; ;;    4 Lookups       ;;
