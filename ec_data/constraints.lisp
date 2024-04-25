@@ -92,6 +92,16 @@
 (defconstraint phase ()
   (eq! PHASE (phase_sum)))
 
+;; In the specs this shorthand is defined in different ways in different contexts
+;; Note that (transition_to_result) + (ecrecover_hypothesis) + (ecadd_hypothesis) + (ecmul_hypothesis) + (ecpairing_hypothesis) is 0 or 1
+;; TODO: find out what is the most elegant solution
+(defun (internal_checks_passed)
+  (+ (* (transition_to_result) HURDLE)
+     (* (ecrecover-hypothesis) (shift HURDLE INDEX_MAX_ECRECOVER_DATA))
+     (* (ecadd-hypothesis) (shift HURDLE INDEX_MAX_ECADD_DATA))
+     (* (ecmul-hypothesis) (shift HURDLE INDEX_MAX_ECMUL_DATA))
+     (* (ecpairing-hypothesis) (shift HURDLE INDEX_MAX_ECPAIRING_DATA_MIN))))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                             ;;
 ;;  1.3.3 constancy conditions ;;
@@ -210,10 +220,9 @@
   (if-zero (flag_sum)
            (vanishes! ICP)))
 
-;; note: internal_checks_passed \def HURDLE
 (defconstraint set-icp ()
   (if-not-zero (transition_to_result)
-               (eq! ICP HURDLE)))
+               (eq! ICP (internal_checks_passed))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                             ;;
@@ -371,26 +380,26 @@
 (defun (callToLT k a b c d)
   (begin (eq! (shift WCP_FLAG k) 1)
          (eq! (shift WCP_INST k) LT)
-         (eq! (shift WCP_ARG_1_HI k) a)
-         (eq! (shift WCP_ARG_1_LO k) b)
-         (eq! (shift WCP_ARG_2_HI k) c)
-         (eq! (shift WCP_ARG_2_LO k) d)))
+         (eq! (shift WCP_ARG1_HI k) a)
+         (eq! (shift WCP_ARG1_LO k) b)
+         (eq! (shift WCP_ARG2_HI k) c)
+         (eq! (shift WCP_ARG2_LO k) d)))
 
 (defun (callToEQ k a b c d)
   (begin (eq! (shift WCP_FLAG k) 1)
          (eq! (shift WCP_INST k) EQ)
-         (eq! (shift WCP_ARG_1_HI k) a)
-         (eq! (shift WCP_ARG_1_LO k) b)
-         (eq! (shift WCP_ARG_2_HI k) c)
-         (eq! (shift WCP_ARG_2_LO k) d)))
+         (eq! (shift WCP_ARG1_HI k) a)
+         (eq! (shift WCP_ARG1_LO k) b)
+         (eq! (shift WCP_ARG2_HI k) c)
+         (eq! (shift WCP_ARG2_LO k) d)))
 
 (defun (callToISZERO k a b)
   (begin (eq! (shift WCP_FLAG k) 1)
          (eq! (shift WCP_INST k) ISZERO)
-         (eq! (shift WCP_ARG_1_HI k) a)
-         (eq! (shift WCP_ARG_1_LO k) b)
-         (debug (vanishes! (shift WCP_ARG_2_HI k)))
-         (debug (vanishes! (shift WCP_ARG_2_LO k)))))
+         (eq! (shift WCP_ARG1_HI k) a)
+         (eq! (shift WCP_ARG1_LO k) b)
+         (debug (vanishes! (shift WCP_ARG2_HI k)))
+         (debug (vanishes! (shift WCP_ARG2_LO k)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                     ;;
@@ -400,22 +409,22 @@
 (defun (callToADDMOD k a b c d e f)
   (begin (eq! (shift EXT_FLAG k) 1)
          (eq! (shift EXT_INST k) ADDMOD)
-         (eq! (shift EXT_ARG_1_HI k) a)
-         (eq! (shift EXT_ARG_1_LO k) b)
-         (eq! (shift EXT_ARG_2_HI k) c)
-         (eq! (shift EXT_ARG_2_LO k) d)
-         (eq! (shift EXT_ARG_3_HI k) e)
-         (eq! (shift EXT_ARG_3_LO k) f)))
+         (eq! (shift EXT_ARG1_HI k) a)
+         (eq! (shift EXT_ARG1_LO k) b)
+         (eq! (shift EXT_ARG2_HI k) c)
+         (eq! (shift EXT_ARG2_LO k) d)
+         (eq! (shift EXT_ARG3_HI k) e)
+         (eq! (shift EXT_ARG3_LO k) f)))
 
 (defun (callToMULMOD k a b c d e f)
   (begin (eq! (shift EXT_FLAG k) 1)
          (eq! (shift EXT_INST k) MULMOD)
-         (eq! (shift EXT_ARG_1_HI k) a)
-         (eq! (shift EXT_ARG_1_LO k) b)
-         (eq! (shift EXT_ARG_2_HI k) c)
-         (eq! (shift EXT_ARG_2_LO k) d)
-         (eq! (shift EXT_ARG_3_HI k) e)
-         (eq! (shift EXT_ARG_3_LO k) f)))
+         (eq! (shift EXT_ARG1_HI k) a)
+         (eq! (shift EXT_ARG1_LO k) b)
+         (eq! (shift EXT_ARG2_HI k) c)
+         (eq! (shift EXT_ARG2_LO k) d)
+         (eq! (shift EXT_ARG3_HI k) e)
+         (eq! (shift EXT_ARG3_LO k) f)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                     ;;
@@ -435,8 +444,104 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                     ;;
-;; 1.6 The ECRECOVER   ;;
-;;     case            ;;
+;; 1.6.1 The ECRECOVER ;;
+;;       case          ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun (ecrecover-hypothesis)
+  (* IS_ECRECOVER_DATA
+     (- ID (prev ID))))
+
+(defun (h_hi)
+  LIMB)
+
+(defun (h_lo)
+  (next LIMB))
+
+(defun (v_hi)
+  (shift LIMB 2))
+
+(defun (v_lo)
+  (shift LIMB 3))
+
+(defun (r_hi)
+  (shift LIMB 4))
+
+(defun (r_lo)
+  (shift LIMB 5))
+
+(defun (s_hi)
+  (shift LIMB 6))
+
+(defun (s_lo)
+  (shift LIMB 7))
+
+(defun (r_is_in_range)
+  WCP_RES)
+
+(defun (r_is_positive)
+  (next WCP_RES))
+
+(defun (s_is_in_range)
+  (shift WCP_RES 2))
+
+(defun (s_is_positive)
+  (shift WCP_RES 3))
+
+(defun (v_is_27)
+  (shift WCP_RES 4))
+
+(defun (v_is_28)
+  (shift WCP_RES 5))
+
+(defconstraint internal-checks-ecrecover (:guard (ecrecover-hypothesis))
+  (begin (callToLT 0 (r_hi) (r_lo) SECP256K1N_HI SECP256K1N_LO)
+         (callToLT 1 0 0 (r_hi) (r_lo))
+         (callToLT 2 (s_hi) (s_lo) SECP256K1N_HI SECP256K1N_LO)
+         (callToLT 3 0 0 (s_hi) (s_lo))
+         (callToEQ 4 (v_hi) (v_lo) 0 27)
+         (callToEQ 5 (v_hi) (v_lo) 0 28)))
+
+(defconstraint justify-success-bit-ecrecover (:guard (ecrecover-hypothesis))
+  (begin (eq! HURDLE (* (r_is_in_range) (r_is_positive)))
+         (eq! (next HURDLE) (* (s_is_in_range) (s_is_positive)))
+         (eq! (shift HURDLE 2)
+              (* HURDLE (next HURDLE)))
+         (eq! (internal_checks_passed)
+              (* (shift HURDLE 2) (+ (v_is_27) (v_is_28))))
+         (if-zero (internal_checks_passed)
+                  (vanishes! SUCCESS_BIT))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                     ;;
+;; 1.6.2 The ECADD     ;;
+;;       case          ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun (ecadd-hypothesis)
+  (* IS_ECADD_DATA
+     (- ID (prev ID))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                     ;;
+;; 1.6.3 The ECMUL     ;;
+;;       case          ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun (ecmul-hypothesis)
+  (* IS_ECMUL_DATA
+     (- ID (prev ID))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                     ;;
+;; 1.6.4 The ECPAIRING ;;
+;;       case          ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun (ecpairing-hypothesis)
+  (* IS_ECPAIRING_DATA
+     (- ACC_PAIRINGS (prev ACC_PAIRINGS))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                     ;;
+;; 1.7 Elliptic curve  ;;
+;;      circuit flags  ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;
 ;; ;;                    ;;
