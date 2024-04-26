@@ -443,9 +443,9 @@
 (defconstraint cumulative-gas-comparaison (:guard IS_LAST_TX_OF_BLOCK)
   (if-not-zero (- ABS_TX_NUM (prev ABS_TX_NUM))
                (if-zero TYPE0
-                        (begin (small-call-to-LEQ NB_ROWS_TYPE_1 GAS_CUMULATIVE LINEA_BLOCK_GAS_LIMIT)
+                        (begin (small-call-to-LEQ NB_ROWS_TYPE_1 GAS_CUMULATIVE BLOCK_GAS_LIMIT)
                                (result-must-be-true NB_ROWS_TYPE_1))
-                        (begin (small-call-to-LEQ NB_ROWS_TYPE_0 GAS_CUMULATIVE LINEA_BLOCK_GAS_LIMIT)
+                        (begin (small-call-to-LEQ NB_ROWS_TYPE_0 GAS_CUMULATIVE BLOCK_GAS_LIMIT)
                                (result-must-be-true NB_ROWS_TYPE_0)))))
 
 
