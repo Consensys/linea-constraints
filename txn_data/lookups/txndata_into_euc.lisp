@@ -5,7 +5,7 @@
     euc.DONE
     euc.DIVIDEND
     euc.DIVISOR
-    euc.REMAINDER
+    euc.QUOTIENT
   )
   ; source columns
   (

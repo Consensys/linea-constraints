@@ -391,9 +391,9 @@
                             (eq! GAS_PRICE (max_fee)))))
 
 (defconstraint setting-priority-fee-per-gas (:guard (first-row-trigger))
-  (if-not-zero TYPE2
-               (eq! PRIORITY_FEE_PER_GAS (gas_price))
-               (eq! PRIORITY_FEE_PER_GAS (- (gas_price) BASEFEE))))
+  (if-zero TYPE2
+           (eq! PRIORITY_FEE_PER_GAS (gas_price))
+           (eq! PRIORITY_FEE_PER_GAS (- (gas_price) BASEFEE))))
 
 (defconstraint setting-refund-effective (:guard (first-row-trigger))
   (if-zero (get_full_refund)
@@ -427,19 +427,18 @@
 ;;                          ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;TODO reenable this constraint
-(defconstraint cumulative-gas ()
-  (begin (if-zero ABS
-                  (vanishes! GAS_CUMULATIVE))
-         (if-not-zero (will-remain-constant! BTC)
-                      ; BTC[i + 1] != BTC[i]
-                      (eq! (next GAS_CUMULATIVE)
-                           (next (- GAS_LIMIT REFUND_EFFECTIVE))))
-         (if-not-zero (and (will-inc! BTC 1) (will-remain-constant! ABS))
-                      ; BTC[i + 1] != 1 + BTC[i] && ABS[i+1] != ABS[i] i.e. BTC[i + 1] == BTC[i] && ABS[i+1] == ABS[i] +1
-                      (eq! (next GAS_CUMULATIVE)
-                           (+ GAS_CUMULATIVE
-                              (next (- GAS_LIMIT REFUND_EFFECTIVE)))))))
-
+;(defconstraint cumulative-gas ()
+;  (begin (if-zero ABS
+;                  (vanishes! GAS_CUMULATIVE))
+;         (if-not-zero (will-remain-constant! BTC)
+;                      ; BTC[i + 1] != BTC[i]
+;                      (eq! (next GAS_CUMULATIVE)
+;                           (next (- GAS_LIMIT REFUND_EFFECTIVE))))
+;         (if-not-zero (and (will-inc! BTC 1) (will-remain-constant! ABS))
+;                      ; BTC[i + 1] != 1 + BTC[i] && ABS[i+1] != ABS[i] i.e. BTC[i + 1] == BTC[i] && ABS[i+1] == ABS[i] +1
+;                      (eq! (next GAS_CUMULATIVE)
+;                           (+ GAS_CUMULATIVE
+;                              (next (- GAS_LIMIT REFUND_EFFECTIVE)))))))
 (defconstraint cumulative-gas-comparaison (:guard IS_LAST_TX_OF_BLOCK)
   (if-not-zero (- ABS_TX_NUM (prev ABS_TX_NUM))
                (if-zero TYPE0
