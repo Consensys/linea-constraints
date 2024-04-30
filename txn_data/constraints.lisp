@@ -384,11 +384,11 @@
                (eq! GAS_INITIALLY_AVAILABLE (- (gas_limit) (access_upfront_gas_cost)))))
 
 (defconstraint setting-gas-price (:guard (first-row-trigger))
-  (if-not-zero TYPE2
-               (eq! GAS_PRICE (gas_price))
-               (if-not-zero (get_full_tip)
-                            (eq! GAS_PRICE (+ BASEFEE (max_priority_fee)))
-                            (eq! GAS_PRICE (max_fee)))))
+  (if-zero TYPE2
+           (eq! GAS_PRICE (gas_price))
+           (if-not-zero (get_full_tip)
+                        (eq! GAS_PRICE (+ BASEFEE (max_priority_fee)))
+                        (eq! GAS_PRICE (max_fee)))))
 
 (defconstraint setting-priority-fee-per-gas (:guard (first-row-trigger))
   (if-zero TYPE2
@@ -426,19 +426,19 @@
 ;;    2.13 Cumulative gas   ;;
 ;;                          ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;TODO reenable this constraint
-;(defconstraint cumulative-gas ()
-;  (begin (if-zero ABS
-;                  (vanishes! GAS_CUMULATIVE))
-;         (if-not-zero (will-remain-constant! BTC)
-;                      ; BTC[i + 1] != BTC[i]
-;                      (eq! (next GAS_CUMULATIVE)
-;                           (next (- GAS_LIMIT REFUND_EFFECTIVE))))
-;         (if-not-zero (and (will-inc! BTC 1) (will-remain-constant! ABS))
-;                      ; BTC[i + 1] != 1 + BTC[i] && ABS[i+1] != ABS[i] i.e. BTC[i + 1] == BTC[i] && ABS[i+1] == ABS[i] +1
-;                      (eq! (next GAS_CUMULATIVE)
-;                           (+ GAS_CUMULATIVE
-;                              (next (- GAS_LIMIT REFUND_EFFECTIVE)))))))
+(defconstraint cumulative-gas ()
+  (begin (if-zero ABS
+                  (vanishes! GAS_CUMULATIVE))
+         (if-not-zero (will-remain-constant! BTC)
+                      ; BTC[i + 1] != BTC[i]
+                      (eq! (next GAS_CUMULATIVE)
+                           (next (- GAS_LIMIT REFUND_EFFECTIVE))))
+         (if-not-zero (and (will-inc! BTC 1) (will-remain-constant! ABS))
+                      ; BTC[i + 1] != 1 + BTC[i] && ABS[i+1] != ABS[i] i.e. BTC[i + 1] == BTC[i] && ABS[i+1] == ABS[i] +1
+                      (eq! (next GAS_CUMULATIVE)
+                           (+ GAS_CUMULATIVE
+                              (next (- GAS_LIMIT REFUND_EFFECTIVE)))))))
+
 (defconstraint cumulative-gas-comparaison (:guard IS_LAST_TX_OF_BLOCK)
   (if-not-zero (- ABS_TX_NUM (prev ABS_TX_NUM))
                (if-zero TYPE0
