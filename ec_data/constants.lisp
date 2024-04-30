@@ -9,10 +9,10 @@
   EQ                            0x14
   MULMOD                        0x09
   ADDMOD                        0x08
-  ECRECOVER_ADDRESS             0x01
-  ECADD_ADDRESSS                0x06
-  ECMUL_ADDRESS                 0x07
-  ECPAIRING_ADDRESS             0x08
+  ECRECOVER                     0x01
+  ECADD                         0x06
+  ECMUL                         0x07
+  ECPAIRING                     0x08
   PHASE_ECRECOVER_DATA          0x010A
   PHASE_ECRECOVER_RESULT        0x010B
   PHASE_ECADD_DATA              0x060A

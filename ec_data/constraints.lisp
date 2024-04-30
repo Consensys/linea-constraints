@@ -54,10 +54,10 @@
 
 ;; TODO: use constants in the specs too
 (defun (address_sum)
-  (+ (* ECRECOVER_ADDRESS (is_ecrecover))
-     (* ECADD_ADDRESSS (is_ecadd))
-     (* ECMUL_ADDRESS (is_ecmul))
-     (* ECPAIRING_ADDRESS (is_ecpairing))))
+  (+ (* ECRECOVER (is_ecrecover))
+     (* ECADD (is_ecadd))
+     (* ECMUL (is_ecmul))
+     (* ECPAIRING (is_ecpairing))))
 
 (defun (phase_sum)
   (+ (* PHASE_ECRECOVER_DATA IS_ECRECOVER_DATA)
