@@ -61,8 +61,6 @@ MXP := mxp
 
 PUB_DATA := $(shell find pub/ -iname '*.lisp')
 
-SHAKIRA := shakira_data
-
 RLP_ADDR := rlpaddr
 
 RLP_TXN := rlptxn
