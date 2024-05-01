@@ -6,7 +6,7 @@
   (INDEX :byte)
   (LIMB :i128)
   TOTAL_SIZE
-  (PHASE :i3@prove)
+  (PHASE :i16@prove)
   INDEX_MAX
   (SUCCESS_BIT :binary@prove)
   (IS_ECRECOVER_DATA :binary@prove)
