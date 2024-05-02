@@ -94,7 +94,7 @@
 
 ;; In the specs this shorthand is defined in different ways in different contexts
 ;; Note that (transition_to_result) + (ecrecover_hypothesis) + (ecadd_hypothesis) + (ecmul_hypothesis) + (ecpairing_hypothesis) is 0 or 1
-;; TODO: find out what is the most elegant solution
+;; TODO: use the same approach in the specs
 (defun (internal_checks_passed)
   (+ (* (transition_to_result) HURDLE)
      (* (ecrecover-hypothesis) (shift HURDLE INDEX_MAX_ECRECOVER_DATA))
@@ -452,7 +452,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun (ecrecover-hypothesis)
   (* IS_ECRECOVER_DATA
-     (- ID (prev ID))))
+     (~ (- ID (prev ID)))))
 
 (defun (h_hi)
   LIMB)
@@ -521,7 +521,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun (ecadd-hypothesis)
   (* IS_ECADD_DATA
-     (- ID (prev ID))))
+     (~ (- ID (prev ID)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                     ;;
@@ -530,7 +530,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun (ecmul-hypothesis)
   (* IS_ECMUL_DATA
-     (- ID (prev ID))))
+     (~ (- ID (prev ID)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                     ;;
