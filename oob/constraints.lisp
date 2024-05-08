@@ -217,7 +217,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun (callToADD k arg_1_hi arg_1_lo arg_2_hi arg_2_lo)
   (begin (eq! (wght_lookup_sum k) 1)
-         (eq! (shift OUTGOING_INST k) ADD)
+         (eq! (shift OUTGOING_INST k) EVM_INST_ADD)
          (eq! (shift [OUTGOING_DATA 1] k) arg_1_hi)
          (eq! (shift [OUTGOING_DATA 2] k) arg_1_lo)
          (eq! (shift [OUTGOING_DATA 3] k) arg_2_hi)
@@ -225,7 +225,7 @@
 
 (defun (callToDIV k arg_1_hi arg_1_lo arg_2_hi arg_2_lo)
   (begin (eq! (wght_lookup_sum k) 2)
-         (eq! (shift OUTGOING_INST k) DIV)
+         (eq! (shift OUTGOING_INST k) EVM_INST_DIV)
          (eq! (shift [OUTGOING_DATA 1] k) arg_1_hi)
          (eq! (shift [OUTGOING_DATA 2] k) arg_1_lo)
          (eq! (shift [OUTGOING_DATA 3] k) arg_2_hi)
@@ -233,7 +233,7 @@
 
 (defun (callToMOD k arg_1_hi arg_1_lo arg_2_hi arg_2_lo)
   (begin (eq! (wght_lookup_sum k) 2)
-         (eq! (shift OUTGOING_INST k) MOD)
+         (eq! (shift OUTGOING_INST k) EVM_INST_MOD)
          (eq! (shift [OUTGOING_DATA 1] k) arg_1_hi)
          (eq! (shift [OUTGOING_DATA 2] k) arg_1_lo)
          (eq! (shift [OUTGOING_DATA 3] k) arg_2_hi)
@@ -241,7 +241,7 @@
 
 (defun (callToLT k arg_1_hi arg_1_lo arg_2_hi arg_2_lo)
   (begin (eq! (wght_lookup_sum k) 3)
-         (eq! (shift OUTGOING_INST k) LT)
+         (eq! (shift OUTGOING_INST k) EVM_INST_LT)
          (eq! (shift [OUTGOING_DATA 1] k) arg_1_hi)
          (eq! (shift [OUTGOING_DATA 2] k) arg_1_lo)
          (eq! (shift [OUTGOING_DATA 3] k) arg_2_hi)
@@ -249,7 +249,7 @@
 
 (defun (callToGT k arg_1_hi arg_1_lo arg_2_hi arg_2_lo)
   (begin (eq! (wght_lookup_sum k) 3)
-         (eq! (shift OUTGOING_INST k) GT)
+         (eq! (shift OUTGOING_INST k) EVM_INST_GT)
          (eq! (shift [OUTGOING_DATA 1] k) arg_1_hi)
          (eq! (shift [OUTGOING_DATA 2] k) arg_1_lo)
          (eq! (shift [OUTGOING_DATA 3] k) arg_2_hi)
@@ -257,7 +257,7 @@
 
 (defun (callToISZERO k arg_1_hi arg_1_lo)
   (begin (eq! (wght_lookup_sum k) 3)
-         (eq! (shift OUTGOING_INST k) ISZERO)
+         (eq! (shift OUTGOING_INST k) EVM_INST_ISZERO)
          (eq! (shift [OUTGOING_DATA 1] k) arg_1_hi)
          (eq! (shift [OUTGOING_DATA 2] k) arg_1_lo)
          (debug (vanishes! (shift [OUTGOING_DATA 3] k)))
@@ -265,7 +265,7 @@
 
 (defun (callToEQ k arg_1_hi arg_1_lo arg_2_hi arg_2_lo)
   (begin (eq! (wght_lookup_sum k) 3)
-         (eq! (shift OUTGOING_INST k) EQ)
+         (eq! (shift OUTGOING_INST k) EVM_INST_EQ)
          (eq! (shift [OUTGOING_DATA 1] k) arg_1_hi)
          (eq! (shift [OUTGOING_DATA 2] k) arg_1_lo)
          (eq! (shift [OUTGOING_DATA 3] k) arg_2_hi)
@@ -362,7 +362,7 @@
 ;;            (begin (vanishes! (shift ADD_FLAG 2))
 ;;                   (vanishes! (shift MOD_FLAG 2))
 ;;                   (eq! (shift WCP_FLAG 2) 1)
-;;                   (eq! (shift OUTGOING_INST 2) GT)
+;;                   (eq! (shift OUTGOING_INST 2) EVM_INST_GT)
 ;;                   (vanishes! (shift [OUTGOING_DATA 3] 2))
 ;;                   (eq! (shift [OUTGOING_DATA 4] 2) (rdc___rds)))
 ;;            (noCall 2)))
@@ -497,7 +497,7 @@
 ;; (defun (sstore___sufficient_gas)
 ;;   OUTGOING_RES_LO)
 ;; (defconstraint valid-sstore (:guard (* (standing-hypothesis) (sstore-hypothesis)))
-;;   (callToLT 0 0 G_CALLSTIPEND 0 (sstore___gas)))
+;;   (callToLT 0 0 GAS_CONST_G_CALL_STIPEND 0 (sstore___gas)))
 ;; ;; (defconstraint set-oob-event-sstore (:guard (* (standing-hypothesis) (sstore-hypothesis)))
 ;; ;;   (begin (eq! [OOB_EVENT 1] (- 1 (sstore___sufficient_gas)))
 ;; ;;          (vanishes! [OOB_EVENT 2])))
@@ -670,7 +670,7 @@
            (begin (vanishes! (shift ADD_FLAG 4))
                   (vanishes! (shift MOD_FLAG 4))
                   (eq! (shift WCP_FLAG 4) 1)
-                  (eq! (shift OUTGOING_INST 4) LT)
+                  (eq! (shift OUTGOING_INST 4) EVM_INST_LT)
                   (vanishes! (shift [OUTGOING_DATA 1] 4))
                   (eq! (shift [OUTGOING_DATA 2] 4) (prc___call_gas))
                   (vanishes! (shift [OUTGOING_DATA 3] 4))
@@ -1037,3 +1037,5 @@
          (if-not-zero (prc___ram_success)
                       (eq! (prc___return_gas) (- (prc___call_gas) (prc-blake_params___blake_f)))
                       (vanishes! (prc___return_gas)))))
+
+
