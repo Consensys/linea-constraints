@@ -13,9 +13,9 @@
   (
     (* blockdata.WCP_FLAG blockdata.DATA_HI)
     (* blockdata.WCP_FLAG blockdata.DATA_LO)
-    (* blockdata.WCP_FLAG (shift blockdata.DATA_HI -8)) ;; -8 = (- 0 (+ MAX_CT 1))
+    (* blockdata.WCP_FLAG (shift blockdata.DATA_HI -7)) ;; -7 = (- 0 (+ MAX_CT 1))
 
-    (* blockdata.WCP_FLAG (shift blockdata.DATA_LO -8)) ;; -8 = (- 0 (+ MAX_CT 1))
+    (* blockdata.WCP_FLAG (shift blockdata.DATA_LO -7)) ;; -7 = (- 0 (+ MAX_CT 1))
 
     blockdata.WCP_FLAG
     (* blockdata.WCP_FLAG EVM_INST_LT)
