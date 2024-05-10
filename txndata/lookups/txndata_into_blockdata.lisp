@@ -11,12 +11,12 @@
   )
   ; source columns
   (
-    txnData.REL_BLOCK
-    txnData.REL_TX_NUM_MAX
-    txnData.COINBASE_HI
-    txnData.COINBASE_LO
-    txnData.BASEFEE
-    txnData.BLOCK_GAS_LIMIT
+    txndata.REL_BLOCK
+    txndata.REL_TX_NUM_MAX
+    txndata.COINBASE_HI
+    txndata.COINBASE_LO
+    txndata.BASEFEE
+    txndata.BLOCK_GAS_LIMIT
   ))
 
 
