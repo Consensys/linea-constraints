@@ -110,6 +110,63 @@
          ;; (eq! (shift [ misc/OOB_DATA 8 ]    kappa) )
          ))
 
+
+(defun (set-OOB-inst-xcall
+         kappa           ;; offset
+         value_hi        ;; value (high part)
+         value_lo        ;; value (low  part, stack argument of CALL-type instruction)
+         ) (begin
+         (eq!    (shift misc/OOB_INST          kappa)   OOB_INST_xcall )
+         (eq!    (shift [ misc/OOB_DATA 1 ]    kappa)   value_hi       )
+         (eq!    (shift [ misc/OOB_DATA 2 ]    kappa)   value_lo       )
+         ;; (eq!    (shift [ misc/OOB_DATA 3 ]    kappa) )
+         ;; (eq!    (shift [ misc/OOB_DATA 4 ]    kappa) )
+         ;; (eq!    (shift [ misc/OOB_DATA 5 ]    kappa) )
+         ;; (eq!    (shift [ misc/OOB_DATA 6 ]    kappa) )
+         ;; (eq!    (shift [ misc/OOB_DATA 7 ]    kappa) )    ;; value_is_nonzero
+         ;; (eq!    (shift [ misc/OOB_DATA 8 ]    kappa) )    ;; value_is_zero    ... I don't remember why I ask for both ...
+         ))
+
+
+(defun (set-OOB-inst-call
+         kappa              ;; offset
+         value_hi           ;; value   (high part)
+         value_lo           ;; value   (low  part, stack argument of CALL-type instruction)
+         balance            ;; balance (from caller account)
+         call_stack_depth   ;; call stack depth
+         ) (begin
+         (eq!    (shift misc/OOB_INST          kappa)   OOB_INST_call   )
+         (eq!    (shift [ misc/OOB_DATA 1 ]    kappa)   value_hi        )
+         (eq!    (shift [ misc/OOB_DATA 2 ]    kappa)   value_lo        )
+         (eq!    (shift [ misc/OOB_DATA 3 ]    kappa)   balance         )
+         ;; (eq!    (shift [ misc/OOB_DATA 4 ]    kappa) )
+         ;; (eq!    (shift [ misc/OOB_DATA 5 ]    kappa) )
+         (eq!    (shift [ misc/OOB_DATA 6 ]    kappa)   call_stack_depth)
+         ;; (eq!    (shift [ misc/OOB_DATA 7 ]    kappa) )    ;; value_is_nonzero
+         ;; (eq!    (shift [ misc/OOB_DATA 8 ]    kappa) )    ;; aborting condition
+         ))
+
+
+(defun (set-OOB-inst-create
+         kappa              ;; offset
+         value_hi           ;; value   (high part)
+         value_lo           ;; value   (low  part, stack argument of CALL-type instruction)
+         balance            ;; balance (from caller account)
+         nonce              ;; callee's nonce
+         has_code           ;; callee's HAS_CODE
+         call_stack_depth   ;; current call stack depth
+         ) (begin
+         (eq!    (shift misc/OOB_INST          kappa)   OOB_INST_create  )
+         (eq!    (shift [ misc/OOB_DATA 1 ]    kappa)   value_hi         )
+         (eq!    (shift [ misc/OOB_DATA 2 ]    kappa)   value_lo         )
+         (eq!    (shift [ misc/OOB_DATA 3 ]    kappa)   balance          )
+         (eq!    (shift [ misc/OOB_DATA 4 ]    kappa)   nonce            )
+         (eq!    (shift [ misc/OOB_DATA 5 ]    kappa)   has_code         )
+         (eq!    (shift [ misc/OOB_DATA 6 ]    kappa)   call_stack_depth )
+         ;; (eq!    (shift [ misc/OOB_DATA 7 ]    kappa) )    ;; value_is_nonzero
+         ;; (eq!    (shift [ misc/OOB_DATA 8 ]    kappa) )    ;; aborting condition
+         ))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                           ;;
 ;;   9.4 MISC/OOB constraints: precompiles   ;;
