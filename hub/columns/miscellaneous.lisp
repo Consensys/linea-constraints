@@ -54,7 +54,7 @@
 		 (OOB_DATA                :array[1:8])
 
 		 ;; STP columns (DONE)
-		 STP_INST
+		 STP_INSTRUCTION
 		 STP_GAS_HI
 		 STP_GAS_LO
 		 STP_VAL_HI
@@ -62,6 +62,7 @@
 		 (STP_EXISTS                        :binary@prove) ;; TODO: demote to debug constraint
 		 (STP_WARMTH                        :binary@prove) ;; TODO: demote to debug constraint
 		 (STP_OOGX                          :binary@prove) ;; TODO: demote to debug constraint
+		 STP_GAS_MXP
 		 STP_GAS_UPFRONT_GAS_COST
 		 STP_GAS_PAID_OUT_OF_POCKET
 		 STP_GAS_STIPEND
