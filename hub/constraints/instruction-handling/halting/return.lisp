@@ -21,12 +21,12 @@
                                                 (-  1  stack/SUX )))
 
 (defun  (return-inst-standard-scenario-row)  (* PEEK_AT_SCENARIO
-                                                (scen-RETURN-shorthand-sum)))
+                                                (scenario-shorthand-RETURN-sum)))
 
 (defconstraint   return-inst-imposing-some-RETURN-scenario  (:guard  (return-inst-standard-stack-hypothesis))
                  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                  (begin  (eq!  (next  PEEK_AT_SCENARIO)             1)
-                         (eq!  (next  (scen-RETURN-shorthand-sum))  1)))
+                         (eq!  (next  (scenario-shorthand-RETURN-sum))  1)))
 
 
 ;; Note: we could pack into a single constraint the last 3 constraints.
@@ -98,11 +98,11 @@
 (defconstraint return-inst-acceptable-exceptions  (:guard  PEEK_AT_SCENARIO)
                ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                (begin
-                 (if-not-zero  (scen-RETURN-shorthand-message-call)
+                 (if-not-zero  (scenario-shorthand-RETURN-message-call)
                                (eq!  XAHOY
                                      (+  (return-inst-exception-flag-MXPX)
                                          (return-inst-exception-flag-OOGX))))
-                 (if-not-zero  (scen-RETURN-shorthand-deployment)
+                 (if-not-zero  (scenario-shorthand-RETURN-deployment)
                                (eq!  XAHOY
                                      (+  (return-inst-exception-flag-MXPX)
                                          (return-inst-exception-flag-OOGX)
@@ -187,13 +187,13 @@
                  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                  (begin
                    (eq!  scenario/RETURN_EXCEPTION  XAHOY)
-                   (if-not-zero  (scen-RETURN-shorthand-unexceptional)
-                                 (eq!  (scen-RETURN-shorthand-deployment)  (return-inst-is-deployment)))
-                   (if-not-zero  (scen-RETURN-shorthand-deployment)
+                   (if-not-zero  (scenario-shorthand-RETURN-unexceptional)
+                                 (eq!  (scenario-shorthand-RETURN-deployment)  (return-inst-is-deployment)))
+                   (if-not-zero  (scenario-shorthand-RETURN-deployment)
                                  (begin
-                                    (eq!  (scen-RETURN-shorthand-deployment-will-revert)  CONTEXT_WILL_REVERT)
-                                    (eq!  (scen-RETURN-shorthand-nonempty-deployment)     (return-inst-MXP-may-trigger-non-trivial-operation))))
-                   (if-not-zero  (scen-RETURN-shorthand-message-call)
+                                    (eq!  (scenario-shorthand-RETURN-deployment-will-revert)  CONTEXT_WILL_REVERT)
+                                    (eq!  (scenario-shorthand-RETURN-nonempty-deployment)     (return-inst-MXP-may-trigger-non-trivial-operation))))
+                   (if-not-zero  (scenario-shorthand-RETURN-message-call)
                                  (if-zero  (return-touch-ram-expression)
                                            ;; touch_ram_expression = 0
                                            (eq!  scenario/RETURN_FROM_MESSAGE_CALL_WONT_TOUCH_RAM  1)
@@ -213,13 +213,13 @@
 
 (defun  (return-inst-trigger_MXP)                     1)   ;;                             does this syntax make sense ?
 (defun  (return-inst-trigger_OOB)                     (+  (return-inst-exception-flag-MAXCSX)
-                                                          (scen-RETURN-shorthand-nonempty-deployment)))
+                                                          (scenario-shorthand-RETURN-nonempty-deployment)))
 (defun  (return-inst-trigger_MMU)                     (+  (return-inst-check-first-byte)
                                                           (return-inst-write-return-data-to-caller-ram)))
 (defun  (return-inst-check-first-byte)                (+  (return-inst-exception-flag-ICPX)
-                                                          (scen-RETURN-shorthand-nonempty-deployment)))
+                                                          (scenario-shorthand-RETURN-nonempty-deployment)))
 (defun  (return-inst-write-return-data-to-caller-ram) scenario/RETURN_FROM_MESSAGE_CALL_WILL_TOUCH_RAM)
-(defun  (return-inst-trigger_HASHINFO)                (scen-RETURN-shorthand-nonempty-deployment))
+(defun  (return-inst-trigger_HASHINFO)                (scenario-shorthand-RETURN-nonempty-deployment))
 
 (defconstraint   return-inst-triggering-HASHINFO           (:guard   (return-inst-standard-scenario-row))
                  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -316,7 +316,7 @@
                                                      (return-inst-MXP-memory-expansion-gas)))))
 
 (defun   (return-inst-gas-cost-required)   (+  (return-inst-exception-flag-OOGX)
-                                               (scen-RETURN-shorthand-unexceptional)))
+                                               (scenario-shorthand-RETURN-unexceptional)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                               ;;

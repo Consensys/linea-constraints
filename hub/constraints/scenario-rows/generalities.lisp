@@ -57,6 +57,10 @@
                    (scenario-shorthand-CALL-sum)
                    (scenario-shorthand-CREATE-sum)
                    (scenario-shorthand-PRC-sum)
-                   ;; (scen-RETURN-shorthand-sum)
-                   ;; (scen-SELFDESTRUCT-shorthand-sum)
+                   (scenario-shorthand-RETURN-sum)
+                   (scenario-shorthand-SELFDESTRUCT-sum)
                    )))
+
+(defconstraint   at-most-one-precompile-address-bit-is-active   (:perspective scenario)
+                 (eq!   (scenario-shorthand-PRC-full-address-bit-sum)
+                        (scenario-shorthand-PRC-sum)))

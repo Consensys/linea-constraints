@@ -8,7 +8,7 @@
 
 
 ;; ;;  RETURN/message_call
-(defun (scen-RETURN-shorthand-message-call)
+(defun (scenario-shorthand-RETURN-message-call)
   (+ ;; scenario/RETURN_EXCEPTION
      scenario/RETURN_FROM_MESSAGE_CALL_WILL_TOUCH_RAM
      scenario/RETURN_FROM_MESSAGE_CALL_WONT_TOUCH_RAM
@@ -19,7 +19,7 @@
      ))
 
 ;; ;;  RETURN/empty_deployment
-(defun (scen-RETURN-shorthand-empty-deployment)
+(defun (scenario-shorthand-RETURN-empty-deployment)
   (+ ;; scenario/RETURN_EXCEPTION
      ;; scenario/RETURN_FROM_MESSAGE_CALL_WILL_TOUCH_RAM
      ;; scenario/RETURN_FROM_MESSAGE_CALL_WONT_TOUCH_RAM
@@ -30,7 +30,7 @@
      ))
 
 ;; ;;  RETURN/nonempty_deployment
-(defun (scen-RETURN-shorthand-nonempty-deployment)
+(defun (scenario-shorthand-RETURN-nonempty-deployment)
   (+ ;; scenario/RETURN_EXCEPTION
      ;; scenario/RETURN_FROM_MESSAGE_CALL_WILL_TOUCH_RAM
      ;; scenario/RETURN_FROM_MESSAGE_CALL_WONT_TOUCH_RAM
@@ -41,12 +41,12 @@
      ))
 
 ;; ;;  RETURN/deployment
-(defun (scen-RETURN-shorthand-deployment)
-  (+ (scen-RETURN-shorthand-empty-deployment)
-     (scen-RETURN-shorthand-nonempty-deployment)))
+(defun (scenario-shorthand-RETURN-deployment)
+  (+ (scenario-shorthand-RETURN-empty-deployment)
+     (scenario-shorthand-RETURN-nonempty-deployment)))
 
 ;; ;;  RETURN/deployment_will_revert
-(defun (scen-RETURN-shorthand-deployment-will-revert)
+(defun (scenario-shorthand-RETURN-deployment-will-revert)
   (+ ;; scenario/RETURN_EXCEPTION
      ;; scenario/RETURN_FROM_MESSAGE_CALL_WILL_TOUCH_RAM
      ;; scenario/RETURN_FROM_MESSAGE_CALL_WONT_TOUCH_RAM
@@ -57,21 +57,21 @@
      ))
 
 ;; ;; NOT A CONSTRAINT
-;; (defconstraint  BULLSHIT-making-sure-everything-compiles-scen-RETURN-shorthands () 
-;;                (begin  (vanishes! (scen-RETURN-shorthand-message-call)           )
-;;                        (vanishes! (scen-RETURN-shorthand-empty-deployment)       )
-;;                        (vanishes! (scen-RETURN-shorthand-nonempty-deployment)    )
-;;                        (vanishes! (scen-RETURN-shorthand-deployment)             )
-;;                        (vanishes! (scen-RETURN-shorthand-deployment-will-revert) )
-;;                        (vanishes! (scen-RETURN-shorthand-unexceptional)          )
-;;                        (vanishes! (scen-RETURN-shorthand-sum)                    )))
+;; (defconstraint  BULLSHIT-making-sure-everything-compiles-scenario-shorthand-RETURNs () 
+;;                (begin  (vanishes! (scenario-shorthand-RETURN-message-call)           )
+;;                        (vanishes! (scenario-shorthand-RETURN-empty-deployment)       )
+;;                        (vanishes! (scenario-shorthand-RETURN-nonempty-deployment)    )
+;;                        (vanishes! (scenario-shorthand-RETURN-deployment)             )
+;;                        (vanishes! (scenario-shorthand-RETURN-deployment-will-revert) )
+;;                        (vanishes! (scenario-shorthand-RETURN-unexceptional)          )
+;;                        (vanishes! (scenario-shorthand-RETURN-sum)                    )))
 
 ;; ;;  RETURN/unexceptional
-(defun (scen-RETURN-shorthand-unexceptional)
-  (+ (scen-RETURN-shorthand-message-call)
-     (scen-RETURN-shorthand-deployment)))
+(defun (scenario-shorthand-RETURN-unexceptional)
+  (+ (scenario-shorthand-RETURN-message-call)
+     (scenario-shorthand-RETURN-deployment)))
 
 ;; ;;  RETURN/sum
-(defun (scen-RETURN-shorthand-sum)
+(defun (scenario-shorthand-RETURN-sum)
   (+ scenario/RETURN_EXCEPTION
-     (scen-RETURN-shorthand-unexceptional)))
+     (scenario-shorthand-RETURN-unexceptional)))
