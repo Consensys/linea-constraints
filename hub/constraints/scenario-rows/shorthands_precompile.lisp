@@ -31,7 +31,7 @@
 
 ;;  PRC/sum
 (defun (scenario-shorthand-PRC-full-address-bit-sum)
-  (+  (scenario-shorthand-PRC-common)
+  (+  (scenario-shorthand-PRC-common-address-bit-sum)
       scenario/PRC_MODEXP
       scenario/PRC_BLAKE2f
       ))
@@ -127,17 +127,8 @@
     ))
 
 ;;  PRC/scenario_sum
-(defun (scenario-shorthand-PRC-scenario-sum)
+(defun (scenario-shorthand-PRC-sum)
   (+ 
-    ;; scenario/PRC_ECRECOVER
-    ;; scenario/PRC_SHA2-256
-    ;; scenario/PRC_RIPEMD-160
-    ;; scenario/PRC_IDENTITY
-    ;; scenario/PRC_MODEXP
-    ;; scenario/PRC_ECADD
-    ;; scenario/PRC_ECMUL
-    ;; scenario/PRC_ECPAIRING
-    ;; scenario/PRC_BLAKE2f
     (scenario-shorthand-PRC-failure)
     (scenario-shorthand-PRC-success)
     ))

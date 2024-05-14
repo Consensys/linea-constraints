@@ -446,3 +446,16 @@
                     (push-scnd-row-stack-item                       4)
                     (set-scnd-row-stack-item-stamp                  4 4)
                     ))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                        ;;
+;;  5. requestHash and maybeRequestHash   ;;
+;;                                        ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+(defun   (maybeRequestHash   relative_offset   bit)
+  (eq!   (shift   HASH_INFO_FLAG   relative_offset)
+         bit))
+
+(defun  (requestHash   relative_offset) (maybeRequestHash   relative_offset   1))
