@@ -1,32 +1,49 @@
 CORSET ?= corset
 
-HUB_V2 := $(wildcard hub_v2/columns/*lisp) \
-	  $(wildcard hub_v2/constraints/heartbeat/*lisp) \
-	  $(wildcard hub_v2/constraints/generalities/*lisp) \
-	  $(wildcard hub_v2/lookups/*lisp) \
-	  hub_v2/constants.lisp
+HUB :=  $(wildcard hub/columns/*lisp) \
+	$(wildcard hub/constraints/account-rows/*lisp) \
+	$(wildcard hub/constraints/consistency/*lisp) \
+	$(wildcard hub/constraints/context-rows/*lisp) \
+	$(wildcard hub/constraints/generalities/*lisp) \
+	$(wildcard hub/constraints/heartbeat/*lisp) \
+	$(wildcard hub/constraints/instruction-handling/*lisp) \
+	$(wildcard hub/constraints/instruction-handling/halting/*lisp) \
+	$(wildcard hub/constraints/instruction-handling/create/*lisp) \
+	$(wildcard hub/constraints/instruction-handling/copy/*lisp) \
+	$(wildcard hub/constraints/miscellaneous-rows/*lisp) \
+	$(wildcard hub/constraints/scenario-rows/*lisp) \
+	$(wildcard hub/constraints/storage-rows/*lisp) \
+	$(wildcard hub/constraints/tx_skip/*lisp) \
+	$(wildcard hub/constraints/tx_prewarm/*lisp) \
+	$(wildcard hub/constraints/tx_init/*lisp) \
+	$(wildcard hub/constraints/tx_finl/*lisp) \
+	$(wildcard hub/constraints/*lisp) \
+	$(wildcard hub/lookups/*lisp) \
+	$(wildcard hub/constants.lisp) \
+	# hub/constants.lisp
 
 ALU := alu/add/columns.lisp \
        alu/add/constraints.lisp \
        alu/ext/columns.lisp \
        alu/ext/constraints.lisp \
        alu/mod/columns.lisp \
+	   alu/mod/constants.lisp \
        alu/mod/constraints.lisp \
        alu/mul/columns.lisp \
        alu/mul/constraints.lisp \
        alu/mul/helpers.lisp
-# alu/add/hub_into_add.lisp \
-	# alu/ext/hub_into_ext.lisp \
-	# alu/mod/hub_into_mod.lisp \
-	# alu/mul/hub_into_mul.lisp
 
 BIN := bin   
 
-BLAKE2f_MODEXP_DATA := blake2f_modexp_data
+BLAKE2f_MODEXP_DATA := blake2fmodexpdata
+
+BLOCKDATA := blockdata
+
+BLOCKHASH := blockhash
 
 CONSTANTS := constants/constants.lisp
 
-EC_DATA := ec_data
+EC_DATA := ecdata
 
 EUC := euc
 
@@ -36,9 +53,9 @@ GAS := gas
 
 LIBRARY := library/rlp_constraints_pattern.lisp
 
-LOG_DATA := logData
+LOG_DATA := logdata
 
-LOG_INFO := logInfo
+LOG_INFO := loginfo
 
 MMU := mmu
 
@@ -48,10 +65,6 @@ MMIO := mmio/columns.lisp #TODO enable the MMIO constraint and lookup
 
 MXP := mxp
 
-PUB_DATA := $(shell find pub/ -iname '*.lisp')
-
-SHAKIRA := shakira_data
-
 RLP_ADDR := rlpaddr
 
 RLP_TXN := rlptxn
@@ -60,56 +73,55 @@ RLP_TXRCPT := rlptxrcpt
 
 ROM := rom
 
-ROM_LEX := romLex
+ROM_LEX := romlex
 
-SHAKIRA := shakira
+SHAKIRA_DATA := shakiradata
 
 SHIFT :=  shf
 
-STACK := hub/columns.lisp \
-	 hub/constraints.lisp
+STP := stp
 
 STP := stp
 
-TABLES := reference_tables/binRT.lisp \
-	  reference_tables/shfRT.lisp \
-	  reference_tables/instruction_decoder.lisp 
+TABLES := reftables/bin_reftable.lisp \
+	  reftables/shf_reftable.lisp \
+	  reftables/inst_decoder.lisp
 
 TRM := trm
 
-TXN_DATA := txn_data 
+TXN_DATA := txndata
 
 WCP := wcp
 
 ZKEVM_MODULES := ${ALU} \
-	${BIN} \
-	${BLAKE2f_MODEXP_DATA} \
-	${CONSTANTS} \
-	${EC_DATA} \
-	${EUC} \
-	${EXP} \
-	${GAS} \
-	${LIBRARY} \
-	${LOG_DATA} \
-	${LOG_INFO} \
-	${MMU} \
-	${MMIO} \
-	${MXP} \
-	${PUB_DATA} \
-	${RIPSHA} \
-	${RLP_ADDR} \
-	${RLP_TXN} \
-	${RLP_TXRCPT} \
-	${ROM} \
-	${ROM_LEX} \
-	${SHAKIRA} \
-	${SHIFT} \
-	${STACK} \
-	${STP} \
-	${TABLES} \
-	${TRM} \
-	${TXN_DATA} \
-	${WCP}
+		 ${BIN} \
+		 ${BLAKE2f_MODEXP_DATA} \
+		 ${BLOCKDATA} \
+	     ${BLOCKHASH} \
+		 ${CONSTANTS} \
+		 ${EC_DATA} \
+		 ${EUC} \
+		 ${EXP} \
+		 ${GAS} \
+		 ${HUB} \
+		 ${LIBRARY} \
+		 ${LOG_DATA} \
+		 ${LOG_INFO} \
+		 ${MMU} \
+		 ${MMIO} \
+		 ${MXP} \
+		 ${RLP_ADDR} \
+		 ${RLP_TXN} \
+		 ${RLP_TXRCPT} \
+		 ${ROM} \
+		 ${ROM_LEX} \
+		 ${SHAKIRA_DATA} \
+		 ${SHIFT} \
+		 ${STP} \
+		 ${TABLES} \
+		 ${TRM} \
+		 ${TXN_DATA} \
+		 ${WCP}
 
 define.go: ${ZKEVM_MODULES}
 	${CORSET} wizard-iop -vv -P define -o $@ ${ZKEVM_MODULES}
