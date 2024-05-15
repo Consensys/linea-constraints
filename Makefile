@@ -81,7 +81,7 @@ TXN_DATA := txn_data
 
 WCP := wcp
 
-ZKEVM_MODULES := ${ALU} \
+# ZKEVM_MODULES := ${ALU} \
 	${BIN} \
 	${BLAKE2f_MODEXP_DATA} \
 	${CONSTANTS} \
@@ -110,6 +110,37 @@ ZKEVM_MODULES := ${ALU} \
 	${TRM} \
 	${TXN_DATA} \
 	${WCP}
+
+ZKEVM_MODULES := ${ALU} \
+	${BIN} \
+	${BLAKE2f_MODEXP_DATA} \
+	${CONSTANTS} \
+	${EC_DATA} \
+	${EUC} \
+	${EXP} \
+	${LIBRARY} \
+	${LOG_DATA} \
+	${LOG_INFO} \
+	${MMU} \
+	${MMIO} \
+	${MXP} \
+	${RLP_ADDR} \
+	${RLP_TXN} \
+	${RLP_TXRCPT} \
+	${ROM} \
+	${ROM_LEX} \
+	${SHIFT} \
+	${STP} \
+	${TABLES} \
+	${TRM} \
+	${TXN_DATA} \
+	${WCP}
+
+# ZKEVM_MODULES := ${ALU} \
+	${EC_DATA} \
+	${WCP} \
+	${CONSTANTS}
+
 
 define.go: ${ZKEVM_MODULES}
 	${CORSET} wizard-iop -vv -P define -o $@ ${ZKEVM_MODULES}
