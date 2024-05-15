@@ -6,12 +6,12 @@
 (deflookup hub-into-shakira
 	   ;; target columns
 	   (
-	     shakira.PHASE
-	     shakira.ID
-	     shakira.INDEX
-	     ;; shakira.TOTAL_SIZE
-	     (shift shakira.LIMB -1)
-	     shakira.LIMB
+	     shakiradata.PHASE
+	     shakiradata.ID
+	     shakiradata.INDEX
+	     ;; shakiradata.TOTAL_SIZE
+	     (shift shakiradata.LIMB -1)
+	     shakiradata.LIMB
 	     )
 	   ;; source columns
 	   (

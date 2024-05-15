@@ -4,43 +4,43 @@
 
            ;; target columns
 	   ( 
-	     instruction-decoder.OPCODE
-	     instruction-decoder.STATIC_GAS
-	     instruction-decoder.TWO_LINE_INSTRUCTION
-	     instruction-decoder.FLAG_1
-	     instruction-decoder.FLAG_2
-	     instruction-decoder.FLAG_3
-	     instruction-decoder.FLAG_4
-	     instruction-decoder.MXP_FLAG
-	     instruction-decoder.STATIC_FLAG
-	     instruction-decoder.ALPHA
-	     instruction-decoder.DELTA
-	     instruction-decoder.NB_REMOVED
-	     instruction-decoder.NB_ADDED  
+	     instdecoder.OPCODE
+	     instdecoder.STATIC_GAS
+	     instdecoder.TWO_LINE_INSTRUCTION
+	     instdecoder.FLAG_1
+	     instdecoder.FLAG_2
+	     instdecoder.FLAG_3
+	     instdecoder.FLAG_4
+	     instdecoder.MXP_FLAG
+	     instdecoder.STATIC_FLAG
+	     instdecoder.ALPHA
+	     instdecoder.DELTA
+	     instdecoder.NB_REMOVED
+	     instdecoder.NB_ADDED  
 	     ;;
-	     instruction-decoder.FAMILY_ACCOUNT
-	     instruction-decoder.FAMILY_ADD
-	     instruction-decoder.FAMILY_BIN
-	     instruction-decoder.FAMILY_BATCH
-	     instruction-decoder.FAMILY_CONTEXT
-	     instruction-decoder.FAMILY_COPY
-	     instruction-decoder.FAMILY_DUP
-	     instruction-decoder.FAMILY_EXT
-	     instruction-decoder.FAMILY_HALT
-	     instruction-decoder.FAMILY_INVALID
-	     instruction-decoder.FAMILY_JUMP
-	     instruction-decoder.FAMILY_KEC
-	     instruction-decoder.FAMILY_LOG
-	     instruction-decoder.FAMILY_MACHINE_STATE
-	     instruction-decoder.FAMILY_MOD
-	     instruction-decoder.FAMILY_MUL
-	     instruction-decoder.FAMILY_PUSH_POP
-	     instruction-decoder.FAMILY_SHF
-	     instruction-decoder.FAMILY_STACK_RAM
-	     instruction-decoder.FAMILY_STORAGE
-	     instruction-decoder.FAMILY_SWAP
-	     instruction-decoder.FAMILY_TRANSACTION
-	     instruction-decoder.FAMILY_WCP
+	     instdecoder.FAMILY_ACCOUNT
+	     instdecoder.FAMILY_ADD
+	     instdecoder.FAMILY_BIN
+	     instdecoder.FAMILY_BATCH
+	     instdecoder.FAMILY_CONTEXT
+	     instdecoder.FAMILY_COPY
+	     instdecoder.FAMILY_DUP
+	     instdecoder.FAMILY_EXT
+	     instdecoder.FAMILY_HALT
+	     instdecoder.FAMILY_INVALID
+	     instdecoder.FAMILY_JUMP
+	     instdecoder.FAMILY_KEC
+	     instdecoder.FAMILY_LOG
+	     instdecoder.FAMILY_MACHINE_STATE
+	     instdecoder.FAMILY_MOD
+	     instdecoder.FAMILY_MUL
+	     instdecoder.FAMILY_PUSH_POP
+	     instdecoder.FAMILY_SHF
+	     instdecoder.FAMILY_STACK_RAM
+	     instdecoder.FAMILY_STORAGE
+	     instdecoder.FAMILY_SWAP
+	     instdecoder.FAMILY_TRANSACTION
+	     instdecoder.FAMILY_WCP
 	     ;;
            )
 
