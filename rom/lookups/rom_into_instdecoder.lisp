@@ -1,10 +1,10 @@
 (deflookup 
-  rom-into-inst-decoder
+  rom-into-instruction-decoder
   ;; target columns
   (
-    instdecoder.OPCODE
-    instdecoder.IS_PUSH
-    instdecoder.IS_JUMPDEST
+    instruction-decoder.OPCODE
+    instruction-decoder.IS_PUSH
+    instruction-decoder.IS_JUMPDEST
   )
   ;; source columns
   (

@@ -3,33 +3,33 @@
 (deflookup hub-into-txn-data
            ;; target columns
            (
-            txnData.ABS_TX_NUM
-            txnData.BTC_NUM
-            txnData.FROM_HI
-            txnData.FROM_LO
-            txnData.TO_HI
-            txnData.TO_LO
-            txnData.COINBASE_HI
-            txnData.COINBASE_LO
+            txndata.ABS_TX_NUM
+            txndata.REL_BLOCK
+            txndata.FROM_HI
+            txndata.FROM_LO
+            txndata.TO_HI
+            txndata.TO_LO
+            txndata.COINBASE_HI
+            txndata.COINBASE_LO
             ;;
-            txnData.NONCE
-            txnData.VALUE
-            txnData.IS_DEP
-            txnData.TYPE2
-            txnData.GAS_PRICE
-            txnData.PRIORITY_FEE_PER_GAS
-            txnData.BASEFEE
-            txnData.CALL_DATA_SIZE
-            txnData.INIT_CODE_SIZE
+            txndata.NONCE
+            txndata.VALUE
+            txndata.IS_DEP
+            txndata.TYPE2
+            txndata.GAS_PRICE
+            txndata.PRIORITY_FEE_PER_GAS
+            txndata.BASEFEE
+            txndata.CALL_DATA_SIZE
+            txndata.INIT_CODE_SIZE
             ;;
-            txnData.GAS_INITIALLY_AVAILABLE
-            txnData.INITIAL_BALANCE
-            txnData.REQUIRES_EVM_EXECUTION
-            txnData.COPY_TXCD
-            txnData.STATUS_CODE
-            txnData.LEFTOVER_GAS
-            txnData.REFUND_COUNTER
-            txnData.REFUND_EFFECTIVE
+            txndata.GAS_INITIALLY_AVAILABLE
+            txndata.INITIAL_BALANCE
+            txndata.REQUIRES_EVM_EXECUTION
+            txndata.COPY_TXCD
+            txndata.STATUS_CODE
+            txndata.GAS_LEFTOVER
+            txndata.REFUND_COUNTER
+            txndata.REFUND_EFFECTIVE
             )
            ;; source columns
            (

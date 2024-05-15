@@ -1,4 +1,4 @@
-(module instdecoder)
+(module instruction-decoder)
 
 (defcolumns
     (OPCODE :display :opcode)

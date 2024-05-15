@@ -77,9 +77,9 @@
                  (if-zero        MXP_FLAG                        (vanishes! MXPX))
                  (if-zero        JUMP_FLAG                       (vanishes! JUMPX))
                  (if-zero        STATIC_FLAG                     (vanishes! STATICX))
-                 (if-not-zero    (-  INSTRUCTION RETURNDATACOPY) (vanishes! RDCX))
-                 (if-not-zero    (-  INSTRUCTION SSTORE)         (vanishes! SSTOREX))
-                 (if-not-zero    (-  INSTRUCTION RETURN)         (vanishes! (+ ICPX MAXCSX)))))
+                 (if-not-zero    (-  INSTRUCTION EVM_INST_RETURNDATACOPY) (vanishes! RDCX))
+                 (if-not-zero    (-  INSTRUCTION EVM_INST_SSTORE)         (vanishes! SSTOREX))
+                 (if-not-zero    (-  INSTRUCTION EVM_INST_RETURN)         (vanishes! (+ ICPX MAXCSX)))))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

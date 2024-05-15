@@ -6,7 +6,7 @@
  )
  ;; source columns
  (
-  txnData.BTC_NUM
-  txnData.ABS_TX_NUM
+  txndata.REL_BLOCK
+  txndata.ABS_TX_NUM
  )
 )

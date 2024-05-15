@@ -19,7 +19,8 @@ HUB :=  $(wildcard hub/columns/*lisp) \
 	$(wildcard hub/constraints/tx_finl/*lisp) \
 	$(wildcard hub/constraints/*lisp) \
 	$(wildcard hub/lookups/*lisp) \
-	hub/constants.lisp
+	$(wildcard hub/constants.lisp) \
+	# hub/constants.lisp
 
 ALU := alu/add/columns.lisp \
        alu/add/constraints.lisp \
@@ -64,8 +65,6 @@ MMIO := mmio/columns.lisp #TODO enable the MMIO constraint and lookup
 
 MXP := mxp
 
-PUB_DATA := $(shell find pub/ -iname '*.lisp')
-
 RLP_ADDR := rlpaddr
 
 RLP_TXN := rlptxn
@@ -84,7 +83,7 @@ STP := stp
 
 TABLES := reftables/bin_reftable.lisp \
 	  reftables/shf_reftable.lisp \
-	  reftables/inst_decoder.lisp
+	  reftables/instruction_decoder.lisp
 
 TRM := trm
 

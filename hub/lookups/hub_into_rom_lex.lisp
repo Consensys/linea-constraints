@@ -5,11 +5,11 @@
 (deflookup hub-into-rom-lex
            ;; target columns
 	   ( 
-	     romLex.CODE_FRAGMENT_INDEX
-	     romLex.ADDRESS_HI
-	     romLex.ADDRESS_LO       
-	     romLex.DEPLOYMENT_NUMBER
-	     romLex.DEPLOYMENT_STATUS
+	     romlex.CODE_FRAGMENT_INDEX
+	     romlex.ADDRESS_HI
+	     romlex.ADDRESS_LO       
+	     romlex.DEPLOYMENT_NUMBER
+	     romlex.DEPLOYMENT_STATUS
            )
            ;; source columns
 	   (

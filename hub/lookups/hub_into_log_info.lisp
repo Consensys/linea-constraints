@@ -6,20 +6,20 @@
 (deflookup hub-into-log-info
            ;; target columns
 	   ( 
-	     logInfo.ABS_TXN_NUM
-	     logInfo.ABS_LOG_NUM
-	     logInfo.INST
-	     logInfo.ADDR_HI
-	     logInfo.ADDR_LO
-	     [logInfo.TOPIC_HI 1]
-	     [logInfo.TOPIC_LO 1]
-	     [logInfo.TOPIC_HI 2]
-	     [logInfo.TOPIC_LO 2]
-	     [logInfo.TOPIC_HI 3]
-	     [logInfo.TOPIC_LO 3]
-	     [logInfo.TOPIC_HI 4]
-	     [logInfo.TOPIC_LO 4]
-	     logInfo.DATA_SIZE
+	     loginfo.ABS_TXN_NUM
+	     loginfo.ABS_LOG_NUM
+	     loginfo.INST
+	     loginfo.ADDR_HI
+	     loginfo.ADDR_LO
+	     [loginfo.TOPIC_HI 1]
+	     [loginfo.TOPIC_LO 1]
+	     [loginfo.TOPIC_HI 2]
+	     [loginfo.TOPIC_LO 2]
+	     [loginfo.TOPIC_HI 3]
+	     [loginfo.TOPIC_LO 3]
+	     [loginfo.TOPIC_HI 4]
+	     [loginfo.TOPIC_LO 4]
+	     loginfo.DATA_SIZE
            )
            ;; source columns
 	   (

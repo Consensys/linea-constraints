@@ -166,7 +166,7 @@
                                    ;; limb_1                                 ;; limb 1
                                    ;; limb_2                                 ;; limb 2
                                    EXO_SUM_WEIGHT_TXCD                    ;; weighted exogenous module flag sum
-                                   RLP_TXN_PHASE_DATA_VALUE               ;; phase
+                                   RLP_TXN_PHASE_DATA                     ;; phase
                                    )))
 
 (defconstraint   tx-init-initializing-context                                 (:guard (tx-init-precondition))
