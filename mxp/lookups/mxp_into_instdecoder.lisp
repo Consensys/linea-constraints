@@ -1,14 +1,14 @@
-(deflookup lookup-mxp-into-instruction-decoder
+(deflookup lookup-mxp-into-instdecoder
     ;; source columns
     (
-        instruction-decoder.MXP_TYPE_1
-        instruction-decoder.MXP_TYPE_2
-        instruction-decoder.MXP_TYPE_3
-        instruction-decoder.MXP_TYPE_4
-        instruction-decoder.MXP_TYPE_5
-        instruction-decoder.BILLING_PER_WORD
-        instruction-decoder.BILLING_PER_BYTE
-        instruction-decoder.OPCODE
+        instdecoder.MXP_TYPE_1
+        instdecoder.MXP_TYPE_2
+        instdecoder.MXP_TYPE_3
+        instdecoder.MXP_TYPE_4
+        instdecoder.MXP_TYPE_5
+        instdecoder.BILLING_PER_WORD
+        instdecoder.BILLING_PER_BYTE
+        instdecoder.OPCODE
     )
     ;target columns
     (

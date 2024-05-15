@@ -75,15 +75,17 @@ ROM := rom
 
 ROM_LEX := romlex
 
-SHAKIRA := shakira
+SHAKIRA_DATA := shakiradata
 
 SHIFT :=  shf
 
 STP := stp
 
+STP := stp
+
 TABLES := reftables/bin_reftable.lisp \
 	  reftables/shf_reftable.lisp \
-	  reftables/instruction_decoder.lisp
+	  reftables/inst_decoder.lisp
 
 TRM := trm
 
@@ -113,7 +115,7 @@ ZKEVM_MODULES := ${ALU} \
 		 ${RLP_TXRCPT} \
 		 ${ROM} \
 		 ${ROM_LEX} \
-		 ${SHAKIRA} \
+		 ${SHAKIRA_DATA} \
 		 ${SHIFT} \
 		 ${STP} \
 		 ${TABLES} \

@@ -2,9 +2,9 @@
   rom-into-instruction-decoder
   ;; target columns
   (
-    instruction-decoder.OPCODE
-    instruction-decoder.IS_PUSH
-    instruction-decoder.IS_JUMPDEST
+    instdecoder.OPCODE
+    instdecoder.IS_PUSH
+    instdecoder.IS_JUMPDEST
   )
   ;; source columns
   (
