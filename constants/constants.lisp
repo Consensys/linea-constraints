@@ -283,14 +283,14 @@
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; EC DATA MODULE ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;                ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  EC_DATA_PHASE_ECRECOVER_DATA           1
-  EC_DATA_PHASE_ECRECOVER_RESULT         2
-  EC_DATA_PHASE_ECADD_DATA               3
-  EC_DATA_PHASE_ECADD_RESULT             4
-  EC_DATA_PHASE_ECMUL_DATA               5
-  EC_DATA_PHASE_ECMUL_RESULT             6
-  EC_DATA_PHASE_PAIRING_DATA             7
-  EC_DATA_PHASE_PAIRING_RESULT           8
+  PHASE_ECRECOVER_DATA          0x010A
+  PHASE_ECRECOVER_RESULT        0x010B
+  PHASE_ECADD_DATA              0x060A
+  PHASE_ECADD_RESULT            0x060B
+  PHASE_ECMUL_DATA              0x070A
+  PHASE_ECMUL_RESULT            0x070B
+  PHASE_ECPAIRING_DATA          0x080A
+  PHASE_ECPAIRING_RESULT        0x080B
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;            ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; EXP MODULE ;;
