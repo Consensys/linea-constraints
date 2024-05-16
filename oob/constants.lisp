@@ -23,15 +23,6 @@
   CT_MAX_MODEXP_xbs       2
   CT_MAX_MODEXP_lead      3
   CT_MAX_MODEXP_pricing   5
-  CT_MAX_MODEXP_extract   3
-  LT                      0x10    ;; TODO: remove and replace by EVM_INST_XXX
-  ISZERO                  0x15
-  ADD                     0x01
-  DIV                     0x04
-  MOD                     0x06
-  GT                      0x11
-  EQ                      0x14
-  G_CALLSTIPEND           2300   ;; TODO: remove and replace by GAS_CONST_G_XXX
-  G_QUADDIVISOR           3)
+  CT_MAX_MODEXP_extract   3)
 
 
