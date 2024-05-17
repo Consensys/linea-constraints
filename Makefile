@@ -80,23 +80,17 @@ SHIFT :=  shf
 
 STP := stp
 
-STP := stp
-
 TABLES := reftables/bin_reftable.lisp \
 	  reftables/shf_reftable.lisp \
 	  reftables/inst_decoder.lisp
 
 TRM := trm
 
-#TXN_DATA := txndata
-# TODO: we disabled the lookups due to issues with the hub.
-TXN_DATA := txndata/columns.lisp \
-    txndata/constants.lisp \
-    txndata/constraints.lisp
+TXN_DATA := txndata
 
 WCP := wcp
 
-# TODO: hub is currently excluded and that should be fixed.
+# TODO: fix issues with the HUB and include it again in the modules
 ZKEVM_MODULES := ${ALU} \
 		 ${BIN} \
 		 ${BLAKE2f_MODEXP_DATA} \
@@ -155,7 +149,6 @@ ZKEVM_MODULES := ${ALU} \
 #		 ${TRM} \
 #		 ${TXN_DATA} \
 #		 ${WCP}
-#
 
 define.go: ${ZKEVM_MODULES}
 	${CORSET} wizard-iop -vv -P define -o $@ ${ZKEVM_MODULES}
