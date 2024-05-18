@@ -57,8 +57,8 @@
 		 STP_INSTRUCTION
 		 STP_GAS_HI
 		 STP_GAS_LO
-		 STP_VAL_HI
-		 STP_VAL_LO
+		 STP_VALUE_HI
+		 STP_VALUE_LO
 		 (STP_EXISTS                        :binary@prove) ;; TODO: demote to debug constraint
 		 (STP_WARMTH                        :binary@prove) ;; TODO: demote to debug constraint
 		 (STP_OOGX                          :binary@prove) ;; TODO: demote to debug constraint

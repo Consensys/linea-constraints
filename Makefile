@@ -9,6 +9,7 @@ HUB :=  $(wildcard hub/columns/*lisp) \
 	$(wildcard hub/constraints/instruction-handling/*lisp) \
 	$(wildcard hub/constraints/instruction-handling/halting/*lisp) \
 	$(wildcard hub/constraints/instruction-handling/create/*lisp) \
+	$(wildcard hub/constraints/instruction-handling/create/constraints/*lisp) \
 	$(wildcard hub/constraints/instruction-handling/copy/*lisp) \
 	$(wildcard hub/constraints/miscellaneous-rows/*lisp) \
 	$(wildcard hub/constraints/scenario-rows/*lisp) \
