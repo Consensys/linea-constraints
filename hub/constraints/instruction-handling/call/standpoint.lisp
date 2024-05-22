@@ -23,7 +23,7 @@
 (defconstraint    call-instruction---forward-scenario-setting    ()
                   (if-not-zero    PEEK_AT_STACK
                                   (if-not-zero    stack/CALL_FLAG
-                                                  (if-not-zero    (-    1    CT)
+                                                  (if-not-zero    (-    1    CT_TLI)
                                                                   (if-not-zero   (-   1   stack/SUX    stack/SOX)
                                                                                  (begin
                                                                                    (eq!    (shift    PEEK_AT_SCENARIO                 2)    1)
@@ -39,10 +39,10 @@
                  (if-not-zero    PEEK_AT_SCENARIO
                                  (if-not-zero    (scenario-shorthand-CALL-sum)
                                                  (begin
-                                                   (eq!    (shift    PEEK_AT_STACK                   CALL_frst_stack___row_offset)    1)
-                                                   (eq!    (shift    stack/CALL_FLAG                 CALL_frst_stack___row_offset)    1)
-                                                   (eq!    (shift    CT_TLI                          CALL_frst_stack___row_offset)    0)
-                                                   (eq!    (shift    (+   stack/SUX    stack/SOX)    CALL_frst_stack___row_offset)    0)
+                                                   (eq!    (shift    PEEK_AT_STACK                   CALL_1st_stack_row___row_offset)    1)
+                                                   (eq!    (shift    stack/CALL_FLAG                 CALL_1st_stack_row___row_offset)    1)
+                                                   (eq!    (shift    CT_TLI                          CALL_1st_stack_row___row_offset)    0)
+                                                   (eq!    (shift    (+   stack/SUX    stack/SOX)    CALL_1st_stack_row___row_offset)    0)
                                                    )
                                                  )
                                  )
