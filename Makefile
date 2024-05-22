@@ -100,8 +100,7 @@ ZKEVM_MODULES := ${ALU} \
 		 ${CONSTANTS} \
 		 ${EC_DATA} \
 		 ${EUC} \
-		 ${EXP} \
-		 ${GAS} \
+		 ${EXP} \		 
 		 ${LIBRARY} \
 		 ${LOG_DATA} \
 		 ${LOG_INFO} \
@@ -112,14 +111,17 @@ ZKEVM_MODULES := ${ALU} \
 		 ${RLP_TXN} \
 		 ${RLP_TXRCPT} \
 		 ${ROM} \
-		 ${ROM_LEX} \
-		 ${SHAKIRA_DATA} \
+		 ${ROM_LEX} \		 
 		 ${SHIFT} \
 		 ${STP} \
 		 ${TABLES} \
 		 ${TRM} \
 		 ${TXN_DATA} \
 		 ${WCP}
+
+# TODO: add later
+# ${GAS} \
+# ${SHAKIRA_DATA} \
 
 #ZKEVM_MODULES := ${ALU} \
 #		 ${BIN} \
