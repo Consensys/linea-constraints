@@ -100,7 +100,7 @@ ZKEVM_MODULES := ${ALU} \
 		 ${CONSTANTS} \
 		 ${EC_DATA} \
 		 ${EUC} \
-		 ${EXP} \		 
+		 ${EXP} \
 		 ${LIBRARY} \
 		 ${LOG_DATA} \
 		 ${LOG_INFO} \
@@ -111,7 +111,7 @@ ZKEVM_MODULES := ${ALU} \
 		 ${RLP_TXN} \
 		 ${RLP_TXRCPT} \
 		 ${ROM} \
-		 ${ROM_LEX} \		 
+		 ${ROM_LEX} \
 		 ${SHIFT} \
 		 ${STP} \
 		 ${TABLES} \
