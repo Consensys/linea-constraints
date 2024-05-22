@@ -106,7 +106,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defconstraint set-kec-res-selector ()
   (eq! SELECTOR_KECCAK_RES
-       (* STAMP
+       (* (~ STAMP)
           (- STAMP (prev STAMP)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
