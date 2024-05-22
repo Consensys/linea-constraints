@@ -17,10 +17,10 @@
   (+ IS_ECRECOVER IS_SHA2 IS_RIPEMD IS_IDENTITY IS_ECADD IS_ECMUL IS_ECPAIRING))
 
 (defun (flag_sum_prc_blake)
-  (+ IS_BLAKE2F_cds IS_BLAKE2F_params))
+  (+ IS_BLAKE2F_CDS IS_BLAKE2F_PARAMS))
 
 (defun (flag_sum_prc_modexp)
-  (+ IS_MODEXP_cds IS_MODEXP_xbs IS_MODEXP_lead IS_MODEXP_pricing IS_MODEXP_extract))
+  (+ IS_MODEXP_CDS IS_MODEXP_XBS IS_MODEXP_LEAD IS_MODEXP_PRICING IS_MODEXP_EXTRACT))
 
 (defun (flag_sum_prc)
   (+ (flag_sum_prc_common) (flag_sum_prc_blake) (flag_sum_prc_modexp)))
@@ -29,34 +29,34 @@
   (+ (flag_sum_inst) (flag_sum_prc)))
 
 (defun (wght_sum_inst)
-  (+ (* OOB_INST_jump IS_JUMP)
-     (* OOB_INST_jumpi IS_JUMPI)
-     (* OOB_INST_rdc IS_RDC)
-     (* OOB_INST_cdl IS_CDL)
-     (* OOB_INST_xcall IS_XCALL)
-     (* OOB_INST_call IS_CALL)
-     (* OOB_INST_create IS_CREATE)
-     (* OOB_INST_sstore IS_SSTORE)
-     (* OOB_INST_deployment IS_DEPLOYMENT)))
+  (+ (* OOB_INST_JUMP IS_JUMP)
+     (* OOB_INST_JUMPI IS_JUMPI)
+     (* OOB_INST_RDC IS_RDC)
+     (* OOB_INST_CDL IS_CDL)
+     (* OOB_INST_XCALL IS_XCALL)
+     (* OOB_INST_CALL IS_CALL)
+     (* OOB_INST_CREATE IS_CREATE)
+     (* OOB_INST_SSTORE IS_SSTORE)
+     (* OOB_INST_DEPLOYMENT IS_DEPLOYMENT)))
 
 (defun (wght_sum_prc_common)
-  (+ (* OOB_INST_ecrecover IS_ECRECOVER)
-     (* OOB_INST_sha2 IS_SHA2)
-     (* OOB_INST_ripemd IS_RIPEMD)
-     (* OOB_INST_identity IS_IDENTITY)
-     (* OOB_INST_ecadd IS_ECADD)
-     (* OOB_INST_ecmul IS_ECMUL)
-     (* OOB_INST_ecpairing IS_ECPAIRING)))
+  (+ (* OOB_INST_ECRECOVER IS_ECRECOVER)
+     (* OOB_INST_SHA2 IS_SHA2)
+     (* OOB_INST_RIPEMD IS_RIPEMD)
+     (* OOB_INST_IDENTITY IS_IDENTITY)
+     (* OOB_INST_ECADD IS_ECADD)
+     (* OOB_INST_ECMUL IS_ECMUL)
+     (* OOB_INST_ECPAIRING IS_ECPAIRING)))
 
 (defun (wght_sum_prc_blake)
-  (+ (* OOB_INST_blake_cds IS_BLAKE2F_cds) (* OOB_INST_blake_params IS_BLAKE2F_params)))
+  (+ (* OOB_INST_BLAKE_CDS IS_BLAKE2F_CDS) (* OOB_INST_BLAKE_PARAMS IS_BLAKE2F_PARAMS)))
 
 (defun (wght_sum_prc_modexp)
-  (+ (* OOB_INST_modexp_cds IS_MODEXP_cds)
-     (* OOB_INST_modexp_xbs IS_MODEXP_xbs)
-     (* OOB_INST_modexp_lead IS_MODEXP_lead)
-     (* OOB_INST_modexp_pricing IS_MODEXP_pricing)
-     (* OOB_INST_modexp_extract IS_MODEXP_extract)))
+  (+ (* OOB_INST_MODEXP_CDS IS_MODEXP_CDS)
+     (* OOB_INST_MODEXP_XBS IS_MODEXP_XBS)
+     (* OOB_INST_MODEXP_LEAD IS_MODEXP_LEAD)
+     (* OOB_INST_MODEXP_PRICING IS_MODEXP_PRICING)
+     (* OOB_INST_MODEXP_EXTRACT IS_MODEXP_EXTRACT)))
 
 (defun (wght_sum_prc)
   (+ (wght_sum_prc_common) (wght_sum_prc_blake) (wght_sum_prc_modexp)))
@@ -85,14 +85,14 @@
      (* CT_MAX_ECPAIRING IS_ECPAIRING)))
 
 (defun (maxct_sum_prc_blake)
-  (+ (* CT_MAX_BLAKE2F_cds IS_BLAKE2F_cds) (* CT_MAX_BLAKE2F_params IS_BLAKE2F_params)))
+  (+ (* CT_MAX_BLAKE2F_CDS IS_BLAKE2F_CDS) (* CT_MAX_BLAKE2F_PARAMS IS_BLAKE2F_PARAMS)))
 
 (defun (maxct_sum_prc_modexp)
-  (+ (* CT_MAX_MODEXP_cds IS_MODEXP_cds)
-     (* CT_MAX_MODEXP_xbs IS_MODEXP_xbs)
-     (* CT_MAX_MODEXP_lead IS_MODEXP_lead)
-     (* CT_MAX_MODEXP_pricing IS_MODEXP_pricing)
-     (* CT_MAX_MODEXP_extract IS_MODEXP_extract)))
+  (+ (* CT_MAX_MODEXP_CDS IS_MODEXP_CDS)
+     (* CT_MAX_MODEXP_XBS IS_MODEXP_XBS)
+     (* CT_MAX_MODEXP_LEAD IS_MODEXP_LEAD)
+     (* CT_MAX_MODEXP_PRICING IS_MODEXP_PRICING)
+     (* CT_MAX_MODEXP_EXTRACT IS_MODEXP_EXTRACT)))
 
 (defun (maxct_sum_prc)
   (+ (maxct_sum_prc_common) (maxct_sum_prc_blake) (maxct_sum_prc_modexp)))
@@ -133,13 +133,13 @@
          (is-binary IS_ECADD)
          (is-binary IS_ECMUL)
          (is-binary IS_ECPAIRING)
-         (is-binary IS_BLAKE2F_cds)
-         (is-binary IS_BLAKE2F_params)
-         (is-binary IS_MODEXP_cds)
-         (is-binary IS_MODEXP_xbs)
-         (is-binary IS_MODEXP_lead)
-         (is-binary IS_MODEXP_extract)
-         (is-binary IS_MODEXP_pricing)))
+         (is-binary IS_BLAKE2F_CDS)
+         (is-binary IS_BLAKE2F_PARAMS)
+         (is-binary IS_MODEXP_CDS)
+         (is-binary IS_MODEXP_XBS)
+         (is-binary IS_MODEXP_LEAD)
+         (is-binary IS_MODEXP_EXTRACT)
+         (is-binary IS_MODEXP_PRICING)))
 
 ;;(for i [2] (is-binary [OOB_EVENT i]))))
 (defconstraint wcp-add-mod-are-exclusive ()
@@ -696,7 +696,7 @@
 ;;                         ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun (prc-modexp_cds-hypothesis)
-  IS_MODEXP_cds)
+  IS_MODEXP_CDS)
 
 (defun (prc-modexp_cds___extract_bbs)
   [DATA 3])
@@ -727,7 +727,7 @@
 ;;                         ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun (prc-modexp_xbs-hypothesis)
-  IS_MODEXP_xbs)
+  IS_MODEXP_XBS)
 
 (defun (prc-modexp_xbs___xbs_hi)
   [DATA 1])
@@ -782,7 +782,7 @@
 ;;   - lead                ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun (prc-modexp_lead-hypothesis)
-  IS_MODEXP_lead)
+  IS_MODEXP_LEAD)
 
 (defun (prc-modexp_lead___bbs)
   [DATA 1])
@@ -853,7 +853,7 @@
 ;;   - pricing             ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun (prc-modexp_pricing-hypothesis)
-  IS_MODEXP_pricing)
+  IS_MODEXP_PRICING)
 
 (defun (prc-modexp_pricing___exponent_log)
   [DATA 6])
@@ -919,7 +919,7 @@
 ;;   - extract             ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun (prc-modexp_extract-hypothesis)
-  IS_MODEXP_extract)
+  IS_MODEXP_EXTRACT)
 
 (defun (prc-modexp_extract___bbs)
   [DATA 3])
@@ -980,7 +980,7 @@
 ;;                       ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun (prc-blake_cds-hypothesis)
-  IS_BLAKE2F_cds)
+  IS_BLAKE2F_CDS)
 
 (defun (prc-blake_cds___valid_cds)
   OUTGOING_RES_LO)
@@ -1004,7 +1004,7 @@
 ;;                         ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun (prc-blake_params-hypothesis)
-  IS_BLAKE2F_params)
+  IS_BLAKE2F_PARAMS)
 
 (defun (prc-blake_params___blake_r)
   [DATA 6])

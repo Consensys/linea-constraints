@@ -16,11 +16,11 @@
 
 (defun (maxct_sum)
   (+ (* CMPTN
-        (+ (* MAX_CT_CMPTN_EXP_LOG IS_EXP_LOG) (* MAX_CT_CMPTN_MODEXP_LOG IS_MODEXP_LOG)))
+        (+ (* CT_MAX_CMPTN_EXP_LOG IS_EXP_LOG) (* CT_MAX_CMPTN_MODEXP_LOG IS_MODEXP_LOG)))
      (* MACRO
-        (+ (* MAX_CT_MACRO_EXP_LOG IS_EXP_LOG) (* MAX_CT_MACRO_MODEXP_LOG IS_MODEXP_LOG)))
+        (+ (* CT_MAX_MACRO_EXP_LOG IS_EXP_LOG) (* CT_MAX_MACRO_MODEXP_LOG IS_MODEXP_LOG)))
      (* PRPRC
-        (+ (* MAX_CT_PRPRC_EXP_LOG IS_EXP_LOG) (* MAX_CT_PRPRC_MODEXP_LOG IS_MODEXP_LOG)))))
+        (+ (* CT_MAX_PRPRC_EXP_LOG IS_EXP_LOG) (* CT_MAX_PRPRC_MODEXP_LOG IS_MODEXP_LOG)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                             ;;
@@ -75,7 +75,7 @@
 
 ;; perspective constancy constraint (TODO: in stdlib.lisp)
 (defpurefun ((perspective-constancy :@loob) PERSPECTIVE_SELECTOR X)
-  (if-not-zero (and PERSPECTIVE_SELECTOR (prev PERSPECTIVE_SELECTOR))
+  (if-not-zero (* PERSPECTIVE_SELECTOR (prev PERSPECTIVE_SELECTOR))
                (remained-constant! X)))
 
 (defconstraint computation-constancy (:perspective computation)
@@ -115,11 +115,12 @@
 
 ;; 6
 (defconstraint allowed-transitions ()
-  (if (and (neq STAMP 0) (eq CT CT_MAX))
-      (eq! (+ (* CMPTN (next MACRO))
-              (* MACRO (next PRPRC))
-              (* PRPRC (next CMPTN)))
-           1)))
+  (if-not-zero STAMP
+               (if-eq CT CT_MAX
+                      (eq! (+ (* CMPTN (next MACRO))
+                              (* MACRO (next PRPRC))
+                              (* PRPRC (next CMPTN)))
+                           1))))
 
 ;; 7
 (defconstraint instruction-counter-cycle ()
@@ -195,15 +196,21 @@
 ;;    3.11 Most significant           ;;
 ;;         byte constraints           ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defconstraint most-significant-byte (:perspective computation :guard IS_MODEXP_LOG)
-  (begin (if (and (eq CT 0) (neq TANZB_ACC 0))
-             (eq! MSB TRIM_BYTE))
-         (if (and (neq CT 0)
-                  (and (neq TANZB_ACC 0)
-                       (eq (prev TANZB_ACC) 0)))
-             (eq! MSB TRIM_BYTE))
-         (if (and (eq CT 15) (eq TANZB_ACC 0))
-             (vanishes! MSB))))
+(defconstraint most-significant-byte-start (:perspective computation :guard IS_MODEXP_LOG)
+  (if-zero CT
+           (if-not-zero TANZB_ACC
+                        (eq! MSB TRIM_BYTE))))
+
+(defconstraint most-significant-byte-middle (:perspective computation :guard IS_MODEXP_LOG)
+  (if-not-zero CT
+               (if-not-zero TANZB_ACC
+                            (if-zero (prev TANZB_ACC)
+                                     (eq! MSB TRIM_BYTE)))))
+
+(defconstraint most-significant-byte-end (:perspective computation :guard IS_MODEXP_LOG)
+  (if-eq CT 15
+         (if-zero TANZB_ACC
+                  (vanishes! MSB))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                    ;;
@@ -212,7 +219,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun (callToLT k a b c d)
   (begin (eq! (shift preprocessing/WCP_FLAG k) 1)
-         (eq! (shift preprocessing/WCP_INST k) LT)
+         (eq! (shift preprocessing/WCP_INST k) EVM_INST_LT)
          (eq! (shift preprocessing/WCP_ARG_1_HI k) a)
          (eq! (shift preprocessing/WCP_ARG_1_LO k) b)
          (eq! (shift preprocessing/WCP_ARG_2_HI k) c)
@@ -220,7 +227,7 @@
 
 (defun (callToEQ k a b c d)
   (begin (eq! (shift preprocessing/WCP_FLAG k) 1)
-         (eq! (shift preprocessing/WCP_INST k) EQ)
+         (eq! (shift preprocessing/WCP_INST k) EVM_INST_EQ)
          (eq! (shift preprocessing/WCP_ARG_1_HI k) a)
          (eq! (shift preprocessing/WCP_ARG_1_LO k) b)
          (eq! (shift preprocessing/WCP_ARG_2_HI k) c)
@@ -228,7 +235,7 @@
 
 (defun (callToISZERO k a b)
   (begin (eq! (shift preprocessing/WCP_FLAG k) 1)
-         (eq! (shift preprocessing/WCP_INST k) ISZERO)
+         (eq! (shift preprocessing/WCP_INST k) EVM_INST_ISZERO)
          (eq! (shift preprocessing/WCP_ARG_1_HI k) a)
          (eq! (shift preprocessing/WCP_ARG_1_LO k) b)
          (debug (vanishes! (shift preprocessing/WCP_ARG_2_HI k)))
@@ -288,8 +295,8 @@
 (defconstraint justify-hub-prediction-exp-log (:perspective macro :guard IS_EXP_LOG)
   (if-zero (expn_hi_is_zero)
            (eq! (dyn_cost)
-                (* G_EXPBYTES (+ (expoennt_byte_length) 16)))
-           (eq! (dyn_cost) (* G_EXPBYTES (expoennt_byte_length)))))
+                (* GAS_CONST_G_EXP_BYTE (+ (expoennt_byte_length) 16)))
+           (eq! (dyn_cost) (* GAS_CONST_G_EXP_BYTE (expoennt_byte_length)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                    ;;
