@@ -49,8 +49,8 @@
 (defun    (call-instruction---current-call-stack-depth)          (shift    context/CALL_STACK_DEPTH            CALL_1st_context_row___row_offset))
 (defun    (call-instruction---MXP-memory-expansion-exception)    (shift    misc/MXP_MXPX                       CALL_misc_row___row_offset))
 (defun    (call-instruction---MXP-memory-expansion-gas)          (shift    misc/MXP_GAS_MXP                    CALL_misc_row___row_offset))
-(defun    (call-instruction---STP-gas-upfront)                   (shift    misc/STP_GAS_UPFRONT                CALL_misc_row___row_offset))
-(defun    (call-instruction---STP-gas-paid-out-of-pocket)        (shift    misc/STP_GAS_POOP                   CALL_misc_row___row_offset))
+(defun    (call-instruction---STP-gas-upfront)                   (shift    misc/STP_GAS_UPFRONT_GAS_COST       CALL_misc_row___row_offset))
+(defun    (call-instruction---STP-gas-paid-out-of-pocket)        (shift    misc/STP_GAS_PAID_OUT_OF_POCKET     CALL_misc_row___row_offset))
 (defun    (call-instruction---STP-call-stipend)                  (shift    misc/STP_GAS_STIPEND                CALL_misc_row___row_offset))
 (defun    (call-instruction---STP-out-of-gas-exception)          (shift    misc/STP_OOGX                       CALL_misc_row___row_offset))
 (defun    (call-instruction---OOB-nonzero-value)                 (shift    [misc/OOB_DATA  7]                  CALL_misc_row___row_offset))
@@ -67,5 +67,5 @@
 ;; revert data shorthands
 (defun    (call-instruction---caller-will-revert)     (shift    CONTEXT_WILL_REVERT     CALL_1st_stack_row___row_offset))
 (defun    (call-instruction---caller-revert-stamp)    (shift    CONTEXT_REVERT_STAMP    CALL_1st_stack_row___row_offset))
-(defun    (call-instruction---callee-will-revert)     (shift    misc/CCSR_FLAG          CALL_misc_row___row_offset))
+(defun    (call-instruction---callee-self-reverts)    (shift    misc/CCSR_FLAG          CALL_misc_row___row_offset))
 (defun    (call-instruction---callee-revert-stamp)    (shift    misc/CCRS_STAMP         CALL_misc_row___row_offset))

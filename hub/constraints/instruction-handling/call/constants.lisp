@@ -25,26 +25,26 @@
   CALL_SMC_success_will_revert_initialize_callee_context_row___row_offset       7
   CALL_SMC_success_wont_revert_initialize_callee_context_row___row_offset       5
   ;;
-  CALL_2nd_scenario_row_PRC_failure___row_offset                            5
-  CALL_2nd_scenario_row_PRC_success_will_revert_2nd_scenario___row_offset   7
-  CALL_2nd_scenario_row_PRC_success_wont_revert_2nd_scenario___row_offset   5
+  CALL_2nd_scenario_row_PRC_failure___row_offset                                5
+  CALL_2nd_scenario_row_PRC_success_will_revert_2nd_scenario___row_offset       7
+  CALL_2nd_scenario_row_PRC_success_wont_revert_2nd_scenario___row_offset       5
 
   ;; NSR's for non entry
-  CALL_nsr___staticx                                                        3
-  CALL_nsr___mxpx                                                           3
-  CALL_nsr___oogx                                                           5
-  CALL_nsr___abort                                                          5
+  CALL_nsr___staticx                                                            3
+  CALL_nsr___mxpx                                                               3
+  CALL_nsr___oogx                                                               5
+  CALL_nsr___abort                                                              5
 
   ;; NSR's for entry (no precompiles)
-  CALL_nsr___eoa_success_will_revert                                        7
-  CALL_nsr___eoa_success_wont_revert                                        5
-  CALL_nsr___smc_failure_will_revert                                        8
-  CALL_nsr___smc_failure_wont_revert                                        7
-  CALL_nsr___smc_success_will_revert                                        7
-  CALL_nsr___smc_success_wont_revert                                        5
+  CALL_nsr___eoa_success_will_revert                                            7
+  CALL_nsr___eoa_success_wont_revert                                            5
+  CALL_nsr___smc_failure_will_revert                                            8
+  CALL_nsr___smc_failure_wont_revert                                            7
+  CALL_nsr___smc_success_will_revert                                            7
+  CALL_nsr___smc_success_wont_revert                                            5
 
   ;; partial NSR's for entry into precompiles
-  CALL___first_half_nsr___prc_failure                                       5
-  CALL___first_half_nsr___prc_success_will_revert                           7
-  CALL___first_half_nsr___prc_success_wont_revert                           5
+  CALL___first_half_nsr___prc_failure                                           5
+  CALL___first_half_nsr___prc_success_will_revert                               7
+  CALL___first_half_nsr___prc_success_wont_revert                               5
   )

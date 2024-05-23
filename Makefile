@@ -8,6 +8,7 @@ HUB :=  $(wildcard hub/columns/*lisp) \
 	$(wildcard hub/constraints/generalities/*lisp) \
 	$(wildcard hub/constraints/heartbeat/*lisp) \
 	$(wildcard hub/constraints/instruction-handling/call/*lisp) \
+	$(wildcard hub/constraints/instruction-handling/call/generalities/*lisp) \
 	$(wildcard hub/constraints/instruction-handling/copy/*lisp) \
 	$(wildcard hub/constraints/instruction-handling/create/*lisp) \
 	$(wildcard hub/constraints/instruction-handling/create/constraints/*lisp) \
