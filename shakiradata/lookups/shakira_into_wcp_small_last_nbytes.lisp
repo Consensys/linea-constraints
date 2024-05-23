@@ -15,8 +15,8 @@
     (* (is-final-data-row) shakiradata.nBYTES)
     0
     (* (is-final-data-row) LLARGE)
-    (* (is-first-data-row) 1)
-    (* (is-first-data-row) WCP_INST_LEQ)
+    (* (is-final-data-row) 1)
+    (* (is-final-data-row) WCP_INST_LEQ)
   ))
 
 

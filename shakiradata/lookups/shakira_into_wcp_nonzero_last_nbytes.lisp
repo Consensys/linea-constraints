@@ -27,8 +27,8 @@
     (* (is-final-data-row) shakiradata.nBYTES)
     0
     0
-    (* (is-first-data-row) 1)
-    (* (is-first-data-row) EVM_INST_GT)
+    (* (is-final-data-row) 1)
+    (* (is-final-data-row) EVM_INST_GT)
   ))
 
 
