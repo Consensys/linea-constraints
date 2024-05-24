@@ -992,7 +992,7 @@
   (callToEQ 0 0 (prc___cds) 0 213))
 
 (defconstraint valid-prc-blake_cds-future (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-blake_cds-hypothesis)))
-  (callToISZERO 1 0 (prc-blake_cds___r_at_c_is_zero)))
+  (callToISZERO 1 0 (prc___r_at_c)))
 
 (defconstraint justify-hub-predictions-blake2f_a (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-blake_cds-hypothesis)))
   (begin (eq! (prc___hub_success) (prc-blake_cds___valid_cds))
