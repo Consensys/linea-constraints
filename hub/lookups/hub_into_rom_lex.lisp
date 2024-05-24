@@ -1,6 +1,6 @@
 (defun (hub-into-rom-lex-trigger)
   (and hub.PEEK_AT_ACCOUNT
-       hub.account/ROM_LEX_FLAG)) ;; TODO: the selector is different in the spec
+       hub.account/ROMLEX_FLAG)) ;; TODO: the selector is different in the spec
 
 (deflookup hub-into-rom-lex
            ;; target columns
