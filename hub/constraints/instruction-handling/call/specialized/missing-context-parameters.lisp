@@ -15,6 +15,7 @@
 ;;                                                       ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+
 (defun    (call-instruction---new-context-is-static)            (+    (*    (call-instruction---is-CALL)            (call-instruction---current-context-is-static))
                                                                       (*    (call-instruction---is-CALLCODE)        (call-instruction---current-context-is-static))
                                                                       (*    (call-instruction---is-DELEGATECALL)    (call-instruction---current-context-is-static))
