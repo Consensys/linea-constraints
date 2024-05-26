@@ -55,8 +55,8 @@
    (PRC_ECPAIRING                                    :binary@prove)
    (PRC_BLAKE2f                                      :binary@prove)
    ;; execution paths
-   (PRC_SUCCESS_WILL_REVERT                          :binary@prove)
-   (PRC_SUCCESS_WONT_REVERT                          :binary@prove)
+   (PRC_SUCCESS_CALLER_WILL_REVERT                   :binary@prove)
+   (PRC_SUCCESS_CALLER_WONT_REVERT                   :binary@prove)
    (PRC_FAILURE_KNOWN_TO_HUB                         :binary@prove)
    (PRC_FAILURE_KNOWN_TO_RAM                         :binary@prove)
    ;; gas parameters (RETURN_GAS is a prediction)

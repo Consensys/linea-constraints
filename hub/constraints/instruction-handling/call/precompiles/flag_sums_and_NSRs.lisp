@@ -71,26 +71,23 @@
 ;;;;;;;;;;;;;;;;;;;;;
 
 
-;; ECRECOVER flag sum
+;; flag sum
 (defun    (precompile-processing---2nd-half-flag-sum-for-ECRECOVER)
   (+      (precompile-processing---flag-sum-ECRECOVER-FKTH)       scenario/PRC_FAILURE_KNOWN_TO_HUB
-          (precompile-processing---flag-sum-ECRECOVER-FKTR)       scenario/PRC_FAILURE_KNOWN_TO_RAM
-          (precompile-processing---flag-sum-ECRECOVER-success)    (scenario-shorthand-PRC-failure)
+          (precompile-processing---flag-sum-ECRECOVER-success)    (scenario-shorthand-PRC-success)
           ))
-;; ECRECOVER non stack rows
+;; non stack rows
 (defun    (precompile-processing---2nd-half-NSR-for-ECRECOVER)
   (+      (precompile-processing---nsr-ECRECOVER-FKTH)       scenario/PRC_FAILURE_KNOWN_TO_HUB
-          (precompile-processing---nsr-ECRECOVER-FKTR)       scenario/PRC_FAILURE_KNOWN_TO_RAM
-          (precompile-processing---nsr-ECRECOVER-success)    (scenario-shorthand-PRC-failure)
+          (precompile-processing---nsr-ECRECOVER-success)    (scenario-shorthand-PRC-success)
           ))
-;; ECRECOVER non stack rows shorthands
-(defun    (precompile-processing---nsr-ECRECOVER-FKTH)       (precompile-processing---nsr-standard-failure))
-(defun    (precompile-processing---nsr-ECRECOVER-FKTR)       (precompile-processing---nsr-standard-failure))
-(defun    (precompile-processing---nsr-ECRECOVER-success)    (precompile-processing---nsr-standard-success))
-;; ECRECOVER flag sum shorthands
+;; flag sum shorthands
 (defun    (precompile-processing---flag-sum-ECRECOVER-FKTH)       (precompile-processing---flag-sum-standard-failure))
-(defun    (precompile-processing---flag-sum-ECRECOVER-FKTR)       (precompile-processing---flag-sum-standard-failure))
 (defun    (precompile-processing---flag-sum-ECRECOVER-success)    (precompile-processing---flag-sum-standard-success))
+;; non stack rows shorthands
+(defun    (precompile-processing---nsr-ECRECOVER-FKTH)            precompile-processing---nsr-standard-failure)
+(defun    (precompile-processing---nsr-ECRECOVER-success)         precompile-processing---nsr-standard-success)
+;; NB: the failure scenario FAILURE_KNOWN_TO_RAM is impossible
 
 
 ;;;;;;;;;;;;;;;;;;;;
@@ -100,26 +97,23 @@
 ;;;;;;;;;;;;;;;;;;;;
 
 
-;; SHA2-256 flag sum
+;; flag sum
 (defun    (precompile-processing---2nd-half-flag-sum-for-SHA2-256)
   (+      (precompile-processing---flag-sum-SHA2-256-FKTH)       scenario/PRC_FAILURE_KNOWN_TO_HUB
-          (precompile-processing---flag-sum-SHA2-256-FKTR)       scenario/PRC_FAILURE_KNOWN_TO_RAM
-          (precompile-processing---flag-sum-SHA2-256-success)    (scenario-shorthand-PRC-failure)
+          (precompile-processing---flag-sum-SHA2-256-success)    (scenario-shorthand-PRC-success)
           ))
-;; SHA2-256 non stack rows
+;; non stack rows
 (defun    (precompile-processing---2nd-half-NSR-for-SHA2-256)
   (+      (precompile-processing---nsr-SHA2-256-FKTH)       scenario/PRC_FAILURE_KNOWN_TO_HUB
-          (precompile-processing---nsr-SHA2-256-FKTR)       scenario/PRC_FAILURE_KNOWN_TO_RAM
-          (precompile-processing---nsr-SHA2-256-success)    (scenario-shorthand-PRC-failure)
+          (precompile-processing---nsr-SHA2-256-success)    (scenario-shorthand-PRC-success)
           ))
-;; SHA2-256 non stack rows shorthands
-(defun    (precompile-processing---nsr-SHA2-256-FKTH)       (precompile-processing---nsr-standard-failure))
-(defun    (precompile-processing---nsr-SHA2-256-FKTR)       (precompile-processing---nsr-standard-failure))
-(defun    (precompile-processing---nsr-SHA2-256-success)    (precompile-processing---nsr-standard-success))
-;; SHA2-256 flag sum shorthands
+;; non stack rows shorthands
+(defun    (precompile-processing---nsr-SHA2-256-FKTH)       precompile-processing---nsr-standard-failure)
+(defun    (precompile-processing---nsr-SHA2-256-success)    precompile-processing---nsr-standard-success)
+;; flag sum shorthands
 (defun    (precompile-processing---flag-sum-SHA2-256-FKTH)       (precompile-processing---flag-sum-standard-failure))
-(defun    (precompile-processing---flag-sum-SHA2-256-FKTR)       (precompile-processing---flag-sum-standard-failure))
 (defun    (precompile-processing---flag-sum-SHA2-256-success)    (precompile-processing---flag-sum-standard-success))
+;; NB: the failure scenario FAILURE_KNOWN_TO_RAM is impossible
 
 
 ;;;;;;;;;;;;;;;;;;;;;;
@@ -132,23 +126,20 @@
 ;; RIPEMD-160 flag sum
 (defun    (precompile-processing---2nd-half-flag-sum-for-RIPEMD-160)
   (+      (precompile-processing---flag-sum-RIPEMD-160-FKTH)       scenario/PRC_FAILURE_KNOWN_TO_HUB
-          (precompile-processing---flag-sum-RIPEMD-160-FKTR)       scenario/PRC_FAILURE_KNOWN_TO_RAM
-          (precompile-processing---flag-sum-RIPEMD-160-success)    (scenario-shorthand-PRC-failure)
+          (precompile-processing---flag-sum-RIPEMD-160-success)    (scenario-shorthand-PRC-success)
           ))
-;; RIPEMD-160 non stack rows
+;; non stack rows
 (defun    (precompile-processing---2nd-half-NSR-for-RIPEMD-160)
   (+      (precompile-processing---nsr-RIPEMD-160-FKTH)       scenario/PRC_FAILURE_KNOWN_TO_HUB
-          (precompile-processing---nsr-RIPEMD-160-FKTR)       scenario/PRC_FAILURE_KNOWN_TO_RAM
-          (precompile-processing---nsr-RIPEMD-160-success)    (scenario-shorthand-PRC-failure)
+          (precompile-processing---nsr-RIPEMD-160-success)    (scenario-shorthand-PRC-success)
           ))
-;; RIPEMD-160 non stack rows shorthands
-(defun    (precompile-processing---nsr-RIPEMD-160-FKTH)       (precompile-processing---nsr-standard-failure))
-(defun    (precompile-processing---nsr-RIPEMD-160-FKTR)       (precompile-processing---nsr-standard-failure))
-(defun    (precompile-processing---nsr-RIPEMD-160-success)    (precompile-processing---nsr-standard-success))
-;; RIPEMD-160 flag sum shorthands
+;; non stack rows shorthands
+(defun    (precompile-processing---nsr-RIPEMD-160-FKTH)       precompile-processing---nsr-standard-failure)
+(defun    (precompile-processing---nsr-RIPEMD-160-success)    precompile-processing---nsr-standard-success)
+;; flag sum shorthands
 (defun    (precompile-processing---flag-sum-RIPEMD-160-FKTH)       (precompile-processing---flag-sum-standard-failure))
-(defun    (precompile-processing---flag-sum-RIPEMD-160-FKTR)       (precompile-processing---flag-sum-standard-failure))
 (defun    (precompile-processing---flag-sum-RIPEMD-160-success)    (precompile-processing---flag-sum-standard-success))
+;; NB: the failure scenario FAILURE_KNOWN_TO_RAM is impossible
 
 
 ;;;;;;;;;;;;;;;;;;;;
@@ -158,26 +149,28 @@
 ;;;;;;;;;;;;;;;;;;;;
 
 
-;; IDENTITY flag sum
+;; flag sum
 (defun    (precompile-processing---2nd-half-flag-sum-for-IDENTITY)
   (+      (precompile-processing---flag-sum-IDENTITY-FKTH)       scenario/PRC_FAILURE_KNOWN_TO_HUB
-          (precompile-processing---flag-sum-IDENTITY-FKTR)       scenario/PRC_FAILURE_KNOWN_TO_RAM
-          (precompile-processing---flag-sum-IDENTITY-success)    (scenario-shorthand-PRC-failure)
+          (precompile-processing---flag-sum-IDENTITY-success)    (scenario-shorthand-PRC-success)
           ))
-;; IDENTITY non stack rows
+;; non stack rows
 (defun    (precompile-processing---2nd-half-NSR-for-IDENTITY)
-  (+      (precompile-processing---nsr-IDENTITY-FKTH)       scenario/PRC_FAILURE_KNOWN_TO_HUB
-          (precompile-processing---nsr-IDENTITY-FKTR)       scenario/PRC_FAILURE_KNOWN_TO_RAM
-          (precompile-processing---nsr-IDENTITY-success)    (scenario-shorthand-PRC-failure)
+  (+       precompile-processing---nsr-IDENTITY-FKTH         scenario/PRC_FAILURE_KNOWN_TO_HUB
+           precompile-processing---nsr-IDENTITY-success     (scenario-shorthand-PRC-success)
+           ))
+;; non stack rows shorthands
+(defconst  precompile-processing---nsr-IDENTITY-FKTH        precompile-processing---nsr-standard-failure)
+(defconst  precompile-processing---nsr-IDENTITY-success     4)
+;; flag sum shorthands
+(defun    (precompile-processing---flag-sum-IDENTITY-FKTH)    (precompile-processing---flag-sum-standard-failure))  
+(defun    (precompile-processing---flag-sum-IDENTITY-success)    
+  (+      (shift    PEEK_AT_SCENARIO         0)
+          (shift    PEEK_AT_MISCELLANEOUS    1)
+          (shift    PEEK_AT_MISCELLANEOUS    2)
+          (shift    PEEK_AT_CONTEXT          3)
           ))
-;; IDENTITY non stack rows shorthands
-(defun    (precompile-processing---nsr-IDENTITY-FKTH)       (precompile-processing---nsr-standard-failure))
-(defun    (precompile-processing---nsr-IDENTITY-FKTR)       (precompile-processing---nsr-standard-failure))
-(defun    (precompile-processing---nsr-IDENTITY-success)    (precompile-processing---nsr-standard-success))
-;; IDENTITY flag sum shorthands
-(defun    (precompile-processing---flag-sum-IDENTITY-FKTH)       (precompile-processing---flag-sum-standard-failure))
-(defun    (precompile-processing---flag-sum-IDENTITY-FKTR)       (precompile-processing---flag-sum-standard-failure))
-(defun    (precompile-processing---flag-sum-IDENTITY-success)    (precompile-processing---flag-sum-standard-success))
+;; NB: the failure scenario FAILURE_KNOWN_TO_RAM is impossible
 
 
 ;;;;;;;;;;;;;;;;;;
@@ -189,24 +182,64 @@
 
 ;; MODEXP flag sum
 (defun    (precompile-processing---2nd-half-flag-sum-for-MODEXP)
-  (+      (precompile-processing---flag-sum-MODEXP-FKTH)       scenario/PRC_FAILURE_KNOWN_TO_HUB
-          (precompile-processing---flag-sum-MODEXP-FKTR)       scenario/PRC_FAILURE_KNOWN_TO_RAM
-          (precompile-processing---flag-sum-MODEXP-success)    (scenario-shorthand-PRC-failure)
+  (+      (precompile-processing---flag-sum-MODEXP-FKTR)       scenario/PRC_FAILURE_KNOWN_TO_RAM
+          (precompile-processing---flag-sum-MODEXP-success)    (scenario-shorthand-PRC-success)
           ))
 ;; MODEXP non stack rows
 (defun    (precompile-processing---2nd-half-NSR-for-MODEXP)
-  (+      (precompile-processing---nsr-MODEXP-FKTH)       scenario/PRC_FAILURE_KNOWN_TO_HUB
-          (precompile-processing---nsr-MODEXP-FKTR)       scenario/PRC_FAILURE_KNOWN_TO_RAM
-          (precompile-processing---nsr-MODEXP-success)    (scenario-shorthand-PRC-failure)
+  (+      (precompile-processing---nsr-MODEXP-FKTR)       scenario/PRC_FAILURE_KNOWN_TO_RAM
+          (precompile-processing---nsr-MODEXP-success)    (scenario-shorthand-PRC-success)
           ))
 ;; MODEXP non stack rows shorthands
-(defun    (precompile-processing---nsr-MODEXP-FKTH)       (precompile-processing---nsr-standard-failure))
-(defun    (precompile-processing---nsr-MODEXP-FKTR)       (precompile-processing---nsr-standard-failure))
-(defun    (precompile-processing---nsr-MODEXP-success)    (precompile-processing---nsr-standard-success))
+(defun    (precompile-processing---nsr-MODEXP-FKTR)       (+    
+                                                            (shift    PEEK_AT_SCENARIO         0                                                                       )
+                                                            (shift    PEEK_AT_MISCELLANEOUS    precompile-processing---MODEXP-misc-row---cds---row-offset              )
+                                                            (shift    PEEK_AT_MISCELLANEOUS    precompile-processing---MODEXP-misc-row---extract-bbs---offset          )
+                                                            (shift    PEEK_AT_MISCELLANEOUS    precompile-processing---MODEXP-misc-row---extract-ebs---row-offset      )
+                                                            (shift    PEEK_AT_MISCELLANEOUS    precompile-processing---MODEXP-misc-row---extract-mbs---row-offset      )
+                                                            (shift    PEEK_AT_MISCELLANEOUS    precompile-processing---MODEXP-misc-row---extract-raw-lead---row-offset )
+                                                            (shift    PEEK_AT_MISCELLANEOUS    precompile-processing---MODEXP-misc-row---pricing---row-offset          )
+                                                            (shift    PEEK_AT_CONTEXT          precompile-processing---MODEXP-context-row---FKTR---row-offset          )
+                                                            )
+  )
+(defun    (precompile-processing---nsr-MODEXP-success)    (+    
+                                                            (shift    PEEK_AT_SCENARIO         0                                                                             )
+                                                            (shift    PEEK_AT_MISCELLANEOUS    precompile-processing---MODEXP-misc-row---cds---row-offset                    )
+                                                            (shift    PEEK_AT_MISCELLANEOUS    precompile-processing---MODEXP-misc-row---extract-bbs---offset                )
+                                                            (shift    PEEK_AT_MISCELLANEOUS    precompile-processing---MODEXP-misc-row---extract-ebs---row-offset            )
+                                                            (shift    PEEK_AT_MISCELLANEOUS    precompile-processing---MODEXP-misc-row---extract-mbs---row-offset            )
+                                                            (shift    PEEK_AT_MISCELLANEOUS    precompile-processing---MODEXP-misc-row---extract-raw-lead---row-offset       )
+                                                            (shift    PEEK_AT_MISCELLANEOUS    precompile-processing---MODEXP-misc-row---pricing---row-offset                )
+                                                            (shift    PEEK_AT_MISCELLANEOUS    precompile-processing---MODEXP-misc-row---copy-inputs-base---row-offset       )
+                                                            (shift    PEEK_AT_MISCELLANEOUS    precompile-processing---MODEXP-misc-row---copy-inputs-exponent---row-offset   )
+                                                            (shift    PEEK_AT_MISCELLANEOUS    precompile-processing---MODEXP-misc-row---copy-inputs-modulus---row-offset    )
+                                                            (shift    PEEK_AT_MISCELLANEOUS    precompile-processing---MODEXP-misc-row---full-result-transfer---row-offset   )
+                                                            (shift    PEEK_AT_MISCELLANEOUS    precompile-processing---MODEXP-misc-row---partial-result-copy---row-offset    )
+                                                            (shift    PEEK_AT_CONTEXT          precompile-processing---MODEXP-context-row---success---row-offset             )
+                                                            ))
 ;; MODEXP flag sum shorthands
-(defun    (precompile-processing---flag-sum-MODEXP-FKTH)       (precompile-processing---flag-sum-standard-failure))
 (defun    (precompile-processing---flag-sum-MODEXP-FKTR)       (precompile-processing---flag-sum-standard-failure))
 (defun    (precompile-processing---flag-sum-MODEXP-success)    (precompile-processing---flag-sum-standard-success))
+;; NB: the failure scenario FAILURE_KNOWN_TO_HUB is impossible
+(defconst    
+  precompile-processing---MODEXP-misc-row---cds---row-offset                      1
+  precompile-processing---MODEXP-misc-row---extract-bbs---offset                  2
+  precompile-processing---MODEXP-misc-row---extract-ebs---row-offset              3
+  precompile-processing---MODEXP-misc-row---extract-mbs---row-offset              4
+  precompile-processing---MODEXP-misc-row---extract-raw-lead---row-offset         5
+  precompile-processing---MODEXP-misc-row---pricing---row-offset                  6
+  precompile-processing---MODEXP-misc-row---copy-inputs-base---row-offset         7
+  precompile-processing---MODEXP-misc-row---copy-inputs-exponent---row-offset     8
+  precompile-processing---MODEXP-misc-row---copy-inputs-modulus---row-offset      9
+  precompile-processing---MODEXP-misc-row---full-result-transfer---row-offset    10
+  precompile-processing---MODEXP-misc-row---partial-result-copy---row-offset     11
+
+  precompile-processing---MODEXP-context-row---FKTR---row-offset                  7
+  precompile-processing---MODEXP-context-row---success---row-offset              12
+  
+  precompile-processing---nsr-FKTR                                                8
+  precompile-processing---nsr-success                                            13
+  )
 
 
 ;;;;;;;;;;;;;;;;;
@@ -220,18 +253,18 @@
 (defun    (precompile-processing---2nd-half-flag-sum-for-ECADD)
   (+      (precompile-processing---flag-sum-ECADD-FKTH)       scenario/PRC_FAILURE_KNOWN_TO_HUB
           (precompile-processing---flag-sum-ECADD-FKTR)       scenario/PRC_FAILURE_KNOWN_TO_RAM
-          (precompile-processing---flag-sum-ECADD-success)    (scenario-shorthand-PRC-failure)
+          (precompile-processing---flag-sum-ECADD-success)    (scenario-shorthand-PRC-success)
           ))
 ;; ECADD non stack rows
 (defun    (precompile-processing---2nd-half-NSR-for-ECADD)
   (+      (precompile-processing---nsr-ECADD-FKTH)       scenario/PRC_FAILURE_KNOWN_TO_HUB
           (precompile-processing---nsr-ECADD-FKTR)       scenario/PRC_FAILURE_KNOWN_TO_RAM
-          (precompile-processing---nsr-ECADD-success)    (scenario-shorthand-PRC-failure)
+          (precompile-processing---nsr-ECADD-success)    (scenario-shorthand-PRC-success)
           ))
 ;; ECADD non stack rows shorthands
-(defun    (precompile-processing---nsr-ECADD-FKTH)       (precompile-processing---nsr-standard-failure))
-(defun    (precompile-processing---nsr-ECADD-FKTR)       (precompile-processing---nsr-standard-failure))
-(defun    (precompile-processing---nsr-ECADD-success)    (precompile-processing---nsr-standard-success))
+(defun    (precompile-processing---nsr-ECADD-FKTH)       precompile-processing---nsr-standard-failure)
+(defun    (precompile-processing---nsr-ECADD-FKTR)       precompile-processing---nsr-standard-failure)
+(defun    (precompile-processing---nsr-ECADD-success)    precompile-processing---nsr-standard-success)
 ;; ECADD flag sum shorthands
 (defun    (precompile-processing---flag-sum-ECADD-FKTH)       (precompile-processing---flag-sum-standard-failure))
 (defun    (precompile-processing---flag-sum-ECADD-FKTR)       (precompile-processing---flag-sum-standard-failure))
@@ -249,18 +282,18 @@
 (defun    (precompile-processing---2nd-half-flag-sum-for-ECMUL)
   (+      (precompile-processing---flag-sum-ECMUL-FKTH)       scenario/PRC_FAILURE_KNOWN_TO_HUB
           (precompile-processing---flag-sum-ECMUL-FKTR)       scenario/PRC_FAILURE_KNOWN_TO_RAM
-          (precompile-processing---flag-sum-ECMUL-success)    (scenario-shorthand-PRC-failure)
+          (precompile-processing---flag-sum-ECMUL-success)    (scenario-shorthand-PRC-success)
           ))
 ;; ECMUL non stack rows
 (defun    (precompile-processing---2nd-half-NSR-for-ECMUL)
   (+      (precompile-processing---nsr-ECMUL-FKTH)       scenario/PRC_FAILURE_KNOWN_TO_HUB
           (precompile-processing---nsr-ECMUL-FKTR)       scenario/PRC_FAILURE_KNOWN_TO_RAM
-          (precompile-processing---nsr-ECMUL-success)    (scenario-shorthand-PRC-failure)
+          (precompile-processing---nsr-ECMUL-success)    (scenario-shorthand-PRC-success)
           ))
 ;; ECMUL non stack rows shorthands
-(defun    (precompile-processing---nsr-ECMUL-FKTH)       (precompile-processing---nsr-standard-failure))
-(defun    (precompile-processing---nsr-ECMUL-FKTR)       (precompile-processing---nsr-standard-failure))
-(defun    (precompile-processing---nsr-ECMUL-success)    (precompile-processing---nsr-standard-success))
+(defun    (precompile-processing---nsr-ECMUL-FKTH)       precompile-processing---nsr-standard-failure)
+(defun    (precompile-processing---nsr-ECMUL-FKTR)       precompile-processing---nsr-standard-failure)
+(defun    (precompile-processing---nsr-ECMUL-success)    precompile-processing---nsr-standard-success)
 ;; ECMUL flag sum shorthands
 (defun    (precompile-processing---flag-sum-ECMUL-FKTH)       (precompile-processing---flag-sum-standard-failure))
 (defun    (precompile-processing---flag-sum-ECMUL-FKTR)       (precompile-processing---flag-sum-standard-failure))
@@ -278,18 +311,18 @@
 (defun    (precompile-processing---2nd-half-flag-sum-for-ECPAIRING)
   (+      (precompile-processing---flag-sum-ECPAIRING-FKTH)       scenario/PRC_FAILURE_KNOWN_TO_HUB
           (precompile-processing---flag-sum-ECPAIRING-FKTR)       scenario/PRC_FAILURE_KNOWN_TO_RAM
-          (precompile-processing---flag-sum-ECPAIRING-success)    (scenario-shorthand-PRC-failure)
+          (precompile-processing---flag-sum-ECPAIRING-success)    (scenario-shorthand-PRC-success)
           ))
 ;; ECPAIRING non stack rows
 (defun    (precompile-processing---2nd-half-NSR-for-ECPAIRING)
   (+      (precompile-processing---nsr-ECPAIRING-FKTH)       scenario/PRC_FAILURE_KNOWN_TO_HUB
           (precompile-processing---nsr-ECPAIRING-FKTR)       scenario/PRC_FAILURE_KNOWN_TO_RAM
-          (precompile-processing---nsr-ECPAIRING-success)    (scenario-shorthand-PRC-failure)
+          (precompile-processing---nsr-ECPAIRING-success)    (scenario-shorthand-PRC-success)
           ))
 ;; ECPAIRING non stack rows shorthands
-(defun    (precompile-processing---nsr-ECPAIRING-FKTH)       (precompile-processing---nsr-standard-failure))
-(defun    (precompile-processing---nsr-ECPAIRING-FKTR)       (precompile-processing---nsr-standard-failure))
-(defun    (precompile-processing---nsr-ECPAIRING-success)    (precompile-processing---nsr-standard-success))
+(defun    (precompile-processing---nsr-ECPAIRING-FKTH)       precompile-processing---nsr-standard-failure)
+(defun    (precompile-processing---nsr-ECPAIRING-FKTR)       precompile-processing---nsr-standard-failure)
+(defun    (precompile-processing---nsr-ECPAIRING-success)    precompile-processing---nsr-standard-success)
 ;; ECPAIRING flag sum shorthands
 (defun    (precompile-processing---flag-sum-ECPAIRING-FKTH)       (precompile-processing---flag-sum-standard-failure))
 (defun    (precompile-processing---flag-sum-ECPAIRING-FKTR)       (precompile-processing---flag-sum-standard-failure))
@@ -307,36 +340,46 @@
 (defun    (precompile-processing---2nd-half-flag-sum-for-BLAKE2f)
   (+      (precompile-processing---flag-sum-BLAKE2f-FKTH)       scenario/PRC_FAILURE_KNOWN_TO_HUB
           (precompile-processing---flag-sum-BLAKE2f-FKTR)       scenario/PRC_FAILURE_KNOWN_TO_RAM
-          (precompile-processing---flag-sum-BLAKE2f-success)    (scenario-shorthand-PRC-failure)
+          (precompile-processing---flag-sum-BLAKE2f-success)    (scenario-shorthand-PRC-success)
           ))
 ;; BLAKE2f non stack rows
 (defun    (precompile-processing---2nd-half-NSR-for-BLAKE2f)
-  (+      (precompile-processing---nsr-BLAKE2f-FKTH)       scenario/PRC_FAILURE_KNOWN_TO_HUB
-          (precompile-processing---nsr-BLAKE2f-FKTR)       scenario/PRC_FAILURE_KNOWN_TO_RAM
-          (precompile-processing---nsr-BLAKE2f-success)    (scenario-shorthand-PRC-failure)
+  (+      precompile-processing---nsr-standard-failure     scenario/PRC_FAILURE_KNOWN_TO_HUB
+          precompile-processing---nsr-BLAKE2f-FKTR         scenario/PRC_FAILURE_KNOWN_TO_RAM
+          precompile-processing---nsr-BLAKE2f-success      (scenario-shorthand-PRC-success)
           ))
 ;; BLAKE2f non stack rows shorthands
-(defun    (precompile-processing---nsr-BLAKE2f-FKTH)       (precompile-processing---nsr-standard-failure))
-(defun    (precompile-processing---nsr-BLAKE2f-FKTR)       (precompile-processing---nsr-standard-failure))
-(defun    (precompile-processing---nsr-BLAKE2f-success)    (precompile-processing---nsr-standard-success))
+(defconst
+  precompile-processing---nsr-BLAKE2f-FKTR       4
+  precompile-processing---nsr-BLAKE2f-success    6
+  )
 ;; BLAKE2f flag sum shorthands
 (defun    (precompile-processing---flag-sum-BLAKE2f-FKTH)       (precompile-processing---flag-sum-standard-failure))
-(defun    (precompile-processing---flag-sum-BLAKE2f-FKTR)       (precompile-processing---flag-sum-standard-failure))
-(defun    (precompile-processing---flag-sum-BLAKE2f-success)    (precompile-processing---flag-sum-standard-success))
-
+(defun    (precompile-processing---flag-sum-BLAKE2f-FKTR)       (+      (shift    PEEK_AT_SCENARIO         0)
+                                                                        (shift    PEEK_AT_MISCELLANEOUS    1)
+                                                                        (shift    PEEK_AT_MISCELLANEOUS    2)
+                                                                        (shift    PEEK_AT_CONTEXT          3)
+                                                                        ))
+(defun    (precompile-processing---flag-sum-BLAKE2f-success)    (+      (shift    PEEK_AT_SCENARIO         0)
+                                                                        (shift    PEEK_AT_MISCELLANEOUS    1)
+                                                                        (shift    PEEK_AT_MISCELLANEOUS    2)
+                                                                        (shift    PEEK_AT_MISCELLANEOUS    3)
+                                                                        (shift    PEEK_AT_MISCELLANEOUS    4)
+                                                                        (shift    PEEK_AT_CONTEXT          5)
+                                                                        ))
 
 
 ;; ;; xxx flag sum
 ;; (defun    (precompile-processing---2nd-half-flag-sum-for-xxx)
 ;;   (+      (precompile-processing---flag-sum-xxx-FKTH)       scenario/PRC_FAILURE_KNOWN_TO_HUB
 ;;           (precompile-processing---flag-sum-xxx-FKTR)       scenario/PRC_FAILURE_KNOWN_TO_RAM
-;;           (precompile-processing---flag-sum-xxx-success)    (scenario-shorthand-PRC-failure)
+;;           (precompile-processing---flag-sum-xxx-success)    (scenario-shorthand-PRC-success)
 ;;           ))
 ;; ;; xxx non stack rows
 ;; (defun    (precompile-processing---2nd-half-NSR-for-xxx)
 ;;   (+      (precompile-processing---nsr-xxx-FKTH)       scenario/PRC_FAILURE_KNOWN_TO_HUB
 ;;           (precompile-processing---nsr-xxx-FKTR)       scenario/PRC_FAILURE_KNOWN_TO_RAM
-;;           (precompile-processing---nsr-xxx-success)    (scenario-shorthand-PRC-failure)
+;;           (precompile-processing---nsr-xxx-success)    (scenario-shorthand-PRC-success)
 ;;           ))
 ;; ;; xxx non stack rows shorthands
 ;; (defun    (precompile-processing---nsr-xxx-FKTH)       (precompile-processing---nsr-standard-failure))
