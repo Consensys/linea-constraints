@@ -430,25 +430,75 @@
        (+ (rdc___rdc_roob)
           (* (- 1 (rdc___rdc_roob)) (rdc___rdc_soob)))))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                       ;;
+;; 3.6 For               ;;
+;; CALLDATALOAD          ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun (cdl-hypothesis)
+  IS_CDL)
+
+(defun (cdl___offset_hi)
+  [DATA 1])
+
+(defun (cdl___offset_lo)
+  [DATA 2])
+
+(defun (cdl___cds)
+  [DATA 5])
+
+(defun (cdl___cdl_out_of_bounds)
+  [DATA 7])
+
+(defun (cdl___touches_ram)
+  OUTGOING_RES_LO)
+
+(defconstraint valid-cdl (:guard (* (standing-hypothesis) (cdl-hypothesis)))
+  (callToLT 0 (cdl___offset_hi) (cdl___offset_lo) 0 (cdl___cds)))
+
+(defconstraint justify-hub-predictions-cdl (:guard (* (standing-hypothesis) (cdl-hypothesis)))
+  (eq! (cdl___cdl_out_of_bounds) (- 1 (cdl___touches_ram))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                       ;;
+;; 3.9 For               ;;
+;; SSTORE                ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun (sstore-hypothesis)
+  IS_SSTORE)
+
+(defun (sstore___gas)
+  [DATA 5])
+
+(defun (sstore___sstorex)
+  [DATA 7])
+
+(defun (sstore___sufficient_gas)
+  OUTGOING_RES_LO)
+
+(defconstraint valid-sstore (:guard (* (standing-hypothesis) (sstore-hypothesis)))
+  (callToLT 0 0 GAS_CONST_G_CALL_STIPEND 0 (sstore___gas)))
+
+(defconstraint justify-hub-predictions-sstore (:guard (* (standing-hypothesis) (sstore-hypothesis)))
+  (eq! (sstore___sstorex) (- 1 (sstore___sufficient_gas))))
+
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; ;;                       ;;
-;; ;; 3.5 For               ;;
-;; ;; CALLDATALOAD          ;;
+;; ;; 3.10 For              ;;
+;; ;; RETURN                ;;
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; (defun (cdl-hypothesis)
-;;   IS_CDL)
-;; (defun (cdl___offset_hi)
+;; (defun (return-hypothesis)
+;;   IS_DEPLOYMENT)
+;; (defun (return___size_hi)
 ;;   [DATA 1])
-;; (defun (cdl___offset_lo)
+;; (defun (return___size_lo)
 ;;   [DATA 2])
-;; (defun (cdl___cds)
-;;   [DATA 5])
-;; (defun (cdl___touches_ram)
+;; (defun (return___exceeds_max_code_size)
 ;;   OUTGOING_RES_LO)
-;; (defconstraint valid-cdl (:guard (* (standing-hypothesis) (cdl-hypothesis)))
-;;   (callToLT 0 (cdl___offset_hi) (cdl___offset_lo) 0 (cdl___cds)))
-;; ;; (defconstraint set-oob-event-cdl (:guard (* (standing-hypothesis) (cdl-hypothesis)))
-;; ;;   (begin (eq! [OOB_EVENT 1] (- 1 (cdl___touches_ram)))
+;; (defconstraint valid-return (:guard (* (standing-hypothesis) (return-hypothesis)))
+;;   (callToLT 0 0 24576 (return___size_hi) (return___size_lo)))
+;; ;; (defconstraint set-oob-event-return (:guard (* (standing-hypothesis) (return-hypothesis)))
+;; ;;   (begin (eq! [OOB_EVENT 1] (return___exceeds_max_code_size))
 ;; ;;          (vanishes! [OOB_EVENT 2])))
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; ;;                       ;;
@@ -544,40 +594,6 @@
 ;; ;;               (* (- 1 [OOB_EVENT 1])
 ;; ;;                  (+ (create___has_code)
 ;; ;;                     (* (- 1 (create___has_code)) (create___nonzero_nonce)))))))
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; ;;                       ;;
-;; ;; 3.9 For               ;;
-;; ;; SSTORE                ;;
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; (defun (sstore-hypothesis)
-;;   IS_SSTORE)
-;; (defun (sstore___gas)
-;;   [DATA 5])
-;; (defun (sstore___sufficient_gas)
-;;   OUTGOING_RES_LO)
-;; (defconstraint valid-sstore (:guard (* (standing-hypothesis) (sstore-hypothesis)))
-;;   (callToLT 0 0 GAS_CONST_G_CALL_STIPEND 0 (sstore___gas)))
-;; ;; (defconstraint set-oob-event-sstore (:guard (* (standing-hypothesis) (sstore-hypothesis)))
-;; ;;   (begin (eq! [OOB_EVENT 1] (- 1 (sstore___sufficient_gas)))
-;; ;;          (vanishes! [OOB_EVENT 2])))
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; ;;                       ;;
-;; ;; 3.10 For              ;;
-;; ;; RETURN                ;;
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; (defun (return-hypothesis)
-;;   IS_DEPLOYMENT)
-;; (defun (return___size_hi)
-;;   [DATA 1])
-;; (defun (return___size_lo)
-;;   [DATA 2])
-;; (defun (return___exceeds_max_code_size)
-;;   OUTGOING_RES_LO)
-;; (defconstraint valid-return (:guard (* (standing-hypothesis) (return-hypothesis)))
-;;   (callToLT 0 0 24576 (return___size_hi) (return___size_lo)))
-;; ;; (defconstraint set-oob-event-return (:guard (* (standing-hypothesis) (return-hypothesis)))
-;; ;;   (begin (eq! [OOB_EVENT 1] (return___exceeds_max_code_size))
-;; ;;          (vanishes! [OOB_EVENT 2])))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                               ;;
 ;;   5 Populating common         ;;
