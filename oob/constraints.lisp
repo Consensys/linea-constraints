@@ -144,12 +144,6 @@
 (defconstraint wcp-add-mod-are-exclusive ()
   (is-binary (lookup_sum 0)))
 
-;; (defconstraint is-create-is-jump-oob-event ()
-;;   (if-zero (+ IS_CREATE IS_JUMPI)
-;;            (vanishes! [OOB_EVENT 2])))
-;; (defconstraint outgoing-res-lo-binary ()
-;;   (if-zero MOD_FLAG
-;;            (vanishes! (* OUTGOING_RES_LO (- 1 OUTGOING_RES_LO)))))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                               ;;
 ;;    2.3 instruction decoding   ;;
@@ -587,7 +581,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                       ;;
-;; 3.8 For               ;;
+;; 3.11 For              ;;
 ;; CREATE's              ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun (create-hypothesis)
