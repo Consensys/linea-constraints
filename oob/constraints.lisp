@@ -461,7 +461,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                       ;;
-;; 3.9 For               ;;
+;; 3.7 For               ;;
 ;; SSTORE                ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun (sstore-hypothesis)
@@ -482,24 +482,32 @@
 (defconstraint justify-hub-predictions-sstore (:guard (* (standing-hypothesis) (sstore-hypothesis)))
   (eq! (sstore___sstorex) (- 1 (sstore___sufficient_gas))))
 
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; ;;                       ;;
-;; ;; 3.10 For              ;;
-;; ;; RETURN                ;;
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; (defun (return-hypothesis)
-;;   IS_DEPLOYMENT)
-;; (defun (return___size_hi)
-;;   [DATA 1])
-;; (defun (return___size_lo)
-;;   [DATA 2])
-;; (defun (return___exceeds_max_code_size)
-;;   OUTGOING_RES_LO)
-;; (defconstraint valid-return (:guard (* (standing-hypothesis) (return-hypothesis)))
-;;   (callToLT 0 0 24576 (return___size_hi) (return___size_lo)))
-;; ;; (defconstraint set-oob-event-return (:guard (* (standing-hypothesis) (return-hypothesis)))
-;; ;;   (begin (eq! [OOB_EVENT 1] (return___exceeds_max_code_size))
-;; ;;          (vanishes! [OOB_EVENT 2])))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                       ;;
+;; 3.8 For               ;;
+;; DEPLOYMENT            ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun (deployment-hypothesis)
+  IS_DEPLOYMENT)
+
+(defun (deployment___code_size_hi)
+  [DATA 1])
+
+(defun (deployment___code_size_lo)
+  [DATA 2])
+
+(defun (deployment___max_code_size_exception)
+  [DATA 7])
+
+(defun (deployment___exceeds_max_code_size)
+  OUTGOING_RES_LO)
+
+(defconstraint valid-deployment (:guard (* (standing-hypothesis) (deployment-hypothesis)))
+  (callToLT 0 0 24576 (deployment___code_size_hi) (deployment___code_size_lo)))
+
+(defconstraint justify-hub-predictions-deployment (:guard (* (standing-hypothesis) (deployment-hypothesis)))
+  (eq! (deployment___max_code_size_exception) (deployment___exceeds_max_code_size)))
+
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; ;;                       ;;
 ;; ;;    3.6 For XCALL's    ;;
