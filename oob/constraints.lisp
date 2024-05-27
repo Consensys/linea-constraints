@@ -585,45 +585,65 @@
               (+ (call___insufficient_balance_abort)
                  (* (- 1 (call___insufficient_balance_abort)) (call___call_stack_depth_abort))))))
 
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; ;;                       ;;
-;; ;; 3.8 For               ;;
-;; ;; CREATE's              ;;
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; (defun (create-hypothesis)
-;;   IS_CREATE)
-;; (defun (create___val_hi)
-;;   [DATA 1])
-;; (defun (create___val_lo)
-;;   [DATA 2])
-;; (defun (create___bal)
-;;   [DATA 3])
-;; (defun (create___nonce)
-;;   [DATA 4])
-;; (defun (create___has_code)
-;;   [DATA 5])
-;; (defun (create___csd)
-;;   [DATA 6])
-;; (defun (create___insufficient_balance_abort)
-;;   OUTGOING_RES_LO)
-;; (defun (create___stack_depth_abort)
-;;   (- 1 (next OUTGOING_RES_LO)))
-;; (defun (create___nonzero_nonce)
-;;   (- 1 (shift OUTGOING_RES_LO 2)))
-;; (defconstraint valid-create (:guard (* (standing-hypothesis) (create-hypothesis)))
-;;   (callToLT 0 0 (create___bal) (create___val_hi) (create___val_lo)))
-;; (defconstraint valid-create-future (:guard (* (standing-hypothesis) (create-hypothesis)))
-;;   (callToLT 1 0 (create___csd) 0 1024))
-;; (defconstraint valid-create-future-future (:guard (* (standing-hypothesis) (create-hypothesis)))
-;;   (callToISZERO 2 0 (create___nonce)))
-;; ;; (defconstraint set-oob-event-create (:guard (* (standing-hypothesis) (create-hypothesis)))
-;; ;;   (begin (eq! [OOB_EVENT 1]
-;; ;;               (+ (create___insufficient_balance_abort)
-;; ;;                  (* (- 1 (create___insufficient_balance_abort)) (create___stack_depth_abort))))
-;; ;;          (eq! [OOB_EVENT 2]
-;; ;;               (* (- 1 [OOB_EVENT 1])
-;; ;;                  (+ (create___has_code)
-;; ;;                     (* (- 1 (create___has_code)) (create___nonzero_nonce)))))))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                       ;;
+;; 3.8 For               ;;
+;; CREATE's              ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun (create-hypothesis)
+  IS_CREATE)
+
+(defun (create___value_hi)
+  [DATA 1])
+
+(defun (create___value_lo)
+  [DATA 2])
+
+(defun (create___balance)
+  [DATA 3])
+
+(defun (create___nonce)
+  [DATA 4])
+
+(defun (create___has_code)
+  [DATA 5])
+
+(defun (create___call_stack_depth)
+  [DATA 6])
+
+(defun (create___aborting_condition)
+  [DATA 7])
+
+(defun (create___failure_condition)
+  [DATA 8])
+
+(defun (create___insufficient_balance_abort)
+  OUTGOING_RES_LO)
+
+(defun (create___stack_depth_abort)
+  (- 1 (next OUTGOING_RES_LO)))
+
+(defun (create___nonzero_nonce)
+  (- 1 (shift OUTGOING_RES_LO 2)))
+
+(defconstraint valid-create (:guard (* (standing-hypothesis) (create-hypothesis)))
+  (callToLT 0 0 (create___balance) (create___value_hi) (create___value_lo)))
+
+(defconstraint valid-create-future (:guard (* (standing-hypothesis) (create-hypothesis)))
+  (callToLT 1 0 (create___call_stack_depth) 0 1024))
+
+(defconstraint valid-create-future-future (:guard (* (standing-hypothesis) (create-hypothesis)))
+  (callToISZERO 2 0 (create___nonce)))
+
+(defconstraint justify-hub-predictions-create (:guard (* (standing-hypothesis) (create-hypothesis)))
+  (begin (eq! (call___aborting_condition)
+              (+ (create___insufficient_balance_abort)
+                 (* (- 1 (create___insufficient_balance_abort)) (create___stack_depth_abort)))
+              (eq! (create___failure_condition)
+                   (+ (- 1 (create___aborting_condition))
+                      (+ (create___has_code)
+                         (* (- 1 (create___has_code)) (create___nonzero_nonce))))))))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                               ;;
 ;;   5 Populating common         ;;
