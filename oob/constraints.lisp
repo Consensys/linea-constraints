@@ -558,7 +558,7 @@
 (defun (call___value_is_nonzero)
   [DATA 7])
 
-(defun (call___abortin_condition)
+(defun (call___aborting_condition)
   [DATA 8])
 
 (defun (call___insufficient_balance_abort)
@@ -580,10 +580,10 @@
   (callToISZERO 2 (call___value_hi) (call___value_lo)))
 
 (defconstraint justify-hub-predictions-call (:guard (* (standing-hypothesis) (call-hypothesis)))
-  (begin (eq! (call___insufficient_balance_abort) OUTGOING_RES_LO)
-         (eq! (call___call_stack_depth_abort)
-              (- 1 (next OUTGOING_RES_LO)))
-         (eq! (call___value_is_zero) (shift OUTGOING_RES_LO 2))))
+  (begin (eq! (call___value_is_nonzero) (- 1 (call___value_is_zero)))
+         (eq! (call___aborting_condition)
+              (+ (call___insufficient_balance_abort)
+                 (* (- 1 (call___insufficient_balance_abort)) (call___call_stack_depth_abort))))))
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; ;;                       ;;
