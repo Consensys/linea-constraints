@@ -508,25 +508,33 @@
 (defconstraint justify-hub-predictions-deployment (:guard (* (standing-hypothesis) (deployment-hypothesis)))
   (eq! (deployment___max_code_size_exception) (deployment___exceeds_max_code_size)))
 
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; ;;                       ;;
-;; ;;    3.6 For XCALL's    ;;
-;; ;;                       ;;
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; (defun (xcall-hypothesis)
-;;   IS_XCALL)
-;; (defun (xcall___val_hi)
-;;   [DATA 1])
-;; (defun (xcall___val_lo)
-;;   [DATA 2])
-;; (defun (xcall___nonzero_value)
-;;   [DATA 4])
-;; (defun (xcall___value_ISZERO)
-;;   OUTGOING_RES_LO)
-;; (defconstraint valid-xcall (:guard (* (standing-hypothesis) (xcall-hypothesis)))
-;;   (callToISZERO 0 (xcall___val_hi) (xcall___val_lo)))
-;; (defconstraint val-xcall-prediction (:guard (* (standing-hypothesis) (xcall-hypothesis)))
-;;   (eq! (xcall___nonzero_value) (- 1 (xcall___value_ISZERO))))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                       ;;
+;;    3.9 For XCALL's    ;;
+;;                       ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun (xcall-hypothesis)
+  IS_XCALL)
+
+(defun (xcall___value_hi)
+  [DATA 1])
+
+(defun (xcall___value_lo)
+  [DATA 2])
+
+(defun (xcall___value_is_nonzero)
+  [DATA 7])
+
+(defun (xcall___value_is_zero)
+  [DATA 8])
+
+(defconstraint valid-xcall (:guard (* (standing-hypothesis) (xcall-hypothesis)))
+  (callToISZERO 0 (xcall___value_hi) (xcall___value_lo)))
+
+(defconstraint justify-hub-predictions-xcall (:guard (* (standing-hypothesis) (xcall-hypothesis)))
+  (begin (eq! (xcall___value_is_nonzero) (- 1 OUTGOING_RES_LO))
+         (eq! (xcall___value_is_zero) (next OUTGOING_RES_LO))))
+
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; ;;                       ;;
 ;; ;;    3.7 For CALL's     ;;
