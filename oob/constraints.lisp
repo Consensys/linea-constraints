@@ -141,7 +141,6 @@
          (is-binary IS_MODEXP_EXTRACT)
          (is-binary IS_MODEXP_PRICING)))
 
-;;(for i [2] (is-binary [OOB_EVENT i]))))
 (defconstraint wcp-add-mod-are-exclusive ()
   (is-binary (lookup_sum 0)))
 
@@ -196,7 +195,7 @@
   (any! (remained-constant! STAMP) (did-inc! STAMP 1)))
 
 (defconstraint counter-reset ()
-  (if-not-zero (remained-constant! STAMP) ;; if it is false (not zero, in the case of loobean) that STAMP remained constant
+  (if-not-zero (remained-constant! STAMP)
                (vanishes! CT)))
 
 (defconstraint ct-max ()
@@ -282,26 +281,42 @@
 (defun (standing-hypothesis)
   (- STAMP (prev STAMP)))
 
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; ;;                       ;;
-;; ;;    3.2 For JUMP       ;;
-;; ;;                       ;;
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; (defun (jump-hypothesis)
-;;   IS_JUMP)
-;; (defun (jump___pc_new_hi)
-;;   [DATA 1])
-;; (defun (jump___pc_new_lo)
-;;   [DATA 2])
-;; (defun (jump___codesize)
-;;   [DATA 5])
-;; (defun (jump___invalid_pc_new)
-;;   (- 1 OUTGOING_RES_LO))
-;; (defconstraint valid-jump (:guard (* (standing-hypothesis) (jump-hypothesis)))
-;;   (callToLT 0 (jump___pc_new_hi) (jump___pc_new_lo) 0 (jump___codesize)))
-;; ;; (defconstraint set-oob-event-jump (:guard (* (standing-hypothesis) (jump-hypothesis)))
-;; ;;   (begin (eq! [OOB_EVENT 1] (jump___invalid_pc_new))
-;; ;;          (vanishes! [OOB_EVENT 2])))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                       ;;
+;;    3.3 For JUMP       ;;
+;;                       ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun (jump-hypothesis)
+  IS_JUMP)
+
+(defun (jump___pc_new_hi)
+  [DATA 1])
+
+(defun (jump___pc_new_lo)
+  [DATA 2])
+
+(defun (jump___codesize)
+  [DATA 5])
+
+(defun (jump___guaranteed_exception)
+  [DATA 7])
+
+(defun (jump___jump_must_be_attempted)
+  [DATA 8])
+
+(defun (jump___valid_pc_new)
+  OUTGOING_RES_LO)
+
+(defconstraint valid-jump (:guard (* (standing-hypothesis) (jump-hypothesis)))
+  (callToLT 0 (jump___pc_new_hi) (jump___pc_new_lo) 0 (jump___codesize)))
+
+(defconstraint justify-hub-predictions-jump (:guard (* (standing-hypothesis) (jump-hypothesis)))
+  (begin (eq! (jump___guaranteed_exception) (- 1 (jump___valid_pc_new)))
+         (eq! (jump___jump_must_be_attempted) (jump___valid_pc_new))
+         (debug (is-binary (jump___guaranteed_exception)))
+         (debug (is-binary (jump___jump_must_be_attempted)))
+         (debug (eq! (+ (jump___guaranteed_exception) (jump___jump_must_be_attempted)) 1))))
+
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; ;;                       ;;
 ;; ;;    3.3 For JUMPI      ;;
