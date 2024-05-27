@@ -535,42 +535,56 @@
   (begin (eq! (xcall___value_is_nonzero) (- 1 OUTGOING_RES_LO))
          (eq! (xcall___value_is_zero) (next OUTGOING_RES_LO))))
 
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; ;;                       ;;
-;; ;;    3.7 For CALL's     ;;
-;; ;;                       ;;
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; (defun (call-hypothesis)
-;;   IS_CALL)
-;; (defun (call___val_hi)
-;;   [DATA 1])
-;; (defun (call___val_lo)
-;;   [DATA 2])
-;; (defun (call___bal)
-;;   [DATA 3])
-;; (defun (call___nonzero_value)
-;;   [DATA 4])
-;; (defun (call___csd)
-;;   [DATA 6])
-;; (defun (call___insufficient_balance_abort)
-;;   OUTGOING_RES_LO)
-;; (defun (call___call_stack_depth_abort)
-;;   (- 1 (next OUTGOING_RES_LO)))
-;; (defun (call___value_ISZERO)
-;;   (shift OUTGOING_RES_LO 2))
-;; (defconstraint justify-hub-predictions-call (:guard (* (standing-hypothesis) (call-hypothesis)))
-;;   (eq! (call___nonzero_value) (- 1 (call___value_ISZERO))))
-;; (defconstraint valid-call (:guard (* (standing-hypothesis) (call-hypothesis)))
-;;   (callToLT 0 0 (call___bal) (call___val_hi) (call___val_lo)))
-;; (defconstraint valid-call-future (:guard (* (standing-hypothesis) (call-hypothesis)))
-;;   (callToLT 1 0 (call___csd) 0 1024))
-;; (defconstraint valid-call-future-future (:guard (* (standing-hypothesis) (call-hypothesis)))
-;;   (callToISZERO 2 (call___val_hi) (call___val_lo)))
-;; ;; (defconstraint set-oob-event-call (:guard (* (standing-hypothesis) (call-hypothesis)))
-;; ;;   (begin (eq! [OOB_EVENT 1]
-;; ;;               (+ (call___insufficient_balance_abort)
-;; ;;                  (* (- 1 (call___insufficient_balance_abort)) (call___call_stack_depth_abort))))
-;; ;;          (vanishes! [OOB_EVENT 2])))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                       ;;
+;;    3.10 For CALL's    ;;
+;;                       ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun (call-hypothesis)
+  IS_CALL)
+
+(defun (call___value_hi)
+  [DATA 1])
+
+(defun (call___value_lo)
+  [DATA 2])
+
+(defun (call___balance)
+  [DATA 3])
+
+(defun (call___call_stack_depth)
+  [DATA 6])
+
+(defun (call___value_is_nonzero)
+  [DATA 7])
+
+(defun (call___abortin_condition)
+  [DATA 8])
+
+(defun (call___insufficient_balance_abort)
+  OUTGOING_RES_LO)
+
+(defun (call___call_stack_depth_abort)
+  (- 1 (next OUTGOING_RES_LO)))
+
+(defun (call___value_is_zero)
+  (shift OUTGOING_RES_LO 2))
+
+(defconstraint valid-call (:guard (* (standing-hypothesis) (call-hypothesis)))
+  (callToLT 0 0 (call___balance) (call___value_hi) (call___value_lo)))
+
+(defconstraint valid-call-future (:guard (* (standing-hypothesis) (call-hypothesis)))
+  (callToLT 1 0 (call___call_stack_depth) 0 1024))
+
+(defconstraint valid-call-future-future (:guard (* (standing-hypothesis) (call-hypothesis)))
+  (callToISZERO 2 (call___value_hi) (call___value_lo)))
+
+(defconstraint justify-hub-predictions-call (:guard (* (standing-hypothesis) (call-hypothesis)))
+  (begin (eq! (call___insufficient_balance_abort) OUTGOING_RES_LO)
+         (eq! (call___call_stack_depth_abort)
+              (- 1 (next OUTGOING_RES_LO)))
+         (eq! (call___value_is_zero) (shift OUTGOING_RES_LO 2))))
+
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; ;;                       ;;
 ;; ;; 3.8 For               ;;
