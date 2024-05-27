@@ -16,15 +16,15 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-(defun    (precompile-processing---ECRECOVER-success)    (*    PEEK_AT_SCENARIO
-                                                               scenario/PRC_ECRECOVER
-                                                               (scenario-shorthand-PRC-success)))
+(defun    (precompile-processing---ECRECOVER---success-precondition)    (*    PEEK_AT_SCENARIO
+                                                                              scenario/PRC_ECRECOVER
+                                                                              (scenario-shorthand-PRC-success)))
 
-(defconstraint    precompile-processing---ECRECOVER-success---2nd-misc-row---setting-module-flags       (:guard    (precompile-processing---ECRECOVER-success))
+(defconstraint    precompile-processing---ECRECOVER-success---2nd-misc-row---setting-module-flags       (:guard    (precompile-processing---ECRECOVER---success-precondition))
                   (eq!    (weighted-MISC-flag-sum    precompile-processing---common---2nd-misc-row---row-offset)
                           (*    MISC_WEIGHT_MMU    (precompile-processing---common---address-recovery-success))))
 
-(defconstraint    precompile-processing---ECRECOVER-success---2nd-misc-row---setting-MMU-instruction    (:guard    (precompile-processing---ECRECOVER-success))
+(defconstraint    precompile-processing---ECRECOVER-success---2nd-misc-row---setting-MMU-instruction    (:guard    (precompile-processing---ECRECOVER---success-precondition))
                   (if-not-zero    (shift    misc/MMU_FLAG    precompile-processing---common---2nd-misc-row---row-offset)
                                   (set-MMU-inst-exo-to-ram-transplants
                                     precompile-processing---common---2nd-misc-row---row-offset               ;; offset
@@ -45,14 +45,14 @@
                                     )
                                   ))
 
-(defconstraint    precompile-processing---ECRECOVER-success---3rd-misc-row---setting-module-flags       (:guard    (precompile-processing---ECRECOVER-success))
+(defconstraint    precompile-processing---ECRECOVER-success---3rd-misc-row---setting-module-flags       (:guard    (precompile-processing---ECRECOVER---success-precondition))
                   (eq!    (weighted-MISC-flag-sum    precompile-processing---common---3rd-misc-row---row-offset)
                           (*    MISC_WEIGHT_MMU
                                 (precompile-processing---common---address-recovery-success)
                                 (precompile-processing---common---OOB-r@c-nonzero)
                                 )))
 
-(defconstraint    precompile-processing---ECRECOVER-success---3rd-misc-row---setting-MMU-instruction    (:guard    (precompile-processing---ECRECOVER-success))
+(defconstraint    precompile-processing---ECRECOVER-success---3rd-misc-row---setting-MMU-instruction    (:guard    (precompile-processing---ECRECOVER---success-precondition))
                   (if-not-zero    (shift    misc/MMU_FLAG    precompile-processing---common---3rd-misc-row---row-offset)
                                   (set-MMU-inst-ram-to-ram-sans-padding
                                     precompile-processing---common---3rd-misc-row---row-offset               ;; offset
@@ -60,11 +60,11 @@
                                     CONTEXT_NUMBER
                                     ;; aux_id                                                                   ;; auxiliary ID
                                     ;; src_offset_hi                                                            ;; source offset high
-                                    (precompile-processing---dup-r@o)                                        ;; source offset low
+                                    0                                                                           ;; source offset low
                                     ;; tgt_offset_lo                                                            ;; target offset low
-                                    (precompile-processing---dup-r@c)                                        ;; size
-                                    0                                                                        ;; reference offset
-                                    32                                                                       ;; reference size
+                                    32                                                                          ;; size
+                                    (precompile-processing---dup-r@o)                                        ;; reference offset
+                                    (precompile-processing---dup-r@c)                                        ;; reference size
                                     ;; success_bit                                                              ;; success bit
                                     ;; limb_1                                                                   ;; limb 1
                                     ;; limb_2                                                                   ;; limb 2
@@ -73,8 +73,8 @@
                                     )
                                   ))
 
-(defconstraint    precompile-processing---ECRECOVER-success---updating-return-data                      (:guard    (precompile-processing---ECRECOVER-success))
-                  (provide-return-data     precompile-processing---common---context-row-FKTH---row-offset             ;; row offset
+(defconstraint    precompile-processing---ECRECOVER-success---updating-return-data                      (:guard    (precompile-processing---ECRECOVER---success-precondition))
+                  (provide-return-data     precompile-processing---common---context-row-success---row-offset          ;; row offset
                                            CONTEXT_NUMBER                                                             ;; receiver context
                                            (+    1    HUB_STAMP)                                                      ;; provider context
                                            0                                                                          ;; rdo
