@@ -12,6 +12,7 @@ HUB :=  $(wildcard hub/columns/*lisp) \
 	$(wildcard hub/constraints/instruction-handling/call/finishing_touches/*lisp) \
 	$(wildcard hub/constraints/instruction-handling/call/specialized/*lisp) \
 	$(wildcard hub/constraints/instruction-handling/call/precompiles/*lisp) \
+	$(wildcard hub/constraints/instruction-handling/call/precompiles/common/*lisp) \
 	$(wildcard hub/constraints/instruction-handling/copy/*lisp) \
 	$(wildcard hub/constraints/instruction-handling/create/*lisp) \
 	$(wildcard hub/constraints/instruction-handling/create/constraints/*lisp) \
