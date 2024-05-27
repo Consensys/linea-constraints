@@ -8,8 +8,8 @@
   (ADDRESS_LO :i128)
   (DEPLOYMENT_NUMBER :i16)
   (DEPLOYMENT_STATUS :binary@prove)
-  (CODEHASH_HIGH :i128)
-  (CODEHASH_LOW :i128)
+  (CODE_HASH_HI :i128)
+  (CODE_HASH_LO :i128)
   (COMMIT_TO_STATE :binary@prove)
   (READ_FROM_STATE :binary@prove))
 

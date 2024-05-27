@@ -17,5 +17,3 @@
                   (will-remain-constant! CODE_FRAGMENT_INDEX_INFTY))))
 
 ;; TODO add lexicographic ordering
-
-
