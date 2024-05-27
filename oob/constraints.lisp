@@ -317,11 +317,11 @@
          (debug (is-binary (jump___jump_must_be_attempted)))
          (debug (eq! (+ (jump___guaranteed_exception) (jump___jump_must_be_attempted)) 1))))
 
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; ;;                       ;;
-;; ;;    3.3 For JUMPI      ;;
-;; ;;                       ;;
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                       ;;
+;;    3.4 For JUMPI      ;;
+;;                       ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun (jumpi-hypothesis)
   IS_JUMPI)
 
@@ -375,47 +375,61 @@
                         (jumpi___jump_not_attempted))
                      1))))
 
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; ;;                       ;;
-;; ;; 3.4 For               ;;
-;; ;; RETURNDATACOPY        ;;
-;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; (defun (rdc-hypothesis)
-;;   IS_RDC)
-;; (defun (rdc___offset_hi)
-;;   [DATA 1])
-;; (defun (rdc___offset_lo)
-;;   [DATA 2])
-;; (defun (rdc___size_hi)
-;;   [DATA 3])
-;; (defun (rdc___size_lo)
-;;   [DATA 4])
-;; (defun (rdc___rds)
-;;   [DATA 5])
-;; (defun (rdc___rdc_roob)
-;;   (- 1 OUTGOING_RES_LO))
-;; (defun (rdc___rdc_soob)
-;;   (shift OUTGOING_RES_LO 2))
-;; (defconstraint valid-rdc (:guard (* (standing-hypothesis) (rdc-hypothesis)))
-;;   (callToISZERO 0 (rdc___offset_hi) (rdc___size_hi)))
-;; (defconstraint valid-rdc-future (:guard (* (standing-hypothesis) (rdc-hypothesis)))
-;;   (if-zero (rdc___rdc_roob)
-;;            (callToADD 1 0 (rdc___offset_lo) 0 (rdc___size_lo))
-;;            (noCall 1)))
-;; (defconstraint valid-rdc-future-future (:guard (* (standing-hypothesis) (rdc-hypothesis)))
-;;   (if-zero (rdc___rdc_roob)
-;;            (begin (vanishes! (shift ADD_FLAG 2))
-;;                   (vanishes! (shift MOD_FLAG 2))
-;;                   (eq! (shift WCP_FLAG 2) 1)
-;;                   (eq! (shift OUTGOING_INST 2) EVM_INST_GT)
-;;                   (vanishes! (shift [OUTGOING_DATA 3] 2))
-;;                   (eq! (shift [OUTGOING_DATA 4] 2) (rdc___rds)))
-;;            (noCall 2)))
-;; ;; (defconstraint set-oob-event-rdc (:guard (* (standing-hypothesis) (rdc-hypothesis)))
-;; ;;   (begin (eq! [OOB_EVENT 1]
-;; ;;               (+ (rdc___rdc_roob)
-;; ;;                  (* (- 1 (rdc___rdc_roob)) (rdc___rdc_soob))))
-;; ;;          (vanishes! [OOB_EVENT 2])))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                       ;;
+;; 3.5 For               ;;
+;; RETURNDATACOPY        ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun (rdc-hypothesis)
+  IS_RDC)
+
+(defun (rdc___offset_hi)
+  [DATA 1])
+
+(defun (rdc___offset_lo)
+  [DATA 2])
+
+(defun (rdc___size_hi)
+  [DATA 3])
+
+(defun (rdc___size_lo)
+  [DATA 4])
+
+(defun (rdc___rds)
+  [DATA 5])
+
+(defun (rdc___rdcx)
+  [DATA 7])
+
+(defun (rdc___rdc_roob)
+  (- 1 OUTGOING_RES_LO))
+
+(defun (rdc___rdc_soob)
+  (shift OUTGOING_RES_LO 2))
+
+(defconstraint valid-rdc (:guard (* (standing-hypothesis) (rdc-hypothesis)))
+  (callToISZERO 0 (rdc___offset_hi) (rdc___size_hi)))
+
+(defconstraint valid-rdc-future (:guard (* (standing-hypothesis) (rdc-hypothesis)))
+  (if-zero (rdc___rdc_roob)
+           (callToADD 1 0 (rdc___offset_lo) 0 (rdc___size_lo))
+           (noCall 1)))
+
+(defconstraint valid-rdc-future-future (:guard (* (standing-hypothesis) (rdc-hypothesis)))
+  (if-zero (rdc___rdc_roob)
+           (begin (vanishes! (shift ADD_FLAG 2))
+                  (vanishes! (shift MOD_FLAG 2))
+                  (eq! (shift WCP_FLAG 2) 1)
+                  (eq! (shift OUTGOING_INST 2) EVM_INST_GT)
+                  (vanishes! (shift [OUTGOING_DATA 3] 2))
+                  (eq! (shift [OUTGOING_DATA 4] 2) (rdc___rds)))
+           (noCall 2)))
+
+(defconstraint justify-hub-predictions-rdc (:guard (* (standing-hypothesis) (rdc-hypothesis)))
+  (eq! (rdc___rdcx)
+       (+ (rdc___rdc_roob)
+          (* (- 1 (rdc___rdc_roob)) (rdc___rdc_soob)))))
+
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; ;;                       ;;
 ;; ;; 3.5 For               ;;
