@@ -289,7 +289,7 @@
 (defun (jump___pc_new_lo)
   [DATA 2])
 
-(defun (jump___codesize)
+(defun (jump___code_size)
   [DATA 5])
 
 (defun (jump___guaranteed_exception)
@@ -302,7 +302,7 @@
   OUTGOING_RES_LO)
 
 (defconstraint valid-jump (:guard (* (standing-hypothesis) (jump-hypothesis)))
-  (callToLT 0 (jump___pc_new_hi) (jump___pc_new_lo) 0 (jump___codesize)))
+  (callToLT 0 (jump___pc_new_hi) (jump___pc_new_lo) 0 (jump___code_size)))
 
 (defconstraint justify-hub-predictions-jump (:guard (* (standing-hypothesis) (jump-hypothesis)))
   (begin (eq! (jump___guaranteed_exception) (- 1 (jump___valid_pc_new)))
@@ -331,7 +331,7 @@
 (defun (jumpi___jump_cond_lo)
   [DATA 4])
 
-(defun (jumpi___codesize)
+(defun (jumpi___code_size)
   [DATA 5])
 
 (defun (jumpi___jump_not_attempted)
@@ -350,7 +350,7 @@
   (next OUTGOING_RES_LO))
 
 (defconstraint valid-jumpi (:guard (* (standing-hypothesis) (jumpi-hypothesis)))
-  (callToLT 0 (jumpi___pc_new_hi) (jumpi___pc_new_lo) 0 (jumpi___codesize)))
+  (callToLT 0 (jumpi___pc_new_hi) (jumpi___pc_new_lo) 0 (jumpi___code_size)))
 
 (defconstraint valid-jumpi-future (:guard (* (standing-hypothesis) (jumpi-hypothesis)))
   (callToISZERO 1 (jumpi___jump_cond_hi) (jumpi___jump_cond_lo)))
@@ -358,9 +358,9 @@
 (defconstraint justify-hub-predictions-jumpi (:guard (* (standing-hypothesis) (jumpi-hypothesis)))
   (begin (eq! (jumpi___jump_not_attempted) (jumpi___jump_cond_is_zero))
          (eq! (jumpi___guaranteed_exception)
-              (* (- 1 (jumpi___valid_pc_new)) (- 1 (jumpi___valid_pc_new))))
+              (* (- 1 (jumpi___jump_cond_is_zero)) (- 1 (jumpi___valid_pc_new))))
          (eq! (jumpi___jump_must_be_attempted)
-              (* (- 1 (jumpi___valid_pc_new)) (jumpi___valid_pc_new)))
+              (* (- 1 (jumpi___jump_cond_is_zero)) (jumpi___valid_pc_new)))
          (debug (is-binary (jumpi___jump_not_attempted)))
          (debug (is-binary (jumpi___guaranteed_exception)))
          (debug (is-binary (jumpi___jump_must_be_attempted)))
@@ -527,7 +527,7 @@
 
 (defconstraint justify-hub-predictions-xcall (:guard (* (standing-hypothesis) (xcall-hypothesis)))
   (begin (eq! (xcall___value_is_nonzero) (- 1 OUTGOING_RES_LO))
-         (eq! (xcall___value_is_zero) (next OUTGOING_RES_LO))))
+         (eq! (xcall___value_is_zero) OUTGOING_RES_LO)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                       ;;
