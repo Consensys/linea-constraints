@@ -630,7 +630,7 @@
   (callToISZERO 2 0 (create___nonce)))
 
 (defconstraint justify-hub-predictions-create (:guard (* (standing-hypothesis) (create-hypothesis)))
-  (begin (eq! (call___aborting_condition)
+  (begin (eq! (create___aborting_condition)
               (+ (create___insufficient_balance_abort)
                  (* (- 1 (create___insufficient_balance_abort)) (create___stack_depth_abort))))
          (eq! (create___failure_condition)
