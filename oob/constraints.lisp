@@ -634,7 +634,7 @@
               (+ (create___insufficient_balance_abort)
                  (* (- 1 (create___insufficient_balance_abort)) (create___stack_depth_abort))))
          (eq! (create___failure_condition)
-              (+ (- 1 (create___aborting_condition))
+              (* (- 1 (create___aborting_condition))
                  (+ (create___has_code)
                     (* (- 1 (create___has_code)) (create___nonzero_nonce)))))))
 
