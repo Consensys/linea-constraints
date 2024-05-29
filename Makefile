@@ -117,6 +117,7 @@ ZKEVM_MODULES := ${ALU} \
 		 ${TABLES} \
 		 ${TRM} \
 		 ${TXN_DATA} \
+         ${OOB} \
 		 ${WCP}
 
 # TODO: add later
@@ -124,7 +125,6 @@ ZKEVM_MODULES := ${ALU} \
 #		 ${HUB} \
          ${EXP} \
          ${BLAKE2f_MODEXP_DATA} \
-         ${OOB} \
 
 define.go: ${ZKEVM_MODULES}
 	${CORSET} wizard-iop -vv -P define -o $@ ${ZKEVM_MODULES}
