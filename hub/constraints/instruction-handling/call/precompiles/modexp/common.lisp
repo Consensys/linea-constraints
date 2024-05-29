@@ -37,10 +37,9 @@
                     precompile-processing---MODEXP---misc-row-offset---cds-analysis   ;; row offset
                     (precompile-processing---dup-cds)))                               ;; call data size
 
-;; ;; TODO: uncomment
-;; (defun    (precompile-processing---MODEXP---extract-bbs)    (shift    [misc/OOB_DATA  3]    precompile-processing---MODEXP---misc-row-offset---cds-analysis))
-;; (defun    (precompile-processing---MODEXP---extract-ebs)    (shift    [misc/OOB_DATA  4]    precompile-processing---MODEXP---misc-row-offset---cds-analysis))
-;; (defun    (precompile-processing---MODEXP---extract-mbs)    (shift    [misc/OOB_DATA  5]    precompile-processing---MODEXP---misc-row-offset---cds-analysis))
+(defun    (precompile-processing---MODEXP---extract-bbs)    (shift    [misc/OOB_DATA  3]    precompile-processing---MODEXP---misc-row-offset---cds-analysis))
+(defun    (precompile-processing---MODEXP---extract-ebs)    (shift    [misc/OOB_DATA  4]    precompile-processing---MODEXP---misc-row-offset---cds-analysis))
+(defun    (precompile-processing---MODEXP---extract-mbs)    (shift    [misc/OOB_DATA  5]    precompile-processing---MODEXP---misc-row-offset---cds-analysis))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -182,9 +181,8 @@
                     ))
 
 
-;; ;; TODO: uncomment
-;; (defun    (precompile-processing---MODEXP---max-mbs-bbs)    (shift    [misc/OOB_DATA   7]    precompile-processing---MODEXP---misc-row-offset---mbs-analysis))
-;; (defun    (precompile-processing---MODEXP---mbs-nonzero)    (shift    [misc/OOB_DATA   8]    precompile-processing---MODEXP---misc-row-offset---mbs-analysis))
+(defun    (precompile-processing---MODEXP---max-mbs-bbs)    (shift    [misc/OOB_DATA   7]    precompile-processing---MODEXP---misc-row-offset---mbs-analysis))
+(defun    (precompile-processing---MODEXP---mbs-nonzero)    (shift    [misc/OOB_DATA   8]    precompile-processing---MODEXP---misc-row-offset---mbs-analysis))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;                                 ;;
@@ -208,11 +206,10 @@
                     (precompile-processing---MODEXP---bbs-lo)                                  ;; low part of ebs (exponent byte size)
                     ))
 
-;; ;; TODO: uncomment
-;; (defun    (precompile-processing---MODEXP---load-lead)     (*    (precompile-processing---MODEXP---extract-bbs)    (shift    [misc/OOB_DATA  4]    precompile-processing---MODEXP---misc-row-offset---leading-word-analysis)))
-;; (defun    (precompile-processing---MODEXP---cds-cutoff)    (*    (precompile-processing---MODEXP---extract-bbs)    (shift    [misc/OOB_DATA  6]    precompile-processing---MODEXP---misc-row-offset---leading-word-analysis)))
-;; (defun    (precompile-processing---MODEXP---ebs-cutoff)    (*    (precompile-processing---MODEXP---extract-bbs)    (shift    [misc/OOB_DATA  7]    precompile-processing---MODEXP---misc-row-offset---leading-word-analysis)))
-;; (defun    (precompile-processing---MODEXP---sub-ebs-32)    (*    (precompile-processing---MODEXP---extract-bbs)    (shift    [misc/OOB_DATA  8]    precompile-processing---MODEXP---misc-row-offset---leading-word-analysis)))
+(defun    (precompile-processing---MODEXP---load-lead)     (*    (precompile-processing---MODEXP---extract-bbs)    (shift    [misc/OOB_DATA  4]    precompile-processing---MODEXP---misc-row-offset---leading-word-analysis)))
+(defun    (precompile-processing---MODEXP---cds-cutoff)    (*    (precompile-processing---MODEXP---extract-bbs)    (shift    [misc/OOB_DATA  6]    precompile-processing---MODEXP---misc-row-offset---leading-word-analysis)))
+(defun    (precompile-processing---MODEXP---ebs-cutoff)    (*    (precompile-processing---MODEXP---extract-bbs)    (shift    [misc/OOB_DATA  7]    precompile-processing---MODEXP---misc-row-offset---leading-word-analysis)))
+(defun    (precompile-processing---MODEXP---sub-ebs-32)    (*    (precompile-processing---MODEXP---extract-bbs)    (shift    [misc/OOB_DATA  8]    precompile-processing---MODEXP---misc-row-offset---leading-word-analysis)))
 
 
 (defconstraint    precompile-processing---MODEXP---lead-word-analysis---setting-MMU-instruction    (:guard    (precompile-processing---MODEXP---standard-precondition))
@@ -251,9 +248,8 @@
                                     (precompile-processing---MODEXP---ebs-cutoff)                                     ;; min{ebs, 32}
                                     )))
 
-;; ;; TODO: uncomment
-;; (defun    (precompile-processing---MODEXP---modexp-full-log)    (+    (precompile-processing---MODEXP---lead-log)     (*    8    (precompile-processing---MODEXP---sub-ebs-32))))
-;; (defun    (precompile-processing---MODEXP---lead-log)           (*    (precompile-processing---MODEXP---load-lead)    (shift    [misc/OOB_DATA   5]    precompile-processing---MODEXP---misc-row-offset---leading-word-analysis)))
+(defun    (precompile-processing---MODEXP---lead-log)           (*    (precompile-processing---MODEXP---load-lead)    (shift    [misc/OOB_DATA   5]    precompile-processing---MODEXP---misc-row-offset---leading-word-analysis)))
+(defun    (precompile-processing---MODEXP---modexp-full-log)    (+    (precompile-processing---MODEXP---lead-log)     (*    8    (precompile-processing---MODEXP---sub-ebs-32))))
                                                                                                                   
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;                            ;;
@@ -261,57 +257,35 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;                            ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                                                                                                                   
+
+(defconstraint    precompile-processing---MODEXP---pricing-analysis---setting-misc-module-flags    (:guard    (precompile-processing---MODEXP---standard-precondition))
+                  (eq!    (weighted-MISC-flag-sum    precompile-processing---MODEXP---misc-row-offset---pricing)
+                          MISC_WEIGHT_OOB
+                          ))
+
+(defconstraint    precompile-processing---MODEXP---pricing-analysis---setting-OOB-instruction    (:guard    (precompile-processing---MODEXP---standard-precondition))
+                  (set-OOB-instruction-modexp-pricing
+                    precompile-processing---MODEXP---misc-row-offset---pricing   ;; offset
+                    (precompile-processing---dup-call-gas)                       ;; call gas i.e. gas provided to the precompile
+                    (precompile-processing---dup-r@c)                            ;; return at capacity, final argument of any CALL
+                    (precompile-processing---MODEXP---lead-log)                  ;; leading (≤) word log of exponent
+                    (precompile-processing---MODEXP---max-mbs-bbs)               ;; call data size
+                    ))
+
+(defun    (precompile-processing---MODEXP---ram-success)    (shift    [misc/OOB_DATA   4]    precompile-processing---MODEXP---misc-row-offset---pricing))
+(defun    (precompile-processing---MODEXP---return-gas)     (shift    [misc/OOB_DATA   5]    precompile-processing---MODEXP---misc-row-offset---pricing))
+(defun    (precompile-processing---MODEXP---r@c-nonzero)    (shift    [misc/OOB_DATA   8]    precompile-processing---MODEXP---misc-row-offset---pricing))
                                                                                                                   
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;                                                      ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx    ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;                                                      ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;                                                         ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;    Justifying precompile success / failure scenarios    ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;                                                         ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                                                                                                                   
+
+(defconstraint    precompile-processing---MODEXP---justifying-success-failure-scenarios    (:guard    (precompile-processing---MODEXP---standard-precondition))
+                  (begin
+                    (eq!    (scenario-shorthand-PRC-success)            (precompile-processing---MODEXP---ram-success))
+                    (eq!    (precompile-processing---prd-return-gas)    (precompile-processing---MODEXP---return-gas))
+                    ))
                                                                                                                   
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;                                                      ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;    xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx    ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;                                                      ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
-
-;;
-;; (defconstraint    (precompile-processing---MODEXP---)    (:guard    (precompile-processing---MODEXP---standard-precondition))
-;;
-;; (defconstraint    (precompile-processing---MODEXP---)    (:guard    (precompile-processing---MODEXP---standard-precondition))
-;;
-;; (defconstraint    (precompile-processing---MODEXP---)    (:guard    (precompile-processing---MODEXP---standard-precondition))
-;;
-;; (defconstraint    (precompile-processing---MODEXP---)    (:guard    (precompile-processing---MODEXP---standard-precondition))
-;;
-;; (defconstraint    (precompile-processing---MODEXP---)    (:guard    (precompile-processing---MODEXP---standard-precondition))
-;;
-;; (defconstraint    (precompile-processing---MODEXP---)    (:guard    (precompile-processing---MODEXP---standard-precondition))
-;;
-;; (defconstraint    (precompile-processing---MODEXP---)    (:guard    (precompile-processing---MODEXP---standard-precondition))
-;;
-;; (defconstraint    (precompile-processing---MODEXP---)    (:guard    (precompile-processing---MODEXP---standard-precondition))
-;;
-;; (defconstraint    (precompile-processing---MODEXP---)    (:guard    (precompile-processing---MODEXP---standard-precondition))
-;;
-
-;; TODO: remove
-(defun    (precompile-processing---MODEXP---extract-bbs)    (shift    [misc/OOB_DATA  3]    precompile-processing---MODEXP---misc-row-offset---cds-analysis))
-(defun    (precompile-processing---MODEXP---extract-ebs)    (shift    [misc/OOB_DATA  4]    precompile-processing---MODEXP---misc-row-offset---cds-analysis))
-(defun    (precompile-processing---MODEXP---extract-mbs)    (shift    [misc/OOB_DATA  5]    precompile-processing---MODEXP---misc-row-offset---cds-analysis))
-
-;; TODO: remove
-(defun    (precompile-processing---MODEXP---max-mbs-bbs)    (shift    [misc/OOB_DATA   7]    precompile-processing---MODEXP---misc-row-offset---mbs-analysis))
-(defun    (precompile-processing---MODEXP---mbs-nonzero)    (shift    [misc/OOB_DATA   8]    precompile-processing---MODEXP---misc-row-offset---mbs-analysis))
-
-;; TODO: remove
-(defun    (precompile-processing---MODEXP---load-lead)     (*    (precompile-processing---MODEXP---extract-bbs)    (shift    [misc/OOB_DATA  4]    precompile-processing---MODEXP---misc-row-offset---leading-word-analysis)))
-(defun    (precompile-processing---MODEXP---cds-cutoff)    (*    (precompile-processing---MODEXP---extract-bbs)    (shift    [misc/OOB_DATA  6]    precompile-processing---MODEXP---misc-row-offset---leading-word-analysis)))
-(defun    (precompile-processing---MODEXP---ebs-cutoff)    (*    (precompile-processing---MODEXP---extract-bbs)    (shift    [misc/OOB_DATA  7]    precompile-processing---MODEXP---misc-row-offset---leading-word-analysis)))
-(defun    (precompile-processing---MODEXP---sub-ebs-32)    (*    (precompile-processing---MODEXP---extract-bbs)    (shift    [misc/OOB_DATA  8]    precompile-processing---MODEXP---misc-row-offset---leading-word-analysis)))
-
-;; TODO: uncomment
-(defun    (precompile-processing---MODEXP---modexp-full-log)    (+    (precompile-processing---MODEXP---lead-log)     (*    8    (precompile-processing---MODEXP---sub-ebs-32))))
-(defun    (precompile-processing---MODEXP---lead-log)           (*    (precompile-processing---MODEXP---load-lead)    (shift    [misc/OOB_DATA   5]    precompile-processing---MODEXP---misc-row-offset---leading-word-analysis)))
