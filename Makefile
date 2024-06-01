@@ -1,9 +1,7 @@
 CORSET ?= corset
 
-
 HUB :=  $(wildcard hub/columns/*lisp) \
 	$(wildcard hub/constraints/account-rows/*lisp) \
-	$(wildcard hub/constraints/consistency/*lisp) \
 	$(wildcard hub/constraints/context-rows/*lisp) \
 	$(wildcard hub/constraints/generalities/*lisp) \
 	$(wildcard hub/constraints/heartbeat/*lisp) \
@@ -27,7 +25,38 @@ HUB :=  $(wildcard hub/columns/*lisp) \
 	$(wildcard hub/constraints/tx_init/*lisp) \
 	$(wildcard hub/constraints/tx_finl/*lisp) \
 	$(wildcard hub/constraints/*lisp) \
-	$(wildcard hub/lookups/*lisp) \
+	$(wildcard hub/lookups/*lisp)
+
+# COMMENTED:
+#       $(wildcard hub/constraints/consistency/*lisp) \
+
+# HUB :=  $(wildcard hub/columns/*lisp) \
+# 	$(wildcard hub/constraints/account-rows/*lisp) \
+# 	$(wildcard hub/constraints/consistency/*lisp) \
+# 	$(wildcard hub/constraints/context-rows/*lisp) \
+# 	$(wildcard hub/constraints/generalities/*lisp) \
+# 	$(wildcard hub/constraints/heartbeat/*lisp) \
+# 	$(wildcard hub/constraints/instruction-handling/call/*lisp) \
+# 	$(wildcard hub/constraints/instruction-handling/call/generalities/*lisp) \
+# 	$(wildcard hub/constraints/instruction-handling/call/finishing_touches/*lisp) \
+# 	$(wildcard hub/constraints/instruction-handling/call/specialized/*lisp) \
+# 	$(wildcard hub/constraints/instruction-handling/call/precompiles/*lisp) \
+# 	$(wildcard hub/constraints/instruction-handling/call/precompiles/common/*lisp) \
+# 	$(wildcard hub/constraints/instruction-handling/call/precompiles/modexp/*lisp) \
+# 	$(wildcard hub/constraints/instruction-handling/copy/*lisp) \
+# 	$(wildcard hub/constraints/instruction-handling/create/*lisp) \
+# 	$(wildcard hub/constraints/instruction-handling/create/constraints/*lisp) \
+# 	$(wildcard hub/constraints/instruction-handling/halting/*lisp) \
+# 	$(wildcard hub/constraints/instruction-handling/*lisp) \
+# 	$(wildcard hub/constraints/miscellaneous-rows/*lisp) \
+# 	$(wildcard hub/constraints/scenario-rows/*lisp) \
+# 	$(wildcard hub/constraints/storage-rows/*lisp) \
+# 	$(wildcard hub/constraints/tx_skip/*lisp) \
+# 	$(wildcard hub/constraints/tx_prewarm/*lisp) \
+# 	$(wildcard hub/constraints/tx_init/*lisp) \
+# 	$(wildcard hub/constraints/tx_finl/*lisp) \
+# 	$(wildcard hub/constraints/*lisp) \
+# 	$(wildcard hub/lookups/*lisp)
 
 ALU := alu/add/columns.lisp \
        alu/add/constraints.lisp \
