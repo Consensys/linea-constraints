@@ -57,7 +57,7 @@
 
 (defconstraint    precompile-processing---MODEXP---bbs-analysis---setting-MMU-instruction    (:guard    (precompile-processing---MODEXP---standard-precondition))
                   (if-not-zero    (shift    misc/MMU_FLAG    precompile-processing---MODEXP---misc-row-offset---bbs-analysis)
-                                  (set-MMU-inst-right-padded-word-extraction
+                                  (set-MMU-instruction---right-padded-word-extraction
                                     precompile-processing---MODEXP---misc-row-offset---bbs-analysis                                          ;; offset
                                     CONTEXT_NUMBER                                                                                           ;; source ID
                                     ;; tgt_id                                                                                                   ;; target ID
@@ -103,7 +103,7 @@
 
 (defconstraint    precompile-processing---MODEXP---ebs-analysis---setting-MMU-instruction    (:guard    (precompile-processing---MODEXP---standard-precondition))
                   (if-not-zero    (shift    misc/MMU_FLAG    precompile-processing---MODEXP---misc-row-offset---ebs-analysis)
-                                  (set-MMU-inst-right-padded-word-extraction
+                                  (set-MMU-instruction---right-padded-word-extraction
                                     precompile-processing---MODEXP---misc-row-offset---ebs-analysis                                          ;; offset
                                     CONTEXT_NUMBER                                                                                           ;; source ID
                                     ;; tgt_id                                                                                                   ;; target ID
@@ -150,7 +150,7 @@
 
 (defconstraint    precompile-processing---MODEXP---mbs-analysis---setting-MMU-instruction    (:guard    (precompile-processing---MODEXP---standard-precondition))
                   (if-not-zero    (shift    misc/MMU_FLAG    precompile-processing---MODEXP---misc-row-offset---mbs-analysis)
-                                  (set-MMU-inst-right-padded-word-extraction
+                                  (set-MMU-instruction---right-padded-word-extraction
                                     precompile-processing---MODEXP---misc-row-offset---mbs-analysis                                          ;; offset
                                     CONTEXT_NUMBER                                                                                           ;; source ID
                                     ;; tgt_id                                                                                                   ;; target ID
@@ -214,7 +214,7 @@
 
 (defconstraint    precompile-processing---MODEXP---lead-word-analysis---setting-MMU-instruction    (:guard    (precompile-processing---MODEXP---standard-precondition))
                   (if-not-zero    (shift    misc/MMU_FLAG    precompile-processing---MODEXP---misc-row-offset---leading-word-analysis)
-                                  (set-MMU-inst-mload
+                                  (set-MMU-instruction---mload
                                     precompile-processing---MODEXP---misc-row-offset---leading-word-analysis                                   ;; offset
                                     CONTEXT_NUMBER                                                                                             ;; source ID
                                     ;; tgt_id                                                                                                     ;; target ID

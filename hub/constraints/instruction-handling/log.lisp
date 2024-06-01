@@ -119,7 +119,7 @@
 (defconstraint log-inst-MISC-row-setting-MMU-data                        (:guard (log-inst-standard-hypothesis))
                (if-zero (force-bin stack/STATICX)
                         (if-not-zero (shift misc/MMU_FLAG log-misc-row-offset)
-                                     (set-MMU-inst-ram-to-exo-with-padding
+                                     (set-MMU-instruction---ram-to-exo-with-padding
                                        log-misc-row-offset            ;; offset
                                        CONTEXT_NUMBER                 ;; source ID
                                        LOG_INFO_STAMP                 ;; target ID

@@ -128,7 +128,7 @@
                (if-not-zero (shift misc/MMU_FLAG stack-ram-misc-row-offset)
                             (begin (if-not-zero [ stack/DEC_FLAG 1]
                                                 ;; CALLDATALOAD case
-                                                (set-MMU-inst-right-padded-word-extraction
+                                                (set-MMU-instruction---right-padded-word-extraction
                                                   stack-ram-misc-row-offset           ;; row offsetet
                                                   CALLER_CONTEXT_NUMBER               ;; source ID
                                                   ;; tgt_id                              ;; target ID
@@ -147,7 +147,7 @@
                                                   ))
                                    (if-not-zero [ stack/DEC_FLAG 2]
                                                 ;; MLOAD case
-                                                (set-MMU-inst-mload
+                                                (set-MMU-instruction---mload
                                                   stack-ram-misc-row-offset           ;; offset
                                                   CONTEXT_NUMBER                      ;; source ID
                                                   ;; tgt_id                              ;; target ID
@@ -166,7 +166,7 @@
                                                   ))
                                    (if-not-zero [ stack/DEC_FLAG 3]
                                                 ;; MSTORE case
-                                                (set-MMU-inst-mstore
+                                                (set-MMU-instruction---mstore
                                                   stack-ram-misc-row-offset           ;; offset
                                                   ;; src_id                              ;; source ID
                                                   CONTEXT_NUMBER                      ;; target ID
@@ -185,7 +185,7 @@
                                                   ))
                                    (if-not-zero [ stack/DEC_FLAG 4]
                                                 ;; MSTORE8 case
-                                                (set-MMU-inst-mstore8
+                                                (set-MMU-instruction---mstore8
                                                   stack-ram-misc-row-offset           ;; offset
                                                   ;; src_id                              ;; source ID
                                                   CONTEXT_NUMBER                      ;; target ID

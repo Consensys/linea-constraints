@@ -119,7 +119,7 @@
 
 (defconstraint    create-instruction---setting-the-MMU-instruction                          (:guard    (create-instruction---generic-precondition))
                   (if-not-zero    (shift    misc/MMU_FLAG    CREATE_miscellaneous_row___row_offset)
-                                  (set-MMU-inst-ram-to-exo-with-padding
+                                  (set-MMU-instruction---ram-to-exo-with-padding
                                     CREATE_miscellaneous_row___row_offset               ;; offset
                                     CONTEXT_NUMBER                                      ;; source ID
                                     (create-instruction---tgt-id)                       ;; target ID

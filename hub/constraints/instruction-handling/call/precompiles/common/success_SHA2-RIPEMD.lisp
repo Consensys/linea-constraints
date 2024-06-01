@@ -28,7 +28,7 @@
 (defconstraint    precompile-processing---SHA2-and-RIPEMD---success---2nd-misc-row---setting-MMU-instruction    (:guard    (precompile-processing---SHA2-and-RIPEMD---success-precondition))
                   (begin
                     (if-not-zero    (precompile-processing---common---OOB-empty-call-data)
-                                    (set-MMU-inst-mstore
+                                    (set-MMU-instruction---mstore
                                       precompile-processing---common---2nd-misc-row---row-offset               ;; offset
                                       ;; src_id                                                                   ;; source ID
                                       (+    1    HUB_STAMP)                                                    ;; target ID
@@ -46,7 +46,7 @@
                                       ;; phase                                                                    ;; phase
                                       ))
                     (if-not-zero    (precompile-processing---common---OOB-extract-call-data)
-                                    (set-MMU-inst-exo-to-ram-transplants
+                                    (set-MMU-instruction---exo-to-ram-transplants
                                       precompile-processing---common---2nd-misc-row---row-offset               ;; offset
                                       (+    1    HUB_STAMP)                                                    ;; source ID
                                       (+    1    HUB_STAMP)                                                    ;; target ID
@@ -82,7 +82,7 @@
 
 (defconstraint    precompile-processing---SHA2-and-RIPEMD---success---3rd-misc-row---setting-MMU-instruction    (:guard    (precompile-processing---SHA2-and-RIPEMD---success-precondition))
                   (if-not-zero    (shift    misc/MMU_FLAG    precompile-processing---common---3rd-misc-row---row-offset)
-                                  (set-MMU-inst-ram-to-ram-sans-padding
+                                  (set-MMU-instruction---ram-to-ram-sans-padding
                                     precompile-processing---common---3rd-misc-row---row-offset                 ;; offset
                                     (+    1    HUB_STAMP)                                                      ;; source ID
                                     CONTEXT_NUMBER                                                             ;; target ID

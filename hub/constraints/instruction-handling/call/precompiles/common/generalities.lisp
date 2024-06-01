@@ -67,7 +67,7 @@
                   (if-not-zero    (shift    misc/MMU_FLAG    precompile-processing---common---1st-misc-row---row-offset)
                                   (begin
                                     (if-not-zero    scenario/PRC_IDENTITY
-                                                    (set-MMU-inst-ram-to-ram-sans-padding
+                                                    (set-MMU-instruction---ram-to-ram-sans-padding
                                                       precompile-processing---common---1st-misc-row---row-offset   ;; offset
                                                       CONTEXT_NUMBER                                               ;; source ID
                                                       (+    1    HUB_STAMP)                                        ;; target ID
@@ -85,7 +85,7 @@
                                                       ;; phase                                                     ;; phase
                                                       ))
                                     (if-not-zero    (scenario-shorthand-PRC-common-except-identity-address-bit-sum)
-                                                    (set-MMU-inst-ram-to-exo-with-padding
+                                                    (set-MMU-instruction---ram-to-exo-with-padding
                                                       precompile-processing---common---1st-misc-row---row-offset   ;; offset
                                                       CONTEXT_NUMBER                                               ;; source ID
                                                       (+    1    HUB_STAMP)                                        ;; target ID

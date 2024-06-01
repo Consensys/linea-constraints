@@ -15,7 +15,7 @@
 ;;                                ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defun  (return-instruction---standard-stack-hypothesis)  (*  PEEK_AT_STACK
+(defun  (return-instruction---standard-precondition)  (*  PEEK_AT_STACK
                                                               stack/HALT_FLAG
                                                               [ stack/DEC_FLAG 1 ]
                                                               (-  1  stack/SUX )
@@ -25,7 +25,7 @@
 (defun  (return-instruction---standard-scenario-row)  (* PEEK_AT_SCENARIO
                                                 (scenario-shorthand-RETURN-sum)))
 
-(defconstraint   return-instruction---imposing-some-RETURN-scenario    (:guard  (return-instruction---standard-stack-hypothesis))
+(defconstraint   return-instruction---imposing-some-RETURN-scenario    (:guard  (return-instruction---standard-precondition))
                  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                  (begin  (eq!  (next  PEEK_AT_SCENARIO)             1)
                          (eq!  (next  (scenario-shorthand-RETURN-sum))  1)
@@ -278,7 +278,7 @@
                  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                  (begin
                    (if-not-zero   (return-instruction---check-first-byte)
-                                  (set-MMU-inst-invalid-code-prefix    RETURN_INSTRUCTION_FIRST_MISC_ROW_OFFSET       ;; offset
+                                  (set-MMU-instruction---invalid-code-prefix    RETURN_INSTRUCTION_FIRST_MISC_ROW_OFFSET       ;; offset
                                                                        CONTEXT_NUMBER                         ;; source ID
                                                                        ;; tgt_id                              ;; target ID
                                                                        ;; aux_id                              ;; auxiliary ID
@@ -295,7 +295,7 @@
                                                                        ;; phase                               ;; phase
                                                                        ))
                    (if-not-zero   (return-instruction---write-return-data-to-caller-ram)
-                                  (set-MMU-inst-ram-to-ram-sans-padding   RETURN_INSTRUCTION_FIRST_MISC_ROW_OFFSET   ;; offset
+                                  (set-MMU-instruction---ram-to-ram-sans-padding   RETURN_INSTRUCTION_FIRST_MISC_ROW_OFFSET   ;; offset
                                                                           CONTEXT_NUMBER                      ;; source ID
                                                                           CALLER_CONTEXT_NUMBER               ;; target ID
                                                                           ;; aux_id                              ;; auxiliary ID
@@ -475,7 +475,7 @@
                  (eq!   (weighted-MISC-flag-sum    RETURN_INSTRUCTION_SECOND_MISC_ROW_OFFSET_DEPLOY_AND_HASH)    MISC_WEIGHT_MMU))
 
 (defconstraint   return-instruction---setting-the-second-MMU-instruction   (:guard    (return-instruction---nonempty-deployment-scenario))
-                 (set-MMU-inst-ram-to-exo-with-padding
+                 (set-MMU-instruction---ram-to-exo-with-padding
                    RETURN_INSTRUCTION_SECOND_MISC_ROW_OFFSET_DEPLOY_AND_HASH    ;; offset
                    CONTEXT_NUMBER                                               ;; source ID
                    (return-instruction---deployment-code-fragment-index)        ;; target ID
