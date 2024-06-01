@@ -97,14 +97,14 @@
                                       (* CMC (shift PEEK_AT_CONTEXT 2)))))))
 
 (defconstraint stateless-instruction---setting-miscellaneous-flags (:guard (stateless-instruction---precondition))
-               (if-not-zero (stateless-instructions---classifier)
+               (if-not-zero (stateless-instruction---is-EXP)
                             (eq! (weighted-MISC-flag-sum 1)
-                                 (* (stateless-instruction---is-EXP) MISC_WEIGHT_EXP))))
+                                 MISC_WEIGHT_EXP)))
 
 (defconstraint stateless-instruction---setting-EXP-arguments (:guard (stateless-instruction---precondition))
                (if-not-zero (stateless-instruction---is-EXP)
                             (set-EXP-instruction-exp-log
-                              1                                  ;; row offset
+                              1                                ;; row offset
                               [ stack/STACK_ITEM_VALUE_HI 2 ]  ;; exponent high
                               [ stack/STACK_ITEM_VALUE_LO 2 ]  ;; exponent low
                               )))
