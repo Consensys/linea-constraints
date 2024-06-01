@@ -101,6 +101,8 @@ MMIO := mmio/columns.lisp #TODO enable the MMIO constraint and lookup
 
 MXP := mxp
 
+OOB := oob
+
 RLP_ADDR := rlpaddr
 
 RLP_TXN := rlptxn
@@ -127,18 +129,14 @@ TXN_DATA := txndata
 
 WCP := wcp
 
-# TODO: fix issues with the HUB and include it again in the modules
 ZKEVM_MODULES := ${ALU} \
 		 ${BIN} \
-		 ${BLAKE2f_MODEXP_DATA} \
+     ${BLAKE2f_MODEXP_DATA} \
 		 ${BLOCKDATA} \
 		 ${BLOCKHASH} \
 		 ${CONSTANTS} \
 		 ${EC_DATA} \
 		 ${EUC} \
-		 ${EXP} \
-		 ${GAS} \
-		 ${HUB} \
 		 ${LIBRARY} \
 		 ${LOG_DATA} \
 		 ${LOG_INFO} \
@@ -156,40 +154,16 @@ ZKEVM_MODULES := ${ALU} \
 		 ${TABLES} \
 		 ${TRM} \
 		 ${TXN_DATA} \
+     ${OOB} \
 		 ${WCP}
 
-#ZKEVM_MODULES := ${ALU} \
-#		 ${BIN} \
-#		 ${BLAKE2f_MODEXP_DATA} \
-#		 ${BLOCKDATA} \
-#	     ${BLOCKHASH} \
-#		 ${CONSTANTS} \
-#		 ${EC_DATA} \
-#		 ${EUC} \
-#		 ${EXP} \
-#		 ${GAS} \
-#		 ${HUB} \
-#		 ${LIBRARY} \
-#		 ${LOG_DATA} \
-#		 ${LOG_INFO} \
-#		 ${MMU} \
-#		 ${MMIO} \
-#		 ${MXP} \
-#		 ${RLP_ADDR} \
-#		 ${RLP_TXN} \
-#		 ${RLP_TXRCPT} \
-#		 ${ROM} \
-#		 ${ROM_LEX} \
-#		 ${SHAKIRA_DATA} \
-#		 ${SHIFT} \
-#		 ${STP} \
-#		 ${TABLES} \
-#		 ${TRM} \
-#		 ${TXN_DATA} \
-#		 ${WCP}
+# TODO: add later
+#        ${GAS} \
+#        ${HUB} \
+#        ${EXP} \
 
 define.go: ${ZKEVM_MODULES}
 	${CORSET} wizard-iop -vv -P define -o $@ ${ZKEVM_MODULES}
-    
+
 zkevm.bin: ${ZKEVM_MODULES}
 	${CORSET} compile -vv -o $@ ${ZKEVM_MODULES}
