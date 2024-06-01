@@ -1,4 +1,4 @@
-(defun (hub---mod-activation-flag)
+(defun (hub-into-mod-activation-flag)
   (and (unexceptional-stack-row)
        hub.stack/MOD_FLAG))
 
