@@ -55,7 +55,7 @@
                    (account-turn-on-warmth                        TX_INIT_SENDER_ACCOUNT_ROW_OFFSET)
                    (account-same-marked-for-selfdestruct          TX_INIT_SENDER_ACCOUNT_ROW_OFFSET)
                    (account-isnt-precompile                       TX_INIT_SENDER_ACCOUNT_ROW_OFFSET)
-                   (standard-dom-sub-stamps                       TX_INIT_SENDER_ACCOUNT_ROW_OFFSET
+                   (DOM-SUB-stamps---standard                     TX_INIT_SENDER_ACCOUNT_ROW_OFFSET
                                                                   0)))
 
 ;; recipient account operation
@@ -75,7 +75,7 @@
                    (account-same-marked-for-selfdestruct          TX_INIT_RECIPIENT_ACCOUNT_ROW_OFFSET)
                    (account-isnt-precompile                       TX_INIT_RECIPIENT_ACCOUNT_ROW_OFFSET)
                    (account-retrieve-code-fragment-index          TX_INIT_RECIPIENT_ACCOUNT_ROW_OFFSET)
-                   (standard-dom-sub-stamps                       TX_INIT_RECIPIENT_ACCOUNT_ROW_OFFSET
+                   (DOM-SUB-stamps---standard                     TX_INIT_RECIPIENT_ACCOUNT_ROW_OFFSET
                                                                   1)))
 
 (defun (tx-initialization---is-deployment)       (force-bin (shift transaction/IS_DEPLOYMENT               TX_INIT_TRANSACTION_ROW_OFFSET)))

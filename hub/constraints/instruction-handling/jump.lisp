@@ -106,7 +106,7 @@
                  (account-same-deployment-number-and-status      ROW_OFFSET_FOR_JUMP_NO_OOGX_ADDRESS_ROW)
                  (account-same-warmth                            ROW_OFFSET_FOR_JUMP_NO_OOGX_ADDRESS_ROW)
                  (account-same-marked-for-selfdestruct           ROW_OFFSET_FOR_JUMP_NO_OOGX_ADDRESS_ROW)
-                 (standard-dom-sub-stamps                        ROW_OFFSET_FOR_JUMP_NO_OOGX_ADDRESS_ROW
+                 (DOM-SUB-stamps---standard                      ROW_OFFSET_FOR_JUMP_NO_OOGX_ADDRESS_ROW
                                                                  0)))
 
 (defconstraint jump-instruction-the-miscellaneous-row-flags                 (:guard (jump-instruction-no-stack-exception-and-no-oogx))

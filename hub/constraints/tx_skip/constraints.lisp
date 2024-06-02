@@ -53,7 +53,7 @@
                    (account-same-warmth                           TX_SKIP_SENDER_ACCOUNT_ROW_OFFSET)
                    (account-same-marked-for-selfdestruct          TX_SKIP_SENDER_ACCOUNT_ROW_OFFSET)
                    (account-isnt-precompile                       TX_SKIP_SENDER_ACCOUNT_ROW_OFFSET)
-                   (standard-dom-sub-stamps                       TX_SKIP_SENDER_ACCOUNT_ROW_OFFSET
+                   (DOM-SUB-stamps---standard                     TX_SKIP_SENDER_ACCOUNT_ROW_OFFSET
                                                                   0)))
 
 ;; recipient account operation
@@ -71,7 +71,7 @@
                    (account-same-warmth                           TX_SKIP_RECIPIENT_ACCOUNT_ROW_OFFSET)
                    (account-same-marked-for-selfdestruct          TX_SKIP_RECIPIENT_ACCOUNT_ROW_OFFSET)
                    (account-isnt-precompile                       TX_SKIP_RECIPIENT_ACCOUNT_ROW_OFFSET)
-                   (standard-dom-sub-stamps                       TX_SKIP_RECIPIENT_ACCOUNT_ROW_OFFSET
+                   (DOM-SUB-stamps---standard                     TX_SKIP_RECIPIENT_ACCOUNT_ROW_OFFSET
                                                                   1)))
 
 (defconstraint   tx-skip-setting-recipient-account-row-nonce-code-and-deployment-status-for-trivial-message-calls     (:guard (tx-skip-precondition))
@@ -143,7 +143,7 @@
                    (account-same-deployment-number-and-status     TX_SKIP_COINBASE_ACCOUNT_ROW_OFFSET)
                    (account-same-warmth                           TX_SKIP_COINBASE_ACCOUNT_ROW_OFFSET)
                    (account-same-marked-for-selfdestruct          TX_SKIP_COINBASE_ACCOUNT_ROW_OFFSET)
-                   (standard-dom-sub-stamps                       TX_SKIP_COINBASE_ACCOUNT_ROW_OFFSET
+                   (DOM-SUB-stamps---standard                     TX_SKIP_COINBASE_ACCOUNT_ROW_OFFSET
                                                                   2)))
 
 (defconstraint   tx-skip-transaction-row-partially-justifying-requires-evm-execution           (:guard (tx-skip-precondition))

@@ -93,28 +93,30 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-(defun (zero-dom-sub-stamps relOffset) (begin
-                                         (vanishes! (shift DOM_STAMP relOffset))
-                                         (vanishes! (shift SUB_STAMP relOffset))))
+(defun (zero-dom-sub-stamps relOffset)
+  (begin
+    (vanishes! (shift DOM_STAMP relOffset))
+    (vanishes! (shift SUB_STAMP relOffset))))
 
-(defun (standard-dom-sub-stamps relOffset d) (begin
-                                               (eq!       (shift DOM_STAMP relOffset) (+ (* hub_lambda HUB_STAMP) d))
-                                               (vanishes! (shift SUB_STAMP relOffset)                               )))
+(defun (DOM-SUB-stamps---standard relOffset d)
+  (begin
+    (eq!       (shift DOM_STAMP relOffset) (+ (* hub_lambda HUB_STAMP) d))
+    (vanishes! (shift SUB_STAMP relOffset)                               )))
 
 (defun (undoing-dom-sub-stamps relOffset rho epsilon s) (begin
                                                           (eq!  (shift DOM_STAMP relOffset)  (+ (* hub_lambda rho      ) epsilon))
                                                           (eq!  (shift SUB_STAMP relOffset)  (+ (* hub_lambda HUB_STAMP) s      ))))
 
-(defun (revert-with-current-dom-sub-stamps    relOffset
-                                              sub_offset)
+(defun (DOM-SUB-stamps---revert-with-current    relOffset
+                                                sub_offset)
   (undoing-dom-sub-stamps   relOffset
                             CN_REV_STAMP
                             epsilon_revert
                             sub_offset))
 
-(defun (revert-with-child-failure-dom-sub-stamps    relOffset
-                                                    sub_stamp_offset
-                                                    child_rev_stamp)
+(defun (DOM-SUB-stamps---revert-with-child    relOffset
+                                              sub_stamp_offset
+                                              child_rev_stamp)
   (undoing-dom-sub-stamps    relOffset
                              child_rev_stamp
                              epsilon_revert

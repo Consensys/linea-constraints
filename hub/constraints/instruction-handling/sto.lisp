@@ -100,7 +100,7 @@
                               (eq! (shift storage/STORAGE_KEY_HI    3) [ stack/STACK_ITEM_VALUE_HI  1 ])
                               (eq! (shift storage/STORAGE_KEY_LO    3) [ stack/STACK_ITEM_VALUE_LO  1 ])
                               (storage-turn-on-warmth               3)
-                              (standard-dom-sub-stamps              3        ;; kappa
+                              (DOM-SUB-stamps---standard            3        ;; kappa
                                                                     0))))    ;; c
 
 (defconstraint storage-setting-storage-slot-values (:guard (storage-no-stack-exceptions))
@@ -118,7 +118,7 @@
                                            (begin
                                              (storage-same-slot                        4)
                                              (undo-storage-warmth-and-value-update     4)
-                                             (revert-with-current-dom-sub-stamps       4         ;; kappa
+                                             (DOM-SUB-stamps---revert-with-current     4         ;; kappa
                                                                                        0))))))   ;; c
 
 (defun (orig-is-zero) (shift storage/VALUE_ORIG_IS_ZERO 3))

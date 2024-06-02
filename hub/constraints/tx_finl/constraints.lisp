@@ -66,7 +66,7 @@
                    (account-same-deployment-number-and-status     ROW_OFFSET_TX_FINL_SUCCESS_SENDER_ACCOUNT)
                    (account-same-warmth                           ROW_OFFSET_TX_FINL_SUCCESS_SENDER_ACCOUNT)
                    (account-same-marked-for-selfdestruct          ROW_OFFSET_TX_FINL_SUCCESS_SENDER_ACCOUNT)
-                   (standard-dom-sub-stamps                       ROW_OFFSET_TX_FINL_SUCCESS_SENDER_ACCOUNT
+                   (DOM-SUB-stamps---standard                     ROW_OFFSET_TX_FINL_SUCCESS_SENDER_ACCOUNT
                                                                   0)))
 
 (defun (tx-finalization---success-sender-refund)    (* (shift   transaction/GAS_PRICE           ROW_OFFSET_TX_FINL_SUCCESS_TRANSACTION_ROW)
@@ -85,7 +85,7 @@
                    (account-same-deployment-number-and-status     ROW_OFFSET_TX_FINL_SUCCESS_COINBASE_ACCOUNT)
                    (account-same-warmth                           ROW_OFFSET_TX_FINL_SUCCESS_COINBASE_ACCOUNT)
                    (account-same-marked-for-selfdestruct          ROW_OFFSET_TX_FINL_SUCCESS_COINBASE_ACCOUNT)
-                   (standard-dom-sub-stamps                       ROW_OFFSET_TX_FINL_SUCCESS_COINBASE_ACCOUNT
+                   (DOM-SUB-stamps---standard                     ROW_OFFSET_TX_FINL_SUCCESS_COINBASE_ACCOUNT
                                                                   1)))
 
 (defun (tx-finalization---success-coinbase-reward)
@@ -130,7 +130,7 @@
                    (account-same-deployment-number-and-status     ROW_OFFSET_TX_FINL_FAILURE_SENDER_ACCOUNT)
                    (account-same-warmth                           ROW_OFFSET_TX_FINL_FAILURE_SENDER_ACCOUNT)
                    (account-same-marked-for-selfdestruct          ROW_OFFSET_TX_FINL_FAILURE_SENDER_ACCOUNT)
-                   (standard-dom-sub-stamps                       ROW_OFFSET_TX_FINL_FAILURE_SENDER_ACCOUNT
+                   (DOM-SUB-stamps---standard                     ROW_OFFSET_TX_FINL_FAILURE_SENDER_ACCOUNT
                                                                   0)))
 
 (defun (tx-finalization---failure-sender-refund)    (+  (* (shift   transaction/GAS_PRICE           ROW_OFFSET_TX_FINL_FAILURE_TRANSACTION_ROW)
@@ -150,7 +150,7 @@
                    (account-same-deployment-number-and-status     ROW_OFFSET_TX_FINL_FAILURE_RECIPIENT_ACCOUNT)
                    (account-same-warmth                           ROW_OFFSET_TX_FINL_FAILURE_RECIPIENT_ACCOUNT)
                    (account-same-marked-for-selfdestruct          ROW_OFFSET_TX_FINL_FAILURE_RECIPIENT_ACCOUNT)
-                   (standard-dom-sub-stamps                       ROW_OFFSET_TX_FINL_FAILURE_RECIPIENT_ACCOUNT
+                   (DOM-SUB-stamps---standard                     ROW_OFFSET_TX_FINL_FAILURE_RECIPIENT_ACCOUNT
                                                                   1)))
 
 ;; coinbase address
@@ -166,7 +166,7 @@
                    (account-same-deployment-number-and-status     ROW_OFFSET_TX_FINL_FAILURE_COINBASE_ACCOUNT)
                    (account-same-warmth                           ROW_OFFSET_TX_FINL_FAILURE_COINBASE_ACCOUNT)
                    (account-same-marked-for-selfdestruct          ROW_OFFSET_TX_FINL_FAILURE_COINBASE_ACCOUNT)
-                   (standard-dom-sub-stamps                       ROW_OFFSET_TX_FINL_FAILURE_COINBASE_ACCOUNT
+                   (DOM-SUB-stamps---standard                     ROW_OFFSET_TX_FINL_FAILURE_COINBASE_ACCOUNT
                                                                   2)))
 
 (defun (tx-finalization---failure-coinbase-reward)

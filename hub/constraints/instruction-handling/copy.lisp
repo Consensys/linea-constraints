@@ -321,7 +321,7 @@
                              (account-same-deployment-number-and-status   ROW_OFFSET_CODECOPY_NO_XAHOY_ACCOUNT_ROW)
                              (account-same-warmth                         ROW_OFFSET_CODECOPY_NO_XAHOY_ACCOUNT_ROW)
                              (account-same-marked-for-selfdestruct        ROW_OFFSET_CODECOPY_NO_XAHOY_ACCOUNT_ROW)
-                             (standard-dom-sub-stamps                     ROW_OFFSET_CODECOPY_NO_XAHOY_ACCOUNT_ROW
+                             (DOM-SUB-stamps---standard                   ROW_OFFSET_CODECOPY_NO_XAHOY_ACCOUNT_ROW
                                                                           0))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -358,7 +358,7 @@
                                  (account-same-deployment-number-and-status            ROW_OFFSET_EXTCODECOPY_OOGX_ACCOUNT_ROW)
                                  (account-same-warmth                                  ROW_OFFSET_EXTCODECOPY_OOGX_ACCOUNT_ROW)
                                  (account-same-marked-for-selfdestruct                 ROW_OFFSET_EXTCODECOPY_OOGX_ACCOUNT_ROW)
-                                 (standard-dom-sub-stamps                              ROW_OFFSET_EXTCODECOPY_OOGX_ACCOUNT_ROW
+                                 (DOM-SUB-stamps---standard                            ROW_OFFSET_EXTCODECOPY_OOGX_ACCOUNT_ROW
                                                                                        0))
                                ;; context-row i + 3
                                (execution-provides-empty-return-data  ROW_OFFSET_EXTCODECOPY_OOGX_CONTEXT_ROW)))
@@ -378,7 +378,7 @@
                                  (account-same-deployment-number-and-status  ROW_OFFSET_EXTCODECOPY_NO_XAHOY_REVERT_ACCOUNT_DOING_ROW)
                                  (account-turn-on-warmth                     ROW_OFFSET_EXTCODECOPY_NO_XAHOY_REVERT_ACCOUNT_DOING_ROW)
                                  (account-same-marked-for-selfdestruct       ROW_OFFSET_EXTCODECOPY_NO_XAHOY_REVERT_ACCOUNT_DOING_ROW)
-                                 (standard-dom-sub-stamps                    ROW_OFFSET_EXTCODECOPY_NO_XAHOY_REVERT_ACCOUNT_DOING_ROW
+                                 (DOM-SUB-stamps---standard                  ROW_OFFSET_EXTCODECOPY_NO_XAHOY_REVERT_ACCOUNT_DOING_ROW
                                                                              0))))
 
 (defconstraint   copy-inst-unexceptional-reverted-EXTCODECOPY-undoing-account-row                 (:guard   (copy-inst-standard-EXTCODECOPY))
@@ -393,7 +393,7 @@
                                  (account-undo-deployment-status-update        ROW_OFFSET_EXTCODECOPY_NO_XAHOY_REVERT_ACCOUNT_UNDOING_ROW   ROW_OFFSET_EXTCODECOPY_NO_XAHOY_REVERT_ACCOUNT_DOING_ROW)
                                  (account-undo-warmth-update                   ROW_OFFSET_EXTCODECOPY_NO_XAHOY_REVERT_ACCOUNT_UNDOING_ROW   ROW_OFFSET_EXTCODECOPY_NO_XAHOY_REVERT_ACCOUNT_DOING_ROW)
                                  (account-same-marked-for-selfdestruct         ROW_OFFSET_EXTCODECOPY_NO_XAHOY_REVERT_ACCOUNT_UNDOING_ROW)
-                                 (revert-with-current-dom-sub-stamps           ROW_OFFSET_EXTCODECOPY_NO_XAHOY_REVERT_ACCOUNT_UNDOING_ROW
+                                 (DOM-SUB-stamps---revert-with-current         ROW_OFFSET_EXTCODECOPY_NO_XAHOY_REVERT_ACCOUNT_UNDOING_ROW
                                                                                1))))
 
 (defconstraint   copy-inst-unexceptional-unreverted-EXTCODECOPY-account-row                       (:guard   (copy-inst-standard-EXTCODECOPY))
@@ -409,5 +409,5 @@
                                  (account-same-deployment-number-and-status  ROW_OFFSET_EXTCODECOPY_NO_XAHOY_NO_REVERT_ACCOUNT_ROW)
                                  (account-turn-on-warmth                     ROW_OFFSET_EXTCODECOPY_NO_XAHOY_NO_REVERT_ACCOUNT_ROW)
                                  (account-same-marked-for-selfdestruct       ROW_OFFSET_EXTCODECOPY_NO_XAHOY_NO_REVERT_ACCOUNT_ROW)
-                                 (standard-dom-sub-stamps                    ROW_OFFSET_EXTCODECOPY_NO_XAHOY_NO_REVERT_ACCOUNT_ROW
+                                 (DOM-SUB-stamps---standard                  ROW_OFFSET_EXTCODECOPY_NO_XAHOY_NO_REVERT_ACCOUNT_ROW
                                                                              0))))

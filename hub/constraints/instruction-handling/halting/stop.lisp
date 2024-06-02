@@ -68,7 +68,8 @@
                       (account-same-deployment-number 2)
                       (eq!       (shift account/DEPLOYMENT_STATUS     2) 1)
                       (eq!       (shift account/DEPLOYMENT_STATUS_NEW 2) 0)
-                      (standard-dom-sub-stamps 2 0)))
+                      (DOM-SUB-stamps---standard    2
+                                                    0)))
 
 (defconstraint stop-instruction---second-address-row (:guard (stop-instruction---standard-precondition))
                (begin (debug (vanishes! (shift account/TRM_FLAG     3)))
@@ -79,4 +80,4 @@
                       (account-undo-warmth-update            3 2)
                       (account-undo-code-update              3 2)
                       (account-undo-deployment-status-update 3 2)
-                      (revert-with-current-dom-sub-stamps    3 1)))
+                      (DOM-SUB-stamps---revert-with-current  3 1)))
