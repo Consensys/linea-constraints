@@ -116,10 +116,10 @@
                                          (eq! [ stack/STACK_ITEM_VALUE_LO 4 ] (shift storage/VALUE_NEXT_LO 3))))
                               (if-not-zero CONTEXT_WILL_REVERT
                                            (begin
-                                             (storage-same-slot                    4)
-                                             (undo-storage-warmth-and-value-update 4)
-                                             (revert-dom-sub-stamps                4         ;; kappa
-                                                                                   0))))))   ;; c
+                                             (storage-same-slot                        4)
+                                             (undo-storage-warmth-and-value-update     4)
+                                             (revert-with-current-dom-sub-stamps       4         ;; kappa
+                                                                                       0))))))   ;; c
 
 (defun (orig-is-zero) (shift storage/VALUE_ORIG_IS_ZERO 3))
 (defun (curr-is-zero) (shift storage/VALUE_CURR_IS_ZERO 3))

@@ -393,7 +393,7 @@
                                  (account-undo-deployment-status-update        ROW_OFFSET_EXTCODECOPY_NO_XAHOY_REVERT_ACCOUNT_UNDOING_ROW   ROW_OFFSET_EXTCODECOPY_NO_XAHOY_REVERT_ACCOUNT_DOING_ROW)
                                  (account-undo-warmth-update                   ROW_OFFSET_EXTCODECOPY_NO_XAHOY_REVERT_ACCOUNT_UNDOING_ROW   ROW_OFFSET_EXTCODECOPY_NO_XAHOY_REVERT_ACCOUNT_DOING_ROW)
                                  (account-same-marked-for-selfdestruct         ROW_OFFSET_EXTCODECOPY_NO_XAHOY_REVERT_ACCOUNT_UNDOING_ROW)
-                                 (revert-dom-sub-stamps                        ROW_OFFSET_EXTCODECOPY_NO_XAHOY_REVERT_ACCOUNT_UNDOING_ROW
+                                 (revert-with-current-dom-sub-stamps           ROW_OFFSET_EXTCODECOPY_NO_XAHOY_REVERT_ACCOUNT_UNDOING_ROW
                                                                                1))))
 
 (defconstraint   copy-inst-unexceptional-unreverted-EXTCODECOPY-account-row                       (:guard   (copy-inst-standard-EXTCODECOPY))

@@ -40,7 +40,7 @@
                                                                                  2
                                                                                  (call-instruction---callee-revert-stamp)))
                     (if-not-zero    (scenario-shorthand-CALL-balance-update-undone-with-caller-revert)
-                                    (revert-dom-sub-stamps                       CALL_2nd_caller_account_row___row_offset
+                                    (revert-with-current-dom-sub-stamps          CALL_2nd_caller_account_row___row_offset
                                                                                  2))
                     ))
 
@@ -66,6 +66,6 @@
                                     (begin    (revert-with-child-failure-dom-sub-stamps    CALL_2nd_callee_account_row___row_offset    3    (call-instruction---callee-revert-stamp))
                                               (account-same-warmth                         CALL_2nd_callee_account_row___row_offset)))
                     (if-not-zero    (scenario-shorthand-CALL-balance-update-undone-with-caller-revert)
-                                    (begin    (revert-dom-sub-stamps                       CALL_2nd_callee_account_row___row_offset    3)
+                                    (begin    (revert-with-current-dom-sub-stamps          CALL_2nd_callee_account_row___row_offset    3)
                                               (account-undo-warmth-update                  CALL_2nd_callee_account_row___row_offset    CALL_1st_callee_account_row___row_offset)))
                     ))

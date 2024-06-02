@@ -79,4 +79,4 @@
                       (account-undo-warmth-update            3 2)
                       (account-undo-code-update              3 2)
                       (account-undo-deployment-status-update 3 2)
-                      (revert-dom-sub-stamps                 3 1)))
+                      (revert-with-current-dom-sub-stamps    3 1)))

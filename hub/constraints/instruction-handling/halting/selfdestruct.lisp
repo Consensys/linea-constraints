@@ -284,7 +284,7 @@
                  (account-undo-code-update                    ROW_OFFSET_FOR_SELFDESTRUCT_FIRST_ACCOUNT_UNDOING_ROW      ROW_OFFSET_FOR_SELFDESTRUCT_FIRST_ACCOUNT_ROW)
                  (account-undo-deployment-status-update       ROW_OFFSET_FOR_SELFDESTRUCT_FIRST_ACCOUNT_UNDOING_ROW      ROW_OFFSET_FOR_SELFDESTRUCT_FIRST_ACCOUNT_ROW)
                  (account-same-marked-for-selfdestruct        ROW_OFFSET_FOR_SELFDESTRUCT_FIRST_ACCOUNT_UNDOING_ROW)
-                 (revert-dom-sub-stamps                       ROW_OFFSET_FOR_SELFDESTRUCT_FIRST_ACCOUNT_UNDOING_ROW 2)))
+                 (revert-with-current-dom-sub-stamps                       ROW_OFFSET_FOR_SELFDESTRUCT_FIRST_ACCOUNT_UNDOING_ROW 2)))
 
 (defconstraint selfdestruct-second-undoing-row-for-WILL_REVERT-scenario (:guard (selfdestruct-scenario-WILL_REVERT-precondition))
                (begin
@@ -297,7 +297,7 @@
                  (account-undo-code-update                    ROW_OFFSET_FOR_SELFDESTRUCT_SECOND_ACCOUNT_UNDOING_ROW      ROW_OFFSET_FOR_SELFDESTRUCT_SECOND_ACCOUNT_ROW)
                  (account-undo-deployment-status-update       ROW_OFFSET_FOR_SELFDESTRUCT_SECOND_ACCOUNT_UNDOING_ROW      ROW_OFFSET_FOR_SELFDESTRUCT_SECOND_ACCOUNT_ROW)
                  (account-same-marked-for-selfdestruct        ROW_OFFSET_FOR_SELFDESTRUCT_SECOND_ACCOUNT_UNDOING_ROW)
-                 (revert-dom-sub-stamps                       ROW_OFFSET_FOR_SELFDESTRUCT_SECOND_ACCOUNT_UNDOING_ROW 2)))
+                 (revert-with-current-dom-sub-stamps          ROW_OFFSET_FOR_SELFDESTRUCT_SECOND_ACCOUNT_UNDOING_ROW 2)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                                                              ;;

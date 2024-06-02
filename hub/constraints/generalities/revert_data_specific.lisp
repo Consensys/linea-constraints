@@ -105,8 +105,8 @@
                                                           (eq!  (shift DOM_STAMP relOffset)  (+ (* hub_lambda rho      ) epsilon))
                                                           (eq!  (shift SUB_STAMP relOffset)  (+ (* hub_lambda HUB_STAMP) s      ))))
 
-(defun (revert-dom-sub-stamps    relOffset
-                                 sub_offset)
+(defun (revert-with-current-dom-sub-stamps    relOffset
+                                              sub_offset)
   (undoing-dom-sub-stamps   relOffset
                             CN_REV_STAMP
                             epsilon_revert

@@ -43,5 +43,5 @@
                     (vanishes!    (shift    account/TRM_FLAG         CREATE_second_createe_account_row___row_offset))
                     (vanishes!    (shift    account/ROMLEX_FLAG      CREATE_second_createe_account_row___row_offset))
                     (vanishes!    (shift    account/RLPADDR_FLAG     CREATE_second_createe_account_row___row_offset))    ;; TODO: these 3 bit vanishing constraints could be merged
-                    (revert-dom-sub-stamps                           CREATE_second_createe_account_row___row_offset    1)
+                    (revert-with-current-dom-sub-stamps              CREATE_second_createe_account_row___row_offset    1)
                     ))

@@ -128,7 +128,7 @@
                                                (account-undo-deployment-status-update  2 1)
                                                (account-undo-warmth-update             2 1)
                                                (account-same-marked-for-selfdestruct   2  )
-                                               (revert-dom-sub-stamps                  2 1))))))
+                                               (revert-with-current-dom-sub-stamps     2 1))))))
 
 (defconstraint   account-instruction-non-trim-case                                          (:guard (account-instruction-standard-hypothesis))
                  (begin
