@@ -25,7 +25,9 @@ HUB :=  $(wildcard hub/columns/*lisp) \
 	$(wildcard hub/constraints/tx_init/*lisp) \
 	$(wildcard hub/constraints/tx_finl/*lisp) \
 	$(wildcard hub/constraints/*lisp) \
-	$(wildcard hub/lookups/*lisp)
+	$(wildcard hub/lookups/*lisp) \
+	hub/constants.lisp
+
 
 # COMMENTED:
 #       $(wildcard hub/constraints/consistency/*lisp) \
@@ -138,7 +140,7 @@ ZKEVM_MODULES := ${ALU} \
 		 ${EC_DATA} \
 		 ${EUC} \
 		 ${EXP} \
-	     ${GAS} \
+		 ${GAS} \
 		 ${HUB} \
 		 ${LIBRARY} \
 		 ${LOG_DATA} \

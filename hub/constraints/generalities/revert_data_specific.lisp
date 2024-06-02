@@ -73,21 +73,10 @@
                                                                (eq! CN_GETS_REV (prev CN_WILL_REV))
                                                                (if-zero CN_SELF_REV (remained-constant! CN_REV_STAMP))))))))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;                                     ;;
-;;   4.3.5 Special purpose constants   ;;
-;;                                     ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
-(defconst
-  hub_tau                8      ;; for height increments
-  hub_lambda            16      ;; for dom/sub stamp business
-  epsilon_revert         8
-  epsilon_selfdestruct  12)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                         ;;
+;;   4.3.5 Special purpose constants       ;;
 ;;   4.3.6 Special DOM / SUB constraints   ;;
 ;;                                         ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -100,18 +89,18 @@
 
 (defun (DOM-SUB-stamps---standard relOffset d)
   (begin
-    (eq!       (shift DOM_STAMP relOffset) (+ (* hub_lambda HUB_STAMP) d))
+    (eq!       (shift DOM_STAMP relOffset) (+ (* MULTIPLIER___DOM_SUB_STAMPS HUB_STAMP) d))
     (vanishes! (shift SUB_STAMP relOffset)                               )))
 
 (defun (undoing-dom-sub-stamps relOffset rho epsilon s) (begin
-                                                          (eq!  (shift DOM_STAMP relOffset)  (+ (* hub_lambda rho      ) epsilon))
-                                                          (eq!  (shift SUB_STAMP relOffset)  (+ (* hub_lambda HUB_STAMP) s      ))))
+                                                          (eq!  (shift DOM_STAMP relOffset)  (+ (* MULTIPLIER___DOM_SUB_STAMPS rho      ) epsilon))
+                                                          (eq!  (shift SUB_STAMP relOffset)  (+ (* MULTIPLIER___DOM_SUB_STAMPS HUB_STAMP) s      ))))
 
 (defun (DOM-SUB-stamps---revert-with-current    relOffset
                                                 sub_offset)
   (undoing-dom-sub-stamps   relOffset
                             CN_REV_STAMP
-                            epsilon_revert
+                            DOM_SUB_STAMP_OFFSET___REVERT
                             sub_offset))
 
 (defun (DOM-SUB-stamps---revert-with-child    relOffset
@@ -119,12 +108,12 @@
                                               child_rev_stamp)
   (undoing-dom-sub-stamps    relOffset
                              child_rev_stamp
-                             epsilon_revert
+                             DOM_SUB_STAMP_OFFSET___REVERT
                              sub_stamp_offset
                              ))
 
 (defun (selfdestruct-dom-sub-stamps relOffset) (undoing-dom-sub-stamps
                                                  relOffset
                                                  TX_END_STAMP
-                                                 epsilon_selfdestruct
+                                                 DOM_SUB_STAMP_OFFSET___SELFDESTRUCT
                                                  0))
