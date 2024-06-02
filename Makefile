@@ -137,14 +137,16 @@ ZKEVM_MODULES := ${ALU} \
 		 ${CONSTANTS} \
 		 ${EC_DATA} \
 		 ${EUC} \
-         ${EXP} \
-         ${GAS} \
+		 ${EXP} \
+	     ${GAS} \
+		 ${HUB} \
 		 ${LIBRARY} \
 		 ${LOG_DATA} \
 		 ${LOG_INFO} \
 		 ${MMU} \
 		 ${MMIO} \
 		 ${MXP} \
+		 ${OOB} \
 		 ${RLP_ADDR} \
 		 ${RLP_TXN} \
 		 ${RLP_TXRCPT} \
@@ -156,11 +158,7 @@ ZKEVM_MODULES := ${ALU} \
 		 ${TABLES} \
 		 ${TRM} \
 		 ${TXN_DATA} \
-		 ${OOB} \
 		 ${WCP}
-
-# TODO: add later
-#        ${HUB} \
 
 define.go: ${ZKEVM_MODULES}
 	${CORSET} wizard-iop -vv -o $@ ${ZKEVM_MODULES}
