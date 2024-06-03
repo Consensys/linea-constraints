@@ -54,7 +54,7 @@
                                      (execution-provides-empty-return-data 4))))))
 
 
-(defconstraint stop-instruction---first-address-row (:guard (stop-instruction---standard-precondition))
+(defconstraint stop-instruction---first-address-row (:guard (*    (stop-instruction---standard-precondition)    (deployment)))
                (begin (debug (vanishes!       (shift account/TRM_FLAG     2)))
                       (debug (vanishes!       (shift account/ROMLEX_FLAG  2)))
                       (eq! (shift account/ADDRESS_HI  2) (code-address-hi))
@@ -71,7 +71,7 @@
                       (DOM-SUB-stamps---standard    2
                                                     0)))
 
-(defconstraint stop-instruction---second-address-row (:guard (stop-instruction---standard-precondition))
+(defconstraint stop-instruction---second-address-row (:guard (*    (stop-instruction---standard-precondition)    (deployment)    (will-revert)))
                (begin (debug (vanishes! (shift account/TRM_FLAG     3)))
                       (debug (vanishes! (shift account/ROMLEX_FLAG  3)))
                       (account-same-address-as               3 2)
