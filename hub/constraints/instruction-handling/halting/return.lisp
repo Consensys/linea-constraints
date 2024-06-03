@@ -16,14 +16,13 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defun  (return-instruction---standard-precondition)  (*  PEEK_AT_STACK
-                                                              stack/HALT_FLAG
-                                                              [ stack/DEC_FLAG 1 ]
-                                                              (-  1  stack/SUX )
-                                                              )
-  )
+                                                          stack/HALT_FLAG
+                                                          [ stack/DEC_FLAG 1 ]
+                                                          (-  1  stack/SUX )
+                                                          ))
 
 (defun  (return-instruction---standard-scenario-row)  (* PEEK_AT_SCENARIO
-                                                (scenario-shorthand-RETURN-sum)))
+                                                         (scenario-shorthand-RETURN-sum)))
 
 (defconstraint   return-instruction---imposing-some-RETURN-scenario    (:guard  (return-instruction---standard-precondition))
                  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -137,7 +136,7 @@
                            )
                        )
                  )
-                 
+
 (defconstraint   return-instruction---setting-peeking-flags                   (:guard  (return-instruction---standard-scenario-row))
                  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                  (begin
@@ -199,7 +198,7 @@
                  (read-context-data   RETURN_INSTRUCTION_CURRENT_CONTEXT_ROW_OFFSET
                                       CONTEXT_NUMBER)
                  )
-                 
+
 (defconstraint   return-instruction---refining-the-return-scenario        (:guard  (return-instruction---standard-scenario-row))
                  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                  (begin
@@ -208,8 +207,8 @@
                                  (eq!  (scenario-shorthand-RETURN-deployment)  (return-instruction---is-deployment)))
                    (if-not-zero  (scenario-shorthand-RETURN-deployment)
                                  (begin
-                                    (eq!  (scenario-shorthand-RETURN-deployment-will-revert)  CONTEXT_WILL_REVERT)
-                                    (eq!  (scenario-shorthand-RETURN-nonempty-deployment)     (return-instruction---MXP-may-trigger-non-trivial-operation))))
+                                   (eq!  (scenario-shorthand-RETURN-deployment-will-revert)  CONTEXT_WILL_REVERT)
+                                   (eq!  (scenario-shorthand-RETURN-nonempty-deployment)     (return-instruction---MXP-may-trigger-non-trivial-operation))))
                    (if-not-zero  (scenario-shorthand-RETURN-message-call)
                                  (if-zero  (return-touch-ram-expression)
                                            ;; touch_ram_expression = 0
@@ -272,45 +271,45 @@
                                                                   )
                                 )
                  )
-                                                         
-                                
+
+
 (defconstraint   return-instruction---setting-MMU-data-first-call   (:guard   (return-instruction---standard-scenario-row))
                  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                  (begin
                    (if-not-zero   (return-instruction---check-first-byte)
                                   (set-MMU-instruction---invalid-code-prefix    RETURN_INSTRUCTION_FIRST_MISC_ROW_OFFSET       ;; offset
-                                                                       CONTEXT_NUMBER                         ;; source ID
-                                                                       ;; tgt_id                              ;; target ID
-                                                                       ;; aux_id                              ;; auxiliary ID
-                                                                       ;; src_offset_hi                       ;; source offset high
-                                                                       (return-instruction---offset-lo)             ;; source offset low
-                                                                       ;; tgt_offset_lo                       ;; target offset low
-                                                                       ;; size                                ;; size
-                                                                       ;; ref_offset                          ;; reference offset
-                                                                       ;; ref_size                            ;; reference size
-                                                                       (return-instruction---exception-flag-ICPX)   ;; success bit
-                                                                       ;; limb_1                              ;; limb 1
-                                                                       ;; limb_2                              ;; limb 2
-                                                                       ;; exo_sum                             ;; weighted exogenous module flag sum
-                                                                       ;; phase                               ;; phase
-                                                                       ))
+                                                                                CONTEXT_NUMBER                         ;; source ID
+                                                                                ;; tgt_id                              ;; target ID
+                                                                                ;; aux_id                              ;; auxiliary ID
+                                                                                ;; src_offset_hi                       ;; source offset high
+                                                                                (return-instruction---offset-lo)             ;; source offset low
+                                                                                ;; tgt_offset_lo                       ;; target offset low
+                                                                                ;; size                                ;; size
+                                                                                ;; ref_offset                          ;; reference offset
+                                                                                ;; ref_size                            ;; reference size
+                                                                                (return-instruction---exception-flag-ICPX)   ;; success bit
+                                                                                ;; limb_1                              ;; limb 1
+                                                                                ;; limb_2                              ;; limb 2
+                                                                                ;; exo_sum                             ;; weighted exogenous module flag sum
+                                                                                ;; phase                               ;; phase
+                                                                                ))
                    (if-not-zero   (return-instruction---write-return-data-to-caller-ram)
                                   (set-MMU-instruction---ram-to-ram-sans-padding   RETURN_INSTRUCTION_FIRST_MISC_ROW_OFFSET   ;; offset
-                                                                          CONTEXT_NUMBER                      ;; source ID
-                                                                          CALLER_CONTEXT_NUMBER               ;; target ID
-                                                                          ;; aux_id                              ;; auxiliary ID
-                                                                          ;; src_offset_hi                       ;; source offset high
-                                                                          (return-instruction---offset-lo)             ;; source offset low
-                                                                          ;; tgt_offset_lo                       ;; target offset low
-                                                                          (return-instruction---size-lo)               ;; size
-                                                                          (return-instruction---return-at-offset)      ;; reference offset
-                                                                          (return-instruction---return-at-capacity)    ;; reference size
-                                                                          ;; success_bit                         ;; success bit
-                                                                          ;; limb_1                              ;; limb 1
-                                                                          ;; limb_2                              ;; limb 2
-                                                                          ;; exo_sum                             ;; weighted exogenous module flag sum
-                                                                          ;; phase                               ;; phase
-                                                                          )
+                                                                                   CONTEXT_NUMBER                      ;; source ID
+                                                                                   CALLER_CONTEXT_NUMBER               ;; target ID
+                                                                                   ;; aux_id                              ;; auxiliary ID
+                                                                                   ;; src_offset_hi                       ;; source offset high
+                                                                                   (return-instruction---offset-lo)             ;; source offset low
+                                                                                   ;; tgt_offset_lo                       ;; target offset low
+                                                                                   (return-instruction---size-lo)               ;; size
+                                                                                   (return-instruction---return-at-offset)      ;; reference offset
+                                                                                   (return-instruction---return-at-capacity)    ;; reference size
+                                                                                   ;; success_bit                         ;; success bit
+                                                                                   ;; limb_1                              ;; limb 1
+                                                                                   ;; limb_2                              ;; limb 2
+                                                                                   ;; exo_sum                             ;; weighted exogenous module flag sum
+                                                                                   ;; phase                               ;; phase
+                                                                                   )
                                   )
                    )
                  )
@@ -341,15 +340,15 @@
 (defconstraint   return-instruction---setting-the-gas-cost          (:guard   (return-instruction---standard-scenario-row))
                  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                  (if-zero   (force-bin   (return-instruction---gas-cost-required))
-                                         ;; we don't require the computation of gas cost
-                                         (vanishes!   GAS_COST)
-                                         ;; we require the computation of gas cost (either OOGX or unexceptional)
-                                         (eq!   GAS_COST
-                                                (+   stack/STATIC_GAS
-                                                     (return-instruction---MXP-memory-expansion-gas)))))
+                            ;; we don't require the computation of gas cost
+                            (vanishes!   GAS_COST)
+                            ;; we require the computation of gas cost (either OOGX or unexceptional)
+                            (eq!   GAS_COST
+                                   (+   stack/STATIC_GAS
+                                        (return-instruction---MXP-memory-expansion-gas)))))
 
 (defun   (return-instruction---gas-cost-required)   (+  (return-instruction---exception-flag-OOGX)
-                                               (scenario-shorthand-RETURN-unexceptional)))
+                                                        (scenario-shorthand-RETURN-unexceptional)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                               ;;
@@ -494,7 +493,7 @@
                    )
                  )
 
-(defconstraint   return-instruction---first-account-row-for-nonempty-deployments   (:guard   (scenario-shorthand-RETURN-nonempty-deployment))
+(defconstraint   return-instruction---first-account-row-for-nonempty-deployments   (:guard   (return-instruction---nonempty-deployment-scenario))
                  (begin
                    (eq!   (shift   account/ADDRESS_HI                         RETURN_INSTRUCTION_NONEMPTY_DEPLOYMENT_FIRST_ACCOUNT_ROW_OFFSET)    (return-instruction---deployment-address-hi))
                    (eq!   (shift   account/ADDRESS_LO                         RETURN_INSTRUCTION_NONEMPTY_DEPLOYMENT_FIRST_ACCOUNT_ROW_OFFSET)    (return-instruction---deployment-address-lo))
@@ -518,7 +517,7 @@
                    )
                  )
 
-(defconstraint   return-instruction---second-account-row-for-nonempty-deployments   (:guard   (scenario-shorthand-RETURN-nonempty-deployment))
+(defconstraint   return-instruction---second-account-row-for-nonempty-deployments   (:guard   (return-instruction---nonempty-deployment-scenario))
                  (if-not-zero   scenario/RETURN_FROM_DEPLOYMENT_NONEMPTY_CODE_WILL_REVERT
                                 (begin
                                   (account-same-address-as                     RETURN_INSTRUCTION_NONEMPTY_DEPLOYMENT_SECOND_ACCOUNT_ROW_OFFSET    RETURN_INSTRUCTION_NONEMPTY_DEPLOYMENT_FIRST_ACCOUNT_ROW_OFFSET)
@@ -535,7 +534,7 @@
                                 )
                  )
 
-(defconstraint   return-instruction---setting-the-callers-new-return-data-nonempty-deployments    (:guard   (scenario-shorthand-RETURN-nonempty-deployment))
+(defconstraint   return-instruction---setting-the-callers-new-return-data-nonempty-deployments    (:guard   (return-instruction---nonempty-deployment-scenario))
                  (begin
                    (if-not-zero   scenario/RETURN_FROM_DEPLOYMENT_NONEMPTY_CODE_WILL_REVERT
                                   (if-not-zero   (force-bin   (return-instruction---is-root))
