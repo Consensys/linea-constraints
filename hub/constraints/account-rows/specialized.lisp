@@ -19,11 +19,13 @@
 ;;                                       ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defun (account-same-balance           relOffset)          (shift (eq! account/BALANCE_NEW account/BALANCE          ) relOffset))         ;; relOffset rows into the future
-(defun (account-increment-balance-by   relOffset value)    (shift (eq! account/BALANCE_NEW (+ account/BALANCE value)) relOffset))         ;; relOffset rows into the future
-(defun (account-decrement-balance-by   relOffset value)    (shift (eq! account/BALANCE_NEW (- account/BALANCE value)) relOffset))         ;; relOffset rows into the future
-(defun (account-undo-balance-update    undoAt doneAt)      (begin (eq! (shift account/BALANCE_NEW undoAt) (shift     account/BALANCE doneAt))   ;; same as relOffset rows into the past
-                                                                 (eq! (shift account/BALANCE     undoAt) (shift account/BALANCE_NEW doneAt)))) ;; same as relOffset rows into the past
+(defun (account-same-balance           relOffset)          (eq!       (shift    account/BALANCE_NEW    relOffset)         (shift account/BALANCE   relOffset)         ))         ;; relOffset rows into the future
+(defun (account-increment-balance-by   relOffset value)    (eq!       (shift    account/BALANCE_NEW    relOffset)    (+   (shift account/BALANCE   relOffset)   value)))         ;; relOffset rows into the future
+(defun (account-decrement-balance-by   relOffset value)    (eq!       (shift    account/BALANCE_NEW    relOffset)    (-   (shift account/BALANCE   relOffset)   value)))         ;; relOffset rows into the future
+(defun (account-undo-balance-update    undoAt doneAt)      (begin
+                                                             (eq!     (shift   account/BALANCE_NEW   undoAt)   (shift   account/BALANCE       doneAt))   ;; same as relOffset rows into the past
+                                                             (eq!     (shift   account/BALANCE       undoAt)   (shift   account/BALANCE_NEW   doneAt))   ;; same as relOffset rows into the past
+                                                             ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                         ;;
@@ -133,7 +135,7 @@
 ;;                                             ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defun (account-retrieve-code-fragment-index    kappa) (eq! (shift account/ROM_LEX_FLAG   kappa) 1))
+(defun (account-retrieve-code-fragment-index    kappa) (eq! (shift account/ROMLEX_FLAG   kappa) 1))
 
 (defun (account-trim-address   kappa                   ;; row offset
                                raw-address-hi          ;; high part of raw, potentially untrimmed address
@@ -164,16 +166,16 @@
 (defconstraint account-code-ownership-curr (:perspective account)
                (if-eq-else account/CODE_HASH_HI EMPTY_KECCAK_HI
                            (if-eq-else account/CODE_HASH_LO EMPTY_KECCAK_LO
-                                       (eq! account/HAS_CODE 1)
-                                       (eq! account/HAS_CODE 0))
-                           (eq! account/HAS_CODE 0)))
+                                       (eq! account/HAS_CODE 0)
+                                       (eq! account/HAS_CODE 1))
+                           (eq! account/HAS_CODE 1)))
 
 (defconstraint account-code-ownership-next (:perspective account)
                (if-eq-else account/CODE_HASH_HI_NEW EMPTY_KECCAK_HI
                            (if-eq-else account/CODE_HASH_LO_NEW EMPTY_KECCAK_LO
-                                       (eq! account/HAS_CODE_NEW 1)
-                                       (eq! account/HAS_CODE_NEW 0))
-                           (eq! account/HAS_CODE_NEW 0)))
+                                       (eq! account/HAS_CODE_NEW 0)
+                                       (eq! account/HAS_CODE_NEW 1))
+                           (eq! account/HAS_CODE_NEW 1)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                       ;;
