@@ -1,4 +1,4 @@
-CORSET ?= corset
+CORSET = ../corset/target/release/corset
 
 HUB :=  $(wildcard hub/columns/*lisp) \
 	$(wildcard hub/constraints/account-rows/*lisp) \
@@ -163,7 +163,7 @@ ZKEVM_MODULES := ${ALU} \
 #        ${HUB} \
 
 define.go: ${ZKEVM_MODULES}
-	${CORSET} wizard-iop -vv define -o $@ ${ZKEVM_MODULES}
+	${CORSET} wizard-iop -vv -o $@ ${ZKEVM_MODULES}
 
 zkevm.bin: ${ZKEVM_MODULES}
 	${CORSET} compile -vv -o $@ ${ZKEVM_MODULES}
