@@ -28,8 +28,8 @@
   (
     (rlp-txn-into-hub-src-selector)
     (* rlptxn.ABS_TX_NUM (rlp-txn-into-hub-src-selector))
-    (* (rlp-txn-depth-2) (rlp-txn-into-hub-src-selector))
     (* (- 1 (rlp-txn-depth-2)) (rlp-txn-into-hub-src-selector))
+    (* (rlp-txn-depth-2) (rlp-txn-into-hub-src-selector))
     (* rlptxn.ADDR_HI (rlp-txn-into-hub-src-selector))
     (* rlptxn.ADDR_LO (rlp-txn-into-hub-src-selector))
     (* [rlptxn.INPUT 1] (rlp-txn-depth-2) (rlp-txn-into-hub-src-selector))
