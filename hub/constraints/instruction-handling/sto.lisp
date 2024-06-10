@@ -75,13 +75,14 @@
                        (shift context/IS_STATIC 1))))
 
 (defconstraint storage-instruction---setting-MISC-row (:guard (storage-instruction---no-stack-exceptions))
-               (if-not-zero (shift PEEK_AT_MISCELLANEOUS 2)
+               (if-not-zero (shift    PEEK_AT_MISCELLANEOUS    2)
                             (begin
                               (eq! (weighted-MISC-flag-sum 2)
                                    (* [ stack/DEC_FLAG 1 ] MISC_WEIGHT_OOB))
-                              (set-OOB-instruction-sstore 2                   ;; offset
-                                                          GAS_ACTUAL ))       ;; GAS_ACTUAL
-                              ))
+                              (if-not-zero    [ stack/DEC_FLAG    1 ]
+                                              (set-OOB-instruction-sstore    2              ;; offset
+                                                                             GAS_ACTUAL ))  ;; GAS_ACTUAL
+                              )))
 
 (defconstraint storage-instruction---justifying-SSTOREX (:guard (storage-instruction---no-stack-exceptions))
                (if-not-zero (shift PEEK_AT_MISCELLANEOUS 2)
@@ -121,13 +122,13 @@
                                              (DOM-SUB-stamps---revert-with-current     4         ;; kappa
                                                                                        0))))))   ;; c
 
-(defun (orig-is-zero) (shift storage/VALUE_ORIG_IS_ZERO 3))
-(defun (curr-is-zero) (shift storage/VALUE_CURR_IS_ZERO 3))
-(defun (next-is-zero) (shift storage/VALUE_NEXT_IS_ZERO 3))
-(defun (curr-is-orig) (shift storage/VALUE_CURR_IS_ORIG 3))
-(defun (next-is-orig) (shift storage/VALUE_NEXT_IS_ORIG 3))
-(defun (next-is-curr) (shift storage/VALUE_NEXT_IS_CURR 3))
-(defun (cold-slot)    (force-bin (- 1 (shift storage/WARMTH 3))))
+(defun    (orig-is-zero)    (shift storage/VALUE_ORIG_IS_ZERO 3))
+(defun    (curr-is-zero)    (shift storage/VALUE_CURR_IS_ZERO 3))
+(defun    (next-is-zero)    (shift storage/VALUE_NEXT_IS_ZERO 3))
+(defun    (curr-is-orig)    (shift storage/VALUE_CURR_IS_ORIG 3))
+(defun    (next-is-orig)    (shift storage/VALUE_NEXT_IS_ORIG 3))
+(defun    (next-is-curr)    (shift storage/VALUE_NEXT_IS_CURR 3))
+(defun    (cold-slot)       (force-bin (- 1 (shift storage/WARMTH 3))))
 
 
 (defconstraint storage-instruction---setting-gas-costs (:guard (storage-instruction---no-stack-exceptions))
