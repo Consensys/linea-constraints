@@ -1,16 +1,16 @@
 (module hub)
 
-(defun (storage-no-stack-exceptions)
+(defun (storage-instruction---no-stack-exceptions)
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   (* PEEK_AT_STACK
      stack/STO_FLAG
      (- 1 stack/SUX stack/SOX)))
 
-(defconstraint storage-stack-pattern (:guard (storage-no-stack-exceptions))
+(defconstraint storage-instruction---stack-pattern (:guard (storage-instruction---no-stack-exceptions))
                (load-store-stack-pattern [ stack/DEC_FLAG 1 ]))
 
 ;; TODO: comment out
-(defconstraint storage-valid-exceptions (:guard (storage-no-stack-exceptions))
+(defconstraint storage-instruction---valid-exceptions (:guard (storage-instruction---no-stack-exceptions))
                (if-zero (force-bin [ stack/DEC_FLAG 1 ])
                         (eq! XAHOY
                              stack/OOGX)
@@ -19,7 +19,7 @@
                                 stack/SSTOREX
                                 stack/OOGX))))
 
-(defconstraint storage-setting-NSR-and-peeking-flags-STATICX (:guard (storage-no-stack-exceptions))
+(defconstraint storage-instruction---setting-NSR-and-peeking-flags-STATICX (:guard (storage-instruction---no-stack-exceptions))
                  ;; static exception
                  ;;;;;;;;;;;;;;;;;;;
                  (if-not-zero stack/STATICX
@@ -29,7 +29,7 @@
                                      (+ (shift PEEK_AT_CONTEXT 1)
                                         (shift PEEK_AT_CONTEXT 2))))))
 
-(defconstraint storage-setting-NSR-and-peeking-flags-SSTOREX (:guard (storage-no-stack-exceptions))
+(defconstraint storage-instruction---setting-NSR-and-peeking-flags-SSTOREX (:guard (storage-instruction---no-stack-exceptions))
                  ;; sstore gas exception
                  ;;;;;;;;;;;;;;;;;;;;;;;
                  (if-not-zero stack/SSTOREX
@@ -40,7 +40,7 @@
                                         (shift PEEK_AT_MISCELLANEOUS 2)
                                         (shift PEEK_AT_CONTEXT       3))))))
 
-(defconstraint storage-setting-NSR-and-peeking-flags-OOGX (:guard (storage-no-stack-exceptions))
+(defconstraint storage-instruction---setting-NSR-and-peeking-flags-OOGX (:guard (storage-instruction---no-stack-exceptions))
                  ;; out of gas exception
                  ;;;;;;;;;;;;;;;;;;;;;;;
                  (if-not-zero stack/SSTOREX
@@ -53,7 +53,7 @@
                                         (shift PEEK_AT_STORAGE       4)
                                         (shift PEEK_AT_CONTEXT       5))))))
 
-(defconstraint storage-setting-NSR-and-peeking-flags-UNEXCEPTIONAL (:guard (storage-no-stack-exceptions))
+(defconstraint storage-instruction---setting-NSR-and-peeking-flags-UNEXCEPTIONAL (:guard (storage-instruction---no-stack-exceptions))
                  ;; unexceptional
                  ;;;;;;;;;;;;;;;;
                  (if-zero XAHOY
@@ -65,16 +65,16 @@
                                     (shift PEEK_AT_STORAGE        3)
                                     (* CONTEXT_WILL_REVERT (shift PEEK_AT_STORAGE 4)))))))
 
-(defconstraint storage-first-context-row (:guard (storage-no-stack-exceptions))
+(defconstraint storage-instruction---first-context-row (:guard (storage-instruction---no-stack-exceptions))
                (read-context-data 1                  ;; row offset
                                   CONTEXT_NUMBER ))  ;; context to read
 
-(defconstraint storage-justifying-STATICX (:guard (storage-no-stack-exceptions))
+(defconstraint storage-instruction---justifying-STATICX (:guard (storage-instruction---no-stack-exceptions))
                (eq! stack/STATICX
                     (* [ stack/DEC_FLAG 1 ]
                        (shift context/IS_STATIC 1))))
 
-(defconstraint storage-setting-MISC-row (:guard (storage-no-stack-exceptions))
+(defconstraint storage-instruction---setting-MISC-row (:guard (storage-instruction---no-stack-exceptions))
                (if-not-zero (shift PEEK_AT_MISCELLANEOUS 2)
                             (begin
                               (eq! (weighted-MISC-flag-sum 2)
@@ -83,7 +83,7 @@
                                                           GAS_ACTUAL ))       ;; GAS_ACTUAL
                               ))
 
-(defconstraint storage-justifying-SSTOREX (:guard (storage-no-stack-exceptions))
+(defconstraint storage-instruction---justifying-SSTOREX (:guard (storage-instruction---no-stack-exceptions))
                (if-not-zero (shift PEEK_AT_MISCELLANEOUS 2)
                             (if-not-zero [ stack/DEC_FLAG 1 ]
                                          (eq! stack/SSTOREX
@@ -91,7 +91,7 @@
 
 (defun (oogx-or-no-exception) (+ stack/OOGX (- 1 XAHOY)))
 
-(defconstraint storage-setting-storage-slot-parameters (:guard (storage-no-stack-exceptions))
+(defconstraint storage-instruction---setting-storage-slot-parameters (:guard (storage-instruction---no-stack-exceptions))
                (if-not-zero (oogx-or-no-exception)
                             (begin
                               (eq! (shift storage/ADDRESS_HI        3) (shift context/ACCOUNT_ADDRESS_HI        1))
@@ -103,7 +103,7 @@
                               (DOM-SUB-stamps---standard            3        ;; kappa
                                                                     0))))    ;; c
 
-(defconstraint storage-setting-storage-slot-values (:guard (storage-no-stack-exceptions))
+(defconstraint storage-instruction---setting-storage-slot-values (:guard (storage-instruction---no-stack-exceptions))
                (if-not-zero (oogx-or-no-exception)
                             (begin
                               (if-zero (force-bin [ stack/DEC_FLAG 1 ])
@@ -130,7 +130,7 @@
 (defun (cold-slot)    (force-bin (- 1 (shift storage/WARMTH 3))))
 
 
-(defconstraint storage-setting-gas-costs (:guard (storage-no-stack-exceptions))
+(defconstraint storage-instruction---setting-gas-costs (:guard (storage-instruction---no-stack-exceptions))
                (if-not-zero (oogx-or-no-exception)
                             (if-zero (force-bin [ stack/DEC_FLAG 1 ])
                                      (if-zero (force-bin (shift storage/WARMTH 3))
@@ -145,7 +145,7 @@
                                                                               (eq! GAS_COST (+ GAS_CONST_G_WARM_ACCESS (* (cold-slot) GAS_CONST_G_SSET      )))
                                                                               (eq! GAS_COST (+ GAS_CONST_G_WARM_ACCESS (* (cold-slot) GAS_CONST_G_COLD_SLOAD))))))))))
 
-(defconstraint storage-setting-the-refund (:guard (storage-no-stack-exceptions))
+(defconstraint storage-instruction---setting-the-refund (:guard (storage-instruction---no-stack-exceptions))
                (if-zero CONTEXT_WILL_REVERT
                         (if-not-zero [ stack/DEC_FLAG 1 ]
                                      (if-not-zero (force-bin (next-is-curr))
