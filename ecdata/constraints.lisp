@@ -92,16 +92,6 @@
 (defconstraint phase ()
   (eq! PHASE (phase_sum)))
 
-;; In the specs this shorthand is defined in different ways in different contexts
-;; Note that (transition_to_result) + (ecrecover_hypothesis) + (ecadd_hypothesis) + (ecmul_hypothesis) + (ecpairing_hypothesis) is 0 or 1
-;; TODO: use the same approach in the specs
-(defun (internal_checks_passed)
-  (+ (* (transition_to_result) HURDLE)
-     (* (ecrecover-hypothesis) (shift HURDLE INDEX_MAX_ECRECOVER_DATA))
-     (* (ecadd-hypothesis) (shift HURDLE INDEX_MAX_ECADD_DATA))
-     (* (ecmul-hypothesis) (shift HURDLE INDEX_MAX_ECMUL_DATA))
-     (* (ecpairing-hypothesis) (shift HURDLE INDEX_MAX_ECPAIRING_DATA_MIN))))
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                             ;;
 ;;  1.3.3 constancy conditions ;;
@@ -224,8 +214,9 @@
            (vanishes! ICP)))
 
 (defconstraint set-icp ()
-  (if-not-zero (transition_to_result)
-               (eq! ICP (internal_checks_passed))))
+  (let ((internal_checks_passed HURDLE))
+       (if-not-zero (transition_to_result)
+                    (eq! ICP internal_checks_passed))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                             ;;
@@ -264,16 +255,16 @@
                         (vanishes! (next TRIVIAL_PAIRING))
                         (eq! (next TRIVIAL_PAIRING) (next IS_INFINITY)))))
 
-;; note: pairing_result_hi \def LIMB_{i+1}
-;; note: pairing_result_lo \def LIMB_{i+2}
 (defconstraint set-pairing-result-when-trivial-pairngs ()
-  (if-not-zero (transition_to_result)
-               (if-not-zero ICP
-                            (if-zero NOT_ON_G2_ACC_MAX
-                                     (if-not-zero TRIVIAL_PAIRING
-                                                  (begin (eq! SUCCESS_BIT 1)
-                                                         (vanishes! (next LIMB))
-                                                         (eq! (shift LIMB 2) 1)))))))
+  (let ((pairing_result_hi (next LIMB))
+        (pairing_result_lo (shift LIMB 2)))
+       (if-not-zero (transition_to_result)
+                    (if-not-zero ICP
+                                 (if-zero NOT_ON_G2_ACC_MAX
+                                          (if-not-zero TRIVIAL_PAIRING
+                                                       (begin (eq! SUCCESS_BIT 1)
+                                                              (vanishes! pairing_result_hi)
+                                                              (eq! pairing_result_lo 1))))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                    ;;
@@ -505,14 +496,15 @@
          (callToEQ 5 (v_hi) (v_lo) 0 28)))
 
 (defconstraint justify-success-bit-ecrecover (:guard (ecrecover-hypothesis))
-  (begin (eq! HURDLE (* (r_is_in_range) (r_is_positive)))
-         (eq! (next HURDLE) (* (s_is_in_range) (s_is_positive)))
-         (eq! (shift HURDLE 2)
-              (* HURDLE (next HURDLE)))
-         (eq! (internal_checks_passed)
-              (* (shift HURDLE 2) (+ (v_is_27) (v_is_28))))
-         (if-zero (internal_checks_passed)
-                  (vanishes! SUCCESS_BIT))))
+  (let ((internal_checks_passed (shift HURDLE INDEX_MAX_ECRECOVER_DATA)))
+       (begin (eq! HURDLE (* (r_is_in_range) (r_is_positive)))
+              (eq! (next HURDLE) (* (s_is_in_range) (s_is_positive)))
+              (eq! (shift HURDLE 2)
+                   (* HURDLE (next HURDLE)))
+              (eq! internal_checks_passed
+                   (* (shift HURDLE 2) (+ (v_is_27) (v_is_28))))
+              (if-zero internal_checks_passed
+                       (vanishes! SUCCESS_BIT)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                     ;;
