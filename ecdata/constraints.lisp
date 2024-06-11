@@ -459,11 +459,11 @@
                                      P_x_square_lo
                                      P_x_cube_hi
                                      P_x_cube_lo)
-              (is-zero P_is_in_range
+              (if-zero P_is_in_range
                        (vanishes! P_is_point_at_infinity)
                        (if-zero large_sum
                                 (eq! P_is_point_at_infinity 1)
-                                (vanishe! P_is_point_at_infinity))))))
+                                (vanishes! P_is_point_at_infinity))))))
 
 ; TODO: shall we modify the signature of this function in the spec (add last four arguments)?
 (defun (callToC1MembershipWCP k
@@ -614,6 +614,45 @@
 (defun (ecadd-hypothesis)
   (* IS_ECADD_DATA
      (~ (- ID (prev ID)))))
+
+(defun (P_x_hi)
+  LIMB)
+
+(defun (P_x_lo)
+  (next LIMB))
+
+(defun (P_y_hi)
+  (shift LIMB 2))
+
+(defun (P_y_lo)
+  (shift LIMB 3))
+
+(defun (Q_x_hi)
+  (shift LIMB 4))
+
+(defun (Q_x_lo)
+  (shift LIMB 5))
+
+(defun (Q_y_hi)
+  (shift LIMB 6))
+
+(defun (Q_y_lo)
+  (shift LIMB 7))
+
+(defun (C1_membership_first_point)
+  HURDLE)
+
+(defun (C1_membership_second_point)
+  (shift HURDLE 4))
+
+(defconstraint internal-checks-ecadd (:guard (ecadd-hypothesis))
+  (begin (callToC1Membership 0 (P_x_hi) (P_x_lo) (P_y_hi) (P_y_lo))
+         (callToC1Membership 4 (Q_x_hi) (Q_x_lo) (Q_y_hi) (Q_y_lo))))
+
+(defun (justify-success-bit-ecadd)
+  (let ((internal_checks_passed (shift HURDLE INDEX_MAX_ECADD_DATA)))
+       (begin (eq! internal_checks_passed (* C1_membership_first_point C1_membership_second_point))
+              (eq! SUCCESS_BIT internal_checks_passed))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                     ;;
