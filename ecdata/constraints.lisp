@@ -425,6 +425,75 @@
 ;; 1.4.3 C1 membership ;;
 ;;       utilities     ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun (callToC1Membership k P_x_hi P_x_lo P_y_hi P_y_lo)
+  (let ((P_x_is_in_range (shift WCP_RES k))
+        (P_y_is_in_range (shift WCP_RES (+ k 1)))
+        (P_satisfies_cubic (shift WCP_RES (+ k 2)))
+        (P_y_square_hi (shift EXT_RES_HI k))
+        (P_y_square_lo (shift EXT_RES_LO k))
+        (P_x_square_hi (shift EXT_RES_HI (+ k 1)))
+        (P_x_square_lo (shift EXT_RES_LO (+ k 1)))
+        (P_x_cube_hi (shift EXT_RES_HI (+ k 2)))
+        (P_x_cube_lo (shift EXT_RES_LO (+ k 2)))
+        (P_x_cube_plus_three_hi (shift EXT_RES_HI (+ k 3)))
+        (P_x_cube_plus_three_lo (shift EXT_RES_LO (+ k 3)))
+        (P_is_in_range (shift HURDLE (+ k 1)))
+        (C1_membership (shift HURDLE k))
+        (large_sum (+ P_x_hi P_x_lo P_y_hi P_y_lo))
+        (P_is_point_at_infinity (shift IS_INFINITY k)))
+       (begin (callToC1MembershipWCP k
+                                     P_x_hi
+                                     P_x_lo
+                                     P_y_hi
+                                     P_y_lo
+                                     P_x_square_hi
+                                     P_x_square_lo
+                                     P_x_cube_plus_three_hi
+                                     P_x_cube_plus_three_lo)
+              (callToC1MembershipEXT k
+                                     P_x_hi
+                                     P_x_lo
+                                     P_y_hi
+                                     P_y_lo
+                                     P_x_square_hi
+                                     P_x_square_lo
+                                     P_x_cube_hi
+                                     P_x_cube_lo)
+              (is-zero P_is_in_range
+                       (vanishes! P_is_point_at_infinity)
+                       (if-zero large_sum
+                                (eq! P_is_point_at_infinity 1)
+                                (vanishe! P_is_point_at_infinity))))))
+
+; TODO: shall we modify the signature of this function in the spec (add last four arguments)?
+(defun (callToC1MembershipWCP k
+                              P_x_hi
+                              P_x_lo
+                              P_y_hi
+                              P_y_lo
+                              P_x_square_hi
+                              P_x_square_lo
+                              P_x_cube_plus_three_hi
+                              P_x_cube_plus_three_lo)
+  (begin (callToLT k P_x_hi P_x_lo P_BN_HI P_BN_LO)
+         (callToLT (+ k 1) P_y_hi P_y_lo P_BN_HI P_BN_LO)
+         (callToEQ (+ k 2) P_x_square_hi P_x_square_lo P_x_cube_plus_three_hi P_x_cube_plus_three_lo)))
+
+; TODO: shall we modify the signature of this function in the spec (add last four arguments)?
+(defun (callToC1MembershipEXT k
+                              P_x_hi
+                              P_x_lo
+                              P_y_hi
+                              P_y_lo
+                              P_x_square_hi
+                              P_x_square_lo
+                              P_x_cube_hi
+                              P_x_cube_lo)
+  (begin (callToMULMOD k P_y_hi P_y_lo P_y_hi P_y_lo P_BN_HI P_BN_LO)
+         (callToMULMOD (+ k 1) P_x_hi P_x_lo P_x_hi P_x_lo P_BN_HI P_BN_LO)
+         (callToMULMOD (+ k 2) P_x_square_hi P_x_square_lo P_x_hi P_x_lo P_BN_HI P_BN_LO)
+         (callToADDMOD (+ k 3) P_x_cube_hi P_x_cube_lo 0 3 P_BN_HI P_BN_LO)))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                     ;;
 ;; 1.4.4 Well formed   ;;
