@@ -525,7 +525,7 @@
               (eq! B_x_is_in_range (* B_x_Im_is_in_range B_x_Re_is_in_range))
               (eq! B_y_is_in_range (* B_y_Im_is_in_range B_y_Re_is_in_range))
               (eq! well_formed_coordinates (* B_x_is_in_range B_y_is_in_range))
-              (is-zero well_formed_coordinates
+              (if-zero well_formed_coordinates
                        (vanishes! B_is_point_at_infinity)
                        (if-zero very_large_sum
                                 (eq! B_is_point_at_infinity 1)
@@ -638,6 +638,50 @@
 (defun (ecpairing-hypothesis)
   (* IS_ECPAIRING_DATA
      (- ACC_PAIRINGS (prev ACC_PAIRINGS))))
+
+(defconstraint internal-checks-ecpairing (:guard (ecpairing-hypothesis))
+  (let ((A_x_hi LIMB)
+        (A_x_lo (next LIMB))
+        (A_y_hi (shift LIMB 2))
+        (A_y_lo (shift LIMB 3))
+        (B_x_Im_hi (shift LIMB 4))
+        (B_x_Im_lo (shift LIMB 5))
+        (B_x_Re_hi (shift LIMB 6))
+        (B_x_Re_lo (shift LIMB 7))
+        (B_y_Im_hi (shift LIMB 8))
+        (B_y_Im_lo (shift LIMB 9))
+        (B_y_Re_hi (shift LIMB 10))
+        (B_y_Re_lo (shift LIMB 11)))
+       (begin (callToC1Membership 0 A_x_hi A_x_lo A_y_hi A_y_lo)
+              (callToWellFormedCoordinates 4
+                                           B_x_Im_hi
+                                           B_x_Im_lo
+                                           B_x_Re_hi
+                                           B_x_Re_lo
+                                           B_y_Im_hi
+                                           B_y_Im_lo
+                                           B_y_Re_hi
+                                           B_y_Re_lo))))
+
+(defconstraint propagation-of-internal-checks-passed (:guard (ecpairing-hypothesis))
+  (let ((C1_membership HURDLE)
+        (well_formed_coordinates (shift HURDLE 4))
+        (internal_checks_passed (shift HURDLE INDEX_MAX_ECPAIRING_DATA_MIN))
+        (prev_internal_checks_passed (shift HURDLE -1)))
+       (begin (if-zero (- ACC_PAIRINGS 1)
+                       (eq! internal_checks_passed (* C1_membership well_formed_coordinates))
+                       (begin (eq! (shift HURDLE 10) (* C1_membership well_formed_coordinates))
+                              (eq! internal_checks_passed
+                                   (* (shift HURDLE 10) prev_internal_checks_passed)))))))
+
+(defconstraint justify-success-bit-ecpairing (:guard (ecpairing-hypothesis))
+  (begin (if-not-zero SUCCESS_BIT
+                      (begin (eq! ICP 1)
+                             (vanishes! NOT_ON_G2_ACC_MAX)))
+         (if-zero ICP
+                  (vanishes! SUCCESS_BIT))
+         (if-not-zero NOT_ON_G2_ACC_MAX
+                      (vanishes! SUCCESS_BIT))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                     ;;
