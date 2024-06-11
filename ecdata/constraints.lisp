@@ -545,64 +545,36 @@
   (* IS_ECRECOVER_DATA
      (~ (- ID (prev ID)))))
 
-(defun (h_hi)
-  LIMB)
-
-(defun (h_lo)
-  (next LIMB))
-
-(defun (v_hi)
-  (shift LIMB 2))
-
-(defun (v_lo)
-  (shift LIMB 3))
-
-(defun (r_hi)
-  (shift LIMB 4))
-
-(defun (r_lo)
-  (shift LIMB 5))
-
-(defun (s_hi)
-  (shift LIMB 6))
-
-(defun (s_lo)
-  (shift LIMB 7))
-
-(defun (r_is_in_range)
-  WCP_RES)
-
-(defun (r_is_positive)
-  (next WCP_RES))
-
-(defun (s_is_in_range)
-  (shift WCP_RES 2))
-
-(defun (s_is_positive)
-  (shift WCP_RES 3))
-
-(defun (v_is_27)
-  (shift WCP_RES 4))
-
-(defun (v_is_28)
-  (shift WCP_RES 5))
-
 (defconstraint internal-checks-ecrecover (:guard (ecrecover-hypothesis))
-  (begin (callToLT 0 (r_hi) (r_lo) SECP256K1N_HI SECP256K1N_LO)
-         (callToLT 1 0 0 (r_hi) (r_lo))
-         (callToLT 2 (s_hi) (s_lo) SECP256K1N_HI SECP256K1N_LO)
-         (callToLT 3 0 0 (s_hi) (s_lo))
-         (callToEQ 4 (v_hi) (v_lo) 0 27)
-         (callToEQ 5 (v_hi) (v_lo) 0 28)))
+  (let ((h_hi LIMB)
+        (h_lo (next LIMB))
+        (v_hi (shift LIMB 2))
+        (v_lo (shift LIMB 3))
+        (r_hi (shift LIMB 4))
+        (r_lo (shift LIMB 5))
+        (s_hi (shift LIMB 6))
+        (s_lo (shift LIMB 7)))
+       (begin (callToLT 0 r_hi r_lo SECP256K1N_HI SECP256K1N_LO)
+              (callToLT 1 0 0 r_hi r_lo)
+              (callToLT 2 s_hi s_lo SECP256K1N_HI SECP256K1N_LO)
+              (callToLT 3 0 0 s_hi s_lo)
+              (callToEQ 4 v_hi v_lo 0 27)
+              (callToEQ 5 v_hi v_lo 0 28))))
 
 (defconstraint justify-success-bit-ecrecover (:guard (ecrecover-hypothesis))
-  (let ((internal_checks_passed (shift HURDLE INDEX_MAX_ECRECOVER_DATA)))
-       (begin (eq! HURDLE (* (r_is_in_range) (r_is_positive)))
-              (eq! (next HURDLE) (* (s_is_in_range) (s_is_positive)))
+  (let ((r_is_in_range WCP_RES)
+        (r_is_positive (next WCP_RES))
+        (s_is_in_range (shift WCP_RES 2))
+        (s_is_positive (shift WCP_RES 3))
+        (v_is_27 (shift WCP_RES 4))
+        (v_is_28 (shift WCP_RES 5))
+        (internal_checks_passed (shift HURDLE INDEX_MAX_ECRECOVER_DATA)))
+       (begin (eq! HURDLE (* r_is_in_range r_is_positive))
+              (eq! (next HURDLE) (* s_is_in_range s_is_positive))
               (eq! (shift HURDLE 2)
                    (* HURDLE (next HURDLE)))
               (eq! internal_checks_passed
-                   (* (shift HURDLE 2) (+ (v_is_27) (v_is_28))))
+                   (* (shift HURDLE 2) (+ v_is_27 v_is_28)))
               (if-zero internal_checks_passed
                        (vanishes! SUCCESS_BIT)))))
 
@@ -615,42 +587,22 @@
   (* IS_ECADD_DATA
      (~ (- ID (prev ID)))))
 
-(defun (P_x_hi)
-  LIMB)
-
-(defun (P_x_lo)
-  (next LIMB))
-
-(defun (P_y_hi)
-  (shift LIMB 2))
-
-(defun (P_y_lo)
-  (shift LIMB 3))
-
-(defun (Q_x_hi)
-  (shift LIMB 4))
-
-(defun (Q_x_lo)
-  (shift LIMB 5))
-
-(defun (Q_y_hi)
-  (shift LIMB 6))
-
-(defun (Q_y_lo)
-  (shift LIMB 7))
-
-(defun (C1_membership_first_point)
-  HURDLE)
-
-(defun (C1_membership_second_point)
-  (shift HURDLE 4))
-
 (defconstraint internal-checks-ecadd (:guard (ecadd-hypothesis))
-  (begin (callToC1Membership 0 (P_x_hi) (P_x_lo) (P_y_hi) (P_y_lo))
-         (callToC1Membership 4 (Q_x_hi) (Q_x_lo) (Q_y_hi) (Q_y_lo))))
+  (let ((P_x_hi LIMB)
+        (P_x_lo (next LIMB))
+        (P_y_hi (shift LIMB 2))
+        (P_y_lo (shift LIMB 3))
+        (Q_x_hi (shift LIMB 4))
+        (Q_x_lo (shift LIMB 5))
+        (Q_y_hi (shift LIMB 6))
+        (Q_y_lo (shift LIMB 7)))
+       (begin (callToC1Membership 0 P_x_hi P_x_lo P_y_hi P_y_lo)
+              (callToC1Membership 4 Q_x_hi Q_x_lo Q_y_hi Q_y_lo))))
 
-(defun (justify-success-bit-ecadd)
-  (let ((internal_checks_passed (shift HURDLE INDEX_MAX_ECADD_DATA)))
+(defconstraint justify-success-bit-ecadd (:guard (ecadd-hypothesis))
+  (let ((C1_membership_first_point HURDLE)
+        (C1_membership_second_point (shift HURDLE 4))
+        (internal_checks_passed (shift HURDLE INDEX_MAX_ECADD_DATA)))
        (begin (eq! internal_checks_passed (* C1_membership_first_point C1_membership_second_point))
               (eq! SUCCESS_BIT internal_checks_passed))))
 
@@ -662,6 +614,21 @@
 (defun (ecmul-hypothesis)
   (* IS_ECMUL_DATA
      (~ (- ID (prev ID)))))
+
+(defconstraint internal-checks-ecmul (:guard (ecmul-hypothesis))
+  (let ((P_x_hi LIMB)
+        (P_x_lo (next LIMB))
+        (P_y_hi (shift LIMB 2))
+        (P_y_lo (shift LIMB 3))
+        (n_hi (shift LIMB 4))
+        (n_lo (shift LIMB 5)))
+       (begin (callToC1Membership 0 P_x_hi P_x_lo P_y_hi P_y_lo))))
+
+(defconstraint justify-success-bit-ecmul (:guard (ecmul-hypothesis))
+  (let ((C1_membership HURDLE)
+        (internal_checks_passed (shift HURDLE INDEX_MAX_ECMUL_DATA)))
+       (begin (eq! internal_checks_passed C1_membership)
+              (eq! SUCCESS_BIT internal_checks_passed))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                     ;;
