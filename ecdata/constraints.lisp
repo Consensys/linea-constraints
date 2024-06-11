@@ -500,6 +500,37 @@
 ;;       coordinates   ;;
 ;;       utilities     ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun (callToWellFormedCoordinates k
+                                    B_x_Im_hi
+                                    B_x_Im_lo
+                                    B_x_Re_hi
+                                    B_x_Re_lo
+                                    B_y_Im_hi
+                                    B_y_Im_lo
+                                    B_y_Re_hi
+                                    B_y_Re_lo)
+  (let ((B_x_Im_is_in_range (shift WCP_RES k))
+        (B_x_Re_is_in_range (shift WCP_RES (+ k 1)))
+        (B_y_Im_is_in_range (shift WCP_RES (+ k 2)))
+        (B_y_Re_is_in_range (shift WCP_RES (+ k 3)))
+        (B_x_is_in_range (shift HURDLE (+ k 2)))
+        (B_y_is_in_range (shift HURDLE (+ k 1)))
+        (well_formed_coordinates (shift HURDLE k))
+        (B_is_point_at_infinity (shift IS_INFINITY k))
+        (very_large_sum (+ B_x_Im_hi B_x_Im_lo B_x_Re_hi B_x_Re_lo B_y_Im_hi B_y_Im_lo B_y_Re_hi B_y_Re_lo)))
+       (begin (callToLT k B_x_Im_hi B_x_Im_lo P_BN_HI P_BN_LO)
+              (callToLT (+ k 1) B_x_Re_hi B_x_Re_lo P_BN_HI P_BN_LO)
+              (callToLT (+ k 2) B_y_Im_hi B_y_Im_lo P_BN_HI P_BN_LO)
+              (callToLT (+ k 3) B_y_Re_hi B_y_Re_lo P_BN_HI P_BN_LO)
+              (eq! B_x_is_in_range (* B_x_Im_is_in_range B_x_Re_is_in_range))
+              (eq! B_y_is_in_range (* B_y_Im_is_in_range B_y_Re_is_in_range))
+              (eq! well_formed_coordinates (* B_x_is_in_range B_y_is_in_range))
+              (is-zero well_formed_coordinates
+                       (vanishes! B_is_point_at_infinity)
+                       (if-zero very_large_sum
+                                (eq! B_is_point_at_infinity 1)
+                                (vanishes! B_is_point_at_infinity))))))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                     ;;
 ;; 1.6 Specialized     ;;
