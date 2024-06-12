@@ -134,17 +134,21 @@
 (defconstraint storage-instruction---setting-gas-costs (:guard (storage-instruction---no-stack-exceptions))
                (if-not-zero (oogx-or-no-exception)
                             (if-zero (force-bin [ stack/DEC_FLAG 1 ])
+                                     ;; SLOAD case
+                                     ;;;;;;;;;;;;;
                                      (if-zero (force-bin (shift storage/WARMTH 3))
                                               (eq! GAS_COST GAS_CONST_G_COLD_SLOAD)
                                               (eq! GAS_COST GAS_CONST_G_WARM_ACCESS))
+                                     ;; SSTORE case
+                                     ;;;;;;;;;;;;;;
                                      (begin
                                        (if-not-zero (next-is-curr) (eq! GAS_COST (+ GAS_CONST_G_WARM_ACCESS (* (cold-slot) GAS_CONST_G_COLD_SLOAD))))
                                        (if-zero     (curr-is-orig) (eq! GAS_COST (+ GAS_CONST_G_WARM_ACCESS (* (cold-slot) GAS_CONST_G_COLD_SLOAD))))
                                        (if-zero     (next-is-curr)
                                                     (if-not-zero (curr-is-orig)
                                                                  (if-not-zero (orig-is-zero) 
-                                                                              (eq! GAS_COST (+ GAS_CONST_G_WARM_ACCESS (* (cold-slot) GAS_CONST_G_SSET      )))
-                                                                              (eq! GAS_COST (+ GAS_CONST_G_WARM_ACCESS (* (cold-slot) GAS_CONST_G_COLD_SLOAD))))))))))
+                                                                              (eq! GAS_COST (+ GAS_CONST_G_SSET   (* (cold-slot) GAS_CONST_G_COLD_SLOAD)))
+                                                                              (eq! GAS_COST (+ GAS_CONST_G_SRESET (* (cold-slot) GAS_CONST_G_COLD_SLOAD))))))))))
 
 (defconstraint storage-instruction---setting-the-refund (:guard (storage-instruction---no-stack-exceptions))
                (if-zero CONTEXT_WILL_REVERT
