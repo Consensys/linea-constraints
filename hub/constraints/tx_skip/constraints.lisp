@@ -123,17 +123,20 @@
 
 ;; coinbase account operation
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defun (tx-skip---coinbase-fee)
-  (if-zero   (force-bin   (shift    transaction/IS_TYPE2          tx-skip---transaction-row---row-offset))
-             ;; TYPE 0 / TYPE 1
-             (*    (shift      transaction/GAS_PRICE              tx-skip---transaction-row---row-offset)
-                   (-    (shift   transaction/GAS_LIMIT           tx-skip---transaction-row---row-offset)
-                         (shift   transaction/REFUND_EFFECTIVE    tx-skip---transaction-row---row-offset)))
-             ;; TYPE 2
-             (*    (-    (shift   transaction/GAS_PRICE           tx-skip---transaction-row---row-offset)
-                         (shift   transaction/BASEFEE             tx-skip---transaction-row---row-offset))
-                   (-    (shift   transaction/GAS_LIMIT           tx-skip---transaction-row---row-offset)
-                         (shift   transaction/REFUND_EFFECTIVE    tx-skip---transaction-row---row-offset)))))
+;; (defun (tx-skip---coinbase-fee)
+;;   (if-zero   (force-bin   (shift    transaction/IS_TYPE2          tx-skip---transaction-row---row-offset))
+;;              ;; TYPE 0 / TYPE 1
+;;              (*    (shift      transaction/GAS_PRICE              tx-skip---transaction-row---row-offset)
+;;                    (-    (shift   transaction/GAS_LIMIT           tx-skip---transaction-row---row-offset)
+;;                          (shift   transaction/REFUND_EFFECTIVE    tx-skip---transaction-row---row-offset)))
+;;              ;; TYPE 2
+;;              (*    (-    (shift   transaction/GAS_PRICE           tx-skip---transaction-row---row-offset)
+;;                          (shift   transaction/BASEFEE             tx-skip---transaction-row---row-offset))
+;;                    (-    (shift   transaction/GAS_LIMIT           tx-skip---transaction-row---row-offset)
+;;                          (shift   transaction/REFUND_EFFECTIVE    tx-skip---transaction-row---row-offset)))))
+
+(defun    (tx-skip---coinbase-fee)    (shift    (*    transaction/PRIORITY_FEE_PER_GAS    (-    transaction/GAS_LIMIT    transaction/REFUND_EFFECTIVE))
+                                                tx-skip---transaction-row---row-offset))
 
 (defconstraint tx-skip---setting-coinbase-account-row (:guard (tx-skip---precondition))
                (begin 
