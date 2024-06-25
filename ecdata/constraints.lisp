@@ -459,6 +459,9 @@
                                      P_x_square_lo
                                      P_x_cube_hi
                                      P_x_cube_lo)
+              (eq! P_is_in_range (* P_x_is_in_range P_y_is_in_range))
+              (eq! C1_membership
+                   (* P_is_in_range (+ P_is_point_at_infinity P_satisfies_cubic)))
               (if-zero P_is_in_range
                        (vanishes! P_is_point_at_infinity)
                        (if-zero large_sum
