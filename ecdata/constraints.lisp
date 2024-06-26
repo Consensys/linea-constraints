@@ -247,7 +247,7 @@
 
 (defconstraint transition-large-to-small ()
   (if-not-zero (transition_from_large_to_small)
-               (eq! (next TRIVIAL_PAIRING) TRIVIAL_PAIRING)))
+               (will-remain-constant! TRIVIAL_PAIRING)))
 
 (defconstraint transition-small-to-large ()
   (if-not-zero (transition_from_small_to_large)
