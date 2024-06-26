@@ -101,7 +101,6 @@
   (begin (stamp-constancy STAMP ID)
          (stamp-constancy STAMP SUCCESS_BIT)
          (stamp-constancy STAMP TOTAL_PAIRINGS)
-         (stamp-constancy STAMP NOT_ON_G2_ACC_MAX)
          (stamp-constancy STAMP ICP)
          (stamp-constancy STAMP (address_sum))))
 
@@ -200,9 +199,11 @@
            (begin (vanishes! ACC_PAIRINGS)
                   (eq! (next ACC_PAIRINGS) (next IS_ECPAIRING_DATA)))))
 
+;; TODO: modify in the specs too
 (defconstraint set-acc-pairings-increment ()
   (if-not-zero IS_ECPAIRING_DATA
-               (eq! (next ACC_PAIRINGS) (+ ACC_PAIRINGS (transition_from_large_to_small)))))
+               (eq! (next ACC_PAIRINGS)
+                    (* (next IS_ECPAIRING_DATA) (+ ACC_PAIRINGS (transition_from_large_to_small))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                             ;;
