@@ -197,8 +197,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defconstraint set-acc-pairings-init ()
   (if-zero IS_ECPAIRING_DATA
-           (vanishes! ACC_PAIRINGS)
-           (eq! (next ACC_PAIRINGS) (next IS_ECPAIRING_DATA))))
+           (begin (vanishes! ACC_PAIRINGS)
+                  (eq! (next ACC_PAIRINGS) (next IS_ECPAIRING_DATA)))))
 
 (defconstraint set-acc-pairings-increment ()
   (if-not-zero IS_ECPAIRING_DATA
