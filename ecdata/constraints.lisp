@@ -334,8 +334,8 @@
 ;;         and NOT_ON_G2_ACC   ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defconstraint large-point-necessary-condition-not-on-g2 ()
-  (if-not-zero IS_LARGE_POINT
-               (eq! NOT_ON_G2 1)))
+  (if-not-zero NOT_ON_G2
+               (eq! IS_LARGE_POINT 1)))
 
 (defconstraint set-not-on-g2-not-on-g2-acc ()
   (if-zero IS_ECPAIRING_DATA
