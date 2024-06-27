@@ -52,7 +52,6 @@
 (defun (flag_sum)
   (+ (is_ecrecover) (is_ecadd) (is_ecmul) (is_ecpairing)))
 
-;; TODO: use constants in the specs too
 (defun (address_sum)
   (+ (* ECRECOVER (is_ecrecover))
      (* ECADD (is_ecadd))
@@ -469,7 +468,7 @@
                                 (eq! P_is_point_at_infinity 1)
                                 (vanishes! P_is_point_at_infinity))))))
 
-; TODO: shall we modify the signature of this function in the spec (add last four arguments)?
+;; Note: in the specs for simplicity we omit the last four arguments
 (defun (callToC1MembershipWCP k
                               P_x_hi
                               P_x_lo
@@ -483,7 +482,7 @@
          (callToLT (+ k 1) P_y_hi P_y_lo P_BN_HI P_BN_LO)
          (callToEQ (+ k 2) P_y_square_hi P_y_square_lo P_x_cube_plus_three_hi P_x_cube_plus_three_lo)))
 
-; TODO: shall we modify the signature of this function in the spec (add last four arguments)?
+;; Note: in the specs for simplicity we omit the last four arguments
 (defun (callToC1MembershipEXT k
                               P_x_hi
                               P_x_lo
