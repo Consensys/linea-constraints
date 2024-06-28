@@ -1,7 +1,6 @@
 CORSET ?= corset
 
 HUB :=  $(wildcard hub/columns/*lisp) \
-	$(wildcard hub/constraints/heartbeat/*lisp) \
 	$(wildcard hub/lookups/*lisp) \
 	hub/constants.lisp
 
