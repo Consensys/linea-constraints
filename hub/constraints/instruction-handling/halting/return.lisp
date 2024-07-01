@@ -309,10 +309,7 @@
                                                                                    ;; limb_2                              ;; limb 2
                                                                                    ;; exo_sum                             ;; weighted exogenous module flag sum
                                                                                    ;; phase                               ;; phase
-                                                                                   )
-                                  )
-                   )
-                 )
+                                                                                   ))))
 
 (defconstraint   return-instruction---justifying-the-MXPX           (:guard   (return-instruction---standard-scenario-row))
                  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -474,24 +471,22 @@
                  (eq!   (weighted-MISC-flag-sum    RETURN_INSTRUCTION_SECOND_MISC_ROW_OFFSET_DEPLOY_AND_HASH)    MISC_WEIGHT_MMU))
 
 (defconstraint   return-instruction---setting-the-second-MMU-instruction   (:guard    (return-instruction---nonempty-deployment-scenario))
-                 (set-MMU-instruction---ram-to-exo-with-padding
-                   RETURN_INSTRUCTION_SECOND_MISC_ROW_OFFSET_DEPLOY_AND_HASH    ;; offset
-                   CONTEXT_NUMBER                                               ;; source ID
-                   (return-instruction---deployment-code-fragment-index)        ;; target ID
-                   (+   1   HUB_STAMP)                                          ;; auxiliary ID
-                   ;; src_offset_hi                                             ;; source offset high
-                   (return-instruction---offset-lo)                             ;; source offset low
-                   ;; tgt_offset_lo                                             ;; target offset low
-                   (return-instruction---size-lo)                               ;; size
-                   ;; ref_offset                                                ;; reference offset
-                   (return-instruction---size-lo)                               ;; reference size
-                   0                                                            ;; success bit     <==  here: irrelevant
-                   ;; limb_1                                                    ;; limb 1
-                   ;; limb_2                                                    ;; limb 2
-                   (+   EXO_SUM_WEIGHT_ROM   EXO_SUM_WEIGHT_KEC)                ;; weighted exogenous module flag sum
-                   0                                                            ;; phase           <==  here: irrelevant
-                   )
-                 )
+                 (set-MMU-instruction---ram-to-exo-with-padding    RETURN_INSTRUCTION_SECOND_MISC_ROW_OFFSET_DEPLOY_AND_HASH    ;; offset
+                                                                   CONTEXT_NUMBER                                               ;; source ID
+                                                                   (return-instruction---deployment-code-fragment-index)        ;; target ID
+                                                                   (+   1   HUB_STAMP)                                          ;; auxiliary ID
+                                                                   ;; src_offset_hi                                             ;; source offset high
+                                                                   (return-instruction---offset-lo)                             ;; source offset low
+                                                                   ;; tgt_offset_lo                                             ;; target offset low
+                                                                   (return-instruction---size-lo)                               ;; size
+                                                                   ;; ref_offset                                                ;; reference offset
+                                                                   (return-instruction---size-lo)                               ;; reference size
+                                                                   0                                                            ;; success bit     <==  here: irrelevant
+                                                                   ;; limb_1                                                    ;; limb 1
+                                                                   ;; limb_2                                                    ;; limb 2
+                                                                   (+   EXO_SUM_WEIGHT_ROM   EXO_SUM_WEIGHT_KEC)                ;; weighted exogenous module flag sum
+                                                                   0                                                            ;; phase           <==  here: irrelevant
+                                                                   ))
 
 (defconstraint   return-instruction---first-account-row-for-nonempty-deployments   (:guard   (return-instruction---nonempty-deployment-scenario))
                  (begin

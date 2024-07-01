@@ -117,23 +117,22 @@
 
 (defconstraint  revert-instruction---setting-the-MMU-data                          (:guard (revert-instruction---standard-precondition))
                 (if-not-zero  (shift  misc/MMU_FLAG  ROW_OFFSET_REVERT_MISCELLANEOUS_ROW)
-                              (set-MMU-instruction---ram-to-ram-sans-padding
-                                ROW_OFFSET_REVERT_MISCELLANEOUS_ROW  ;; row offset
-                                (revert-instruction---current-context)        ;; source ID
-                                (revert-instruction---caller-context)         ;; target ID
-                                ;; aux_id                               ;; auxiliary ID
-                                ;; src_offset_hi                        ;; source offset high
-                                (revert-instruction---offset-lo)              ;; source offset low
-                                ;; tgt_offset_lo                        ;; target offset low
-                                (revert-instruction---size-lo)                ;; size
-                                (revert-instruction---r@o)                    ;; reference offset
-                                (revert-instruction---r@c)                    ;; reference size
-                                ;; success_bit                          ;; success bit
-                                ;; limb_1                               ;; limb 1
-                                ;; limb_2                               ;; limb 2
-                                ;; exo_sum                              ;; weighted exogenous module flag sum
-                                ;; phase                                ;; phase
-                                )))
+                              (set-MMU-instruction---ram-to-ram-sans-padding    ROW_OFFSET_REVERT_MISCELLANEOUS_ROW  ;; row offset
+                                                                                (revert-instruction---current-context)        ;; source ID
+                                                                                (revert-instruction---caller-context)         ;; target ID
+                                                                                ;; aux_id                               ;; auxiliary ID
+                                                                                ;; src_offset_hi                        ;; source offset high
+                                                                                (revert-instruction---offset-lo)              ;; source offset low
+                                                                                ;; tgt_offset_lo                        ;; target offset low
+                                                                                (revert-instruction---size-lo)                ;; size
+                                                                                (revert-instruction---r@o)                    ;; reference offset
+                                                                                (revert-instruction---r@c)                    ;; reference size
+                                                                                ;; success_bit                          ;; success bit
+                                                                                ;; limb_1                               ;; limb 1
+                                                                                ;; limb_2                               ;; limb 2
+                                                                                ;; exo_sum                              ;; weighted exogenous module flag sum
+                                                                                ;; phase                                ;; phase
+                                                                                )))
 
 (defconstraint  revert-instruction---setting-the-gas-cost                          (:guard (revert-instruction---standard-precondition))
                 (if-not-zero  stack/MXPX

@@ -335,10 +335,10 @@
          ;; success_bit         ;; success bit
          ;; limb_1              ;; limb 1
          ;; limb_2              ;; limb 2
-         exo_sum             ;; weighted exogenous module flag sum
+         ;; exo_sum             ;; weighted exogenous module flag sum
          phase               ;; phase
          ) (begin
-         (eq! (shift misc/MMU_INST            kappa) MMU_INST_modexpZero )
+         (eq! (shift misc/MMU_INST            kappa) MMU_INST_MODEXP_ZERO )
          ;; (eq! (shift misc/MMU_SRC_ID          kappa) src_id )
          (eq! (shift misc/MMU_TGT_ID          kappa) tgt_id )
          ;; (eq! (shift misc/MMU_AUX_ID          kappa) aux_id )
@@ -351,7 +351,7 @@
          ;; (eq! (shift misc/MMU_SUCCESS_BIT     kappa) success_bit )
          ;; (eq! (shift misc/MMU_LIMB_1          kappa) limb_1 )
          ;; (eq! (shift misc/MMU_LIMB_2          kappa) limb_2 )
-         (eq! (shift misc/MMU_EXO_SUM         kappa) exo_sum )
+         (eq! (shift misc/MMU_EXO_SUM         kappa) EXO_SUM_WEIGHT_BLAKEMODEXP )
          (eq! (shift misc/MMU_PHASE           kappa) phase )
          ))
 
@@ -370,10 +370,10 @@
          ;; success_bit         ;; success bit
          ;; limb_1              ;; limb 1
          ;; limb_2              ;; limb 2
-         exo_sum             ;; weighted exogenous module flag sum
+         ;; exo_sum             ;; weighted exogenous module flag sum
          phase               ;; phase
          ) (begin
-         (eq! (shift misc/MMU_INST            kappa) MMU_INST_modexpData )
+         (eq! (shift misc/MMU_INST            kappa) MMU_INST_MODEXP_DATA )
          (eq! (shift misc/MMU_SRC_ID          kappa) src_id )
          (eq! (shift misc/MMU_TGT_ID          kappa) tgt_id )
          ;; (eq! (shift misc/MMU_AUX_ID          kappa) aux_id )
@@ -386,7 +386,7 @@
          ;; (eq! (shift misc/MMU_SUCCESS_BIT     kappa) success_bit )
          ;; (eq! (shift misc/MMU_LIMB_1          kappa) limb_1 )
          ;; (eq! (shift misc/MMU_LIMB_2          kappa) limb_2 )
-         (eq! (shift misc/MMU_EXO_SUM         kappa) exo_sum )
+         (eq! (shift misc/MMU_EXO_SUM         kappa) EXO_SUM_WEIGHT_BLAKEMODEXP )
          (eq! (shift misc/MMU_PHASE           kappa) phase )
          ))
 
@@ -405,8 +405,8 @@
          success_bit         ;; success bit
          limb_1              ;; limb 1
          limb_2              ;; limb 2
-         exo_sum             ;; weighted exogenous module flag sum
-         phase               ;; phase
+         ;; exo_sum             ;; weighted exogenous module flag sum
+         ;; phase               ;; phase
          ) (begin
          (eq! (shift misc/MMU_INST            kappa) MMU_INST_blake )
          (eq! (shift misc/MMU_SRC_ID          kappa) src_id )
@@ -421,8 +421,8 @@
          (eq! (shift misc/MMU_SUCCESS_BIT     kappa) success_bit )
          (eq! (shift misc/MMU_LIMB_1          kappa) limb_1 )
          (eq! (shift misc/MMU_LIMB_2          kappa) limb_2 )
-         (eq! (shift misc/MMU_EXO_SUM         kappa) exo_sum )
-         (eq! (shift misc/MMU_PHASE           kappa) phase )
+         ;; (eq! (shift misc/MMU_EXO_SUM         kappa) exo_sum )
+         ;; (eq! (shift misc/MMU_PHASE           kappa) phase )
          ))
 
 

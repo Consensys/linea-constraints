@@ -57,23 +57,22 @@
 
 (defconstraint    precompile-processing---MODEXP---bbs-analysis---setting-MMU-instruction    (:guard    (precompile-processing---MODEXP---standard-precondition))
                   (if-not-zero    (shift    misc/MMU_FLAG    precompile-processing---MODEXP---misc-row-offset---bbs-analysis)
-                                  (set-MMU-instruction---right-padded-word-extraction
-                                    precompile-processing---MODEXP---misc-row-offset---bbs-analysis                                          ;; offset
-                                    CONTEXT_NUMBER                                                                                           ;; source ID
-                                    ;; tgt_id                                                                                                   ;; target ID
-                                    ;; aux_id                                                                                                   ;; auxiliary ID
-                                    ;; src_offset_hi                                                                                            ;; source offset high
-                                    0                                                                                                        ;; source offset low
-                                    ;; tgt_offset_lo                                                                                            ;; target offset low
-                                    ;; size                                                                                                     ;; size
-                                    (precompile-processing---dup-cdo)                                                                        ;; reference offset
-                                    (precompile-processing---dup-cds)                                                                        ;; reference size
-                                    ;; success_bit                                                                                              ;; success bit
-                                    (shift    misc/MMU_LIMB_1    precompile-processing---MODEXP---misc-row-offset---bbs-analysis)            ;; limb 1          ;; TODO: remove SELF REFERENCE
-                                    (shift    misc/MMU_LIMB_2    precompile-processing---MODEXP---misc-row-offset---bbs-analysis)            ;; limb 2          ;; TODO: remove SELF REFERENCE
-                                    ;; exo_sum                                                                                                  ;; weighted exogenous module flag sum
-                                    ;; phase                                                                                                    ;; phase
-                                    )))
+                                  (set-MMU-instruction---right-padded-word-extraction    precompile-processing---MODEXP---misc-row-offset---bbs-analysis                                          ;; offset
+                                                                                         CONTEXT_NUMBER                                                                                           ;; source ID
+                                                                                         ;; tgt_id                                                                                                   ;; target ID
+                                                                                         ;; aux_id                                                                                                   ;; auxiliary ID
+                                                                                         ;; src_offset_hi                                                                                            ;; source offset high
+                                                                                         0                                                                                                        ;; source offset low
+                                                                                         ;; tgt_offset_lo                                                                                            ;; target offset low
+                                                                                         ;; size                                                                                                     ;; size
+                                                                                         (precompile-processing---dup-cdo)                                                                        ;; reference offset
+                                                                                         (precompile-processing---dup-cds)                                                                        ;; reference size
+                                                                                         ;; success_bit                                                                                              ;; success bit
+                                                                                         (shift    misc/MMU_LIMB_1    precompile-processing---MODEXP---misc-row-offset---bbs-analysis)            ;; limb 1          ;; TODO: remove SELF REFERENCE
+                                                                                         (shift    misc/MMU_LIMB_2    precompile-processing---MODEXP---misc-row-offset---bbs-analysis)            ;; limb 2          ;; TODO: remove SELF REFERENCE
+                                                                                         ;; exo_sum                                                                                                  ;; weighted exogenous module flag sum
+                                                                                         ;; phase                                                                                                    ;; phase
+                                                                                         )))
 
 (defun    (precompile-processing---MODEXP---bbs-hi)    (*    (precompile-processing---MODEXP---extract-bbs)    (shift    misc/MMU_LIMB_1    precompile-processing---MODEXP---misc-row-offset---bbs-analysis)))
 (defun    (precompile-processing---MODEXP---bbs-lo)    (*    (precompile-processing---MODEXP---extract-bbs)    (shift    misc/MMU_LIMB_2    precompile-processing---MODEXP---misc-row-offset---bbs-analysis)))
@@ -103,23 +102,22 @@
 
 (defconstraint    precompile-processing---MODEXP---ebs-analysis---setting-MMU-instruction    (:guard    (precompile-processing---MODEXP---standard-precondition))
                   (if-not-zero    (shift    misc/MMU_FLAG    precompile-processing---MODEXP---misc-row-offset---ebs-analysis)
-                                  (set-MMU-instruction---right-padded-word-extraction
-                                    precompile-processing---MODEXP---misc-row-offset---ebs-analysis                                          ;; offset
-                                    CONTEXT_NUMBER                                                                                           ;; source ID
-                                    ;; tgt_id                                                                                                   ;; target ID
-                                    ;; aux_id                                                                                                   ;; auxiliary ID
-                                    ;; src_offset_hi                                                                                            ;; source offset high
-                                    32                                                                                                       ;; source offset low
-                                    ;; tgt_offset_lo                                                                                            ;; target offset low
-                                    ;; size                                                                                                     ;; size
-                                    (precompile-processing---dup-cdo)                                                                        ;; reference offset
-                                    (precompile-processing---dup-cds)                                                                        ;; reference size
-                                    ;; success_bit                                                                                              ;; success bit
-                                    (shift    misc/MMU_LIMB_1    precompile-processing---MODEXP---misc-row-offset---ebs-analysis)            ;; limb 1          ;; TODO: remove SELF REFERENCE
-                                    (shift    misc/MMU_LIMB_2    precompile-processing---MODEXP---misc-row-offset---ebs-analysis)            ;; limb 2          ;; TODO: remove SELF REFERENCE
-                                    ;; exo_sum                                                                                                  ;; weighted exogenous module flag sum
-                                    ;; phase                                                                                                    ;; phase
-                                    )))
+                                  (set-MMU-instruction---right-padded-word-extraction    precompile-processing---MODEXP---misc-row-offset---ebs-analysis                                          ;; offset
+                                                                                         CONTEXT_NUMBER                                                                                           ;; source ID
+                                                                                         ;; tgt_id                                                                                                   ;; target ID
+                                                                                         ;; aux_id                                                                                                   ;; auxiliary ID
+                                                                                         ;; src_offset_hi                                                                                            ;; source offset high
+                                                                                         32                                                                                                       ;; source offset low
+                                                                                         ;; tgt_offset_lo                                                                                            ;; target offset low
+                                                                                         ;; size                                                                                                     ;; size
+                                                                                         (precompile-processing---dup-cdo)                                                                        ;; reference offset
+                                                                                         (precompile-processing---dup-cds)                                                                        ;; reference size
+                                                                                         ;; success_bit                                                                                              ;; success bit
+                                                                                         (shift    misc/MMU_LIMB_1    precompile-processing---MODEXP---misc-row-offset---ebs-analysis)            ;; limb 1          ;; TODO: remove SELF REFERENCE
+                                                                                         (shift    misc/MMU_LIMB_2    precompile-processing---MODEXP---misc-row-offset---ebs-analysis)            ;; limb 2          ;; TODO: remove SELF REFERENCE
+                                                                                         ;; exo_sum                                                                                                  ;; weighted exogenous module flag sum
+                                                                                         ;; phase                                                                                                    ;; phase
+                                                                                         )))
 
 (defun    (precompile-processing---MODEXP---ebs-hi)    (*    (precompile-processing---MODEXP---extract-ebs)    (shift    misc/MMU_LIMB_1    precompile-processing---MODEXP---misc-row-offset---ebs-analysis)))
 (defun    (precompile-processing---MODEXP---ebs-lo)    (*    (precompile-processing---MODEXP---extract-ebs)    (shift    misc/MMU_LIMB_2    precompile-processing---MODEXP---misc-row-offset---ebs-analysis)))
@@ -150,23 +148,22 @@
 
 (defconstraint    precompile-processing---MODEXP---mbs-analysis---setting-MMU-instruction    (:guard    (precompile-processing---MODEXP---standard-precondition))
                   (if-not-zero    (shift    misc/MMU_FLAG    precompile-processing---MODEXP---misc-row-offset---mbs-analysis)
-                                  (set-MMU-instruction---right-padded-word-extraction
-                                    precompile-processing---MODEXP---misc-row-offset---mbs-analysis                                          ;; offset
-                                    CONTEXT_NUMBER                                                                                           ;; source ID
-                                    ;; tgt_id                                                                                                   ;; target ID
-                                    ;; aux_id                                                                                                   ;; auxiliary ID
-                                    ;; src_offset_hi                                                                                            ;; source offset high
-                                    64                                                                                                       ;; source offset low
-                                    ;; tgt_offset_lo                                                                                            ;; target offset low
-                                    ;; size                                                                                                     ;; size
-                                    (precompile-processing---dup-cdo)                                                                        ;; reference offset
-                                    (precompile-processing---dup-cds)                                                                        ;; reference size
-                                    ;; success_bit                                                                                              ;; success bit
-                                    (shift    misc/MMU_LIMB_1    precompile-processing---MODEXP---misc-row-offset---mbs-analysis)            ;; limb 1          ;; TODO: remove SELF REFERENCE
-                                    (shift    misc/MMU_LIMB_2    precompile-processing---MODEXP---misc-row-offset---mbs-analysis)            ;; limb 2          ;; TODO: remove SELF REFERENCE
-                                    ;; exo_sum                                                                                                  ;; weighted exogenous module flag sum
-                                    ;; phase                                                                                                    ;; phase
-                                    )))
+                                  (set-MMU-instruction---right-padded-word-extraction    precompile-processing---MODEXP---misc-row-offset---mbs-analysis                                          ;; offset
+                                                                                         CONTEXT_NUMBER                                                                                           ;; source ID
+                                                                                         ;; tgt_id                                                                                                   ;; target ID
+                                                                                         ;; aux_id                                                                                                   ;; auxiliary ID
+                                                                                         ;; src_offset_hi                                                                                            ;; source offset high
+                                                                                         64                                                                                                       ;; source offset low
+                                                                                         ;; tgt_offset_lo                                                                                            ;; target offset low
+                                                                                         ;; size                                                                                                     ;; size
+                                                                                         (precompile-processing---dup-cdo)                                                                        ;; reference offset
+                                                                                         (precompile-processing---dup-cds)                                                                        ;; reference size
+                                                                                         ;; success_bit                                                                                              ;; success bit
+                                                                                         (shift    misc/MMU_LIMB_1    precompile-processing---MODEXP---misc-row-offset---mbs-analysis)            ;; limb 1          ;; TODO: remove SELF REFERENCE
+                                                                                         (shift    misc/MMU_LIMB_2    precompile-processing---MODEXP---misc-row-offset---mbs-analysis)            ;; limb 2          ;; TODO: remove SELF REFERENCE
+                                                                                         ;; exo_sum                                                                                                  ;; weighted exogenous module flag sum
+                                                                                         ;; phase                                                                                                    ;; phase
+                                                                                         )))
 
 (defun    (precompile-processing---MODEXP---mbs-hi)    (*    (precompile-processing---MODEXP---extract-mbs)    (shift    misc/MMU_LIMB_1    precompile-processing---MODEXP---misc-row-offset---mbs-analysis)))
 (defun    (precompile-processing---MODEXP---mbs-lo)    (*    (precompile-processing---MODEXP---extract-mbs)    (shift    misc/MMU_LIMB_2    precompile-processing---MODEXP---misc-row-offset---mbs-analysis)))
@@ -214,25 +211,24 @@
 
 (defconstraint    precompile-processing---MODEXP---lead-word-analysis---setting-MMU-instruction    (:guard    (precompile-processing---MODEXP---standard-precondition))
                   (if-not-zero    (shift    misc/MMU_FLAG    precompile-processing---MODEXP---misc-row-offset---leading-word-analysis)
-                                  (set-MMU-instruction---mload
-                                    precompile-processing---MODEXP---misc-row-offset---leading-word-analysis                                   ;; offset
-                                    CONTEXT_NUMBER                                                                                             ;; source ID
-                                    ;; tgt_id                                                                                                     ;; target ID
-                                    ;; aux_id                                                                                                     ;; auxiliary ID
-                                    ;; src_offset_hi                                                                                              ;; source offset high
-                                    (+    (precompile-processing---dup-cdo)                                                                    
-                                          96                                                                                                   
-                                          (precompile-processing---MODEXP---bbs-lo))                                                              ;; source offset low
-                                    ;; tgt_offset_lo                                                                                              ;; target offset low
-                                    ;; size                                                                                                       ;; size
-                                    ;; ref_offset                                                                                                 ;; reference offset
-                                    ;; ref_size                                                                                                   ;; reference size
-                                    ;; success_bit                                                                                                ;; success bit
-                                    (shift    misc/MMU_LIMB_1    precompile-processing---MODEXP---misc-row-offset---leading-word-analysis)     ;; limb 1    ;; TODO: remove SELF REFERENCE
-                                    (shift    misc/MMU_LIMB_2    precompile-processing---MODEXP---misc-row-offset---leading-word-analysis)     ;; limb 2    ;; TODO: remove SELF REFERENCE
-                                    ;; exo_sum                                                                                                    ;; weighted exogenous module flag sum
-                                    ;; phase                                                                                                      ;; phase
-                                    )))
+                                  (set-MMU-instruction---mload    precompile-processing---MODEXP---misc-row-offset---leading-word-analysis                                   ;; offset
+                                                                  CONTEXT_NUMBER                                                                                             ;; source ID
+                                                                  ;; tgt_id                                                                                                     ;; target ID
+                                                                  ;; aux_id                                                                                                     ;; auxiliary ID
+                                                                  ;; src_offset_hi                                                                                              ;; source offset high
+                                                                  (+    (precompile-processing---dup-cdo)                                                                    
+                                                                        96                                                                                                   
+                                                                        (precompile-processing---MODEXP---bbs-lo))                                                              ;; source offset low
+                                                                  ;; tgt_offset_lo                                                                                              ;; target offset low
+                                                                  ;; size                                                                                                       ;; size
+                                                                  ;; ref_offset                                                                                                 ;; reference offset
+                                                                  ;; ref_size                                                                                                   ;; reference size
+                                                                  ;; success_bit                                                                                                ;; success bit
+                                                                  (shift    misc/MMU_LIMB_1    precompile-processing---MODEXP---misc-row-offset---leading-word-analysis)     ;; limb 1    ;; TODO: remove SELF REFERENCE
+                                                                  (shift    misc/MMU_LIMB_2    precompile-processing---MODEXP---misc-row-offset---leading-word-analysis)     ;; limb 2    ;; TODO: remove SELF REFERENCE
+                                                                  ;; exo_sum                                                                                                    ;; weighted exogenous module flag sum
+                                                                  ;; phase                                                                                                      ;; phase
+                                                                  )))
 
 (defun    (precompile-processing---MODEXP---raw-lead-hi)    (*    (precompile-processing---MODEXP---load-lead)    (shift    misc/MMU_LIMB_1    precompile-processing---MODEXP---misc-row-offset---leading-word-analysis)))
 (defun    (precompile-processing---MODEXP---raw-lead-lo)    (*    (precompile-processing---MODEXP---load-lead)    (shift    misc/MMU_LIMB_2    precompile-processing---MODEXP---misc-row-offset---leading-word-analysis)))
@@ -288,4 +284,3 @@
                     (eq!    (scenario-shorthand-PRC-success)            (precompile-processing---MODEXP---ram-success))
                     (eq!    (precompile-processing---prd-return-gas)    (precompile-processing---MODEXP---return-gas))
                     ))
-                                                                                                                  
