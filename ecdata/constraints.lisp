@@ -701,9 +701,9 @@
                                    (* (shift HURDLE 10) prev_internal_checks_passed)))))))
 
 (defconstraint justify-success-bit-ecpairing (:guard (ecpairing-hypothesis))
-  (begin (if-zero ICP
-                  (vanishes! SUCCESS_BIT)
-                  (eq! SUCCESS_BIT (- 1 NOT_ON_G2_ACC_MAX)))))
+  (if-zero ICP
+           (vanishes! SUCCESS_BIT)
+           (eq! SUCCESS_BIT (- 1 NOT_ON_G2_ACC_MAX))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                     ;;
