@@ -48,8 +48,7 @@
                (if-not-zero stack/MXP_FLAG
                             (begin
                               (eq! (weighted-MISC-flag-sum    1) MISC_WEIGHT_MXP)
-                              (set-MXP-instruction-type-1     1))
-                            ))
+                              (set-MXP-instruction-type-1     1))))
 
 (defconstraint machine-state-instruction---setting-gas-cost          (:guard (machine-state-instruction---no-stack-exception))
                (eq! GAS_COST stack/STATIC_GAS))
