@@ -18,6 +18,7 @@ HUB :=  $(wildcard hub/columns/*lisp) \
 	$(wildcard hub/constraints/instruction-handling/halting/*lisp) \
 	$(wildcard hub/constraints/instruction-handling/*lisp) \
 	$(wildcard hub/constraints/miscellaneous-rows/*lisp) \
+	$(wildcard hub/constraints/scenario-rows/shorthands/*lisp) \
 	$(wildcard hub/constraints/scenario-rows/*lisp) \
 	$(wildcard hub/constraints/storage-rows/*lisp) \
 	$(wildcard hub/constraints/tx_skip/*lisp) \
@@ -137,8 +138,9 @@ ZKEVM_MODULES := ${ALU} \
 		 ${CONSTANTS} \
 		 ${EC_DATA} \
 		 ${EUC} \
-         ${EXP} \
-         ${GAS} \
+		 ${EXP} \
+        	 ${GAS} \
+        	 ${HUB} \
 		 ${LIBRARY} \
 		 ${LOG_DATA} \
 		 ${LOG_INFO} \
@@ -158,9 +160,6 @@ ZKEVM_MODULES := ${ALU} \
 		 ${TXN_DATA} \
 		 ${OOB} \
 		 ${WCP}
-
-# TODO: add later
-#        ${HUB} \
 
 define.go: ${ZKEVM_MODULES}
 	${CORSET} wizard-iop -vv -o $@ ${ZKEVM_MODULES}
