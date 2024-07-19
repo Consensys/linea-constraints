@@ -159,6 +159,8 @@ ZKEVM_MODULES := ${ALU} \
 		 ${TXN_DATA} \
 		 ${OOB} \
 		 ${WCP}
+# TODO: add later
+#        ${HUB} \
 
 define.go: ${ZKEVM_MODULES}
 	${CORSET} wizard-iop -vv -o $@ ${ZKEVM_MODULES}
