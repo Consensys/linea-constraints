@@ -236,7 +236,7 @@
 
 ;;  CALL/callee_warmth_update_not_required
 (defun (scenario-shorthand---CALL---callee-warmth-update-not-required)
-  (+    scenario/CALL_EXCEPTION    0))    ;; if I don't include the (+ ... 0) business it breaks the syntax highlighting :/
+  (+    scenario/CALL_EXCEPTION    0))    ;; TODO: test if removing the (+ ... 0) causes compilation issues; it certainly breaks the syntax highlighting :/
 
 ;;  CALL/callee_warmth_update_required
 (defun (scenario-shorthand---CALL---callee-warmth-update-required)
