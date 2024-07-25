@@ -83,7 +83,7 @@
                                                                                                       ;; exo_sum                                                   ;; weighted exogenous module flag sum
                                                                                                       ;; phase                                                     ;; phase
                                                                                                       ))
-                                    (if-not-zero    (scenario-shorthand-PRC-common-except-identity-address-bit-sum)
+                                    (if-not-zero    (scenario-shorthand---PRC---common-except-identity-address-bit-sum)
                                                     (set-MMU-instruction---ram-to-exo-with-padding    precompile-processing---common---1st-misc-row---row-offset   ;; offset
                                                                                                       CONTEXT_NUMBER                                               ;; source ID
                                                                                                       (+    1    HUB_STAMP)                                        ;; target ID

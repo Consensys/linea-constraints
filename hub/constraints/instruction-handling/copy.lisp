@@ -265,7 +265,7 @@
 
 (defconstraint    copy-misc-row-partially-setting-the-MMU-instruction                        (:guard    (copy-inst-standard-precondition))
                   (if-not-zero  (shift  misc/MMU_FLAG  ROW_OFFSET_COPY_INST_MISCELLANEOUS_ROW)
-                                (set-MMU-instruction-any-to-ram-with-padding    ROW_OFFSET_COPY_INST_MISCELLANEOUS_ROW      ;; offset
+                                (set-MMU-instruction---any-to-ram-with-padding    ROW_OFFSET_COPY_INST_MISCELLANEOUS_ROW      ;; offset
                                                                                 (copy-inst-source-id)                       ;; source ID
                                                                                 CONTEXT_NUMBER                              ;; target ID
                                                                                 ;; aux_id                                      ;; auxiliary ID

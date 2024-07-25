@@ -35,11 +35,11 @@
 
 (defconstraint    call-instruction---2nd-caller-account-operation---missing-fields    (:guard (call-instruction---summon-both-account-rows-twice-or-more))
                   (begin
-                    (if-not-zero    (scenario-shorthand-CALL-balance-update-undone-with-callee-failure)
+                    (if-not-zero    (scenario-shorthand---CALL---balance-update-undone-with-callee-failure)
                                     (DOM-SUB-stamps---revert-with-child    CALL_2nd_caller_account_row___row_offset
                                                                            2
                                                                                  (call-instruction---callee-revert-stamp)))
-                    (if-not-zero    (scenario-shorthand-CALL-balance-update-undone-with-caller-revert)
+                    (if-not-zero    (scenario-shorthand---CALL---balance-update-undone-with-caller-revert)
                                     (DOM-SUB-stamps---revert-with-current        CALL_2nd_caller_account_row___row_offset
                                                                                  2))
                     ))
@@ -62,10 +62,10 @@
 
 (defconstraint    call-instruction---2nd-callee-account-operation---missing-fields    (:guard (call-instruction---summon-both-account-rows-twice-or-more))
                   (begin
-                    (if-not-zero    (scenario-shorthand-CALL-balance-update-undone-with-callee-failure)
+                    (if-not-zero    (scenario-shorthand---CALL---balance-update-undone-with-callee-failure)
                                     (begin    (DOM-SUB-stamps---revert-with-child    CALL_2nd_callee_account_row___row_offset    3    (call-instruction---callee-revert-stamp))
                                               (account-same-warmth                   CALL_2nd_callee_account_row___row_offset)))
-                    (if-not-zero    (scenario-shorthand-CALL-balance-update-undone-with-caller-revert)
+                    (if-not-zero    (scenario-shorthand---CALL---balance-update-undone-with-caller-revert)
                                     (begin    (DOM-SUB-stamps---revert-with-current        CALL_2nd_callee_account_row___row_offset    3)
                                               (account-undo-warmth-update                  CALL_2nd_callee_account_row___row_offset    CALL_1st_callee_account_row___row_offset)))
                     ))
