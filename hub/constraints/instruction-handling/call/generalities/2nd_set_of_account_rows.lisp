@@ -16,7 +16,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defun    (call-instruction---summon-both-account-rows-twice-or-more)    (*    PEEK_AT_SCENARIO
-                                                                               (scenario-shorthand-CALL-requires-both-accounts-twice)))
+                                                                               (scenario-shorthand---CALL---requires-both-accounts-twice)))
 
 (defconstraint    call-instruction---2nd-caller-account-operation                     (:guard (call-instruction---summon-both-account-rows-twice-or-more))
                   (begin
