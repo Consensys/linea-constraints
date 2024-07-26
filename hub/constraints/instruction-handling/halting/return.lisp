@@ -394,7 +394,7 @@
 
 (defun   (return-instruction---empty-deployment-scenario)   (*   PEEK_AT_SCENARIO   (scenario-shorthand---RETURN---empty-deployment)))
 
-(defconstraint   return-instruction---first-account-row-for-empty-deployments   (:guard   (scenario-shorthand---RETURN---empty-deployment))
+(defconstraint   return-instruction---first-account-row-for-empty-deployments   (:guard   (return-instruction---empty-deployment-scenario))
                  (begin
                    (eq!   (shift   account/ADDRESS_HI                         RETURN_INSTRUCTION_EMPTY_DEPLOYMENT_FIRST_ACCOUNT_ROW_OFFSET)    (return-instruction---deployment-address-hi))
                    (eq!   (shift   account/ADDRESS_LO                         RETURN_INSTRUCTION_EMPTY_DEPLOYMENT_FIRST_ACCOUNT_ROW_OFFSET)    (return-instruction---deployment-address-lo))
@@ -419,7 +419,7 @@
                    )
                  )
 
-(defconstraint   return-instruction---second-account-row-for-empty-deployments   (:guard   (scenario-shorthand---RETURN---empty-deployment))
+(defconstraint   return-instruction---second-account-row-for-empty-deployments   (:guard   (return-instruction---empty-deployment-scenario))
                  (if-not-zero   scenario/RETURN_FROM_DEPLOYMENT_EMPTY_CODE_WILL_REVERT
                                 (begin
                                   (account-same-address-as                     RETURN_INSTRUCTION_EMPTY_DEPLOYMENT_SECOND_ACCOUNT_ROW_OFFSET    RETURN_INSTRUCTION_EMPTY_DEPLOYMENT_FIRST_ACCOUNT_ROW_OFFSET)
@@ -436,7 +436,7 @@
                                 )
                  )
 
-(defconstraint   return-instruction---setting-the-callers-new-return-data-empty-deployments    (:guard   (scenario-shorthand---RETURN---empty-deployment))
+(defconstraint   return-instruction---setting-the-callers-new-return-data-empty-deployments    (:guard   (return-instruction---empty-deployment-scenario))
                  (begin
                    (if-not-zero   scenario/RETURN_FROM_DEPLOYMENT_EMPTY_CODE_WILL_REVERT
                                   (if-not-zero   (force-bin   (return-instruction---is-root))
@@ -512,7 +512,7 @@
                    )
                  )
 
-(defconstraint   return-instruction---second-account-row-for-nonempty-deployments   (:guard   (scenario-shorthand---RETURN---nonempty-deployment))
+(defconstraint   return-instruction---second-account-row-for-nonempty-deployments   (:guard   (return-instruction---nonempty-deployment-scenario))
                  (if-not-zero   scenario/RETURN_FROM_DEPLOYMENT_NONEMPTY_CODE_WILL_REVERT
                                 (begin
                                   (account-same-address-as                     RETURN_INSTRUCTION_NONEMPTY_DEPLOYMENT_SECOND_ACCOUNT_ROW_OFFSET    RETURN_INSTRUCTION_NONEMPTY_DEPLOYMENT_FIRST_ACCOUNT_ROW_OFFSET)
@@ -529,7 +529,7 @@
                                 )
                  )
 
-(defconstraint   return-instruction---setting-the-callers-new-return-data-nonempty-deployments    (:guard   (scenario-shorthand---RETURN---nonempty-deployment))
+(defconstraint   return-instruction---setting-the-callers-new-return-data-nonempty-deployments    (:guard   (return-instruction---nonempty-deployment-scenario))
                  (begin
                    (if-not-zero   scenario/RETURN_FROM_DEPLOYMENT_NONEMPTY_CODE_WILL_REVERT
                                   (if-not-zero   (force-bin   (return-instruction---is-root))
