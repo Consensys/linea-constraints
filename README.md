@@ -1,6 +1,10 @@
 # Linea constraints 
 
-This repository hosts the implementation of the constraint system from the Linea zk-EVM specification.
+This repository hosts the Implementation of the constraint system specified in the [linea-specification repo](https://github.com/Consensys/linea-specification). 
+
+Linea’s constraint system applies to so-called traces which are large matrices of fixed width (i.e. fixed number of columns or ‘registries’) and variable depth (correlating with the complexity of the EVM execution). The production of such traces is the job of the [linea-tracer repo](https://github.com/Consensys/linea-tracer).
+
+Constraints and traces are two of the inputs to the prover.
 
 It serves developers by making the Linea tech stack open source under 
 the [Apache 2.0 license](LICENSE).
