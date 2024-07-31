@@ -18,7 +18,6 @@ tbd -->
 Linea's stack is made up of multiple repositories, these include:
 
 - [linea-constraints](https://github.com/Consensys/linea-constraints): 
->
 > Constraints and traces are two of the inputs to the prover.
 - [linea-monorepo](https://github.com/Consensys/linea-monorepo): The main repository for the Linea stack & network 
 - [linea-besu](https://github.com/Consensys/linea-besu): Fork of Besu to implement the Linea-Besu client
