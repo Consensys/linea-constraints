@@ -18,7 +18,6 @@ tbd -->
 Linea's stack is made up of multiple repositories, these include:
 
 - [linea-constraints](https://github.com/Consensys/linea-constraints): 
-> Linea’s constraint system applies to so-called traces which are large matrices of fixed width (i.e. fixed number of columns or ‘registries’) and variable depth (correlating with the complexity of the EVM execution). The production of such traces is the job of the [linea-tracer repo](https://github.com/Consensys/linea-tracer).
 >
 > Constraints and traces are two of the inputs to the prover.
 - [linea-monorepo](https://github.com/Consensys/linea-monorepo): The main repository for the Linea stack & network 
