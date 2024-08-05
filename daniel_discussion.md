@@ -87,3 +87,18 @@ CREATEE:
 - raising of the creator nonce    (0 → 1)
 - balance update of cretor / createe happens after contextEntry (normal)
 - at contextEnter we don't have the updated accounts (balances / nonces / code)
+
+
+
+If a CREATE(2) produces a failure condition (...) does Besu create and enter a child frame ?
+Same question for empty initialization code.
+Our reason for asking is that:
+  - for failure condition and empty init code we would like to take snapshots of the updated creator and createe
+    accounts when the TraceContextReEntry hook is activated. If not "re-entry" takes place we must hook somewhere
+    else ... maybe post execution of the current OpCode ... or even PreExecution of the next OpCode ... ?
+Other question:
+  - we remember from discussions almost a year ago with @Franklin and @Daniel that when Besu either
+    * did a CALL to an account with empty bytecode that BESU executes a STOP
+    * did a CREATE with empty init code that, again, BESU would execute a STOP
+  (both in compliance with the Yellow Paper.) Is that indeed the case ? I remember that I asked @Franklin to make it
+  so that our arithmetization would not trace that STOP. But that would lead
