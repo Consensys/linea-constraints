@@ -31,7 +31,7 @@
                              MISC_WEIGHT_MMU))
 
 
-(defconstraint    precompile-processing---BLAKE2f---setting-MISC-flags---full-return-data-transfer
+(defconstraint    precompile-processing---BLAKE2f---setting-MMU-instruction---full-return-data-transfer
                   (:guard    (precompile-processing---BLAKE2f---success))
                   (set-MMU-instruction---exo-to-ram-transplants    precompile-processing---BLAKE2f---misc-row-offset---BLAKE-return-data-full-transfer     ;; offset
                                                                    (+    1    HUB_STAMP)                                                                   ;; source ID
@@ -79,8 +79,7 @@
                                                                                     ;; limb_2                                                                                ;; limb 2
                                                                                     ;; exo_sum                                                                               ;; weighted exogenous module flag sum
                                                                                     ;; phase                                                                                 ;; phase
-                                                                                    )
-                                  )
+                                                                                    )))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -95,4 +94,4 @@
                                            (+    1    HUB_STAMP)                                                                   ;; source IDr context
                                            0                                                                                       ;; rdo
                                            64                                                                                      ;; rds
-                                           )
+                                           ))

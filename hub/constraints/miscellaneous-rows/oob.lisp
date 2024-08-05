@@ -273,7 +273,7 @@
                                            cds                              ;; call data size
                                            r@c                              ;; return at capacity
                                            ) (begin
-                                           (eq! (shift misc/OOB_INST            kappa) OOB_INST_blakeCds )
+                                           (eq! (shift misc/OOB_INST            kappa) OOB_INST_BLAKE_CDS )
                                            ;; (eq! (shift [ misc/OOB_DATA 1 ]    kappa) )
                                            (eq! (shift [ misc/OOB_DATA 2 ]    kappa) cds )
                                            (eq! (shift [ misc/OOB_DATA 3 ]    kappa) r@c )
@@ -290,7 +290,7 @@
                                        blake_r                          ;; rounds parameter of the call data of BLAKE2f
                                        blake_f                          ;; f      parameter of the call data of BLAKE2f ("final block indicator")
                                        ) (begin
-                                       (eq! (shift misc/OOB_INST            kappa) OOB_INST_blakeParams )
+                                       (eq! (shift misc/OOB_INST            kappa) OOB_INST_BLAKE_PARAMS )
                                        (eq! (shift [ misc/OOB_DATA 1 ]    kappa) call_gas )
                                        ;; (eq! (shift [ misc/OOB_DATA 2 ]    kappa) )
                                        ;; (eq! (shift [ misc/OOB_DATA 3 ]    kappa) )
