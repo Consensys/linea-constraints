@@ -39,7 +39,7 @@
                                MISC_WEIGHT_OOB)))
 
 (defconstraint    precompile-processing---MODEXP---success-case---base-extraction-row---setting-the-OOB-instruction-which-decides-which-actual-parameters-to-extract      (:guard    (precompile-processing---MODEXP---success-case))
-                  (set-OOB-instruction-modexp-extract    precompile-processing---MODEXP---misc-row-offset---base-extraction    ;; offset
+                  (set-OOB-instruction---modexp-extract    precompile-processing---MODEXP---misc-row-offset---base-extraction    ;; offset
                                                          (precompile-processing---dup-cds)                                     ;; call data size
                                                          (precompile-processing---MODEXP---bbs-lo)                             ;; low part of bbs (base     byte size)
                                                          (precompile-processing---MODEXP---ebs-lo)                             ;; low part of ebs (exponent byte size)

@@ -16,15 +16,15 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-(defun    (precompile-processing---ECADD/MUL/PAIRING---success-case)    (*    PEEK_AT_SCENARIO
-                                                                              (+    scenario/PRC_ECADD
-                                                                                    scenario/PRC_ECMUL
-                                                                                    scenario/PRC_ECPAIRING)
-                                                                              (scenario-shorthand---PRC---success)))
-
 ;;;;;;;;;;;;;;;;
 ;; Shorthands ;;
 ;;;;;;;;;;;;;;;;
+
+(defun    (precompile-processing---ECADD/MUL/PAIRING---success-case)            (*    PEEK_AT_SCENARIO
+                                                                                      (+    scenario/PRC_ECADD
+                                                                                            scenario/PRC_ECMUL
+                                                                                            scenario/PRC_ECPAIRING)
+                                                                                      (scenario-shorthand---PRC---success)))
 
 (defun    (precompile-processing---ECADD/MUL/PAIRING---nontrivial-ECADD)        (*    (precompile-processing---common---OOB-extract-call-data)    scenario/PRC_ECADD))
 (defun    (precompile-processing---ECADD/MUL/PAIRING---nontrivial-ECMUL)        (*    (precompile-processing---common---OOB-extract-call-data)    scenario/PRC_ECMUL))
@@ -43,7 +43,7 @@
 
 (defconstraint    precompile-processing---ECADD/MUL/PAIRING---second-misc-row-peeking-flags
                   (:guard    (precompile-processing---ECADD/MUL/PAIRING---success-case))
-                  (eq!    (weighted-MISC-flag-sum    precompile-processing--ECADD/MUL/PAIRING---misc-row-offset---full-return-data-transfer)
+                  (eq!    (weighted-MISC-flag-sum    precompile-processing---ECADD/MUL/PAIRING---misc-row-offset---full-return-data-transfer)
                           (*    MISC_WEIGHT_MMU    (precompile-processing---ECADD/MUL/PAIRING---trigger_MMU))))
 
 (defun    (precompile-processing---ECADD/MUL/PAIRING---trigger_MMU)    (+    (precompile-processing---ECADD/MUL/PAIRING---nontrivial-ECADD)
@@ -54,7 +54,7 @@
 (defconstraint    precompile-processing---ECADD/MUL/PAIRING---setting-MMU-instruction---full-return-data-transfer---trivial-case
                   (:guard    (precompile-processing---ECADD/MUL/PAIRING---success-case))
                   (if-not-zero    (precompile-processing---ECADD/MUL/PAIRING---trivial-ECPAIRING)
-                                  (set-MMU-instruction---mstore                    precompile-processing--ECADD/MUL/PAIRING---misc-row-offset---full-return-data-transfer   ;; offset
+                                  (set-MMU-instruction---mstore                    precompile-processing---ECADD/MUL/PAIRING---misc-row-offset---full-return-data-transfer   ;; offset
                                                                                    ;; src_id                                                                                   ;; source ID
                                                                                    (+    1    HUB_STAMP)                                                                    ;; target ID
                                                                                    ;; aux_id                                                                                   ;; auxiliary ID
@@ -74,7 +74,7 @@
 (defconstraint    precompile-processing---ECADD/MUL/PAIRING---setting-MMU-instruction---full-return-data-transfer---nontrivial-cases
                   (:guard    (precompile-processing---ECADD/MUL/PAIRING---success-case))
                   (if-not-zero    (precompile-processing---ECADD/MUL/PAIRING---nontrivial-cases)
-                                  (set-MMU-instruction---exo-to-ram-transplants    precompile-processing--ECADD/MUL/PAIRING---misc-row-offset---full-return-data-transfer    ;; offset
+                                  (set-MMU-instruction---exo-to-ram-transplants    precompile-processing---ECADD/MUL/PAIRING---misc-row-offset---full-return-data-transfer    ;; offset
                                                                                    (+    1    HUB_STAMP)                                                                     ;; source ID
                                                                                    (+    1    HUB_STAMP)                                                                     ;; target ID
                                                                                    ;; aux_id                                                                                    ;; auxiliary ID
@@ -110,15 +110,15 @@
 
 (defconstraint    precompile-processing---ECADD/MUL/PAIRING---third-misc-row-peeking-flags
                   (:guard    (precompile-processing---ECADD/MUL/PAIRING---success-case))
-                  (eq!    (weighted-MISC-flag-sum    precompile-processing--ECADD/MUL/PAIRING---misc-row-offset---partial-return-data-copy)
+                  (eq!    (weighted-MISC-flag-sum    precompile-processing---ECADD/MUL/PAIRING---misc-row-offset---partial-return-data-copy)
                           (*    MISC_WEIGHT_MMU
                                 (precompile-processing---common---OOB-r@c-nonzero))))
 
 
 (defconstraint    precompile-processing---ECADD/MUL/PAIRING---setting-the-MMU-instruction---partial-return-data-copy
                   (:guard    (precompile-processing---ECADD/MUL/PAIRING---success-case))
-                  (if-not-zero    (shift    misc/MMU_FLAG                           precompile-processing--ECADD/MUL/PAIRING---misc-row-offset---partial-return-data-copy)
-                                  (set-MMU-instruction---ram-to-ram-sans-padding    precompile-processing--ECADD/MUL/PAIRING---misc-row-offset---partial-return-data-copy   ;; offset
+                  (if-not-zero    (shift    misc/MMU_FLAG                           precompile-processing---ECADD/MUL/PAIRING---misc-row-offset---partial-return-data-copy)
+                                  (set-MMU-instruction---ram-to-ram-sans-padding    precompile-processing---ECADD/MUL/PAIRING---misc-row-offset---partial-return-data-copy   ;; offset
                                                                                     (+    1    HUB_STAMP)                                                                   ;; source ID
                                                                                     CONTEXT_NUMBER                                                                          ;; target ID
                                                                                     ;; aux_id                                                                                  ;; auxiliary ID
@@ -143,7 +143,7 @@
 
 (defconstraint    precompile-processing---ECADD/MUL/PAIRING---updating-caller-context-with-precompile-return-data
                   (:guard    (precompile-processing---ECADD/MUL/PAIRING---success-case))
-                  (provide-return-data     precompile-processing--ECADD/MUL/PAIRING---context-row-offset---updating-caller-context    ;; row offset
+                  (provide-return-data     precompile-processing---ECADD/MUL/PAIRING---context-row-offset---updating-caller-context    ;; row offset
                                            CONTEXT_NUMBER                                                                             ;; receiver context
                                            (+    1    HUB_STAMP)                                                                      ;; provider context
                                            0                                                                                          ;; rdo
