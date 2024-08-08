@@ -4,7 +4,7 @@
     (STAMP   :i64)
     (OLI     :binary)
     (CT      :i4)
-    (INST    :byte)
+    (INST    :byte :display :opcode)
     ;
     (ARG_1_HI       :i128)
     (ARG_1_LO       :i128)
