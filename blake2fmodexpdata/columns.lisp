@@ -1,8 +1,8 @@
 (module blake2fmodexpdata)
 
 (defcolumns 
-  (STAMP                :byte)
-  (ID                   :i48)
+  (STAMP                :i10)
+  (ID                   :i32)
   (PHASE                :byte)
   (INDEX                :byte :display :dec)
   (INDEX_MAX            :byte :display :dec)
