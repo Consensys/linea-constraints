@@ -1,7 +1,7 @@
 (module ext)
 
 (defcolumns
-    (STAMP   :i64)
+    (STAMP   :i32)
     (OLI     :binary)
     (CT      :i4)
     (INST    :byte :display :opcode)
