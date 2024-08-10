@@ -193,42 +193,52 @@
 ;;                                                ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defun (first-row-of-CALL)               (* (remained-constant! STAMP) (is_call)))
-(defun (first-row-of-unexceptional-CALL) (* (first-row-of-CALL) (- 1 OOGX)))
-(defun (call-valueIsZero)                (next RES_LO))
-(defun (call-gActual)                    GAS_ACTUAL)
-(defun (call-gAccess)                    (if-not-zero    WARM
-                                                         GAS_CONST_G_WARM_ACCESS
-                                                         GAS_CONST_G_COLD_ACCOUNT_ACCESS))
-(defun (call-gNewAccount)                (if-zero        EXISTS
-                                                         GAS_CONST_G_NEW_ACCOUNT))
-(defun (call-gTransfer)                  (* (cctv) (- 1 (call-valueIsZero)) GAS_CONST_G_CALL_VALUE))
-(defun (call-gXtra)                      (+ (call-gAccess) (call-gNewAccount) (call-gTransfer)))
-(defun (call-gPrelim)                    (+ GAS_MXP (call-gXtra)))
-(defun (call-oneSixtyFourths)            (shift RES_LO 3))
-(defun (call-gDiff)                      (- (call-gActual) (call-gPrelim)))
-(defun (call-stpComp)                    (shift RES_LO 4))
-(defun (call-LgDiff)                     (- (call-gDiff) (call-oneSixtyFourths)))
-(defun (call-gMin)                       (if-zero    (force-bin    (call-stpComp))
-                                                     (call-LgDiff)
-                                                     GAS_LO))
+(defun (call---first-row-common)                 (*    (remained-constant! STAMP) (is_call)))
+(defun (call---first-row-unexceptional)          (*    (call---first-row-common) (- 1 OOGX)))
+
+
+(defun (call---transfers-value)                  (*    (cctv)    (-    1    (next RES_LO))))
+(defun (call---zero-value)                       (*    (cctv)    (next RES_LO)))
+(defun (call---gas-actual)                       GAS_ACTUAL)
+(defun (call---gas-access-cost)                  (if-not-zero    WARM
+                                                                 GAS_CONST_G_WARM_ACCESS
+                                                                 GAS_CONST_G_COLD_ACCOUNT_ACCESS))
+(defun (call---gas-value-transfer-cost)          (*    (call---transfers-value)
+                                                       GAS_CONST_G_CALL_VALUE))
+(defun (call---gas-new-account-cost)             (*    (-    1    EXISTS)
+                                                       (call---transfers-value)
+                                                       GAS_CONST_G_NEW_ACCOUNT))
+(defun (call---gas-extra)                        (+    (call---gas-access-cost)
+                                                       (call---gas-new-account-cost)
+                                                       (call---gas-value-transfer-cost)))
+(defun (call---gas-prelim)                       (+    GAS_MXP
+                                                       (call---gas-extra)))
+(defun (call---one-sixty-fourth)                 (shift    RES_LO    3))
+(defun (call---gas-to-L-comparison)              (shift    RES_LO    4))
+(defun (call---gas-diff)                         (-    (call---gas-actual)
+                                                       (call---gas-prelim)))
+(defun (call---L-of-gas-diff)                    (-    (call---gas-diff)
+                                                       (call---one-sixty-fourth)))
+(defun (call---gas-Min)                          (if-zero    (force-bin    (call---gas-to-L-comparison))
+                                                             (call---L-of-gas-diff)
+                                                             GAS_LO))
 
 ;; common rows for CALL instructions
 (defconstraint    CALL-type---common-part---row-i-plus-0
-                  (:guard (first-row-of-CALL))
+                  (:guard (call---first-row-common))
                   (begin
                     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                     ;;   ------------->   row i + 0  ;;
                     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                     (vanishes!   ARG_1_HI)
-                    (eq!         ARG_1_LO (call-gActual))
+                    (eq!         ARG_1_LO (call---gas-actual))
                     (vanishes!   ARG_2_LO)
                     (eq!         EXO_INST EVM_INST_LT)
                     (vanishes!   RES_LO)
                     (eq!         WCP_FLAG 1)))
 
 (defconstraint    CALL-type---common-part---row-i-plus-1
-                  (:guard (first-row-of-CALL))
+                  (:guard (call---first-row-common))
                   (begin
                     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                     ;;   ------------->   row i + 1   ;;
@@ -241,39 +251,39 @@
                     (vanishes!         (next MOD_FLAG))))
 
 (defconstraint    CALL-type---common-part---row-i-plus-2
-                  (:guard (first-row-of-CALL))
+                  (:guard (call---first-row-common))
                   (begin
                     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                     ;;   ------------->   row i + 2   ;;
                     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                     (vanishes!  (shift ARG_1_HI 2))
-                    (eq!        (shift ARG_1_LO 2)    (call-gActual))
-                    (eq!        (shift ARG_2_LO 2)    (call-gPrelim))
+                    (eq!        (shift ARG_1_LO 2)    (call---gas-actual))
+                    (eq!        (shift ARG_2_LO 2)    (call---gas-prelim))
                     (eq!        (shift EXO_INST 2)    EVM_INST_LT)
                     (eq!        (shift RES_LO   2)    OOGX)
                     (eq!        (shift WCP_FLAG 2)    1)))
 
 (defconstraint CALL-type---unexceptional---row-i-plus-3
-               (:guard (first-row-of-unexceptional-CALL))
+               (:guard (call---first-row-unexceptional))
                (begin
                  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                  ;;   ------------->   row i + 3   ;;
                  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                  (vanishes! (shift ARG_1_HI 3))
-                 (eq! (shift ARG_1_LO 3) (call-gDiff))
+                 (eq! (shift ARG_1_LO 3) (call---gas-diff))
                  (eq! (shift ARG_2_LO 3) 64)
                  (eq! (shift EXO_INST 3) EVM_INST_DIV)
                  (eq! (shift MOD_FLAG 3) 1)))
 
 (defconstraint CALL-type---unexceptional---row-i-plus-4
-               (:guard (first-row-of-unexceptional-CALL))
+               (:guard (call---first-row-unexceptional))
                (begin
                  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                  ;;   ------------->   row i + 4   ;;
                  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                  (eq! (shift ARG_1_HI 4) GAS_HI)
                  (eq! (shift ARG_1_LO 4) GAS_LO)
-                 (eq! (shift ARG_2_LO 4) (call-LgDiff))
+                 (eq! (shift ARG_2_LO 4) (call---L-of-gas-diff))
                  (eq! (shift EXO_INST 4) EVM_INST_LT)
                  (eq! (shift WCP_FLAG 4) 1)))
 
@@ -282,8 +292,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defconstraint    CALL-type---setting-upfront-gas
-                  (:guard (first-row-of-CALL))
-                  (eq! GAS_UPFRONT (call-gPrelim)))
+                  (:guard (call---first-row-common))
+                  (eq! GAS_UPFRONT (call---gas-prelim)))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -291,9 +301,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defconstraint    CALL-type---setting-gas-paid-out-of-pocket
-                  (:guard (first-row-of-CALL))
+                  (:guard (call---first-row-common))
                   (if-zero OOGX
-                           (eq!       GAS_OUT_OF_POCKET    (call-gMin))
+                           (eq!       GAS_OUT_OF_POCKET    (call---gas-Min))
                            (vanishes! GAS_OUT_OF_POCKET)))
 
 
@@ -301,7 +311,7 @@
 ;;   Setting GAS_STIPEND   ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defconstraint    CALL-type---setting-gas-stipend (:guard (first-row-of-CALL))
+(defconstraint    CALL-type---setting-gas-stipend (:guard (call---first-row-common))
                   (if-zero    OOGX
                               (eq! GAS_STIPEND
                                    (* (cctv)
