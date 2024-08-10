@@ -17,8 +17,8 @@
   (VAL_HI :i128)
   (VAL_LO :i128)
   ;;
-  (EXISTS :binary)
-  (WARM :binary)
+  (EXISTS               :binary)
+  (WARM                 :binary)
   (OUT_OF_GAS_EXCEPTION :binary)
   ;;
   (GAS_ACTUAL           :i48)
