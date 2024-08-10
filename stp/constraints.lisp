@@ -1,14 +1,11 @@
 (module stp)
 
 (defconst 
-  max_CT_CALL         4
-  max_CT_CALL_OOGX    2
-  G_create            32000
-  G_warmaccess        100
-  G_coldaccountaccess 2600
-  G_callvalue         9000
-  G_newaccount        25000
-  G_callstipend       2300)
+  STP_CT_MAX_CALL           4
+  STP_CT_MAX_CALL_OOGX      2
+  STP_CT_MAX_CREATE         2
+  STP_CT_MAX_CREATE_OOGX    1
+  )
 
 (defconstraint exclusive-flags ()
   (vanishes! (* WCP_FLAG MOD_FLAG)))
@@ -71,11 +68,11 @@
   (begin (if-eq-else CT CT_MAX (will-inc! STAMP 1) (will-inc! CT 1))
          (if-zero (is_create)
                   (if-zero OOGX
-                           (eq! CT_MAX 4)
-                           (eq! CT_MAX 2))
+                           (eq!    CT_MAX    STP_CT_MAX_CALL)
+                           (eq!    CT_MAX    STP_CT_MAX_CALL_OOGX))
                   (if-zero OOGX
-                           (eq! CT_MAX 2)
-                           (eq! CT_MAX 1)))))
+                           (eq!    CT_MAX    STP_CT_MAX_CREATE)
+                           (eq!    CT_MAX    STP_CT_MAX_CREATE_OOGX)))))
 
 (defconstraint final-row (:domain {-1})
   (if-not-zero STAMP
@@ -129,7 +126,7 @@
   GAS_ACTUAL)
 
 (defun (create-gPrelim)
-  (+ GAS_MXP G_create))
+  (+ GAS_MXP    GAS_CONST_G_CREATE))
 
 (defun (create-gDiff)
   (- (create-gActual) (create-gPrelim)))
@@ -196,6 +193,12 @@
 
 (defun (first-row-of-unexceptional-CALL)
   (* (first-row-of-CALL) (- 1 OOGX)))
+(defun (call-gAccess)                    (if-not-zero    WARM
+                                                         GAS_CONST_G_WARM_ACCESS
+                                                         GAS_CONST_G_COLD_ACCOUNT_ACCESS))
+(defun (call-gNewAccount)                (if-zero        EXISTS
+                                                         GAS_CONST_G_NEW_ACCOUNT))
+(defun (call-gTransfer)                  (* (cctv) (- 1 (call-valueIsZero)) GAS_CONST_G_CALL_VALUE))
 
 (defun (call-valueIsZero)
   (next RES_LO))
@@ -298,4 +301,14 @@
                   (begin (vanishes! GAS_OUT_OF_POCKET)
                          (vanishes! GAS_STIPEND)))))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;   Setting GAS_STIPEND   ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(defconstraint    CALL-type---setting-gas-stipend (:guard (first-row-of-CALL))
+                  (if-zero    OOGX
+                              (eq! GAS_STIPEND
+                                   (* (cctv)
+                                      (- 1 (next RES_LO))
+                                      GAS_CONST_G_CALL_STIPEND))
+                              (vanishes! GAS_STIPEND)))
