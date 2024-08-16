@@ -4,7 +4,7 @@
   (STAMP :i32)
   (CT :i3)
   (CT_MAX :i3)
-  (DATA :array [8])
+  (DATA :array [9])
   OOB_INST
   (IS_JUMP :binary@prove)
   (IS_JUMPI :binary@prove)
@@ -35,3 +35,5 @@
   (OUTGOING_INST :byte :display :opcode)
   (OUTGOING_DATA :array [4])
   OUTGOING_RES_LO)
+
+

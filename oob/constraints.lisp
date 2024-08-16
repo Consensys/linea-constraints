@@ -611,6 +611,9 @@
 (defun (create___failure_condition)
   [DATA 8])
 
+(defun (create___caller_nonce)
+  [DATA 9])
+
 (defun (create___insufficient_balance_abort)
   OUTGOING_RES_LO)
 
@@ -619,6 +622,9 @@
 
 (defun (create___nonzero_nonce)
   (- 1 (shift OUTGOING_RES_LO 2)))
+
+(defun (create___caller_nonce_gt_max_nonce)
+  (shift OUTGOING_RES_LO 3))
 
 (defconstraint valid-create (:guard (* (standing-hypothesis) (create-hypothesis)))
   (callToLT 0 0 (create___balance) (create___value_hi) (create___value_lo)))
@@ -629,10 +635,14 @@
 (defconstraint valid-create-future-future (:guard (* (standing-hypothesis) (create-hypothesis)))
   (callToISZERO 2 0 (create___nonce)))
 
+(defconstraint valid-create-future-future-future (:guard (* (standing-hypothesis) (create-hypothesis)))
+  (callToLT 3 0 (create___caller_nonce) 0 18446744073709551615)) ; 2^64 - 1
+
 (defconstraint justify-hub-predictions-create (:guard (* (standing-hypothesis) (create-hypothesis)))
   (begin (eq! (create___aborting_condition)
-              (+ (create___insufficient_balance_abort)
-                 (* (- 1 (create___insufficient_balance_abort)) (create___stack_depth_abort))))
+              (* (- 1 (create___caller_nonce_gt_max_nonce))
+                 (+ (create___insufficient_balance_abort)
+                    (* (- 1 (create___insufficient_balance_abort)) (create___stack_depth_abort)))))
          (eq! (create___failure_condition)
               (* (- 1 (create___aborting_condition))
                  (+ (create___has_code)
