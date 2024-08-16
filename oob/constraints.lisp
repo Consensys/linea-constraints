@@ -623,7 +623,7 @@
 (defun (create___nonzero_nonce)
   (- 1 (shift OUTGOING_RES_LO 2)))
 
-(defun (create___caller_nonce_gt_max_nonce)
+(defun (create___caller_nonce_geq_max_nonce)
   (shift OUTGOING_RES_LO 3))
 
 (defconstraint valid-create (:guard (* (standing-hypothesis) (create-hypothesis)))
@@ -640,7 +640,7 @@
 
 (defconstraint justify-hub-predictions-create (:guard (* (standing-hypothesis) (create-hypothesis)))
   (begin (eq! (create___aborting_condition)
-              (* (- 1 (create___caller_nonce_gt_max_nonce))
+              (* (create___caller_nonce_geq_max_nonce)
                  (+ (create___insufficient_balance_abort)
                     (* (- 1 (create___insufficient_balance_abort)) (create___stack_depth_abort)))))
          (eq! (create___failure_condition)
