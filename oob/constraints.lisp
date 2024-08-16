@@ -169,7 +169,7 @@
 (defconstraint counter-constancy ()
   (begin (counter-constancy CT STAMP)
          (debug (counter-constancy CT CT_MAX))
-         (for i [8] (counter-constancy CT [DATA i]))
+         (for i [9] (counter-constancy CT [DATA i]))
          (counter-constancy CT OOB_INST)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -611,7 +611,7 @@
 (defun (create___failure_condition)
   [DATA 8])
 
-(defun (create___caller_nonce)
+(defun (create___creator_nonce)
   [DATA 9])
 
 (defun (create___insufficient_balance_abort)
@@ -623,8 +623,11 @@
 (defun (create___nonzero_nonce)
   (- 1 (shift OUTGOING_RES_LO 2)))
 
-(defun (create___caller_nonce_geq_max_nonce)
-  (shift OUTGOING_RES_LO 3))
+(defun (create___creator_nonce_abort)
+  (- 1 (shift OUTGOING_RES_LO 3)))
+
+(defun (create___aborting_conditions_sum)
+  (+ (create___insufficient_balance_abort) (create___stack_depth_abort) (create___creator_nonce_abort)))
 
 (defconstraint valid-create (:guard (* (standing-hypothesis) (create-hypothesis)))
   (callToLT 0 0 (create___balance) (create___value_hi) (create___value_lo)))
@@ -636,13 +639,12 @@
   (callToISZERO 2 0 (create___nonce)))
 
 (defconstraint valid-create-future-future-future (:guard (* (standing-hypothesis) (create-hypothesis)))
-  (callToLT 3 0 (create___caller_nonce) 0 18446744073709551615)) ; 2^64 - 1
+  (callToLT 3 0 (create___creator_nonce) 0 18446744073709551615)) ; 2^64 - 1
 
 (defconstraint justify-hub-predictions-create (:guard (* (standing-hypothesis) (create-hypothesis)))
-  (begin (eq! (create___aborting_condition)
-              (* (create___caller_nonce_geq_max_nonce)
-                 (+ (create___insufficient_balance_abort)
-                    (* (- 1 (create___insufficient_balance_abort)) (create___stack_depth_abort)))))
+  (begin (if-zero (create___aborting_conditions_sum)
+                  (vanishes! (create___aborting_condition))
+                  (eq! (create___aborting_condition) 1))
          (eq! (create___failure_condition)
               (* (- 1 (create___aborting_condition))
                  (+ (create___has_code)
