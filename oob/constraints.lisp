@@ -644,7 +644,7 @@
 (defconstraint justify-hub-predictions-create (:guard (* (standing-hypothesis) (create-hypothesis)))
   (begin (if-zero (create___aborting_conditions_sum)
                   (vanishes! (create___aborting_condition))
-                  (eq! (create___aborting_condition) 1))
+                  (eq!       (create___aborting_condition) 1))
          (eq! (create___failure_condition)
               (* (- 1 (create___aborting_condition))
                  (+ (create___has_code)
