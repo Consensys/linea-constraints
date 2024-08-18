@@ -5,9 +5,9 @@
 ;;    2.1 heartbeat    ;;
 ;;                     ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;
-;; 2.1.1
-(defconstraint    first-row (:domain {0})
-                  (vanishes! STAMP))
+;; ;; 2.1.1
+;; (defconstraint    first-row (:domain {0})
+;;                   (vanishes! STAMP))
 
 ;; 2.1.2
 (defconstraint    stamp-increments ()
@@ -25,16 +25,16 @@
                                (vanishes! (shift CT 1))))
 
 ;; 2.1.6
-(defconstraint    INST-vanishes-outside-of-padding ()
-                  (if-zero    IOMF    (vanishes!    INST)))
+(defconstraint    INST-inside-and-outside-of-padding ()
+                  (if-zero    IOMF
+                              (vanishes!    INST)
+                              (vanishes!    (*    (-    INST    EVM_INST_SHL)
+                                                  (-    INST    EVM_INST_SHR)
+                                                  (-    INST    EVM_INST_SAR)))))
 
 ;; 2.1.7
 (defconstraint    heartbeat ()
                   (if-not-zero IOMF
-                               (begin
-                                 (vanishes!    (*    (-    INST    EVM_INST_SHL)
-                                                     (-    INST    EVM_INST_SHR)
-                                                     (-    INST    EVM_INST_SAR)))
                                  (if-not-zero OLI
                                               ;; 2.1.5.b
                                               ;; OLI == 1
@@ -48,7 +48,7 @@
                                                           ;; 2.1.5.c.i
                                                           ;; If CT != LLARGEMO (15)
                                                           (begin (will-inc!    CT    1)
-                                                                 (will-remain-constant! OLI)))))))
+                                                                 (will-remain-constant! OLI))))))
 
 ;; 2.1.8
 (defconstraint last-row (:domain {-1})
