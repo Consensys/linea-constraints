@@ -102,7 +102,8 @@ TABLES := reftables/bin_reftable.lisp \
 
 TRM := trm
 
-TXN_DATA := txndata
+# TXN_DATA := txndata
+TXN_DATA := txndata/columns.lisp
 
 WCP := wcp
 
@@ -132,11 +133,11 @@ ZKEVM_MODULES := ${ALU} \
 		 ${SHIFT} \
 		 ${TABLES} \
 		 ${TRM} \
+		 ${TXN_DATA} \
 		 ${WCP}
 
 # 		 ${HUB} \
 #		 ${STP} \
-#		 ${TXN_DATA} \
 
 
 define.go: ${ZKEVM_MODULES}
