@@ -1,12 +1,22 @@
 (module gas)
 
 (defcolumns 
-  (STAMP :i32)
+  (INPUTS_AND_OUTPUTS_ARE_MEANINGFUL :binary@prove)
+  (FIRST :binary@prove)
   (CT :i3)
-  (GAS_ACTL :i32)
+  (CT_MAX :i3)
+  (GAS_ACTUAL :i32)
   (GAS_COST :i64)
-  (OOGX :binary@prove)
-  (BYTE :byte@prove :array [2])
-  (ACC :i64 :array [2]))
+  (EXCEPTIONS_AHOY :binary@prove)
+  (OUT_OF_GAS_EXCEPTION :binary@prove)
+  (WCP_ARG1_LO :i128)
+  (WCP_ARG2_LO :i128)
+  (WCP_INST :byte@prove :display :opcode)
+  (WCP_RES :binary@prove))
+
+(defalias 
+  INPUTS_AND_OUTPUTS_ARE_MEANINGFUL IOMF
+  EXCEPTIONS_AHOY                   XAHOY
+  OUT_OF_GAS_EXCEPTION              OOGX)
 
 
