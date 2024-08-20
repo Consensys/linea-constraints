@@ -12,8 +12,9 @@
     wcp.INST
   )
   (
-    (* 0 (wcp-activation-flag))
+    0
     (* gas.WCP_ARG1_LO (wcp-activation-flag))
+    0
     (* gas.WCP_ARG2_LO (wcp-activation-flag))
     (* gas.WCP_RES (wcp-activation-flag))
     (* gas.WCP_INST (wcp-activation-flag))
