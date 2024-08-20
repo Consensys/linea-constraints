@@ -11,8 +11,8 @@
          (is-binary OOGX)
          (debug (is-binary FIRST))
          (debug (is-binary WCP_RES))
-         (if-not-zero OOGX
-                      (eq! XAHOY 1))))
+         (if-not-zero    OOGX
+                         (eq!    XAHOY    1))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                     ;;
@@ -46,9 +46,8 @@
                            (- 2
                               (* XAHOY (- 1 OOGX))))
                       (if-zero CT
-                               (eq! FIRST 1))
-                      (if-not-zero CT
-                                   (eq! FIRST 0))
+                               (eq! FIRST 1)
+                               (eq! FIRST 0))
                       (if-eq-else CT CT_MAX
                                   (vanishes! (next CT))
                                   (will-inc! CT 1)))))
@@ -74,26 +73,50 @@
 ;;  3.4 Populating the lookup columns  ;;
 ;;                                     ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defun (call-to-LT k a b c)
-  (begin (eq! (shift WCP_ARG1_LO k) a)
-         (eq! (shift WCP_ARG2_LO k) b)
-         (eq! (shift WCP_INST k) EVM_INST_LT)
-         (eq! (shift WCP_RES k) c)))
 
-(defun (call-to-LEQ k a b c)
-  (begin (eq! (shift WCP_ARG1_LO k) a)
-         (eq! (shift WCP_ARG2_LO k) b)
-         (eq! (shift WCP_INST k) WCP_INST_LEQ)
-         (eq! (shift WCP_RES k) c)))
+;; defining "WCP macros"
+(defun (call-to-LT    k     ;; row shift parameter
+                      a     ;; arg 1 low
+                      b     ;; arg 2 low
+                      c     ;; res
+                      ) (begin    (eq! (shift WCP_ARG1_LO k) a)
+                                  (eq! (shift WCP_ARG2_LO k) b)
+                                  (eq! (shift WCP_INST    k) EVM_INST_LT)
+                                  (eq! (shift WCP_RES     k) c)))
 
-(defconstraint row-0 (:guard FIRST)
-  (call-to-LEQ 0 0 GAS_ACTUAL 1))
+(defun (call-to-LEQ   k     ;; row shift parameter
+                      a     ;; arg 1 low
+                      b     ;; arg 2 low
+                      c     ;; res
+                      ) (begin    (eq! (shift WCP_ARG1_LO k) a)
+                                  (eq! (shift WCP_ARG2_LO k) b)
+                                  (eq! (shift WCP_INST    k) WCP_INST_LEQ)
+                                  (eq! (shift WCP_RES     k) c)))
 
-(defconstraint row-1 (:guard FIRST)
-  (call-to-LEQ 1 0 GAS_COST 1))
+(defconstraint    asserting-the-leftover-gas-is-nonnegative    (:guard FIRST)
+                  (call-to-LEQ   0          ;; row shift parameter
+                                 0          ;; arg 1 low
+                                 GAS_ACTUAL ;; arg 2 low
+                                 1          ;; res is TRUE!
+                                 ))
 
-(defconstraint row-2 (:guard FIRST)
-  (if-zero (* XAHOY (- 1 OOGX))
-           (call-to-LT 2 GAS_ACTUAL GAS_COST OOGX)))
+;; as per the spec, this constraint the following
+;; constraint is slightly useless ... not entirely,
+;; though: it still asserts "smallness" so that it
+;; should filter out MXPX induced out of gas exceptions.
+(defconstraint    asserting-the-gas-cost-is-nonnegative    (:guard FIRST)
+                  (call-to-LT    1          ;; row shift parameter
+                                 0          ;; arg 1 low
+                                 GAS_COST   ;; arg 2 low
+                                 1          ;; res is TRUE!
+                                 ))
+
+(defconstraint    asserting-either-sufficient-gas-or-insufficient-gas (:guard FIRST)
+                  (if-zero    (force-bin    (* XAHOY (- 1 OOGX)))
+                              (call-to-LT    2          ;; row shift parameter
+                                             GAS_ACTUAL ;; arg 1 low
+                                             GAS_COST   ;; arg 2 low
+                                             OOGX       ;; res predicted by HUB
+                                             )))
 
 
