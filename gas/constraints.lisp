@@ -10,9 +10,9 @@
          (is-binary XAHOY)
          (is-binary OOGX)
          (debug (is-binary FIRST))
-         (debug (is-binary WCP_RES))
-         (if-not-zero    OOGX
-                         (eq!    XAHOY    1))))
+         (is-binary WCP_RES) ;; TODO: this isn't necessary, may be removed in the future
+         (if-not-zero OOGX
+                      (eq! XAHOY 1))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                     ;;
@@ -73,50 +73,46 @@
 ;;  3.4 Populating the lookup columns  ;;
 ;;                                     ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
 ;; defining "WCP macros"
-(defun (call-to-LT    k     ;; row shift parameter
-                      a     ;; arg 1 low
-                      b     ;; arg 2 low
-                      c     ;; res
-                      ) (begin    (eq! (shift WCP_ARG1_LO k) a)
-                                  (eq! (shift WCP_ARG2_LO k) b)
-                                  (eq! (shift WCP_INST    k) EVM_INST_LT)
-                                  (eq! (shift WCP_RES     k) c)))
+(defun (call-to-LT k  ;; row shift parameter
+                   a  ;; arg 1 low
+                   b  ;; arg 2 low
+                   c) ;; res
+  (begin (eq! (shift WCP_ARG1_LO k) a)
+         (eq! (shift WCP_ARG2_LO k) b)
+         (eq! (shift WCP_INST k) EVM_INST_LT)
+         (eq! (shift WCP_RES k) c)))
 
-(defun (call-to-LEQ   k     ;; row shift parameter
-                      a     ;; arg 1 low
-                      b     ;; arg 2 low
-                      c     ;; res
-                      ) (begin    (eq! (shift WCP_ARG1_LO k) a)
-                                  (eq! (shift WCP_ARG2_LO k) b)
-                                  (eq! (shift WCP_INST    k) WCP_INST_LEQ)
-                                  (eq! (shift WCP_RES     k) c)))
+(defun (call-to-LEQ k  ;; row shift parameter
+                    a  ;; arg 1 low
+                    b  ;; arg 2 low
+                    c) ;; res
+  (begin (eq! (shift WCP_ARG1_LO k) a)
+         (eq! (shift WCP_ARG2_LO k) b)
+         (eq! (shift WCP_INST k) WCP_INST_LEQ)
+         (eq! (shift WCP_RES k) c)))
 
-(defconstraint    asserting-the-leftover-gas-is-nonnegative    (:guard FIRST)
-                  (call-to-LEQ   0          ;; row shift parameter
-                                 0          ;; arg 1 low
-                                 GAS_ACTUAL ;; arg 2 low
-                                 1          ;; res is TRUE!
-                                 ))
+(defconstraint asserting-the-leftover-gas-is-nonnegative (:guard FIRST)
+  (call-to-LEQ 0          ;; row shift parameter
+               0          ;; arg 1 low
+               GAS_ACTUAL ;; arg 2 low
+               1))        ;; res is TRUE!
 
 ;; as per the spec, this constraint the following
 ;; constraint is slightly useless ... not entirely,
 ;; though: it still asserts "smallness" so that it
 ;; should filter out MXPX induced out of gas exceptions.
-(defconstraint    asserting-the-gas-cost-is-nonnegative    (:guard FIRST)
-                  (call-to-LT    1          ;; row shift parameter
-                                 0          ;; arg 1 low
-                                 GAS_COST   ;; arg 2 low
-                                 1          ;; res is TRUE!
-                                 ))
+(defconstraint asserting-the-gas-cost-is-nonnegative (:guard FIRST)
+  (call-to-LT 1        ;; row shift parameter
+              0        ;; arg 1 low
+              GAS_COST ;; arg 2 low
+              1))      ;; res is TRUE!
 
-(defconstraint    asserting-either-sufficient-gas-or-insufficient-gas (:guard FIRST)
-                  (if-zero    (force-bin    (* XAHOY (- 1 OOGX)))
-                              (call-to-LT    2          ;; row shift parameter
-                                             GAS_ACTUAL ;; arg 1 low
-                                             GAS_COST   ;; arg 2 low
-                                             OOGX       ;; res predicted by HUB
-                                             )))
+(defconstraint asserting-either-sufficient-gas-or-insufficient-gas (:guard FIRST)
+  (if-zero (force-bin (* XAHOY (- 1 OOGX)))
+           (call-to-LT 2          ;; row shift parameter
+                       GAS_ACTUAL ;; arg 1 low
+                       GAS_COST   ;; arg 2 low
+                       OOGX)))    ;; res predicted by HUB
 
 
