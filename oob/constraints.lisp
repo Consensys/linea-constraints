@@ -10,26 +10,14 @@
 ;; 2.1 shorthands and  ;;
 ;;     constants       ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;
-(defun (flag-sum-inst)
-  (+ IS_JUMP IS_JUMPI IS_RDC IS_CDL IS_XCALL IS_CALL IS_CREATE IS_SSTORE IS_DEPLOYMENT))
 
-(defun (flag-sum-prc-common)
-  (+ IS_ECRECOVER IS_SHA2 IS_RIPEMD IS_IDENTITY IS_ECADD IS_ECMUL IS_ECPAIRING))
-
-(defun (flag-sum-prc-blake)
-  (+ IS_BLAKE2F_CDS IS_BLAKE2F_PARAMS))
-
-(defun (flag-sum-prc-modexp)
-  (+ IS_MODEXP_CDS IS_MODEXP_XBS IS_MODEXP_LEAD IS_MODEXP_PRICING IS_MODEXP_EXTRACT))
-
-(defun (flag-sum-prc)
-  (+ (flag-sum-prc-common) (flag-sum-prc-blake) (flag-sum-prc-modexp)))
-
-(defun (flag-sum)
-  (+ (flag-sum-inst) (flag-sum-prc)))
-
-(defun (wght-sum-inst)
-  (+ (* OOB_INST_JUMP IS_JUMP)
+(defun (flag-sum-inst)    (+ IS_JUMP IS_JUMPI IS_RDC IS_CDL IS_XCALL IS_CALL IS_CREATE IS_SSTORE IS_DEPLOYMENT))
+(defun (flag-sum-prc-common)  (+ IS_ECRECOVER IS_SHA2 IS_RIPEMD IS_IDENTITY IS_ECADD IS_ECMUL IS_ECPAIRING))
+(defun (flag-sum-prc-blake)  (+ IS_BLAKE2F_CDS IS_BLAKE2F_PARAMS))
+(defun (flag-sum-prc-modexp)  (+ IS_MODEXP_CDS IS_MODEXP_XBS IS_MODEXP_LEAD IS_MODEXP_PRICING IS_MODEXP_EXTRACT))
+(defun (flag-sum-prc)  (+ (flag-sum-prc-common) (flag-sum-prc-blake) (flag-sum-prc-modexp)))
+(defun (flag-sum)  (+ (flag-sum-inst) (flag-sum-prc)))
+(defun (wght-sum-inst)  (+ (* OOB_INST_JUMP IS_JUMP)
      (* OOB_INST_JUMPI IS_JUMPI)
      (* OOB_INST_RDC IS_RDC)
      (* OOB_INST_CDL IS_CDL)
@@ -38,7 +26,6 @@
      (* OOB_INST_CREATE IS_CREATE)
      (* OOB_INST_SSTORE IS_SSTORE)
      (* OOB_INST_DEPLOYMENT IS_DEPLOYMENT)))
-
 (defun (wght-sum-prc-common)
   (+ (* OOB_INST_ECRECOVER IS_ECRECOVER)
      (* OOB_INST_SHA2 IS_SHA2)
@@ -47,25 +34,15 @@
      (* OOB_INST_ECADD IS_ECADD)
      (* OOB_INST_ECMUL IS_ECMUL)
      (* OOB_INST_ECPAIRING IS_ECPAIRING)))
-
-(defun (wght-sum-prc-blake)
-  (+ (* OOB_INST_BLAKE_CDS IS_BLAKE2F_CDS) (* OOB_INST_BLAKE_PARAMS IS_BLAKE2F_PARAMS)))
-
-(defun (wght-sum-prc-modexp)
-  (+ (* OOB_INST_MODEXP_CDS IS_MODEXP_CDS)
+(defun (wght-sum-prc-blake)  (+ (* OOB_INST_BLAKE_CDS IS_BLAKE2F_CDS) (* OOB_INST_BLAKE_PARAMS IS_BLAKE2F_PARAMS)))
+(defun (wght-sum-prc-modexp)  (+ (* OOB_INST_MODEXP_CDS IS_MODEXP_CDS)
      (* OOB_INST_MODEXP_XBS IS_MODEXP_XBS)
      (* OOB_INST_MODEXP_LEAD IS_MODEXP_LEAD)
      (* OOB_INST_MODEXP_PRICING IS_MODEXP_PRICING)
      (* OOB_INST_MODEXP_EXTRACT IS_MODEXP_EXTRACT)))
-
-(defun (wght-sum-prc)
-  (+ (wght-sum-prc-common) (wght-sum-prc-blake) (wght-sum-prc-modexp)))
-
-(defun (wght-sum)
-  (+ (wght-sum-inst) (wght-sum-prc)))
-
-(defun (maxct-sum-inst)
-  (+ (* CT_MAX_JUMP IS_JUMP)
+(defun (wght-sum-prc)  (+ (wght-sum-prc-common) (wght-sum-prc-blake) (wght-sum-prc-modexp)))
+(defun (wght-sum)  (+ (wght-sum-inst) (wght-sum-prc)))
+(defun (maxct-sum-inst)  (+ (* CT_MAX_JUMP IS_JUMP)
      (* CT_MAX_JUMPI IS_JUMPI)
      (* CT_MAX_RDC IS_RDC)
      (* CT_MAX_CDL IS_CDL)
@@ -74,37 +51,23 @@
      (* CT_MAX_CREATE IS_CREATE)
      (* CT_MAX_SSTORE IS_SSTORE)
      (* CT_MAX_DEPLOYMENT IS_DEPLOYMENT)))
-
-(defun (maxct-sum-prc-common)
-  (+ (* CT_MAX_ECRECOVER IS_ECRECOVER)
+(defun (maxct-sum-prc-common)    (+ (* CT_MAX_ECRECOVER IS_ECRECOVER)
      (* CT_MAX_SHA2 IS_SHA2)
      (* CT_MAX_RIPEMD IS_RIPEMD)
      (* CT_MAX_IDENTITY IS_IDENTITY)
      (* CT_MAX_ECADD IS_ECADD)
      (* CT_MAX_ECMUL IS_ECMUL)
      (* CT_MAX_ECPAIRING IS_ECPAIRING)))
-
-(defun (maxct-sum-prc-blake)
-  (+ (* CT_MAX_BLAKE2F_CDS IS_BLAKE2F_CDS) (* CT_MAX_BLAKE2F_PARAMS IS_BLAKE2F_PARAMS)))
-
-(defun (maxct-sum-prc-modexp)
-  (+ (* CT_MAX_MODEXP_CDS IS_MODEXP_CDS)
+(defun (maxct-sum-prc-blake)  (+ (* CT_MAX_BLAKE2F_CDS IS_BLAKE2F_CDS) (* CT_MAX_BLAKE2F_PARAMS IS_BLAKE2F_PARAMS)))
+(defun (maxct-sum-prc-modexp)  (+ (* CT_MAX_MODEXP_CDS IS_MODEXP_CDS)
      (* CT_MAX_MODEXP_XBS IS_MODEXP_XBS)
      (* CT_MAX_MODEXP_LEAD IS_MODEXP_LEAD)
      (* CT_MAX_MODEXP_PRICING IS_MODEXP_PRICING)
      (* CT_MAX_MODEXP_EXTRACT IS_MODEXP_EXTRACT)))
-
-(defun (maxct-sum-prc)
-  (+ (maxct-sum-prc-common) (maxct-sum-prc-blake) (maxct-sum-prc-modexp)))
-
-(defun (maxct-sum)
-  (+ (maxct-sum-inst) (maxct-sum-prc)))
-
-(defun (lookup-sum k)
-  (+ (shift ADD_FLAG k) (shift MOD_FLAG k) (shift WCP_FLAG k)))
-
-(defun (wght-lookup-sum k)
-  (+ (* 1 (shift ADD_FLAG k))
+(defun (maxct-sum-prc)  (+ (maxct-sum-prc-common) (maxct-sum-prc-blake) (maxct-sum-prc-modexp)))
+(defun (maxct-sum)  (+ (maxct-sum-inst) (maxct-sum-prc)))
+(defun (lookup-sum k)  (+ (shift ADD_FLAG k) (shift MOD_FLAG k) (shift WCP_FLAG k)))
+(defun (wght-lookup-sum k)  (+ (* 1 (shift ADD_FLAG k))
      (* 2 (shift MOD_FLAG k))
      (* 3 (shift WCP_FLAG k))))
 
@@ -374,6 +337,9 @@
 ;; 3.5 For               ;;
 ;; RETURNDATACOPY        ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; Note. We use rdc as a shorthand for RETURNDATACOPY
+
 (defun (rdc-hypothesis)
   IS_RDC)
 
@@ -429,6 +395,9 @@
 ;; 3.6 For               ;;
 ;; CALLDATALOAD          ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; Note. We use cdl as a shorthand for CALLDATALOAD
+
 (defun (cdl-hypothesis)
   IS_CDL)
 
@@ -481,6 +450,9 @@
 ;; 3.8 For               ;;
 ;; DEPLOYMENT            ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; Note. Here "DEPLOYMENT" refers to the execution of the RETURN opcode in a deployment context
+
 (defun (deployment-hypothesis)
   IS_DEPLOYMENT)
 
@@ -507,6 +479,9 @@
 ;;    3.9 For XCALL's    ;;
 ;;                       ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; Note. We use XCALL as a shorthand for "eXceptional CALL-type instruction"
+
 (defun (xcall-hypothesis)
   IS_XCALL)
 
@@ -534,6 +509,7 @@
 ;;    3.10 For CALL's    ;;
 ;;                       ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (defun (call-hypothesis)
   IS_CALL)
 
@@ -661,71 +637,42 @@
 ;; constraints for       ;; 
 ;; precompiles           ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defun (prc-hypothesis)
-  (flag-sum-prc))
 
-(defun (prc-common-hypothesis)
-  (flag-sum-prc-common))
-
-(defun (prc---call-gas)
-  [DATA 1])
-
-(defun (prc---cds)
-  [DATA 2])
-
-(defun (prc---r-at-c)
-  [DATA 3])
-
-(defun (prc---hub-success)
-  [DATA 4])
-
-(defun (prc---ram-success)
-  [DATA 4])
-
-(defun (prc---return-gas)
-  [DATA 5])
-
-(defun (prc---extract-call-data)
-  [DATA 6])
-
-(defun (prc---empty-call-data)
-  [DATA 7])
-
-(defun (prc---r-at-c-nonzero)
-  [DATA 8])
-
-;;
-(defun (prc---cds-is-zero)
-  OUTGOING_RES_LO)
-
-(defun (prc---r-at-c-is-zero)
-  (next OUTGOING_RES_LO))
+(defun (prc-hypothesis)          (flag-sum-prc))
+(defun (prc-common-hypothesis)   (flag-sum-prc-common))
+(defun (prc---call-gas)          [DATA 1])
+(defun (prc---cds)               [DATA 2])
+(defun (prc---r@c)               [DATA 3])
+(defun (prc---hub-success)       [DATA 4])
+(defun (prc---ram-success)       [DATA 4])
+(defun (prc---return-gas)        [DATA 5])
+(defun (prc---extract-call-data) [DATA 6])
+(defun (prc---empty-call-data)   [DATA 7])
+(defun (prc---r@c-nonzero)       [DATA 8])
+(defun (prc---cds-is-zero)       OUTGOING_RES_LO)
+(defun (prc----is-zero)          (next OUTGOING_RES_LO))
 
 (defconstraint prc---check-cds-is-zero (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-common-hypothesis)))
   (call-to-ISZERO 0 0 (prc---cds)))
 
-(defconstraint prc---check-r-at-c-is-zero (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-common-hypothesis)))
-  (call-to-ISZERO 1 0 (prc---r-at-c)))
+(defconstraint prc---check--is-zero (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-common-hypothesis)))
+  (call-to-ISZERO 1 0 (prc---)))
 
 (defconstraint prc---justify-hub-predictions (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-common-hypothesis)))
   (begin (eq! (prc---extract-call-data)
               (* (prc---hub-success) (- 1 (prc---cds-is-zero))))
          (eq! (prc---empty-call-data) (* (prc---hub-success) (prc---cds-is-zero)))
-         (eq! (prc---r-at-c-nonzero) (- 1 (prc---r-at-c-is-zero)))))
+         (eq! (prc----nonzero) (- 1 (prc----is-zero)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                       ;;
 ;; 5.2 For ECRECOVER,    ;;
 ;; ECADD, ECMUL          ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defun (prc-ecrecover-prc-ecadd-prc-ecmul-hypothesis)
-  (+ IS_ECRECOVER IS_ECADD IS_ECMUL))
 
-(defun (prc-ecrecover-prc-ecadd-prc-ecmul---precompile-cost)
-  (+ (* 3000 IS_ECRECOVER) (* 150 IS_ECADD) (* 6000 IS_ECMUL)))
-
-(defun (prc-ecrecover-prc-ecadd-prc-ecmul---insufficient-gas)
-  (shift OUTGOING_RES_LO 2))
+(defun (prc-ecrecover-prc-ecadd-prc-ecmul-hypothesis)            (+ IS_ECRECOVER IS_ECADD IS_ECMUL))
+(defun (prc-ecrecover-prc-ecadd-prc-ecmul---precompile-cost)     (+ (* 3000 IS_ECRECOVER) (* 150 IS_ECADD) (* 6000 IS_ECMUL)))
+(defun (prc-ecrecover-prc-ecadd-prc-ecmul---insufficient-gas)    (shift OUTGOING_RES_LO 2))
 
 (defconstraint prc-ecrecover-prc-ecadd-prc-ecmul---compare-call-gas-and-precompile-cost (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-ecrecover-prc-ecadd-prc-ecmul-hypothesis)))
   (call-to-LT 2 0 (prc---call-gas) 0 (prc-ecrecover-prc-ecadd-prc-ecmul---precompile-cost)))
@@ -742,18 +689,12 @@
 ;; 5.3 For SHA2-256,     ;;
 ;; RIPEMD-160, IDENTITY  ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defun (prc-sha2-prc-ripemd-prc-identity-hypothesis)
-  (+ IS_SHA2 IS_RIPEMD IS_IDENTITY))
 
-(defun (prc-sha2-prc-ripemd-prc-identity---ceil)
-  (shift OUTGOING_RES_LO 2))
-
-(defun (prc-sha2-prc-ripemd-prc-identity---insufficient-gas)
-  (shift OUTGOING_RES_LO 3))
-
-(defun (prc-sha2-prc-ripemd-prc-identity---precompile-cost)
-  (* (+ 5 (prc-sha2-prc-ripemd-prc-identity---ceil))
-     (+ (* 12 IS_SHA2) (* 120 IS_RIPEMD) (* 3 IS_IDENTITY))))
+(defun (prc-sha2-prc-ripemd-prc-identity-hypothesis)           (+ IS_SHA2 IS_RIPEMD IS_IDENTITY))
+(defun (prc-sha2-prc-ripemd-prc-identity---ceil)               (shift OUTGOING_RES_LO 2))
+(defun (prc-sha2-prc-ripemd-prc-identity---insufficient-gas)   (shift OUTGOING_RES_LO 3))
+(defun (prc-sha2-prc-ripemd-prc-identity---precompile-cost)    (*    (+ 5 (prc-sha2-prc-ripemd-prc-identity---ceil))
+                                                                     (+ (* 12 IS_SHA2) (* 120 IS_RIPEMD) (* 3 IS_IDENTITY))))
 
 (defconstraint prc-sha2-prc-ripemd-prc-identity---div-cds-plus-31-by-32 (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-sha2-prc-ripemd-prc-identity-hypothesis)))
   (call-to-DIV 2 0 (+ (prc---cds) 31) 0 32))
@@ -773,21 +714,13 @@
 ;; 4.4 For ECPAIRING     ;;
 ;;                       ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defun (prc-ecpairing-hypothesis)
-  IS_ECPAIRING)
 
-(defun (prc-ecpairing---remainder)
-  (shift OUTGOING_RES_LO 2))
-
-(defun (prc-ecpairing---is-multiple_192)
-  (shift OUTGOING_RES_LO 3))
-
-(defun (prc-ecpairing---insufficient-gas)
-  (shift OUTGOING_RES_LO 4))
-
-(defun (prc-ecpairing---precompile-cost192)
-  (* (prc-ecpairing---is-multiple_192)
-     (+ (* 45000 192) (* 34000 (prc---cds)))))
+(defun (prc-ecpairing-hypothesis)            IS_ECPAIRING)
+(defun (prc-ecpairing---remainder)           (shift OUTGOING_RES_LO 2))
+(defun (prc-ecpairing---is-multiple_192)     (shift OUTGOING_RES_LO 3))
+(defun (prc-ecpairing---insufficient-gas)    (shift OUTGOING_RES_LO 4))
+(defun (prc-ecpairing---precompile-cost192)  (*    (prc-ecpairing---is-multiple_192)
+                                                   (+ (* 45000 192) (* 34000 (prc---cds)))))
 
 (defconstraint prc-ecpairing---mod-cds-by-192 (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-ecpairing-hypothesis)))
   (call-to-MOD 2 0 (prc---cds) 0 192))
@@ -826,17 +759,11 @@
 ;;   6.1 For MODEXP - cds  ;;
 ;;                         ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defun (prc-modexp-cds-hypothesis)
-  IS_MODEXP_CDS)
 
-(defun (prc-modexp-cds---extract-bbs)
-  [DATA 3])
-
-(defun (prc-modexp-cds---extract-ebs)
-  [DATA 4])
-
-(defun (prc-modexp-cds---extract-mbs)
-  [DATA 5])
+(defun (prc-modexp-cds-hypothesis)      IS_MODEXP_CDS)
+(defun (prc-modexp-cds---extract-bbs)   [DATA 3])
+(defun (prc-modexp-cds---extract-ebs)   [DATA 4])
+(defun (prc-modexp-cds---extract-mbs)   [DATA 5])
 
 (defconstraint prc-modexp-cds---compare-0-and-cds (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp-cds-hypothesis)))
   (call-to-LT 0 0 0 0 (prc---cds)))
@@ -857,32 +784,16 @@
 ;;   6.2 For MODEXP - xbs  ;;
 ;;                         ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defun (prc-modexp-xbs-hypothesis)
-  IS_MODEXP_XBS)
 
-(defun (prc-modexp-xbs---xbs-hi)
-  [DATA 1])
-
-(defun (prc-modexp-xbs---xbs-lo)
-  [DATA 2])
-
-(defun (prc-modexp-xbs---ybs-lo)
-  [DATA 3])
-
-(defun (prc-modexp-xbs---compute-max)
-  [DATA 4])
-
-(defun (prc-modexp-xbs---max-xbs-ybs)
-  [DATA 7])
-
-(defun (prc-modexp-xbs---xbs-nonzero)
-  [DATA 8])
-
-(defun (prc-modexp-xbs---compo-to_512)
-  OUTGOING_RES_LO)
-
-(defun (prc-modexp-xbs---comp)
-  (next OUTGOING_RES_LO))
+(defun (prc-modexp-xbs-hypothesis)       IS_MODEXP_XBS)
+(defun (prc-modexp-xbs---xbs-hi)         [DATA 1])
+(defun (prc-modexp-xbs---xbs-lo)         [DATA 2])
+(defun (prc-modexp-xbs---ybs-lo)         [DATA 3])
+(defun (prc-modexp-xbs---compute-max)    [DATA 4])
+(defun (prc-modexp-xbs---max-xbs-ybs)    [DATA 7])
+(defun (prc-modexp-xbs---xbs-nonzero)    [DATA 8])
+(defun (prc-modexp-xbs---compo-to_512)   OUTGOING_RES_LO)
+(defun (prc-modexp-xbs---comp)           (next OUTGOING_RES_LO))
 
 (defconstraint prc-modexp-xbs---compare-xbs-hi-and-513 (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp-xbs-hypothesis)))
   (call-to-LT 0 (prc-modexp-xbs---xbs-hi) (prc-modexp-xbs---xbs-lo) 0 513))
@@ -912,38 +823,18 @@
 ;;   6.3 For MODEXP        ;;
 ;;   - lead                ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defun (prc-modexp-lead-hypothesis)
-  IS_MODEXP_LEAD)
 
-(defun (prc-modexp-lead---bbs)
-  [DATA 1])
-
-(defun (prc-modexp-lead---ebs)
-  [DATA 3])
-
-(defun (prc-modexp-lead---load-lead)
-  [DATA 4])
-
-(defun (prc-modexp-lead---cds-cutoff)
-  [DATA 6])
-
-(defun (prc-modexp-lead---ebs-cutoff)
-  [DATA 7])
-
-(defun (prc-modexp-lead---sub-ebs_32)
-  [DATA 8])
-
-(defun (prc-modexp-lead---ebs-is-zero)
-  OUTGOING_RES_LO)
-
-(defun (prc-modexp-lead---ebs-less-than_32)
-  (next OUTGOING_RES_LO))
-
-(defun (prc-modexp-lead---call-data-contains-exponent-bytes)
-  (shift OUTGOING_RES_LO 2))
-
-(defun (prc-modexp-lead---comp)
-  (shift OUTGOING_RES_LO 3))
+(defun (prc-modexp-lead-hypothesis)                            IS_MODEXP_LEAD)
+(defun (prc-modexp-lead---bbs)                                 [DATA 1])
+(defun (prc-modexp-lead---ebs)                                 [DATA 3])
+(defun (prc-modexp-lead---load-lead)                           [DATA 4])
+(defun (prc-modexp-lead---cds-cutoff)                          [DATA 6])
+(defun (prc-modexp-lead---ebs-cutoff)                          [DATA 7])
+(defun (prc-modexp-lead---sub-ebs_32)                          [DATA 8])
+(defun (prc-modexp-lead---ebs-is-zero)                         OUTGOING_RES_LO)
+(defun (prc-modexp-lead---ebs-less-than_32)                    (next OUTGOING_RES_LO))
+(defun (prc-modexp-lead---call-data-contains-exponent-bytes)   (shift OUTGOING_RES_LO 2))
+(defun (prc-modexp-lead---comp)                                (shift OUTGOING_RES_LO 3))
 
 (defconstraint prc-modexp-lead---check-ebs-is-zero (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp-lead-hypothesis)))
   (call-to-ISZERO 0 0 (prc-modexp-lead---ebs)))
@@ -984,39 +875,23 @@
 ;;   6.4 For MODEXP        ;;
 ;;   - pricing             ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defun (prc-modexp-pricing-hypothesis)
-  IS_MODEXP_PRICING)
 
-(defun (prc-modexp-pricing---exponent-log)
-  [DATA 6])
+(defun (prc-modexp-pricing-hypothesis)                IS_MODEXP_PRICING)
+(defun (prc-modexp-pricing---exponent-log)            [DATA 6])
+(defun (prc-modexp-pricing---max-xbs-ybs)             [DATA 7])
+(defun (prc-modexp-pricing---exponent-log-is-zero)    (next OUTGOING_RES_LO))
+(defun (prc-modexp-pricing---f-of-max)                (shift OUTGOING_RES_LO 2))
+(defun (prc-modexp-pricing---big-quotient)            (shift OUTGOING_RES_LO 3))
+(defun (prc-modexp-pricing---big-quotient_LT_200)     (shift OUTGOING_RES_LO 4))
+(defun (prc-modexp-pricing---big-numerator)           (if-zero (prc-modexp-pricing---exponent-log-is-zero)
+                                                               (* (prc-modexp-pricing---f-of-max) (prc-modexp-pricing---exponent-log))
+                                                               (prc-modexp-pricing---f-of-max)))
+(defun (prc-modexp-pricing---precompile-cost)         (if-zero (prc-modexp-pricing---big-quotient_LT_200)
+                                                               (prc-modexp-pricing---big-quotient)
+                                                               200))
 
-(defun (prc-modexp-pricing---max-xbs-ybs)
-  [DATA 7])
-
-(defun (prc-modexp-pricing---exponent-log-is-zero)
-  (next OUTGOING_RES_LO))
-
-(defun (prc-modexp-pricing---f-of-max)
-  (shift OUTGOING_RES_LO 2))
-
-(defun (prc-modexp-pricing---big-quotient)
-  (shift OUTGOING_RES_LO 3))
-
-(defun (prc-modexp-pricing---big-quotient_LT_200)
-  (shift OUTGOING_RES_LO 4))
-
-(defun (prc-modexp-pricing---big-numerator)
-  (if-zero (prc-modexp-pricing---exponent-log-is-zero)
-           (* (prc-modexp-pricing---f-of-max) (prc-modexp-pricing---exponent-log))
-           (prc-modexp-pricing---f-of-max)))
-
-(defun (prc-modexp-pricing---precompile-cost)
-  (if-zero (prc-modexp-pricing---big-quotient_LT_200)
-           (prc-modexp-pricing---big-quotient)
-           200))
-
-(defconstraint prc-modexp-pricing---check-r-at-c-is-zero (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp-pricing-hypothesis)))
-  (call-to-ISZERO 0 0 (prc---r-at-c)))
+(defconstraint prc-modexp-pricing---check--is-zero (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp-pricing-hypothesis)))
+  (call-to-ISZERO 0 0 (prc---)))
 
 (defconstraint prc-modexp-pricing---check-exponent-log-is-zero (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp-pricing-hypothesis)))
   (call-to-ISZERO 1 0 (prc-modexp-pricing---exponent-log)))
@@ -1043,45 +918,24 @@
          (if-zero (prc---ram-success)
                   (vanishes! (prc---return-gas))
                   (eq! (prc---return-gas) (- (prc---call-gas) (prc-modexp-pricing---precompile-cost))))
-         (eq! (prc---r-at-c-nonzero) (- 1 OUTGOING_RES_LO))))
+         (eq! (prc----nonzero) (- 1 OUTGOING_RES_LO))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                         ;;
 ;;   6.5 For MODEXP        ;;
 ;;   - extract             ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defun (prc-modexp-extract-hypothesis)
-  IS_MODEXP_EXTRACT)
-
-(defun (prc-modexp-extract---bbs)
-  [DATA 3])
-
-(defun (prc-modexp-extract---ebs)
-  [DATA 4])
-
-(defun (prc-modexp-extract---mbs)
-  [DATA 5])
-
-(defun (prc-modexp-extract---extract-base)
-  [DATA 6])
-
-(defun (prc-modexp-extract---extract-exponent)
-  [DATA 7])
-
-(defun (prc-modexp-extract---extract-modulus)
-  [DATA 8])
-
-(defun (prc-modexp-extract---bbs-is-zero)
-  OUTGOING_RES_LO)
-
-(defun (prc-modexp-extract---ebs-is-zero)
-  (next OUTGOING_RES_LO))
-
-(defun (prc-modexp-extract---mbs-is-zero)
-  (shift OUTGOING_RES_LO 2))
-
-(defun (prc-modexp-extract---call-data-extends-beyond-exponent)
-  (shift OUTGOING_RES_LO 3))
+(defun (prc-modexp-extract-hypothesis)                              IS_MODEXP_EXTRACT)
+(defun (prc-modexp-extract---bbs)                                   [DATA 3])
+(defun (prc-modexp-extract---ebs)                                   [DATA 4])
+(defun (prc-modexp-extract---mbs)                                   [DATA 5])
+(defun (prc-modexp-extract---extract-base)                          [DATA 6])
+(defun (prc-modexp-extract---extract-exponent)                      [DATA 7])
+(defun (prc-modexp-extract---extract-modulus)                       [DATA 8])
+(defun (prc-modexp-extract---bbs-is-zero)                           OUTGOING_RES_LO)
+(defun (prc-modexp-extract---ebs-is-zero)                           (next OUTGOING_RES_LO))
+(defun (prc-modexp-extract---mbs-is-zero)                           (shift OUTGOING_RES_LO 2))
+(defun (prc-modexp-extract---call-data-extends-beyond-exponent)     (shift OUTGOING_RES_LO 3))
 
 (defconstraint prc-modexp-extract---check-bbs-is-zero (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp-extract-hypothesis)))
   (call-to-ISZERO 0 0 (prc-modexp-extract---bbs)))
@@ -1111,44 +965,31 @@
 ;; 7.1 For BLAKE2F_cds   ;;
 ;;                       ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defun (prc-blake-cds-hypothesis)
-  IS_BLAKE2F_CDS)
-
-(defun (prc-blake-cds---valid-cds)
-  OUTGOING_RES_LO)
-
-(defun (prc-blake-cds---r-at-c-is-zero)
-  (next OUTGOING_RES_LO))
+(defun (prc-blake-cds-hypothesis)   IS_BLAKE2F_CDS)
+(defun (prc-blake-cds---valid-cds)  OUTGOING_RES_LO)
+(defun (prc-blake-cds----is-zero)   (next OUTGOING_RES_LO))
 
 (defconstraint prc-blake-cds---compare-cds-and-213 (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-blake-cds-hypothesis)))
   (call-to-EQ 0 0 (prc---cds) 0 213))
 
-(defconstraint prc-blake-cds---check-r-at-c-is-zero (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-blake-cds-hypothesis)))
-  (call-to-ISZERO 1 0 (prc---r-at-c)))
+(defconstraint prc-blake-cds---check--is-zero (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-blake-cds-hypothesis)))
+  (call-to-ISZERO 1 0 (prc---)))
 
 (defconstraint blake2f-a---justify-hub-predictions (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-blake-cds-hypothesis)))
   (begin (eq! (prc---hub-success) (prc-blake-cds---valid-cds))
-         (eq! (prc---r-at-c-nonzero) (- 1 (prc-blake-cds---r-at-c-is-zero)))))
+         (eq! (prc----nonzero) (- 1 (prc-blake-cds----is-zero)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;::;;
 ;;                         ;;
 ;; 7.2 For BLAKE2F_params  ;;
 ;;                         ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defun (prc-blake-params-hypothesis)
-  IS_BLAKE2F_PARAMS)
+(defun (prc-blake-params-hypothesis)          IS_BLAKE2F_PARAMS)
+(defun (prc-blake-params---blake-r)           [DATA 6])
+(defun (prc-blake-params---blake-f)           [DATA 7])
+(defun (prc-blake-params---sufficient-gas)    (- 1 OUTGOING_RES_LO))
+(defun (prc-blake-params---f-is-a-bit)        (next OUTGOING_RES_LO))
 
-(defun (prc-blake-params---blake-r)
-  [DATA 6])
-
-(defun (prc-blake-params---blake-f)
-  [DATA 7])
-
-(defun (prc-blake-params---sufficient-gas)
-  (- 1 OUTGOING_RES_LO))
-
-(defun (prc-blake-params---f-is-a-bit)
-  (next OUTGOING_RES_LO))
 
 (defconstraint prc-blake-params---compare-call-gas-and-blake-r (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-blake-params-hypothesis)))
   (call-to-LT 0 0 (prc---call-gas) 0 (prc-blake-params---blake-r)))
