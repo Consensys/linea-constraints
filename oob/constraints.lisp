@@ -301,10 +301,10 @@
 (defun (jump---valid-pc-new)
   OUTGOING_RES_LO)
 
-(defconstraint valid-jump (:guard (* (standing-hypothesis) (jump-hypothesis)))
+(defconstraint jump---compare-pc-new-and-code-size (:guard (* (standing-hypothesis) (jump-hypothesis)))
   (call-to-LT 0 (jump---pc-new-hi) (jump---pc-new-lo) 0 (jump---code-size)))
 
-(defconstraint justify-hub-predictions-jump (:guard (* (standing-hypothesis) (jump-hypothesis)))
+(defconstraint jump---justify-hub-predictions (:guard (* (standing-hypothesis) (jump-hypothesis)))
   (begin (eq! (jump---guaranteed-exception) (- 1 (jump---valid-pc-new)))
          (eq! (jump---jump-must-be-attempted) (jump---valid-pc-new))
          (debug (is-binary (jump---guaranteed-exception)))
@@ -349,13 +349,13 @@
 (defun (jumpi---jump-cond-is-zero)
   (next OUTGOING_RES_LO))
 
-(defconstraint valid-jumpi (:guard (* (standing-hypothesis) (jumpi-hypothesis)))
+(defconstraint jumpi---compare-pc-new-and-code-size (:guard (* (standing-hypothesis) (jumpi-hypothesis)))
   (call-to-LT 0 (jumpi---pc-new-hi) (jumpi---pc-new-lo) 0 (jumpi---code-size)))
 
-(defconstraint valid-jumpi-future (:guard (* (standing-hypothesis) (jumpi-hypothesis)))
+(defconstraint jumpi---check-jump-cond-is-zero (:guard (* (standing-hypothesis) (jumpi-hypothesis)))
   (call-to-ISZERO 1 (jumpi---jump-cond-hi) (jumpi---jump-cond-lo)))
 
-(defconstraint justify-hub-predictions-jumpi (:guard (* (standing-hypothesis) (jumpi-hypothesis)))
+(defconstraint jumpi---justify-hub-predictions (:guard (* (standing-hypothesis) (jumpi-hypothesis)))
   (begin (eq! (jumpi---jump-not-attempted) (jumpi---jump-cond-is-zero))
          (eq! (jumpi---guaranteed-exception)
               (* (- 1 (jumpi---jump-cond-is-zero)) (- 1 (jumpi---valid-pc-new))))
@@ -401,15 +401,15 @@
 (defun (rdc---rdc-soob)
   (shift OUTGOING_RES_LO 2))
 
-(defconstraint valid-rdc (:guard (* (standing-hypothesis) (rdc-hypothesis)))
+(defconstraint rdc---check-offset-is-zero (:guard (* (standing-hypothesis) (rdc-hypothesis)))
   (call-to-ISZERO 0 (rdc---offset-hi) (rdc---size-hi)))
 
-(defconstraint valid-rdc-future (:guard (* (standing-hypothesis) (rdc-hypothesis)))
+(defconstraint rdc---add-offset-and-size (:guard (* (standing-hypothesis) (rdc-hypothesis)))
   (if-zero (rdc---rdc-roob)
            (call-to-ADD 1 0 (rdc---offset-lo) 0 (rdc---size-lo))
            (noCall 1)))
 
-(defconstraint valid-rdc-future-future (:guard (* (standing-hypothesis) (rdc-hypothesis)))
+(defconstraint rdc---compare-offset-and-size-sum-and-rds (:guard (* (standing-hypothesis) (rdc-hypothesis)))
   (if-zero (rdc---rdc-roob)
            (begin (vanishes! (shift ADD_FLAG 2))
                   (vanishes! (shift MOD_FLAG 2))
@@ -419,7 +419,7 @@
                   (eq! (shift [OUTGOING_DATA 4] 2) (rdc---rds)))
            (noCall 2)))
 
-(defconstraint justify-hub-predictions-rdc (:guard (* (standing-hypothesis) (rdc-hypothesis)))
+(defconstraint rdc---justify-hub-predictions (:guard (* (standing-hypothesis) (rdc-hypothesis)))
   (eq! (rdc---rdcx)
        (+ (rdc---rdc-roob)
           (* (- 1 (rdc---rdc-roob)) (rdc---rdc-soob)))))
