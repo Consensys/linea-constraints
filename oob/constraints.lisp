@@ -447,7 +447,7 @@
 (defun (cdl---touches-ram)
   OUTGOING_RES_LO)
 
-(defconstraint valid-cdl (:guard (* (standing-hypothesis) (cdl-hypothesis)))
+(defconstraint cdl---compare-offset-and-cds (:guard (* (standing-hypothesis) (cdl-hypothesis)))
   (call-to-LT 0 (cdl---offset-hi) (cdl---offset-lo) 0 (cdl---cds)))
 
 (defconstraint cdl---justify-hub-predictions (:guard (* (standing-hypothesis) (cdl-hypothesis)))
@@ -470,7 +470,7 @@
 (defun (sstore---sufficient-gas)
   OUTGOING_RES_LO)
 
-(defconstraint valid-sstore (:guard (* (standing-hypothesis) (sstore-hypothesis)))
+(defconstraint sstore---compare-g-call-stipend-and-gas (:guard (* (standing-hypothesis) (sstore-hypothesis)))
   (call-to-LT 0 0 GAS_CONST_G_CALL_STIPEND 0 (sstore---gas)))
 
 (defconstraint sstore---justify-hub-predictions (:guard (* (standing-hypothesis) (sstore-hypothesis)))
@@ -496,7 +496,7 @@
 (defun (deployment---exceeds-max-code-size)
   OUTGOING_RES_LO)
 
-(defconstraint valid-deployment (:guard (* (standing-hypothesis) (deployment-hypothesis)))
+(defconstraint deployment---compare-24576-and-code-size (:guard (* (standing-hypothesis) (deployment-hypothesis)))
   (call-to-LT 0 0 24576 (deployment---code-size-hi) (deployment---code-size-lo)))
 
 (defconstraint deployment---justify-hub-predictions (:guard (* (standing-hypothesis) (deployment-hypothesis)))
@@ -522,7 +522,7 @@
 (defun (xcall---value-is-zero)
   [DATA 8])
 
-(defconstraint valid-xcall (:guard (* (standing-hypothesis) (xcall-hypothesis)))
+(defconstraint xcall---check-value-is-zero (:guard (* (standing-hypothesis) (xcall-hypothesis)))
   (call-to-ISZERO 0 (xcall---value-hi) (xcall---value-lo)))
 
 (defconstraint xcall---justify-hub-predictions (:guard (* (standing-hypothesis) (xcall-hypothesis)))
@@ -564,13 +564,13 @@
 (defun (call---value-is-zero)
   (shift OUTGOING_RES_LO 2))
 
-(defconstraint valid-call (:guard (* (standing-hypothesis) (call-hypothesis)))
+(defconstraint call---compare-balance-and-value (:guard (* (standing-hypothesis) (call-hypothesis)))
   (call-to-LT 0 0 (call---balance) (call---value-hi) (call---value-lo)))
 
-(defconstraint valid-call-future (:guard (* (standing-hypothesis) (call-hypothesis)))
+(defconstraint call---compare-call-stack-depth-and-1024 (:guard (* (standing-hypothesis) (call-hypothesis)))
   (call-to-LT 1 0 (call---call-stack-depth) 0 1024))
 
-(defconstraint valid-call-future-future (:guard (* (standing-hypothesis) (call-hypothesis)))
+(defconstraint call---check-value-is-zero (:guard (* (standing-hypothesis) (call-hypothesis)))
   (call-to-ISZERO 2 (call---value-hi) (call---value-lo)))
 
 (defconstraint call---justify-hub-predictions (:guard (* (standing-hypothesis) (call-hypothesis)))
@@ -629,16 +629,16 @@
 (defun (create---aborting-conditions-sum)
   (+ (create---insufficient-balance-abort) (create---stack-depth-abort) (create---creator-nonce-abort)))
 
-(defconstraint valid-create (:guard (* (standing-hypothesis) (create-hypothesis)))
+(defconstraint create---compare-balance-and-value (:guard (* (standing-hypothesis) (create-hypothesis)))
   (call-to-LT 0 0 (create---balance) (create---value-hi) (create---value-lo)))
 
-(defconstraint valid-create-future (:guard (* (standing-hypothesis) (create-hypothesis)))
+(defconstraint create---compare-call-stack-depth-and-1024 (:guard (* (standing-hypothesis) (create-hypothesis)))
   (call-to-LT 1 0 (create---call-stack-depth) 0 1024))
 
-(defconstraint valid-create-future-future (:guard (* (standing-hypothesis) (create-hypothesis)))
+(defconstraint create---check-nonce-is-zero (:guard (* (standing-hypothesis) (create-hypothesis)))
   (call-to-ISZERO 2 0 (create---nonce)))
 
-(defconstraint valid-create-future-future-future (:guard (* (standing-hypothesis) (create-hypothesis)))
+(defconstraint create---compare-creator-nonce-and-max-nonce (:guard (* (standing-hypothesis) (create-hypothesis)))
   (call-to-LT 3 0 (create---creator-nonce) 0 EIP2681_MAX_NONCE))
 
 (defconstraint create---justify-hub-predictions (:guard (* (standing-hypothesis) (create-hypothesis)))
@@ -701,10 +701,10 @@
 (defun (prc---r-at-c-is-zero)
   (next OUTGOING_RES_LO))
 
-(defconstraint valid-prc (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-common-hypothesis)))
+(defconstraint prc---check-cds-is-zero (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-common-hypothesis)))
   (call-to-ISZERO 0 0 (prc---cds)))
 
-(defconstraint valid-prc-future (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-common-hypothesis)))
+(defconstraint prc---check-r-at-c-is-zero (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-common-hypothesis)))
   (call-to-ISZERO 1 0 (prc---r-at-c)))
 
 (defconstraint prc---justify-hub-predictions (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-common-hypothesis)))
@@ -727,7 +727,7 @@
 (defun (prc-ecrecover-prc-ecadd-prc-ecmul---insufficient-gas)
   (shift OUTGOING_RES_LO 2))
 
-(defconstraint valid-prc-ecrecover-prc-ecadd-prc-ecmul-future-future (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-ecrecover-prc-ecadd-prc-ecmul-hypothesis)))
+(defconstraint prc-ecrecover-prc-ecadd-prc-ecmul---compare-call-gas-and-precompile-cost (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-ecrecover-prc-ecadd-prc-ecmul-hypothesis)))
   (call-to-LT 2 0 (prc---call-gas) 0 (prc-ecrecover-prc-ecadd-prc-ecmul---precompile-cost)))
 
 (defconstraint prc-ecrecover-prc-ecadd-prc-ecmul---justify-hub-predictions (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-ecrecover-prc-ecadd-prc-ecmul-hypothesis)))
@@ -755,10 +755,10 @@
   (* (+ 5 (prc-sha2-prc-ripemd-prc-identity---ceil))
      (+ (* 12 IS_SHA2) (* 120 IS_RIPEMD) (* 3 IS_IDENTITY))))
 
-(defconstraint valid-prc-sha2-prc-ripemd-prc-identity-future-future (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-sha2-prc-ripemd-prc-identity-hypothesis)))
+(defconstraint prc-sha2-prc-ripemd-prc-identity---div-cds-plus-31-by-32 (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-sha2-prc-ripemd-prc-identity-hypothesis)))
   (call-to-DIV 2 0 (+ (prc---cds) 31) 0 32))
 
-(defconstraint valid-prc-sha2-prc-ripemd-prc-identity-future-future-future (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-sha2-prc-ripemd-prc-identity-hypothesis)))
+(defconstraint prc-sha2-prc-ripemd-prc-identity---compare-call-gas-and-precompile-cost (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-sha2-prc-ripemd-prc-identity-hypothesis)))
   (call-to-LT 3 0 (prc---call-gas) 0 (prc-sha2-prc-ripemd-prc-identity---precompile-cost)))
 
 (defconstraint prc-sha2-prc-ripemd-prc-identity---justify-hub-predictions (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-sha2-prc-ripemd-prc-identity-hypothesis)))
@@ -789,13 +789,13 @@
   (* (prc-ecpairing---is-multiple_192)
      (+ (* 45000 192) (* 34000 (prc---cds)))))
 
-(defconstraint valid-prc-ecpairing-future-future (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-ecpairing-hypothesis)))
+(defconstraint prc-ecpairing---mod-cds-by-192 (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-ecpairing-hypothesis)))
   (call-to-MOD 2 0 (prc---cds) 0 192))
 
-(defconstraint valid-prc-ecpairing-future-future-future (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-ecpairing-hypothesis)))
+(defconstraint prc-ecpairing---check-remainder-is-zero (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-ecpairing-hypothesis)))
   (call-to-ISZERO 3 0 (prc-ecpairing---remainder)))
 
-(defconstraint valid-prc-ecpairing-future-future-future-future (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-ecpairing-hypothesis)))
+(defconstraint prc-ecpairing---compare-call-gas-and-precompile-cost (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-ecpairing-hypothesis)))
   (if-zero (prc-ecpairing---is-multiple_192)
            (noCall 4)
            (begin (vanishes! (shift ADD_FLAG 4))
@@ -838,13 +838,13 @@
 (defun (prc-modexp-cds---extract-mbs)
   [DATA 5])
 
-(defconstraint valid-prc-modexp-cds (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp-cds-hypothesis)))
+(defconstraint prc-modexp-cds---compare-0-and-cds (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp-cds-hypothesis)))
   (call-to-LT 0 0 0 0 (prc---cds)))
 
-(defconstraint valid-prc-modexp-cds-future (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp-cds-hypothesis)))
+(defconstraint prc-modexp-cds---compare-32-and-cds (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp-cds-hypothesis)))
   (call-to-LT 1 0 32 0 (prc---cds)))
 
-(defconstraint valid-prc-modexp-cds-future-future (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp-cds-hypothesis)))
+(defconstraint prc-modexp-cds---compare-64-and-cds (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp-cds-hypothesis)))
   (call-to-LT 2 0 64 0 (prc---cds)))
 
 (defconstraint prc-modexp-cds---justify-hub-predictions (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp-cds-hypothesis)))
@@ -884,13 +884,13 @@
 (defun (prc-modexp-xbs---comp)
   (next OUTGOING_RES_LO))
 
-(defconstraint valid-prc-modexp-xbs (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp-xbs-hypothesis)))
+(defconstraint prc-modexp-xbs---compare-xbs-hi-and-513 (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp-xbs-hypothesis)))
   (call-to-LT 0 (prc-modexp-xbs---xbs-hi) (prc-modexp-xbs---xbs-lo) 0 513))
 
-(defconstraint valid-prc-modexp-xbs-future (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp-xbs-hypothesis)))
+(defconstraint prc-modexp-xbs---compare-xbs-and-ybs (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp-xbs-hypothesis)))
   (call-to-LT 1 0 (prc-modexp-xbs---xbs-lo) 0 (prc-modexp-xbs---ybs-lo)))
 
-(defconstraint valid-prc-modexp-xbs-future-future (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp-xbs-hypothesis)))
+(defconstraint prc-modexp-xbs---check-xbs-is-zero (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp-xbs-hypothesis)))
   (call-to-ISZERO 2 0 (prc-modexp-xbs---xbs-lo)))
 
 (defconstraint additional-prc-modexp-xbs (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp-xbs-hypothesis)))
@@ -945,16 +945,16 @@
 (defun (prc-modexp-lead---comp)
   (shift OUTGOING_RES_LO 3))
 
-(defconstraint valid-prc-modexp-lead (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp-lead-hypothesis)))
+(defconstraint prc-modexp-lead---check-ebs-is-zero (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp-lead-hypothesis)))
   (call-to-ISZERO 0 0 (prc-modexp-lead---ebs)))
 
-(defconstraint valid-prc-modexp-lead-future (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp-lead-hypothesis)))
+(defconstraint prc-modexp-lead---compare-ebs-and-32 (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp-lead-hypothesis)))
   (call-to-LT 1 0 (prc-modexp-lead---ebs) 0 32))
 
-(defconstraint valid-prc-modexp-lead-future-future (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp-lead-hypothesis)))
+(defconstraint prc-modexp-lead---compare-ebs-and-cds (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp-lead-hypothesis)))
   (call-to-LT 2 0 (+ 96 (prc-modexp-lead---ebs)) 0 (prc---cds)))
 
-(defconstraint valid-prc-modexp-lead-future-future-future (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp-lead-hypothesis)))
+(defconstraint prc-modexp-lead---compare-cds-minus-96-plus-bbs-and-32 (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp-lead-hypothesis)))
   (if-not-zero (prc-modexp-lead---call-data-contains-exponent-bytes)
                (call-to-LT 3
                            0
@@ -1015,26 +1015,26 @@
            (prc-modexp-pricing---big-quotient)
            200))
 
-(defconstraint valid-prc-modexp-pricing (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp-pricing-hypothesis)))
+(defconstraint prc-modexp-pricing---check-r-at-c-is-zero (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp-pricing-hypothesis)))
   (call-to-ISZERO 0 0 (prc---r-at-c)))
 
-(defconstraint valid-prc-modexp-pricing-future (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp-pricing-hypothesis)))
+(defconstraint prc-modexp-pricing---check-exponent-log-is-zero (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp-pricing-hypothesis)))
   (call-to-ISZERO 1 0 (prc-modexp-pricing---exponent-log)))
 
-(defconstraint valid-prc-modexp-pricing-future-future (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp-pricing-hypothesis)))
+(defconstraint prc-modexp-pricing---div-max-xbs-ybs-square-plus-7-by-8 (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp-pricing-hypothesis)))
   (call-to-DIV 2
                0
                (+ (* (prc-modexp-pricing---max-xbs-ybs) (prc-modexp-pricing---max-xbs-ybs)) 7)
                0
                8))
 
-(defconstraint valid-prc-modexp-pricing-future-future-future (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp-pricing-hypothesis)))
+(defconstraint prc-modexp-pricing---div-big-numerator-by-quaddivisor (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp-pricing-hypothesis)))
   (call-to-DIV 3 0 (prc-modexp-pricing---big-numerator) 0 G_QUADDIVISOR))
 
-(defconstraint valid-prc-modexp-pricing-future-future-future-future (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp-pricing-hypothesis)))
+(defconstraint prc-modexp-pricing---compare-big-quotient-and-200 (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp-pricing-hypothesis)))
   (call-to-LT 4 0 (prc-modexp-pricing---big-quotient) 0 200))
 
-(defconstraint valid-prc-modexp-pricing-future-future-future-future-future (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp-pricing-hypothesis)))
+(defconstraint prc-modexp-pricing---compare-call-gas-and-precompile-cost (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp-pricing-hypothesis)))
   (call-to-LT 5 0 (prc---call-gas) 0 (prc-modexp-pricing---precompile-cost)))
 
 (defconstraint prc-modexp-pricing---justify-hub-predictions (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp-pricing-hypothesis)))
@@ -1083,13 +1083,13 @@
 (defun (prc-modexp-extract---call-data-extends-beyond-exponent)
   (shift OUTGOING_RES_LO 3))
 
-(defconstraint valid-prc-modexp-extract (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp-extract-hypothesis)))
+(defconstraint prc-modexp-extract---check-bbs-is-zero (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp-extract-hypothesis)))
   (call-to-ISZERO 0 0 (prc-modexp-extract---bbs)))
 
-(defconstraint valid-prc-modexp-extract-future (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp-extract-hypothesis)))
+(defconstraint prc-modexp-extract---check-ebs-is-zero (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp-extract-hypothesis)))
   (call-to-ISZERO 1 0 (prc-modexp-extract---ebs)))
 
-(defconstraint valid-prc-modexp-extract-future-future (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp-extract-hypothesis)))
+(defconstraint prc-modexp-extract---check-mbs-is-zero (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp-extract-hypothesis)))
   (call-to-ISZERO 2 0 (prc-modexp-extract---mbs)))
 
 (defconstraint prc-modexp-extract---justify-hub-predictions (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp-extract-hypothesis)))
@@ -1120,10 +1120,10 @@
 (defun (prc-blake-cds---r-at-c-is-zero)
   (next OUTGOING_RES_LO))
 
-(defconstraint valid-prc-blake-cds (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-blake-cds-hypothesis)))
+(defconstraint prc-blake-cds---compare-cds-and-213 (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-blake-cds-hypothesis)))
   (call-to-EQ 0 0 (prc---cds) 0 213))
 
-(defconstraint valid-prc-blake-cds-future (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-blake-cds-hypothesis)))
+(defconstraint prc-blake-cds---check-r-at-c-is-zero (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-blake-cds-hypothesis)))
   (call-to-ISZERO 1 0 (prc---r-at-c)))
 
 (defconstraint blake2f-a---justify-hub-predictions (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-blake-cds-hypothesis)))
@@ -1150,18 +1150,15 @@
 (defun (prc-blake-params---f-is-a-bit)
   (next OUTGOING_RES_LO))
 
-(defconstraint valid-prc-blake-params (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-blake-params-hypothesis)))
+(defconstraint prc-blake-params---compare-call-gas-and-blake-r (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-blake-params-hypothesis)))
   (call-to-LT 0 0 (prc---call-gas) 0 (prc-blake-params---blake-r)))
 
-(defconstraint valid-prc-blake-params-future (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-blake-params-hypothesis)))
+(defconstraint prc-blake-params---compare-blake-f-and-blake-f-square (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-blake-params-hypothesis)))
   (call-to-EQ 1
               0
               (prc-blake-params---blake-f)
               0
               (* (prc-blake-params---blake-f) (prc-blake-params---blake-f))))
-
-(defconstraint valid-prc-blake-params-future-future (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-blake-params-hypothesis)))
-  (call-to-ISZERO 2 0 (prc---r-at-c)))
 
 (defconstraint prc-blake-params---justify-hub-predictions (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-blake-params-hypothesis)))
   (begin (eq! (prc---ram-success)
