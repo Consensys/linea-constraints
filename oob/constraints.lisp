@@ -97,23 +97,29 @@
                                                   (* CT_MAX_ECMUL              IS_ECMUL)
                                                   (* CT_MAX_ECPAIRING          IS_ECPAIRING)))
 
-(defun (maxct-sum-prc-blake)  (+ (* CT_MAX_BLAKE2F_CDS IS_BLAKE2F_CDS) (* CT_MAX_BLAKE2F_PARAMS IS_BLAKE2F_PARAMS)))
+(defun (maxct-sum-prc-blake)                (+    (* CT_MAX_BLAKE2F_CDS IS_BLAKE2F_CDS)
+                                                  (* CT_MAX_BLAKE2F_PARAMS IS_BLAKE2F_PARAMS)))
 
-(defun (maxct-sum-prc-modexp)  (+ (* CT_MAX_MODEXP_CDS IS_MODEXP_CDS)
-                                  (* CT_MAX_MODEXP_XBS IS_MODEXP_XBS)
-                                  (* CT_MAX_MODEXP_LEAD IS_MODEXP_LEAD)
-                                  (* CT_MAX_MODEXP_PRICING IS_MODEXP_PRICING)
-                                  (* CT_MAX_MODEXP_EXTRACT IS_MODEXP_EXTRACT)))
+(defun (maxct-sum-prc-modexp)               (+    (* CT_MAX_MODEXP_CDS IS_MODEXP_CDS)
+                                                  (* CT_MAX_MODEXP_XBS IS_MODEXP_XBS)
+                                                  (* CT_MAX_MODEXP_LEAD IS_MODEXP_LEAD)
+                                                  (* CT_MAX_MODEXP_PRICING IS_MODEXP_PRICING)
+                                                  (* CT_MAX_MODEXP_EXTRACT IS_MODEXP_EXTRACT)))
 
-(defun (maxct-sum-prc)  (+ (maxct-sum-prc-common) (maxct-sum-prc-blake) (maxct-sum-prc-modexp)))
+(defun (maxct-sum-prc)                      (+    (maxct-sum-prc-common)
+                                                  (maxct-sum-prc-blake)
+                                                  (maxct-sum-prc-modexp)))
 
-(defun (maxct-sum)  (+ (maxct-sum-inst) (maxct-sum-prc)))
+(defun (maxct-sum)                          (+    (maxct-sum-inst)
+                                                  (maxct-sum-prc)))
 
-(defun (lookup-sum k)  (+ (shift ADD_FLAG k) (shift MOD_FLAG k) (shift WCP_FLAG k)))
+(defun (lookup-sum k)                       (+    (shift ADD_FLAG k)
+                                                  (shift MOD_FLAG k)
+                                                  (shift WCP_FLAG k)))
 
-(defun (wght-lookup-sum k)  (+ (* 1 (shift ADD_FLAG k))
-                               (* 2 (shift MOD_FLAG k))
-                               (* 3 (shift WCP_FLAG k))))
+(defun (wght-lookup-sum k)                  (+    (* 1 (shift ADD_FLAG k))
+                                                  (* 2 (shift MOD_FLAG k))
+                                                  (* 3 (shift WCP_FLAG k))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                             ;;
