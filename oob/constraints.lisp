@@ -672,7 +672,6 @@
 ;; precompiles           ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defun (prc-hypothesis)          (flag-sum-prc))
 (defun (prc-common-hypothesis)   (flag-sum-prc-common))
 (defun (prc---call-gas)          [DATA 1])
 (defun (prc---cds)               [DATA 2])
@@ -686,13 +685,13 @@
 (defun (prc---cds-is-zero)       OUTGOING_RES_LO)
 (defun (prc---r@c-is-zero)          (next OUTGOING_RES_LO))
 
-(defconstraint prc---check-cds-is-zero (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-common-hypothesis)))
+(defconstraint prc---check-cds-is-zero (:guard (* (standing-hypothesis) (prc-common-hypothesis)))
   (call-to-ISZERO 0 0 (prc---cds)))
 
-(defconstraint prc---check-r@c-is-zero (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-common-hypothesis)))
+(defconstraint prc---check-r@c-is-zero (:guard (* (standing-hypothesis) (prc-common-hypothesis)))
   (call-to-ISZERO 1 0 (prc---r@c)))
 
-(defconstraint prc---justify-hub-predictions (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-common-hypothesis)))
+(defconstraint prc---justify-hub-predictions (:guard (* (standing-hypothesis) (prc-common-hypothesis)))
   (begin (eq! (prc---extract-call-data)
               (* (prc---hub-success) (- 1 (prc---cds-is-zero))))
          (eq! (prc---empty-call-data) (* (prc---hub-success) (prc---cds-is-zero)))
@@ -708,10 +707,10 @@
 (defun (prc-ecrecover-prc-ecadd-prc-ecmul---precompile-cost)     (+ (* 3000 IS_ECRECOVER) (* 150 IS_ECADD) (* 6000 IS_ECMUL)))
 (defun (prc-ecrecover-prc-ecadd-prc-ecmul---insufficient-gas)    (shift OUTGOING_RES_LO 2))
 
-(defconstraint prc-ecrecover-prc-ecadd-prc-ecmul---compare-call-gas-and-precompile-cost (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-ecrecover-prc-ecadd-prc-ecmul-hypothesis)))
+(defconstraint prc-ecrecover-prc-ecadd-prc-ecmul---compare-call-gas-and-precompile-cost (:guard (* (standing-hypothesis) (prc-ecrecover-prc-ecadd-prc-ecmul-hypothesis)))
   (call-to-LT 2 0 (prc---call-gas) 0 (prc-ecrecover-prc-ecadd-prc-ecmul---precompile-cost)))
 
-(defconstraint prc-ecrecover-prc-ecadd-prc-ecmul---justify-hub-predictions (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-ecrecover-prc-ecadd-prc-ecmul-hypothesis)))
+(defconstraint prc-ecrecover-prc-ecadd-prc-ecmul---justify-hub-predictions (:guard (* (standing-hypothesis) (prc-ecrecover-prc-ecadd-prc-ecmul-hypothesis)))
   (begin (eq! (prc---hub-success) (- 1 (prc-ecrecover-prc-ecadd-prc-ecmul---insufficient-gas)))
          (if-zero (prc---hub-success)
                   (vanishes! (prc---return-gas))
@@ -730,13 +729,13 @@
 (defun (prc-sha2-prc-ripemd-prc-identity---precompile-cost)    (*    (+ 5 (prc-sha2-prc-ripemd-prc-identity---ceil))
                                                                      (+ (* 12 IS_SHA2) (* 120 IS_RIPEMD) (* 3 IS_IDENTITY))))
 
-(defconstraint prc-sha2-prc-ripemd-prc-identity---div-cds-plus-31-by-32 (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-sha2-prc-ripemd-prc-identity-hypothesis)))
+(defconstraint prc-sha2-prc-ripemd-prc-identity---div-cds-plus-31-by-32 (:guard (* (standing-hypothesis) (prc-sha2-prc-ripemd-prc-identity-hypothesis)))
   (call-to-DIV 2 0 (+ (prc---cds) 31) 0 32))
 
-(defconstraint prc-sha2-prc-ripemd-prc-identity---compare-call-gas-and-precompile-cost (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-sha2-prc-ripemd-prc-identity-hypothesis)))
+(defconstraint prc-sha2-prc-ripemd-prc-identity---compare-call-gas-and-precompile-cost (:guard (* (standing-hypothesis) (prc-sha2-prc-ripemd-prc-identity-hypothesis)))
   (call-to-LT 3 0 (prc---call-gas) 0 (prc-sha2-prc-ripemd-prc-identity---precompile-cost)))
 
-(defconstraint prc-sha2-prc-ripemd-prc-identity---justify-hub-predictions (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-sha2-prc-ripemd-prc-identity-hypothesis)))
+(defconstraint prc-sha2-prc-ripemd-prc-identity---justify-hub-predictions (:guard (* (standing-hypothesis) (prc-sha2-prc-ripemd-prc-identity-hypothesis)))
   (begin (eq! (prc---hub-success) (- 1 (prc-sha2-prc-ripemd-prc-identity---insufficient-gas)))
          (if-zero (prc---hub-success)
                   (vanishes! (prc---return-gas))
@@ -756,13 +755,13 @@
 (defun (prc-ecpairing---precompile-cost192)  (*    (prc-ecpairing---is-multiple_192)
                                                    (+ (* 45000 192) (* 34000 (prc---cds)))))
 
-(defconstraint prc-ecpairing---mod-cds-by-192 (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-ecpairing-hypothesis)))
+(defconstraint prc-ecpairing---mod-cds-by-192 (:guard (* (standing-hypothesis) (prc-ecpairing-hypothesis)))
   (call-to-MOD 2 0 (prc---cds) 0 192))
 
-(defconstraint prc-ecpairing---check-remainder-is-zero (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-ecpairing-hypothesis)))
+(defconstraint prc-ecpairing---check-remainder-is-zero (:guard (* (standing-hypothesis) (prc-ecpairing-hypothesis)))
   (call-to-ISZERO 3 0 (prc-ecpairing---remainder)))
 
-(defconstraint prc-ecpairing---compare-call-gas-and-precompile-cost (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-ecpairing-hypothesis)))
+(defconstraint prc-ecpairing---compare-call-gas-and-precompile-cost (:guard (* (standing-hypothesis) (prc-ecpairing-hypothesis)))
   (if-zero (prc-ecpairing---is-multiple_192)
            (noCall 4)
            (begin (vanishes! (shift ADD_FLAG 4))
@@ -775,7 +774,7 @@
                   (eq! (* (shift [OUTGOING_DATA 4] 4) 192)
                        (prc-ecpairing---precompile-cost192)))))
 
-(defconstraint prc-ecpairing---justify-hub-predictions (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-ecpairing-hypothesis)))
+(defconstraint prc-ecpairing---justify-hub-predictions (:guard (* (standing-hypothesis) (prc-ecpairing-hypothesis)))
   (begin (eq! (prc---hub-success)
               (* (prc-ecpairing---is-multiple_192) (- 1 (prc-ecpairing---insufficient-gas))))
          (if-zero (prc---hub-success)
@@ -800,16 +799,16 @@
 (defun (prc-modexp-cds---extract-ebs)   [DATA 4])
 (defun (prc-modexp-cds---extract-mbs)   [DATA 5])
 
-(defconstraint prc-modexp-cds---compare-0-and-cds (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp-cds-hypothesis)))
+(defconstraint prc-modexp-cds---compare-0-and-cds (:guard (* (standing-hypothesis) (prc-modexp-cds-hypothesis)))
   (call-to-LT 0 0 0 0 (prc---cds)))
 
-(defconstraint prc-modexp-cds---compare-32-and-cds (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp-cds-hypothesis)))
+(defconstraint prc-modexp-cds---compare-32-and-cds (:guard (* (standing-hypothesis) (prc-modexp-cds-hypothesis)))
   (call-to-LT 1 0 32 0 (prc---cds)))
 
-(defconstraint prc-modexp-cds---compare-64-and-cds (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp-cds-hypothesis)))
+(defconstraint prc-modexp-cds---compare-64-and-cds (:guard (* (standing-hypothesis) (prc-modexp-cds-hypothesis)))
   (call-to-LT 2 0 64 0 (prc---cds)))
 
-(defconstraint prc-modexp-cds---justify-hub-predictions (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp-cds-hypothesis)))
+(defconstraint prc-modexp-cds---justify-hub-predictions (:guard (* (standing-hypothesis) (prc-modexp-cds-hypothesis)))
   (begin (eq! (prc-modexp-cds---extract-bbs) OUTGOING_RES_LO)
          (eq! (prc-modexp-cds---extract-ebs) (next OUTGOING_RES_LO))
          (eq! (prc-modexp-cds---extract-mbs) (shift OUTGOING_RES_LO 2))))
@@ -830,20 +829,20 @@
 (defun (prc-modexp-xbs---compo-to_512)   OUTGOING_RES_LO)
 (defun (prc-modexp-xbs---comp)           (next OUTGOING_RES_LO))
 
-(defconstraint prc-modexp-xbs---compare-xbs-hi-and-513 (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp-xbs-hypothesis)))
+(defconstraint prc-modexp-xbs---compare-xbs-hi-and-513 (:guard (* (standing-hypothesis) (prc-modexp-xbs-hypothesis)))
   (call-to-LT 0 (prc-modexp-xbs---xbs-hi) (prc-modexp-xbs---xbs-lo) 0 513))
 
-(defconstraint prc-modexp-xbs---compare-xbs-and-ybs (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp-xbs-hypothesis)))
+(defconstraint prc-modexp-xbs---compare-xbs-and-ybs (:guard (* (standing-hypothesis) (prc-modexp-xbs-hypothesis)))
   (call-to-LT 1 0 (prc-modexp-xbs---xbs-lo) 0 (prc-modexp-xbs---ybs-lo)))
 
-(defconstraint prc-modexp-xbs---check-xbs-is-zero (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp-xbs-hypothesis)))
+(defconstraint prc-modexp-xbs---check-xbs-is-zero (:guard (* (standing-hypothesis) (prc-modexp-xbs-hypothesis)))
   (call-to-ISZERO 2 0 (prc-modexp-xbs---xbs-lo)))
 
-(defconstraint additional-prc-modexp-xbs (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp-xbs-hypothesis)))
+(defconstraint additional-prc-modexp-xbs (:guard (* (standing-hypothesis) (prc-modexp-xbs-hypothesis)))
   (begin (vanishes! (* (prc-modexp-xbs---compute-max) (- 1 (prc-modexp-xbs---compute-max))))
          (eq! (prc-modexp-xbs---compo-to_512) 1)))
 
-(defconstraint prc-modexp-xbs---justify-hub-predictions (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp-xbs-hypothesis)))
+(defconstraint prc-modexp-xbs---justify-hub-predictions (:guard (* (standing-hypothesis) (prc-modexp-xbs-hypothesis)))
   (if-zero (prc-modexp-xbs---compute-max)
            (begin (vanishes! (prc-modexp-xbs---max-xbs-ybs))
                   (vanishes! (prc-modexp-xbs---xbs-nonzero)))
@@ -871,16 +870,16 @@
 (defun (prc-modexp-lead---call-data-contains-exponent-bytes)   (shift OUTGOING_RES_LO 2))
 (defun (prc-modexp-lead---comp)                                (shift OUTGOING_RES_LO 3))
 
-(defconstraint prc-modexp-lead---check-ebs-is-zero (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp-lead-hypothesis)))
+(defconstraint prc-modexp-lead---check-ebs-is-zero (:guard (* (standing-hypothesis) (prc-modexp-lead-hypothesis)))
   (call-to-ISZERO 0 0 (prc-modexp-lead---ebs)))
 
-(defconstraint prc-modexp-lead---compare-ebs-and-32 (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp-lead-hypothesis)))
+(defconstraint prc-modexp-lead---compare-ebs-and-32 (:guard (* (standing-hypothesis) (prc-modexp-lead-hypothesis)))
   (call-to-LT 1 0 (prc-modexp-lead---ebs) 0 32))
 
-(defconstraint prc-modexp-lead---compare-ebs-and-cds (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp-lead-hypothesis)))
+(defconstraint prc-modexp-lead---compare-ebs-and-cds (:guard (* (standing-hypothesis) (prc-modexp-lead-hypothesis)))
   (call-to-LT 2 0 (+ 96 (prc-modexp-lead---bbs)) 0 (prc---cds)))
 
-(defconstraint prc-modexp-lead---compare-cds-minus-96-plus-bbs-and-32 (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp-lead-hypothesis)))
+(defconstraint prc-modexp-lead---compare-cds-minus-96-plus-bbs-and-32 (:guard (* (standing-hypothesis) (prc-modexp-lead-hypothesis)))
   (if-not-zero (prc-modexp-lead---call-data-contains-exponent-bytes)
                (call-to-LT 3
                            0
@@ -888,7 +887,7 @@
                            0
                            32)))
 
-(defconstraint prc-modexp-lead---justify-hub-predictions (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp-lead-hypothesis)))
+(defconstraint prc-modexp-lead---justify-hub-predictions (:guard (* (standing-hypothesis) (prc-modexp-lead-hypothesis)))
   (begin (eq! (prc-modexp-lead---load-lead)
               (* (prc-modexp-lead---call-data-contains-exponent-bytes)
                  (- 1 (prc-modexp-lead---ebs-is-zero))))
@@ -925,29 +924,29 @@
                                                                (prc-modexp-pricing---big-quotient)
                                                                200))
 
-(defconstraint prc-modexp-pricing---check--is-zero (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp-pricing-hypothesis)))
+(defconstraint prc-modexp-pricing---check--is-zero (:guard (* (standing-hypothesis) (prc-modexp-pricing-hypothesis)))
   (call-to-ISZERO 0 0 (prc---r@c)))
 
-(defconstraint prc-modexp-pricing---check-exponent-log-is-zero (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp-pricing-hypothesis)))
+(defconstraint prc-modexp-pricing---check-exponent-log-is-zero (:guard (* (standing-hypothesis) (prc-modexp-pricing-hypothesis)))
   (call-to-ISZERO 1 0 (prc-modexp-pricing---exponent-log)))
 
-(defconstraint prc-modexp-pricing---div-max-xbs-ybs-square-plus-7-by-8 (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp-pricing-hypothesis)))
+(defconstraint prc-modexp-pricing---div-max-xbs-ybs-square-plus-7-by-8 (:guard (* (standing-hypothesis) (prc-modexp-pricing-hypothesis)))
   (call-to-DIV 2
                0
                (+ (* (prc-modexp-pricing---max-xbs-ybs) (prc-modexp-pricing---max-xbs-ybs)) 7)
                0
                8))
 
-(defconstraint prc-modexp-pricing---div-big-numerator-by-quaddivisor (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp-pricing-hypothesis)))
+(defconstraint prc-modexp-pricing---div-big-numerator-by-quaddivisor (:guard (* (standing-hypothesis) (prc-modexp-pricing-hypothesis)))
   (call-to-DIV 3 0 (prc-modexp-pricing---big-numerator) 0 G_QUADDIVISOR))
 
-(defconstraint prc-modexp-pricing---compare-big-quotient-and-200 (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp-pricing-hypothesis)))
+(defconstraint prc-modexp-pricing---compare-big-quotient-and-200 (:guard (* (standing-hypothesis) (prc-modexp-pricing-hypothesis)))
   (call-to-LT 4 0 (prc-modexp-pricing---big-quotient) 0 200))
 
-(defconstraint prc-modexp-pricing---compare-call-gas-and-precompile-cost (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp-pricing-hypothesis)))
+(defconstraint prc-modexp-pricing---compare-call-gas-and-precompile-cost (:guard (* (standing-hypothesis) (prc-modexp-pricing-hypothesis)))
   (call-to-LT 5 0 (prc---call-gas) 0 (prc-modexp-pricing---precompile-cost)))
 
-(defconstraint prc-modexp-pricing---justify-hub-predictions (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp-pricing-hypothesis)))
+(defconstraint prc-modexp-pricing---justify-hub-predictions (:guard (* (standing-hypothesis) (prc-modexp-pricing-hypothesis)))
   (begin (eq! (prc---ram-success)
               (- 1 (shift OUTGOING_RES_LO 5)))
          (if-zero (prc---ram-success)
@@ -973,16 +972,16 @@
 (defun (prc-modexp-extract---mbs-is-zero)                           (shift OUTGOING_RES_LO 2))
 (defun (prc-modexp-extract---call-data-extends-beyond-exponent)     (shift OUTGOING_RES_LO 3))
 
-(defconstraint prc-modexp-extract---check-bbs-is-zero (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp-extract-hypothesis)))
+(defconstraint prc-modexp-extract---check-bbs-is-zero (:guard (* (standing-hypothesis) (prc-modexp-extract-hypothesis)))
   (call-to-ISZERO 0 0 (prc-modexp-extract---bbs)))
 
-(defconstraint prc-modexp-extract---check-ebs-is-zero (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp-extract-hypothesis)))
+(defconstraint prc-modexp-extract---check-ebs-is-zero (:guard (* (standing-hypothesis) (prc-modexp-extract-hypothesis)))
   (call-to-ISZERO 1 0 (prc-modexp-extract---ebs)))
 
-(defconstraint prc-modexp-extract---check-mbs-is-zero (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp-extract-hypothesis)))
+(defconstraint prc-modexp-extract---check-mbs-is-zero (:guard (* (standing-hypothesis) (prc-modexp-extract-hypothesis)))
   (call-to-ISZERO 2 0 (prc-modexp-extract---mbs)))
 
-(defconstraint prc-modexp-extract---justify-hub-predictions (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-modexp-extract-hypothesis)))
+(defconstraint prc-modexp-extract---justify-hub-predictions (:guard (* (standing-hypothesis) (prc-modexp-extract-hypothesis)))
   (begin (eq! (prc-modexp-extract---extract-modulus)
               (* (prc-modexp-extract---call-data-extends-beyond-exponent)
                  (- 1 (prc-modexp-extract---mbs-is-zero))))
@@ -1007,13 +1006,13 @@
 (defun (prc-blake-cds---valid-cds)  OUTGOING_RES_LO)
 (defun (prc-blake-cds---r@c-is-zero)   (next OUTGOING_RES_LO))
 
-(defconstraint prc-blake-cds---compare-cds-and-213 (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-blake-cds-hypothesis)))
+(defconstraint prc-blake-cds---compare-cds-and-213 (:guard (* (standing-hypothesis) (prc-blake-cds-hypothesis)))
   (call-to-EQ 0 0 (prc---cds) 0 213))
 
-(defconstraint prc-blake-cds---check--is-zero (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-blake-cds-hypothesis)))
+(defconstraint prc-blake-cds---check--is-zero (:guard (* (standing-hypothesis) (prc-blake-cds-hypothesis)))
   (call-to-ISZERO 1 0 (prc---r@c)))
 
-(defconstraint blake2f-a---justify-hub-predictions (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-blake-cds-hypothesis)))
+(defconstraint blake2f-a---justify-hub-predictions (:guard (* (standing-hypothesis) (prc-blake-cds-hypothesis)))
   (begin (eq! (prc---hub-success) (prc-blake-cds---valid-cds))
          (eq! (prc---r@c-nonzero) (- 1 (prc-blake-cds---r@c-is-zero)))))
 
@@ -1030,17 +1029,17 @@
 (defun (prc-blake-params---f-is-a-bit)        (next OUTGOING_RES_LO))
 
 
-(defconstraint prc-blake-params---compare-call-gas-and-blake-r (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-blake-params-hypothesis)))
+(defconstraint prc-blake-params---compare-call-gas-and-blake-r (:guard (* (standing-hypothesis) (prc-blake-params-hypothesis)))
   (call-to-LT 0 0 (prc---call-gas) 0 (prc-blake-params---blake-r)))
 
-(defconstraint prc-blake-params---compare-blake-f-and-blake-f-square (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-blake-params-hypothesis)))
+(defconstraint prc-blake-params---compare-blake-f-and-blake-f-square (:guard (* (standing-hypothesis) (prc-blake-params-hypothesis)))
   (call-to-EQ 1
               0
               (prc-blake-params---blake-f)
               0
               (* (prc-blake-params---blake-f) (prc-blake-params---blake-f))))
 
-(defconstraint prc-blake-params---justify-hub-predictions (:guard (* (standing-hypothesis) (prc-hypothesis) (prc-blake-params-hypothesis)))
+(defconstraint prc-blake-params---justify-hub-predictions (:guard (* (standing-hypothesis) (prc-blake-params-hypothesis)))
   (begin (eq! (prc---ram-success)
               (* (prc-blake-params---sufficient-gas) (prc-blake-params---f-is-a-bit)))
          (if-not-zero (prc---ram-success)
