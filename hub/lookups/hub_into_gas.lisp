@@ -5,7 +5,7 @@
 (deflookup hub-into-gas
            ;; target columns
 	   ( 
-	     gas.GAS_ACTL
+	     gas.GAS_ACTUAL
 	     gas.GAS_COST
 	     gas.XAHOY   ;; TODO @lorenzo: implement GAS module
 	     gas.OOGX
