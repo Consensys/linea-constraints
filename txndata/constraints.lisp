@@ -289,7 +289,7 @@
 ;; row i + comparaison---nonce-row-offset
 (defun (nonce-check)
   (begin (small-call-to-LT comparaison---nonce-row-offset NONCE EIP2681_MAX_NONCE)
-         (result-must-be-true nonce-row-offset)))
+         (result-must-be-true comparaison---nonce-row-offset)))
 
 ;; row i + comparaison---sufficient-gas-row-offset
 (defun (sufficient_balance)
