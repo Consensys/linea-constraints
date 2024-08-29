@@ -116,15 +116,12 @@ ZKEVM_MODULES := ${ALU} \
 		 ${EC_DATA} \
 		 ${EUC} \
 		 ${EXP} \
-		 ${GAS} \
- 		 ${HUB} \
 		 ${LIBRARY} \
 		 ${LOG_DATA} \
 		 ${LOG_INFO} \
 		 ${MMU} \
 		 ${MMIO} \
 		 ${MXP} \
-		 ${OOB} \
 		 ${RLP_ADDR} \
 		 ${RLP_TXN} \
 		 ${RLP_TXRCPT} \
@@ -137,6 +134,9 @@ ZKEVM_MODULES := ${ALU} \
 		 ${TXN_DATA} \
 		 ${WCP}
 
+# 		 ${GAS} \
+#  		 ${HUB} \
+# 		 ${OOB} \
 #		 ${STP} \
 
 
