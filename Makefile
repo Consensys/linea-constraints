@@ -118,7 +118,6 @@ ZKEVM_MODULES := ${ALU} \
 		 ${EC_DATA} \
 		 ${EUC} \
 		 ${EXP} \
-		 ${GAS} \
 		 ${HUB_COLUMNS} \
 		 ${LIBRARY} \
 		 ${LOG_DATA} \
@@ -141,6 +140,7 @@ ZKEVM_MODULES := ${ALU} \
 		 ${WCP}
 
 #		 ${HUB} \
+#		 ${GAS} \
 
 define.go: ${ZKEVM_MODULES}
 	${CORSET} wizard-iop -vv -o $@ ${ZKEVM_MODULES}
