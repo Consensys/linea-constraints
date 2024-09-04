@@ -804,7 +804,7 @@
 (defun (prc-modexp-pricing---exponent-log)            [DATA 6])
 (defun (prc-modexp-pricing---max-xbs-ybs)             [DATA 7])
 (defun (prc-modexp-pricing---exponent-log-is-zero)    (next OUTGOING_RES_LO))
-(defun (prc-modexp-pricing---f-of-max)                (* (shift OUTGOING_RES_LO 2)(shift OUTGOING_RES_LO 2)))
+(defun (prc-modexp-pricing---f-of-max)                (*  (shift OUTGOING_RES_LO 2)  (shift OUTGOING_RES_LO 2)))
 (defun (prc-modexp-pricing---big-quotient)            (shift OUTGOING_RES_LO 3))
 (defun (prc-modexp-pricing---big-quotient_LT_200)     (shift OUTGOING_RES_LO 4))
 (defun (prc-modexp-pricing---big-numerator)           (if-zero (prc-modexp-pricing---exponent-log-is-zero)
