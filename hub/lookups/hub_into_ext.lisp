@@ -2,7 +2,7 @@
   (and (unexceptional-stack-row)
        hub.stack/EXT_FLAG))
 
-(deflookup hub-into-ext-alu
+(deflookup hub-into-ext
     ;; target columns
     (
         ext.ARG_1_HI
