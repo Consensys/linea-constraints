@@ -1092,7 +1092,13 @@
                          (callToEq 9 0 (shift prprc/EUC_REM 9) LLARGEMO)
                          (eq! (any-to-ram-some-data-last-dt-single-target)
                               (- 1 (shift prprc/EUC_QUOT 9)))
-                         (eq! (any-to-ram-some-data-last-dt-maxes-out-target) (shift prprc/WCP_RES 9))))
+                         (eq! (any-to-ram-some-data-last-dt-maxes-out-target) (shift prprc/WCP_RES 9))
+                         (if-not-zero (any-to-ram-some-data-totnt-is-one)
+                                      (vanishes! (any-to-ram-some-data-tlo-increment-after-first-dt))
+                                      (if-zero (any-to-ram-some-data-first-dt-single-target)
+                                               (eq! (any-to-ram-some-data-tlo-increment-after-first-dt) 1)
+                                               (eq! (any-to-ram-some-data-tlo-increment-after-first-dt)
+                                                    (any-to-ram-some-data-first-dt-maxes-out-target))))))
          ;; justifying tlo_increments_at_transition
          (if-eq-else (any-to-ram-some-data-totnt-is-one) 1
                      (if-zero (any-to-ram-some-data-only-dt-single-target)
@@ -1106,6 +1112,10 @@
          ;; preprocessing row n°10
          (callToEq 10 0 TOTRZ 1)
          (callToEuc 10 (any-to-ram-some-data-first-padding-offset) LLARGE)
+         (if-eq (any-to-ram-pure-data) 1 (vanishes! TOTRZ))
+         (if-eq (any-to-ram-mixed) 1
+                (eq! TOTRZ
+                     (+ (- (any-to-ram-some-data-last-plo) (any-to-ram-some-data-first-plo)) 1)))
          (eq! (any-to-ram-some-data-first-pbo)
               (* (any-to-ram-mixed) (shift prprc/EUC_REM 10)))
          (if-eq-else (any-to-ram-some-data-totrz-is-one) 1
@@ -1121,6 +1131,7 @@
          (eq! (shift micro/EXO_SUM NB_PP_ROWS_ANY_TO_RAM_WITH_PADDING_SOME_DATA_PO) macro/EXO_SUM)
          (eq! (shift micro/EXO_ID NB_PP_ROWS_ANY_TO_RAM_WITH_PADDING_SOME_DATA_PO)
               (any-to-ram-some-data-micro-id1))
+         (eq! (shift micro/TOTAL_SIZE NB_PP_ROWS_ANY_TO_RAM_WITH_PADDING_SOME_DATA_PO) macro/REF_SIZE)
          ;; FIRST and ONLY mmio inst shared values
          (eq! (shift micro/SLO NB_PP_ROWS_ANY_TO_RAM_WITH_PADDING_SOME_DATA_PO)
               (any-to-ram-some-data-min-slo))
