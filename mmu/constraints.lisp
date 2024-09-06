@@ -339,6 +339,7 @@
          (callToIszero 1 0 (mstore-tbo))
          ;;setting mmio constant values
          (eq! (shift micro/CN_T NB_PP_ROWS_MSTORE_PO) macro/TGT_ID)
+         (vanishes! (shift micro/EXO_SUM NB_PP_ROWS_MSTORE_PO))
          ;; setting first mmio inst
          (if-zero (mstore-aligned)
                   (eq! (shift micro/INST NB_PP_ROWS_MSTORE_PO) MMIO_INST_LIMB_TO_RAM_TWO_TARGET)
@@ -374,10 +375,13 @@
          (callToEuc 1 macro/TGT_OFFSET_LO LLARGE)
          ;; setting first mmio inst
          (eq! (shift micro/INST NB_PP_ROWS_MSTORE8_PO) MMIO_INST_LIMB_TO_RAM_ONE_TARGET)
+         (eq! (shift micro/SIZE NB_PP_ROWS_MSTORE8_PO) 1)
+         (eq! (shift micro/SBO NB_PP_ROWS_MSTORE8_PO) LLARGEMO)
          (eq! (shift micro/TLO NB_PP_ROWS_MSTORE8_PO) (mstore8-tlo))
          (eq! (shift micro/TBO NB_PP_ROWS_MSTORE8_PO) (mstore8-tbo))
          (eq! (shift micro/LIMB NB_PP_ROWS_MSTORE8_PO) macro/LIMB_2)
-         (eq! (shift micro/CN_T NB_PP_ROWS_MSTORE8_PO) macro/TGT_ID)))
+         (eq! (shift micro/CN_T NB_PP_ROWS_MSTORE8_PO) macro/TGT_ID)
+         (vanishes! (shift micro/EXO_SUM NB_PP_ROWS_MSTORE8_PO))))
 
 ;;
 ;; INVALID CODE PREFIX
@@ -561,9 +565,11 @@
          ;; setting prprc row n°2
          (callToLt 2 0 macro/SIZE macro/REF_SIZE)
          (callToEuc 2 (ram-exo-wpad-padding-size) LLARGE)
+         (eq! TOTRZ (shift prprc/EUC_QUOT 2))
          ;; setting prprc row n°3
          (callToIszero 3 0 (shift prprc/EUC_REM 3))
          (callToEuc 3 (ram-exo-wpad-extraction-size) LLARGE)
+         (eq! TOTNT (shift prprc/EUC_CEIL 3))
          ;; setting prprc row n°4
          (callToLt 4
                    0
