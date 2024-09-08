@@ -18,100 +18,154 @@
 
 ;; we are guaranteed that this is a 20B integer
 (defun (acp_full_address) (+ (* (^ 256 16) acp_ADDRESS_HI)
-                             acp_ADDRESS_LO))
+                             acp_ADDRESS_LO)) ;; ""
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                                               ;;
+;;    X.5.3 Constraints for acc_FIRST, acc_AGAIN and acc_FINAL   ;;
+;;                                                               ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;                                                    ;;
-;;    X.5.3 Constraints for acc_FIRST and acc_FINAL   ;;
-;;                                                    ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(defconstraint account-consistency-FINAL-FIRST-generalities ()
+(defconstraint account-consistency---FIRST-AGAIN-FINAL---automatic-vanishing ()
                (begin
-                 (debug (is-binary acc_FIRST ))
-                 (debug (is-binary acc_FINAL ))
                  (if-zero (force-bool acp_PEEK_AT_ACCOUNT)
-                          (vanishes! (+ acc_FIRST
-                                        acc_FINAL)))))
+                          (vanishes! (+
+                                       acc_FIRST_IN_TXN   acc_FIRST_IN_BLK   acc_FIRST_IN_CNF
+                                       acc_AGAIN_IN_TXN   acc_AGAIN_IN_BLK   acc_AGAIN_IN_CNF
+                                       acc_FINAL_IN_TXN   acc_FINAL_IN_BLK   acc_FINAL_IN_CNF)))))
 
-(defconstraint account-consistency-FINAL-FIRST-first-account-row ()
-               (if-not-zero (- 1 (prev acp_PEEK_AT_ACCOUNT))
-                            (if-not-zero acp_PEEK_AT_ACCOUNT
-                                         (eq! acc_FIRST 1))))
+(defun    (account-consistency---transtion-conflation)    (+    (prev acc_FINAL_IN_CNF)    acc_FIRST_IN_CNF))
+(defun    (account-consistency---transtion-block)         (+    (prev acc_FINAL_IN_BLK)    acc_FIRST_IN_BLK))
+(defun    (account-consistency---transtion-transaction)   (+    (prev acc_FINAL_IN_TXN)    acc_FIRST_IN_TXN))
+(defun    (account-consistency---transtion-sum)           (+    account-consistency---transtion-conflation
+                                                                account-consistency---transtion-block
+                                                                account-consistency---transtion-transaction))
 
-(defconstraint account-consistency-FINAL-FIRST-repeat-encounter ()
-               (if-not-zero (prev acp_PEEK_AT_ACCOUNT)
-                            (if-not-zero acp_PEEK_AT_ACCOUNT
-                                         (if-eq-else (acp_full_address) (prev (acp_full_address))
-                                                     (eq! (+ acc_FIRST (prev acc_FINAL)) 0)
-                                                     (eq! (+ acc_FIRST (prev acc_FINAL)) 2)))))
 
-(defconstraint account-consistency-FINAL-FIRST-final-row-1 ()
-               (if-not-zero (prev acp_PEEK_AT_ACCOUNT)
-                            (if-not-zero (- 1 acp_PEEK_AT_ACCOUNT)
-                                         (eq! (prev acc_FINAL) 1))))
+(defconstraint    account-consistency---FIRST-AGAIN-FINAL---first-account-row ()
+                  (if-zero    (force-bool     (prev acp_PEEK_AT_ACCOUNT))
+                              (if-not-zero    (force-bool    acp_PEEK_AT_ACCOUNT)
+                                              (if-not-zero acp_PEEK_AT_ACCOUNT
+                                                           (eq!    3
+                                                                   (+   acc_FIRST_IN_CNF
+                                                                        acc_FIRST_IN_BLK
+                                                                        acc_FIRST_IN_TXN))))))
 
-(defconstraint account-consistency-FINAL-FIRST-final-row-2 (:domain {-1})
-               (if-not-zero acp_PEEK_AT_ACCOUNT
-                            (eq! acc_FINAL 1)))
+(defun   (account-consistency---repeat-account-row)    (*    (prev    acp_PEEK_AT_ACCOUNT)   acp_PEEK_AT_ACCOUNT))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;                        ;;
-;;    X.5.4 Constraints   ;;
-;;                        ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defconstraint    account-consistency---FIRST-AGAIN-FINAL---repeat-encounter---conflation-level  (:guard   (account-consistency---repeat-account-row))
+                  (if-eq-else (acp_full_address) (prev (acp_full_address))
+                              (eq! (account-consistency---transtion-conflation) 0)
+                              (eq! (account-consistency---transtion-conflation) 2)))
 
-(defconstraint account-consistency-initialization ()
-               (if-not-zero acc_FIRST
-                            (begin
-                              (eq! acp_TRM_FLAG 1)
-                              (eq! acp_WARMTH acp_IS_PRECOMPILE)
-                              (vanishes! acp_MARKED_FOR_SELFDESTRUCT)
-                              (vanishes! acp_DEPLOYMENT_NUMBER)
-                              (vanishes! acp_DEPLOYMENT_STATUS))))
+(defconstraint    account-consistency---FIRST-AGAIN-FINAL---repeat-encounter---block-level       (:guard   (account-consistency---repeat-account-row))
+                  (begin
+                    (if-not-zero (remained-constant!   (prev (acp_full_address)))       (eq! (account-consistency---transtion-block) 2))
+                    (if-not-zero (remained-constant!    acp_REL_BLK_NUM)                (eq! (account-consistency---transtion-block) 2))
+                    (if-zero     (remained-constant!   (prev (acp_full_address)))
+                                 (if-zero    (remained-constant!    acp_REL_BLK_NUM)    (eq! (account-consistency---transtion-block) 0)))))
 
-(defconstraint account-consistency-simple-linking-constraints ()
-               (if-not-zero acp_PEEK_AT_ACCOUNT
-                            (if-zero acc_FIRST
-                                     (begin
-                                       (was-eq! acp_NONCE_NEW               acp_NONCE                   )
-                                       (was-eq! acp_BALANCE_NEW             acp_BALANCE                 )
-                                       (was-eq! acp_CODE_SIZE_NEW           acp_CODE_SIZE               )
-                                       (was-eq! acp_CODE_HASH_HI_NEW        acp_CODE_HASH_HI            )
-                                       (was-eq! acp_CODE_HASH_LO_NEW        acp_CODE_HASH_LO            )
-                                       (was-eq! acp_IS_PRECOMPILE           acp_IS_PRECOMPILE           )
-                                       (was-eq! acp_DEPLOYMENT_NUMBER_NEW   acp_DEPLOYMENT_NUMBER       )
-                                       (was-eq! acp_DEPLOYMENT_STATUS_NEW   acp_DEPLOYMENT_STATUS       )
-                                       (was-eq! acp_DEPLOYMENT_NUMBER_INFTY acp_DEPLOYMENT_NUMBER_INFTY )
-                                       ;; (was-eq! acp_DEPLOYMENT_STATUS_INFTY acp_DEPLOYMENT_STATUS_INFTY )
-                                       ))))
+(defconstraint    account-consistency---FIRST-AGAIN-FINAL---repeat-encounter---transaction-level (:guard   (account-consistency---repeat-account-row))
+                  (begin
+                    (if-not-zero (remained-constant!   (prev (acp_full_address)))       (eq! (account-consistency---transtion-transaction) 2))
+                    (if-not-zero (remained-constant!    acp_ABS_TX_NUM)                 (eq! (account-consistency---transtion-transaction) 2))
+                    (if-zero     (remained-constant!   (prev (acp_full_address)))
+                                 (if-zero    (remained-constant!    acp_ABS_TX_NUM)     (eq! (account-consistency---transtion-transaction) 0)))))
 
-(defconstraint account-consistency-linking-and-resetting-constraints ()
-               (if-not-zero acp_PEEK_AT_ACCOUNT
-                            (if-zero acc_FIRST
-                                     (if-eq-else acp_ABS_TX_NUM (prev acp_ABS_TX_NUM)
-                                                 (begin
-                                                   (was-eq! acp_WARMTH_NEW                    acp_WARMTH)
-                                                   (was-eq! acp_MARKED_FOR_SELFDESTRUCT_NEW acp_MARKED_FOR_SELFDESTRUCT))
-                                                 (begin
-                                                   (eq!       acp_WARMTH acp_IS_PRECOMPILE)
-                                                   (vanishes! acp_MARKED_FOR_SELFDESTRUCT)
-                                                   (debug (vanishes! acp_DEPLOYMENT_STATUS)))))))
+(defconstraint    account-consistency---FIRST-AGAIN-FINAL---final-row-with-room-to-spare ()
+                  (if-not-zero (prev acp_PEEK_AT_ACCOUNT)
+                               (if-zero    (force-bool    acp_PEEK_AT_ACCOUNT)
+                                           (eq!    3
+                                                   (+   acc_FINAL_IN_CNF
+                                                        acc_FINAL_IN_BLK
+                                                        acc_FINAL_IN_TXN)))))
 
-;; I really doubt we need the final deployment status
-;; it should necessarily be 0 ... if things are done right
-(defconstraint account-consistency-finalization-constraints ()
-               (if-not-zero acc_FINAL
-                            (begin
-                              (eq! acp_DEPLOYMENT_NUMBER_INFTY acp_DEPLOYMENT_NUMBER)
-                              ;; (eq! acp_DEPLOYMENT_STATUS_INFTY acp_DEPLOYMENT_STATUS)
-                              )))
+(defconstraint    account-consistency---FIRST-AGAIN-FINAL---final-row-of-the-trace       (:domain {-1})
+                  (if-not-zero acp_PEEK_AT_ACCOUNT
+                               (eq!    3
+                                       (+   acc_FINAL_IN_CNF
+                                            acc_FINAL_IN_BLK
+                                            acc_FINAL_IN_TXN))))
 
-(defconstraint account-consistency-monotony-constraints ()
-               (if-not-zero acp_PEEK_AT_ACCOUNT
-                            (begin
-                              (any! (eq! acp_DEPLOYMENT_NUMBER_NEW acp_DEPLOYMENT_NUMBER)
-                                    (eq! acp_DEPLOYMENT_NUMBER_NEW (+ 1 acp_DEPLOYMENT_NUMBER)))
-                              (if-not-zero acp_MARKED_FOR_SELFDESTRUCT
-                                           (eq! acp_MARKED_FOR_SELFDESTRUCT_NEW 1)))))
+(defconstraint    account-consistency---FIRST-AGAIN-FINAL---unconditionally-constraining-AGAIN ()
+                  (begin
+                    (eq!   (+   acc_FINAL_IN_CNF   acc_AGAIN_IN_CNF)   acp_PEEK_AT_ACCOUNT)
+                    (eq!   (+   acc_FINAL_IN_BLK   acc_AGAIN_IN_BLK)   acp_PEEK_AT_ACCOUNT)
+                    (eq!   (+   acc_FINAL_IN_TXN   acc_AGAIN_IN_TXN)   acp_PEEK_AT_ACCOUNT)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                       ;;
+;;    X.5.4 Initialization Constraints   ;;
+;;                                       ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defconstraint    account-consistency---initialization---conflation-level  (:guard   acc_FIRST_IN_CNF)
+                  (begin
+                    (eq!        acp_TRM_FLAG    1)
+                    (vanishes!  acp_DEPLOYMENT_NUMBER)))
+
+(defconstraint    account-consistency---initialization---block-level       (:guard   acc_FIRST_IN_BLK)
+                  (eq!    acp_DEPLOYMENT_NUMBER_FIRST_IN_BLOCK    acp_DEPLOYMENT_NUMBER))
+
+(defconstraint    account-consistency---initialization---transaction-level (:guard   acc_FIRST_IN_TXN)
+                  (begin
+                    (eq!        acp_WARMTH    acp_IS_PRECOMPILE)
+                    (vanishes!  acp_DEPLOYMENT_STATUS)
+                    (vanishes!  acp_MARKED_FOR_SELFDESTRUCT)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                ;;
+;;    X.5.5 Linking Constraints   ;;
+;;                                ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defconstraint    account-consistency---linking---conflation-level  (:guard   acc_AGAIN_IN_CNF)
+                  (begin
+                    (eq!   acp_NONCE                     (prev acp_NONCE_NEW)               )
+                    (eq!   acp_BALANCE                   (prev acp_BALANCE_NEW)             )
+                    (eq!   acp_CODE_SIZE                 (prev acp_CODE_SIZE_NEW)           )
+                    (eq!   acp_CODE_HASH_HI              (prev acp_CODE_HASH_HI_NEW)        )
+                    (eq!   acp_CODE_HASH_LO              (prev acp_CODE_HASH_LO_NEW)        )
+                    (eq!   acp_DEPLOYMENT_NUMBER         (prev acp_DEPLOYMENT_NUMBER_NEW)   )
+                    (eq!   acp_DEPLOYMENT_STATUS         (prev acp_DEPLOYMENT_STATUS_NEW)   )
+                    ;;
+                    (eq!   acp_IS_PRECOMPILE             (prev acp_IS_PRECOMPILE)           )))
+
+(defconstraint    account-consistency---linking---block-level       (:guard   acc_AGAIN_IN_BLK)
+                  (begin
+                    (remained-constant!    acp_DEPLOYMENT_NUMBER_FIRST_IN_BLOCK)
+                    (remained-constant!    acp_DEPLOYMENT_NUMBER_FINAL_IN_BLOCK)))
+
+(defconstraint    account-consistency---linking---transaction-level (:guard   acc_AGAIN_IN_TXN)
+                  (begin
+                    (eq!   acp_WARMTH                     (prev    acp_WARMTH_NEW))
+                    (eq!   acp_MARKED_FOR_SELFDESTRUCT    (prev    acp_MARKED_FOR_SELFDESTRUCT_NEW))
+                    (if-not-zero    acp_MARKED_FOR_SELFDESTRUCT
+                                    (eq!    acp_MARKED_FOR_SELFDESTRUCT_NEW    1))))
+
+(defconstraint    account-consistency---linking---for-CFI (:guard    acc_AGAIN_IN_CNF)
+                  (if-eq    acp_DEPLOYMENT_NUMBER_NEW    acp_DEPLOYMENT_NUMBER
+                            (if-eq    acp_DEPLOYMENT_STATUS_NEW    acp_DEPLOYMENT_STATUS
+                                      (remained-constant!    acp_CODE_FRAGMENT_INDEX))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                     ;;
+;;    X.5.6 Finalization Constraints   ;;
+;;                                     ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defconstraint    account-consistency---finalization---block-level       (:guard   acc_FINAL_IN_BLK)
+                  (eq!    acp_DEPLOYMENT_NUMBER_FINAL_IN_BLOCK    acp_DEPLOYMENT_NUMBER_NEW))
+
+(defconstraint    account-consistency---finalization---transaction-level (:guard   acc_FINAL_IN_TXN)
+                  (vanishes!    acp_DEPLOYMENT_STATUS_NEW))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                              ;;
+;;    X.5.7 Other Constraints   ;;
+;;                              ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defconstraint    account-consistency---other---monotony-of-deployment-number (:guard    acp_PEEK_AT_ACCOUNT)
+                  (any!    (eq!   acp_DEPLOYMENT_NUMBER_NEW    acp_DEPLOYMENT_NUMBER)
+                           (eq!   acp_DEPLOYMENT_STATUS_NEW    (+    1    acp_DEPLOYMENT_STATUS))))
