@@ -1,10 +1,12 @@
 (module hub)
 
 
-;; TODO: how do we declare columns of size 4 * x in corset ?
-;; stack consistency permutation related; Note these have size 4 * [standard size]
-( stk_FIRST :binary@prove )
-( stk_AGAIN :binary@prove )
+(defcolumns
+  ;; TODO: how do we declare columns of size 4 * x in corset ?
+  ;; stack consistency permutation related; Note these have size 4 * [standard size]
+  ( stk_FIRST :binary@prove )
+  ( stk_AGAIN :binary@prove )
+  )
 
 (definterleaved PEEK_AT_STACK_POW_4   (PEEK_AT_STACK                  PEEK_AT_STACK                  PEEK_AT_STACK                  PEEK_AT_STACK                 ))
 (definterleaved CN_POW_4              (CONTEXT_NUMBER                 CONTEXT_NUMBER                 CONTEXT_NUMBER                 CONTEXT_NUMBER                ))
