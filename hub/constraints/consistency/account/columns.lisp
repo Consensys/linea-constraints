@@ -9,6 +9,7 @@
   ( acp_DEPLOYMENT_NUMBER_FINAL_IN_BLOCK    :i16)
   )
 
+;; acp_ ⇔ account consistency permutation
 (defpermutation
     ;; permuted columns
     ;; replace acp with account_consistency_permutation

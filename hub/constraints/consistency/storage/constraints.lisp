@@ -35,9 +35,9 @@
 (defun    (storage-consistency---transtion-conflation)    (+    (prev scp_FINAL_IN_CNF)    scp_FIRST_IN_CNF))
 (defun    (storage-consistency---transtion-block)         (+    (prev scp_FINAL_IN_BLK)    scp_FIRST_IN_BLK))
 (defun    (storage-consistency---transtion-transaction)   (+    (prev scp_FINAL_IN_TXN)    scp_FIRST_IN_TXN))
-(defun    (storage-consistency---transtion-sum)           (+    storage-consistency---transtion-conflation
-                                                                storage-consistency---transtion-block
-                                                                storage-consistency---transtion-transaction))
+(defun    (storage-consistency---transtion-sum)           (+    (storage-consistency---transtion-conflation)
+                                                                (storage-consistency---transtion-block)
+                                                                (storage-consistency---transtion-transaction)))
 
 (defconstraint    storage-consistency---FIRST-AGAIN-FINAL---first-storage-row ()
                   (if-zero    (force-bool     (prev scp_PEEK_AT_STORAGE))
@@ -52,15 +52,15 @@
                   (begin
                     (if-not-zero (remained-constant!   (scp_full_address))
                                  (eq! (storage-consistency---transtion-sum) 6))
-                    (if-not-zero (remained-constant!   (scp_STORAGE_KEY_HI))
+                    (if-not-zero (remained-constant!   scp_STORAGE_KEY_HI)
                                  (eq! (storage-consistency---transtion-sum) 6))
-                    (if-not-zero (remained-constant!   (scp_STORAGE_KEY_LO))
+                    (if-not-zero (remained-constant!   scp_STORAGE_KEY_LO)
                                  (eq! (storage-consistency---transtion-sum) 6))))
 
 (defconstraint    storage-consistency---FIRST-AGAIN-FINAL---repeat-storage-row---no-change-in-storage-slot  (:guard   (storage-consistency---repeat-storage-row))
                   (if-zero (remained-constant!   (scp_full_address))
-                           (if-zero (remained-constant!   (scp_STORAGE_KEY_HI))
-                                    (if-zero (remained-constant!   (scp_STORAGE_KEY_LO))
+                           (if-zero (remained-constant!   scp_STORAGE_KEY_HI)
+                                    (if-zero (remained-constant!   scp_STORAGE_KEY_LO)
                                              (eq! (storage-consistency---transtion-conflation) 0)))))
 
 (defconstraint    storage-consistency---FIRST-AGAIN-FINAL---repeat-encounter-of-storage-slot    (:guard    (*   scp_PEEK_AT_STORAGE    (-   1   scp_FIRST_IN_CNF)))

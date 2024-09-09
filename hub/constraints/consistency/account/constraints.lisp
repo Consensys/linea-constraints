@@ -37,9 +37,9 @@
 (defun    (account-consistency---transtion-conflation)    (+    (prev acp_FINAL_IN_CNF)    acp_FIRST_IN_CNF))
 (defun    (account-consistency---transtion-block)         (+    (prev acp_FINAL_IN_BLK)    acp_FIRST_IN_BLK))
 (defun    (account-consistency---transtion-transaction)   (+    (prev acp_FINAL_IN_TXN)    acp_FIRST_IN_TXN))
-(defun    (account-consistency---transtion-sum)           (+    account-consistency---transtion-conflation
-                                                                account-consistency---transtion-block
-                                                                account-consistency---transtion-transaction))
+(defun    (account-consistency---transtion-sum)           (+    (account-consistency---transtion-conflation)
+                                                                (account-consistency---transtion-block)
+                                                                (account-consistency---transtion-transaction)))
 
 
 (defconstraint    account-consistency---FIRST-AGAIN-FINAL---first-account-row ()

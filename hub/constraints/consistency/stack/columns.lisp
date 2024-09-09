@@ -4,8 +4,8 @@
 (defcolumns
   ;; TODO: how do we declare columns of size 4 * x in corset ?
   ;; stack consistency permutation related; Note these have size 4 * [standard size]
-  ( stk_FIRST :binary@prove )
-  ( stk_AGAIN :binary@prove )
+  ( stkcp_FIRST :binary@prove )
+  ( stkcp_AGAIN :binary@prove )
   )
 
 (definterleaved PEEK_AT_STACK_POW_4   (PEEK_AT_STACK                  PEEK_AT_STACK                  PEEK_AT_STACK                  PEEK_AT_STACK                 ))
@@ -16,16 +16,17 @@
 (definterleaved VALUE_HI_1234         ([stack/STACK_ITEM_VALUE_HI 1]  [stack/STACK_ITEM_VALUE_HI 2]  [stack/STACK_ITEM_VALUE_HI 3]  [stack/STACK_ITEM_VALUE_HI 4] ))  ;; ""
 (definterleaved VALUE_LO_1234         ([stack/STACK_ITEM_VALUE_LO 1]  [stack/STACK_ITEM_VALUE_LO 2]  [stack/STACK_ITEM_VALUE_LO 3]  [stack/STACK_ITEM_VALUE_LO 4] ))  ;; ""
 
+;; stkcp_ ⇔ stack consistency permutation
 (defpermutation
   ;; row-permuted columns
   (
-   stack_consistency_perm_PEEK_AT_STACK_POW_4
-   stack_consistency_perm_CN_POW_4
-   stack_consistency_perm_HEIGHT_1234
-   stack_consistency_perm_STACK_STAMP_1234
-   stack_consistency_perm_POP_1234
-   stack_consistency_perm_VALUE_HI_1234
-   stack_consistency_perm_VALUE_LO_1234
+   stkcp_PEEK_AT_STACK_POW_4
+   stkcp_CN_POW_4
+   stkcp_HEIGHT_1234
+   stkcp_STACK_STAMP_1234
+   stkcp_POP_1234
+   stkcp_VALUE_HI_1234
+   stkcp_VALUE_LO_1234
    )
   ;; underlying columns
   (

@@ -2,13 +2,14 @@
 
 (defcolumns
   ;; storage consistency permutation related 
-  ( scp_FIRST_IN_CNF :binary@prove )     ( scp_FIRST_IN_BLC :binary@prove )     ( scp_FIRST_IN_TXN :binary@prove )
-  ( scp_AGAIN_IN_CNF :binary@prove )     ( scp_AGAIN_IN_BLC :binary@prove )     ( scp_AGAIN_IN_TXN :binary@prove )
-  ( scp_FINAL_IN_CNF :binary@prove )     ( scp_FINAL_IN_BLC :binary@prove )     ( scp_FINAL_IN_TXN :binary@prove )
+  ( scp_FIRST_IN_CNF :binary@prove )     ( scp_FIRST_IN_BLK :binary@prove )     ( scp_FIRST_IN_TXN :binary@prove )
+  ( scp_AGAIN_IN_CNF :binary@prove )     ( scp_AGAIN_IN_BLK :binary@prove )     ( scp_AGAIN_IN_TXN :binary@prove )
+  ( scp_FINAL_IN_CNF :binary@prove )     ( scp_FINAL_IN_BLK :binary@prove )     ( scp_FINAL_IN_TXN :binary@prove )
   ( scp_DEPLOYMENT_NUMBER_FIRST_IN_BLOCK    :i16)
   ( scp_DEPLOYMENT_NUMBER_FINAL_IN_BLOCK    :i16)
   )
 
+;; scp_ ⇔ storage consistency permutation
 (defpermutation 
   ;; permuted columns
   ;; replace scp with storage_consistency_permutation

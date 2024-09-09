@@ -21,8 +21,8 @@
    )
   ;; original columns
   (
-   (+ CN )
-   (+ HUB_STAMP )
+   (↓ CN )
+   (↓ HUB_STAMP )
    CFI
    CALLER_CN
    CN_WILL_REV
