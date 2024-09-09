@@ -129,7 +129,7 @@
               (will-inc! CT 1)))
 
 ;; 8
-(defconstraint finalization()
+(defconstraint finalization (:domain {-1})
   (if-not-zero STAMP
     (begin (eq! PRPRC 1)
            (eq! CT CT_MAX))))
