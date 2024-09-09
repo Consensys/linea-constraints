@@ -118,7 +118,6 @@ ZKEVM_MODULES := ${ALU} \
 		 ${EC_DATA} \
 		 ${EUC} \
 		 ${EXP} \
-		 ${GAS} \
 		 ${HUB_COLUMNS} \
 		 ${LIBRARY} \
 		 ${LOG_DATA} \
@@ -139,7 +138,7 @@ ZKEVM_MODULES := ${ALU} \
 		 ${TRM} \
 		 ${TXN_DATA} \
 		 ${WCP}
-
+#		 ${GAS} \
 #		 ${HUB} \
 
 define.go: ${ZKEVM_MODULES}
