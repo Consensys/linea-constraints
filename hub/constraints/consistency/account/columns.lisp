@@ -2,9 +2,9 @@
 
 (defcolumns
   ;; account consistency permutation related
-  ( acc_FIRST_IN_CNF :binary@prove )     ( acc_FIRST_IN_BLK :binary@prove )     ( acc_FIRST_IN_TXN :binary@prove )
-  ( acc_AGAIN_IN_CNF :binary@prove )     ( acc_AGAIN_IN_BLK :binary@prove )     ( acc_AGAIN_IN_TXN :binary@prove )
-  ( acc_FINAL_IN_CNF :binary@prove )     ( acc_FINAL_IN_BLK :binary@prove )     ( acc_FINAL_IN_TXN :binary@prove )
+  ( acp_FIRST_IN_CNF :binary@prove )     ( acp_FIRST_IN_BLK :binary@prove )     ( acp_FIRST_IN_TXN :binary@prove )
+  ( acp_AGAIN_IN_CNF :binary@prove )     ( acp_AGAIN_IN_BLK :binary@prove )     ( acp_AGAIN_IN_TXN :binary@prove )
+  ( acp_FINAL_IN_CNF :binary@prove )     ( acp_FINAL_IN_BLK :binary@prove )     ( acp_FINAL_IN_TXN :binary@prove )
   ( acp_DEPLOYMENT_NUMBER_FIRST_IN_BLOCK    :i16)
   ( acp_DEPLOYMENT_NUMBER_FINAL_IN_BLOCK    :i16)
   )

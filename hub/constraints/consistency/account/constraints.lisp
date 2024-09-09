@@ -22,7 +22,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                                               ;;
-;;    X.5.3 Constraints for acc_FIRST, acc_AGAIN and acc_FINAL   ;;
+;;    X.5.3 Constraints for acp_FIRST, acp_AGAIN and acp_FINAL   ;;
 ;;                                                               ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -30,13 +30,13 @@
                (begin
                  (if-zero (force-bool acp_PEEK_AT_ACCOUNT)
                           (vanishes! (+
-                                       acc_FIRST_IN_TXN   acc_FIRST_IN_BLK   acc_FIRST_IN_CNF
-                                       acc_AGAIN_IN_TXN   acc_AGAIN_IN_BLK   acc_AGAIN_IN_CNF
-                                       acc_FINAL_IN_TXN   acc_FINAL_IN_BLK   acc_FINAL_IN_CNF)))))
+                                       acp_FIRST_IN_TXN   acp_FIRST_IN_BLK   acp_FIRST_IN_CNF
+                                       acp_AGAIN_IN_TXN   acp_AGAIN_IN_BLK   acp_AGAIN_IN_CNF
+                                       acp_FINAL_IN_TXN   acp_FINAL_IN_BLK   acp_FINAL_IN_CNF)))))
 
-(defun    (account-consistency---transtion-conflation)    (+    (prev acc_FINAL_IN_CNF)    acc_FIRST_IN_CNF))
-(defun    (account-consistency---transtion-block)         (+    (prev acc_FINAL_IN_BLK)    acc_FIRST_IN_BLK))
-(defun    (account-consistency---transtion-transaction)   (+    (prev acc_FINAL_IN_TXN)    acc_FIRST_IN_TXN))
+(defun    (account-consistency---transtion-conflation)    (+    (prev acp_FINAL_IN_CNF)    acp_FIRST_IN_CNF))
+(defun    (account-consistency---transtion-block)         (+    (prev acp_FINAL_IN_BLK)    acp_FIRST_IN_BLK))
+(defun    (account-consistency---transtion-transaction)   (+    (prev acp_FINAL_IN_TXN)    acp_FIRST_IN_TXN))
 (defun    (account-consistency---transtion-sum)           (+    account-consistency---transtion-conflation
                                                                 account-consistency---transtion-block
                                                                 account-consistency---transtion-transaction))
@@ -45,11 +45,9 @@
 (defconstraint    account-consistency---FIRST-AGAIN-FINAL---first-account-row ()
                   (if-zero    (force-bool     (prev acp_PEEK_AT_ACCOUNT))
                               (if-not-zero    (force-bool    acp_PEEK_AT_ACCOUNT)
-                                              (if-not-zero acp_PEEK_AT_ACCOUNT
-                                                           (eq!    3
-                                                                   (+   acc_FIRST_IN_CNF
-                                                                        acc_FIRST_IN_BLK
-                                                                        acc_FIRST_IN_TXN))))))
+                                              (if-not-zero   acp_PEEK_AT_ACCOUNT
+                                                             (eq!    (account-consistency---transtion-sum)
+                                                                     3)))))
 
 (defun   (account-consistency---repeat-account-row)    (*    (prev    acp_PEEK_AT_ACCOUNT)   acp_PEEK_AT_ACCOUNT))
 
@@ -76,22 +74,20 @@
                   (if-not-zero (prev acp_PEEK_AT_ACCOUNT)
                                (if-zero    (force-bool    acp_PEEK_AT_ACCOUNT)
                                            (eq!    3
-                                                   (+   acc_FINAL_IN_CNF
-                                                        acc_FINAL_IN_BLK
-                                                        acc_FINAL_IN_TXN)))))
+                                                   (account-consistency---transtion-sum)))))
 
 (defconstraint    account-consistency---FIRST-AGAIN-FINAL---final-row-of-the-trace       (:domain {-1})
                   (if-not-zero acp_PEEK_AT_ACCOUNT
                                (eq!    3
-                                       (+   acc_FINAL_IN_CNF
-                                            acc_FINAL_IN_BLK
-                                            acc_FINAL_IN_TXN))))
+                                       (+   acp_FINAL_IN_CNF
+                                            acp_FINAL_IN_BLK
+                                            acp_FINAL_IN_TXN))))
 
 (defconstraint    account-consistency---FIRST-AGAIN-FINAL---unconditionally-constraining-AGAIN ()
                   (begin
-                    (eq!   (+   acc_FINAL_IN_CNF   acc_AGAIN_IN_CNF)   acp_PEEK_AT_ACCOUNT)
-                    (eq!   (+   acc_FINAL_IN_BLK   acc_AGAIN_IN_BLK)   acp_PEEK_AT_ACCOUNT)
-                    (eq!   (+   acc_FINAL_IN_TXN   acc_AGAIN_IN_TXN)   acp_PEEK_AT_ACCOUNT)))
+                    (eq!   (+   acp_FINAL_IN_CNF   acp_AGAIN_IN_CNF)   acp_PEEK_AT_ACCOUNT)
+                    (eq!   (+   acp_FINAL_IN_BLK   acp_AGAIN_IN_BLK)   acp_PEEK_AT_ACCOUNT)
+                    (eq!   (+   acp_FINAL_IN_TXN   acp_AGAIN_IN_TXN)   acp_PEEK_AT_ACCOUNT)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                       ;;
@@ -99,15 +95,15 @@
 ;;                                       ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defconstraint    account-consistency---initialization---conflation-level  (:guard   acc_FIRST_IN_CNF)
+(defconstraint    account-consistency---initialization---conflation-level  (:guard   acp_FIRST_IN_CNF)
                   (begin
                     (eq!        acp_TRM_FLAG    1)
                     (vanishes!  acp_DEPLOYMENT_NUMBER)))
 
-(defconstraint    account-consistency---initialization---block-level       (:guard   acc_FIRST_IN_BLK)
+(defconstraint    account-consistency---initialization---block-level       (:guard   acp_FIRST_IN_BLK)
                   (eq!    acp_DEPLOYMENT_NUMBER_FIRST_IN_BLOCK    acp_DEPLOYMENT_NUMBER))
 
-(defconstraint    account-consistency---initialization---transaction-level (:guard   acc_FIRST_IN_TXN)
+(defconstraint    account-consistency---initialization---transaction-level (:guard   acp_FIRST_IN_TXN)
                   (begin
                     (eq!        acp_WARMTH    acp_IS_PRECOMPILE)
                     (vanishes!  acp_DEPLOYMENT_STATUS)
@@ -119,7 +115,7 @@
 ;;                                ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defconstraint    account-consistency---linking---conflation-level  (:guard   acc_AGAIN_IN_CNF)
+(defconstraint    account-consistency---linking---conflation-level  (:guard   acp_AGAIN_IN_CNF)
                   (begin
                     (eq!   acp_NONCE                     (prev acp_NONCE_NEW)               )
                     (eq!   acp_BALANCE                   (prev acp_BALANCE_NEW)             )
@@ -131,19 +127,19 @@
                     ;;
                     (eq!   acp_IS_PRECOMPILE             (prev acp_IS_PRECOMPILE)           )))
 
-(defconstraint    account-consistency---linking---block-level       (:guard   acc_AGAIN_IN_BLK)
+(defconstraint    account-consistency---linking---block-level       (:guard   acp_AGAIN_IN_BLK)
                   (begin
                     (remained-constant!    acp_DEPLOYMENT_NUMBER_FIRST_IN_BLOCK)
                     (remained-constant!    acp_DEPLOYMENT_NUMBER_FINAL_IN_BLOCK)))
 
-(defconstraint    account-consistency---linking---transaction-level (:guard   acc_AGAIN_IN_TXN)
+(defconstraint    account-consistency---linking---transaction-level (:guard   acp_AGAIN_IN_TXN)
                   (begin
                     (eq!   acp_WARMTH                     (prev    acp_WARMTH_NEW))
                     (eq!   acp_MARKED_FOR_SELFDESTRUCT    (prev    acp_MARKED_FOR_SELFDESTRUCT_NEW))
                     (if-not-zero    acp_MARKED_FOR_SELFDESTRUCT
                                     (eq!    acp_MARKED_FOR_SELFDESTRUCT_NEW    1))))
 
-(defconstraint    account-consistency---linking---for-CFI (:guard    acc_AGAIN_IN_CNF)
+(defconstraint    account-consistency---linking---for-CFI (:guard    acp_AGAIN_IN_CNF)
                   (if-eq    acp_DEPLOYMENT_NUMBER_NEW    acp_DEPLOYMENT_NUMBER
                             (if-eq    acp_DEPLOYMENT_STATUS_NEW    acp_DEPLOYMENT_STATUS
                                       (remained-constant!    acp_CODE_FRAGMENT_INDEX))))
@@ -154,10 +150,10 @@
 ;;                                     ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defconstraint    account-consistency---finalization---block-level       (:guard   acc_FINAL_IN_BLK)
+(defconstraint    account-consistency---finalization---block-level       (:guard   acp_FINAL_IN_BLK)
                   (eq!    acp_DEPLOYMENT_NUMBER_FINAL_IN_BLOCK    acp_DEPLOYMENT_NUMBER_NEW))
 
-(defconstraint    account-consistency---finalization---transaction-level (:guard   acc_FINAL_IN_TXN)
+(defconstraint    account-consistency---finalization---transaction-level (:guard   acp_FINAL_IN_TXN)
                   (vanishes!    acp_DEPLOYMENT_STATUS_NEW))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
