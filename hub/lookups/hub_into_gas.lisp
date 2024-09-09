@@ -12,7 +12,7 @@
            )
            ;; source columns
 	   (
-	     (* hub.GAS_ACTL      (hub-into-gas-trigger))
+	     (* hub.GAS_ACTUAL    (hub-into-gas-trigger))
 	     (* hub.GAS_COST      (hub-into-gas-trigger))
 	     (* hub.XAHOY         (hub-into-gas-trigger))
 	     (* hub.stack/OOGX    (hub-into-gas-trigger))

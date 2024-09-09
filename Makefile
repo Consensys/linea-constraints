@@ -1,5 +1,7 @@
 CORSET ?= corset
 
+HUB_COLUMNS :=  $(wildcard hub/columns/*lisp)
+
 HUB :=  $(wildcard hub/columns/*lisp) \
 	$(wildcard hub/constraints/account-rows/*lisp) \
 	$(wildcard hub/constraints/consistency/*lisp) \
@@ -107,8 +109,7 @@ TABLES := reftables/bin_reftable.lisp \
 
 TRM := trm
 
-# TXN_DATA := txndata
-TXN_DATA := txndata/columns.lisp
+TXN_DATA := txndata
 
 WCP := wcp
 
@@ -122,7 +123,7 @@ ZKEVM_MODULES := ${ALU} \
 		 ${EUC} \
 		 ${EXP} \
 		 ${GAS} \
-		 ${HUB} \
+		 ${HUB_COLUMNS} \
 		 ${LIBRARY} \
 		 ${LOG_DATA} \
 		 ${LOG_INFO} \
@@ -143,7 +144,7 @@ ZKEVM_MODULES := ${ALU} \
 		 ${TXN_DATA} \
 		 ${WCP}
 
-
+#		 ${HUB} \
 
 define.go: ${ZKEVM_MODULES}
 	${CORSET} wizard-iop -vv -o $@ ${ZKEVM_MODULES}
