@@ -1,23 +1,24 @@
 (module hub)
 
 
+;; envcp_ ⇔ execution envionment consistency permutation
 (defpermutation
   ;; permuted columns
   (
-   exec_env_consistency_perm_CN
-   exec_env_consistency_perm_HUB_STAMP
-   exec_env_consistency_perm_CFI
-   exec_env_consistency_perm_CALLER_CN
-   exec_env_consistency_perm_CN_WILL_REV
-   exec_env_consistency_perm_CN_GETS_REV
-   exec_env_consistency_perm_CN_SELF_REV
-   exec_env_consistency_perm_CN_REV_STAMP
-   exec_env_consistency_perm_PC
-   exec_env_consistency_perm_PC_NEW
-   exec_env_consistency_perm_HEIGHT
-   exec_env_consistency_perm_HEIGHT_NEW
-   exec_env_consistency_perm_GAS_EXPECTED
-   exec_env_consistency_perm_GAS_NEXT
+   envcp_CN
+   envcp_HUB_STAMP
+   envcp_CFI
+   envcp_CALLER_CN
+   envcp_CN_WILL_REV
+   envcp_CN_GETS_REV
+   envcp_CN_SELF_REV
+   envcp_CN_REV_STAMP
+   envcp_PC
+   envcp_PC_NEW
+   envcp_HEIGHT
+   envcp_HEIGHT_NEW
+   envcp_GAS_EXPECTED
+   envcp_GAS_NEXT
    )
   ;; original columns
   (

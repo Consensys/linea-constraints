@@ -7,28 +7,28 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-(defconstraint consistency-exec-env-constancies ()
-               (if-not-zero exec_env_consistency_perm_CN
-                            (if-eq (next exec_env_consistency_perm_CN) exec_env_consistency_perm_CN
+(defconstraint execution-environment-consistency---constancies ()
+               (if-not-zero envcp_CN
+                            (if-eq (next envcp_CN) envcp_CN
                                    (begin
-                                     (will-eq! exec_env_consistency_perm_CFI          exec_env_consistency_perm_CFI)
-                                     (will-eq! exec_env_consistency_perm_CALLER_CN    exec_env_consistency_perm_CALLER_CN)
-                                     (will-eq! exec_env_consistency_perm_CN_WILL_REV  exec_env_consistency_perm_CN_WILL_REV)
-                                     (will-eq! exec_env_consistency_perm_CN_GETS_REV  exec_env_consistency_perm_CN_GETS_REV)
-                                     (will-eq! exec_env_consistency_perm_CN_SELF_REV  exec_env_consistency_perm_CN_SELF_REV)
-                                     (will-eq! exec_env_consistency_perm_CN_REV_STAMP exec_env_consistency_perm_CN_REV_STAMP)))))
+                                     (will-remain-constant!   envcp_CFI          )
+                                     (will-remain-constant!   envcp_CALLER_CN    )
+                                     (will-remain-constant!   envcp_CN_WILL_REV  )
+                                     (will-remain-constant!   envcp_CN_GETS_REV  )
+                                     (will-remain-constant!   envcp_CN_SELF_REV  )
+                                     (will-remain-constant!   envcp_CN_REV_STAMP )))))
 
-(defconstraint consistency-exec-env-linking ()
-               (if-not-zero exec_env_consistency_perm_CN
-                            (if-eq (next exec_env_consistency_perm_CN) exec_env_consistency_perm_CN
-                                   (if-not-zero (will-remain-constant! exec_env_consistency_perm_HUB_STAMP)
+(defconstraint execution-environment-consistency---linking ()
+               (if-not-zero envcp_CN
+                            (if-eq (next envcp_CN) envcp_CN
+                                   (if-not-zero (will-remain-constant! envcp_HUB_STAMP)
                                                 (begin
-                                                  (will-eq! exec_env_consistency_perm_PC           exec_env_consistency_perm_PC_NEW)
-                                                  (will-eq! exec_env_consistency_perm_HEIGHT       exec_env_consistency_perm_HEIGHT_NEW)
-                                                  (will-eq! exec_env_consistency_perm_GAS_EXPECTED exec_env_consistency_perm_GAS_NEXT))))))
+                                                  (eq! (next   envcp_PC)             envcp_PC_NEW)
+                                                  (eq! (next   envcp_HEIGHT)         envcp_HEIGHT_NEW)
+                                                  (eq! (next   envcp_GAS_EXPECTED)   envcp_GAS_NEXT))))))
                                                                        
-(defconstraint consistency-exec-env-initialization ()
-               (if-not-zero (will-remain-constant! exec_env_consistency_perm_HUB_STAMP)
+(defconstraint execution-environment-consistency---initialization ()
+               (if-not-zero (will-remain-constant! envcp_CN)
                             (begin
-                              (vanishes! (next exec_env_consistency_perm_PC))
-                              (vanishes! (next exec_env_consistency_perm_HEIGHT)))))
+                              (vanishes! (next envcp_PC))
+                              (vanishes! (next envcp_HEIGHT)))))

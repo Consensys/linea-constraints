@@ -12,8 +12,7 @@
                  (eq!   (+    con_AGAIN    con_FIRST) 
                         ccp_PEEK_AT_CONTEXT)
                  (if-zero    (force-bool ccp_PEEK_AT_CONTEXT)
-                             (eq! (next con_FIRST)
-                                  (next ccp_PEEK_AT_CONTEXT)))
+                             (eq!    (next con_FIRST)    (next ccp_PEEK_AT_CONTEXT)))
                  (if-not-zero  ccp_PEEK_AT_CONTEXT
                                (if-not-zero (next    ccp_PEEK_AT_CONTEXT)
                                             (if-not-zero    (will-remain-constant!   ccp_CONTEXT_NUMBER)
@@ -23,7 +22,6 @@
 (defconstraint context-consistency---context-data-immutability ()
                (if-not-zero (next con_AGAIN)
                             (begin
-                              ( will-remain-constant!  ccp_CALL_DATA_CONTEXT_NUMBER      )
                               ( will-remain-constant!  ccp_CALL_STACK_DEPTH              )
                               ( will-remain-constant!  ccp_IS_ROOT                       )
                               ( will-remain-constant!  ccp_IS_STATIC                     )
@@ -38,6 +36,7 @@
                               ( will-remain-constant!  ccp_CALLER_ADDRESS_HI             )
                               ( will-remain-constant!  ccp_CALLER_ADDRESS_LO             )
                               ( will-remain-constant!  ccp_CALL_VALUE                    )
+                              ( will-remain-constant!  ccp_CALL_DATA_CONTEXT_NUMBER      )
                               ( will-remain-constant!  ccp_CALL_DATA_OFFSET              )
                               ( will-remain-constant!  ccp_CALL_DATA_SIZE                )
                               ( will-remain-constant!  ccp_RETURN_AT_OFFSET              )
