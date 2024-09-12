@@ -114,6 +114,17 @@ TRM := trm
 
 TXN_DATA := txndata
 
+TXN_DATA_FOR_REFERENCE_TESTS :=  $(wildcard txndata/*.lisp) \
+				 txndata/lookups/txndata_into_euc.lisp \
+				 txndata/lookups/txndata_into_rlpaddr.lisp \
+				 txndata/lookups/txndata_into_rlptxn.lisp \
+				 txndata/lookups/txndata_into_rlptxrcpt.lisp \
+				 txndata/lookups/txndata_into_romlex.lisp \
+				 txndata/lookups/txndata_into_wcp.lisp
+
+#				 txndata/lookups/txndata_into_blockdata.lisp \
+#				 txndata/lookups/txndata_into_hub.lispX \
+
 WCP := wcp
 
 ZKEVM_MODULES := ${ALU} \
@@ -184,7 +195,7 @@ ZKEVM_MODULES_FOR_REFERENCE_TESTS := ${ALU} \
 				     ${STP} \
 				     ${TABLES} \
 				     ${TRM} \
-				     ${TXN_DATA} \
+				     ${TXN_DATA_FOR_REFERENCE_TESTS} \
 				     ${WCP}
 
 
