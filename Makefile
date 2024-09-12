@@ -57,8 +57,8 @@ BIN := bin
 
 BLAKE2f_MODEXP_DATA := blake2fmodexpdata
 
-BLOCKDATA_COLUMNS := blockdata/columns.lisp \
-		     blockdata/constants.lisp
+BLOCKDATA_FOR_REFERENCE_TESTS := blockdata/columns.lisp \
+				 blockdata/constants.lisp
 
 BLOCKDATA := blockdata
 
@@ -159,7 +159,7 @@ zkevm.bin: ${ZKEVM_MODULES}
 ZKEVM_MODULES_FOR_REFERENCE_TESTS := ${ALU} \
 				     ${BIN} \
 				     ${BLAKE2f_MODEXP_DATA} \
-				     ${BLOCKDATA_COLUMNS} \
+				     ${BLOCKDATA_FOR_REFERENCE_TESTS} \
 				     ${BLOCKHASH} \
 				     ${CONSTANTS} \
 				     ${EC_DATA} \
