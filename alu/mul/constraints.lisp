@@ -78,8 +78,8 @@
          (vanishes! ARG_1_LO)
          (vanishes! ARG_2_HI)
          (vanishes! ARG_2_LO)
-         (debug (vanishes! RES_HI))
-         (debug (vanishes! RES_LO))))
+         (debug (= RES_HI 0))
+         (debug (= RES_LO 1))))
 
 (defun (first-row)
   (if-not-zero (- (prev STAMP) STAMP)
