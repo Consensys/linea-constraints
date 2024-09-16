@@ -107,7 +107,7 @@
   (eq! CT_MAX (maxct_sum)))
 
 ;; 5
-(defconstraint unallowed-transitions ()
+(defconstraint disallowed-transitions ()
   (vanishes! (+ (* CMPTN (next PRPRC))
                 (* MACRO
                    (+ (next MACRO) (next CMPTN)))
@@ -275,7 +275,7 @@
 ;;                      ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 1
-(defconstraint preprocessing---exp---log---exponent-hi-is-zero (:perspective macro :guard IS_EXP_LOG)
+(defconstraint exp-log---preprocessing---exponent-hi-is-zero (:perspective macro :guard IS_EXP_LOG)
   (callToISZERO 1 0 (exponent_hi)))
 
 (defun (expn_hi_is_zero)
@@ -286,7 +286,7 @@
 ;;    4.4 Linking       ;;
 ;;        constraints   ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defconstraint linking-constraints-exp-log (:perspective macro :guard IS_EXP_LOG)
+(defconstraint exp-log---linking-constraints (:perspective macro :guard IS_EXP_LOG)
   (begin (eq! (shift computation/PLT_JMP -1) 16)
          (if-not-zero (expn_hi_is_zero)
                       (eq! (shift computation/RAW_ACC -1) (exponent_lo)))
@@ -298,7 +298,7 @@
 ;;    4.5 Justify          ;;
 ;;        hub prediction   ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defconstraint justify-hub-prediction-exp-log (:perspective macro :guard IS_EXP_LOG)
+(defconstraint exp-log---justify-hub-prediction (:perspective macro :guard IS_EXP_LOG)
   (if-zero (expn_hi_is_zero)
            (eq! (dyn_cost)
                 (* GAS_CONST_G_EXP_BYTE (+ (expoennt_byte_length) 16)))
@@ -347,7 +347,7 @@
 ;;                      ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 1 
-(defconstraint preprocessing---modexp---cds-cutoff-less-than-ebs-cutoff (:perspective macro :guard IS_MODEXP_LOG)
+(defconstraint modexp-log---preprocessing---cds-cutoff-less-than-ebs-cutoff (:perspective macro :guard IS_MODEXP_LOG)
   (callToLT 1 0 (cds_cutoff) 0 (ebs_cutoff)))
 
 (defun (comp)
@@ -358,21 +358,21 @@
      (* (ebs_cutoff) (- 1 (comp)))))
 
 ;; 2
-(defconstraint preprocessing---modexp---min-cutoff-less-or-equal-than-16 (:perspective macro :guard IS_MODEXP_LOG)
+(defconstraint modexp-log---preprocessing---min-cutoff-less-or-equal-than-16 (:perspective macro :guard IS_MODEXP_LOG)
   (callToLT 2 0 (min_cutoff) 0 17))
 
 (defun (min_cutoff_leq_16)
   (shift preprocessing/WCP_RES 2))
 
 ;; 3
-(defconstraint preprocessing---modexp---raw-lead-hi-is-zero (:perspective macro :guard IS_MODEXP_LOG)
+(defconstraint modexp-log---preprocessing---raw-lead-hi-is-zero (:perspective macro :guard IS_MODEXP_LOG)
   (callToISZERO 3 0 (raw_lead_hi)))
 
 (defun (raw_lead_hi_is_zero)
   (shift preprocessing/WCP_RES 4))
 
 ;; 4
-(defconstraint preprocessing---modexp---trim-acc-is-zero (:perspective macro :guard IS_MODEXP_LOG)
+(defconstraint modexp-log---preprocessing---trim-acc-is-zero (:perspective macro :guard IS_MODEXP_LOG)
   (callToISZERO 4 0 (trim_acc)))
 
 (defun (trim_acc_is_zero)
@@ -383,7 +383,7 @@
 ;;    5.4 Linking       ;;
 ;;        constraints   ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defconstraint linking-constraints-modexp-log (:perspective macro :guard IS_MODEXP_LOG)
+(defconstraint modexp-log---linking-constraints (:perspective macro :guard IS_MODEXP_LOG)
   (begin (if-not-zero (min_cutoff_leq_16)
                       (begin (eq! (shift computation/RAW_ACC -1) (raw_lead_hi))
                              (eq! (shift computation/PLT_JMP -1) (min_cutoff)))
@@ -399,7 +399,7 @@
 ;;    5.5 Justify          ;;
 ;;        hub prediction   ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defconstraint justify-hub-prediction-modexp-log (:perspective macro :guard IS_MODEXP_LOG)
+(defconstraint modexp-log---justify-hub-prediction (:perspective macro :guard IS_MODEXP_LOG)
   (if-not-zero (min_cutoff_leq_16)
                (if-not-zero (trim_acc_is_zero)
                             (vanishes! (lead_log))
