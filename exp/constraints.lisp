@@ -275,7 +275,7 @@
 ;;                      ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 1
-(defconstraint preprocessing-1-exp-log-exponent-hi-is-zero (:perspective macro :guard IS_EXP_LOG)
+(defconstraint preprocessing---exp---log---exponent-hi-is-zero (:perspective macro :guard IS_EXP_LOG)
   (callToISZERO 1 0 (exponent_hi)))
 
 (defun (expn_hi_is_zero)
@@ -347,7 +347,7 @@
 ;;                      ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 1 
-(defconstraint preprocessing-1-modexp-log-cds-cutoff-less-than-ebs-cutoff (:perspective macro :guard IS_MODEXP_LOG)
+(defconstraint preprocessing---modexp---cds-cutoff-less-than-ebs-cutoff (:perspective macro :guard IS_MODEXP_LOG)
   (callToLT 1 0 (cds_cutoff) 0 (ebs_cutoff)))
 
 (defun (comp)
@@ -358,21 +358,21 @@
      (* (ebs_cutoff) (- 1 (comp)))))
 
 ;; 2
-(defconstraint preprocessing-2-modexp-log-min-cutoff-less-or-equal-than-16 (:perspective macro :guard IS_MODEXP_LOG)
+(defconstraint preprocessing---modexp---min-cutoff-less-or-equal-than-16 (:perspective macro :guard IS_MODEXP_LOG)
   (callToLT 2 0 (min_cutoff) 0 17))
 
 (defun (min_cutoff_leq_16)
   (shift preprocessing/WCP_RES 2))
 
 ;; 3
-(defconstraint preprocessing-4-modexp-log-raw-lead-hi-is-zero (:perspective macro :guard IS_MODEXP_LOG)
+(defconstraint preprocessing---modexp---raw-lead-hi-is-zero (:perspective macro :guard IS_MODEXP_LOG)
   (callToISZERO 3 0 (raw_lead_hi)))
 
 (defun (raw_lead_hi_is_zero)
   (shift preprocessing/WCP_RES 4))
 
 ;; 4
-(defconstraint preprocessing-5-modexp-log-trim-acc-is-zero (:perspective macro :guard IS_MODEXP_LOG)
+(defconstraint preprocessing---modexp---trim-acc-is-zero (:perspective macro :guard IS_MODEXP_LOG)
   (callToISZERO 4 0 (trim_acc)))
 
 (defun (trim_acc_is_zero)
