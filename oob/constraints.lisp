@@ -871,6 +871,9 @@
 (defconstraint prc-modexp-extract---check-mbs-is-zero (:guard (* (assumption---fresh-new-stamp) (prc-modexp-extract---standard-precondition)))
   (call-to-ISZERO 2 0 (prc-modexp-extract---mbs)))
 
+(defconstraint prc-modexp-extract---compare-96-plus-bbs-plus-ebs-and-cds (:guard (* (assumption---fresh-new-stamp) (prc-modexp-extract---standard-precondition)))
+  (call-to-LT 3 0 (+ 96 (prc-modexp-extract---bbs) (prc-modexp-extract---mbs)) 0 (prc---cds)))
+
 (defconstraint prc-modexp-extract---justify-hub-predictions (:guard (* (assumption---fresh-new-stamp) (prc-modexp-extract---standard-precondition)))
   (begin (eq! (prc-modexp-extract---extract-modulus)
               (* (prc-modexp-extract---call-data-extends-beyond-exponent)
@@ -933,7 +936,7 @@
   (begin (eq! (prc---ram-success)
               (* (prc-blake-params---sufficient-gas) (prc-blake-params---f-is-a-bit)))
          (if-not-zero (prc---ram-success)
-                      (eq! (prc---return-gas) (- (prc---call-gas) (prc-blake-params---blake-f)))
+                      (eq! (prc---return-gas) (- (prc---call-gas) (prc-blake-params---blake-r)))
                       (vanishes! (prc---return-gas)))))
 
 
