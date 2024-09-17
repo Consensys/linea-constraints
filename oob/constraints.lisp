@@ -872,7 +872,7 @@
   (call-to-ISZERO 2 0 (prc-modexp-extract---mbs)))
 
 (defconstraint prc-modexp-extract---compare-96-plus-bbs-plus-ebs-and-cds (:guard (* (assumption---fresh-new-stamp) (prc-modexp-extract---standard-precondition)))
-  (call-to-LT 3 0 (+ 96 (prc-modexp-extract---bbs) (prc-modexp-extract---mbs)) 0 (prc---cds)))
+  (call-to-LT 3 0 (+ 96 (prc-modexp-extract---bbs) (prc-modexp-extract---ebs)) 0 (prc---cds)))
 
 (defconstraint prc-modexp-extract---justify-hub-predictions (:guard (* (assumption---fresh-new-stamp) (prc-modexp-extract---standard-precondition)))
   (begin (eq! (prc-modexp-extract---extract-modulus)
