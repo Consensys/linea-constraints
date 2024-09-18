@@ -176,6 +176,7 @@ ZKEVM_MODULES_FOR_REFERENCE_TESTS := ${ALU} \
 				     ${EC_DATA} \
 				     ${EUC} \
 				     ${EXP} \
+#				     ${GAS} \
 				     ${HUB_COLUMNS} \
 				     ${LIBRARY} \
 				     ${LOG_DATA} \
@@ -199,7 +200,6 @@ ZKEVM_MODULES_FOR_REFERENCE_TESTS := ${ALU} \
 
 #				     ${BLOCKDATA} \
 #		 		     ${HUB} \
-#				     ${GAS} \
 
 zkevm_for_reference_tests.bin: ${ZKEVM_MODULES_FOR_REFERENCE_TESTS}
 	${CORSET} compile -vv -o $@ ${ZKEVM_MODULES_FOR_REFERENCE_TESTS}
