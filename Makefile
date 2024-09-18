@@ -136,7 +136,8 @@ ZKEVM_MODULES := ${ALU} \
 		 ${EC_DATA} \
 		 ${EUC} \
 		 ${EXP} \
-		 ${HUB_COLUMNS} \
+		 ${GAS} \
+                 ${HUB_COLUMNS} \
 		 ${LIBRARY} \
 		 ${LOG_DATA} \
 		 ${LOG_INFO} \
@@ -156,9 +157,8 @@ ZKEVM_MODULES := ${ALU} \
 		 ${TRM} \
 		 ${TXN_DATA} \
 		 ${WCP}
-
+               
 #		 ${HUB} \
-#		 ${GAS} \
 
 define.go: ${ZKEVM_MODULES}
 	${CORSET} wizard-iop -vv -o $@ ${ZKEVM_MODULES}
@@ -176,6 +176,7 @@ ZKEVM_MODULES_FOR_REFERENCE_TESTS := ${ALU} \
 				     ${EC_DATA} \
 				     ${EUC} \
 				     ${EXP} \
+#				     ${GAS} \
 				     ${HUB_COLUMNS} \
 				     ${LIBRARY} \
 				     ${LOG_DATA} \
@@ -199,7 +200,6 @@ ZKEVM_MODULES_FOR_REFERENCE_TESTS := ${ALU} \
 
 #				     ${BLOCKDATA} \
 #		 		     ${HUB} \
-#				     ${GAS} \
 
 zkevm_for_reference_tests.bin: ${ZKEVM_MODULES_FOR_REFERENCE_TESTS}
 	${CORSET} compile -vv -o $@ ${ZKEVM_MODULES_FOR_REFERENCE_TESTS}
