@@ -10,7 +10,7 @@
   (FROM_HI :i32)
   (FROM_LO :i128)
   (NONCE :i64)
-  (INITIAL_BALANCE :i128)
+  (INITIAL_BALANCE :i132)
   (VALUE :i128)
   (TO_HI :i32)
   (TO_LO :i128)

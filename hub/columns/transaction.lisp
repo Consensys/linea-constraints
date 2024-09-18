@@ -11,7 +11,7 @@
                 ( FROM_ADDRESS_HI              :i32  )
                 ( FROM_ADDRESS_LO              :i128 )
                 ( NONCE                        :i64  )
-                ( INITIAL_BALANCE              :i128 ) ;; TODO: vastly exagerated
+                ( INITIAL_BALANCE              :i132 ) ;; TODO: vastly exagerated
                 ( VALUE                        :i128 ) ;; TODO: vastly exagerated
 
                 ;; to account related
