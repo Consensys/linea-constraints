@@ -12,17 +12,17 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;                             ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defun (ram-to-exo-with-padding---aligned)                    (next prprc/WCP_RES))
-(defun (ram-to-exo-with-padding---initial-slo)                (next prprc/EUC_QUOT))
-(defun (ram-to-exo-with-padding---initial-sbo)                (next prprc/EUC_REM))
-(defun (ram-to-exo-with-padding---has-right-padding)          (shift prprc/WCP_RES 2))
-(defun (ram-to-exo-with-padding---padding-size)               (* (ram-to-exo-with-padding---has-right-padding) (- macro/REF_SIZE macro/SIZE)))
-(defun (ram-to-exo-with-padding---extraction-size)            (+ (* (ram-to-exo-with-padding---has-right-padding) macro/SIZE)
-                                                                 (* (- 1 (ram-to-exo-with-padding---has-right-padding)) macro/REF_SIZE)))
-(defun (ram-to-exo-with-padding---last-limb-is-full)          (shift prprc/WCP_RES 3))
-(defun (ram-to-exo-with-padding---last-limb-byte-size)        (+ (* (ram-to-exo-with-padding---last-limb-is-full) LLARGE)
-                                                                 (* (- 1 (ram-to-exo-with-padding---last-limb-is-full)) (shift prprc/EUC_REM 3))))
-(defun (ram-to-exo-with-padding---last-limb-single-source)    (shift prprc/WCP_RES 4))
+(defun    (ram-to-exo-with-padding---aligned)                    (next prprc/WCP_RES))
+(defun    (ram-to-exo-with-padding---initial-slo)                (next prprc/EUC_QUOT))
+(defun    (ram-to-exo-with-padding---initial-sbo)                (next prprc/EUC_REM))
+(defun    (ram-to-exo-with-padding---has-right-padding)          (shift prprc/WCP_RES 2))
+(defun    (ram-to-exo-with-padding---padding-size)               (* (ram-to-exo-with-padding---has-right-padding) (- macro/REF_SIZE macro/SIZE)))
+(defun    (ram-to-exo-with-padding---extraction-size)            (+ (* (ram-to-exo-with-padding---has-right-padding) macro/SIZE)
+                                                                    (* (- 1 (ram-to-exo-with-padding---has-right-padding)) macro/REF_SIZE)))
+(defun    (ram-to-exo-with-padding---last-limb-is-full)          (shift prprc/WCP_RES 3))
+(defun    (ram-to-exo-with-padding---last-limb-byte-size)        (+ (* (ram-to-exo-with-padding---last-limb-is-full) LLARGE)
+                                                                    (* (- 1 (ram-to-exo-with-padding---last-limb-is-full)) (shift prprc/EUC_REM 3))))
+(defun    (ram-to-exo-with-padding---last-limb-single-source)    (shift prprc/WCP_RES 4))
 
 (defconstraint    ram-to-exo-with-padding---setting-TOTLZ (:guard (* MACRO IS_RAM_TO_EXO_WITH_PADDING))
                   ;; setting nb of LEFT ZEROS rows

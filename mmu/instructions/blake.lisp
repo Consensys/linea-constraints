@@ -13,15 +13,15 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;           ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defun (blake---cdo)                 macro/SRC_OFFSET_LO)
-(defun (blake---success-bit)         macro/SUCCESS_BIT)
-(defun (blake---r-prediction)        macro/LIMB_1)
-(defun (blake---f-prediction)        macro/LIMB_2)
-(defun (blake---slo-r)              (next prprc/EUC_QUOT))
-(defun (blake---sbo-r)              (next prprc/EUC_REM))
-(defun (blake---r-single-source)    (next prprc/WCP_RES))
-(defun (blake---slo-f)              (shift prprc/EUC_QUOT 2))
-(defun (blake---sbo-f)              (shift prprc/EUC_REM 2)) ;; ""
+(defun    (blake---cdo)                 macro/SRC_OFFSET_LO)
+(defun    (blake---success-bit)         macro/SUCCESS_BIT)
+(defun    (blake---r-prediction)        macro/LIMB_1)
+(defun    (blake---f-prediction)        macro/LIMB_2)
+(defun    (blake---slo-r)              (next prprc/EUC_QUOT))
+(defun    (blake---sbo-r)              (next prprc/EUC_REM))
+(defun    (blake---r-single-source)    (next prprc/WCP_RES))
+(defun    (blake---slo-f)              (shift prprc/EUC_QUOT 2))
+(defun    (blake---sbo-f)              (shift prprc/EUC_REM 2)) ;; ""
 
 (defconstraint    blake---setting-the-TOTs (:guard (* MACRO IS_BLAKE))
                   (begin

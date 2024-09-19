@@ -32,7 +32,7 @@
                                   0
                                   (mload---sbo))))
 
-(defconstraint    mload---setting-micro-instrution-constant-values    (:guard (* MACRO IS_MLOAD))
+(defconstraint    mload---setting-micro-instruction-constant-values    (:guard (* MACRO IS_MLOAD))
                   (begin
                     (eq!       (shift micro/CN_S       NB_PP_ROWS_MLOAD_PO) macro/SRC_ID)
                     (vanishes! (shift micro/EXO_SUM    NB_PP_ROWS_MLOAD_PO))))
