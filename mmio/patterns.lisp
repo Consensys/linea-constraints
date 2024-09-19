@@ -45,33 +45,34 @@
                              (eq! target (* accumulator pow)))))
 
 ;; [2 => 1 Padded]
-(defpurefun (two-to-one-padded target
-                               source1_byte
-                               source2_byte
-                               accumulator1
-                               accumulator2
-                               pow1
-                               pow2
-                               source1_marker
-                               size
-                               bit1
-                               bit2
-                               bit3
-                               bit4
+(defpurefun    (two-to-one-padded    target
+                                     source1_byte
+                                     source2_byte
+                                     accumulator1
+                                     accumulator2
+                                     pow1
+                                     pow2
+                                     source1_marker
+                                     target_marker
+                                     size
+                                     bit1
+                                     bit2
+                                     bit3
+                                     bit4
+                                     counter)
+               (begin (plateau bit1 source1_marker counter)
+                      (plateau bit2
+                               (+ source1_marker (- size LLARGE))
                                counter)
-            (begin (plateau bit1 source1_marker counter)
-                   (plateau bit2
-                            (+ source1_marker (- size LLARGE))
-                            counter)
-                   (plateau bit3 (- LLARGE source1_marker) counter)
-                   (plateau bit4 size counter)
-                   (isolate-suffix accumulator1 source1_byte bit1 counter)
-                   (isolate-prefix accumulator2 source2_byte bit2 counter)
-                   (power pow1 bit3 counter)
-                   (power pow2 bit4 counter)
-                   (if-eq counter LLARGEMO
-                          (eq! target
-                               (+ (* accumulator1 pow1) (* accumulator2 pow2))))))
+                      (plateau bit3 (- (+ target_marker LLARGE) source1_marker)) counter)
+                      (plateau bit4 size counter)
+                      (isolate-suffix accumulator1 source1_byte bit1 counter)
+                      (isolate-prefix accumulator2 source2_byte bit2 counter)
+                      (power pow1 bit3 counter)
+                      (power pow2 bit4 counter)
+                      (if-eq counter LLARGEMO
+                             (eq! target
+                                  (+ (* accumulator1 pow1) (* accumulator2 pow2))))))
 
 ;; [1 Partial => 1]
 (defpurefun (one-partial-to-one target
