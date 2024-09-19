@@ -24,15 +24,25 @@
                              (eq! target_new
                                   (- target (* accumulator pow))))))
 
-;[1 => 1 Padded]
-(defpurefun (one-to-one-padded target source_byte accumulator pow source_marker size bit1 bit2 bit3 counter)
-  (begin (plateau bit1 source_marker counter)
-         (plateau bit2 (+ source_marker size) counter)
-         (plateau bit3 size counter)
-         (isolate-chunk accumulator source_byte bit1 bit2 counter)
-         (power pow bit3 counter)
-         (if-eq counter LLARGEMO
-                (eq! target (* accumulator pow)))))
+;; [1 => 1 Padded]
+(defpurefun    (one-to-one-padded    target
+                                     source_byte
+                                     accumulator
+                                     pow
+                                     source_marker
+                                     target_marker
+                                     size
+                                     bit1
+                                     bit2
+                                     bit3
+                                     counter)
+               (begin (plateau bit1 source_marker counter)
+                      (plateau bit2 (+ source_marker size) counter)
+                      (plateau bit3 (+ target_marker size) counter)
+                      (isolate-chunk accumulator source_byte bit1 bit2 counter)
+                      (power pow bit3 counter)
+                      (if-eq counter LLARGEMO
+                             (eq! target (* accumulator pow)))))
 
 ;; [2 => 1 Padded]
 (defpurefun (two-to-one-padded target

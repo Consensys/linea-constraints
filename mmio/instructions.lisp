@@ -74,7 +74,17 @@
          (eq! INDEX_A SLO)
          (eq! VAL_A_NEW VAL_A)
          (eq! INDEX_X TLO)
-         (one-to-one-padded LIMB BYTE_A [ACC 1] [POW_256 1] SBO SIZE [BIT 1] [BIT 2] [BIT 3] CT)))
+         (one-to-one-padded    LIMB
+                               BYTE_A
+                               [ACC 1]
+                               [POW_256 1]
+                               SBO
+                               TBO
+                               SIZE
+                               [BIT 1]
+                               [BIT 2]
+                               [BIT 3]
+                               CT)))
 
 (defconstraint ram-to-limb-two-source (:guard IS_RAM_TO_LIMB_TWO_SOURCE)
   (begin (eq! CN_A CNS)
