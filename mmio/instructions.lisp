@@ -95,7 +95,21 @@
          (eq! VAL_A_NEW VAL_A)
          (eq! VAL_B_NEW VAL_B)
          (eq! INDEX_X TLO)
-         (two-to-one-padded LIMB BYTE_A BYTE_B [ACC 1] [ACC 2] [POW_256 1] [POW_256 2] SBO SIZE [BIT 1] [BIT 2] [BIT 3] [BIT 4] CT)))
+         (two-to-one-padded LIMB
+                            BYTE_A
+                            BYTE_B
+                            [ACC 1]
+                            [ACC 2]
+                            [POW_256 1]
+                            [POW_256 2]
+                            SBO
+                            TBO
+                            SIZE
+                            [BIT 1]
+                            [BIT 2]
+                            [BIT 3]
+                            [BIT 4]
+                            CT)))
 
 (defconstraint ram-to-ram-transplant (:guard IS_RAM_TO_RAM_TRANSPLANT)
   (begin (eq! CN_A CNS)
