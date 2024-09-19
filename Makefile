@@ -80,7 +80,9 @@ LOG_DATA := logdata
 
 LOG_INFO := loginfo
 
-MMU := mmu
+MMU :=  $(wildcard mmu/*.lisp) \
+	$(wildcard mmu/lookups/*.lisp) \
+	$(wildcard mmu/instructions/*.lisp)
 
 MMIO := mmio/columns.lisp #TODO enable the MMIO constraint and lookup
 # MMIO := mmio \
