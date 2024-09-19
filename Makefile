@@ -83,8 +83,8 @@ LOG_INFO := loginfo
 MMU := mmu
 
 MMIO := mmio/columns.lisp #TODO enable the MMIO constraint and lookup
-# MMIO := mmio \
-# mmio/consistency.lisp
+#	$(wildcard mmio/*lisp) \
+#	$(wildcard mmio/lookups/*lisp) \
 
 MXP := mxp
 
