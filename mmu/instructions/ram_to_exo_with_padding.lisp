@@ -90,7 +90,7 @@
 
 (defconstraint    ram-to-exo-with-padding---std-progression (:guard (* IS_RAM_TO_EXO_WITH_PADDING MICRO))
                   (begin
-                    (stdProgression micro/TLO)
+                    (standard-progression micro/TLO)
                     (vanishes! micro/TBO)))
 
 (defconstraint    ram-to-exo-with-padding---first-row (:guard (* IS_RAM_TO_EXO_WITH_PADDING NT_FIRST))

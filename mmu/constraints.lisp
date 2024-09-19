@@ -263,7 +263,7 @@
          (eq! (shift prprc/WCP_ARG_1_LO row) arg1lo)
          (debug (vanishes! (shift prprc/WCP_ARG_2_LO row)))))
 
-(defun (stdProgression C)
+(defun (standard-progression C)
   (eq! C
        (* (prev MICRO)
           (+ (prev C) 1))))
