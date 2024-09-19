@@ -60,11 +60,15 @@
                                      bit3
                                      bit4
                                      counter)
-               (begin (plateau bit1 source1_marker counter)
+               (begin (plateau bit1
+                               source1_marker
+                               counter)
                       (plateau bit2
                                (+ source1_marker (- size LLARGE))
                                counter)
-                      (plateau bit3 (- (+ target_marker LLARGE) source1_marker)) counter)
+                      (plateau bit3
+                               (- (+ target_marker LLARGE) source1_marker)
+                               counter)
                (plateau bit4 (+ target_marker size) counter)
                (isolate-suffix accumulator1 source1_byte bit1 counter)
                (isolate-prefix accumulator2 source2_byte bit2 counter)
