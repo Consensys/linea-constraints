@@ -76,7 +76,8 @@ LOG_INFO := loginfo
 
 MMU :=  $(wildcard mmu/*.lisp) \
 	$(wildcard mmu/lookups/*.lisp) \
-	$(wildcard mmu/instructions/*.lisp)
+	$(wildcard mmu/instructions/*.lisp) \
+	$(wildcard mmu/instructions/any_to_ram_with_padding/*.lisp)
 
 MMIO := mmio/columns.lisp
 
