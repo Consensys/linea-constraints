@@ -39,23 +39,43 @@
 (defun    (modexp-data---totnt-is-one)                   (shift prprc/WCP_RES 3))
 (defun    (modexp-data---middle-sbo)                     (shift prprc/EUC_REM 6)) ;; ""
 
-(defconstraint modexp-data---preprocessing (:guard (* MACRO IS_MODEXP_DATA))
-               (begin
+
+(defconstraint modexp-data---setting-TOT (:guard (* MACRO IS_MODEXP_DATA))
                  ;; Setting total number of mmio inst
-                 (eq! TOT NB_MICRO_ROWS_TOT_MODEXP_DATA)
+                 (eq! TOT NB_MICRO_ROWS_TOT_MODEXP_DATA))
+
+(defconstraint modexp-data---1st-preprocessing-row (:guard (* MACRO IS_MODEXP_DATA))
+               (begin
                  ;; preprocessing row n°1
-                 (callToEuc   1 (modexp-data---num-left-padding-bytes) LLARGE)
+                 (callToEuc   1
+                              (modexp-data---num-left-padding-bytes)
+                              LLARGE)
                  (eq! (modexp-data---initial-tbo) (next prprc/EUC_REM))
-                 (eq! TOTLZ (next prprc/EUC_QUOT))
+                 (eq! TOTLZ (next prprc/EUC_QUOT))))
+
+(defconstraint modexp-data---2nd-preprocessing-row (:guard (* MACRO IS_MODEXP_DATA))
+               (begin
                  ;; preprocessing row n°2
-                 (callToLt    2 0 (modexp-data---leftover-data-size) (modexp-data---param-byte-size))
-                 (callToEuc   2 (modexp-data---num-right-padding-bytes) LLARGE)
+                 (callToLt    2
+                              0
+                              (modexp-data---leftover-data-size)
+                              (modexp-data---param-byte-size))
+                 (callToEuc   2
+                              (modexp-data---num-right-padding-bytes)
+                              LLARGE)
                  (eq! TOTRZ (shift prprc/EUC_QUOT 2))
-                 (debug (eq! TOTNT
-                             (- 32 (+ TOTLZ TOTRZ))))
+                 (debug (eq! TOTNT (- 32 (+ TOTLZ TOTRZ))))))
+
+(defconstraint modexp-data---3rd-preprocessing-row (:guard (* MACRO IS_MODEXP_DATA))
+               (begin
                  ;; preprocessing row n°3
-                 (callToEq    3 0 TOTNT 1)
-                 (callToEuc   3 (modexp-data---param-offset) LLARGE)
+                 (callToEq    3
+                              0
+                              TOTNT
+                              1)
+                 (callToEuc   3
+                              (modexp-data---param-offset)
+                              LLARGE)
                  (eq! (modexp-data---initial-slo) (shift prprc/EUC_QUOT 3))
                  (eq! (modexp-data---initial-sbo) (shift prprc/EUC_REM 3))
                  (if-zero (modexp-data---totnt-is-one)
@@ -65,16 +85,28 @@
                                    (eq! (modexp-data---first-limb-bytesize) (modexp-data---leftover-data-size))))
                  (if-zero (modexp-data---data-runs-out)
                           (eq! (modexp-data---last-limb-bytesize) LLARGE)
-                          (eq! (modexp-data---last-limb-bytesize) (- LLARGE (modexp-data---right-padding-remainder))))
+                          (eq! (modexp-data---last-limb-bytesize) (- LLARGE (modexp-data---right-padding-remainder))))))
+
+(defconstraint modexp-data---4th-preprocessing-row (:guard (* MACRO IS_MODEXP_DATA))
+               (begin
                  ;; preprocessing row n°4
                  (callToLt    4
                               0
                               (+ (modexp-data---initial-sbo) (- (modexp-data---first-limb-bytesize) 1))
                               LLARGE)
-                 (eq! (modexp-data---first-limb-single-source) (shift prprc/WCP_RES 4))
+                 (eq! (modexp-data---first-limb-single-source) (shift prprc/WCP_RES 4))))
+
+(defconstraint modexp-data---5th-preprocessing-row (:guard (* MACRO IS_MODEXP_DATA))
+               (begin
                  ;; preprocessing row n°5
-                 (callToEq    5 0 (modexp-data---initial-sbo) (modexp-data---initial-tbo))
-                 (eq! (modexp-data---aligned) (shift prprc/WCP_RES 5))
+                 (callToEq    5
+                              0
+                              (modexp-data---initial-sbo)
+                              (modexp-data---initial-tbo))
+                 (eq! (modexp-data---aligned) (shift prprc/WCP_RES 5))))
+
+(defconstraint modexp-data---6th-preprocessing-row (:guard (* MACRO IS_MODEXP_DATA))
+               (begin
                  ;; preprocessing row n°6
                  (if-eq-else (modexp-data---aligned) 1
                              (eq! (modexp-data---last-limb-single-source) (modexp-data---aligned))
@@ -85,7 +117,10 @@
                                                   0
                                                   (+ (modexp-data---middle-sbo) (- (modexp-data---last-limb-bytesize) 1))
                                                   LLARGE)
-                                    (eq! (modexp-data---last-limb-single-source) (shift prprc/WCP_RES 6))))
+                                    (eq! (modexp-data---last-limb-single-source) (shift prprc/WCP_RES 6))))))
+
+(defconstraint modexp-data---setting-micro-instruction-constant-values (:guard (* MACRO IS_MODEXP_DATA))
+               (begin
                  ;; setting mmio constant values
                  (eq! (shift micro/CN_S NB_PP_ROWS_MODEXP_DATA_PO) (modexp-data---src-id))
                  (eq! (shift micro/EXO_SUM NB_PP_ROWS_MODEXP_DATA_PO) EXO_SUM_WEIGHT_BLAKEMODEXP)
