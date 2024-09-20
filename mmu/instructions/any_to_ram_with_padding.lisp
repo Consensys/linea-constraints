@@ -7,9 +7,12 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-;;
-;; ANY TO RAM WITH PADDING
-;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;                             ;;
+;;;;;;;;;;;;;;;;;;;;;;;;   ANY_TO_RAM_WITH_PADDING   ;;
+;;;;;;;;;;;;;;;;;;;;;;;;                             ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (defun    (any-to-ram-min-tgt-offset)             macro/TGT_OFFSET_LO)
 (defun    (any-to-ram-max-tgt-offset)             (+ macro/TGT_OFFSET_LO (- macro/SIZE 1)))
 (defun    (any-to-ram-pure-padd)                  (force-bool (- 1 (next prprc/WCP_RES))))
