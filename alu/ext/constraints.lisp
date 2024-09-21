@@ -115,15 +115,13 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                           ;;
-;;    6.7 oli constraints    ;;
+;;    6.7 OLI constraints    ;;
 ;;                           ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defconstraint bit-1-constraints ()
   (if-not-zero STAMP
-               (begin (if-not-zero (- INST EVM_INST_MULMOD)
-                                   (vanishes! BIT_1))
-                      (if-not-zero ARG_1_HI
-                                   (vanishes! BIT_1))
+               (begin (if-not-zero (- INST EVM_INST_MULMOD) (vanishes! BIT_1))
+                      (if-not-zero ARG_1_HI                 (vanishes! BIT_1))
                       (if-zero ARG_1_HI
                                (if-not-zero (- INST EVM_INST_ADDMOD)
                                             (if-zero ARG_1_LO
@@ -132,10 +130,8 @@
 
 (defconstraint bit-2-constraints ()
   (if-not-zero STAMP
-               (begin (if-not-zero (- INST EVM_INST_MULMOD)
-                                   (vanishes! BIT_2))
-                      (if-not-zero ARG_2_HI
-                                   (vanishes! BIT_2))
+               (begin (if-not-zero (- INST EVM_INST_MULMOD)  (vanishes! BIT_2))
+                      (if-not-zero ARG_2_HI                  (vanishes! BIT_2))
                       (if-zero ARG_2_HI
                                (if-eq INST EVM_INST_MULMOD
                                       (if-zero ARG_2_LO
