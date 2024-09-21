@@ -142,6 +142,17 @@
                                                (= BIT_2 1)
                                                (vanishes! BIT_2)))))))
 
+(defconstraint bit-3-constraints ()
+               (if-not-zero STAMP
+                            (begin
+                              (if-not-zero   ARG_3_HI                 
+                                             ;; ARG_3_HI ≠ 0
+                                             (vanishes! BIT_3)
+                                             ;; ARG_3_HI = 0
+                                             (if-not-zero   (*   ARG_3_LO   (-   1   ARG_3_LO))
+                                                            (eq!    BIT_3   0)
+                                                            (eq!    BIT_3   1))))))
+
 (defconstraint oli-constraints ()
   (if-not-zero STAMP
                (= OLI
