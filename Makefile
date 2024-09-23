@@ -1,40 +1,46 @@
 CORSET ?= corset
 
- HUB :=  $(wildcard hub/columns/*lisp)
+HUB_COLUMNS :=  $(wildcard hub/columns/*lisp)
 
- #	$(wildcard hub/constraints/account-rows/*lisp) \
- 	$(wildcard hub/constraints/context-rows/*lisp) \
- 	$(wildcard hub/constraints/generalities/*lisp) \
- 	$(wildcard hub/constraints/heartbeat/*lisp) \
- 	$(wildcard hub/constraints/instruction-handling/call/*lisp) \
- 	$(wildcard hub/constraints/instruction-handling/call/generalities/*lisp) \
- 	$(wildcard hub/constraints/instruction-handling/call/finishing_touches/*lisp) \
- 	$(wildcard hub/constraints/instruction-handling/call/specialized/*lisp) \
- 	$(wildcard hub/constraints/instruction-handling/call/precompiles/*lisp) \
- 	$(wildcard hub/constraints/instruction-handling/call/precompiles/common/*lisp) \
- 	$(wildcard hub/constraints/instruction-handling/call/precompiles/ec_add_mul_pairing/*lisp) \
- 	$(wildcard hub/constraints/instruction-handling/call/precompiles/modexp/*lisp) \
- 	$(wildcard hub/constraints/instruction-handling/call/precompiles/blake/*lisp) \
- 	$(wildcard hub/constraints/instruction-handling/copy/*lisp) \
- 	$(wildcard hub/constraints/instruction-handling/create/*lisp) \
- 	$(wildcard hub/constraints/instruction-handling/create/constraints/*lisp) \
- 	$(wildcard hub/constraints/instruction-handling/halting/*lisp) \
- 	$(wildcard hub/constraints/instruction-handling/*lisp) \
- 	$(wildcard hub/constraints/miscellaneous-rows/*lisp) \
+HUB :=  $(wildcard hub/columns/*lisp) \
+	$(wildcard hub/constraints/account-rows/*lisp) \
+	$(wildcard hub/constraints/consistency/*lisp) \
+	$(wildcard hub/constraints/consistency/account/*lisp) \
+	$(wildcard hub/constraints/consistency/context/*lisp) \
+	$(wildcard hub/constraints/consistency/execution_environment/*lisp) \
+	$(wildcard hub/constraints/consistency/stack/*lisp) \
+	$(wildcard hub/constraints/consistency/storage/*lisp) \
+	$(wildcard hub/constraints/context-rows/*lisp) \
+	$(wildcard hub/constraints/generalities/*lisp) \
+	$(wildcard hub/constraints/heartbeat/*lisp) \
+	$(wildcard hub/constraints/instruction-handling/call/*lisp) \
+	$(wildcard hub/constraints/instruction-handling/call/generalities/*lisp) \
+	$(wildcard hub/constraints/instruction-handling/call/finishing_touches/*lisp) \
+	$(wildcard hub/constraints/instruction-handling/call/specialized/*lisp) \
+	$(wildcard hub/constraints/instruction-handling/call/precompiles/*lisp) \
+	$(wildcard hub/constraints/instruction-handling/call/precompiles/common/*lisp) \
+	$(wildcard hub/constraints/instruction-handling/call/precompiles/ec_add_mul_pairing/*lisp) \
+	$(wildcard hub/constraints/instruction-handling/call/precompiles/modexp/*lisp) \
+	$(wildcard hub/constraints/instruction-handling/call/precompiles/blake/*lisp) \
+	$(wildcard hub/constraints/instruction-handling/copy/*lisp) \
+	$(wildcard hub/constraints/instruction-handling/create/*lisp) \
+	$(wildcard hub/constraints/instruction-handling/create/constraints/*lisp) \
+	$(wildcard hub/constraints/instruction-handling/halting/*lisp) \
+	$(wildcard hub/constraints/instruction-handling/*lisp) \
+	$(wildcard hub/constraints/miscellaneous-rows/*lisp) \
 	$(wildcard hub/constraints/scenario-rows/shorthands/*lisp) \
- 	$(wildcard hub/constraints/scenario-rows/*lisp) \
- 	$(wildcard hub/constraints/storage-rows/*lisp) \
- 	$(wildcard hub/constraints/tx_skip/*lisp) \
- 	$(wildcard hub/constraints/tx_prewarm/*lisp) \
- 	$(wildcard hub/constraints/tx_init/*lisp) \
- 	$(wildcard hub/constraints/tx_finl/*lisp) \
- 	$(wildcard hub/constraints/*lisp) \
- 	$(wildcard hub/lookups/*lisp) \
-    hub/constants.lisp
+	$(wildcard hub/constraints/scenario-rows/*lisp) \
+	$(wildcard hub/constraints/storage-rows/*lisp) \
+	$(wildcard hub/constraints/tx_skip/*lisp) \
+	$(wildcard hub/constraints/tx_prewarm/*lisp) \
+	$(wildcard hub/constraints/tx_init/*lisp) \
+	$(wildcard hub/constraints/tx_finl/*lisp) \
+	$(wildcard hub/constraints/*lisp) \
+	$(wildcard hub/lookups/*lisp) \
+	hub/constants.lisp
 
 
  # Missing from the above
- #	$(wildcard hub/constraints/consistency/*lisp) \
 
 ALU := alu/add/columns.lisp \
        alu/add/constraints.lisp \
@@ -50,6 +56,9 @@ ALU := alu/add/columns.lisp \
 BIN := bin   
 
 BLAKE2f_MODEXP_DATA := blake2fmodexpdata
+
+BLOCKDATA_FOR_REFERENCE_TESTS := blockdata/columns.lisp \
+				 blockdata/constants.lisp
 
 BLOCKDATA := blockdata
 
@@ -102,8 +111,18 @@ TABLES := reftables/bin_reftable.lisp \
 
 TRM := trm
 
-# TXN_DATA := txndata
-TXN_DATA := txndata/columns.lisp
+TXN_DATA := txndata
+
+TXN_DATA_FOR_REFERENCE_TESTS :=  $(wildcard txndata/*.lisp) \
+				 txndata/lookups/txndata_into_euc.lisp \
+				 txndata/lookups/txndata_into_rlpaddr.lisp \
+				 txndata/lookups/txndata_into_rlptxn.lisp \
+				 txndata/lookups/txndata_into_rlptxrcpt.lisp \
+				 txndata/lookups/txndata_into_romlex.lisp \
+				 txndata/lookups/txndata_into_wcp.lisp
+
+#				 txndata/lookups/txndata_into_blockdata.lisp \
+#				 txndata/lookups/txndata_into_hub.lispX \
 
 WCP := wcp
 
@@ -116,8 +135,7 @@ ZKEVM_MODULES := ${ALU} \
 		 ${EC_DATA} \
 		 ${EUC} \
 		 ${EXP} \
-		 ${GAS} \
- 		 ${HUB} \
+		 ${HUB_COLUMNS} \
 		 ${LIBRARY} \
 		 ${LOG_DATA} \
 		 ${LOG_INFO} \
@@ -132,16 +150,55 @@ ZKEVM_MODULES := ${ALU} \
 		 ${ROM_LEX} \
 		 ${SHAKIRA_DATA} \
 		 ${SHIFT} \
+		 ${STP} \
 		 ${TABLES} \
 		 ${TRM} \
 		 ${TXN_DATA} \
 		 ${WCP}
 
-#		 ${STP} \
-
+#		 ${HUB} \
+#		 ${GAS} \
 
 define.go: ${ZKEVM_MODULES}
 	${CORSET} wizard-iop -vv -o $@ ${ZKEVM_MODULES}
 
 zkevm.bin: ${ZKEVM_MODULES}
 	${CORSET} compile -vv -o $@ ${ZKEVM_MODULES}
+
+
+ZKEVM_MODULES_FOR_REFERENCE_TESTS := ${ALU} \
+				     ${BIN} \
+				     ${BLAKE2f_MODEXP_DATA} \
+				     ${BLOCKDATA_FOR_REFERENCE_TESTS} \
+				     ${BLOCKHASH} \
+				     ${CONSTANTS} \
+				     ${EC_DATA} \
+				     ${EUC} \
+				     ${EXP} \
+				     ${HUB_COLUMNS} \
+				     ${LIBRARY} \
+				     ${LOG_DATA} \
+				     ${LOG_INFO} \
+				     ${MMU} \
+				     ${MMIO} \
+				     ${MXP} \
+				     ${OOB} \
+				     ${RLP_ADDR} \
+				     ${RLP_TXN} \
+				     ${RLP_TXRCPT} \
+				     ${ROM} \
+				     ${ROM_LEX} \
+				     ${SHAKIRA_DATA} \
+				     ${SHIFT} \
+				     ${STP} \
+				     ${TABLES} \
+				     ${TRM} \
+				     ${TXN_DATA_FOR_REFERENCE_TESTS} \
+				     ${WCP}
+
+#				     ${BLOCKDATA} \
+#		 		     ${HUB} \
+#				     ${GAS} \
+
+zkevm_for_reference_tests.bin: ${ZKEVM_MODULES_FOR_REFERENCE_TESTS}
+	${CORSET} compile -vv -o $@ ${ZKEVM_MODULES_FOR_REFERENCE_TESTS}

@@ -1,6 +1,6 @@
 (defun (hub-into-txn-data-trigger) hub.PEEK_AT_TRANSACTION)
 
-(deflookup hub-into-txn-data
+(deflookup hub-into-txndata
            ;; target columns
            (
             txndata.ABS_TX_NUM
@@ -34,7 +34,7 @@
            ;; source columns
            (
             (* hub.ABSOLUTE_TRANSACTION_NUMBER                                      (hub-into-txn-data-trigger))
-            (* hub.transaction/BATCH_NUM                                            (hub-into-txn-data-trigger))
+            (* hub.RELATIVE_BLOCK_NUMBER                                            (hub-into-txn-data-trigger))
             (* hub.transaction/FROM_ADDRESS_HI                                      (hub-into-txn-data-trigger))
             (* hub.transaction/FROM_ADDRESS_LO                                      (hub-into-txn-data-trigger))
             (* hub.transaction/TO_ADDRESS_HI                                        (hub-into-txn-data-trigger))
