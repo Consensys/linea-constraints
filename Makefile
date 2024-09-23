@@ -42,16 +42,10 @@ HUB :=  $(wildcard hub/columns/*lisp) \
 
  # Missing from the above
 
-ALU := alu/add/columns.lisp \
-       alu/add/constraints.lisp \
-       alu/ext/columns.lisp \
-       alu/ext/constraints.lisp \
-       alu/mod/columns.lisp \
-       alu/mod/constants.lisp \
-       alu/mod/constraints.lisp \
-       alu/mul/columns.lisp \
-       alu/mul/constraints.lisp \
-       alu/mul/helpers.lisp
+ALU := $(wildcard alu/add/*.lisp) \
+       $(wildcard alu/ext/*.lisp) \
+       $(wildcard alu/mod/*.lisp) \
+       $(wildcard alu/mul/*.lisp)
 
 BIN := bin   
 
@@ -80,11 +74,16 @@ LOG_DATA := logdata
 
 LOG_INFO := loginfo
 
-MMU := mmu
+MMU :=  $(wildcard mmu/*.lisp) \
+	$(wildcard mmu/lookups/*.lisp) \
+	$(wildcard mmu/instructions/*.lisp) \
+	$(wildcard mmu/instructions/any_to_ram_with_padding/*.lisp)
 
-MMIO := mmio/columns.lisp #TODO enable the MMIO constraint and lookup
-# MMIO := mmio \
-# mmio/consistency.lisp
+MMIO := mmio/columns.lisp
+
+# TODO enable the MMIO constraint and lookup
+#	$(wildcard mmio/*lisp) \
+#	$(wildcard mmio/lookups/*lisp) \
 
 MXP := mxp
 
