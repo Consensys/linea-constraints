@@ -20,44 +20,44 @@
 ;;                     ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defcontraint   first-row (:domain {0}) ;; ""
+(defconstraint   first-row (:domain {0}) ;; ""
                 (vanishes! ABS))
 
-(defcontraint   padding-is-padding ()
+(defconstraint   padding-is-padding ()
                 (if-zero ABS
                          (begin (debug (vanishes! CT))
                                 (vanishes! (weight_sum))))) ;;TODO: useless, but in the spec
 
-(defcontraint   padding ()
+(defconstraint   padding ()
                 (if-zero ABS
                          (begin (vanishes! CT)
                                 (vanishes! (tx-type-sum)))))
 
-(defcontraint   abs-tx-num-increments ()
+(defconstraint   abs-tx-num-increments ()
                 (stamp-progression ABS))
 
-(defcontraint   new-stamp-reboot-ct ()
+(defconstraint   new-stamp-reboot-ct ()
                 (if-not-zero (will-remain-constant! ABS)
                              (vanishes! (next CT))))
 
-(defcontraint   transactions-have-a-single-type (:guard ABS) (eq! (tx-type-sum) 1))
+(defconstraint   transactions-have-a-single-type (:guard ABS) (eq! (tx-type-sum) 1))
 
-(defcontraint   counter-column-updates-type-0   (:guard TYPE0)
+(defconstraint   counter-column-updates-type-0   (:guard TYPE0)
                 (if-eq-else    CT    (+ CT_MAX_TYPE_0 IS_LAST_TX_OF_BLOCK)
                                (will-inc!   ABS   1)
                                (will-inc!   CT    1)))
 
-(defcontraint   counter-column-updates-type-1   (:guard TYPE1)
+(defconstraint   counter-column-updates-type-1   (:guard TYPE1)
                 (if-eq-else    CT    (+ CT_MAX_TYPE_1 IS_LAST_TX_OF_BLOCK)
                                (will-inc!   ABS   1)
                                (will-inc!   CT    1)))
 
-(defcontraint   counter-column-updates-type-2   (:guard TYPE2)
+(defconstraint   counter-column-updates-type-2   (:guard TYPE2)
                 (if-eq-else    CT    (+ CT_MAX_TYPE_2 IS_LAST_TX_OF_BLOCK)
                                (will-inc!   ABS   1)
                                (will-inc!   CT    1)))
 
-(defcontraint   final-row (:domain {-1}) ;; ""
+(defconstraint   final-row (:domain {-1}) ;; ""
                 (begin
                   (eq! ABS ABS_MAX)
                   (eq! REL REL_MAX)
@@ -84,7 +84,7 @@
      (* (^ 2 5) COPY_TXCD)
      (* (^ 2 6) STATUS_CODE))) ;; ""
 
-(defcontraint   constancies ()
+(defconstraint   constancies ()
                 (begin
                   (transaction-constant FROM_HI)
                   (transaction-constant FROM_LO)
@@ -116,7 +116,7 @@
 ;;    2.4 Batch numbers and transaction number    ;;
 ;;                                                ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defcontraint   total-number-constancies ()
+(defconstraint   total-number-constancies ()
                 (begin (if-not-zero ABS
                                     (will-remain-constant! ABS_MAX)
                                     ;; (begin (vanishes! ABS_MAX)
@@ -128,10 +128,10 @@
                        (if-not-zero (will-inc! BLK 1)
                                     (will-remain-constant! REL_MAX))))
 
-(defcontraint   batch-num-increments ()
+(defconstraint   batch-num-increments ()
                 (stamp-progression BLK))
 
-(defcontraint   batchNum-txNum-lexicographic ()
+(defconstraint   batchNum-txNum-lexicographic ()
                 (begin (if-zero ABS
                                 (begin (vanishes! BLK)
                                        (vanishes! REL)
@@ -146,7 +146,7 @@
                                                         (begin (will-inc! BLK 1)
                                                                (will-eq! REL 1)))))))
 
-(defcontraint   set-last-tx-of-block-flag (:guard ABS_TX_NUM)
+(defconstraint   set-last-tx-of-block-flag (:guard ABS_TX_NUM)
                 (if-eq-else REL_TX_NUM REL_TX_NUM_MAX
                             (eq! IS_LAST_TX_OF_BLOCK 1)
                             (vanishes! IS_LAST_TX_OF_BLOCK)))
@@ -216,7 +216,7 @@
 (defun (first-row-of-new-transaction)
   (- ABS (prev ABS)))
 
-(defcontraint   verticalization (:guard (first-row-of-new-transaction))
+(defconstraint   verticalization (:guard (first-row-of-new-transaction))
                 (begin (setting_phase_numbers)
                        (data_transfer)
                        (debug (vanishing_data_cells))))
@@ -227,7 +227,7 @@
 ;;                       ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defcontraint   euc-and-wcp-exclusivity ()
+(defconstraint   euc-and-wcp-exclusivity ()
                 (vanishes! (* EUC_FLAG WCP_FLAG)))
 
 (defun (small-call-to-LT row arg1 arg2)
@@ -337,31 +337,31 @@
 ;;                                    ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defcontraint   setting-gas-initially-available (:guard (first-row-of-new-transaction))
+(defconstraint   setting-gas-initially-available (:guard (first-row-of-new-transaction))
                 (if-not-zero TYPE0
                              (eq! GAS_INITIALLY_AVAILABLE (- (gas_limit) (legacy_upfront_gas_cost)))
                              (eq! GAS_INITIALLY_AVAILABLE (- (gas_limit) (access_upfront_gas_cost)))))
 
-(defcontraint   setting-gas-price (:guard (first-row-of-new-transaction))
+(defconstraint   setting-gas-price (:guard (first-row-of-new-transaction))
                 (if-zero TYPE2
                          (eq! GAS_PRICE (gas_price))
                          (if-not-zero (get_full_tip)
                                       (eq! GAS_PRICE (+ BASEFEE (max_priority_fee)))
                                       (eq! GAS_PRICE (max_fee)))))
 
-(defcontraint   setting-priority-fee-per-gas (:guard (first-row-of-new-transaction))
+(defconstraint   setting-priority-fee-per-gas (:guard (first-row-of-new-transaction))
                 (eq! PRIORITY_FEE_PER_GAS (- GAS_PRICE BASEFEE)))
 
-(defcontraint   setting-refund-effective (:guard (first-row-of-new-transaction))
+(defconstraint   setting-refund-effective (:guard (first-row-of-new-transaction))
                 (if-zero (get_full_refund)
                          (eq! REFUND_EFFECTIVE (+ GAS_LEFTOVER (refund_limit)))
                          (eq! REFUND_EFFECTIVE (+ GAS_LEFTOVER REFUND_COUNTER))))
 
-(defcontraint   partially-setting-requires-evm-execution (:guard (first-row-of-new-transaction))
+(defconstraint   partially-setting-requires-evm-execution (:guard (first-row-of-new-transaction))
                 (if-not-zero IS_DEP
                              (eq! REQUIRES_EVM_EXECUTION (nonzero-data-size))))
 
-(defcontraint   setting-copy-txcd (:guard (first-row-of-new-transaction))
+(defconstraint   setting-copy-txcd (:guard (first-row-of-new-transaction))
                 (eq! COPY_TXCD
                      (* (- 1 IS_DEP) REQUIRES_EVM_EXECUTION (nonzero-data-size))))
 
@@ -371,7 +371,7 @@
 ;;                                           ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defcontraint   verticalisation-rlp-txn-rcpt (:guard (first-row-of-new-transaction))
+(defconstraint   verticalisation-rlp-txn-rcpt (:guard (first-row-of-new-transaction))
                 (begin
                   (eq! PHASE_RLP_TXNRCPT    RLP_RCPT_SUBPHASE_ID_TYPE)
                   (eq! OUTGOING_RLP_TXNRCPT (tx_type))
@@ -386,7 +386,7 @@
 ;;                          ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defcontraint   cumulative-gas ()
+(defconstraint   cumulative-gas ()
                 (begin (if-zero ABS
                                 (vanishes! GAS_CUMULATIVE))
                        (if-not-zero (will-remain-constant! BLK)
@@ -399,7 +399,7 @@
                                          (+ GAS_CUMULATIVE
                                             (next (- GAS_LIMIT REFUND_EFFECTIVE)))))))
 
-(defcontraint   cumulative-gas-comparison (:guard IS_LAST_TX_OF_BLOCK)
+(defconstraint   cumulative-gas-comparison (:guard IS_LAST_TX_OF_BLOCK)
                 (if-not-zero (- ABS_TX_NUM (prev ABS_TX_NUM))
                              (if-zero TYPE0
                                       (begin (small-call-to-LEQ     NB_ROWS_TYPE_1
