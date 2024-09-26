@@ -269,7 +269,7 @@
 
 (defconstraint    comparison---initial-balance-must-cover-value-plus-maximal-gas-cost    (:guard (first-row-of-new-transaction))
                   (begin
-                    (small-call-to-LEQ    row-offset---initial-balance-comparison INITIAL_BALANCE (+ (value) (* (max_fee) (gas_limit))))
+                    (small-call-to-LEQ    row-offset---initial-balance-comparison (+ (value) (* (max_fee) (gas_limit))) INITIAL_BALANCE)
                     (result-must-be-true  row-offset---initial-balance-comparison)))
 
 (defun (upfront_gas_cost)
