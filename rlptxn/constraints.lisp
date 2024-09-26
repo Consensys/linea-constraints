@@ -690,11 +690,11 @@
                                                    (eq! (next DATA_GAS_COST) (shift DATA_GAS_COST 2)))
                                             (vanishes! (next LC_CORRECTION))))))))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;                             ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                               ;;
 ;;    4.5 Phase 10 : AccessList  ;;
-;;                             ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                               ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defconstraint phaseAccessList-stillphase-noend (:guard IS_PHASE_ACCESS_LIST)
   (if-not-zero PHASE_SIZE
                (vanishes! PHASE_END)))
@@ -829,10 +829,9 @@
 
 ;; 4.5.2.15
 (defconstraint phaseAccessList-updateAddrLookUp (:guard IS_PHASE_ACCESS_LIST)
-  (if-zero (+ [DEPTH 2]
-              (- (prev nADDR) nADDR))
-           (begin (remained-constant! ADDR_HI)
-                  (remained-constant! ADDR_LO))))
+  (if-not-zero (* [DEPTH 1]  (- nADDR (- (prev nADDR) 1)))
+                     (begin (remained-constant! ADDR_HI)
+                            (remained-constant! ADDR_LO))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                             ;;
