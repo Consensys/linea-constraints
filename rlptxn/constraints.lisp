@@ -865,8 +865,7 @@
                                                                      (next LT)
                                                                      (- 1 (next LX))
                                                                      (- 1 (next IS_PREFIX))))
-                                                       (eq! (^ (w-minus-two-beta-minus-protected-base-V) 2)
-                                                            (w-minus-two-beta-minus-protected-base-V)))))))))
+                                                       (is-binary (w-minus-two-beta-minus-protected-base-V)))))))))
 
 (defconstraint phaseBeta-rlp-beta (:guard IS_PHASE_BETA)
   (if-not-zero (* LX IS_PREFIX)
