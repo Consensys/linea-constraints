@@ -846,7 +846,7 @@
                   (eq! nSTEP 8))))
 
 (defun (w-minus-two-seven)
-  (- [INPUT 1] PROTECTED_BASE_V))
+  (- [INPUT 1] UNPROTECTED_V))
 
 (defun (w-minus-two-beta-minus-protected-base-V)
   (- [INPUT 1]
