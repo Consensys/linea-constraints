@@ -9,7 +9,7 @@
    ( STACK_ITEM_VALUE_HI     :array [4] :i128)
    ( STACK_ITEM_VALUE_LO     :array [4] :i128)
    ( STACK_ITEM_POP          :array [4] :binary@prove)
-   ( STACK_ITEM_STAMP        :array [4] :36)    ;; STAMP is :i32 and we consider 8 * STAMP + bla with 0 ≤ bla < 8
+   ( STACK_ITEM_STAMP        :array [4] :i36)   ;; STAMP is :i32 and we consider 8 * STAMP + bla with 0 ≤ bla < 8
 
    ;; instruction and instruction decoded flags
    (INSTRUCTION              :display :opcode)
