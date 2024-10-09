@@ -74,7 +74,7 @@
 ;;   4.7.4 MMU_STAMP constraints   ;;
 ;;                                 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defconstraint MMU_STAMP-increments (:perspective misc)
+(defconstraint MMU_STAMP-increments ()
   (did-inc! MMU_STAMP (* PEEK_AT_MISCELLANEOUS MMU_FLAG)))
 
 
