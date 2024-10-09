@@ -66,7 +66,7 @@
 ;;   4.7.3 MXP_STAMP constraints   ;;
 ;;                                 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defconstraint MXP_STAMP-increments (:perspective misc)
+(defconstraint MXP_STAMP-increments ()
   (did-inc! MXP_STAMP (* PEEK_AT_MISCELLANEOUS MXP_FLAG)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
