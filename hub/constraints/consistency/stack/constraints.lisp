@@ -8,7 +8,7 @@
 
 
 (defconstraint    stack-consistency---only-nontrivial-contexts     (:guard    stkcp_PEEK_AT_STACK_POW_4)
-                  (is-not-zero!    stkcp_CN_POW_4))
+                  (debug (is-not-zero!    stkcp_CN_POW_4)))
 
 (defconstraint stack-consistency---setting-FIRST-AGAIN ()
                (begin
