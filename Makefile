@@ -79,11 +79,8 @@ MMU :=  $(wildcard mmu/*.lisp) \
 	$(wildcard mmu/instructions/*.lisp) \
 	$(wildcard mmu/instructions/any_to_ram_with_padding/*.lisp)
 
-MMIO := mmio/columns.lisp
-
-# TODO enable the MMIO constraint and lookup
-#	$(wildcard mmio/*lisp) \
-#	$(wildcard mmio/lookups/*lisp) \
+MMIO := $(wildcard mmio/*lisp) \
+	$(wildcard mmio/lookups/*lisp) \
 
 MXP := mxp
 
