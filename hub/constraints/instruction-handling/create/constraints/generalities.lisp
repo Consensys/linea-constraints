@@ -58,7 +58,7 @@
 (defconstraint    create-instruction---setting-the-memory-expansion-exception               (:guard    (create-instruction---generic-precondition))
                   (if-zero    (shift    misc/MXP_FLAG    CREATE_miscellaneous_row___row_offset)
                               ;; MXP_FLAG  ≡  0
-                              (vanishes!    (create-instruction---STACK-mxpx))
+                              (debug (vanishes!    (create-instruction---STACK-mxpx)))
                               ;; MXP_FLAG  ≡  1
                               (eq!          (create-instruction---STACK-mxpx)
                                             (create-instruction---MXP-mxpx))
@@ -75,9 +75,9 @@
 
 (defconstraint    create-instruction---setting-the-out-of-gas-exception                     (:guard    (create-instruction---generic-precondition))
                   (if-zero    (shift    misc/STP_FLAG    CREATE_miscellaneous_row___row_offset)
-                              ;; MXP_FLAG  ≡  0
-                              (vanishes!    (create-instruction---STACK-oogx))
-                              ;; MXP_FLAG  ≡  1
+                              ;; STP_FLAG  ≡  0
+                              (debug (vanishes!    (create-instruction---STACK-oogx)))
+                              ;; STP_FLAG  ≡  1
                               (eq!          (create-instruction---STACK-oogx)
                                             (create-instruction---STP-oogx))
                               ))
@@ -148,10 +148,10 @@
                                                   (*    (create-instruction---send-init-code-to-ROM)                   EXO_SUM_WEIGHT_ROM)))
 
 (defconstraint    create-instruction---setting-the-next-context-number                      (:guard    (create-instruction---generic-precondition))
-                  (begin
+                  (debug (begin
                     (if-not-zero    scenario/CREATE_EXCEPTION                                      (next-context-is-caller))
                     (if-not-zero    (scenario-shorthand---CREATE---no-context-change)                  (next-context-is-current))
-                    (if-not-zero    (scenario-shorthand---CREATE---not-rebuffed-nonempty-init-code)    (next-context-is-new))))
+                    (if-not-zero    (scenario-shorthand---CREATE---not-rebuffed-nonempty-init-code)    (next-context-is-new)))))
 
 (defconstraint    create-instruction---setting-GAS_COST                                     (:guard    (create-instruction---generic-precondition))
                   (begin

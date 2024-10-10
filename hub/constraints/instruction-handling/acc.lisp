@@ -60,7 +60,7 @@
                    (if-not-zero (account-instruction-no-trimming)       (stack-pattern-0-1))))
 
 (defconstraint   account-instruction-setting-allowable-exceptions                           (:guard (account-instruction-standard-hypothesis))
-                 (eq! XAHOY stack/OOGX))
+                 (debug (eq! XAHOY stack/OOGX)))
 
 (defconstraint   account-instruction-setting-NSR                                            (:guard (account-instruction-standard-hypothesis))
                  (begin

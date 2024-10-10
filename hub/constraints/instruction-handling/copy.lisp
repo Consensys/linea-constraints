@@ -241,7 +241,7 @@
                (if-zero (shift misc/OOB_FLAG ROW_OFFSET_COPY_INST_MISCELLANEOUS_ROW)
                         ;; OOB_FLAG ≡ 0
                         ;; TODO: zero case is redundant; careful when modifying the constraint (if-zero vs. if-not-zero)
-                        (vanishes! stack/RDCX)
+                        (debug (vanishes! stack/RDCX))
                         ;; OOB_FLAG ≡ 1
                         (eq! stack/RDCX (copy-inst-OOB-raises-return-data-exception))))
 
@@ -316,9 +316,9 @@
                                (eq! GAS_COST (+ stack/STATIC_GAS (copy-inst-MXP-memory-expansion-gas))))))
 
 (defconstraint copy-setting-context-row-for-exceptional-CALLDATACOPY (:guard (copy-inst-standard-CALLDATACOPY))
-               (if-not-zero XAHOY
+               (debug (if-not-zero XAHOY
                             (execution-provides-empty-return-data ROW_OFFSET_CALLDATACOPY_CONTEXT_ROW)
-                            (read-context-data ROW_OFFSET_CALLDATACOPY_CONTEXT_ROW CONTEXT_NUMBER)))
+                            (read-context-data ROW_OFFSET_CALLDATACOPY_CONTEXT_ROW CONTEXT_NUMBER))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                         ;;
@@ -336,7 +336,7 @@
                                (eq! GAS_COST (+ stack/STATIC_GAS (copy-inst-MXP-memory-expansion-gas))))))
 
 (defconstraint copy-setting-the-context-row-for-RETURNDATACOPY (:guard (copy-inst-standard-RETURNDATACOPY))
-               (begin (if-not-zero stack/RDCX
+               (debug (begin (if-not-zero stack/RDCX
                                    (begin (read-context-data ROW_OFFSET_RETURNDATACOPY_CURRENT_CONTEXT_ROW CONTEXT_NUMBER)
                                           (execution-provides-empty-return-data ROW_OFFSET_RETURNDATACOPY_CALLER_CONTEXT_ROW_RDCX)))
                       (if-not-zero stack/MXPX
@@ -344,7 +344,7 @@
                       (if-not-zero stack/OOGX
                                    (execution-provides-empty-return-data ROW_OFFSET_RETURNDATACOPY_CALLER_CONTEXT_ROW))
                       (if-zero XAHOY
-                               (read-context-data ROW_OFFSET_RETURNDATACOPY_CURRENT_CONTEXT_ROW CONTEXT_NUMBER))))
+                               (read-context-data ROW_OFFSET_RETURNDATACOPY_CURRENT_CONTEXT_ROW CONTEXT_NUMBER)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                   ;;
@@ -360,8 +360,8 @@
                                (eq! GAS_COST (+ stack/STATIC_GAS (copy-inst-MXP-memory-expansion-gas))))))
 
 (defconstraint copy-setting-the-context-row-for-exceptional-CODECOPY (:guard (copy-inst-standard-CODECOPY))
-               (if-not-zero XAHOY
-                            (execution-provides-empty-return-data ROW_OFFSET_CODECOPY_XAHOY_CONTEXT_ROW)))
+               (debug (if-not-zero XAHOY
+                            (execution-provides-empty-return-data ROW_OFFSET_CODECOPY_XAHOY_CONTEXT_ROW))))
 
 (defconstraint copy-setting-the-context-row-for-unexceptional-CODECOPY (:guard (copy-inst-standard-CODECOPY))
                (if-zero XAHOY

@@ -88,7 +88,7 @@
 (defconstraint jump-instruction---setting-the-first-context-row               (:guard (jump-instruction---no-stack-exception))
                (if-not-zero (force-bin stack/OOGX)
                             ;; OOGX = 1
-                            (execution-provides-empty-return-data          ROW_OFFSET_FOR_JUMP_NO_OOGX_CURRENT_CONTEXT_ROW)
+                            (debug (execution-provides-empty-return-data          ROW_OFFSET_FOR_JUMP_NO_OOGX_CURRENT_CONTEXT_ROW))
                             ;; OOGX = 0
                             (read-context-data                             ROW_OFFSET_FOR_JUMP_NO_OOGX_CURRENT_CONTEXT_ROW
                                                                            CONTEXT_NUMBER)))

@@ -153,7 +153,7 @@
 
 (defconstraint    call-instruction---setting-the-next-context-number       (:guard    (call-instruction---standard-precondition))
                   (begin
-                    (if-not-zero    scenario/CALL_EXCEPTION                        (shift    (next-context-is-caller)     CALL_1st_stack_row___row_offset))
+                    (debug (if-not-zero    scenario/CALL_EXCEPTION                        (shift    (next-context-is-caller)     CALL_1st_stack_row___row_offset)))
                     (if-not-zero    (scenario-shorthand---CALL---no-context-change)    (shift    (next-context-is-current)    CALL_1st_stack_row___row_offset))
                     (if-not-zero    (scenario-shorthand---CALL---smart-contract)       (shift    (next-context-is-new)        CALL_1st_stack_row___row_offset))))
 
