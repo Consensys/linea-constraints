@@ -45,6 +45,7 @@
 (defun (stack-ram---MXPX)                     (shift     misc/MXP_MXPX              stack-ram---row-offset---misc-row))
 (defun (stack-ram---call-data-size)           (shift     context/CALL_DATA_SIZE     stack-ram---row-offset---context-row))
 (defun (stack-ram---call-data-offset)         (shift     context/CALL_DATA_OFFSET   stack-ram---row-offset---context-row))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                        ;;
 ;;    X.5.3 Constraints   ;;
@@ -98,12 +99,6 @@
                          (* MISC_WEIGHT_OOB (stack-ram---is-CDL)))))
 
 ;; defining trigger_MMU
-(defconstraint stack-ram-inst-setting-MXP-instruction                   (:guard (stack-ram-inst-std-hyp))
-               (if-not-zero (shift misc/MXP_FLAG stack-ram-misc-row-offset)
-                            (set-MXP-instruction-type-2 stack-ram-misc-row-offset         ;; row offset
-                                                        (stack-ram-inst-instruction)      ;; instruction
-                                                        (stack-ram-inst-offset-hi)             ;; source offset high
-                                                        (stack-ram-inst-offset-lo))))          ;; source offset low
 (defun (stack-ram---trigger_MMU)     (* (- 1 XAHOY)
                                         (+ (* (stack-ram---is-CDL) (- 1 (stack-ram---CDL-is-oob)))
                                            (stack-ram---is-MXX))))
@@ -126,6 +121,20 @@
                  (if-not-zero    (stack-ram---is-CDL)
                                  (read-context-data stack-ram---row-offset---context-row CONTEXT_NUMBER)))
 
+(defconstraint   stack-ram---setting-MXP-instruction---MLOAD-MSTORE-case                   (:guard (stack-ram---std-hyp))
+                 (if-not-zero    (shift misc/MXP_FLAG stack-ram---row-offset---misc-row)
+                                 (if-not-zero    (+    (stack-ram---is-MLOAD)    (stack-ram---is-MSTORE))
+                                                 (set-MXP-instruction-type-2    stack-ram---row-offset---misc-row  ;; row offset
+                                                                                (stack-ram---instruction)          ;; instruction
+                                                                                (stack-ram---offset-hi)            ;; source offset high
+                                                                                (stack-ram---offset-lo)))))        ;; source offset low
+
+(defconstraint   stack-ram---setting-MXP-instruction---MSTORE8-case                   (:guard (stack-ram---std-hyp))
+                 (if-not-zero    (shift misc/MXP_FLAG stack-ram---row-offset---misc-row)
+                                 (if-not-zero    (stack-ram---is-MSTORE8)
+                                                 (set-MXP-instruction-type-3    stack-ram---row-offset---misc-row  ;; row offset
+                                                                                (stack-ram---offset-hi)            ;; source offset high
+                                                                                (stack-ram---offset-lo)))))        ;; source offset low
 
 (defun    (stack-ram---call-data-context-number)   (shift    context/CALL_DATA_CONTEXT_NUMBER    stack-ram---row-offset---context-row))
 (defun    (stack-ram---trigger-MMU)                (shift    misc/MMU_FLAG                       stack-ram---row-offset---misc-row))
