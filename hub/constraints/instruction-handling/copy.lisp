@@ -37,19 +37,19 @@
 (defun (copy-inst-instruction)       stack/INSTRUCTION)
 
 ;;
-(defun (copy-inst-is-CALLDATACOPY)      [stack/DEC_FLAG 1])
-(defun (copy-inst-is-RETURNDATACOPY)    [stack/DEC_FLAG 2])
-(defun (copy-inst-is-CODECOPY)          [stack/DEC_FLAG 3])
-(defun (copy-inst-is-EXTCODECOPY)       [stack/DEC_FLAG 4])
+(defun (copy-inst-is-CALLDATACOPY)      [stack/DEC_FLAG   1])
+(defun (copy-inst-is-RETURNDATACOPY)    [stack/DEC_FLAG   2])
+(defun (copy-inst-is-CODECOPY)          [stack/DEC_FLAG   3])
+(defun (copy-inst-is-EXTCODECOPY)       [stack/DEC_FLAG   4])
 ;;
-(defun (copy-inst-target-offset-hi)     [stack/STACK_ITEM_VALUE_HI 1])
-(defun (copy-inst-target-offset-lo)     [stack/STACK_ITEM_VALUE_LO 1])
-(defun (copy-inst-source-offset-hi)     [stack/STACK_ITEM_VALUE_HI 2])
-(defun (copy-inst-source-offset-lo)     [stack/STACK_ITEM_VALUE_LO 2])
-(defun (copy-inst-size-hi)              [stack/STACK_ITEM_VALUE_HI 3])
-(defun (copy-inst-size-lo)              [stack/STACK_ITEM_VALUE_LO 3])
-(defun (copy-inst-raw-address-hi)       [stack/STACK_ITEM_VALUE_HI 4])
-(defun (copy-inst-raw-address-lo)       [stack/STACK_ITEM_VALUE_LO 4])
+(defun (copy-inst-target-offset-hi)     [stack/STACK_ITEM_VALUE_HI   1])
+(defun (copy-inst-target-offset-lo)     [stack/STACK_ITEM_VALUE_LO   1])
+(defun (copy-inst-size-hi)              [stack/STACK_ITEM_VALUE_HI   2])
+(defun (copy-inst-size-lo)              [stack/STACK_ITEM_VALUE_LO   2])
+(defun (copy-inst-source-offset-hi)     [stack/STACK_ITEM_VALUE_HI   3])
+(defun (copy-inst-source-offset-lo)     [stack/STACK_ITEM_VALUE_LO   3])
+(defun (copy-inst-raw-address-hi)       [stack/STACK_ITEM_VALUE_HI   4])
+(defun (copy-inst-raw-address-lo)       [stack/STACK_ITEM_VALUE_LO   4])
 
 ;;
 (defun (copy-inst-OOB-raises-return-data-exception)         (shift [misc/OOB_DATA 7] ROW_OFFSET_COPY_INST_MISCELLANEOUS_ROW)) ;; ""
