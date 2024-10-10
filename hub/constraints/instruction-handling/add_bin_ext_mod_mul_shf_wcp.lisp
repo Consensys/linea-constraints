@@ -60,14 +60,14 @@
 ;; TODO: comment out
 ;; sanity check
 (defconstraint add-bin-ext-mod-mul-shf-wcp-safeguard (:guard PEEK_AT_STACK)
-               (begin
+               (debug (begin
                  (eq! (stateless-instructions---classifier)
                       (+ (stateless-instruction---is-EXP)
                          (stateless-instruction---isnt-EXP)))
                  (eq! (stateless-instructions---classifier)
                       (+ (stateless-instruction---1-argument-instruction)
                          (stateless-instruction---2-argument-instruction)
-                         (stateless-instruction---3-argument-instruction)))))
+                         (stateless-instruction---3-argument-instruction))))))
 
 (defconstraint stateless-instruction---stack-pattern (:guard (stateless-instruction---precondition))
                (begin
@@ -87,14 +87,14 @@
                                  (+ (stateless-instruction---is-EXP) CONTEXT_MAY_CHANGE))))
 
 (defconstraint stateless-instruction---setting-peeking-flags (:guard (stateless-instruction---precondition))
-               (begin
+               (debug (begin
                  (if-not-zero (stateless-instruction---isnt-EXP)
                               (eq! NON_STACK_ROWS
                                    (* CMC (next PEEK_AT_CONTEXT))))
                  (if-not-zero (stateless-instruction---is-EXP)
                               (eq! NON_STACK_ROWS
                                    (+ (next PEEK_AT_MISCELLANEOUS)
-                                      (* CMC (shift PEEK_AT_CONTEXT 2)))))))
+                                      (* CMC (shift PEEK_AT_CONTEXT 2))))))))
 
 (defconstraint stateless-instruction---setting-miscellaneous-flags (:guard (stateless-instruction---precondition))
                (if-not-zero (stateless-instruction---is-EXP)

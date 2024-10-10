@@ -73,8 +73,8 @@
                       (debug (eq! CMC XAHOY))))
 
 (defconstraint stack-ram-inst-setting-the-memory-expansion-exception    (:guard (stack-ram-inst-std-hyp))
-               (begin (if-not-zero (stack-ram-inst-is-CDL)
-                                   (vanishes! stack/MXPX))
+               (begin (debug (if-not-zero (stack-ram-inst-is-CDL)
+                                   (vanishes! stack/MXPX)))
                       (if-not-zero (stack-ram-inst-is-MXX)
                                    (eq! stack/MXPX (stack-ram-inst-MXPX)))))
                
