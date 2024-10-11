@@ -360,8 +360,8 @@
                                (eq! GAS_COST (+ stack/STATIC_GAS (copy-inst-MXP-memory-expansion-gas))))))
 
 (defconstraint copy-setting-the-context-row-for-exceptional-CODECOPY (:guard (copy-inst-standard-CODECOPY))
-               (debug (if-not-zero XAHOY
-                            (execution-provides-empty-return-data ROW_OFFSET_CODECOPY_XAHOY_CONTEXT_ROW))))
+               (if-not-zero XAHOY
+                            (execution-provides-empty-return-data ROW_OFFSET_CODECOPY_XAHOY_CONTEXT_ROW)))
 
 (defconstraint copy-setting-the-context-row-for-unexceptional-CODECOPY (:guard (copy-inst-standard-CODECOPY))
                (if-zero XAHOY
