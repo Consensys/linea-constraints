@@ -19,7 +19,7 @@
 (defun    (precompile-processing---MODEXP---standard-precondition)    (*    PEEK_AT_SCENARIO    scenario/PRC_MODEXP))
 
 (defconstraint    precompile-processing---MODEXP---excluding-execution-scenarios    (:guard    (precompile-processing---MODEXP---standard-precondition))
-                  (debug (vanishes!    scenario/PRC_FAILURE_KNOWN_TO_HUB)))
+                  (vanishes!    scenario/PRC_FAILURE_KNOWN_TO_HUB))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
