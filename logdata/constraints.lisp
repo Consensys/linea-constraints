@@ -10,7 +10,7 @@
 
 (defconstraint forced-vanishing ()
   (if-zero ABS_LOG_NUM
-           (begin (debug (vanishes! LOGS_DATA))
+           (begin (vanishes! LOGS_DATA)
                   (vanishes! SIZE_TOTAL)
                   (vanishes! SIZE_ACC)
                   (vanishes! SIZE_LIMB)

@@ -89,9 +89,9 @@
                         (eq! GAS_COST 0)))
 
 (defconstraint log-inst-the-final-context-row                            (:guard (log-inst-standard-hypothesis))
-               (debug (begin
+               (begin
                  (if-not-zero stack/STATICX             (execution-provides-empty-return-data log-staticx-context-row-offset))
-                 (if-not-zero (+ stack/MXPX stack/OOGX) (execution-provides-empty-return-data log-other-x-context-row-offset)))))
+                 (if-not-zero (+ stack/MXPX stack/OOGX) (execution-provides-empty-return-data log-other-x-context-row-offset))))
 
 (defconstraint log-inst-setting-MISC-module-flags                        (:guard (log-inst-standard-hypothesis))
                (eq! (weighted-MISC-flag-sum       log-misc-row-offset)

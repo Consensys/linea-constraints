@@ -51,7 +51,7 @@
                  (account-same-deployment-number-and-status    tx-skip---row-offset---sender-account)
                  (account-same-warmth                          tx-skip---row-offset---sender-account)
                  (account-same-marked-for-selfdestruct         tx-skip---row-offset---sender-account)
-                 (debug (account-isnt-precompile                      tx-skip---row-offset---sender-account))
+                 (account-isnt-precompile                      tx-skip---row-offset---sender-account)
                  (DOM-SUB-stamps---standard                    tx-skip---row-offset---sender-account    0)))
 
 
@@ -95,13 +95,13 @@
                                (begin  ;; code
                                  ;; current code
                                  (vanishes!         (shift account/HAS_CODE        tx-skip---row-offset---recipient-account))
-                                 (debug    (eq!     (shift account/CODE_HASH_HI_NEW    tx-skip---row-offset---recipient-account)    EMPTY_KECCAK_HI))
-                                 (debug    (eq!     (shift account/CODE_HASH_LO_NEW    tx-skip---row-offset---recipient-account)    EMPTY_KECCAK_LO))
+                                 (debug    (eq!     (shift account/CODE_HASH_HI    tx-skip---row-offset---recipient-account)    EMPTY_KECCAK_HI))
+                                 (debug    (eq!     (shift account/CODE_HASH_LO    tx-skip---row-offset---recipient-account)    EMPTY_KECCAK_LO))
                                  (vanishes!         (shift account/CODE_SIZE       tx-skip---row-offset---recipient-account))
                                  ;; updated code
                                  (vanishes!         (shift account/HAS_CODE_NEW       tx-skip---row-offset---recipient-account))
-                                 (debug    (eq!     (shift account/CODE_HASH_HI_NEW       tx-skip---row-offset---recipient-account)    EMPTY_KECCAK_HI))
-                                 (debug    (eq!     (shift account/CODE_HASH_LO_NEW       tx-skip---row-offset---recipient-account)    EMPTY_KECCAK_LO))
+                                 (debug    (eq!     (shift account/CODE_HASH_HI       tx-skip---row-offset---recipient-account)    EMPTY_KECCAK_HI))
+                                 (debug    (eq!     (shift account/CODE_HASH_LO       tx-skip---row-offset---recipient-account)    EMPTY_KECCAK_LO))
                                  (eq!               (shift account/CODE_SIZE          tx-skip---row-offset---recipient-account)
                                                     (shift transaction/INIT_CODE_SIZE tx-skip---row-offset---transaction-row))
                                  (debug (vanishes!  (shift account/CODE_SIZE          tx-skip---row-offset---recipient-account))))))
@@ -179,7 +179,7 @@
                     (shift transaction/GAS_INITIALLY_AVAILABLE    tx-skip---row-offset---transaction-row)))
 
 (defconstraint tx-skip---transaction-row-justifying-effective-refund (:guard (tx-skip---precondition))
-               (debug (eq! (shift transaction/REFUND_EFFECTIVE    tx-skip---row-offset---transaction-row)
-                    (shift transaction/GAS_LEFTOVER        tx-skip---row-offset---transaction-row))))
+               (eq! (shift transaction/REFUND_EFFECTIVE    tx-skip---row-offset---transaction-row)
+                    (shift transaction/GAS_LEFTOVER        tx-skip---row-offset---transaction-row)))
 
 

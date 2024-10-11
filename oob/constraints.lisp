@@ -154,7 +154,7 @@
 ;;                             ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defconstraint counter-constancy ()
-  (begin (debug (counter-constancy CT STAMP))
+  (begin (counter-constancy CT STAMP)
          (debug (counter-constancy CT CT_MAX))
          (for i [9] (counter-constancy CT [DATA i]))
          (counter-constancy CT OOB_INST)))
@@ -354,8 +354,8 @@
 
 (defconstraint rdc---compare-offset-plus-size-against-rds (:guard (* (assumption---fresh-new-stamp) (rdc---standard-precondition)))
   (if-zero (rdc---rdc-roob)
-           (begin (debug (vanishes! (shift ADD_FLAG 2))) ;; TODO: this debug may be added also elsewhere due to lookup_sum := WCP_FLAG + ADD_FLAG + MOD_FLAG
-                  (debug (vanishes! (shift MOD_FLAG 2)))
+           (begin (vanishes! (shift ADD_FLAG 2))
+                  (vanishes! (shift MOD_FLAG 2))
                   (eq! (shift WCP_FLAG 2) 1)
                   (eq! (shift OUTGOING_INST 2) EVM_INST_GT)
                   (vanishes! (shift [OUTGOING_DATA 3] 2))
@@ -701,7 +701,7 @@
   (call-to-ISZERO 2 0 (prc-modexp-xbs---xbs-lo)))
 
 (defconstraint additional-prc-modexp-xbs (:guard (* (assumption---fresh-new-stamp) (prc-modexp-xbs---standard-precondition)))
-  (begin (debug (vanishes! (* (prc-modexp-xbs---compute-max) (- 1 (prc-modexp-xbs---compute-max)))))
+  (begin (vanishes! (* (prc-modexp-xbs---compute-max) (- 1 (prc-modexp-xbs---compute-max))))
          (eq! (prc-modexp-xbs---compo-to_512) 1)))
 
 (defconstraint prc-modexp-xbs---justify-hub-predictions (:guard (* (assumption---fresh-new-stamp) (prc-modexp-xbs---standard-precondition)))

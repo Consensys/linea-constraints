@@ -74,10 +74,10 @@
 (defun (selfdestruct-scenario-precondition) (* PEEK_AT_SCENARIO (scenario-shorthand---SELFDESTRUCT---sum)))
 
 (defconstraint selfdestruct-looking-back (:guard (selfdestruct-scenario-precondition))
-               (debug (begin
+               (begin
                  (eq! (prev PEEK_AT_STACK) 1)
                  (eq! (prev stack/INSTRUCTION) EVM_INST_SELFDESTRUCT)
-                 (eq! XAHOY (prev (+ stack/STATICX stack/OOGX))))))
+                 (eq! XAHOY (prev (+ stack/STATICX stack/OOGX)))))
 
 (defconstraint selfdestruct-setting-stack-pattern (:guard (selfdestruct-scenario-precondition))
                (prev (stack-pattern-1-0)))

@@ -53,9 +53,9 @@
                 (stack-pattern-2-0))
 
 (defconstraint  revert-instruction---allowable-exceptions                          (:guard (revert-instruction---standard-precondition))
-                (debug (eq!  XAHOY
+                (eq!  XAHOY
                       (+  stack/MXPX
-                          stack/OOGX))))
+                          stack/OOGX)))
 
 (defconstraint  revert-instruction---setting-NSR                                   (:guard (revert-instruction---standard-precondition))
                 (eq! NSR
@@ -76,7 +76,7 @@
 (defconstraint  revert-instruction---setting-the-context-rows                      (:guard (revert-instruction---standard-precondition))
                 (if-not-zero  XAHOY
                               ;; XAHOY ≡ 1
-                              (debug (execution-provides-empty-return-data      ROW_OFFSET_REVERT_XAHOY_CALLER_CONTEXT_ROW))
+                              (execution-provides-empty-return-data      ROW_OFFSET_REVERT_XAHOY_CALLER_CONTEXT_ROW)
                               ;; XAHOY ≡ 0
                               (begin
                                 (read-context-data   ROW_OFFSET_REVERT_NO_XAHOY_CURRENT_CONTEXT_ROW

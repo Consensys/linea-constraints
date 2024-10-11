@@ -55,7 +55,7 @@
                    (account-same-deployment-number-and-status     tx-init---row-offset---sender-account-row)
                    (account-turn-on-warmth                        tx-init---row-offset---sender-account-row)
                    (account-same-marked-for-selfdestruct          tx-init---row-offset---sender-account-row)
-                   (debug (account-isnt-precompile                       tx-init---row-offset---sender-account-row))
+                   (account-isnt-precompile                       tx-init---row-offset---sender-account-row)
                    (DOM-SUB-stamps---standard                     tx-init---row-offset---sender-account-row
                                                                   0)))
 
@@ -205,7 +205,7 @@
                    (eq!       (shift             transaction/REQUIRES_EVM_EXECUTION       tx-init---row-offset---transaction-row) 1)
                    (if-zero   (shift             transaction/IS_DEPLOYMENT                tx-init---row-offset---transaction-row)
                               (eq!               (shift account/HAS_CODE                  tx-init---row-offset---recipient-account-row) 1)
-                              (debug (is-not-zero!      (shift transaction/INIT_CODE_SIZE        tx-init---row-offset---transaction-row))))))
+                              (is-not-zero!      (shift transaction/INIT_CODE_SIZE        tx-init---row-offset---transaction-row)))))
 
 ;; REFUNDS cannot be set at the present time
 
@@ -214,8 +214,8 @@
                         (shift   transaction/INITIAL_BALANCE                   tx-init---row-offset---transaction-row)))
 
 (defconstraint   tx-initialization---transaction-row-justifying-status-code                (:guard (tx-init---standard-precondition))
-                 (debug (eq!   (shift   transaction/STATUS_CODE               tx-init---row-offset---transaction-row)
-                        (- 1 (shift CONTEXT_WILL_REVERT           (+ 1 tx-init---row-offset---transaction-row))))))
+                 (eq!   (shift   transaction/STATUS_CODE               tx-init---row-offset---transaction-row)
+                        (- 1 (shift CONTEXT_WILL_REVERT           (+ 1 tx-init---row-offset---transaction-row)))))
 
 (defconstraint   tx-initialization---transaction-row-justifying-nonce                      (:guard (tx-init---standard-precondition))
                  (eq!   (shift   transaction/NONCE                     tx-init---row-offset---transaction-row)
