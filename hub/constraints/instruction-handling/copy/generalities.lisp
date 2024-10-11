@@ -21,8 +21,7 @@
   ROW_OFFSET_CALLDATACOPY_CONTEXT_ROW                        2
   ;;
   ROW_OFFSET_RETURNDATACOPY_CURRENT_CONTEXT_ROW              2
-  ROW_OFFSET_RETURNDATACOPY_CALLER_CONTEXT_ROW               2
-  ROW_OFFSET_RETURNDATACOPY_CALLER_CONTEXT_ROW_RDCX          3
+  ROW_OFFSET_RETURNDATACOPY_CALLER_CONTEXT_ROW               3
   ;;
   ROW_OFFSET_CODECOPY_XAHOY_CONTEXT_ROW                      2
   ROW_OFFSET_CODECOPY_NO_XAHOY_CONTEXT_ROW                   2
@@ -105,12 +104,11 @@
 
 (defconstraint copy-instruction---setting-NSR-and-peeking-flags---RETURNDATACOPY-case (:guard (copy-instruction---standard-RETURNDATACOPY))
                (begin
-                 (eq!    NSR    (+ 2 XAHOY))
-                 (eq!    NSR
-                         (+     (shift      PEEK_AT_MISCELLANEOUS      ROW_OFFSET_COPY_INST_MISCELLANEOUS_ROW           )
-                                (shift      PEEK_AT_CONTEXT            ROW_OFFSET_RETURNDATACOPY_CURRENT_CONTEXT_ROW    )
-                                (*   (shift PEEK_AT_CONTEXT            ROW_OFFSET_RETURNDATACOPY_CALLER_CONTEXT_ROW_RDCX)
-                                     XAHOY)))))
+                 (eq!  NSR  (+ 2 XAHOY))
+                 (eq!  NSR
+                       (+  (shift       PEEK_AT_MISCELLANEOUS   ROW_OFFSET_COPY_INST_MISCELLANEOUS_ROW         )
+                           (shift       PEEK_AT_CONTEXT         ROW_OFFSET_RETURNDATACOPY_CURRENT_CONTEXT_ROW  )
+                           (*   (shift  PEEK_AT_CONTEXT         ROW_OFFSET_RETURNDATACOPY_CALLER_CONTEXT_ROW   )    XAHOY)))))
 
 (defconstraint copy-instruction---setting-NSR-and-peeking-flags---CODECOPY-case (:guard (copy-instruction---standard-CODECOPY))
                (begin (eq! NSR (- 3 stack/RDCX))
@@ -223,9 +221,9 @@
 (defun (copy-instruction---reference-offset)  (+   (* (copy-instruction---is-CALLDATACOPY)      (copy-instruction---call-data-offset))
                                                    (* (copy-instruction---is-RETURNDATACOPY)    (copy-instruction---return-data-offset))))
 
-(defun (copy-instruction---reference-size)    (+   (*    (copy-instruction---is-CALLDATACOPY)   (copy-instruction---call-data-size))
-                                                   (*    (copy-instruction---is-RETURNDATACOPY) (copy-instruction---return-data-size))
-                                                   (*    (copy-instruction---is-CODECOPY)       (copy-instruction---current-address-code-size))
-                                                   (*    (copy-instruction---is-EXTCODECOPY)    (copy-instruction---exo-address-code-fragment-index) (copy-instruction---exo-address-has-code))))
+(defun (copy-instruction---reference-size)    (+   (* (copy-instruction---is-CALLDATACOPY)      (copy-instruction---call-data-size))
+                                                   (* (copy-instruction---is-RETURNDATACOPY)    (copy-instruction---return-data-size))
+                                                   (* (copy-instruction---is-CODECOPY)          (copy-instruction---current-address-code-size))
+                                                   (* (copy-instruction---is-EXTCODECOPY)       (copy-instruction---exo-address-code-fragment-index) (copy-instruction---exo-address-has-code))))
 
 (defun (copy-instruction---exo-sum)           (*   (+ (copy-instruction---is-CODECOPY) (copy-instruction---is-EXTCODECOPY)) EXO_SUM_WEIGHT_ROM))

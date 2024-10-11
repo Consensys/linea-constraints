@@ -6,7 +6,7 @@
 ;;                                         ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defconstraint copy-setting-the-gas-cost-for-RETURNDATACOPY (:guard (copy-instruction---standard-RETURNDATACOPY))
+(defconstraint copy-instruction---RETURNDATACOPY---setting-the-gas-cost       (:guard (copy-instruction---standard-RETURNDATACOPY))
                (begin
                  (if-not-zero   stack/RDCX   (vanishes!   GAS_COST))
                  (if-not-zero   stack/MXPX   (vanishes!   GAS_COST))
