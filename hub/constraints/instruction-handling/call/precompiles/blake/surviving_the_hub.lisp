@@ -65,7 +65,7 @@
                   (:guard    (precompile-processing---BLAKE2f---surviving-the-HUB))
                   (begin
                     (eq!    (scenario-shorthand---PRC---success)    (precompile-processing---BLAKE2f---OOB-ram-success))
-                    (debug (eq!     scenario/PRC_FAILURE_KNOWN_TO_RAM      (-    1    (precompile-processing---BLAKE2f---OOB-ram-success))))))
+                    (eq!     scenario/PRC_FAILURE_KNOWN_TO_RAM      (-    1    (precompile-processing---BLAKE2f---OOB-ram-success)))))
 
 (defconstraint    precompile-processing---BLAKE2f---justifying-the-return-gas-prediction
                   (:guard    (precompile-processing---BLAKE2f---surviving-the-HUB))
