@@ -13,7 +13,7 @@
                (eq! NSR CMC))
 
 (defconstraint dup-setting-peeking-flags (:guard (dup-no-stack-exceptions))
-               (debug (eq! NSR (* CMC (next PEEK_AT_CONTEXT)))))
+               (eq! NSR (* CMC (next PEEK_AT_CONTEXT))))
 
 (defconstraint dup-setting-gas-costs (:guard (dup-no-stack-exceptions))
                (eq! GAS_COST stack/STATIC_GAS))
