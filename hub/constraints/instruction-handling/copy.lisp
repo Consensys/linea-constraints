@@ -241,7 +241,7 @@
                (if-zero (shift misc/OOB_FLAG ROW_OFFSET_COPY_INST_MISCELLANEOUS_ROW)
                         ;; OOB_FLAG ≡ 0
                         ;; TODO: zero case is redundant; careful when modifying the constraint (if-zero vs. if-not-zero)
-                        (debug (vanishes! stack/RDCX))
+                        (vanishes! stack/RDCX)
                         ;; OOB_FLAG ≡ 1
                         (eq! stack/RDCX (copy-inst-OOB-raises-return-data-exception))))
 
