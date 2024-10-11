@@ -34,7 +34,7 @@
                   )
 
 (defconstraint   create-instruction---backward-setting-CREATE-instruction   ()
-                 (debug (if-not-zero   PEEK_AT_SCENARIO
+                 (if-not-zero   PEEK_AT_SCENARIO
                                 (if-not-zero   (scenario-shorthand---CREATE---sum)
                                                (begin    (eq!    (shift    PEEK_AT_STACK       CREATE_first_stack_row___row_offset)    1)
                                                          (eq!    (shift    stack/CREATE_FLAG   CREATE_first_stack_row___row_offset)    1)
@@ -43,4 +43,4 @@
                                                          )
                                                )
                                 )
-                 ))
+                 )
