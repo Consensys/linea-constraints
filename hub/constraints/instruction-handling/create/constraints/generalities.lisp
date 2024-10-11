@@ -148,10 +148,10 @@
                                                   (*    (create-instruction---send-init-code-to-ROM)                   EXO_SUM_WEIGHT_ROM)))
 
 (defconstraint    create-instruction---setting-the-next-context-number                      (:guard    (create-instruction---generic-precondition))
-                  (debug (begin
+                  (begin
                     (if-not-zero    scenario/CREATE_EXCEPTION                                      (next-context-is-caller))
                     (if-not-zero    (scenario-shorthand---CREATE---no-context-change)                  (next-context-is-current))
-                    (if-not-zero    (scenario-shorthand---CREATE---not-rebuffed-nonempty-init-code)    (next-context-is-new)))))
+                    (if-not-zero    (scenario-shorthand---CREATE---not-rebuffed-nonempty-init-code)    (next-context-is-new))))
 
 (defconstraint    create-instruction---setting-GAS_COST                                     (:guard    (create-instruction---generic-precondition))
                   (begin
