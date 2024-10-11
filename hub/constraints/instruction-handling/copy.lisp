@@ -336,7 +336,7 @@
                                (eq! GAS_COST (+ stack/STATIC_GAS (copy-inst-MXP-memory-expansion-gas))))))
 
 (defconstraint copy-setting-the-context-row-for-RETURNDATACOPY (:guard (copy-inst-standard-RETURNDATACOPY))
-               (debug (begin (if-not-zero stack/RDCX
+               (begin (if-not-zero stack/RDCX
                                    (begin (read-context-data ROW_OFFSET_RETURNDATACOPY_CURRENT_CONTEXT_ROW CONTEXT_NUMBER)
                                           (execution-provides-empty-return-data ROW_OFFSET_RETURNDATACOPY_CALLER_CONTEXT_ROW_RDCX)))
                       (if-not-zero stack/MXPX
@@ -344,7 +344,7 @@
                       (if-not-zero stack/OOGX
                                    (execution-provides-empty-return-data ROW_OFFSET_RETURNDATACOPY_CALLER_CONTEXT_ROW))
                       (if-zero XAHOY
-                               (read-context-data ROW_OFFSET_RETURNDATACOPY_CURRENT_CONTEXT_ROW CONTEXT_NUMBER)))))
+                               (read-context-data ROW_OFFSET_RETURNDATACOPY_CURRENT_CONTEXT_ROW CONTEXT_NUMBER))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                   ;;
