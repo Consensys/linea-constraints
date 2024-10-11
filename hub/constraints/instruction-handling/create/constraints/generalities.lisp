@@ -58,7 +58,7 @@
 (defconstraint    create-instruction---setting-the-memory-expansion-exception               (:guard    (create-instruction---generic-precondition))
                   (if-zero    (shift    misc/MXP_FLAG    CREATE_miscellaneous_row___row_offset)
                               ;; MXP_FLAG  ≡  0
-                              (debug (vanishes!    (create-instruction---STACK-mxpx)))
+                              (vanishes!    (create-instruction---STACK-mxpx))
                               ;; MXP_FLAG  ≡  1
                               (eq!          (create-instruction---STACK-mxpx)
                                             (create-instruction---MXP-mxpx))
