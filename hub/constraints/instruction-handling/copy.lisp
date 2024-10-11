@@ -316,9 +316,9 @@
                                (eq! GAS_COST (+ stack/STATIC_GAS (copy-inst-MXP-memory-expansion-gas))))))
 
 (defconstraint copy-setting-context-row-for-exceptional-CALLDATACOPY (:guard (copy-inst-standard-CALLDATACOPY))
-               (debug (if-not-zero XAHOY
+               (if-not-zero XAHOY
                             (execution-provides-empty-return-data ROW_OFFSET_CALLDATACOPY_CONTEXT_ROW)
-                            (read-context-data ROW_OFFSET_CALLDATACOPY_CONTEXT_ROW CONTEXT_NUMBER))))
+                            (read-context-data ROW_OFFSET_CALLDATACOPY_CONTEXT_ROW CONTEXT_NUMBER)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                         ;;
