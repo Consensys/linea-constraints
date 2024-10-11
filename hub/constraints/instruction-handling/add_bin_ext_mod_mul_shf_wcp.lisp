@@ -87,14 +87,14 @@
                                  (+ (stateless-instruction---is-EXP) CONTEXT_MAY_CHANGE))))
 
 (defconstraint stateless-instruction---setting-peeking-flags (:guard (stateless-instruction---precondition))
-               (debug (begin
+               (begin
                  (if-not-zero (stateless-instruction---isnt-EXP)
                               (eq! NON_STACK_ROWS
                                    (* CMC (next PEEK_AT_CONTEXT))))
                  (if-not-zero (stateless-instruction---is-EXP)
                               (eq! NON_STACK_ROWS
                                    (+ (next PEEK_AT_MISCELLANEOUS)
-                                      (* CMC (shift PEEK_AT_CONTEXT 2))))))))
+                                      (* CMC (shift PEEK_AT_CONTEXT 2)))))))
 
 (defconstraint stateless-instruction---setting-miscellaneous-flags (:guard (stateless-instruction---precondition))
                (if-not-zero (stateless-instruction---is-EXP)
