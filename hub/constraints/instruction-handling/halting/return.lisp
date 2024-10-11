@@ -35,12 +35,12 @@
 ;; Note: we could pack into a single constraint the last 3 constraints.
 (defconstraint   return-instruction---imposing-the-converse    (:guard  (return-instruction---standard-scenario-row))
                  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-                 (debug (begin  (eq!        (prev  PEEK_AT_STACK)         1)
+                 (begin  (eq!        (prev  PEEK_AT_STACK)         1)
                          (eq!        (prev  stack/HALT_FLAG)       1)
                          (eq!        (prev  [ stack/DEC_FLAG 1 ])  1)
                          (vanishes!  (prev  (+ stack/SUX stack/SOX)))
                          )
-                 ))
+                 )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                       ;;
@@ -318,12 +318,12 @@
 
 (defconstraint   return-instruction---justifying-the-ICPX           (:guard   (return-instruction---standard-scenario-row))
                  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-                 (debug (if-zero   (force-bool   (return-instruction---check-first-byte))
+                 (if-zero   (force-bool   (return-instruction---check-first-byte))
                             ;; check_first_byte ≡ 0
                             (vanishes!    (return-instruction---exception-flag-ICPX))
                             ;; check_first_byte ≡ 1
                             (eq!          (return-instruction---exception-flag-ICPX)
-                                          (return-instruction---MMU-success-bit)))))
+                                          (return-instruction---MMU-success-bit))))
 
 (defconstraint   return-instruction---justifying-the-MAXCSX         (:guard   (return-instruction---standard-scenario-row))
                  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -358,7 +358,7 @@
 ;; redundant
 (defconstraint   return-instruction---resetting-the-caller-contexts-return-data          (:guard   (return-instruction---exception-scenario))
                  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-                 (debug (execution-provides-empty-return-data   RETURN_INSTRUCTION_CALLER_CONTEXT_ROW_OFFSET_EXCEPTION)))
+                 (execution-provides-empty-return-data   RETURN_INSTRUCTION_CALLER_CONTEXT_ROW_OFFSET_EXCEPTION))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                  ;;
