@@ -76,7 +76,7 @@
 (defconstraint    create-instruction---setting-the-out-of-gas-exception                     (:guard    (create-instruction---generic-precondition))
                   (if-zero    (shift    misc/STP_FLAG    CREATE_miscellaneous_row___row_offset)
                               ;; STP_FLAG  ≡  0
-                              (debug (vanishes!    (create-instruction---STACK-oogx)))
+                              (vanishes!    (create-instruction---STACK-oogx))
                               ;; STP_FLAG  ≡  1
                               (eq!          (create-instruction---STACK-oogx)
                                             (create-instruction---STP-oogx))
