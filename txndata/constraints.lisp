@@ -26,7 +26,7 @@
 (defconstraint   padding-is-padding ()
                  (if-zero ABS
                           (begin (debug (vanishes! CT))
-                                 (vanishes! (weight_sum))))) ;;TODO: useless, but in the spec
+                                 (vanishes! (weighted-sum-of-binary-columns-for-transaction-constancy))))) ;;TODO: useless, but in the spec
 
 (defconstraint   padding ()
                  (if-zero ABS
@@ -75,7 +75,7 @@
   (if-not-zero CT
                (eq! X (prev X))))
 
-(defun (weight_sum)
+(defun (weighted-sum-of-binary-columns-for-transaction-constancy)
   (+ (* (^ 2 0) IS_DEP)
      (* (^ 2 1) TYPE0)
      (* (^ 2 2) TYPE1)
@@ -109,13 +109,14 @@
                    (transaction-constant IBAL)
                    (transaction-constant BLK)
                    (transaction-constant REL)
-                   (transaction-constant (weight_sum))))
+                   (transaction-constant (weighted-sum-of-binary-columns-for-transaction-constancy))))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;                                                ;;
-;;    2.4 Batch numbers and transaction number    ;;
-;;                                                ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                                        ;;
+;;    2.3 Constructing the ABSOLUTE_TRANSACTION_NUMBER    ;;
+;;                                                        ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (defconstraint   total-number-constancies ()
                  (begin (if-not-zero ABS
                                      (will-remain-constant! ABS_MAX)
@@ -128,13 +129,15 @@
                         (if-not-zero (will-inc! BLK 1)
                                      (will-remain-constant! REL_MAX))))
 
-(defconstraint   batch-num-increments ()
+(defconstraint   block-number-increments ()
                  (stamp-progression BLK))
 
-(defconstraint   batchNum-txNum-lexicographic ()
+(defconstraint   block-and-transaction-number-generalities ()
                  (begin (if-zero ABS
                                  (begin (vanishes! BLK)
                                         (vanishes! REL)
+                                        (debug (vanishes! BLK_MAX))
+                                        (debug (vanishes! REL_MAX))
                                         (if-not-zero (will-remain-constant! ABS)
                                                      (begin (eq! (next BLK) 1)
                                                             (eq! (next REL) 1))))
@@ -386,18 +389,22 @@
 ;;                          ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defconstraint   cumulative-gas ()
-                 (begin (if-zero ABS
-                                 (vanishes! GAS_CUMULATIVE))
+(defconstraint   cumulative-gas---vanishing-in-padding ()
+                 (if-zero    ABS
+                             (vanishes! GAS_CUMULATIVE)))
+
+(defconstraint   cumulative-gas---initialization-at-block-start ()
                         (if-not-zero (will-remain-constant! BLK)
                                      ; BLK[i + 1] != BLK[i]
                                      (eq! (next GAS_CUMULATIVE)
-                                          (next (- GAS_LIMIT REFUND_EFFECTIVE))))
-                        (if-not-zero (and (will-inc! BLK 1) (will-remain-constant! ABS))
-                                     ; BLK[i + 1] != 1 + BLK[i] && ABS[i+1] != ABS[i] i.e. BLK[i + 1] == BLK[i] && ABS[i+1] == ABS[i] +1
-                                     (eq! (next GAS_CUMULATIVE)
-                                          (+ GAS_CUMULATIVE
-                                             (next (- GAS_LIMIT REFUND_EFFECTIVE)))))))
+                                          (next (- GAS_LIMIT REFUND_EFFECTIVE)))))
+
+(defconstraint   cumulative-gas---update-at-transaction-threshold ()
+                 (if-not-zero    (will-inc! BLK 1)
+                                 (if-not-zero    (will-remain-constant! ABS)
+                                                 ; BLK[i + 1] != 1 + BLK[i] && ABS[i+1] != ABS[i] i.e. BLK[i + 1] == BLK[i] && ABS[i+1] == ABS[i] +1
+                                                 (eq!    (next GAS_CUMULATIVE)
+                                                         (+    GAS_CUMULATIVE (next (- GAS_LIMIT REFUND_EFFECTIVE)))))))
 
 (defconstraint   cumulative-gas-comparison (:guard IS_LAST_TX_OF_BLOCK)
                  (if-not-zero (- ABS_TX_NUM (prev ABS_TX_NUM))
