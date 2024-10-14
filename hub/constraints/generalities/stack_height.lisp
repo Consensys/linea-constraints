@@ -19,4 +19,3 @@
                   (if-not-zero    (stack-exceptions)
                                   (vanishes!    HEIGHT_NEW)
                                   (eq!          HEIGHT_NEW    (+ (- HEIGHT stack/DELTA) stack/ALPHA))))
-
