@@ -29,7 +29,7 @@
     ( CALLER_CONTEXT_NUMBER                     :i32 )
 
     ;;
-    ( CONTEXT_WILL_REVERT                       :binary@prove )
+    ( CONTEXT_WILL_REVERT                       :binary )
     ( CONTEXT_GETS_REVERTED                     :binary@prove )
     ( CONTEXT_SELF_REVERTS                      :binary@prove )
     ( CONTEXT_REVERT_STAMP                      :i32 )
@@ -51,10 +51,10 @@
     ( PEEK_AT_SCENARIO                          :binary@prove )
 
     ;; gas columns
-    ( GAS_EXPECTED                              :i32 )
-    ( GAS_ACTUAL                                :i32 )
+    ( GAS_EXPECTED                              :i64 )
+    ( GAS_ACTUAL                                :i64 )
     ( GAS_COST                                  :i64 )
-    ( GAS_NEXT                                  :i32 )
+    ( GAS_NEXT                                  :i64 )
     ( REFUND_COUNTER                            :i32 )
     ( REFUND_COUNTER_NEW                        :i32 )
 
