@@ -66,15 +66,15 @@
 ;;   4.7.3 MXP_STAMP constraints   ;;
 ;;                                 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defconstraint MXP_STAMP-increments (:perspective misc)
-  (did-inc! MXP_STAMP (* PEEK_AT_MISCELLANEOUS MXP_FLAG)))
+(defconstraint MXP_STAMP-increments ()
+  (did-inc! MXP_STAMP (* PEEK_AT_MISCELLANEOUS misc/MXP_FLAG)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                 ;;
 ;;   4.7.4 MMU_STAMP constraints   ;;
 ;;                                 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defconstraint MMU_STAMP-increments (:perspective misc)
-  (did-inc! MMU_STAMP (* PEEK_AT_MISCELLANEOUS MMU_FLAG)))
+(defconstraint MMU_STAMP-increments ()
+  (did-inc! MMU_STAMP (* PEEK_AT_MISCELLANEOUS misc/MMU_FLAG)))
 
 
