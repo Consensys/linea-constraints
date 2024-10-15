@@ -40,9 +40,9 @@
                                         stack/ICPX
                                         stack/MAXCSX))
 
-(defconstraint gas-columns---GAS_COST-vanishes-for-non-OOG-exceptions (:perspective stack)
-               (if-not-zero   (non-oog-exceptions)
-                              (vanishes!    GAS_COST)))
+;; (defconstraint gas-columns---GAS_COST-vanishes-for-non-OOG-exceptions (:perspective stack)
+;;                (if-not-zero   (non-oog-exceptions)
+;;                               (vanishes!    GAS_COST)))
 
 ;; we drop the stack perspective preconditions
 (defconstraint gas-columns---GAS_NEXT-vanishes-in-case-of-an-exception ()
