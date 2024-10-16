@@ -29,22 +29,6 @@
                               (vanishes! GAS_COST)
                               (vanishes! GAS_NEXT)))))
 
-;; ;; TODO: confirm deletion
-;; (defun    (non-oog-exceptions)    (+    stack/SUX
-;;                                         stack/SOX
-;;                                         stack/MXPX
-;;                                         stack/OPCX
-;;                                         stack/RDCX
-;;                                         stack/JUMPX
-;;                                         stack/STATICX
-;;                                         stack/SSTOREX
-;;                                         stack/ICPX
-;;                                         stack/MAXCSX))
-;;
-;; (defconstraint gas-columns---GAS_COST-vanishes-for-non-OOG-exceptions (:perspective stack)
-;;                (if-not-zero   (non-oog-exceptions)
-;;                               (vanishes!    GAS_COST)))
-
 ;; we drop the stack perspective preconditions
 (defconstraint gas-columns---GAS_NEXT-vanishes-in-case-of-an-exception ()
                (if-not-zero   XAHOY
