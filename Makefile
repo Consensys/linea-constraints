@@ -138,8 +138,8 @@ ZKEVM_MODULES := ${ALU} \
 		 ${LIBRARY} \
 		 ${LOG_DATA} \
 		 ${LOG_INFO} \
+		 ${MMIO} \
 		 ${MMU} \
-		 ${MMIO_COLUMNS} \
 		 ${MXP} \
 		 ${OOB} \
 		 ${RLP_ADDR} \
@@ -179,8 +179,8 @@ ZKEVM_MODULES_FOR_REFERENCE_TESTS := ${ALU} \
 				     ${LIBRARY} \
 				     ${LOG_DATA} \
 				     ${LOG_INFO} \
+                     ${MMIO} \
 				     ${MMU} \
-				     ${MMIO_COLUMNS} \
 				     ${MXP} \
 				     ${OOB} \
 				     ${RLP_ADDR} \
@@ -199,7 +199,6 @@ ZKEVM_MODULES_FOR_REFERENCE_TESTS := ${ALU} \
 #				     ${BLOCKDATA} \
 #				     ${GAS} \
 #				     ${HUB} \
-#               		     ${MMIO} \
 
 zkevm_for_reference_tests.bin: ${ZKEVM_MODULES_FOR_REFERENCE_TESTS}
 	${CORSET} compile -vv -o $@ ${ZKEVM_MODULES_FOR_REFERENCE_TESTS}
