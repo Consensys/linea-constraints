@@ -29,7 +29,7 @@
   (TARGET_BYTE_OFFSET :i8)
   (SIZE :i64)
   (LIMB :i128)
-  (TOTAL_SIZE :i64)
+  (TOTAL_SIZE :i64 :display :dec) 
   (EXO_SUM :i32)
   (EXO_ID :i32)
   (KEC_ID :i32)
