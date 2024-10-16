@@ -42,16 +42,10 @@ HUB :=  $(wildcard hub/columns/*lisp) \
 
  # Missing from the above
 
-ALU := alu/add/columns.lisp \
-       alu/add/constraints.lisp \
-       alu/ext/columns.lisp \
-       alu/ext/constraints.lisp \
-       alu/mod/columns.lisp \
-       alu/mod/constants.lisp \
-       alu/mod/constraints.lisp \
-       alu/mul/columns.lisp \
-       alu/mul/constraints.lisp \
-       alu/mul/helpers.lisp
+ALU := $(wildcard alu/add/*.lisp) \
+       $(wildcard alu/ext/*.lisp) \
+       $(wildcard alu/mod/*.lisp) \
+       $(wildcard alu/mul/*.lisp)
 
 BIN := bin   
 
@@ -80,11 +74,15 @@ LOG_DATA := logdata
 
 LOG_INFO := loginfo
 
-MMU := mmu
+MMU :=  $(wildcard mmu/*.lisp) \
+	$(wildcard mmu/lookups/*.lisp) \
+	$(wildcard mmu/instructions/*.lisp) \
+	$(wildcard mmu/instructions/any_to_ram_with_padding/*.lisp)
 
-MMIO := mmio/columns.lisp #TODO enable the MMIO constraint and lookup
-# MMIO := mmio \
-# mmio/consistency.lisp
+MMIO_COLUMNS := mmio/columns.lisp
+
+MMIO := $(wildcard mmio/*lisp) \
+	$(wildcard mmio/lookups/*lisp) \
 
 MXP := mxp
 
@@ -137,12 +135,12 @@ ZKEVM_MODULES := ${ALU} \
 		 ${EUC} \
 		 ${EXP} \
 		 ${GAS} \
-                 ${HUB_COLUMNS} \
+     ${HUB_COLUMNS} \
 		 ${LIBRARY} \
 		 ${LOG_DATA} \
 		 ${LOG_INFO} \
 		 ${MMU} \
-		 ${MMIO} \
+		 ${MMIO_COLUMNS} \
 		 ${MXP} \
 		 ${OOB} \
 		 ${RLP_ADDR} \
@@ -157,8 +155,9 @@ ZKEVM_MODULES := ${ALU} \
 		 ${TRM} \
 		 ${TXN_DATA} \
 		 ${WCP}
-               
+
 #		 ${HUB} \
+#    ${MMIO} \
 
 define.go: ${ZKEVM_MODULES}
 	${CORSET} wizard-iop -vv -o $@ ${ZKEVM_MODULES}
@@ -176,13 +175,13 @@ ZKEVM_MODULES_FOR_REFERENCE_TESTS := ${ALU} \
 				     ${EC_DATA} \
 				     ${EUC} \
 				     ${EXP} \
-#				     ${GAS} \
+				     ${GAS} \
 				     ${HUB_COLUMNS} \
 				     ${LIBRARY} \
 				     ${LOG_DATA} \
 				     ${LOG_INFO} \
 				     ${MMU} \
-				     ${MMIO} \
+				     ${MMIO_COLUMNS} \
 				     ${MXP} \
 				     ${OOB} \
 				     ${RLP_ADDR} \
@@ -199,7 +198,8 @@ ZKEVM_MODULES_FOR_REFERENCE_TESTS := ${ALU} \
 				     ${WCP}
 
 #				     ${BLOCKDATA} \
-#		 		     ${HUB} \
+#				     ${HUB} \
+#            ${MMIO} \
 
 zkevm_for_reference_tests.bin: ${ZKEVM_MODULES_FOR_REFERENCE_TESTS}
 	${CORSET} compile -vv -o $@ ${ZKEVM_MODULES_FOR_REFERENCE_TESTS}
