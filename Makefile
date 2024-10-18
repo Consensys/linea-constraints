@@ -82,7 +82,7 @@ MMU :=  $(wildcard mmu/*.lisp) \
 MMIO_COLUMNS := mmio/columns.lisp
 
 MMIO := $(wildcard mmio/*lisp) \
-	$(wildcard mmio/lookups/*lisp) \
+	$(wildcard mmio/lookups/*lisp) 
 
 MXP := mxp
 
@@ -134,6 +134,7 @@ ZKEVM_MODULES := ${ALU} \
 		 ${EC_DATA} \
 		 ${EUC} \
 		 ${EXP} \
+		 ${GAS} \
 		 ${HUB_COLUMNS} \
 		 ${LIBRARY} \
 		 ${LOG_DATA} \
@@ -155,9 +156,7 @@ ZKEVM_MODULES := ${ALU} \
 		 ${TXN_DATA} \
 		 ${WCP}
 
-#		 ${GAS} \
-#		 ${HUB} \
-#                ${MMIO} \
+# ${HUB} \
 
 define.go: ${ZKEVM_MODULES}
 	${CORSET} wizard-iop -vv -o $@ ${ZKEVM_MODULES}
@@ -175,11 +174,12 @@ ZKEVM_MODULES_FOR_REFERENCE_TESTS := ${ALU} \
 				     ${EC_DATA} \
 				     ${EUC} \
 				     ${EXP} \
+				     ${GAS} \
 				     ${HUB_COLUMNS} \
 				     ${LIBRARY} \
 				     ${LOG_DATA} \
 				     ${LOG_INFO} \
-                     ${MMIO} \
+                                     ${MMIO} \
 				     ${MMU} \
 				     ${MXP} \
 				     ${OOB} \
@@ -197,7 +197,6 @@ ZKEVM_MODULES_FOR_REFERENCE_TESTS := ${ALU} \
 				     ${WCP}
 
 #				     ${BLOCKDATA} \
-#				     ${GAS} \
 #				     ${HUB} \
 
 zkevm_for_reference_tests.bin: ${ZKEVM_MODULES_FOR_REFERENCE_TESTS}
