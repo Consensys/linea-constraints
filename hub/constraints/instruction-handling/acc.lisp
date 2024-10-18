@@ -88,37 +88,45 @@
 (defconstraint   account-instruction---setting-allowable-exceptions
                  (:guard (account-instruction---standard-hypothesis))
                  ;;
-                 (eq! XAHOY stack/OOGX))
+                 (begin
+                   (eq!    XAHOY stack/OOGX)
+                   (debug  (eq! XAHOY CMC))))
 
-(defconstraint   account-instruction---setting-NSR
+(defconstraint   account-instruction---foreign-address-opcode---setting-NSR
                  (:guard (account-instruction---standard-hypothesis))
                  ;;
-                 (begin
-                   (if-not-zero    (account-instruction---touches-foreign-account)    (eq! NSR (+ 1 CONTEXT_WILL_REVERT CMC)))
-                   (if-not-zero    (account-instruction---touches-current-account)    (eq! NSR (+ 1 (- 1 CMC))))
-                   (debug          (eq! XAHOY CMC))
-                   (debug          (eq! XAHOY stack/OOGX))))
+                 (if-not-zero    (account-instruction---touches-foreign-account)
+                                 (eq!    NSR
+                                         (+ 1 (* CONTEXT_WILL_REVERT (+ 1 CMC))))))
 
-(defconstraint   account-instruction---setting-peeking-flags
+(defconstraint   account-instruction---current-address-opcode---setting-NSR
+                 (:guard (account-instruction---standard-hypothesis))
+                 (if-not-zero    (account-instruction---touches-current-account)
+                                 (eq!    NSR
+                                         (- 2 CMC))))
+
+(defconstraint   account-instruction---foreign-address-opcode---setting-peeking-flags
                  (:guard (account-instruction---standard-hypothesis))
                  ;;
-                 (begin
-                   (if-not-zero (account-instruction---touches-foreign-account)
-                                (if-zero CONTEXT_WILL_REVERT
-                                         (eq! NSR
-                                              (+        (shift PEEK_AT_ACCOUNT        ROFF_ACC___ACCOUNT_DOING_ROW)
-                                                        (* CMC (shift PEEK_AT_CONTEXT 2))))
-                                         (eq! NSR
-                                              (+        (shift PEEK_AT_ACCOUNT        ROFF_ACC___ACCOUNT_DOING_ROW)
-                                                        (shift PEEK_AT_ACCOUNT        ROFF_ACC___ACCOUNT_UNDOING_ROW)
-                                                        (* CMC (shift PEEK_AT_CONTEXT 3))))))
-                   (if-not-zero (account-instruction---touches-current-account)
-                                (if-zero XAHOY
-                                         (eq! NSR
-                                              (+ (shift    PEEK_AT_CONTEXT    ROFF_ACC___CONTEXT_ROW)
-                                                 (shift    PEEK_AT_ACCOUNT    ROFF_ACC___ACCOUNT_READING_ROW)))
-                                         (eq! NSR
-                                              (shift       PEEK_AT_CONTEXT    ROFF_ACC___CONTEXT_ROW))))))
+                 (if-not-zero (account-instruction---touches-foreign-account)
+                              (if-zero CONTEXT_WILL_REVERT
+                                       (eq! NSR
+                                            (shift PEEK_AT_ACCOUNT              ROFF_ACC___ACCOUNT_DOING_ROW))
+                                       (eq! NSR
+                                            (+    (shift PEEK_AT_ACCOUNT        ROFF_ACC___ACCOUNT_DOING_ROW)
+                                                  (shift PEEK_AT_ACCOUNT        ROFF_ACC___ACCOUNT_UNDOING_ROW)
+                                                  (* CMC (shift PEEK_AT_CONTEXT 3)))))))
+
+(defconstraint   account-instruction---current-address-opcode---setting-peeking-flags
+                 (:guard (account-instruction---standard-hypothesis))
+                 ;;
+                 (if-not-zero (account-instruction---touches-current-account)
+                              (if-zero XAHOY
+                                       (eq! NSR
+                                            (+ (shift    PEEK_AT_CONTEXT    ROFF_ACC___CONTEXT_ROW)
+                                               (shift    PEEK_AT_ACCOUNT    ROFF_ACC___ACCOUNT_READING_ROW)))
+                                       (eq! NSR
+                                            (shift       PEEK_AT_CONTEXT    ROFF_ACC___CONTEXT_ROW)))))
 
 (defconstraint   account-instruction---setting-gas-cost
                  (:guard (account-instruction---standard-hypothesis))
@@ -132,31 +140,32 @@
                                 (eq! GAS_COST
                                      stack/STATIC_GAS))))
 
-(defconstraint   account-instruction---trimming-case-garnishing-non-stack-row-make-account-row
+(defconstraint   account-instruction---foreign-address-opcode---doing-account-row
                  (:guard (account-instruction---standard-hypothesis))
                  ;;
                  (begin
                    (if-not-zero (account-instruction---touches-foreign-account)
                                 (begin
-                                  (eq! account/ROMLEX_FLAG            1)
-                                  (eq! account/TRM_RAW_ADDRESS_HI    (account-instruction---raw-address-hi))
-                                  (eq! account/ADDRESS_LO            (account-instruction---raw-address-lo))
+                                  (eq! (shift account/ROMLEX_FLAG               ROFF_ACC___ACCOUNT_DOING_ROW)   0)
+                                  (eq! (shift account/TRM_RAW_ADDRESS_HI        ROFF_ACC___ACCOUNT_DOING_ROW)   (account-instruction---raw-address-hi))
+                                  (eq! (shift account/ADDRESS_LO                ROFF_ACC___ACCOUNT_DOING_ROW)   (account-instruction---raw-address-lo))
                                   (account-same-balance                         ROFF_ACC___ACCOUNT_DOING_ROW)
                                   (account-same-nonce                           ROFF_ACC___ACCOUNT_DOING_ROW)
                                   (account-same-code                            ROFF_ACC___ACCOUNT_DOING_ROW)
                                   (account-same-deployment-number-and-status    ROFF_ACC___ACCOUNT_DOING_ROW)
                                   (account-turn-on-warmth                       ROFF_ACC___ACCOUNT_DOING_ROW)
                                   (account-same-marked-for-selfdestruct         ROFF_ACC___ACCOUNT_DOING_ROW)
-                                  (DOM-SUB-stamps---standard                    ROFF_ACC___ACCOUNT_DOING_ROW 0)))))
+                                  (DOM-SUB-stamps---standard                    ROFF_ACC___ACCOUNT_DOING_ROW    0)))))
 
 
-(defconstraint   account-instruction---trimming-case-garnishing-non-stack-row-undo-account-row
+(defconstraint   account-instruction---foreign-address-opcode---undoing-account-row
                  (:guard (account-instruction---standard-hypothesis))
                  ;;
                  (begin
                    (if-not-zero (account-instruction---touches-foreign-account)
                                 (if-not-zero CONTEXT_WILL_REVERT
                                              (begin
+                                               (eq! (shift account/ROMLEX_FLAG           ROFF_ACC___ACCOUNT_UNDOING_ROW)   0)
                                                (account-same-address-as                  ROFF_ACC___ACCOUNT_UNDOING_ROW    ROFF_ACC___ACCOUNT_DOING_ROW)
                                                (account-undo-balance-update              ROFF_ACC___ACCOUNT_UNDOING_ROW    ROFF_ACC___ACCOUNT_DOING_ROW)
                                                (account-undo-nonce-update                ROFF_ACC___ACCOUNT_UNDOING_ROW    ROFF_ACC___ACCOUNT_DOING_ROW)
@@ -166,14 +175,20 @@
                                                (account-same-marked-for-selfdestruct     ROFF_ACC___ACCOUNT_UNDOING_ROW)
                                                (DOM-SUB-stamps---revert-with-current     ROFF_ACC___ACCOUNT_UNDOING_ROW    1))))))
 
-(defconstraint   account-instruction---non-trim-case
+(defconstraint   account-instruction---current-address-opcode---unexceptional-case---setting-context-row
+                 (:guard (account-instruction---standard-hypothesis))
+                 (if-not-zero (account-instruction---touches-current-account)
+                              (if-zero XAHOY
+                                       (read-context-data                                ROFF_ACC___CONTEXT_ROW            CONTEXT_NUMBER))))
+
+(defconstraint   account-instruction---current-address-opcode---unexceptional-case---setting-account-row
                  (:guard (account-instruction---standard-hypothesis))
                  ;;
                  (begin
                    (if-not-zero (account-instruction---touches-current-account)
                                 (if-zero XAHOY
                                          (begin
-                                           (read-context-data                            ROFF_ACC___CONTEXT_ROW            CONTEXT_NUMBER)
+                                           (eq! (shift account/ROMLEX_FLAG               ROFF_ACC___ACCOUNT_READING_ROW)   0)
                                            (account-same-balance                         ROFF_ACC___ACCOUNT_READING_ROW)
                                            (account-same-nonce                           ROFF_ACC___ACCOUNT_READING_ROW)
                                            (account-same-code                            ROFF_ACC___ACCOUNT_READING_ROW)
@@ -181,15 +196,15 @@
                                            (account-turn-on-warmth                       ROFF_ACC___ACCOUNT_READING_ROW)
                                            (account-same-marked-for-selfdestruct         ROFF_ACC___ACCOUNT_READING_ROW)
                                            (DOM-SUB-stamps---standard                    ROFF_ACC___ACCOUNT_READING_ROW    0)
-                                           (if-zero (account-instruction---is-CODESIZE)
-                                                    ;; DEC_FLAG_4 = 0
+                                           (if-not-zero (account-instruction---is-CODESIZE)
                                                     (begin
                                                       (eq!  (shift account/ADDRESS_HI    ROFF_ACC___ACCOUNT_READING_ROW) (account-instruction---account-address-hi))
-                                                      (eq!  (shift account/ADDRESS_LO    ROFF_ACC___ACCOUNT_READING_ROW) (account-instruction---account-address-lo)))
-                                                    ;; DEC_FLAG_4 = 1
+                                                      (eq!  (shift account/ADDRESS_LO    ROFF_ACC___ACCOUNT_READING_ROW) (account-instruction---account-address-lo))))
+                                           (if-not-zero (account-instruction---is-SELFBALANCE)
                                                     (begin
                                                       (eq!  (shift account/ADDRESS_HI    ROFF_ACC___ACCOUNT_READING_ROW)  (account-instruction---byte-code-address-hi))
-                                                      (eq!  (shift account/ADDRESS_LO    ROFF_ACC___ACCOUNT_READING_ROW)  (account-instruction---byte-code-address-lo)))))))))
+                                                      (eq!  (shift account/ADDRESS_LO    ROFF_ACC___ACCOUNT_READING_ROW)  (account-instruction---byte-code-address-lo)))
+                                                    ))))))
 
 
 (defun    (account-instruction---foreign-balance)         (shift     account/BALANCE                          ROFF_ACC___ACCOUNT_DOING_ROW  ))
