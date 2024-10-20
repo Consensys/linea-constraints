@@ -33,7 +33,7 @@
                     stack/HALT_FLAG))
 
 (defconstraint setting-CMC-and-XAHOY ()
-               (begin (hub-stamp-constancy      (vanishes! (cmc_and_xahoy_weighted_sum)))
+               (begin (hub-stamp-constancy      (vanishes! (cmc_and_xahoy_weighted_sum))) ;; this settles hub-stamp-constancy for CMC and XAHOY simultaneously
                       (if-zero TX_EXEC          (vanishes! (cmc_and_xahoy_weighted_sum)))
                       (if-not-zero PEEK_AT_STACK
                                    (begin (eq! (exception_flag_sum) XAHOY)
