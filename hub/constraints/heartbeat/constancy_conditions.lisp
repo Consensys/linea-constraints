@@ -24,9 +24,6 @@
 ;; TODO: remove PEEK_AT_STACK -- stack-row-constancy will be used on stack rows where this is already a precondition
 
 
-(defconstraint transaction-constancies () 
-               (begin
-                 (transaction-constancy HUB_STAMP_TRANSACTION_END)))
 
 (defconstraint hub-stamp-constancy-of-TLI-and-NSR () 
                (begin
