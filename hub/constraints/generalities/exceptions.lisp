@@ -73,13 +73,13 @@
 
 (defconstraint automatic-exception-flag-vanishing (:perspective stack)
                (begin
-                 (eq!            INVALID_FLAG                    OPCX)
-                 (if-zero        MXP_FLAG                        (vanishes! MXPX))
-                 (if-zero        JUMP_FLAG                       (vanishes! JUMPX))
-                 (if-zero        STATIC_FLAG                     (vanishes! STATICX))
-                 (if-not-zero    (-  INSTRUCTION EVM_INST_RETURNDATACOPY) (vanishes! RDCX))
-                 (if-not-zero    (-  INSTRUCTION EVM_INST_SSTORE)         (vanishes! SSTOREX))
-                 (if-not-zero    (-  INSTRUCTION EVM_INST_RETURN)         (vanishes! (+ ICPX MAXCSX)))))
+                 (eq!            INVALID_FLAG                                   OPCX)
+                 (if-zero        MXP_FLAG                                       (vanishes!    MXPX))
+                 (if-zero        JUMP_FLAG                                      (vanishes!    JUMPX))
+                 (if-zero        STATIC_FLAG                                    (vanishes!    STATICX))
+                 (if-not-zero    (-  INSTRUCTION    EVM_INST_RETURNDATACOPY)    (vanishes!    RDCX))
+                 (if-not-zero    (-  INSTRUCTION    EVM_INST_SSTORE)            (vanishes!    SSTOREX))
+                 (if-not-zero    (-  INSTRUCTION    EVM_INST_RETURN)            (vanishes!    (+ ICPX MAXCSX)))))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
