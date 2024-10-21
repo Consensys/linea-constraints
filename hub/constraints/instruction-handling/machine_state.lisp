@@ -72,8 +72,9 @@
                (eq! GAS_COST stack/STATIC_GAS))
 
 (defconstraint machine-state-instruction---setting-stack-value       (:guard (machine-state-instruction---no-stack-exception))
-               (begin
-                 (vanishes!     (machine-state-instruction---result-hi))
-                 (if-not-zero   (machine-state-instruction---is-PC)      (eq! (machine-state-instruction---result-lo)   PROGRAM_COUNTER))
-                 (if-not-zero   (machine-state-instruction---is-MSIZE)   (eq! (machine-state-instruction---result-lo)   (shift    misc/MXP_WORDS   ROFF_MACHINESTATE___MSIZE___MISC_ROW)))
-                 (if-not-zero   (machine-state-instruction---is-GAS)     (eq! (machine-state-instruction---result-lo)   GAS_NEXT))))
+               (if-zero    XAHOY
+                           (begin
+                             (vanishes!     (machine-state-instruction---result-hi))
+                             (if-not-zero   (machine-state-instruction---is-PC)      (eq! (machine-state-instruction---result-lo)   PROGRAM_COUNTER))
+                             (if-not-zero   (machine-state-instruction---is-MSIZE)   (eq! (machine-state-instruction---result-lo)   (shift    misc/MXP_WORDS   ROFF_MACHINESTATE___MSIZE___MISC_ROW)))
+                             (if-not-zero   (machine-state-instruction---is-GAS)     (eq! (machine-state-instruction---result-lo)   GAS_NEXT)))))
