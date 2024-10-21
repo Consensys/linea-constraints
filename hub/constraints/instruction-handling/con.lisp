@@ -39,24 +39,25 @@
                                                            (context-instruction---is-CALLDATASIZE)))
 
 
-(defconstraint    context-instruction---setting-the-stack-pattern (:guard (context-instruction---standard-hypothesis))
+(defconstraint    context-instruction---setting-the-stack-pattern         (:guard (context-instruction---standard-hypothesis))
                   (stack-pattern-0-1))
 
-(defconstraint    context-instruction---admissible-exceptions     (:guard (context-instruction---standard-hypothesis))
+(defconstraint    context-instruction---setting-admissible-exceptions     (:guard (context-instruction---standard-hypothesis))
                   (eq!    XAHOY    stack/OOGX))
 
-(defconstraint    context-instruction---setting-the-gas-cost      (:guard (context-instruction---standard-hypothesis))
+(defconstraint    context-instruction---setting-the-gas-cost              (:guard (context-instruction---standard-hypothesis))
                   (eq! GAS_COST stack/STATIC_GAS))
 
-(defconstraint    context-instruction---setting-NSR               (:guard (context-instruction---standard-hypothesis))
+(defconstraint    context-instruction---setting-NSR                       (:guard (context-instruction---standard-hypothesis))
                   (eq! NSR
                        (+ 1 CMC)))
 
-(defconstraint    context-instruction---setting-peeking-flags     (:guard (context-instruction---standard-hypothesis))
+(defconstraint    context-instruction---setting-peeking-flags             (:guard (context-instruction---standard-hypothesis))
                   (eq! NSR
-                       (+    (shift PEEK_AT_CONTEXT ROFF_CONTEXT_INSTRUCTION___CONTEXT_ROW)    (* CMC (shift PEEK_AT_CONTEXT 2)))))
+                       (+    (shift    PEEK_AT_CONTEXT    ROFF_CONTEXT_INSTRUCTION___CONTEXT_ROW)
+                             (* CMC (shift PEEK_AT_CONTEXT 2)))))
 
-(defconstraint    context-instruction---reading-context-data      (:guard (context-instruction---standard-hypothesis))
+(defconstraint    context-instruction---reading-context-data              (:guard (context-instruction---standard-hypothesis))
                   (read-context-data   ROFF_CONTEXT_INSTRUCTION___CONTEXT_ROW   CONTEXT_NUMBER))
 
 
@@ -71,7 +72,7 @@
 
 
 
-(defconstraint    context-instruction---value-constraints         (:guard (context-instruction---standard-hypothesis))
+(defconstraint    context-instruction---value-constraints                 (:guard (context-instruction---standard-hypothesis))
                   (if-zero XAHOY
                            (begin
                              (if-not-zero (context-instruction---is-ADDRESS)
