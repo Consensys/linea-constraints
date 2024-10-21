@@ -76,6 +76,7 @@
                                                                           (eq! (shift account/DEPLOYMENT_STATUS_NEW  undoAt)  (shift account/DEPLOYMENT_STATUS     doneAt))
                                                                           (eq! (shift account/DEPLOYMENT_STATUS      undoAt)  (shift account/DEPLOYMENT_STATUS_NEW doneAt))))
 
+;; not used in practice
 (defun (account-initiate-for-deployment  relOffset init_code_size  value)
   (begin
     (debug (eq! (shift account/NONCE              relOffset) 0 ) )
@@ -90,7 +91,8 @@
     (debug (eq! (shift account/CODE_HASH_HI_NEW   relOffset) EMPTY_KECCAK_HI))
     (debug (eq! (shift account/CODE_HASH_LO_NEW   relOffset) EMPTY_KECCAK_LO))
     (account-increment-deployment-number          relOffset)
-    (account-turn-on-deployment-status            relOffset)))
+    (account-turn-on-deployment-status            relOffset)
+    (account-turn-on-warmth                       relOffset)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                                       ;;
