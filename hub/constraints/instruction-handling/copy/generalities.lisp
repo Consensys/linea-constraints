@@ -224,6 +224,6 @@
 (defun (copy-instruction---reference-size)    (+   (* (copy-instruction---is-CALLDATACOPY)      (copy-instruction---call-data-size))
                                                    (* (copy-instruction---is-RETURNDATACOPY)    (copy-instruction---return-data-size))
                                                    (* (copy-instruction---is-CODECOPY)          (copy-instruction---current-address-code-size))
-                                                   (* (copy-instruction---is-EXTCODECOPY)       (copy-instruction---exo-address-code-fragment-index) (copy-instruction---exo-address-has-code))))
+                                                   (* (copy-instruction---is-EXTCODECOPY)       (copy-instruction---exo-address-code-size) (copy-instruction---exo-address-has-code))))
 
 (defun (copy-instruction---exo-sum)           (*   (+ (copy-instruction---is-CODECOPY) (copy-instruction---is-EXTCODECOPY)) EXO_SUM_WEIGHT_ROM))
