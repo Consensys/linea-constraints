@@ -17,17 +17,18 @@
   tx-skip---row-offset---transaction-row      3)
 
 (defconstraint   tx-skip---setting-the-peeking-flags (:guard (tx-skip---precondition))
-                 (eq! (+ (shift PEEK_AT_ACCOUNT        tx-skip---row-offset---sender-account)
-                         (shift PEEK_AT_ACCOUNT        tx-skip---row-offset---recipient-account)
-                         (shift PEEK_AT_ACCOUNT        tx-skip---row-offset---coinbase-account)
-                         (shift PEEK_AT_TRANSACTION    tx-skip---row-offset---transaction-row))
-                      4))
+                 (eq!    4
+                         (+ (shift PEEK_AT_ACCOUNT        tx-skip---row-offset---sender-account)
+                            (shift PEEK_AT_ACCOUNT        tx-skip---row-offset---recipient-account)
+                            (shift PEEK_AT_ACCOUNT        tx-skip---row-offset---coinbase-account)
+                            (shift PEEK_AT_TRANSACTION    tx-skip---row-offset---transaction-row))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                            ;;
 ;;   X.3 Common constraints   ;;
 ;;                            ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (defun (tx-skip---wei-cost-for-sender)
   (+ (shift    transaction/VALUE                         tx-skip---row-offset---transaction-row)
      (* (shift transaction/GAS_PRICE                     tx-skip---row-offset---transaction-row)
@@ -55,7 +56,7 @@
                    (DOM-SUB-stamps---standard                    tx-skip---row-offset---sender-account    0)))
 
 
-(defconstraint     tx-skip---EIP-3607---reject-transactions-from-senders-with-deployed-codey          (:guard (tx-skip---precondition))
+(defconstraint     tx-skip---EIP-3607---reject-transactions-from-senders-with-deployed-code          (:guard (tx-skip---precondition))
                    (vanishes!    (shift    account/HAS_CODE    tx-skip---row-offset---sender-account)))
 
 ;; recipient account operation
@@ -78,16 +79,16 @@
 (defconstraint   tx-skip---recipient-account-row---trivial-message-calls---nonce-code-and-deployment-status- (:guard (tx-skip---precondition))
                  (if-zero (tx-skip---is-deployment)
                           ;; deployment ≡ 0 i.e. pure transfers
-                          (begin    (account-same-nonce tx-skip---row-offset---recipient-account)
-                                    (account-same-code tx-skip---row-offset---recipient-account)
-                                    (account-same-deployment-number-and-status tx-skip---row-offset---recipient-account))))
+                          (begin    (account-same-nonce                          tx-skip---row-offset---recipient-account)
+                                    (account-same-code                           tx-skip---row-offset---recipient-account)
+                                    (account-same-deployment-number-and-status   tx-skip---row-offset---recipient-account))))
 
 (defconstraint   tx-skip---recipient-account-row---trivial-deployments---nonce (:guard (tx-skip---precondition))
                  (if-not-zero    (tx-skip---is-deployment)
                                  ;; deployment ≡ 1 i.e. trivial deployments
                                  (begin  ;; nonce
-                                   (account-increment-nonce tx-skip---row-offset---recipient-account)
-                                   (debug (vanishes! (shift account/NONCE tx-skip---row-offset---recipient-account))))))
+                                   (account-increment-nonce           tx-skip---row-offset---recipient-account)
+                                   (vanishes! (shift account/NONCE    tx-skip---row-offset---recipient-account)))))
 
 (defconstraint   tx-skip---recipient-account-row---trivial-deployments---code (:guard (tx-skip---precondition))
                  (if-not-zero    (tx-skip---is-deployment)
