@@ -116,12 +116,13 @@
                                    (eq! (shift account/DEPLOYMENT_STATUS_NEW tx-skip---row-offset---recipient-account) 1))))
 
 (defconstraint   tx-skip---recipient-is-no-precompile (:guard (tx-skip---precondition))
-                 (if-not-zero    (tx-skip---is-deployment)
-                                 ;; deployment ≡ 1 i.e. trivial deployments
-                                 (begin (account-trim-address tx-skip---row-offset---recipient-account
-                                                              (shift transaction/TO_ADDRESS_HI tx-skip---row-offset---transaction-row)
-                                                              (shift transaction/TO_ADDRESS_LO tx-skip---row-offset---transaction-row))
-                                        (account-isnt-precompile tx-skip---row-offset---recipient-account))))
+                 (if-zero    (tx-skip---is-deployment)
+                             ;; deployment ≡ 0 i.e. pure transfer
+                             (begin
+                               (account-trim-address       tx-skip---row-offset---recipient-account
+                                                           (shift transaction/TO_ADDRESS_HI tx-skip---row-offset---transaction-row)
+                                                           (shift transaction/TO_ADDRESS_LO tx-skip---row-offset---transaction-row))
+                               (account-isnt-precompile    tx-skip---row-offset---recipient-account))))
 
 ;; coinbase account operation
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
