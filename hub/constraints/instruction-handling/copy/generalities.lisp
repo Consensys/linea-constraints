@@ -111,7 +111,7 @@
                            (*   (shift  PEEK_AT_CONTEXT         ROFF_RETURNDATACOPY_CALLER_CONTEXT_ROW   )    XAHOY)))))
 
 (defconstraint copy-instruction---setting-NSR-and-peeking-flags---CODECOPY-case (:guard (copy-instruction---standard-CODECOPY))
-               (begin (eq! NSR (- 3 stack/RDCX))
+               (begin (eq! NSR (-   3   XAHOY))
                       (if-not-zero XAHOY
                                    ;; XAHOY ≡ 1
                                    (eq! NSR
