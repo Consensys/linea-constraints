@@ -50,12 +50,9 @@
 
 (defconstraint    storage-consistency---FIRST-AGAIN-FINAL---repeat-storage-row---change-in-storage-slot  (:guard   (storage-consistency---repeat-storage-row))
                   (begin
-                    (if-not-zero (remained-constant!   (scp_full_address))
-                                 (eq! (storage-consistency---transtion-sum) 6))
-                    (if-not-zero (remained-constant!   scp_STORAGE_KEY_HI)
-                                 (eq! (storage-consistency---transtion-sum) 6))
-                    (if-not-zero (remained-constant!   scp_STORAGE_KEY_LO)
-                                 (eq! (storage-consistency---transtion-sum) 6))))
+                    (if-not-zero (remained-constant!   (scp_full_address))    (eq! (storage-consistency---transtion-sum)   6))
+                    (if-not-zero (remained-constant!   scp_STORAGE_KEY_HI)    (eq! (storage-consistency---transtion-sum)   6))
+                    (if-not-zero (remained-constant!   scp_STORAGE_KEY_LO)    (eq! (storage-consistency---transtion-sum)   6))))
 
 (defconstraint    storage-consistency---FIRST-AGAIN-FINAL---repeat-storage-row---no-change-in-storage-slot  (:guard   (storage-consistency---repeat-storage-row))
                   (if-zero (remained-constant!   (scp_full_address))
