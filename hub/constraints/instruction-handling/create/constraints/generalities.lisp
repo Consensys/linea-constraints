@@ -17,7 +17,7 @@
 (defun    (create-instruction---generic-precondition)    (*    PEEK_AT_SCENARIO    (scenario-shorthand---CREATE---sum)))
 
 (defconstraint    create-instruction---setting-the-stack-pattern                            (:guard    (create-instruction---generic-precondition))
-                  (create-stack-pattern    (create-instruction---is-CREATE2)))
+                  (shift (create-stack-pattern    (shift (create-instruction---is-CREATE2)  2)  -2)))
 
 (defconstraint    create-instruction---setting-the-deployment-address-stack-output          (:guard    (create-instruction---generic-precondition))
                   (begin    (eq!    (create-instruction---STACK-output-hi)    (*    (scenario-shorthand---CREATE---deployment-success)    (create-instruction---createe-address-hi)))
