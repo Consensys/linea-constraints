@@ -14,6 +14,10 @@
 ;;                     ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 
+
+(defconst
+  ROFF_CONTEXT_INSTRUCTION___CONTEXT_ROW    1)
+
 ;; NOTE: bytes from the invalid instruction family
 ;; (ither not an opcode or the INVALID opcode)
 ;; can't raise stack exceptions
@@ -47,7 +51,7 @@
 
 (defconstraint    context-instruction---setting-peeking-flags     (:guard (context-instruction---standard-hypothesis))
                   (begin 
-                    (eq! NSR (+ (shift PEEK_AT_CONTEXT 1)
+                    (eq! NSR (+ (shift PEEK_AT_CONTEXT        ROFF_CONTEXT_INSTRUCTION___CONTEXT_ROW)
                                 (* CMC (shift PEEK_AT_CONTEXT 2))))
                     (read-context-data 1 CONTEXT_NUMBER)))
 
