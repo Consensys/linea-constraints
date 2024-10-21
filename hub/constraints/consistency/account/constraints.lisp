@@ -85,9 +85,9 @@
 
 (defconstraint    account-consistency---FIRST-AGAIN-FINAL---unconditionally-constraining-AGAIN ()
                   (begin
-                    (eq!   (+   acp_FINAL_IN_CNF   acp_AGAIN_IN_CNF)   acp_PEEK_AT_ACCOUNT)
-                    (eq!   (+   acp_FINAL_IN_BLK   acp_AGAIN_IN_BLK)   acp_PEEK_AT_ACCOUNT)
-                    (eq!   (+   acp_FINAL_IN_TXN   acp_AGAIN_IN_TXN)   acp_PEEK_AT_ACCOUNT)))
+                    (eq!   (+   acp_FIRST_IN_CNF   acp_AGAIN_IN_CNF)   acp_PEEK_AT_ACCOUNT)
+                    (eq!   (+   acp_FIRST_IN_BLK   acp_AGAIN_IN_BLK)   acp_PEEK_AT_ACCOUNT)
+                    (eq!   (+   acp_FIRST_IN_TXN   acp_AGAIN_IN_TXN)   acp_PEEK_AT_ACCOUNT)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                       ;;
