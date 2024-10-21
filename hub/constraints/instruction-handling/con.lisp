@@ -42,6 +42,9 @@
 (defconstraint    context-instruction---setting-the-stack-pattern (:guard (context-instruction---standard-hypothesis))
                   (stack-pattern-0-1))
 
+(defconstraint    context-instruction---admissible-exceptions     (:guard (context-instruction---standard-hypothesis))
+                  (eq!    XAHOY    stack/OOGX))
+
 (defconstraint    context-instruction---setting-the-gas-cost      (:guard (context-instruction---standard-hypothesis))
                   (eq! GAS_COST stack/STATIC_GAS))
 
