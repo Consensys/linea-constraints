@@ -164,7 +164,7 @@
 
 (defconstraint    account-consistency---other---monotony-of-deployment-number (:guard    acp_PEEK_AT_ACCOUNT)
                   (any!    (eq!   acp_DEPLOYMENT_NUMBER_NEW    acp_DEPLOYMENT_NUMBER)
-                           (eq!   acp_DEPLOYMENT_STATUS_NEW    (+    1    acp_DEPLOYMENT_STATUS))))
+                           (eq!   acp_DEPLOYMENT_NUMBER_NEW    (+    1    acp_DEPLOYMENT_NUMBER))))
 
 
 (defconstraint    account-consistency---other---vanishing-constraints-upon-trivial-deployments       (:guard    acp_PEEK_AT_ACCOUNT)
