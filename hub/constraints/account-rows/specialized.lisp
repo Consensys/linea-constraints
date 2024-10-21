@@ -83,7 +83,7 @@
     (eq!        (shift account/NONCE_NEW          relOffset) 1 )
     (account-increment-balance-by                 relOffset  value)
     (debug (eq! (shift account/CODE_SIZE          relOffset) 0 ) )
-    (eq!        (shift account/CODE_SIZE_NEW      relOffset) 0 )
+    (eq!        (shift account/CODE_SIZE_NEW      relOffset) init_code_size )
     (debug (eq! (shift account/HAS_CODE           relOffset) 0 ) )
     (debug (eq! (shift account/CODE_HASH_HI       relOffset) EMPTY_KECCAK_HI))
     (debug (eq! (shift account/CODE_HASH_LO       relOffset) EMPTY_KECCAK_LO))
