@@ -52,22 +52,22 @@
 (defun   (account-consistency---repeat-account-row)    (*    (prev    acp_PEEK_AT_ACCOUNT)   acp_PEEK_AT_ACCOUNT))
 
 (defconstraint    account-consistency---FIRST-AGAIN-FINAL---repeat-encounter---conflation-level  (:guard   (account-consistency---repeat-account-row))
-                  (if-eq-else (acp_full_address) (prev (acp_full_address))
-                              (eq! (account-consistency---transtion-conflation) 0)
-                              (eq! (account-consistency---transtion-conflation) 2)))
+                  (if-not-zero  (remained-constant! (acp_full_address))
+                                (eq! (account-consistency---transtion-conflation) 2)
+                                (eq! (account-consistency---transtion-conflation) 0)))
 
 (defconstraint    account-consistency---FIRST-AGAIN-FINAL---repeat-encounter---block-level       (:guard   (account-consistency---repeat-account-row))
                   (begin
-                    (if-not-zero (remained-constant!   (prev (acp_full_address)))       (eq! (account-consistency---transtion-block) 2))
+                    (if-not-zero (remained-constant!   (acp_full_address))              (eq! (account-consistency---transtion-block) 2))
                     (if-not-zero (remained-constant!    acp_REL_BLK_NUM)                (eq! (account-consistency---transtion-block) 2))
-                    (if-zero     (remained-constant!   (prev (acp_full_address)))
+                    (if-zero     (remained-constant!   (acp_full_address))
                                  (if-zero    (remained-constant!    acp_REL_BLK_NUM)    (eq! (account-consistency---transtion-block) 0)))))
 
 (defconstraint    account-consistency---FIRST-AGAIN-FINAL---repeat-encounter---transaction-level (:guard   (account-consistency---repeat-account-row))
                   (begin
-                    (if-not-zero (remained-constant!   (prev (acp_full_address)))       (eq! (account-consistency---transtion-transaction) 2))
+                    (if-not-zero (remained-constant!   (acp_full_address))              (eq! (account-consistency---transtion-transaction) 2))
                     (if-not-zero (remained-constant!    acp_ABS_TX_NUM)                 (eq! (account-consistency---transtion-transaction) 2))
-                    (if-zero     (remained-constant!   (prev (acp_full_address)))
+                    (if-zero     (remained-constant!   (acp_full_address))
                                  (if-zero    (remained-constant!    acp_ABS_TX_NUM)     (eq! (account-consistency---transtion-transaction) 0)))))
 
 (defconstraint    account-consistency---FIRST-AGAIN-FINAL---final-row-with-room-to-spare ()
