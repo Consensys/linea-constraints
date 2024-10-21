@@ -38,7 +38,7 @@
 
 (defun    (precompile-processing---MODEXP---extract-bbs)    (shift    [misc/OOB_DATA  3]    precompile-processing---MODEXP---misc-row-offset---cds-analysis))
 (defun    (precompile-processing---MODEXP---extract-ebs)    (shift    [misc/OOB_DATA  4]    precompile-processing---MODEXP---misc-row-offset---cds-analysis))
-(defun    (precompile-processing---MODEXP---extract-mbs)    (shift    [misc/OOB_DATA  5]    precompile-processing---MODEXP---misc-row-offset---cds-analysis))
+(defun    (precompile-processing---MODEXP---extract-mbs)    (shift    [misc/OOB_DATA  5]    precompile-processing---MODEXP---misc-row-offset---cds-analysis)) ;; ""
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -175,7 +175,7 @@
 
 
 (defun    (precompile-processing---MODEXP---max-mbs-bbs)    (shift    [misc/OOB_DATA   7]    precompile-processing---MODEXP---misc-row-offset---mbs-analysis))
-(defun    (precompile-processing---MODEXP---mbs-nonzero)    (shift    [misc/OOB_DATA   8]    precompile-processing---MODEXP---misc-row-offset---mbs-analysis))
+(defun    (precompile-processing---MODEXP---mbs-nonzero)    (shift    [misc/OOB_DATA   8]    precompile-processing---MODEXP---misc-row-offset---mbs-analysis)) ;; ""
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;                                 ;;
@@ -201,7 +201,7 @@
 (defun    (precompile-processing---MODEXP---load-lead)     (*    (precompile-processing---MODEXP---extract-bbs)    (shift    [misc/OOB_DATA  4]    precompile-processing---MODEXP---misc-row-offset---leading-word-analysis)))
 (defun    (precompile-processing---MODEXP---cds-cutoff)    (*    (precompile-processing---MODEXP---extract-bbs)    (shift    [misc/OOB_DATA  6]    precompile-processing---MODEXP---misc-row-offset---leading-word-analysis)))
 (defun    (precompile-processing---MODEXP---ebs-cutoff)    (*    (precompile-processing---MODEXP---extract-bbs)    (shift    [misc/OOB_DATA  7]    precompile-processing---MODEXP---misc-row-offset---leading-word-analysis)))
-(defun    (precompile-processing---MODEXP---sub-ebs-32)    (*    (precompile-processing---MODEXP---extract-bbs)    (shift    [misc/OOB_DATA  8]    precompile-processing---MODEXP---misc-row-offset---leading-word-analysis)))
+(defun    (precompile-processing---MODEXP---sub-ebs-32)    (*    (precompile-processing---MODEXP---extract-bbs)    (shift    [misc/OOB_DATA  8]    precompile-processing---MODEXP---misc-row-offset---leading-word-analysis))) ;; ""
 
 
 (defconstraint    precompile-processing---MODEXP---lead-word-analysis---setting-MMU-instruction    (:guard    (precompile-processing---MODEXP---standard-precondition))
@@ -239,7 +239,7 @@
                                     (precompile-processing---MODEXP---ebs-cutoff)                                     ;; min{ebs, 32}
                                     )))
 
-(defun    (precompile-processing---MODEXP---lead-log)           (*    (precompile-processing---MODEXP---load-lead)    (shift    [misc/OOB_DATA   5]    precompile-processing---MODEXP---misc-row-offset---leading-word-analysis)))
+(defun    (precompile-processing---MODEXP---lead-log)           (*    (precompile-processing---MODEXP---load-lead)    (shift    [misc/OOB_DATA   5]    precompile-processing---MODEXP---misc-row-offset---leading-word-analysis))) ;; ""
 (defun    (precompile-processing---MODEXP---modexp-full-log)    (+    (precompile-processing---MODEXP---lead-log)     (*    8    (precompile-processing---MODEXP---sub-ebs-32))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -264,7 +264,7 @@
 
 (defun    (precompile-processing---MODEXP---ram-success)    (shift    [misc/OOB_DATA   4]    precompile-processing---MODEXP---misc-row-offset---pricing))
 (defun    (precompile-processing---MODEXP---return-gas)     (shift    [misc/OOB_DATA   5]    precompile-processing---MODEXP---misc-row-offset---pricing))
-(defun    (precompile-processing---MODEXP---r@c-nonzero)    (shift    [misc/OOB_DATA   8]    precompile-processing---MODEXP---misc-row-offset---pricing))
+(defun    (precompile-processing---MODEXP---r@c-nonzero)    (shift    [misc/OOB_DATA   8]    precompile-processing---MODEXP---misc-row-offset---pricing)) ;; ""
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;                                                         ;;
