@@ -116,12 +116,16 @@
 (defun (account-viewing kappa) (begin (account-opening      kappa)
                                       (account-same-balance kappa)))
 
-(defun (account-deletion kappa) (begin (shift (vanishes! account/NONCE_NEW)               kappa)
-                                       (shift (vanishes! account/BALANCE_NEW)             kappa)
-                                       (shift (vanishes! account/CODE_SIZE_NEW)           kappa)
-                                       (shift (debug (vanishes! account/HAS_CODE_NEW) )   kappa)
-                                       (shift (eq! account/CODE_HASH_HI EMPTY_KECCAK_HI)  kappa)
-                                       (shift (eq! account/CODE_HASH_LO EMPTY_KECCAK_LO)  kappa)))
+;; never used in practice
+(defun (account-deletion kappa) (begin (vanishes!             (shift account/NONCE_NEW             kappa))
+                                       (vanishes!             (shift account/BALANCE_NEW           kappa))
+                                       (vanishes!             (shift account/CODE_SIZE_NEW         kappa))
+                                       (vanishes!             (shift account/HAS_CODE_NEW          kappa))
+                                       (debug      (eq!       (shift account/CODE_HASH_HI_NEW      kappa)   EMPTY_KECCAK_HI))
+                                       (debug      (eq!       (shift account/CODE_HASH_LO_NEW      kappa)   EMPTY_KECCAK_LO))
+                                       (account-increment-deployment-number                        kappa)
+                                       (vanishes!             (shift account/DEPLOYMENT_STATUS_NEW kappa))
+                                       (debug      (vanishes! (shift account/DEPLOYMENT_STATUS     kappa)))))
 
 (defun (account-same-address-as  undoAt
                                  doneAt)
