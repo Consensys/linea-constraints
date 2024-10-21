@@ -239,7 +239,7 @@
                                     (precompile-processing---MODEXP---ebs-cutoff)                                     ;; min{ebs, 32}
                                     )))
 
-(defun    (precompile-processing---MODEXP---lead-log)           (*    (precompile-processing---MODEXP---load-lead)    (shift    [misc/OOB_DATA   5]    precompile-processing---MODEXP---misc-row-offset---leading-word-analysis))) ;; ""
+(defun    (precompile-processing---MODEXP---lead-log)           (*    (precompile-processing---MODEXP---load-lead)    (shift    [misc/EXP_DATA   5]    precompile-processing---MODEXP---misc-row-offset---leading-word-analysis))) ;; ""
 (defun    (precompile-processing---MODEXP---modexp-full-log)    (+    (precompile-processing---MODEXP---lead-log)     (*    8    (precompile-processing---MODEXP---sub-ebs-32))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
