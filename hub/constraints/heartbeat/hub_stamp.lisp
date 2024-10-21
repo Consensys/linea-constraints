@@ -5,8 +5,10 @@
 ;;   3.6 Constraints for the hub stamp   ;;
 ;;                                       ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defconstraint hub-stamp-initial-vanishing (:domain {0})
-  (vanishes! HUB_STAMP))
+
+(defconstraint hub-stamp-initial-vanishing ()
+               (if-zero    ABS_TX_NUM
+                           (vanishes! HUB_STAMP)))
 
 (defconstraint hub-stamp-0-1-increments ()
   (any! (will-inc! HUB_STAMP 0) (will-inc! HUB_STAMP 1)))
