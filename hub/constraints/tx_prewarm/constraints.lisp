@@ -19,7 +19,7 @@
                  (if-zero (prev TX_WARM)
                           (eq! PEEK_AT_ACCOUNT 1)))
 
-(defconstraint   prewarming-phase---perpetuating-address-and-deployment-number-for-storage-rows     (:guard (* TX_WARM PEEK_AT_STORAGE))
+(defconstraint   prewarming-phase---perpetuating-address-and-deployment-number-for-storage-rows     (:guard (* TX_WARM (prev TX_WARM) PEEK_AT_STORAGE))
                  (begin
                    (if-not-zero (prev PEEK_AT_ACCOUNT)
                                 (begin
