@@ -12,8 +12,8 @@
 
 (defconstraint stack-consistency---setting-FIRST-AGAIN ()
                (begin
-                 (eq!    (+    stkcp_FIRST_CTXT    stkcp_AGAIN_SPOT)    stkcp_PEEK_AT_STACK_POW_4)
-                 (eq!    (+    stkcp_FIRST_CTXT    stkcp_AGAIN_SPOT)    stkcp_PEEK_AT_STACK_POW_4)
+                 (eq!    (+    stkcp_FIRST_CTXT    stkcp_AGAIN_CTXT)    stkcp_PEEK_AT_STACK_POW_4)
+                 (eq!    (+    stkcp_FIRST_SPOT    stkcp_AGAIN_SPOT)    stkcp_PEEK_AT_STACK_POW_4)
                  (if-zero    (force-bool    stkcp_PEEK_AT_STACK_POW_4)
                              (eq!   (next    (+    stkcp_FIRST_CTXT    stkcp_FIRST_SPOT))
                                     (next    (*    stkcp_PEEK_AT_STACK_POW_4    2))))
