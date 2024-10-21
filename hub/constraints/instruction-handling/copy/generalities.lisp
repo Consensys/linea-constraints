@@ -187,12 +187,12 @@
                                                         (copy-instruction---size-lo))))        ;; size low
 
 (defconstraint copy-instruction---misc-row---setting-MXPX (:guard (copy-instruction---standard-precondition))
-               (if-zero (shift misc/MXP_FLAG ROFF_COPY_INST_MISCELLANEOUS_ROW)
-                        ;; MXP_FLAG ≡ 0
-                        ;; can only happen for RETURNDATACOPY instruction raising the returnDataCopyException; redundant constraint;
-                        (eq! stack/RDCX 0)
-                        ;; MXP_FLAG ≡ 1
-                        (eq! stack/RDCX (copy-instruction---MXP-raises-memory-expansion-exception))))
+               (if-zero    (shift    misc/MXP_FLAG    ROFF_COPY_INST_MISCELLANEOUS_ROW)
+                           ;; MXP_FLAG ≡ 0
+                           ;; can only happen for RETURNDATACOPY instruction raising the returnDataCopyException; redundant constraint;
+                           (eq!      stack/MXPX 0)
+                           ;; MXP_FLAG ≡ 1
+                           (eq!      stack/MXPX (copy-instruction---MXP-raises-memory-expansion-exception))))
 
 (defconstraint    copy-instruction---misc-row---partially-setting-the-MMU-instruction                        (:guard    (copy-instruction---standard-precondition))
                   (if-not-zero  (shift  misc/MMU_FLAG  ROFF_COPY_INST_MISCELLANEOUS_ROW)
