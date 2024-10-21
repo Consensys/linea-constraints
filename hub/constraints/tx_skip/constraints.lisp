@@ -111,9 +111,9 @@
                  (if-not-zero    (tx-skip---is-deployment)
                                  ;; deployment ≡ 1 i.e. trivial deployments
                                  (begin  ;; deployment
-                                   (account-increment-deployment-number tx-skip---row-offset---recipient-account)
-                                   (debug (eq! (shift account/DEPLOYMENT_STATUS tx-skip---row-offset---recipient-account) 0))
-                                   (eq! (shift account/DEPLOYMENT_STATUS_NEW tx-skip---row-offset---recipient-account) 1))))
+                                   (account-increment-deployment-number                tx-skip---row-offset---recipient-account)
+                                   (debug (eq! (shift account/DEPLOYMENT_STATUS        tx-skip---row-offset---recipient-account) 0))
+                                   (eq!        (shift account/DEPLOYMENT_STATUS_NEW    tx-skip---row-offset---recipient-account) 0))))
 
 (defconstraint   tx-skip---recipient-is-no-precompile (:guard (tx-skip---precondition))
                  (if-zero    (tx-skip---is-deployment)
