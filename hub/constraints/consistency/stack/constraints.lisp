@@ -35,13 +35,14 @@
                                                                   (did-inc!    stkcp_HEIGHT_1234   1)))))
 
 
-(defconstraint   stack-consistency---first-and-repeat-encounter-of-spot ()
-               (begin
-                 (if-not-zero    stkcp_FIRST_SPOT    (vanishes!   stkcp_POP_1234))
-                 (if-not-zero    stkcp_AGAIN_SPOT
-                                 (begin
-                                   (eq!    (+    stkcp_POP_1234    (prev    stkcp_POP_1234))     1)
-                                   (if-not-zero    stkcp_POP_1234
-                                                   (begin
-                                                     (remained-constant!    stkcp_VALUE_HI_1234)
-                                                     (remained-constant!    stkcp_VALUE_LO_1234)))))))
+(defconstraint    stack-consistency---first-and-repeat-encounter-of-spot ()
+                  (begin
+                    (if-not-zero    stkcp_FIRST_SPOT    (vanishes!   stkcp_POP_1234))
+                    (if-not-zero    stkcp_AGAIN_SPOT
+                                    (if-not-zero    stkcp_HEIGHT_1234
+                                                    (begin
+                                                      (eq!    (+    stkcp_POP_1234    (prev    stkcp_POP_1234))     1)
+                                                      (if-not-zero    stkcp_POP_1234
+                                                                      (begin
+                                                                        (remained-constant!    stkcp_VALUE_HI_1234)
+                                                                        (remained-constant!    stkcp_VALUE_LO_1234))))))))
