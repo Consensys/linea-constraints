@@ -84,9 +84,9 @@
 
 (defconstraint    storage-consistency---FIRST-AGAIN-FINAL---unconditionally-constraining-AGAIN ()
                   (begin
-                    (eq!   (+   scp_FINAL_IN_CNF   scp_AGAIN_IN_CNF)   scp_PEEK_AT_STORAGE)
-                    (eq!   (+   scp_FINAL_IN_BLK   scp_AGAIN_IN_BLK)   scp_PEEK_AT_STORAGE)
-                    (eq!   (+   scp_FINAL_IN_TXN   scp_AGAIN_IN_TXN)   scp_PEEK_AT_STORAGE)))
+                    (eq!   (+   scp_FIRST_IN_CNF   scp_AGAIN_IN_CNF)   scp_PEEK_AT_STORAGE)
+                    (eq!   (+   scp_FIRST_IN_BLK   scp_AGAIN_IN_BLK)   scp_PEEK_AT_STORAGE)
+                    (eq!   (+   scp_FIRST_IN_TXN   scp_AGAIN_IN_TXN)   scp_PEEK_AT_STORAGE)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                        ;;
