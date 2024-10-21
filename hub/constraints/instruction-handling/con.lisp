@@ -53,26 +53,39 @@
                        (+ 1 CMC)))
 
 (defconstraint    context-instruction---setting-peeking-flags     (:guard (context-instruction---standard-hypothesis))
-                  (begin 
-                    (eq! NSR (+ (shift PEEK_AT_CONTEXT        ROFF_CONTEXT_INSTRUCTION___CONTEXT_ROW)
-                                (* CMC (shift PEEK_AT_CONTEXT 2))))
-                    (read-context-data 1 CONTEXT_NUMBER)))
+                  (eq! NSR
+                       (+    (shift PEEK_AT_CONTEXT ROFF_CONTEXT_INSTRUCTION___CONTEXT_ROW)    (* CMC (shift PEEK_AT_CONTEXT 2)))))
+
+(defconstraint    context-instruction---reading-context-data      (:guard (context-instruction---standard-hypothesis))
+                  (read-context-data   ROFF_CONTEXT_INSTRUCTION___CONTEXT_ROW   CONTEXT_NUMBER))
+
+
+
+(defun    (result-ADDRESS-hi)          (shift   context/ACCOUNT_ADDRESS_HI   ROFF_CONTEXT_INSTRUCTION___CONTEXT_ROW))
+(defun    (result-ADDRESS-lo)          (shift   context/ACCOUNT_ADDRESS_LO   ROFF_CONTEXT_INSTRUCTION___CONTEXT_ROW))
+(defun    (result-CALLER-hi)           (shift   context/CALLER_ADDRESS_HI    ROFF_CONTEXT_INSTRUCTION___CONTEXT_ROW))
+(defun    (result-CALLER-lo)           (shift   context/CALLER_ADDRESS_LO    ROFF_CONTEXT_INSTRUCTION___CONTEXT_ROW))
+(defun    (result-CALLVALUE-lo)        (shift   context/CALL_VALUE           ROFF_CONTEXT_INSTRUCTION___CONTEXT_ROW))
+(defun    (result-CALLDATASIZE-lo)     (shift   context/CALL_DATA_SIZE       ROFF_CONTEXT_INSTRUCTION___CONTEXT_ROW))
+(defun    (result-RETURNDATASIZE-lo)   (shift   context/RETURN_DATA_SIZE     ROFF_CONTEXT_INSTRUCTION___CONTEXT_ROW))
+
+
 
 (defconstraint    context-instruction---value-constraints         (:guard (context-instruction---standard-hypothesis))
-                  (if-zero CMC
+                  (if-zero XAHOY
                            (begin
                              (if-not-zero (context-instruction---is-ADDRESS)
-                                          (begin    (eq!    (context-instruction---result-hi)    context/ACCOUNT_ADDRESS_HI)
-                                                    (eq!    (context-instruction---result-lo)    context/ACCOUNT_ADDRESS_LO)))
+                                          (begin    (eq!    (context-instruction---result-hi)    (result-ADDRESS-hi))
+                                                    (eq!    (context-instruction---result-lo)    (result-ADDRESS-lo))))
                              (if-not-zero (context-instruction---is-CALLER)
-                                          (begin    (eq!    (context-instruction---result-hi)    context/CALLER_ADDRESS_HI)
-                                                    (eq!    (context-instruction---result-lo)    context/CALLER_ADDRESS_LO)))
+                                          (begin    (eq!    (context-instruction---result-hi)    (result-CALLER-hi))
+                                                    (eq!    (context-instruction---result-lo)    (result-CALLER-lo))))
                              (if-not-zero (context-instruction---is-CALLVALUE)
                                           (begin    (eq!    (context-instruction---result-hi)    0)
-                                                    (eq!    (context-instruction---result-lo)    context/CALL_VALUE)))
+                                                    (eq!    (context-instruction---result-lo)    (result-CALLVALUE-lo))))
                              (if-not-zero (context-instruction---is-CALLDATASIZE)
                                           (begin    (eq!    (context-instruction---result-hi)    0)
-                                                    (eq!    (context-instruction---result-lo)    context/CALL_DATA_SIZE)))
+                                                    (eq!    (context-instruction---result-lo)    (result-CALLDATASIZE-lo))))
                              (if-not-zero (context-instruction---is-RETURNDATASIZE)
                                           (begin    (eq!    (context-instruction---result-hi)    0)
-                                                    (eq!    (context-instruction---result-lo)    context/RETURN_DATA_SIZE))))))
+                                                    (eq!    (context-instruction---result-lo)    (result-RETURNDATASIZE-lo)))))))
