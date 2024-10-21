@@ -43,7 +43,7 @@
 (defconstraint storage-instruction---setting-NSR-and-peeking-flags-OOGX (:guard (storage-instruction---no-stack-exceptions))
                  ;; out of gas exception
                  ;;;;;;;;;;;;;;;;;;;;;;;
-                 (if-not-zero stack/SSTOREX
+                 (if-not-zero stack/OOGX
                               (begin
                                 (eq! NSR 5)
                                 (eq! NSR
