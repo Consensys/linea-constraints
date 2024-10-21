@@ -25,7 +25,7 @@
 (defun (log-inst-offset-hi)                [stack/STACK_ITEM_VALUE_HI 1])
 (defun (log-inst-offset-lo)                [stack/STACK_ITEM_VALUE_LO 1])
 (defun (log-inst-size-hi)                  [stack/STACK_ITEM_VALUE_HI 2])
-(defun (log-inst-size-lo)                  [stack/STACK_ITEM_VALUE_LO 2])
+(defun (log-inst-size-lo)                  [stack/STACK_ITEM_VALUE_LO 2]) ;; ""
 (defun (log-inst-standard-hypothesis)      (*    PEEK_AT_STACK
                                                  stack/LOG_FLAG
                                                  (-    1    stack/SUX    stack/SOX)
@@ -48,7 +48,7 @@
                                       [ stack/DEC_FLAG 1 ]
                                       [ stack/DEC_FLAG 2 ]
                                       [ stack/DEC_FLAG 3 ]
-                                      [ stack/DEC_FLAG 4 ]))
+                                      [ stack/DEC_FLAG 4 ])) ;; ""
 
 (defconstraint log-inst-allowable-exceptions                             (:guard (log-inst-standard-hypothesis))         ;; TODO: solo debug constraint plz
                (begin (vanishes! 0)
