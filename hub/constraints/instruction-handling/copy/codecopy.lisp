@@ -26,7 +26,7 @@
                (if-zero XAHOY
                         (begin (eq! (shift account/ADDRESS_HI             ROFF_CODECOPY_NO_XAHOY_ACCOUNT_ROW) (shift context/BYTE_CODE_ADDRESS_HI            ROFF_CODECOPY_NO_XAHOY_CONTEXT_ROW))
                                (eq! (shift account/ADDRESS_LO             ROFF_CODECOPY_NO_XAHOY_ACCOUNT_ROW) (shift context/BYTE_CODE_ADDRESS_LO            ROFF_CODECOPY_NO_XAHOY_CONTEXT_ROW))
-                               (eq! (shift account/DEPLOYMENT_NUMBER      ROFF_CODECOPY_NO_XAHOY_ACCOUNT_ROW) (shift context/BYTE_CODE_CODE_FRAGMENT_INDEX   ROFF_CODECOPY_NO_XAHOY_CONTEXT_ROW))
+                               (eq! (shift account/DEPLOYMENT_NUMBER      ROFF_CODECOPY_NO_XAHOY_ACCOUNT_ROW) (shift context/BYTE_CODE_DEPLOYMENT_NUMBER     ROFF_CODECOPY_NO_XAHOY_CONTEXT_ROW))
                                (eq! (shift account/CODE_FRAGMENT_INDEX    ROFF_CODECOPY_NO_XAHOY_ACCOUNT_ROW) CODE_FRAGMENT_INDEX)
                                (eq! (shift account/ROMLEX_FLAG            ROFF_CODECOPY_NO_XAHOY_ACCOUNT_ROW) 1)
                                (account-same-balance                      ROFF_CODECOPY_NO_XAHOY_ACCOUNT_ROW)
