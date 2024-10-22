@@ -32,10 +32,10 @@
                                                           (-    1    COUNTER_TLI)))
 
 (defconst 
-  ROFF_LOG___CURRENT_CONTEXT_ROW         2
-  ROFF_LOG___MISCELLANEOUS_ROW           3
-  ROFF_LOG___STATICX_XCONTEXT_ROW        3
-  ROFF_LOG___OTHERX_XCONTEXT_ROW         4)
+  ROFF_LOG___CURRENT_CONTEXT_ROW   2
+  ROFF_LOG___MISCELLANEOUS_ROW     3
+  ROFF_LOG___STATICX_XCONTEXT_ROW  3
+  ROFF_LOG___OTHERX_XCONTEXT_ROW   4)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                        ;;
@@ -94,9 +94,10 @@
                     (if-not-zero (+ stack/MXPX stack/OOGX) (execution-provides-empty-return-data ROFF_LOG___OTHERX_XCONTEXT_ROW))))
 
 (defconstraint    log-instruction---setting-MISC-module-flags                        (:guard (log-instruction---standard-hypothesis))
-                  (eq! (weighted-MISC-flag-sum       ROFF_LOG___MISCELLANEOUS_ROW)
-                       (+ (* MISC_WEIGHT_MMU (trigger_MMU))
-                          MISC_WEIGHT_MXP)))
+                  (if-zero   stack/STATICX
+                             (eq!    (weighted-MISC-flag-sum       ROFF_LOG___MISCELLANEOUS_ROW)
+                                     (+ (* MISC_WEIGHT_MMU (trigger_MMU))
+                                        MISC_WEIGHT_MXP))))
 
 (defconstraint    log-instruction---MISC-row-setting-MXP-data                        (:guard (log-instruction---standard-hypothesis))
                   (set-MXP-instruction-type-4 ROFF_LOG___MISCELLANEOUS_ROW        ;; row offset kappa
