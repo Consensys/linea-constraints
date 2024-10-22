@@ -310,7 +310,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defun   (selfdestruct---scenario-WONT_REVERT_NOT_YET_MARKED-precondition) (* PEEK_AT_SCENARIO
-                                                                              (scenario/SELFDESTRUCT_WONT_REVERT_NOT_YET_MARKED)))
+                                                                              scenario/SELFDESTRUCT_WONT_REVERT_NOT_YET_MARKED))
 
 (defconstraint   selfdestruct---first-undoing-row-for-WONT_REVERT_NOT_YET_MARKED-scenario (:guard (selfdestruct---scenario-WONT_REVERT_NOT_YET_MARKED-precondition))
                  (begin
