@@ -46,10 +46,15 @@
         ))
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; NOTE: we have moved shorthand definitions to the end of the file ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; OOB related shorthands ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(defun    (precompile-processing---common---OOB-hub-success)          (shift    [misc/OOB_DATA    4]    precompile-processing---common---1st-misc-row---row-offset))
+(defun    (precompile-processing---common---OOB-return-gas)           (shift    [misc/OOB_DATA    5]    precompile-processing---common---1st-misc-row---row-offset))
+(defun    (precompile-processing---common---OOB-extract-call-data)    (shift    [misc/OOB_DATA    6]    precompile-processing---common---1st-misc-row---row-offset))
+(defun    (precompile-processing---common---OOB-empty-call-data)      (shift    [misc/OOB_DATA    7]    precompile-processing---common---1st-misc-row---row-offset))
+(defun    (precompile-processing---common---OOB-r@c-nonzero)          (shift    [misc/OOB_DATA    8]    precompile-processing---common---1st-misc-row---row-offset)) ;; ""
 
 (defconstraint    precompile-processing---common---implicitly-true-of-OOB-shorthands    (:guard    (precompile-processing---common---precondition))
                   (begin
@@ -189,14 +194,3 @@
                                     (eq!          (precompile-processing---prd-return-gas)
                                                   (precompile-processing---common---OOB-return-gas)))
                     ))
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; OOB related shorthands ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(defun    (precompile-processing---common---OOB-hub-success)          (shift    [misc/OOB_DATA    4]    precompile-processing---common---1st-misc-row---row-offset))
-(defun    (precompile-processing---common---OOB-return-gas)           (shift    [misc/OOB_DATA    5]    precompile-processing---common---1st-misc-row---row-offset))
-(defun    (precompile-processing---common---OOB-extract-call-data)    (shift    [misc/OOB_DATA    6]    precompile-processing---common---1st-misc-row---row-offset))
-(defun    (precompile-processing---common---OOB-empty-call-data)      (shift    [misc/OOB_DATA    7]    precompile-processing---common---1st-misc-row---row-offset))
-(defun    (precompile-processing---common---OOB-r@c-nonzero)          (shift    [misc/OOB_DATA    8]    precompile-processing---common---1st-misc-row---row-offset))
