@@ -66,10 +66,10 @@
                            ;; STATICX = 0
                            (eq! NSR (+ (shift        PEEK_AT_CONTEXT          ROFF_LOG___CURRENT_CONTEXT_ROW )
                                        (shift        PEEK_AT_MISCELLANEOUS    ROFF_LOG___MISCELLANEOUS_ROW   )
-                                       (* CMC (shift PEEK_AT_MISCELLANEOUS    ROFF_LOG___OTHERX_XCONTEXT_ROW ))))
+                                       (* CMC (shift PEEK_AT_CONTEXT          ROFF_LOG___OTHERX_XCONTEXT_ROW ))))
                            ;; STATICX = 1
                            (eq! NSR (+ (shift        PEEK_AT_CONTEXT          ROFF_LOG___CURRENT_CONTEXT_ROW  )
-                                       (shift        PEEK_AT_MISCELLANEOUS    ROFF_LOG___STATICX_XCONTEXT_ROW )))))
+                                       (shift        PEEK_AT_CONTEXT          ROFF_LOG___STATICX_XCONTEXT_ROW )))))
 
 (defconstraint    log-instruction---justifying-static-exception                      (:guard (log-instruction---standard-hypothesis))
                   (begin
