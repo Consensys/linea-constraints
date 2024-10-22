@@ -1,8 +1,7 @@
 (defun (hub-into-rom-lex-trigger)
   (and hub.PEEK_AT_ACCOUNT
-       hub.account/ROMLEX_FLAG)) ;; TODO: the selector is different in the spec, and some version we recently wrote contained
-                                 ;; the following additional term
-	                         ;;      (is-not-zero    hub.account/CODE_SIZE_NEW)))
+       hub.account/ROMLEX_FLAG))
+
 
 (deflookup hub-into-romlex
            ;; target columns
