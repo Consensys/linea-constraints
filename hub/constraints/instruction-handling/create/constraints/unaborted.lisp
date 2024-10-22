@@ -17,6 +17,7 @@
 
 (defun    (create-instruction---unexceptional-and-unaborted-precondition)    (*    PEEK_AT_SCENARIO    (scenario-shorthand---CREATE---compute-deployment-address)))
 
+;; see specs for this suprising (and seemingly out of place) instance of address trimming ...
 (defconstraint    create-instruction---createe-account-row-first-appearance    (:guard    (create-instruction---unexceptional-and-unaborted-precondition))
                   (begin
                     (eq!          (shift    account/ADDRESS_HI       CREATE_first_createe_account_row___row_offset)    (create-instruction---createe-address-hi))
@@ -29,7 +30,9 @@
                     ;; deployment status operation done below
                     (account-same-marked-for-selfdestruct            CREATE_first_createe_account_row___row_offset)
                     (eq!          (shift    account/ROMLEX_FLAG      CREATE_first_createe_account_row___row_offset)    (create-instruction---trigger_ROMLEX))
-                    ;; TRM_FLAG is unknown and, if necessary, imposed elsewhere
+                    (account-trim-address                            CREATE_first_createe_account_row___row_offset     ;; row offset
+                                                                     (create-instruction---createe-address-hi)         ;; high part of raw, potentially untrimmed address
+                                                                     (create-instruction---createe-address-lo))        ;; low  part of raw, potentially untrimmed address
                     (vanishes!    (shift    account/RLPADDR_FLAG     CREATE_first_createe_account_row___row_offset))
                     (DOM-SUB-stamps---standard                       CREATE_first_createe_account_row___row_offset
                                                                      1)
