@@ -100,13 +100,14 @@
                                         MISC_WEIGHT_MXP))))
 
 (defconstraint    log-instruction---MISC-row-setting-MXP-data                        (:guard (log-instruction---standard-hypothesis))
-                  (set-MXP-instruction-type-4 ROFF_LOG___MISCELLANEOUS_ROW        ;; row offset kappa
-                                              (log-instruction---instruction)     ;; instruction
-                                              0                                   ;; bit modifying the behaviour of RETURN pricing
-                                              (log-instruction---offset-hi)       ;; offset high
-                                              (log-instruction---offset-lo)       ;; offset low
-                                              (log-instruction---size-hi)         ;; size high
-                                              (log-instruction---size-lo)))       ;; size low
+                  (if-zero   stack/STATICX
+                             (set-MXP-instruction-type-4    ROFF_LOG___MISCELLANEOUS_ROW        ;; row offset kappa
+                                                            (log-instruction---instruction)     ;; instruction
+                                                            0                                   ;; bit modifying the behaviour of RETURN pricing
+                                                            (log-instruction---offset-hi)       ;; offset high
+                                                            (log-instruction---offset-lo)       ;; offset low
+                                                            (log-instruction---size-hi)         ;; size high
+                                                            (log-instruction---size-lo))))      ;; size low
 
 (defun (trigger_MMU) (* (- 1 CONTEXT_WILL_REVERT)
                         (shift misc/MXP_MTNTOP ROFF_LOG___MISCELLANEOUS_ROW)))
