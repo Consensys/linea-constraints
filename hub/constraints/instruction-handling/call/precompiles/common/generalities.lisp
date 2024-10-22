@@ -146,7 +146,7 @@
                                                                       (-   1    (precompile-processing---common---MMU-success-bit))))
 (defun    (precompile-processing---common---wellformed-data)    (+    (precompile-processing---common---OOB-empty-call-data)
                                                                       (*    (precompile-processing---common---OOB-extract-call-data)
-                                                                            (-   1    (precompile-processing---common---MMU-success-bit)))))
+                                                                            (precompile-processing---common---MMU-success-bit))))
 
 
 ;; (defconstraint    precompile-processing---common---debug-constraints-for-address-recovery                   (:guard    (precompile-processing---common---precondition)))
