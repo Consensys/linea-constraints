@@ -44,6 +44,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
+;; as per usual ROFF ≡ ROW_OFFSET
 (defconst
   ROFF_RETURN_INSTRUCTION___STACK_ROW                                                      -1
   ROFF_RETURN_INSTRUCTION___SCENARIO_ROW                                                    0
