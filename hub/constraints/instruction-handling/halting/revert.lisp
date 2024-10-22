@@ -83,14 +83,14 @@
                                 (if-not-zero   (force-bin (revert-instruction---current-context-is-root))
                                                ;; current context IS root
                                                (read-context-data    ROFF_REVERT_INSTRUCTION___CONTEXT_ROW___CALLER_CONTEXT___NO_EXCEPTION
-                                                                     (revert-instruction---caller-context)))
-                                ;; current context ISN'T root
-                                (provide-return-data   ROFF_REVERT_INSTRUCTION___CONTEXT_ROW___CALLER_CONTEXT___NO_EXCEPTION  ;; row offset
-                                                       (revert-instruction---caller-context)                                  ;; receiver context
-                                                       (revert-instruction---current-context)                                 ;; provider context
-                                                       (revert-instruction---offset-lo)                                       ;; rdo
-                                                       (revert-instruction---size-lo)                                         ;; rds
-                                                       ))))
+                                                                     (revert-instruction---caller-context))
+                                               ;; current context ISN'T root
+                                               (provide-return-data   ROFF_REVERT_INSTRUCTION___CONTEXT_ROW___CALLER_CONTEXT___NO_EXCEPTION  ;; row offset
+                                                                      (revert-instruction---caller-context)                                  ;; receiver context
+                                                                      (revert-instruction---current-context)                                 ;; provider context
+                                                                      (revert-instruction---offset-lo)                                       ;; rdo
+                                                                      (revert-instruction---size-lo)                                         ;; rds
+                                                                      )))))
 
 (defun  (revert-instruction---trigger_MMU)  (*  (-  1  XAHOY)
                                                 (-  1  (revert-instruction---current-context-is-root))
