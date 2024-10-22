@@ -133,7 +133,7 @@
 (defun (account-same-address-as  undoAt
                                  doneAt)
   (begin (eq! (shift account/ADDRESS_HI undoAt) (shift account/ADDRESS_HI doneAt))   ;; action performed doneAt many rows from here
-                                                      (eq! (shift account/ADDRESS_LO undoAt) (shift account/ADDRESS_LO doneAt)))) ;; action undone    undoAt many rows from here
+         (eq! (shift account/ADDRESS_LO undoAt) (shift account/ADDRESS_LO doneAt)))) ;; action undone    undoAt many rows from here
 
 (defun (account-same-address-and-deployment-number-as undoAt doneAt) (begin (account-same-address-as undoAt doneAt)
                                                                             (eq! (shift account/DEPLOYMENT_NUMBER undoAt) (shift account/DEPLOYMENT_NUMBER_NEW doneAt))))
@@ -172,19 +172,19 @@
 ;;                                    ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defconstraint account-code-ownership-curr (:perspective account)
-               (if-eq-else account/CODE_HASH_HI EMPTY_KECCAK_HI
-                           (if-eq-else account/CODE_HASH_LO EMPTY_KECCAK_LO
-                                       (eq! account/HAS_CODE 0)
-                                       (eq! account/HAS_CODE 1))
-                           (eq! account/HAS_CODE 1)))
+(defconstraint   account---code-ownership-curr (:perspective account)
+                 (if-eq-else account/CODE_HASH_HI EMPTY_KECCAK_HI
+                             (if-eq-else account/CODE_HASH_LO EMPTY_KECCAK_LO
+                                         (eq! account/HAS_CODE 0)
+                                         (eq! account/HAS_CODE 1))
+                             (eq! account/HAS_CODE 1)))
 
-(defconstraint account-code-ownership-next (:perspective account)
-               (if-eq-else account/CODE_HASH_HI_NEW EMPTY_KECCAK_HI
-                           (if-eq-else account/CODE_HASH_LO_NEW EMPTY_KECCAK_LO
-                                       (eq! account/HAS_CODE_NEW 0)
-                                       (eq! account/HAS_CODE_NEW 1))
-                           (eq! account/HAS_CODE_NEW 1)))
+(defconstraint   account---code-ownership-next (:perspective account)
+                 (if-eq-else account/CODE_HASH_HI_NEW EMPTY_KECCAK_HI
+                             (if-eq-else account/CODE_HASH_LO_NEW EMPTY_KECCAK_LO
+                                         (eq! account/HAS_CODE_NEW 0)
+                                         (eq! account/HAS_CODE_NEW 1))
+                             (eq! account/HAS_CODE_NEW 1)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                       ;;
@@ -192,23 +192,24 @@
 ;;                                       ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defconstraint account-existence-curr (:perspective account)
-               (begin (debug (is-binary account/EXISTS))
-                      (if-not-zero account/NONCE       (eq! account/EXISTS 1))
-                      (if-not-zero account/BALANCE     (eq! account/EXISTS 1))
-                      (if-not-zero account/HAS_CODE    (eq! account/EXISTS 1))
-                      (if-zero account/NONCE
-                               (if-zero account/BALANCE
-                                        (if-zero account/HAS_CODE (eq! account/EXISTS 0))))))
+(defconstraint   account---existence-curr (:perspective account)
+                 (begin (debug (is-binary account/EXISTS))
+                        (if-not-zero account/NONCE       (eq! account/EXISTS 1))
+                        (if-not-zero account/BALANCE     (eq! account/EXISTS 1))
+                        (if-not-zero account/HAS_CODE    (eq! account/EXISTS 1))
+                        (if-zero account/NONCE
+                                 (if-zero account/BALANCE
+                                          (if-zero account/HAS_CODE (eq! account/EXISTS 0))))))
 
-(defconstraint account-existence-next (:perspective account)
-               (begin (debug (is-binary account/EXISTS_NEW))
-                      (if-not-zero account/NONCE_NEW    (eq! account/EXISTS_NEW 1))
-                      (if-not-zero account/BALANCE_NEW  (eq! account/EXISTS_NEW 1))
-                      (if-not-zero account/HAS_CODE_NEW (eq! account/EXISTS_NEW 1))
-                      (if-zero account/NONCE_NEW
-                               (if-zero account/BALANCE_NEW
-                                        (if-zero account/HAS_CODE_NEW (eq! account/EXISTS_NEW 0))))))
+(defconstraint   account---existence-next (:perspective account)
+                 (begin (debug (is-binary account/EXISTS_NEW))
+                        (if-not-zero account/NONCE_NEW    (eq! account/EXISTS_NEW 1))
+                        (if-not-zero account/BALANCE_NEW  (eq! account/EXISTS_NEW 1))
+                        (if-not-zero account/HAS_CODE_NEW (eq! account/EXISTS_NEW 1))
+                        (if-zero account/NONCE_NEW
+                                 (if-zero account/BALANCE_NEW
+                                          (if-zero account/HAS_CODE_NEW (eq! account/EXISTS_NEW 0))))))
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                    ;;
