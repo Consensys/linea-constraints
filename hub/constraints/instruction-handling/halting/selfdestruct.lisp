@@ -303,27 +303,27 @@
                    (account-same-marked-for-selfdestruct        ROFF_SELFDESTRUCT___ACCOUNT_ROW___FOREIGN_ACCOUNT___UNDOING_ROW)
                    (DOM-SUB-stamps---revert-with-current        ROFF_SELFDESTRUCT___ACCOUNT_ROW___FOREIGN_ACCOUNT___UNDOING_ROW 2)))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;                                                                              ;;
-;;    X.5.6 Undoing rows for scenario/SELFDESTRUCT_WONT_REVERT_NOT_YET_MARKED   ;;
-;;                                                                              ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                                                                      ;;
+;;    X.5.6 Account deletion row for scenario/SELFDESTRUCT_WONT_REVERT_NOT_YET_MARKED   ;;
+;;                                                                                      ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defun   (selfdestruct---scenario-WONT_REVERT_NOT_YET_MARKED-precondition) (* PEEK_AT_SCENARIO
                                                                               (scenario/SELFDESTRUCT_WONT_REVERT_NOT_YET_MARKED)))
 
-(defconstraint   selfdestruct---first-undoing-row-for-WONT_REVERT_NOT_YET_MARKED-scenario (:guard (selfdestruct---scenario-WILL_REVERT-precondition))
+(defconstraint   selfdestruct---first-undoing-row-for-WONT_REVERT_NOT_YET_MARKED-scenario (:guard (selfdestruct---scenario-WONT_REVERT_NOT_YET_MARKED-precondition))
                  (begin
-                   (debug (eq! (shift account/ROMLEX_FLAG           ROFF_SELFDESTRUCT___ACCOUNT_ROW___CURRENT_ACCOUNT___UNDOING_ROW) 0))
-                   (debug (eq! (shift account/TRM_FLAG              ROFF_SELFDESTRUCT___ACCOUNT_ROW___CURRENT_ACCOUNT___UNDOING_ROW) 0))
-                   (account-same-address-as                         ROFF_SELFDESTRUCT___ACCOUNT_ROW___CURRENT_ACCOUNT___UNDOING_ROW      ROFF_SELFDESTRUCT___ACCOUNT_ROW___CURRENT_ACCOUNT___DOING_ROW)
-                   (eq!        (shift account/BALANCE_NEW           ROFF_SELFDESTRUCT___ACCOUNT_ROW___CURRENT_ACCOUNT___UNDOING_ROW) 0)
-                   (eq!        (shift account/NONCE_NEW             ROFF_SELFDESTRUCT___ACCOUNT_ROW___CURRENT_ACCOUNT___UNDOING_ROW) 0)
-                   (account-same-warmth                             ROFF_SELFDESTRUCT___ACCOUNT_ROW___CURRENT_ACCOUNT___UNDOING_ROW)
-                   (eq!        (shift account/CODE_SIZE_NEW         ROFF_SELFDESTRUCT___ACCOUNT_ROW___CURRENT_ACCOUNT___UNDOING_ROW) 0)
-                   (eq!        (shift account/CODE_HASH_HI_NEW      ROFF_SELFDESTRUCT___ACCOUNT_ROW___CURRENT_ACCOUNT___UNDOING_ROW) EMPTY_KECCAK_HI)
-                   (eq!        (shift account/CODE_HASH_LO_NEW      ROFF_SELFDESTRUCT___ACCOUNT_ROW___CURRENT_ACCOUNT___UNDOING_ROW) EMPTY_KECCAK_LO)
-                   (shift      (eq!   account/DEPLOYMENT_NUMBER_NEW (+ 1 account/DEPLOYMENT_NUMBER))                   ROFF_SELFDESTRUCT___ACCOUNT_ROW___CURRENT_ACCOUNT___UNDOING_ROW)
-                   (shift      (eq!   account/DEPLOYMENT_STATUS_NEW 0                              )                   ROFF_SELFDESTRUCT___ACCOUNT_ROW___CURRENT_ACCOUNT___UNDOING_ROW)
-                   (account-same-marked-for-selfdestruct            ROFF_SELFDESTRUCT___ACCOUNT_ROW___CURRENT_ACCOUNT___UNDOING_ROW)
-                   (selfdestruct-dom-sub-stamps                     ROFF_SELFDESTRUCT___ACCOUNT_ROW___CURRENT_ACCOUNT___UNDOING_ROW)))
+                   (debug (eq! (shift account/ROMLEX_FLAG              ROFF_SELFDESTRUCT___ACCOUNT_ROW___CURRENT_ACCOUNT___ACCOUNT_DELETION_ROW)   0))
+                   (debug (eq! (shift account/TRM_FLAG                 ROFF_SELFDESTRUCT___ACCOUNT_ROW___CURRENT_ACCOUNT___ACCOUNT_DELETION_ROW)   0))
+                   (account-same-address-as                            ROFF_SELFDESTRUCT___ACCOUNT_ROW___CURRENT_ACCOUNT___ACCOUNT_DELETION_ROW    ROFF_SELFDESTRUCT___ACCOUNT_ROW___CURRENT_ACCOUNT___DOING_ROW)
+                   (eq!        (shift account/BALANCE_NEW              ROFF_SELFDESTRUCT___ACCOUNT_ROW___CURRENT_ACCOUNT___ACCOUNT_DELETION_ROW)   0)
+                   (eq!        (shift account/NONCE_NEW                ROFF_SELFDESTRUCT___ACCOUNT_ROW___CURRENT_ACCOUNT___ACCOUNT_DELETION_ROW)   0)
+                   (account-same-warmth                                ROFF_SELFDESTRUCT___ACCOUNT_ROW___CURRENT_ACCOUNT___ACCOUNT_DELETION_ROW)
+                   (eq!        (shift account/CODE_SIZE_NEW            ROFF_SELFDESTRUCT___ACCOUNT_ROW___CURRENT_ACCOUNT___ACCOUNT_DELETION_ROW)   0)
+                   (eq!        (shift account/CODE_HASH_HI_NEW         ROFF_SELFDESTRUCT___ACCOUNT_ROW___CURRENT_ACCOUNT___ACCOUNT_DELETION_ROW)   EMPTY_KECCAK_HI)
+                   (eq!        (shift account/CODE_HASH_LO_NEW         ROFF_SELFDESTRUCT___ACCOUNT_ROW___CURRENT_ACCOUNT___ACCOUNT_DELETION_ROW)   EMPTY_KECCAK_LO)
+                   (account-increment-deployment-number                ROFF_SELFDESTRUCT___ACCOUNT_ROW___CURRENT_ACCOUNT___ACCOUNT_DELETION_ROW)
+                   (vanishes!  (shift account/DEPLOYMENT_STATUS_NEW    ROFF_SELFDESTRUCT___ACCOUNT_ROW___CURRENT_ACCOUNT___ACCOUNT_DELETION_ROW))
+                   (account-same-marked-for-selfdestruct               ROFF_SELFDESTRUCT___ACCOUNT_ROW___CURRENT_ACCOUNT___ACCOUNT_DELETION_ROW)
+                   (selfdestruct-dom-sub-stamps                        ROFF_SELFDESTRUCT___ACCOUNT_ROW___CURRENT_ACCOUNT___ACCOUNT_DELETION_ROW)))
