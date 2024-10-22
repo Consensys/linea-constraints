@@ -8,11 +8,11 @@
 
 (defun (flag_sum_perspective)   (+ CMPTN MACRO PRPRC))
 (defun (flag_sum_macro)         (+ IS_EXP_LOG IS_MODEXP_LOG))
-(defun (wght_sum_macro)         (+ (* EXP_INST_EXPLOG IS_EXP_LOG)
-                                   (* EXP_INST_MODEXPLOG IS_MODEXP_LOG)))
-(defun (maxct_sum)              (+ (* CMPTN (+ (* CT_MAX_CMPTN_EXP_LOG IS_EXP_LOG) (* CT_MAX_CMPTN_MODEXP_LOG IS_MODEXP_LOG)))
-                                   (* MACRO (+ (* CT_MAX_MACRO_EXP_LOG IS_EXP_LOG) (* CT_MAX_MACRO_MODEXP_LOG IS_MODEXP_LOG)))
-                                   (* PRPRC (+ (* CT_MAX_PRPRC_EXP_LOG IS_EXP_LOG) (* CT_MAX_PRPRC_MODEXP_LOG IS_MODEXP_LOG)))))
+(defun (wght_sum_macro)         (+ (* EXP_INST_EXPLOG       IS_EXP_LOG)
+                                   (* EXP_INST_MODEXPLOG    IS_MODEXP_LOG)))
+(defun (maxct_sum)              (+ (* CMPTN (+ (* CT_MAX_CMPTN_EXP_LOG    IS_EXP_LOG) (* CT_MAX_CMPTN_MODEXP_LOG    IS_MODEXP_LOG)))
+                                   (* MACRO (+ (* CT_MAX_MACRO_EXP_LOG    IS_EXP_LOG) (* CT_MAX_MACRO_MODEXP_LOG    IS_MODEXP_LOG)))
+                                   (* PRPRC (+ (* CT_MAX_PRPRC_EXP_LOG    IS_EXP_LOG) (* CT_MAX_PRPRC_MODEXP_LOG    IS_MODEXP_LOG)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                             ;;
