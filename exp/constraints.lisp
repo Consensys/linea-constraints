@@ -372,6 +372,7 @@
                                  (if-not-zero    (raw_lead_hi_is_zero)
                                                  (if-not-zero    (trim_acc_is_zero)
                                                                  (vanishes! (lead_log))
-                                                                 (eq!       (lead_log) (- (padded_base_2_log) (* 8 (- 32 (ebs_cutoff))))))
+                                                                 (eq!       (lead_log)
+                                                                            (- (padded_base_2_log) (* 8 (- 32 (ebs_cutoff))))))
                                                  (eq! (lead_log)
                                                       (+ (padded_base_2_log) (* 8 (- (ebs_cutoff) 16)))))))
