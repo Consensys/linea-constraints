@@ -20,22 +20,22 @@
                                                             (halting-instruction---is-RETURN)
                                                             (-  1  stack/SUX )))
 
-(defun  (return-instruction---standard-scenario-row)  (* PEEK_AT_SCENARIO
-                                                (scenario-shorthand---RETURN---sum)))
+(defun    (return-instruction---standard-scenario-row)  (* PEEK_AT_SCENARIO
+                                                           (scenario-shorthand---RETURN---sum)))
 
 (defconstraint   return-instruction---imposing-some-RETURN-scenario    (:guard  (return-instruction---standard-precondition))
                  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-                 (begin  (eq!  (next  PEEK_AT_SCENARIO)             1)
+                 (begin  (eq!  (next  PEEK_AT_SCENARIO)                     1)
                          (eq!  (next  (scenario-shorthand---RETURN---sum))  1)))
 
 
 ;; Note: we could pack into a single constraint the last 3 constraints.
 (defconstraint   return-instruction---imposing-the-converse    (:guard  (return-instruction---standard-scenario-row))
                  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-                 (begin  (eq!        (prev  PEEK_AT_STACK)                      1)
-                         (eq!        (prev  stack/HALT_FLAG)                    1)
-                         (eq!        (prev  (halting-instruction---is-RETURN))  1)
-                         (vanishes!  (prev  (+ stack/SUX stack/SOX)))))
+                 (begin  (eq!         (shift   PEEK_AT_STACK                       ROFF_RETURN_INSTRUCTION___STACK_ROW)  1)
+                         (eq!         (shift   stack/HALT_FLAG                     ROFF_RETURN_INSTRUCTION___STACK_ROW)  1)
+                         (eq!         (shift   (halting-instruction---is-RETURN)   ROFF_RETURN_INSTRUCTION___STACK_ROW)  1)
+                         (vanishes!   (shift   (+ stack/SUX stack/SOX)             ROFF_RETURN_INSTRUCTION___STACK_ROW))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                       ;;
@@ -312,7 +312,7 @@
                             (vanishes!   GAS_COST)
                             ;; we require the computation of gas cost (either OOGX or unexceptional)
                             (eq!   GAS_COST
-                                   (+   stack/STATIC_GAS
+                                   (+   (shift    stack/STATIC_GAS    ROFF_RETURN_INSTRUCTION___STACK_ROW)
                                         (return-instruction---MXP-memory-expansion-gas)))))
 
 (defun   (return-instruction---gas-cost-required)   (+  (return-instruction---exception-flag-OOGX)
