@@ -50,8 +50,8 @@
 (defconstraint    call-instruction---1st-callee-account-operation    (:guard (call-instruction---summon-both-account-rows-once-or-more))
                   (begin
                     ;; account/ADDRESS_HI set implicitly by trimming
-                    (eq!    (shift    account/ADDRESS_LO             CALL_1st_callee_account_row___row_offset)    (call-instruction---STACK-raw-callee-address-hi))
-                    (eq!    (shift    account/TRM_RAW_ADDRESS_HI     CALL_1st_callee_account_row___row_offset)    (call-instruction---STACK-raw-callee-address-lo))
+                    (eq!    (shift    account/TRM_RAW_ADDRESS_HI     CALL_1st_callee_account_row___row_offset)    (call-instruction---STACK-raw-callee-address-hi))
+                    (eq!    (shift    account/ADDRESS_LO             CALL_1st_callee_account_row___row_offset)    (call-instruction---STACK-raw-callee-address-lo))
                     ;; balance done below
                     (account-same-nonce                              CALL_1st_callee_account_row___row_offset)
                     (account-same-code                               CALL_1st_callee_account_row___row_offset)
