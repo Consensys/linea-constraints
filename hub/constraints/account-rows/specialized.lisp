@@ -210,10 +210,13 @@
                                  (if-zero account/BALANCE_NEW
                                           (if-zero account/HAS_CODE_NEW (eq! account/EXISTS_NEW 0))))))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                     ;;
+;;   X.4 Generalities on ROMLEX_FLAG   ;;
+;;                                     ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;                                    ;;
-;;   X.4 Code ownership constraints   ;;
-;;                                    ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(defconstraint   account---the-ROMLEX-lookup-requires-nonzero-code-size (:perspective account)
+                 (if-zero    account/CODE_SIZE_NEW
+                             (vanishes!    account/ROMLEX_FLAG)))
