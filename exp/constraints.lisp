@@ -5,22 +5,14 @@
 ;;    2.1 Shorthands           ;;
 ;;                             ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defun (flag_sum_perspective)
-  (+ CMPTN MACRO PRPRC))
 
-(defun (flag_sum_macro)
-  (+ IS_EXP_LOG IS_MODEXP_LOG))
-
-(defun (wght_sum_macro)
-  (+ (* EXP_INST_EXPLOG IS_EXP_LOG) (* EXP_INST_MODEXPLOG IS_MODEXP_LOG)))
-
-(defun (maxct_sum)
-  (+ (* CMPTN
-        (+ (* CT_MAX_CMPTN_EXP_LOG IS_EXP_LOG) (* CT_MAX_CMPTN_MODEXP_LOG IS_MODEXP_LOG)))
-     (* MACRO
-        (+ (* CT_MAX_MACRO_EXP_LOG IS_EXP_LOG) (* CT_MAX_MACRO_MODEXP_LOG IS_MODEXP_LOG)))
-     (* PRPRC
-        (+ (* CT_MAX_PRPRC_EXP_LOG IS_EXP_LOG) (* CT_MAX_PRPRC_MODEXP_LOG IS_MODEXP_LOG)))))
+(defun (flag_sum_perspective)   (+ CMPTN MACRO PRPRC))
+(defun (flag_sum_macro)         (+ IS_EXP_LOG IS_MODEXP_LOG))
+(defun (wght_sum_macro)         (+ (* EXP_INST_EXPLOG IS_EXP_LOG)
+                                   (* EXP_INST_MODEXPLOG IS_MODEXP_LOG)))
+(defun (maxct_sum)              (+ (* CMPTN (+ (* CT_MAX_CMPTN_EXP_LOG IS_EXP_LOG) (* CT_MAX_CMPTN_MODEXP_LOG IS_MODEXP_LOG)))
+                                   (* MACRO (+ (* CT_MAX_MACRO_EXP_LOG IS_EXP_LOG) (* CT_MAX_MACRO_MODEXP_LOG IS_MODEXP_LOG)))
+                                   (* PRPRC (+ (* CT_MAX_PRPRC_EXP_LOG IS_EXP_LOG) (* CT_MAX_PRPRC_MODEXP_LOG IS_MODEXP_LOG)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                             ;;
@@ -88,8 +80,7 @@
 ;;                     ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 1
-(defconstraint first-row (:domain {0})
-  (vanishes! STAMP))
+(defconstraint first-row (:domain {0}) (vanishes! STAMP)) ;; ""
 
 ;; 2
 (defconstraint stamp-vanishing-values ()
@@ -129,7 +120,7 @@
               (will-inc! CT 1)))
 
 ;; 8
-(defconstraint finalization (:domain {-1})
+(defconstraint finalization (:domain {-1}) ;; ""
   (if-not-zero STAMP
     (begin (eq! PRPRC 1)
            (eq! CT CT_MAX))))
@@ -223,29 +214,27 @@
 ;;    3.12 Word comparisons utilities ;;
 ;;                                    ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defun (callToLT k a b c d)
-  (begin (eq! (shift preprocessing/WCP_FLAG k) 1)
-         (eq! (shift preprocessing/WCP_INST k) EVM_INST_LT)
-         (eq! (shift preprocessing/WCP_ARG_1_HI k) a)
-         (eq! (shift preprocessing/WCP_ARG_1_LO k) b)
-         (eq! (shift preprocessing/WCP_ARG_2_HI k) c)
-         (eq! (shift preprocessing/WCP_ARG_2_LO k) d)))
 
-(defun (callToEQ k a b c d)
-  (begin (eq! (shift preprocessing/WCP_FLAG k) 1)
-         (eq! (shift preprocessing/WCP_INST k) EVM_INST_EQ)
-         (eq! (shift preprocessing/WCP_ARG_1_HI k) a)
-         (eq! (shift preprocessing/WCP_ARG_1_LO k) b)
-         (eq! (shift preprocessing/WCP_ARG_2_HI k) c)
-         (eq! (shift preprocessing/WCP_ARG_2_LO k) d)))
+(defun (callToLT k a b c d) (begin (eq! (shift preprocessing/WCP_FLAG k) 1)
+                                   (eq! (shift preprocessing/WCP_INST k) EVM_INST_LT)
+                                   (eq! (shift preprocessing/WCP_ARG_1_HI k) a)
+                                   (eq! (shift preprocessing/WCP_ARG_1_LO k) b)
+                                   (eq! (shift preprocessing/WCP_ARG_2_HI k) c)
+                                   (eq! (shift preprocessing/WCP_ARG_2_LO k) d)))
 
-(defun (callToISZERO k a b)
-  (begin (eq! (shift preprocessing/WCP_FLAG k) 1)
-         (eq! (shift preprocessing/WCP_INST k) EVM_INST_ISZERO)
-         (eq! (shift preprocessing/WCP_ARG_1_HI k) a)
-         (eq! (shift preprocessing/WCP_ARG_1_LO k) b)
-         (debug (vanishes! (shift preprocessing/WCP_ARG_2_HI k)))
-         (debug (vanishes! (shift preprocessing/WCP_ARG_2_LO k)))))
+(defun (callToEQ k a b c d) (begin (eq! (shift preprocessing/WCP_FLAG k) 1)
+                                   (eq! (shift preprocessing/WCP_INST k) EVM_INST_EQ)
+                                   (eq! (shift preprocessing/WCP_ARG_1_HI k) a)
+                                   (eq! (shift preprocessing/WCP_ARG_1_LO k) b)
+                                   (eq! (shift preprocessing/WCP_ARG_2_HI k) c)
+                                   (eq! (shift preprocessing/WCP_ARG_2_LO k) d)))
+
+(defun (callToISZERO k a b) (begin (eq! (shift preprocessing/WCP_FLAG k) 1)
+                                   (eq! (shift preprocessing/WCP_INST k) EVM_INST_ISZERO)
+                                   (eq! (shift preprocessing/WCP_ARG_1_HI k) a)
+                                   (eq! (shift preprocessing/WCP_ARG_1_LO k) b)
+                                   (debug (vanishes! (shift preprocessing/WCP_ARG_2_HI k)))
+                                   (debug (vanishes! (shift preprocessing/WCP_ARG_2_LO k)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                    ;;
@@ -257,35 +246,29 @@
 ;;    4.2 Shorthands  ;;
 ;;                    ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;
-(defun (exponent_hi)
-  [macro/DATA 1])
 
-(defun (exponent_lo)
-  [macro/DATA 2])
-
-(defun (dyn_cost)
-  [macro/DATA 5])
-
-(defun (expoennt_byte_length)
-  (prev computation/TANZB_ACC))
+(defun (exponent_hi)          [ macro/DATA 1 ])
+(defun (exponent_lo)          [ macro/DATA 2 ])
+(defun (dyn_cost)             [ macro/DATA 5 ]) ;; ""
+(defun (expoennt_byte_length) (prev computation/TANZB_ACC))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                      ;;
 ;;    4.3 Preprocessing ;;
 ;;                      ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; 1
+
 (defconstraint exp-log---preprocessing---exponent-hi-is-zero (:perspective macro :guard IS_EXP_LOG)
   (callToISZERO 1 0 (exponent_hi)))
 
-(defun (expn_hi_is_zero)
-  (next preprocessing/WCP_RES))
+(defun (expn_hi_is_zero) (next preprocessing/WCP_RES))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                      ;;
 ;;    4.4 Linking       ;;
 ;;        constraints   ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (defconstraint exp-log---linking-constraints (:perspective macro :guard IS_EXP_LOG)
   (begin (eq! (shift computation/PLT_JMP -1) 16)
          (if-not-zero (expn_hi_is_zero)
@@ -298,6 +281,7 @@
 ;;    4.5 Justify          ;;
 ;;        hub prediction   ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (defconstraint exp-log---justify-hub-prediction (:perspective macro :guard IS_EXP_LOG)
   (if-zero (expn_hi_is_zero)
            (eq! (dyn_cost)
@@ -314,32 +298,16 @@
 ;;    5.2 Shorthands  ;;
 ;;                    ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;
-(defun (raw_lead_hi)
-  [macro/DATA 1])
-
-(defun (raw_lead_lo)
-  [macro/DATA 2])
-
-(defun (cds_cutoff)
-  [macro/DATA 3])
-
-(defun (ebs_cutoff)
-  [macro/DATA 4])
-
-(defun (lead_log)
-  [macro/DATA 5])
-
-(defun (trim_acc)
-  (shift computation/TRIM_ACC -1))
-
-(defun (nbytes_excluding_leading_byte)
-  (shift computation/TANZB_ACC -2))
-
-(defun (nbits_of_leading_byte_excluding_leading_bit)
-  (shift computation/MANZB_ACC -2))
-
-(defun (padded_base_2_log)
-  (+ (* 8 (nbytes_excluding_leading_byte)) (nbits_of_leading_byte_excluding_leading_bit)))
+(defun (raw_lead_hi)                                 [macro/DATA 1])
+(defun (raw_lead_lo)                                 [macro/DATA 2])
+(defun (cds_cutoff)                                  [macro/DATA 3])
+(defun (ebs_cutoff)                                  [macro/DATA 4])
+(defun (lead_log)                                    [macro/DATA 5]) ;; ""
+(defun (trim_acc)                                    (shift    computation/TRIM_ACC     -1))
+(defun (nbytes_excluding_leading_byte)               (shift    computation/TANZB_ACC    -2))
+(defun (nbits_of_leading_byte_excluding_leading_bit) (shift    computation/MANZB_ACC    -2))
+(defun (padded_base_2_log)                           (+   (*   8 (nbytes_excluding_leading_byte))
+                                                          (nbits_of_leading_byte_excluding_leading_bit)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                      ;;
@@ -350,39 +318,34 @@
 (defconstraint modexp-log---preprocessing---cds-cutoff-less-than-ebs-cutoff (:perspective macro :guard IS_MODEXP_LOG)
   (callToLT 1 0 (cds_cutoff) 0 (ebs_cutoff)))
 
-(defun (comp)
-  (shift preprocessing/WCP_RES 1))
-
-(defun (min_cutoff)
-  (+ (* (cds_cutoff) (comp))
-     (* (ebs_cutoff) (- 1 (comp)))))
+(defun (comp)       (shift preprocessing/WCP_RES 1))
+(defun (min_cutoff) (+ (* (cds_cutoff) (comp))
+                       (* (ebs_cutoff) (- 1 (comp)))))
 
 ;; 2
 (defconstraint modexp-log---preprocessing---min-cutoff-less-or-equal-than-16 (:perspective macro :guard IS_MODEXP_LOG)
   (callToLT 2 0 (min_cutoff) 0 17))
 
-(defun (min_cutoff_leq_16)
-  (shift preprocessing/WCP_RES 2))
+(defun (min_cutoff_leq_16) (shift preprocessing/WCP_RES 2))
 
 ;; 3
 (defconstraint modexp-log---preprocessing---raw-lead-hi-is-zero (:perspective macro :guard IS_MODEXP_LOG)
   (callToISZERO 3 0 (raw_lead_hi)))
 
-(defun (raw_lead_hi_is_zero)
-  (shift preprocessing/WCP_RES 3))
+(defun (raw_lead_hi_is_zero) (shift preprocessing/WCP_RES 3))
 
 ;; 4
 (defconstraint modexp-log---preprocessing---trim-acc-is-zero (:perspective macro :guard IS_MODEXP_LOG)
   (callToISZERO 4 0 (trim_acc)))
 
-(defun (trim_acc_is_zero)
-  (shift preprocessing/WCP_RES 4))
+(defun (trim_acc_is_zero) (shift preprocessing/WCP_RES 4))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                      ;;
 ;;    5.4 Linking       ;;
 ;;        constraints   ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (defconstraint modexp-log---linking-constraints (:perspective macro :guard IS_MODEXP_LOG)
   (begin (if-not-zero (min_cutoff_leq_16)
                       (begin (eq! (shift computation/RAW_ACC -1) (raw_lead_hi))
@@ -399,6 +362,7 @@
 ;;    5.5 Justify          ;;
 ;;        hub prediction   ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (defconstraint modexp-log---justify-hub-prediction (:perspective macro :guard IS_MODEXP_LOG)
   (if-not-zero (min_cutoff_leq_16)
                (if-not-zero (trim_acc_is_zero)
@@ -415,5 +379,3 @@
                             (eq! (lead_log)
                                  (+ (padded_base_2_log)
                                     (* 8 (- (ebs_cutoff) 16)))))))
-
-
