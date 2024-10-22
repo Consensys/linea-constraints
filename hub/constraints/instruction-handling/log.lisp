@@ -73,8 +73,9 @@
 
 (defconstraint    log-instruction---justifying-static-exception                      (:guard (log-instruction---standard-hypothesis))
                   (begin
-                    (read-context-data 2 CONTEXT_NUMBER )
-                    (eq! stack/STATICX context/IS_STATIC)))
+                    (read-context-data     ROFF_LOG___CURRENT_CONTEXT_ROW    CONTEXT_NUMBER)
+                    (eq!   stack/STATICX
+                           (shift    context/IS_STATIC    ROFF_LOG___CURRENT_CONTEXT_ROW))))
 
 (defconstraint    log-instruction---justifying-memory-expansion-exception            (:guard (log-instruction---standard-hypothesis))
                   (if-zero (force-bin stack/STATICX)
