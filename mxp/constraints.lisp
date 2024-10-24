@@ -105,17 +105,21 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;
 ;;                  ;;                         
-;;    2.5 MTNTOP    ;;
+;;    2.5 T4MTNTOP  ;;
 ;;                  ;;                        
 ;;;;;;;;;;;;;;;;;;;;;;
 (defconstraint setting-mtntop ()
-  (if-zero [MXP_TYPE 4]
-           (vanishes! MTNTOP) ;; TODO: make this debug
-           (begin (if-not-zero MXPX
-                               (vanishes! MTNTOP)
-                               (if-zero SIZE_1_LO
-                                        (vanishes! MTNTOP)
-                                        (eq! MTNTOP 1))))))
+  (begin 
+    (debug (is-binary T4MTNTOP))
+    (debug (if-zero [MXP_TYPE 4]
+            (vanishes! T4MTNTOP)))
+    (if-not-zero MXPX
+            (vanishes! T4MTNTOP))
+    (if-not-zero [MXP_TYPE 4]
+            (if-zero MXPX
+              (if-zero SIZE_1_LO
+                (vanishes! T4MTNTOP)
+                (eq! T4MTNTOP 1))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                           ;;
