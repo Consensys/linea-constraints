@@ -11,7 +11,9 @@
          (is-binary MXPX)
          (is-binary DEPLOYS)
          (is-binary COMP)
-         (is-binary EXPANDS)))
+         (is-binary EXPANDS)
+         (debug (is-binary S1NZNOMXPX))
+         (debug (is-binary S2NZNOMXPX))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                             ;;
@@ -39,7 +41,9 @@
          (counter-constancy CT EXPANDS)
          (counter-constancy CT QUAD_COST)
          (counter-constancy CT LIN_COST)
-         (counter-constancy CT GAS_MXP)))
+         (counter-constancy CT GAS_MXP)
+         (debug (counter-constancy CT S1NZNOMXPX))
+         (debug (counter-constancy CT S2NZNOMXPX))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                     ;;
@@ -117,9 +121,35 @@
                                         (vanishes! MTNTOP)
                                         (eq! MTNTOP 1))))))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                           ;;
+;;  2.6 The S1NZNOMXPX and S2NZNOMXPX flags  ;;
+;;                                           ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defconstraint setting-s1nznomp ()
+  (begin 
+    (if-not-zero MXPX
+      (begin (vanishes! S1NZNOMXPX)
+             (vanishes! S2NZNOMXPX))
+      (begin (if-not-zero SIZE_1_LO 
+                (eq! S1NZNOMXPX 1))
+             (if-not-zero SIZE_1_HI 
+                (eq! S1NZNOMXPX 1))
+             (if-zero SIZE_1_LO 
+                (if-zero SIZE_1_HI 
+                  (vanishes! S1NZNOMXPX)))
+             (if-not-zero SIZE_2_LO 
+                (eq! S2NZNOMXPX 1))
+             (if-not-zero SIZE_2_HI 
+                (eq! S2NZNOMXPX 1))
+             (if-zero SIZE_2_LO 
+                (if-zero SIZE_2_HI 
+                  (vanishes! S2NZNOMXPX)))))))
+  
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                     ;;
-;;    2.5 heartbeat    ;;
+;;    2.7 heartbeat    ;;
 ;;                     ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 (defconstraint first-row (:domain {0})
@@ -168,7 +198,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                               ;;
-;;    2.5 Byte decompositions    ;;
+;;    2.8 Byte decompositions    ;;
 ;;                               ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defconstraint byte-decompositions ()
