@@ -18,7 +18,7 @@
 (defun    (return-instruction---standard-precondition)  (*  PEEK_AT_STACK
                                                             stack/HALT_FLAG
                                                             (halting-instruction---is-RETURN)
-                                                            (-  1  stack/SUX )))
+                                                            (-  1  stack/SUX stack/SOX)))
 
 (defun    (return-instruction---standard-scenario-row)  (* PEEK_AT_SCENARIO
                                                            (scenario-shorthand---RETURN---sum)))
