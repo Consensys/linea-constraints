@@ -17,7 +17,7 @@
 
 (defun  (return-instruction---standard-precondition)  (*  PEEK_AT_STACK
                                                           stack/HALT_FLAG
-                                                          [ stack/DEC_FLAG 1 ]
+                                                          (halting-instruction---is-RETURN)
                                                           (-  1  stack/SUX )))
 
 (defun  (return-instruction---standard-scenario-row)  (* PEEK_AT_SCENARIO
@@ -32,12 +32,10 @@
 ;; Note: we could pack into a single constraint the last 3 constraints.
 (defconstraint   return-instruction---imposing-the-converse    (:guard  (return-instruction---standard-scenario-row))
                  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-                 (begin  (eq!        (prev  PEEK_AT_STACK)         1)
-                         (eq!        (prev  stack/HALT_FLAG)       1)
-                         (eq!        (prev  [ stack/DEC_FLAG 1 ])  1)
-                         (vanishes!  (prev  (+ stack/SUX stack/SOX)))
-                         )
-                 )
+                 (begin  (eq!        (shift   PEEK_AT_STACK                       RETURN_INSTRUCTION_STACK_ROW_OFFSET)  1)
+                         (eq!        (shift   stack/HALT_FLAG                     RETURN_INSTRUCTION_STACK_ROW_OFFSET)  1)
+                         (eq!        (shift   (halting-instruction---is-RETURN)   RETURN_INSTRUCTION_STACK_ROW_OFFSET)  1)
+                         (vanishes!  (shift   (+ stack/SUX stack/SOX)             RETURN_INSTRUCTION_STACK_ROW_OFFSET))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                       ;;
@@ -76,7 +74,7 @@
 (defun (return-instruction---offset-hi)                                  (shift   [ stack/STACK_ITEM_VALUE_HI 1]           RETURN_INSTRUCTION_STACK_ROW_OFFSET))
 (defun (return-instruction---offset-lo)                                  (shift   [ stack/STACK_ITEM_VALUE_LO 1]           RETURN_INSTRUCTION_STACK_ROW_OFFSET))
 (defun (return-instruction---size-hi)                                    (shift   [ stack/STACK_ITEM_VALUE_HI 2]           RETURN_INSTRUCTION_STACK_ROW_OFFSET))
-(defun (return-instruction---size-lo)                                    (shift   [ stack/STACK_ITEM_VALUE_LO 2]           RETURN_INSTRUCTION_STACK_ROW_OFFSET))
+(defun (return-instruction---size-lo)                                    (shift   [ stack/STACK_ITEM_VALUE_LO 2]           RETURN_INSTRUCTION_STACK_ROW_OFFSET)) ;; ""
 (defun (return-instruction---code-hash-hi)                               (shift   stack/HASH_INFO_KECCAK_HI                RETURN_INSTRUCTION_STACK_ROW_OFFSET))
 (defun (return-instruction---code-hash-lo)                               (shift   stack/HASH_INFO_KECCAK_LO                RETURN_INSTRUCTION_STACK_ROW_OFFSET))
 (defun (return-instruction---is-root)                                    (shift   context/IS_ROOT                          RETURN_INSTRUCTION_CURRENT_CONTEXT_ROW_OFFSET))
@@ -89,7 +87,7 @@
 (defun (return-instruction---MXP-memory-expansion-gas)                   (shift   misc/MXP_GAS_MXP                         RETURN_INSTRUCTION_FIRST_MISC_ROW_OFFSET))
 (defun (return-instruction---MXP-memory-expansion-exception)             (shift   misc/MXP_MXPX                            RETURN_INSTRUCTION_FIRST_MISC_ROW_OFFSET))
 (defun (return-instruction---MMU-success-bit)                            (shift   misc/MMU_SUCCESS_BIT                     RETURN_INSTRUCTION_FIRST_MISC_ROW_OFFSET))
-(defun (return-instruction---OOB-max-code-size-exception)                (shift   [ misc/OOB_DATA 7 ]                      RETURN_INSTRUCTION_FIRST_MISC_ROW_OFFSET))
+(defun (return-instruction---OOB-max-code-size-exception)                (shift   [ misc/OOB_DATA 7 ]                      RETURN_INSTRUCTION_FIRST_MISC_ROW_OFFSET)) ;; ""
 (defun (return-instruction---deployment-code-fragment-index)             (shift   account/CODE_FRAGMENT_INDEX              RETURN_INSTRUCTION_NONEMPTY_DEPLOYMENT_FIRST_ACCOUNT_ROW_OFFSET))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -116,9 +114,7 @@
 
 (defconstraint   return-instruction---setting-stack-pattern               (:guard  (return-instruction---standard-scenario-row))
                  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-                 (prev (stack-pattern-2-0)
-                       )
-                 )
+                 (shift    (stack-pattern-2-0)   RETURN_INSTRUCTION_STACK_ROW_OFFSET))
 
 (defconstraint   return-instruction---setting-NSR               (:guard  (return-instruction---standard-scenario-row))
                  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
