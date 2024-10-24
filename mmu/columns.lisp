@@ -44,7 +44,7 @@
 
   ;; selector
   MACRO
-  ((INST :i16)
+  ((INST :i16 :display :hex)
    (SRC_ID :i64)
    (TGT_ID :i64)
    (AUX_ID :i64)
@@ -82,7 +82,7 @@
 
   ;; selector
   MICRO
-  ((INST :i16)
+  ((INST :i16 :display :hex)
    (SIZE :byte)
    (SLO :i64)
    (SBO :byte)
