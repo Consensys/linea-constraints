@@ -18,18 +18,15 @@
 (defun  (return-instruction---standard-precondition)  (*  PEEK_AT_STACK
                                                           stack/HALT_FLAG
                                                           [ stack/DEC_FLAG 1 ]
-                                                          (-  1  stack/SUX )
-                                                          ))
+                                                          (-  1  stack/SUX )))
 
 (defun  (return-instruction---standard-scenario-row)  (* PEEK_AT_SCENARIO
                                                 (scenario-shorthand---RETURN---sum)))
 
 (defconstraint   return-instruction---imposing-some-RETURN-scenario    (:guard  (return-instruction---standard-precondition))
                  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-                 (begin  (eq!  (next  PEEK_AT_SCENARIO)             1)
-                         (eq!  (next  (scenario-shorthand---RETURN---sum))  1)
-                         )
-                 )
+                 (begin  (eq!  (next  PEEK_AT_SCENARIO)                     1)
+                         (eq!  (next  (scenario-shorthand---RETURN---sum))  1)))
 
 
 ;; Note: we could pack into a single constraint the last 3 constraints.
@@ -133,9 +130,7 @@
                            (* 5 scenario/RETURN_FROM_DEPLOYMENT_EMPTY_CODE_WONT_REVERT    )
                            (* 7 scenario/RETURN_FROM_DEPLOYMENT_NONEMPTY_CODE_WILL_REVERT )
                            (* 6 scenario/RETURN_FROM_DEPLOYMENT_NONEMPTY_CODE_WONT_REVERT )
-                           )
-                       )
-                 )
+                           )))
 
 (defconstraint   return-instruction---setting-peeking-flags                   (:guard  (return-instruction---standard-scenario-row))
                  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -215,10 +210,7 @@
                                            (eq!  scenario/RETURN_FROM_MESSAGE_CALL_WONT_TOUCH_RAM  1)
                                            ;; touch_ram_expression ≠ 0
                                            (eq!  scenario/RETURN_FROM_MESSAGE_CALL_WILL_TOUCH_RAM  1)
-                                           )
-                                 )
-                   )
-                 )
+                                           ))))
 
 (defun  (return-touch-ram-expression)  (*  (-  1  (return-instruction---is-root))
                                            (return-instruction---MXP-may-trigger-non-trivial-operation)
@@ -232,24 +224,19 @@
                       (+   (*   MISC_WEIGHT_MMU   (return-instruction---trigger_MMU))
                            (*   MISC_WEIGHT_MXP   (return-instruction---trigger_MXP))
                            (*   MISC_WEIGHT_OOB   (return-instruction---trigger_OOB))
-                           )
-                      )
-               )
-
+                           )))
 (defun  (return-instruction---trigger_MXP)                        1)
 (defun  (return-instruction---trigger_OOB)                        (+  (return-instruction---exception-flag-MAXCSX)   (scenario-shorthand---RETURN---nonempty-deployment)))
 (defun  (return-instruction---trigger_MMU)                        (+  (return-instruction---check-first-byte)        (return-instruction---write-return-data-to-caller-ram)))
 (defun  (return-instruction---check-first-byte)                   (+  (return-instruction---exception-flag-ICPX)     (scenario-shorthand---RETURN---nonempty-deployment)))
 (defun  (return-instruction---write-return-data-to-caller-ram)    scenario/RETURN_FROM_MESSAGE_CALL_WILL_TOUCH_RAM)
-(defun  (return-instruction---trigger_HASHINFO)                   (scenario-shorthand---RETURN---nonempty-deployment))
+(defun  (return-instruction---trigger_HASHINFO)                   (scenario-shorthand---RETURN---nonempty-deployment)) ;; ""
 
 (defconstraint   return-instruction---setting-trigger_HASHINFO           (:guard   (return-instruction---standard-scenario-row))
                  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                  (eq!   (shift   stack/HASH_INFO_FLAG   RETURN_INSTRUCTION_STACK_ROW_OFFSET)
                         (return-instruction---trigger_HASHINFO)
-                        )
-                 )
-
+                        ))
 (defconstraint   return-instruction---setting-MXP-data              (:guard   (return-instruction---standard-scenario-row))
                  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                  (set-MXP-instruction-type-4   RETURN_INSTRUCTION_FIRST_MISC_ROW_OFFSET   ;; row offset kappa
@@ -259,8 +246,7 @@
                                                (return-instruction---offset-lo)             ;; offset low
                                                (return-instruction---size-hi)               ;; size high
                                                (return-instruction---size-lo)               ;; size low
-                                               )
-                 )
+                                               ))
 
 (defconstraint   return-instruction---setting-OOB-data              (:guard   (return-instruction---standard-scenario-row))
                  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -268,9 +254,7 @@
                                 (set-OOB-instruction---deployment   RETURN_INSTRUCTION_FIRST_MISC_ROW_OFFSET   ;; offset
                                                                     (return-instruction---size-hi)             ;; code size hi
                                                                     (return-instruction---size-lo)             ;; code size lo
-                                                                    )
-                                )
-                 )
+                                                                    )))
 
 
 (defconstraint   return-instruction---setting-MMU-data-first-call   (:guard   (return-instruction---standard-scenario-row))
@@ -382,9 +366,7 @@
                                   CONTEXT_NUMBER                                     ;; provider context
                                   (return-instruction---offset-lo)                     ;; rdo
                                   (return-instruction---size-lo)                       ;; rds
-                                  )
-                                )
-                 )
+                                  )))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                      ;;
@@ -416,8 +398,7 @@
                    (debug   (eq!         (shift   account/CODE_HASH_LO        RETURN_INSTRUCTION_EMPTY_DEPLOYMENT_FIRST_ACCOUNT_ROW_OFFSET)    EMPTY_KECCAK_LO))
                    (debug   (eq!         (shift   account/DEPLOYMENT_STATUS   RETURN_INSTRUCTION_EMPTY_DEPLOYMENT_FIRST_ACCOUNT_ROW_OFFSET)    1))
                    (debug   (account-isnt-precompile                          RETURN_INSTRUCTION_EMPTY_DEPLOYMENT_FIRST_ACCOUNT_ROW_OFFSET))
-                   )
-                 )
+                   ))
 
 (defconstraint   return-instruction---second-account-row-for-empty-deployments   (:guard   (return-instruction---empty-deployment-scenario))
                  (if-not-zero   scenario/RETURN_FROM_DEPLOYMENT_EMPTY_CODE_WILL_REVERT
@@ -432,9 +413,7 @@
                                   (vanishes!   (shift   account/ROMLEX_FLAG    RETURN_INSTRUCTION_EMPTY_DEPLOYMENT_SECOND_ACCOUNT_ROW_OFFSET))
                                   (vanishes!   (shift   account/TRM_FLAG       RETURN_INSTRUCTION_EMPTY_DEPLOYMENT_SECOND_ACCOUNT_ROW_OFFSET))
                                   (DOM-SUB-stamps---revert-with-current        RETURN_INSTRUCTION_EMPTY_DEPLOYMENT_SECOND_ACCOUNT_ROW_OFFSET    1)
-                                  )
-                                )
-                 )
+                                  )))
 
 (defconstraint   return-instruction---setting-the-callers-new-return-data-empty-deployments    (:guard   (return-instruction---empty-deployment-scenario))
                  (begin
@@ -444,18 +423,14 @@
                                                  (read-context-data                       RETURN_INSTRUCTION_CALLER_CONTEXT_ROW_OFFSET_EMPTY_DEPLOYMENT_WILL_REVERT    CONTEXT_NUMBER)
                                                  ;; IS_ROOT  ≡  0
                                                  (execution-provides-empty-return-data    RETURN_INSTRUCTION_CALLER_CONTEXT_ROW_OFFSET_EMPTY_DEPLOYMENT_WILL_REVERT)
-                                                 )
-                                  )
+                                                 ))
                    (if-not-zero   scenario/RETURN_FROM_DEPLOYMENT_EMPTY_CODE_WONT_REVERT
                                   (if-not-zero   (force-bin   (return-instruction---is-root))
                                                  ;; IS_ROOT  ≡  1
                                                  (read-context-data                       RETURN_INSTRUCTION_CALLER_CONTEXT_ROW_OFFSET_EMPTY_DEPLOYMENT_WONT_REVERT    CONTEXT_NUMBER)
                                                  ;; IS_ROOT  ≡  0
                                                  (execution-provides-empty-return-data    RETURN_INSTRUCTION_CALLER_CONTEXT_ROW_OFFSET_EMPTY_DEPLOYMENT_WONT_REVERT)
-                                                 )
-                                  )
-                   )
-                 )
+                                                 ))))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -509,8 +484,7 @@
                    (debug   (eq!         (shift   account/CODE_HASH_LO        RETURN_INSTRUCTION_NONEMPTY_DEPLOYMENT_FIRST_ACCOUNT_ROW_OFFSET)    EMPTY_KECCAK_LO))
                    (debug   (eq!         (shift   account/DEPLOYMENT_STATUS   RETURN_INSTRUCTION_NONEMPTY_DEPLOYMENT_FIRST_ACCOUNT_ROW_OFFSET)    1))
                    (debug   (account-isnt-precompile                          RETURN_INSTRUCTION_NONEMPTY_DEPLOYMENT_FIRST_ACCOUNT_ROW_OFFSET))
-                   )
-                 )
+                   ))
 
 (defconstraint   return-instruction---second-account-row-for-nonempty-deployments   (:guard   (return-instruction---nonempty-deployment-scenario))
                  (if-not-zero   scenario/RETURN_FROM_DEPLOYMENT_NONEMPTY_CODE_WILL_REVERT
@@ -525,9 +499,7 @@
                                   (vanishes!   (shift   account/ROMLEX_FLAG    RETURN_INSTRUCTION_NONEMPTY_DEPLOYMENT_SECOND_ACCOUNT_ROW_OFFSET))
                                   (vanishes!   (shift   account/TRM_FLAG       RETURN_INSTRUCTION_NONEMPTY_DEPLOYMENT_SECOND_ACCOUNT_ROW_OFFSET))
                                   (DOM-SUB-stamps---revert-with-current        RETURN_INSTRUCTION_NONEMPTY_DEPLOYMENT_SECOND_ACCOUNT_ROW_OFFSET    1)
-                                  )
-                                )
-                 )
+                                  )))
 
 (defconstraint   return-instruction---setting-the-callers-new-return-data-nonempty-deployments    (:guard   (return-instruction---nonempty-deployment-scenario))
                  (begin
@@ -544,8 +516,4 @@
                                                  ;; IS_ROOT  ≡  1
                                                  (read-context-data                       RETURN_INSTRUCTION_CALLER_CONTEXT_ROW_OFFSET_NONEMPTY_DEPLOYMENT_WONT_REVERT    CONTEXT_NUMBER)
                                                  ;; IS_ROOT  ≡  0
-                                                 (execution-provides-empty-return-data    RETURN_INSTRUCTION_CALLER_CONTEXT_ROW_OFFSET_NONEMPTY_DEPLOYMENT_WONT_REVERT)
-                                                 )
-                                  )
-                   )
-                 )
+                                                 (execution-provides-empty-return-data    RETURN_INSTRUCTION_CALLER_CONTEXT_ROW_OFFSET_NONEMPTY_DEPLOYMENT_WONT_REVERT)))))
