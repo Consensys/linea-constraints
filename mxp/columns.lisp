@@ -43,8 +43,8 @@
   (GAS_MXP :i64)
   (EXPANDS :binary@prove)
   (MTNTOP :binary@prove)
-  (SIZE_1_NONZERO_NO_MXPX :binary@prove)
-  (SIZE_2_NONZERO_NO_MXPX :binary@prove))
+  (SIZE_1_NONZERO_NO_MXPX :binary)
+  (SIZE_2_NONZERO_NO_MXPX :binary))
 
   (defalias 
   S1NZNOMXPX SIZE_1_NONZERO_NO_MXPX

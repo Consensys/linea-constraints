@@ -11,9 +11,7 @@
          (is-binary MXPX)
          (is-binary DEPLOYS)
          (is-binary COMP)
-         (is-binary EXPANDS)
-         (debug (is-binary S1NZNOMXPX))
-         (debug (is-binary S2NZNOMXPX))))
+         (is-binary EXPANDS)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                             ;;
@@ -41,9 +39,7 @@
          (counter-constancy CT EXPANDS)
          (counter-constancy CT QUAD_COST)
          (counter-constancy CT LIN_COST)
-         (counter-constancy CT GAS_MXP)
-         (debug (counter-constancy CT S1NZNOMXPX))
-         (debug (counter-constancy CT S2NZNOMXPX))))
+         (counter-constancy CT GAS_MXP)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                     ;;
@@ -127,8 +123,12 @@
 ;;                                           ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defconstraint setting-s1nznomp ()
-  (begin 
+(defconstraint setting-s1nznomp-s2nznomp ()
+  (begin
+    (debug (is-binary S1NZNOMXPX))
+    (debug (is-binary S2NZNOMXPX)) 
+    (debug (counter-constancy CT S1NZNOMXPX))
+    (debug (counter-constancy CT S2NZNOMXPX))
     (if-not-zero MXPX
       (begin (vanishes! S1NZNOMXPX)
              (vanishes! S2NZNOMXPX))
