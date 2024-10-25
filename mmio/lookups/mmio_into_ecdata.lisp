@@ -6,7 +6,6 @@
     ecdata.PHASE
     ecdata.INDEX
     ecdata.LIMB
-    ;; ecdata.nBYTES
     ecdata.TOTAL_SIZE
     ecdata.SUCCESS_BIT
   )
@@ -16,7 +15,6 @@
     (* mmio.EXO_IS_ECDATA mmio.PHASE)
     (* mmio.EXO_IS_ECDATA mmio.INDEX_X)
     (* mmio.EXO_IS_ECDATA mmio.LIMB)
-    ;; (* mmio.EXO_IS_ECDATA mmio.SIZE)
     (* mmio.EXO_IS_ECDATA mmio.TOTAL_SIZE)
     (* mmio.EXO_IS_ECDATA mmio.SUCCESS_BIT)
   ))
