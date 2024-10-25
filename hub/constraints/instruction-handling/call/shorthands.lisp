@@ -75,7 +75,7 @@
 (defun    (call-instruction---callee-revert-stamp)               (shift    misc/CCRS_STAMP         CALL_misc_row___row_offset))
 
 ;; type safe call data and return at segment values
-(defun    (call-instruction---type-safe-cdo)    (*   (call-instruction---STACK-cdo-lo)   (call-instruction---MXP-size-1-nonzero-and-no-mxpx))
-(defun    (call-instruction---type-safe-cds)         (call-instruction---STACK-cds-lo)                                                      )
-(defun    (call-instruction---type-safe-r@o)    (*   (call-instruction---STACK-r@o-lo)   (call-instruction---MXP-size-2-nonzero-and-no-mxpx))
-(defun    (call-instruction---type-safe-r@c)         (call-instruction---STACK-r@c-lo)                                                      )
+(defun    (call-instruction---type-safe-cdo)    (*   (call-instruction---STACK-cdo-lo)   (call-instruction---MXP-size-1-nonzero-and-no-mxpx)))
+(defun    (call-instruction---type-safe-cds)         (call-instruction---STACK-cds-lo)                                                       )
+(defun    (call-instruction---type-safe-r@o)    (*   (call-instruction---STACK-r@o-lo)   (call-instruction---MXP-size-2-nonzero-and-no-mxpx)))
+(defun    (call-instruction---type-safe-r@c)         (call-instruction---STACK-r@c-lo)                                                       )
