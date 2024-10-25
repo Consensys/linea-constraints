@@ -39,6 +39,7 @@
 (defun  (revert-instruction---current-context-is-root)             (shift   context/IS_ROOT                   ROFF_REVERT___NO_XAHOY_CURRENT_CONTEXT_ROW))
 (defun  (revert-instruction---r@o)                                 (shift   context/RETURN_AT_OFFSET          ROFF_REVERT___NO_XAHOY_CURRENT_CONTEXT_ROW))
 (defun  (revert-instruction---r@c)                                 (shift   context/RETURN_AT_CAPACITY        ROFF_REVERT___NO_XAHOY_CURRENT_CONTEXT_ROW))
+
 (defun  (revert-instruction---type-safe-return-data-offset)        (*       (revert-instruction---offset-lo)  (revert-instruction---MXP-size-1-is-nonzero-and-no-mxpx)))
 (defun  (revert-instruction---type-safe-return-data-size)          (revert-instruction---size-lo)) ;; ""
 
@@ -93,8 +94,8 @@
                                 (provide-return-data   ROFF_REVERT___NO_XAHOY_CALLER_CONTEXT_ROW             ;; row offset
                                                        (revert-instruction---caller-context)                 ;; receiver context
                                                        (revert-instruction---current-context)                ;; provider context
-                                                       (revert-instruction---type-safe-return-data-offset)   ;; rdo
-                                                       (revert-instruction---type-safe-return-data-size)     ;; rds
+                                                       (revert-instruction---type-safe-return-data-offset)   ;; type safe rdo
+                                                       (revert-instruction---type-safe-return-data-size)     ;; type safe rds
                                                        ))))
 
 (defun  (revert-instruction---trigger_MMU)  (*  (-  1  XAHOY)
