@@ -330,7 +330,7 @@
                             (vanishes!   GAS_COST)
                             ;; we require the computation of gas cost (either OOGX or unexceptional)
                             (eq!   GAS_COST
-                                   (+   (shift    stack/STATIC_GAS    ROFF_RETURN_INSTRUCTION___STACK_ROW)
+                                   (+   (shift    stack/STATIC_GAS    ROFF_RETURN___STACK_ROW)
                                         (return-instruction---MXP-memory-expansion-gas)))))
 
 (defun   (return-instruction---gas-cost-required)   (+  (return-instruction---exception-flag-OOGX)
