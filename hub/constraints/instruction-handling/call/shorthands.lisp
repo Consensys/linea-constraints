@@ -51,6 +51,8 @@
 (defun    (call-instruction---current-call-stack-depth)          (shift    context/CALL_STACK_DEPTH            CALL_1st_context_row___row_offset))
 (defun    (call-instruction---MXP-memory-expansion-exception)    (shift    misc/MXP_MXPX                       CALL_misc_row___row_offset))
 (defun    (call-instruction---MXP-memory-expansion-gas)          (shift    misc/MXP_GAS_MXP                    CALL_misc_row___row_offset))
+(defun    (call-instruction---MXP-size-1-nonzero-and-no-mxpx)    (shift    misc/MXP_SIZE_1_NONZERO_NO_MXPX     CALL_misc_row___row_offset))
+(defun    (call-instruction---MXP-size-2-nonzero-and-no-mxpx)    (shift    misc/MXP_SIZE_2_NONZERO_NO_MXPX     CALL_misc_row___row_offset))
 (defun    (call-instruction---STP-gas-upfront)                   (shift    misc/STP_GAS_UPFRONT_GAS_COST       CALL_misc_row___row_offset))
 (defun    (call-instruction---STP-gas-paid-out-of-pocket)        (shift    misc/STP_GAS_PAID_OUT_OF_POCKET     CALL_misc_row___row_offset))
 (defun    (call-instruction---STP-call-stipend)                  (shift    misc/STP_GAS_STIPEND                CALL_misc_row___row_offset))
@@ -71,3 +73,9 @@
 (defun    (call-instruction---caller-revert-stamp)               (shift    CONTEXT_REVERT_STAMP    CALL_1st_stack_row___row_offset))
 (defun    (call-instruction---callee-self-reverts)               (shift    misc/CCSR_FLAG          CALL_misc_row___row_offset))
 (defun    (call-instruction---callee-revert-stamp)               (shift    misc/CCRS_STAMP         CALL_misc_row___row_offset))
+
+;; type safe call data and return at segment values
+(defun    (call-instruction---type-safe-cdo)    (*   (call-instruction---STACK-cdo-lo)   (call-instruction---MXP-size-1-nonzero-and-no-mxpx))
+(defun    (call-instruction---type-safe-cds)         (call-instruction---STACK-cds-lo)                                                      )
+(defun    (call-instruction---type-safe-r@o)    (*   (call-instruction---STACK-r@o-lo)   (call-instruction---MXP-size-2-nonzero-and-no-mxpx))
+(defun    (call-instruction---type-safe-r@c)         (call-instruction---STACK-r@c-lo)                                                      )
