@@ -66,29 +66,32 @@
 
 
 
-(defun (return-instruction---instruction)                                (shift   stack/INSTRUCTION                        RETURN_INSTRUCTION_STACK_ROW_OFFSET))
-(defun (return-instruction---exception-flag-MXPX)                        (shift   stack/MXPX                               RETURN_INSTRUCTION_STACK_ROW_OFFSET))
-(defun (return-instruction---exception-flag-OOGX)                        (shift   stack/OOGX                               RETURN_INSTRUCTION_STACK_ROW_OFFSET))
-(defun (return-instruction---exception-flag-MAXCSX)                      (shift   stack/MAXCSX                             RETURN_INSTRUCTION_STACK_ROW_OFFSET))
-(defun (return-instruction---exception-flag-ICPX)                        (shift   stack/ICPX                               RETURN_INSTRUCTION_STACK_ROW_OFFSET))
-(defun (return-instruction---offset-hi)                                  (shift   [ stack/STACK_ITEM_VALUE_HI 1]           RETURN_INSTRUCTION_STACK_ROW_OFFSET))
-(defun (return-instruction---offset-lo)                                  (shift   [ stack/STACK_ITEM_VALUE_LO 1]           RETURN_INSTRUCTION_STACK_ROW_OFFSET))
-(defun (return-instruction---size-hi)                                    (shift   [ stack/STACK_ITEM_VALUE_HI 2]           RETURN_INSTRUCTION_STACK_ROW_OFFSET))
-(defun (return-instruction---size-lo)                                    (shift   [ stack/STACK_ITEM_VALUE_LO 2]           RETURN_INSTRUCTION_STACK_ROW_OFFSET)) ;; ""
-(defun (return-instruction---code-hash-hi)                               (shift   stack/HASH_INFO_KECCAK_HI                RETURN_INSTRUCTION_STACK_ROW_OFFSET))
-(defun (return-instruction---code-hash-lo)                               (shift   stack/HASH_INFO_KECCAK_LO                RETURN_INSTRUCTION_STACK_ROW_OFFSET))
-(defun (return-instruction---is-root)                                    (shift   context/IS_ROOT                          RETURN_INSTRUCTION_CURRENT_CONTEXT_ROW_OFFSET))
-(defun (return-instruction---deployment-address-hi)                      (shift   context/BYTE_CODE_ADDRESS_HI             RETURN_INSTRUCTION_CURRENT_CONTEXT_ROW_OFFSET))
-(defun (return-instruction---deployment-address-lo)                      (shift   context/BYTE_CODE_ADDRESS_LO             RETURN_INSTRUCTION_CURRENT_CONTEXT_ROW_OFFSET))
-(defun (return-instruction---is-deployment)                              (shift   context/BYTE_CODE_DEPLOYMENT_STATUS      RETURN_INSTRUCTION_CURRENT_CONTEXT_ROW_OFFSET))
-(defun (return-instruction---return-at-offset)                           (shift   context/RETURN_AT_OFFSET                 RETURN_INSTRUCTION_CURRENT_CONTEXT_ROW_OFFSET))
-(defun (return-instruction---return-at-capacity)                         (shift   context/RETURN_AT_CAPACITY               RETURN_INSTRUCTION_CURRENT_CONTEXT_ROW_OFFSET))
-(defun (return-instruction---MXP-may-trigger-non-trivial-operation)      (shift   misc/MXP_MTNTOP                          RETURN_INSTRUCTION_FIRST_MISC_ROW_OFFSET))
-(defun (return-instruction---MXP-memory-expansion-gas)                   (shift   misc/MXP_GAS_MXP                         RETURN_INSTRUCTION_FIRST_MISC_ROW_OFFSET))
-(defun (return-instruction---MXP-memory-expansion-exception)             (shift   misc/MXP_MXPX                            RETURN_INSTRUCTION_FIRST_MISC_ROW_OFFSET))
-(defun (return-instruction---MMU-success-bit)                            (shift   misc/MMU_SUCCESS_BIT                     RETURN_INSTRUCTION_FIRST_MISC_ROW_OFFSET))
-(defun (return-instruction---OOB-max-code-size-exception)                (shift   [ misc/OOB_DATA 7 ]                      RETURN_INSTRUCTION_FIRST_MISC_ROW_OFFSET)) ;; ""
-(defun (return-instruction---deployment-code-fragment-index)             (shift   account/CODE_FRAGMENT_INDEX              RETURN_INSTRUCTION_NONEMPTY_DEPLOYMENT_FIRST_ACCOUNT_ROW_OFFSET))
+(defun (return-instruction---instruction)                             (shift   stack/INSTRUCTION                     RETURN_INSTRUCTION_STACK_ROW_OFFSET))
+(defun (return-instruction---exception-flag-MXPX)                     (shift   stack/MXPX                            RETURN_INSTRUCTION_STACK_ROW_OFFSET))
+(defun (return-instruction---exception-flag-OOGX)                     (shift   stack/OOGX                            RETURN_INSTRUCTION_STACK_ROW_OFFSET))
+(defun (return-instruction---exception-flag-MAXCSX)                   (shift   stack/MAXCSX                          RETURN_INSTRUCTION_STACK_ROW_OFFSET))
+(defun (return-instruction---exception-flag-ICPX)                     (shift   stack/ICPX                            RETURN_INSTRUCTION_STACK_ROW_OFFSET))
+(defun (return-instruction---offset-hi)                               (shift   [ stack/STACK_ITEM_VALUE_HI 1]        RETURN_INSTRUCTION_STACK_ROW_OFFSET))
+(defun (return-instruction---offset-lo)                               (shift   [ stack/STACK_ITEM_VALUE_LO 1]        RETURN_INSTRUCTION_STACK_ROW_OFFSET))
+(defun (return-instruction---size-hi)                                 (shift   [ stack/STACK_ITEM_VALUE_HI 2]        RETURN_INSTRUCTION_STACK_ROW_OFFSET))
+(defun (return-instruction---size-lo)                                 (shift   [ stack/STACK_ITEM_VALUE_LO 2]        RETURN_INSTRUCTION_STACK_ROW_OFFSET)) ;; ""
+(defun (return-instruction---code-hash-hi)                            (shift   stack/HASH_INFO_KECCAK_HI             RETURN_INSTRUCTION_STACK_ROW_OFFSET))
+(defun (return-instruction---code-hash-lo)                            (shift   stack/HASH_INFO_KECCAK_LO             RETURN_INSTRUCTION_STACK_ROW_OFFSET))
+(defun (return-instruction---is-root)                                 (shift   context/IS_ROOT                       RETURN_INSTRUCTION_CURRENT_CONTEXT_ROW_OFFSET))
+(defun (return-instruction---deployment-address-hi)                   (shift   context/BYTE_CODE_ADDRESS_HI          RETURN_INSTRUCTION_CURRENT_CONTEXT_ROW_OFFSET))
+(defun (return-instruction---deployment-address-lo)                   (shift   context/BYTE_CODE_ADDRESS_LO          RETURN_INSTRUCTION_CURRENT_CONTEXT_ROW_OFFSET))
+(defun (return-instruction---is-deployment)                           (shift   context/BYTE_CODE_DEPLOYMENT_STATUS   RETURN_INSTRUCTION_CURRENT_CONTEXT_ROW_OFFSET))
+(defun (return-instruction---return-at-offset)                        (shift   context/RETURN_AT_OFFSET              RETURN_INSTRUCTION_CURRENT_CONTEXT_ROW_OFFSET))
+(defun (return-instruction---return-at-capacity)                      (shift   context/RETURN_AT_CAPACITY            RETURN_INSTRUCTION_CURRENT_CONTEXT_ROW_OFFSET))
+(defun (return-instruction---MXP-may-trigger-non-trivial-operation)   (shift   misc/MXP_MTNTOP                       RETURN_INSTRUCTION_FIRST_MISC_ROW_OFFSET))
+(defun (return-instruction---MXP-memory-expansion-gas)                (shift   misc/MXP_GAS_MXP                      RETURN_INSTRUCTION_FIRST_MISC_ROW_OFFSET))
+(defun (return-instruction---MXP-memory-expansion-exception)          (shift   misc/MXP_MXPX                         RETURN_INSTRUCTION_FIRST_MISC_ROW_OFFSET))
+(defun (return-instruction---MMU-success-bit)                         (shift   misc/MMU_SUCCESS_BIT                  RETURN_INSTRUCTION_FIRST_MISC_ROW_OFFSET))
+(defun (return-instruction---OOB-max-code-size-exception)             (shift   [ misc/OOB_DATA 7 ]                   RETURN_INSTRUCTION_FIRST_MISC_ROW_OFFSET)) ;; ""
+(defun (return-instruction---deployment-code-fragment-index)          (shift   account/CODE_FRAGMENT_INDEX           RETURN_INSTRUCTION_NONEMPTY_DEPLOYMENT_FIRST_ACCOUNT_ROW_OFFSET))
+(defun (return-instruction---size-1-is-nonzero-and-no-mxpx)           (shift   misc/MXP_SIZE_1_NONZERO_NO_MXPX       RETURN_INSTRUCTION_FIRST_MISC_ROW_OFFSET))
+(defun (return-instruction---type-safe-return-data-offset)            (*       (return-instruction---offset-lo)      (return-instruction---size-1-is-nonzero-and-no-mxpx)))
+(defun (return-instruction---type-safe-return-data-size)              (return-instruction---size-lo))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                         ;;
@@ -211,8 +214,7 @@
 (defun  (return-touch-ram-expression)  (*  (-  1  (return-instruction---is-root))
                                            (return-instruction---MXP-may-trigger-non-trivial-operation)
                                            (return-instruction---return-at-capacity)
-                                           )
-  )
+                                           ))
 
 (defconstraint return-instruction---setting-the-first-misc-row  (:guard  (return-instruction---standard-scenario-row))
                ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -358,10 +360,10 @@
                                 ;; IS_ROOT = 0
                                 (provide-return-data 
                                   RETURN_INSTRUCTION_CALLER_CONTEXT_ROW_OFFSET_MESSAGE_CALL ;; row offset
-                                  CALLER_CONTEXT_NUMBER                              ;; receiver context
-                                  CONTEXT_NUMBER                                     ;; provider context
-                                  (return-instruction---offset-lo)                     ;; rdo
-                                  (return-instruction---size-lo)                       ;; rds
+                                  CALLER_CONTEXT_NUMBER                                     ;; receiver context
+                                  CONTEXT_NUMBER                                            ;; provider context
+                                  (return-instruction---type-safe-return-data-offset)       ;; (type safe) rdo
+                                  (return-instruction---type-safe-return-data-size)         ;; (type safe) rds
                                   )))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -505,8 +507,7 @@
                                                  (read-context-data                       RETURN_INSTRUCTION_CALLER_CONTEXT_ROW_OFFSET_NONEMPTY_DEPLOYMENT_WILL_REVERT    CONTEXT_NUMBER)
                                                  ;; IS_ROOT  ≡  0
                                                  (execution-provides-empty-return-data    RETURN_INSTRUCTION_CALLER_CONTEXT_ROW_OFFSET_NONEMPTY_DEPLOYMENT_WILL_REVERT)
-                                                 )
-                                  )
+                                                 ))
                    (if-not-zero   scenario/RETURN_FROM_DEPLOYMENT_NONEMPTY_CODE_WONT_REVERT
                                   (if-not-zero   (force-bin   (return-instruction---is-root))
                                                  ;; IS_ROOT  ≡  1
