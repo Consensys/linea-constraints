@@ -21,7 +21,7 @@
                                                           (-  1  stack/SUX )))
 
 (defun  (return-instruction---standard-scenario-row)  (* PEEK_AT_SCENARIO
-                                                (scenario-shorthand---RETURN---sum)))
+                                                         (scenario-shorthand---RETURN---sum)))
 
 (defconstraint   return-instruction---imposing-some-RETURN-scenario    (:guard  (return-instruction---standard-precondition))
                  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -83,14 +83,15 @@
 (defun (return-instruction---is-deployment)                           (shift   context/BYTE_CODE_DEPLOYMENT_STATUS   ROFF_RETURN___CURRENT_CONTEXT_ROW))
 (defun (return-instruction---return-at-offset)                        (shift   context/RETURN_AT_OFFSET              ROFF_RETURN___CURRENT_CONTEXT_ROW))
 (defun (return-instruction---return-at-capacity)                      (shift   context/RETURN_AT_CAPACITY            ROFF_RETURN___CURRENT_CONTEXT_ROW))
-(defun (return-instruction---MXP-may-trigger-non-trivial-operation)   (shift   misc/MXP_MTNTOP                       ROFF_RETURN___1ST_MISC_ROW))
 (defun (return-instruction---MXP-memory-expansion-gas)                (shift   misc/MXP_GAS_MXP                      ROFF_RETURN___1ST_MISC_ROW))
 (defun (return-instruction---MXP-memory-expansion-exception)          (shift   misc/MXP_MXPX                         ROFF_RETURN___1ST_MISC_ROW))
+(defun (return-instruction---MXP-may-trigger-non-trivial-operation)   (shift   misc/MXP_MTNTOP                       ROFF_RETURN___1ST_MISC_ROW))
+(defun (return-instruction---MXP-size-1-is-nonzero-and-no-mxpx)       (shift   misc/MXP_SIZE_1_NONZERO_NO_MXPX       ROFF_RETURN___1ST_MISC_ROW))
 (defun (return-instruction---MMU-success-bit)                         (shift   misc/MMU_SUCCESS_BIT                  ROFF_RETURN___1ST_MISC_ROW))
 (defun (return-instruction---OOB-max-code-size-exception)             (shift   [ misc/OOB_DATA 7 ]                   ROFF_RETURN___1ST_MISC_ROW)) ;; ""
 (defun (return-instruction---deployment-code-fragment-index)          (shift   account/CODE_FRAGMENT_INDEX           ROFF_RETURN___NONEMPTY_DEPLOYMENT___1ST_ACCOUNT_ROW))
-(defun (return-instruction---size-1-is-nonzero-and-no-mxpx)           (shift   misc/MXP_SIZE_1_NONZERO_NO_MXPX       ROFF_RETURN___1ST_MISC_ROW))
-(defun (return-instruction---type-safe-return-data-offset)            (*       (return-instruction---offset-lo)      (return-instruction---size-1-is-nonzero-and-no-mxpx)))
+
+(defun (return-instruction---type-safe-return-data-offset)            (*       (return-instruction---offset-lo)      (return-instruction---MXP-size-1-is-nonzero-and-no-mxpx)))
 (defun (return-instruction---type-safe-return-data-size)              (return-instruction---size-lo))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
