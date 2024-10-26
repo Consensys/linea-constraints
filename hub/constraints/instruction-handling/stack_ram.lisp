@@ -103,22 +103,27 @@
 (defconstraint   stack-ram---setting-MISC-module-flags
                  (:guard (stack-ram---std-hyp))
                  (eq! (weighted-MISC-flag-sum       ROFF_STACK_RAM___MISC_ROW)
-                      (+ (* MISC_WEIGHT_MMU (stack-ram---trigger_MMU))
-                         (* MISC_WEIGHT_MXP (stack-ram---is-MXX))
-                         (* MISC_WEIGHT_OOB (stack-ram---is-CDL)))))
+                      (+ (*   MISC_WEIGHT_MMU   (stack-ram---trigger_MMU))
+                         (*   MISC_WEIGHT_MXP   (stack-ram---trigger_MXP))
+                         (*   MISC_WEIGHT_OOB   (stack-ram---trigger_OOB)))))
 
 ;; defining trigger_MMU
-(defun (stack-ram---trigger_MMU)     (* (- 1 XAHOY)
-                                        (+ (* (stack-ram---is-CDL) (- 1 (stack-ram---CDL-is-oob)))
-                                           (stack-ram---is-MXX))))
+(defun    (stack-ram---trigger_MXP)     (stack-ram---is-MXX))
+(defun    (stack-ram---trigger_OOB)     (stack-ram---is-CDL))
+(defun    (stack-ram---trigger_MMU)     (+   (*   (stack-ram---is-CDL)   (- 1 XAHOY)   (- 1 (stack-ram---CDL-is-oob)))
+                                             (*   (stack-ram---is-MXX)   (- 1 XAHOY)                                 )))
+
+(defun    (stack-ram---misc-MXP-flag)   (shift    misc/MXP_FLAG   ROFF_STACK_RAM___MISC_ROW))
+(defun    (stack-ram---misc-OOB-flag)   (shift    misc/OOB_FLAG   ROFF_STACK_RAM___MISC_ROW))
+(defun    (stack-ram---misc-MMU-flag)   (shift    misc/MMU_FLAG   ROFF_STACK_RAM___MISC_ROW))
 
 (defconstraint   stack-ram---setting-OOB-instruction
                  (:guard (stack-ram---std-hyp))
-                 (if-not-zero (stack-ram---is-CDL)
-                              (set-OOB-instruction---cdl     ROFF_STACK_RAM___MISC_ROW               ;; row offset
-                                                             (stack-ram---offset-hi)              ;; offset within call data, high part
-                                                             (stack-ram---offset-lo)              ;; offset within call data, low  part
-                                                             (stack-ram---call-data-size))))      ;; call data size
+                 (if-not-zero   (stack-ram---misc-OOB-flag)
+                                (set-OOB-instruction---cdl     ROFF_STACK_RAM___MISC_ROW               ;; row offset
+                                                               (stack-ram---offset-hi)              ;; offset within call data, high part
+                                                               (stack-ram---offset-lo)              ;; offset within call data, low  part
+                                                               (stack-ram---call-data-size))))      ;; call data size
 
 (defconstraint   stack-ram---setting-value-for-trivial-CALLDATALOAD
                  (:guard (stack-ram---std-hyp))
@@ -150,8 +155,6 @@
                                                                                 (stack-ram---offset-hi)            ;; source offset high
                                                                                 (stack-ram---offset-lo)))))        ;; source offset low
 
-(defun    (stack-ram---call-data-context-number)   (shift    context/CALL_DATA_CONTEXT_NUMBER    ROFF_STACK_RAM___CONTEXT_ROW))
-(defun    (stack-ram---trigger-MMU)                (shift    misc/MMU_FLAG                       ROFF_STACK_RAM___MISC_ROW))
 
 (defconstraint   stack-ram---setting-MMU-instruction---CALLDATALOAD-case
                  (:guard (stack-ram---std-hyp))
