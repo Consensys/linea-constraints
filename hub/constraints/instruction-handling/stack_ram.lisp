@@ -58,10 +58,11 @@
                  (:guard (stack-ram---std-hyp))
                  (load-store-stack-pattern         (force-bin (stack-ram---is-store-instruction))))
 
-(defconstraint   stack-ram---allowable-exceptions                       (:guard (stack-ram---std-hyp))
-                 (eq!    XAHOY
-                         (+   (*   (stack-ram---is-MXX)   stack/MXPX)
-                              stack/OOGX)))
+(defconstraint   stack-ram---allowable-exceptions
+                 (:guard (stack-ram---std-hyp))
+                 (begin
+                   (if-not-zero    (stack-ram---is-MXX) (eq!    XAHOY    (+   stack/MXPX    stack/OOGX)))
+                   (if-not-zero    (stack-ram---is-CDL) (eq!    XAHOY                       stack/OOGX))))
 
 (defconstraint   stack-ram---setting-NSR
                  (:guard (stack-ram---std-hyp))
