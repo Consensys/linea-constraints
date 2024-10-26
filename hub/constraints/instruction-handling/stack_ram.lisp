@@ -133,11 +133,6 @@
                                              (vanishes! (stack-ram---value-hi))
                                              (vanishes! (stack-ram---value-lo))))))
 
-(defconstraint   stack-ram---setting-context-row-for-CALLDATALOAD
-                 (:guard (stack-ram---std-hyp))
-                 (if-not-zero    (stack-ram---is-CDL)
-                                 (read-context-data ROFF_STACK_RAM___CONTEXT_ROW CONTEXT_NUMBER)))
-
 (defconstraint   stack-ram---setting-MXP-instruction---MLOAD-MSTORE-case
                  (:guard (stack-ram---std-hyp))
                  (if-not-zero    (shift misc/MXP_FLAG ROFF_STACK_RAM___MISC_ROW)
@@ -247,3 +242,8 @@
                                                                                ;; exo_sum                             ;; weighted exogenous module flag sum
                                                                                ;; phase                               ;; phase
                                                                                ))))
+
+(defconstraint   stack-ram---setting-context-row-for-CALLDATALOAD
+                 (:guard (stack-ram---std-hyp))
+                 (if-not-zero    (stack-ram---is-CDL)
+                                 (read-context-data ROFF_STACK_RAM___CONTEXT_ROW CONTEXT_NUMBER)))
