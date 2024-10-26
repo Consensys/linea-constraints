@@ -7,52 +7,54 @@
 ;;;;                               ;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 ;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                    ;;
 ;;    X.5.10 Keccak   ;;
 ;;                    ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;;;;;;;;;;;;;;;;;
 ;;  Shorthands  ;;
 ;;;;;;;;;;;;;;;;;;
-(defun   (keccak-instruction---offset-hi)     [ stack/STACK_ITEM_VALUE_HI 1 ])
-(defun   (keccak-instruction---offset-lo)     [ stack/STACK_ITEM_VALUE_LO 1 ])
-(defun   (keccak-instruction---size-hi)       [ stack/STACK_ITEM_VALUE_HI 2 ])
-(defun   (keccak-instruction---size-lo)       [ stack/STACK_ITEM_VALUE_LO 2 ])
-(defun   (keccak-instruction---result-hi)     [ stack/STACK_ITEM_VALUE_HI 4 ])
-(defun   (keccak-instruction---result-lo)     [ stack/STACK_ITEM_VALUE_LO 4 ])
-(defun   (keccak-instruction---mxpx)          (next misc/MXP_MXPX))
-(defun   (keccak-instruction---mxp-gas)       (next misc/MXP_GAS_MXP))
-(defun   (keccak-instruction---mxp-MTNTOP)    (next misc/MXP_MTNTOP))
-(defun   (keccak-instruction---trigger_MMU)   (* (- 1 XAHOY) (keccak-instruction---mxp-MTNTOP))) ;; ""
 
-(defun (keccak-instruction---no-stack-exceptions)
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  (* PEEK_AT_STACK stack/KEC_FLAG (- 1 stack/SUX stack/SOX)))
+(defun   (keccak-instruction---offset-hi)             [ stack/STACK_ITEM_VALUE_HI 1 ])
+(defun   (keccak-instruction---offset-lo)             [ stack/STACK_ITEM_VALUE_LO 1 ])
+(defun   (keccak-instruction---size-hi)               [ stack/STACK_ITEM_VALUE_HI 2 ])
+(defun   (keccak-instruction---size-lo)               [ stack/STACK_ITEM_VALUE_LO 2 ])
+(defun   (keccak-instruction---result-hi)             [ stack/STACK_ITEM_VALUE_HI 4 ])
+(defun   (keccak-instruction---result-lo)             [ stack/STACK_ITEM_VALUE_LO 4 ])
+(defun   (keccak-instruction---mxpx)                  (next misc/MXP_MXPX))
+(defun   (keccak-instruction---mxp-gas)               (next misc/MXP_GAS_MXP))
+(defun   (keccak-instruction---mxp-MTNTOP)            (next misc/MXP_MTNTOP))
+(defun   (keccak-instruction---trigger_MMU)           (* (- 1 XAHOY) (keccak-instruction---mxp-MTNTOP))) ;; ""
+(defun   (keccak-instruction---no-stack-exceptions)   (* PEEK_AT_STACK stack/KEC_FLAG (- 1 stack/SUX stack/SOX)))
 
-(defconstraint    keccak-stack-pattern (:guard (keccak-instruction---no-stack-exceptions))
+(defconstraint    keccak-instruction---setting-stack-pattern (:guard (keccak-instruction---no-stack-exceptions))
                   (stack-pattern-2-1))
 
-(defconstraint    keccak-NSR-and-peeking-flags (:guard (keccak-instruction---no-stack-exceptions))
+(defconstraint    keccak-instruction---setting-NSR-and-peeking-flags (:guard (keccak-instruction---no-stack-exceptions))
                   (begin (eq! NON_STACK_ROWS (+ 1 CONTEXT_MAY_CHANGE))
                          (eq! NON_STACK_ROWS
                               (+ (shift PEEK_AT_MISCELLANEOUS 1)
                                  (* (shift PEEK_AT_CONTEXT 2) CONTEXT_MAY_CHANGE)))))
 
-(defconstraint    keccak-MISC-flags (:guard (keccak-instruction---no-stack-exceptions))
+(defconstraint    keccak-instruction---setting-MISC-flags (:guard (keccak-instruction---no-stack-exceptions))
                   (eq! (weighted-MISC-flag-sum 1)
                        (+ MISC_WEIGHT_MXP
                           (* MISC_WEIGHT_MMU (keccak-instruction---trigger_MMU)))))
 
-(defconstraint    keccak-MXP-call (:guard (keccak-instruction---no-stack-exceptions))
-                  (set-MXP-instruction-type-4 1                  ;; row offset kappa
-                                              EVM_INST_SHA3      ;; instruction
-                                              0                  ;; deploys (bit modifying the behaviour of RETURN pricing)
-                                              (keccak-instruction---offset-hi) ;; source offset high
-                                              (keccak-instruction---offset-lo) ;; source offset low
-                                              (keccak-instruction---size-hi)   ;; source size high
-                                              (keccak-instruction---size-lo))) ;; source size low
+(defconstraint    keccak-instruction---setting-MXP-parameters (:guard (keccak-instruction---no-stack-exceptions))
+                  (set-MXP-instruction-type-4 1                                  ;; row offset kappa
+                                              EVM_INST_SHA3                      ;; instruction
+                                              0                                  ;; deploys (bit modifying the behaviour of RETURN pricing)
+                                              (keccak-instruction---offset-hi)   ;; source offset high
+                                              (keccak-instruction---offset-lo)   ;; source offset low
+                                              (keccak-instruction---size-hi)     ;; source size high
+                                              (keccak-instruction---size-lo)     ;; source size low
+                                              ))
 
-(defconstraint    keccak-MMU-call (:guard (keccak-instruction---no-stack-exceptions))
+(defconstraint    keccak-instruction---setting-MMU-parameters (:guard (keccak-instruction---no-stack-exceptions))
                   (if-not-zero misc/MMU_FLAG
                                (set-MMU-instruction---ram-to-exo-with-padding    1                        ;; offset
                                                                                  CN                       ;; source ID
@@ -71,19 +73,19 @@
                                                                                  0                        ;; phase
                                                                                  )))
 
-(defconstraint    keccak-transferring-MXPX-to-stack (:guard (keccak-instruction---no-stack-exceptions))
+(defconstraint    keccak-instruction---transferring-MXPX-to-stack (:guard (keccak-instruction---no-stack-exceptions))
                   (eq! stack/MXPX (keccak-instruction---mxpx)))
 
-(defconstraint    keccak-setting-gas-cost (:guard (keccak-instruction---no-stack-exceptions))
+(defconstraint    keccak-instruction---setting-gas-cost (:guard (keccak-instruction---no-stack-exceptions))
                   ;; (if-zero (force-bin (keccak-instruction---mxpx))
                   (if-zero (keccak-instruction---mxpx)
                            (eq! GAS_COST (+ stack/STATIC_GAS (keccak-instruction---mxp-gas)))
                            (vanishes! GAS_COST)))
 
-(defconstraint    keccak-setting-HASH_INFO_FLAG (:guard (keccak-instruction---no-stack-exceptions))
+(defconstraint    keccak-instruction---setting-setting-HASH_INFO_FLAG (:guard (keccak-instruction---no-stack-exceptions))
                   (eq! stack/HASH_INFO_FLAG (keccak-instruction---trigger_MMU)))
 
-(defconstraint    keccak-value-constraints (:guard (keccak-instruction---no-stack-exceptions))
+(defconstraint    keccak-instruction---setting-value-constraints (:guard (keccak-instruction---no-stack-exceptions))
                   (if-zero XAHOY
                            ;; (if-zero (force-bin (keccak-instruction---trigger_MMU))
                            (if-zero (keccak-instruction---trigger_MMU)
