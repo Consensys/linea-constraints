@@ -14,8 +14,8 @@
                             (eq! GAS_COST
                                  (+ stack/STATIC_GAS
                                     (copy-instruction---MXP-memory-expansion-gas)
-                                    (* (copy-instruction---exo-address-warmth) GAS_CONST_G_WARM_ACCESS)
-                                    (* (- 1 (copy-instruction---exo-address-warmth)) GAS_CONST_G_COLD_ACCOUNT_ACCESS)))))
+                                    (* (copy-instruction---foreign-address-warmth)       GAS_CONST_G_WARM_ACCESS)
+                                    (* (- 1 (copy-instruction---foreign-address-warmth)) GAS_CONST_G_COLD_ACCOUNT_ACCESS)))))
 
 (defconstraint copy-instruction---EXTCODECOPY---the-MXPX-case (:guard (copy-instruction---standard-EXTCODECOPY))
                (if-not-zero stack/MXPX
@@ -39,7 +39,7 @@
 (defun (copy-instruction---trigger-CFI)
   (* (copy-instruction---is-EXTCODECOPY)
      (copy-instruction---trigger_MMU)
-     (copy-instruction---exo-address-has-code)))
+     (copy-instruction---foreign-address-has-code)))
 
 (defconstraint copy-instruction---unexceptional-reverted-EXTCODECOPY---doing-account-row (:guard (copy-instruction---standard-EXTCODECOPY))
                (if-not-zero (* (- 1 XAHOY) CONTEXT_WILL_REVERT)

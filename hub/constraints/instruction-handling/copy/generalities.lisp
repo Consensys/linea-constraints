@@ -69,19 +69,19 @@
 (defun (copy-instruction---return-data-size)       (shift context/RETURN_DATA_SIZE              ROFF_RETURNDATACOPY_CURRENT_CONTEXT_ROW))
 
 ;; for ext code copy
-(defun (copy-instruction---current-address-code-fragment-index)    (shift account/CODE_FRAGMENT_INDEX    ROFF_CODECOPY_NO_XAHOY_ACCOUNT_ROW))
-(defun (copy-instruction---current-address-code-size)              (shift account/CODE_SIZE              ROFF_CODECOPY_NO_XAHOY_ACCOUNT_ROW))
+(defun (copy-instruction---bytecode-address-code-fragment-index)    (shift account/CODE_FRAGMENT_INDEX    ROFF_CODECOPY_NO_XAHOY_ACCOUNT_ROW))
+(defun (copy-instruction---bytecode-address-code-size)              (shift account/CODE_SIZE              ROFF_CODECOPY_NO_XAHOY_ACCOUNT_ROW))
 
 ;;
-(defun (copy-instruction---exo-address-warmth)                 (shift account/WARMTH                 ROFF_EXTCODECOPY_NO_XAHOY_ACCOUNT_ROW))
-(defun (copy-instruction---exo-address-has-code)               (shift account/HAS_CODE               ROFF_EXTCODECOPY_NO_XAHOY_ACCOUNT_ROW))
-(defun (copy-instruction---exo-address-code-size)              (shift account/CODE_SIZE              ROFF_EXTCODECOPY_NO_XAHOY_ACCOUNT_ROW))
-(defun (copy-instruction---exo-address-code-fragment-index)    (shift account/CODE_FRAGMENT_INDEX    ROFF_EXTCODECOPY_NO_XAHOY_ACCOUNT_ROW))
-(defun (copy-instruction---standard-precondition)              (* PEEK_AT_STACK stack/COPY_FLAG (- 1 stack/SUX stack/SOX)))
-(defun (copy-instruction---standard-CALLDATACOPY)              (* (copy-instruction---standard-precondition) (copy-instruction---is-CALLDATACOPY)))
-(defun (copy-instruction---standard-RETURNDATACOPY)            (* (copy-instruction---standard-precondition) (copy-instruction---is-RETURNDATACOPY)))
-(defun (copy-instruction---standard-CODECOPY)                  (* (copy-instruction---standard-precondition) (copy-instruction---is-CODECOPY)))
-(defun (copy-instruction---standard-EXTCODECOPY)               (* (copy-instruction---standard-precondition) (copy-instruction---is-EXTCODECOPY)))
+(defun (copy-instruction---foreign-address-warmth)                 (shift account/WARMTH                 ROFF_EXTCODECOPY_NO_XAHOY_ACCOUNT_ROW))
+(defun (copy-instruction---foreign-address-has-code)               (shift account/HAS_CODE               ROFF_EXTCODECOPY_NO_XAHOY_ACCOUNT_ROW))
+(defun (copy-instruction---foreign-address-code-size)              (shift account/CODE_SIZE              ROFF_EXTCODECOPY_NO_XAHOY_ACCOUNT_ROW))
+(defun (copy-instruction---foreign-address-code-fragment-index)    (shift account/CODE_FRAGMENT_INDEX    ROFF_EXTCODECOPY_NO_XAHOY_ACCOUNT_ROW))
+(defun (copy-instruction---standard-precondition)                  (* PEEK_AT_STACK stack/COPY_FLAG (- 1 stack/SUX stack/SOX)))
+(defun (copy-instruction---standard-CALLDATACOPY)                  (* (copy-instruction---standard-precondition) (copy-instruction---is-CALLDATACOPY)))
+(defun (copy-instruction---standard-RETURNDATACOPY)                (* (copy-instruction---standard-precondition) (copy-instruction---is-RETURNDATACOPY)))
+(defun (copy-instruction---standard-CODECOPY)                      (* (copy-instruction---standard-precondition) (copy-instruction---is-CODECOPY)))
+(defun (copy-instruction---standard-EXTCODECOPY)                   (* (copy-instruction---standard-precondition) (copy-instruction---is-EXTCODECOPY)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                ;;
@@ -215,15 +215,15 @@
 
 (defun (copy-instruction---source-id)         (+   (* (copy-instruction---is-CALLDATACOPY)      (copy-instruction---call-data-context))
                                                    (* (copy-instruction---is-RETURNDATACOPY)    (copy-instruction---return-data-context))
-                                                   (* (copy-instruction---is-CODECOPY)          (copy-instruction---current-address-code-fragment-index))
-                                                   (* (copy-instruction---is-EXTCODECOPY)       (copy-instruction---exo-address-code-fragment-index))))
+                                                   (* (copy-instruction---is-CODECOPY)          (copy-instruction---bytecode-address-code-fragment-index))
+                                                   (* (copy-instruction---is-EXTCODECOPY)       (copy-instruction---foreign-address-code-fragment-index))))
 
 (defun (copy-instruction---reference-offset)  (+   (* (copy-instruction---is-CALLDATACOPY)      (copy-instruction---call-data-offset))
                                                    (* (copy-instruction---is-RETURNDATACOPY)    (copy-instruction---return-data-offset))))
 
 (defun (copy-instruction---reference-size)    (+   (* (copy-instruction---is-CALLDATACOPY)      (copy-instruction---call-data-size))
                                                    (* (copy-instruction---is-RETURNDATACOPY)    (copy-instruction---return-data-size))
-                                                   (* (copy-instruction---is-CODECOPY)          (copy-instruction---current-address-code-size))
-                                                   (* (copy-instruction---is-EXTCODECOPY)       (copy-instruction---exo-address-code-size) (copy-instruction---exo-address-has-code))))
+                                                   (* (copy-instruction---is-CODECOPY)          (copy-instruction---bytecode-address-code-size))
+                                                   (* (copy-instruction---is-EXTCODECOPY)       (copy-instruction---foreign-address-code-size) (copy-instruction---foreign-address-has-code))))
 
 (defun (copy-instruction---exo-sum)           (*   (+ (copy-instruction---is-CODECOPY) (copy-instruction---is-EXTCODECOPY)) EXO_SUM_WEIGHT_ROM))
