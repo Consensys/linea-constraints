@@ -135,7 +135,7 @@
 
 (defconstraint   stack-ram---setting-MXP-instruction---MLOAD-MSTORE-case
                  (:guard (stack-ram---std-hyp))
-                 (if-not-zero    (shift misc/MXP_FLAG ROFF_STACK_RAM___MISC_ROW)
+                 (if-not-zero    (stack-ram---misc-MXP-flag)
                                  (if-not-zero    (+    (stack-ram---is-MLOAD)    (stack-ram---is-MSTORE))
                                                  (set-MXP-instruction-type-2    ROFF_STACK_RAM___MISC_ROW  ;; row offset
                                                                                 (stack-ram---instruction)          ;; instruction
@@ -144,7 +144,7 @@
 
 (defconstraint   stack-ram---setting-MXP-instruction---MSTORE8-case
                  (:guard (stack-ram---std-hyp))
-                 (if-not-zero    (shift misc/MXP_FLAG ROFF_STACK_RAM___MISC_ROW)
+                 (if-not-zero    (stack-ram---misc-MXP-flag)
                                  (if-not-zero    (stack-ram---is-MSTORE8)
                                                  (set-MXP-instruction-type-3    ROFF_STACK_RAM___MISC_ROW  ;; row offset
                                                                                 (stack-ram---offset-hi)            ;; source offset high
@@ -153,7 +153,7 @@
 
 (defconstraint   stack-ram---setting-MMU-instruction---CALLDATALOAD-case
                  (:guard (stack-ram---std-hyp))
-                 (if-not-zero    (stack-ram---trigger-MMU)
+                 (if-not-zero    (stack-ram---misc-MMU-flag)
                                 ;; CALLDATALOAD case
                                 ;;;;;;;;;;;;;;;;;;;;
                                 (if-not-zero (stack-ram---is-CDL)
@@ -176,7 +176,7 @@
 
 (defconstraint   stack-ram---setting-MMU-instruction---MLOAD-case
                  (:guard (stack-ram---std-hyp))
-                 (if-not-zero    (stack-ram---trigger-MMU)
+                 (if-not-zero    (stack-ram---misc-MMU-flag)
                                 ;; MLOAD case
                                 ;;;;;;;;;;;;;
                                 (if-not-zero (stack-ram---is-MLOAD)
@@ -199,7 +199,7 @@
 
 (defconstraint   stack-ram---setting-MMU-instruction---MSTORE-case
                  (:guard (stack-ram---std-hyp))
-                 (if-not-zero    (stack-ram---trigger-MMU)
+                 (if-not-zero    (stack-ram---misc-MMU-flag)
                                 ;; MSTORE case
                                 ;;;;;;;;;;;;;;
                                 (if-not-zero (stack-ram---is-MSTORE)
@@ -222,7 +222,7 @@
 
 (defconstraint   stack-ram---setting-MMU-instruction---MSTORE8-case
                  (:guard (stack-ram---std-hyp))
-                 (if-not-zero    (stack-ram---trigger-MMU)
+                 (if-not-zero    (stack-ram---misc-MMU-flag)
                                 ;; MSTORE8 case
                                 ;;;;;;;;;;;;;;;
                                 (if-not-zero (stack-ram---is-MSTORE8)
