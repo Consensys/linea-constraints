@@ -120,10 +120,11 @@
 (defconstraint   stack-ram---setting-OOB-instruction
                  (:guard (stack-ram---std-hyp))
                  (if-not-zero   (stack-ram---misc-OOB-flag)
-                                (set-OOB-instruction---cdl     ROFF_STACK_RAM___MISC_ROW               ;; row offset
-                                                               (stack-ram---offset-hi)              ;; offset within call data, high part
-                                                               (stack-ram---offset-lo)              ;; offset within call data, low  part
-                                                               (stack-ram---call-data-size))))      ;; call data size
+                                (set-OOB-instruction---cdl     ROFF_STACK_RAM___MISC_ROW     ;; row offset
+                                                               (stack-ram---offset-hi)       ;; offset within call data, high part
+                                                               (stack-ram---offset-lo)       ;; offset within call data, low  part
+                                                               (stack-ram---call-data-size)  ;; call data size
+                                                               )))
 
 (defconstraint   stack-ram---setting-value-for-trivial-CALLDATALOAD
                  (:guard (stack-ram---std-hyp))
@@ -137,18 +138,20 @@
                  (:guard (stack-ram---std-hyp))
                  (if-not-zero    (stack-ram---misc-MXP-flag)
                                  (if-not-zero    (+    (stack-ram---is-MLOAD)    (stack-ram---is-MSTORE))
-                                                 (set-MXP-instruction-type-2     ROFF_STACK_RAM___MISC_ROW  ;; row offset
-                                                                                 (stack-ram---instruction)          ;; instruction
-                                                                                 (stack-ram---offset-hi)            ;; source offset high
-                                                                                 (stack-ram---offset-lo)))))        ;; source offset low
+                                                 (set-MXP-instruction-type-2     ROFF_STACK_RAM___MISC_ROW   ;; row offset
+                                                                                 (stack-ram---instruction)   ;; instruction
+                                                                                 (stack-ram---offset-hi)     ;; source offset high
+                                                                                 (stack-ram---offset-lo)     ;; source offset low
+                                                                                 ))))
 
 (defconstraint   stack-ram---setting-MXP-instruction---MSTORE8-case
                  (:guard (stack-ram---std-hyp))
                  (if-not-zero    (stack-ram---misc-MXP-flag)
                                  (if-not-zero    (stack-ram---is-MSTORE8)
                                                  (set-MXP-instruction-type-3    ROFF_STACK_RAM___MISC_ROW  ;; row offset
-                                                                                (stack-ram---offset-hi)            ;; source offset high
-                                                                                (stack-ram---offset-lo)))))        ;; source offset low
+                                                                                (stack-ram---offset-hi)    ;; source offset high
+                                                                                (stack-ram---offset-lo)    ;; source offset low
+                                                                                ))))
 
 
 (defconstraint   stack-ram---setting-MMU-instruction---CALLDATALOAD-case
