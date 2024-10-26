@@ -54,7 +54,8 @@
                                 stack/STACKRAM_FLAG
                                 (- 1 stack/SUX stack/SOX)))
 
-(defconstraint   stack-ram---setting-the-stack-pattern                 (:guard (stack-ram---std-hyp))
+(defconstraint   stack-ram---setting-the-stack-pattern
+                 (:guard (stack-ram---std-hyp))
                  (load-store-stack-pattern         (force-bin (stack-ram---is-store-instruction))))
 
 (defconstraint   stack-ram---allowable-exceptions                       (:guard (stack-ram---std-hyp))
@@ -62,11 +63,13 @@
                          (+   (*   (stack-ram---is-MXX)   stack/MXPX)
                               stack/OOGX)))
 
-(defconstraint   stack-ram---setting-NSR                               (:guard (stack-ram---std-hyp))
+(defconstraint   stack-ram---setting-NSR
+                 (:guard (stack-ram---std-hyp))
                  (eq! NSR
                       (+ 1 (stack-ram---is-CDL) CMC)))
 
-(defconstraint   stack-ram---setting-the-peeking-flags                 (:guard (stack-ram---std-hyp))
+(defconstraint   stack-ram---setting-the-peeking-flags
+                 (:guard (stack-ram---std-hyp))
                  (begin (if-not-zero (stack-ram---is-CDL)
                                      (eq! NSR
                                           (+ (shift PEEK_AT_MISCELLANEOUS   ROFF_STACK_RAM___MISC_ROW)
@@ -78,13 +81,15 @@
                                              (* (shift PEEK_AT_CONTEXT 2) CMC))))
                         (debug (eq! CMC XAHOY))))
 
-(defconstraint   stack-ram---setting-the-memory-expansion-exception    (:guard (stack-ram---std-hyp))
+(defconstraint   stack-ram---setting-the-memory-expansion-exception
+                 (:guard (stack-ram---std-hyp))
                  (begin (if-not-zero (stack-ram---is-CDL)
                                      (vanishes! stack/MXPX))
                         (if-not-zero (stack-ram---is-MXX)
                                      (eq! stack/MXPX (stack-ram---MXP-mxpx)))))
 
-(defconstraint   stack-ram---setting-the-gas-cost                      (:guard (stack-ram---std-hyp))
+(defconstraint   stack-ram---setting-the-gas-cost
+                 (:guard (stack-ram---std-hyp))
                  (begin (if-not-zero (stack-ram---is-CDL)
                                      (eq! GAS_COST stack/STATIC_GAS))
                         (if-not-zero (stack-ram---is-MXX)
@@ -94,7 +99,8 @@
                                                       (stack-ram---MXP-mxp-gas)))
                                               (vanishes! GAS_COST)))))
 
-(defconstraint   stack-ram---setting-MISC-module-flags                 (:guard (stack-ram---std-hyp))
+(defconstraint   stack-ram---setting-MISC-module-flags
+                 (:guard (stack-ram---std-hyp))
                  (eq! (weighted-MISC-flag-sum       ROFF_STACK_RAM___MISC_ROW)
                       (+ (* MISC_WEIGHT_MMU (stack-ram---trigger_MMU))
                          (* MISC_WEIGHT_MXP (stack-ram---is-MXX))
@@ -105,25 +111,29 @@
                                         (+ (* (stack-ram---is-CDL) (- 1 (stack-ram---CDL-is-oob)))
                                            (stack-ram---is-MXX))))
 
-(defconstraint   stack-ram---setting-OOB-instruction                   (:guard (stack-ram---std-hyp))
+(defconstraint   stack-ram---setting-OOB-instruction
+                 (:guard (stack-ram---std-hyp))
                  (if-not-zero (stack-ram---is-CDL)
                               (set-OOB-instruction---cdl     ROFF_STACK_RAM___MISC_ROW               ;; row offset
                                                              (stack-ram---offset-hi)              ;; offset within call data, high part
                                                              (stack-ram---offset-lo)              ;; offset within call data, low  part
                                                              (stack-ram---call-data-size))))      ;; call data size
 
-(defconstraint   stack-ram---setting-value-for-trivial-CALLDATALOAD    (:guard (stack-ram---std-hyp))
+(defconstraint   stack-ram---setting-value-for-trivial-CALLDATALOAD
+                 (:guard (stack-ram---std-hyp))
                  (if-not-zero (stack-ram---is-CDL)
                               (if-not-zero (stack-ram---CDL-is-oob)
                                            (begin
                                              (vanishes! (stack-ram---value-hi))
                                              (vanishes! (stack-ram---value-lo))))))
 
-(defconstraint   stack-ram---setting-context-row-for-CALLDATALOAD      (:guard (stack-ram---std-hyp))
+(defconstraint   stack-ram---setting-context-row-for-CALLDATALOAD
+                 (:guard (stack-ram---std-hyp))
                  (if-not-zero    (stack-ram---is-CDL)
                                  (read-context-data ROFF_STACK_RAM___CONTEXT_ROW CONTEXT_NUMBER)))
 
-(defconstraint   stack-ram---setting-MXP-instruction---MLOAD-MSTORE-case                   (:guard (stack-ram---std-hyp))
+(defconstraint   stack-ram---setting-MXP-instruction---MLOAD-MSTORE-case
+                 (:guard (stack-ram---std-hyp))
                  (if-not-zero    (shift misc/MXP_FLAG ROFF_STACK_RAM___MISC_ROW)
                                  (if-not-zero    (+    (stack-ram---is-MLOAD)    (stack-ram---is-MSTORE))
                                                  (set-MXP-instruction-type-2    ROFF_STACK_RAM___MISC_ROW  ;; row offset
@@ -131,7 +141,8 @@
                                                                                 (stack-ram---offset-hi)            ;; source offset high
                                                                                 (stack-ram---offset-lo)))))        ;; source offset low
 
-(defconstraint   stack-ram---setting-MXP-instruction---MSTORE8-case                   (:guard (stack-ram---std-hyp))
+(defconstraint   stack-ram---setting-MXP-instruction---MSTORE8-case
+                 (:guard (stack-ram---std-hyp))
                  (if-not-zero    (shift misc/MXP_FLAG ROFF_STACK_RAM___MISC_ROW)
                                  (if-not-zero    (stack-ram---is-MSTORE8)
                                                  (set-MXP-instruction-type-3    ROFF_STACK_RAM___MISC_ROW  ;; row offset
@@ -141,7 +152,8 @@
 (defun    (stack-ram---call-data-context-number)   (shift    context/CALL_DATA_CONTEXT_NUMBER    ROFF_STACK_RAM___CONTEXT_ROW))
 (defun    (stack-ram---trigger-MMU)                (shift    misc/MMU_FLAG                       ROFF_STACK_RAM___MISC_ROW))
 
-(defconstraint   stack-ram---setting-MMU-instruction---CALLDATALOAD-case                   (:guard (stack-ram---std-hyp))
+(defconstraint   stack-ram---setting-MMU-instruction---CALLDATALOAD-case
+                 (:guard (stack-ram---std-hyp))
                  (if-not-zero    (stack-ram---trigger-MMU)
                                 ;; CALLDATALOAD case
                                 ;;;;;;;;;;;;;;;;;;;;
@@ -163,7 +175,8 @@
                                                                                                     ;; phase                               ;; phase
                                                                                                     ))))
 
-(defconstraint   stack-ram---setting-MMU-instruction---MLOAD-case                   (:guard (stack-ram---std-hyp))
+(defconstraint   stack-ram---setting-MMU-instruction---MLOAD-case
+                 (:guard (stack-ram---std-hyp))
                  (if-not-zero    (stack-ram---trigger-MMU)
                                 ;; MLOAD case
                                 ;;;;;;;;;;;;;
@@ -185,7 +198,8 @@
                                                                              ;; phase                               ;; phase
                                                                              ))))
 
-(defconstraint   stack-ram---setting-MMU-instruction---MSTORE-case                   (:guard (stack-ram---std-hyp))
+(defconstraint   stack-ram---setting-MMU-instruction---MSTORE-case
+                 (:guard (stack-ram---std-hyp))
                  (if-not-zero    (stack-ram---trigger-MMU)
                                 ;; MSTORE case
                                 ;;;;;;;;;;;;;;
@@ -207,7 +221,8 @@
                                                                               ;; phase                               ;; phase
                                                                               ))))
 
-(defconstraint   stack-ram---setting-MMU-instruction---MSTORE8-case                   (:guard (stack-ram---std-hyp))
+(defconstraint   stack-ram---setting-MMU-instruction---MSTORE8-case
+                 (:guard (stack-ram---std-hyp))
                  (if-not-zero    (stack-ram---trigger-MMU)
                                 ;; MSTORE8 case
                                 ;;;;;;;;;;;;;;;
