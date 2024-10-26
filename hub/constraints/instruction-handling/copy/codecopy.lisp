@@ -26,9 +26,9 @@
                (if-zero XAHOY
                         (begin (eq! (shift account/ADDRESS_HI             ROFF_CODECOPY_NO_XAHOY_ACCOUNT_ROW) (shift context/BYTE_CODE_ADDRESS_HI            ROFF_CODECOPY_NO_XAHOY_CONTEXT_ROW))
                                (eq! (shift account/ADDRESS_LO             ROFF_CODECOPY_NO_XAHOY_ACCOUNT_ROW) (shift context/BYTE_CODE_ADDRESS_LO            ROFF_CODECOPY_NO_XAHOY_CONTEXT_ROW))
-                               (eq! (shift account/DEPLOYMENT_NUMBER      ROFF_CODECOPY_NO_XAHOY_ACCOUNT_ROW) (shift context/BYTE_CODE_DEPLOYMENT_NUMBER     ROFF_CODECOPY_NO_XAHOY_CONTEXT_ROW))
-                               (eq! (shift account/CODE_FRAGMENT_INDEX    ROFF_CODECOPY_NO_XAHOY_ACCOUNT_ROW) CODE_FRAGMENT_INDEX)
-                               (eq! (shift account/ROMLEX_FLAG            ROFF_CODECOPY_NO_XAHOY_ACCOUNT_ROW) 1)
+                               ;; deployment number
+                               ;; deployment status
+                               ;; ROM_LEX flag
                                (account-same-balance                      ROFF_CODECOPY_NO_XAHOY_ACCOUNT_ROW)
                                (account-same-nonce                        ROFF_CODECOPY_NO_XAHOY_ACCOUNT_ROW)
                                (account-same-code                         ROFF_CODECOPY_NO_XAHOY_ACCOUNT_ROW)
@@ -37,3 +37,10 @@
                                (account-same-marked-for-selfdestruct      ROFF_CODECOPY_NO_XAHOY_ACCOUNT_ROW)
                                (DOM-SUB-stamps---standard                 ROFF_CODECOPY_NO_XAHOY_ACCOUNT_ROW 0))))
 
+(defconstraint copy-instruction---CODECOPY---debug-consistency-constraints (:guard (copy-instruction---standard-CODECOPY))
+               (begin
+                 (eq!        (shift account/DEPLOYMENT_NUMBER      ROFF_CODECOPY_NO_XAHOY_ACCOUNT_ROW) (shift context/BYTE_CODE_DEPLOYMENT_NUMBER     ROFF_CODECOPY_NO_XAHOY_CONTEXT_ROW))
+                 (eq!        (shift account/DEPLOYMENT_STATUS      ROFF_CODECOPY_NO_XAHOY_ACCOUNT_ROW) (shift context/BYTE_CODE_DEPLOYMENT_STATUS     ROFF_CODECOPY_NO_XAHOY_CONTEXT_ROW))
+                 (eq!        (shift account/DEPLOYMENT_STATUS      ROFF_CODECOPY_NO_XAHOY_ACCOUNT_ROW) (shift context/BYTE_CODE_CODE_FRAGMENT_INDEX   ROFF_CODECOPY_NO_XAHOY_CONTEXT_ROW))
+                 (eq!        (shift account/CODE_FRAGMENT_INDEX    ROFF_CODECOPY_NO_XAHOY_ACCOUNT_ROW) CODE_FRAGMENT_INDEX)
+                 (debug (eq! (shift account/ROMLEX_FLAG            ROFF_CODECOPY_NO_XAHOY_ACCOUNT_ROW) 1))))
