@@ -210,7 +210,7 @@
                (if-zero (force-bool (+ ROOB NOOP))
                         (eq! CT (if-zero MXPX
                                       CT_MAX_NON_TRIVIAL
-                                      CT_MAX_NON_TRIVIAL_BUT_MXPX)))))
+                                      CT_MAX_NON_TRIVIAL_BUT_MXPX))))) ;; ""
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                               ;;
@@ -230,8 +230,7 @@
 ;;                               ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defun (standing-hypothesis)
-  (* STAMP (- 1 NOOP ROOB))) ;; NOOP + ROOB is binary cf noop section
+(defun (standing-hypothesis) (* STAMP (- 1 NOOP ROOB))) ;; NOOP + ROOB is binary cf noop section
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                       ;;
@@ -383,11 +382,11 @@
            (+ QUAD_COST (* DEPLOYS LIN_COST)))
       (eq! GAS_MXP (+ QUAD_COST LIN_COST))))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;                                    ;;
-;;    2.12 Consistency Constraints    ;;
-;;                                    ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                   ;;
+;;    X.Y Consistency Constraints    ;;
+;;                                   ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defpermutation 
   (CN_perm
