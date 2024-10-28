@@ -14,6 +14,14 @@
                                    (* MACRO (+ (* CT_MAX_MACRO_EXP_LOG    IS_EXP_LOG) (* CT_MAX_MACRO_MODEXP_LOG    IS_MODEXP_LOG)))
                                    (* PRPRC (+ (* CT_MAX_PRPRC_EXP_LOG    IS_EXP_LOG) (* CT_MAX_PRPRC_MODEXP_LOG    IS_MODEXP_LOG)))))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                             ;;
+;;    2.2 binary constraints   ;;
+;;                             ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; done with binary@prove in columns.lisp
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                               ;;
 ;;    2.3 Flag sum perspectives  ;;

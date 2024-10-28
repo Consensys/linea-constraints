@@ -9,6 +9,8 @@
   (if-not-zero OOGX
               (eq! XAHOY 1)))
 
+;; others are done with binary@prove in columns.lisp
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                     ;;
 ;;    3.2 Heartbeat    ;;
