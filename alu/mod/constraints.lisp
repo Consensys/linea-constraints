@@ -256,7 +256,7 @@
 ;;                              ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defconstraint comparaison-constraint ()
+(defconstraint comparison-constraint ()
   (if-eq CT MMEDIUMMO
          (begin (eq! (+ (Delta_3) (lt_3))
                      (* (- (* 2 (lt_3)) 1)
