@@ -285,7 +285,7 @@
            (begin (vanishes! INDEX)
                   (vanishes! ID))))
 
-(defconstraint stamp-increments ()
+(defconstraint stamp-increment-sanity-check ()
   (begin 
     (vanishes! 0)
     (debug (any! (will-remain-constant! STAMP) (will-inc! STAMP 1))))) ;; implied by the constraint below
