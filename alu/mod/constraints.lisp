@@ -30,7 +30,7 @@
 (defun    (Delta_0)    ACC_DELTA_0)
 (defun    (H_2)        ACC_H_2)
 (defun    (H_1)        ACC_H_1)
-(defun    (H_0)        ACC_H_0)
+(defun    (H_0)        ACC_H_0) ;; ""
 (defun    (sgn_1)      (shift MSB_1 -7))
 (defun    (sgn_2)      (shift MSB_2 -7))
 (defun    (lt_0)       (shift CMP_1 -7))
@@ -67,30 +67,28 @@
                  (R_HI)))
 
 ;; alisases for decoding inst
-(defun (flag_sum) (force-bool (+ IS_SMOD IS_MOD IS_SDIV IS_DIV)))
-(defun (weight_sum) (+ (* EVM_INST_SMOD IS_SMOD) (* EVM_INST_MOD IS_MOD) (* EVM_INST_SDIV IS_SDIV) (* EVM_INST_DIV IS_DIV)))
-(defun (signed_inst) (force-bool (+ IS_SMOD IS_SDIV)))
+(defun   (flag_sum)      (force-bool (+ IS_SMOD IS_MOD IS_SDIV IS_DIV)))
+(defun   (weight_sum)    (+ (* EVM_INST_SMOD IS_SMOD) (* EVM_INST_MOD IS_MOD) (* EVM_INST_SDIV IS_SDIV) (* EVM_INST_DIV IS_DIV)))
+(defun   (signed_inst)   (force-bool (+ IS_SMOD IS_SDIV)))
 
 ;; bit decompositions of the most significant bytes
-(defun (bit-dec-msb1)
-  (+ (* 128 (shift MSB_1 -7))
-     (* 64 (shift MSB_1 -6))
-     (* 32 (shift MSB_1 -5))
-     (* 16 (shift MSB_1 -4))
-     (* 8 (shift MSB_1 -3))
-     (* 4 (shift MSB_1 -2))
-     (* 2 (shift MSB_1 -1))
-     MSB_1))
+(defun   (bit-dec-msb1)   (+ (* 128 (shift MSB_1 -7))
+                             (* 64  (shift MSB_1 -6))
+                             (* 32  (shift MSB_1 -5))
+                             (* 16  (shift MSB_1 -4))
+                             (* 8   (shift MSB_1 -3))
+                             (* 4   (shift MSB_1 -2))
+                             (* 2   (shift MSB_1 -1))
+                             MSB_1))
 
-(defun (bit-dec-msb2)
-  (+ (* 128 (shift MSB_2 -7))
-     (* 64 (shift MSB_2 -6))
-     (* 32 (shift MSB_2 -5))
-     (* 16 (shift MSB_2 -4))
-     (* 8 (shift MSB_2 -3))
-     (* 4 (shift MSB_2 -2))
-     (* 2 (shift MSB_2 -1))
-     MSB_2))
+(defun   (bit-dec-msb2)   (+ (* 128 (shift MSB_2 -7))
+                             (* 64  (shift MSB_2 -6))
+                             (* 32  (shift MSB_2 -5))
+                             (* 16  (shift MSB_2 -4))
+                             (* 8   (shift MSB_2 -3))
+                             (* 4   (shift MSB_2 -2))
+                             (* 2   (shift MSB_2 -1))
+                             MSB_2))
 
 (defun (set-negative zHi zLo yHi yLo)
   (if-not-zero yLo
@@ -139,7 +137,7 @@
 ;;                     ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defconstraint first-row (:domain {0})
+(defconstraint first-row (:domain {0}) ;; ""
   (vanishes! STAMP))
 
 (defconstraint heartbeat ()
@@ -150,17 +148,17 @@
          (if-eq MLI 1
                 (if-eq-else CT MMEDIUMMO (will-inc! STAMP 1) (will-inc! CT 1)))))
 
-(defconstraint last-row (:domain {-1})
+(defconstraint last-row (:domain {-1}) ;; ""
   (if-eq MLI 1 (eq! CT MMEDIUMMO)))
 
 (defconstraint stamp-constancies ()
-  (begin (stamp-constancy STAMP ARG_1_HI)
-         (stamp-constancy STAMP ARG_1_LO)
-         (stamp-constancy STAMP ARG_2_HI)
-         (stamp-constancy STAMP ARG_2_LO)
-         (stamp-constancy STAMP RES_HI)
-         (stamp-constancy STAMP RES_LO)
-         (stamp-constancy STAMP INST)))
+               (begin (stamp-constancy STAMP ARG_1_HI)
+                      (stamp-constancy STAMP ARG_1_LO)
+                      (stamp-constancy STAMP ARG_2_HI)
+                      (stamp-constancy STAMP ARG_2_LO)
+                      (stamp-constancy STAMP RES_HI)
+                      (stamp-constancy STAMP RES_LO)
+                      (stamp-constancy STAMP INST)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                                               ;;
@@ -169,29 +167,29 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defconstraint byte-decompositions ()
-  (begin (byte-decomposition CT ACC_1_3 BYTE_1_3)
-         (byte-decomposition CT ACC_1_2 BYTE_1_2)
-         (byte-decomposition CT ACC_2_3 BYTE_2_3)
-         (byte-decomposition CT ACC_2_2 BYTE_2_2)
-         (byte-decomposition CT ACC_B_3 BYTE_B_3)
-         (byte-decomposition CT ACC_B_2 BYTE_B_2)
-         (byte-decomposition CT ACC_B_1 BYTE_B_1)
-         (byte-decomposition CT ACC_B_0 BYTE_B_0)
-         (byte-decomposition CT ACC_Q_3 BYTE_Q_3)
-         (byte-decomposition CT ACC_Q_2 BYTE_Q_2)
-         (byte-decomposition CT ACC_Q_1 BYTE_Q_1)
-         (byte-decomposition CT ACC_Q_0 BYTE_Q_0)
-         (byte-decomposition CT ACC_R_3 BYTE_R_3)
-         (byte-decomposition CT ACC_R_2 BYTE_R_2)
-         (byte-decomposition CT ACC_R_1 BYTE_R_1)
-         (byte-decomposition CT ACC_R_0 BYTE_R_0)
-         (byte-decomposition CT ACC_DELTA_3 BYTE_DELTA_3)
-         (byte-decomposition CT ACC_DELTA_2 BYTE_DELTA_2)
-         (byte-decomposition CT ACC_DELTA_1 BYTE_DELTA_1)
-         (byte-decomposition CT ACC_DELTA_0 BYTE_DELTA_0)
-         (byte-decomposition CT ACC_H_2 BYTE_H_2)
-         (byte-decomposition CT ACC_H_1 BYTE_H_1)
-         (byte-decomposition CT ACC_H_0 BYTE_H_0)))
+               (begin (byte-decomposition CT ACC_1_3 BYTE_1_3)
+                      (byte-decomposition CT ACC_1_2 BYTE_1_2)
+                      (byte-decomposition CT ACC_2_3 BYTE_2_3)
+                      (byte-decomposition CT ACC_2_2 BYTE_2_2)
+                      (byte-decomposition CT ACC_B_3 BYTE_B_3)
+                      (byte-decomposition CT ACC_B_2 BYTE_B_2)
+                      (byte-decomposition CT ACC_B_1 BYTE_B_1)
+                      (byte-decomposition CT ACC_B_0 BYTE_B_0)
+                      (byte-decomposition CT ACC_Q_3 BYTE_Q_3)
+                      (byte-decomposition CT ACC_Q_2 BYTE_Q_2)
+                      (byte-decomposition CT ACC_Q_1 BYTE_Q_1)
+                      (byte-decomposition CT ACC_Q_0 BYTE_Q_0)
+                      (byte-decomposition CT ACC_R_3 BYTE_R_3)
+                      (byte-decomposition CT ACC_R_2 BYTE_R_2)
+                      (byte-decomposition CT ACC_R_1 BYTE_R_1)
+                      (byte-decomposition CT ACC_R_0 BYTE_R_0)
+                      (byte-decomposition CT ACC_DELTA_3 BYTE_DELTA_3)
+                      (byte-decomposition CT ACC_DELTA_2 BYTE_DELTA_2)
+                      (byte-decomposition CT ACC_DELTA_1 BYTE_DELTA_1)
+                      (byte-decomposition CT ACC_DELTA_0 BYTE_DELTA_0)
+                      (byte-decomposition CT ACC_H_2 BYTE_H_2)
+                      (byte-decomposition CT ACC_H_1 BYTE_H_1)
+                      (byte-decomposition CT ACC_H_0 BYTE_H_0)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                           ;;
