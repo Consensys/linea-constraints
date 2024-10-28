@@ -43,21 +43,27 @@
          (counter-constancy CT LIN_COST)
          (counter-constancy CT GAS_MXP)))
 
+(defun   (mxp-instrution---is-type-1)   [ MXP_TYPE 1 ])
+(defun   (mxp-instrution---is-type-2)   [ MXP_TYPE 2 ])
+(defun   (mxp-instrution---is-type-3)   [ MXP_TYPE 3 ])
+(defun   (mxp-instrution---is-type-4)   [ MXP_TYPE 4 ])
+(defun   (mxp-instrution---is-type-5)   [ MXP_TYPE 5 ]) ;; ""
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                     ;;
 ;;    2.3 ROOB flag    ;;
 ;;                     ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defconstraint setting-roob-type-1 (:guard [MXP_TYPE 1])
+(defconstraint setting-roob-type-1 (:guard (mxp-instruction---is-type-1))
   (vanishes! ROOB))
 
-(defconstraint setting-roob-type-2-3 (:guard (+ [MXP_TYPE 2] [MXP_TYPE 3]))
+(defconstraint setting-roob-type-2-3 (:guard (+ (mxp-instruction---is-type-2) (mxp-instruction---is-type-3)))
   (if-not-zero OFFSET_1_HI
                (eq! ROOB 1)
                (vanishes! ROOB)))
 
-(defconstraint setting-roob-type-4 (:guard [MXP_TYPE 4])
+(defconstraint setting-roob-type-4 (:guard (mxp-instruction---is-type-4))
   (begin (if-not-zero SIZE_1_HI
                       (eq! ROOB 1))
          (if-not-zero (* OFFSET_1_HI SIZE_1_LO)
@@ -66,7 +72,7 @@
                   (if-zero (* OFFSET_1_HI SIZE_1_LO)
                            (vanishes! ROOB)))))
 
-(defconstraint setting-roob-type-5 (:guard [MXP_TYPE 5])
+(defconstraint setting-roob-type-5 (:guard (mxp-instruction---is-type-5))
   (begin (if-not-zero SIZE_1_HI
                       (eq! ROOB 1))
          (if-not-zero SIZE_2_HI
@@ -93,11 +99,11 @@
 
 (defconstraint setting-noop ()
   (if-zero ROOB
-           (begin (if-not-zero (+ [MXP_TYPE 1] [MXP_TYPE 2] [MXP_TYPE 3])
-                               (eq! NOOP [MXP_TYPE 1]))
-                  (if-eq [MXP_TYPE 4] 1
+           (begin (if-not-zero (+ (mxp-instruction---is-type-1) (mxp-instruction---is-type-2) (mxp-instruction---is-type-3))
+                               (eq! NOOP (mxp-instruction---is-type-1)))
+                  (if-eq (mxp-instruction---is-type-4) 1
                          (eq! NOOP (is-zero SIZE_1_LO)))
-                  (if-eq [MXP_TYPE 5] 1
+                  (if-eq (mxp-instruction---is-type-5) 1
                          (eq! NOOP
                               (* (is-zero SIZE_1_LO) (is-zero SIZE_2_LO)))))))
 
@@ -116,11 +122,11 @@
 (defconstraint setting-mtntop ()
   (begin 
     (debug (is-binary MTNTOP))
-    (debug (if-zero [MXP_TYPE 4]
+    (debug (if-zero (mxp-instruction---is-type-4)
             (vanishes! MTNTOP)))
     (if-not-zero MXPX
             (vanishes! MTNTOP))
-    (if-not-zero [MXP_TYPE 4]
+    (if-not-zero (mxp-instruction---is-type-4)
             (if-zero MXPX
               (if-zero SIZE_1_LO
                 (vanishes! MTNTOP)
@@ -162,7 +168,7 @@
 ;;                     ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defconstraint first-row (:domain {0})
+(defconstraint first-row (:domain {0}) ;; ""
   (vanishes! STAMP))
 
 (defconstraint stamp-increments ()
@@ -176,7 +182,7 @@
 
 (defconstraint type-flag-sum (:guard STAMP)
   (eq! 1
-       (reduce + (for i [5] [MXP_TYPE i]))))
+       (reduce + (for i [5] [MXP_TYPE i])))) ;; ""
 
 (defconstraint counter-reset ()
   (if-not-zero (will-remain-constant! STAMP)
@@ -213,7 +219,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defconstraint byte-decompositions ()
-  (begin (for k [1:4] (byte-decomposition CT [ACC k] [BYTE k]))
+  (begin (for k [1:4] (byte-decomposition CT [ACC k] [BYTE k])) ;; ""
          (byte-decomposition CT ACC_A BYTE_A)
          (byte-decomposition CT ACC_W BYTE_W)
          (byte-decomposition CT ACC_Q BYTE_Q)))
@@ -234,23 +240,23 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defconstraint max-offsets-1-and-2-type-2 (:guard (standing-hypothesis))
-  (if-eq [MXP_TYPE 2] 1
+  (if-eq (mxp-instruction---is-type-2) 1
          (begin (eq! MAX_OFFSET_1 (+ OFFSET_1_LO 31))
                 (vanishes! MAX_OFFSET_2))))
 
 (defconstraint max-offsets-1-and-2-type-3 (:guard (standing-hypothesis))
-  (if-eq [MXP_TYPE 3] 1
+  (if-eq (mxp-instruction---is-type-3) 1
          (begin (eq! MAX_OFFSET_1 OFFSET_1_LO)
                 (vanishes! MAX_OFFSET_2))))
 
 (defconstraint max-offsets-1-and-2-type-4 (:guard (standing-hypothesis))
-  (if-eq [MXP_TYPE 4] 1
+  (if-eq (mxp-instruction---is-type-4) 1
          (begin (eq! MAX_OFFSET_1
                      (+ OFFSET_1_LO (- SIZE_1_LO 1)))
                 (vanishes! MAX_OFFSET_2))))
 
 (defconstraint max-offsets-1-and-2-type-5 (:guard (standing-hypothesis))
-  (if-eq [MXP_TYPE 5] 1
+  (if-eq (mxp-instruction---is-type-5) 1
          (begin (if-zero SIZE_1_LO
                          (vanishes! MAX_OFFSET_1)
                          (eq! MAX_OFFSET_1
@@ -270,7 +276,7 @@
   (if-eq MXPX 1
          (if-eq CT CT_MAX_NON_TRIVIAL_BUT_MXPX
                 (vanishes! (* (- (- MAX_OFFSET_1 TWO_POW_32) [ACC 1])
-                              (- (- MAX_OFFSET_2 TWO_POW_32) [ACC 2]))))))
+                              (- (- MAX_OFFSET_2 TWO_POW_32) [ACC 2])))))) ;; ""
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                ;;
@@ -283,7 +289,7 @@
      (- 1 MXPX)))
 
 (defconstraint size-in-evm-words (:guard (* (standing-hypothesis) (offsets-are-in-bounds)))
-  (if-eq [MXP_TYPE 4] 1
+  (if-eq (mxp-instruction---is-type-4) 1
          (begin (eq! SIZE_1_LO
                      (- (* 32 ACC_W) BYTE_R))
                 (eq! (prev BYTE_R)
@@ -293,10 +299,14 @@
   (begin (eq! [ACC 1] MAX_OFFSET_1)
          (eq! [ACC 2] MAX_OFFSET_2)))
 
+
+
 (defconstraint comparing-max-offsets-1-and-2 (:guard (* (standing-hypothesis) (offsets-are-in-bounds)))
   (eq! (+ [ACC 3] (- 1 COMP))
        (* (- MAX_OFFSET_1 MAX_OFFSET_2)
           (- (* 2 COMP) 1))))
+
+;; ""
 
 (defconstraint defining-max-offset (:guard (* (standing-hypothesis) (offsets-are-in-bounds)))
   (eq! MAX_OFFSET
@@ -313,6 +323,8 @@
   (eq! (+ [ACC 4] EXPANDS)
        (* (- ACC_A WORDS)
           (- (* 2 EXPANDS) 1))))
+
+;; ""
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                              ;;
