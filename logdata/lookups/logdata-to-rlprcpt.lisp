@@ -2,7 +2,7 @@
   logdata.LOGS_DATA)
 
 (deflookup 
-  logdata-into-rlptxrcpt
+  logdata-into-rlptxnrcpt
   ;reference columns
   (
     rlptxrcpt.ABS_LOG_NUM
@@ -13,11 +13,11 @@
   )
   ;source columns
   (
-    (* logdata.ABS_LOG_NUM (sel-logdata-to-rlptxnrcpt))
+    (* logdata.ABS_LOG_NUM            (sel-logdata-to-rlptxnrcpt))
     (* RLP_RCPT_SUBPHASE_ID_DATA_LIMB (sel-logdata-to-rlptxnrcpt))
-    (* logdata.INDEX (sel-logdata-to-rlptxnrcpt))
-    (* logdata.LIMB (sel-logdata-to-rlptxnrcpt))
-    (* logdata.SIZE_LIMB (sel-logdata-to-rlptxnrcpt))
+    (* logdata.INDEX                  (sel-logdata-to-rlptxnrcpt))
+    (* logdata.LIMB                   (sel-logdata-to-rlptxnrcpt))
+    (* logdata.SIZE_LIMB              (sel-logdata-to-rlptxnrcpt))
   ))
 
 
