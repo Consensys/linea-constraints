@@ -44,33 +44,36 @@
          (push-constant PUSH_VALUE_LO)))
 
 ;; Heartbeat
-(defconstraint initialization (:domain {0})
+(defconstraint initialization (:domain {0}) ;; ""
   (vanishes! CODE_FRAGMENT_INDEX))
 
 (defconstraint cfi-evolving-possibility ()
   (or! (will-remain-constant! CFI) (will-inc! CFI 1)))
 
-(defconstraint no-cfi-nothing ()
-  (if-zero CFI
-           (begin (vanishes! CT)
-                  (vanishes! COUNTER_MAX)
-                  (vanishes! PBCB)
-                  (debug (vanishes! IS_PUSH))
-                  (debug (vanishes! IS_PUSH_DATA))
-                  (debug (vanishes! COUNTER_PUSH))
-                  (debug (vanishes! PUSH_PARAMETER))
-                  (debug (vanishes! PROGRAM_COUNTER)))
-           (begin (debug (or! (eq! COUNTER_MAX LLARGEMO) (eq! COUNTER_MAX EVMWORDMO)))
-                  (if-eq COUNTER_MAX LLARGEMO (will-remain-constant! CFI))
-                  (if-not-eq COUNTER COUNTER_MAX (will-remain-constant! CFI))
-                  (if-eq CT WORD_SIZE_MO (will-inc! CFI 1)))))
+(defconstraint heartbeat---automatic-vanishing-constraints-for-padding-rows ()
+               (if-zero CFI
+                        (begin (vanishes!              CT              )
+                               (vanishes!              COUNTER_MAX     )
+                               (vanishes!              PBCB            )
+                               (debug     (vanishes!   IS_PUSH         ))
+                               (debug     (vanishes!   IS_PUSH_DATA    ))
+                               (debug     (vanishes!   COUNTER_PUSH    ))
+                               (debug     (vanishes!   PUSH_PARAMETER  ))
+                               (debug     (vanishes!   PROGRAM_COUNTER )))))
+
+(defconstraint heartbeat---CFI-updates-for-non-padding-rows ()
+               (if-not-zero CFI
+                            (begin (debug (or! (eq! COUNTER_MAX   LLARGEMO)      (eq! COUNTER_MAX EVMWORDMO)))
+                                   (if-eq           COUNTER_MAX   LLARGEMO       (will-remain-constant! CFI))
+                                   (if-not-eq       COUNTER       COUNTER_MAX    (will-remain-constant! CFI))
+                                   (if-eq           CT            WORD_SIZE_MO   (will-inc!             CFI 1)))))
 
 (defconstraint counter-evolution ()
   (if-eq-else CT COUNTER_MAX
               (vanishes! (next CT))
               (will-inc! CT 1)))
 
-(defconstraint finalisation (:domain {-1})
+(defconstraint finalisation (:domain {-1}) ;; ""
   (if-not-zero CFI
                (begin (eq! CT COUNTER_MAX)
                       (eq! COUNTER_MAX WORD_SIZE_MO)
