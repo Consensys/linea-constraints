@@ -10,7 +10,7 @@
   (IS_MOD  :binary@prove)
   (IS_SDIV :binary@prove)
   (IS_DIV  :binary@prove)
-  (SIGNED  :binary@prove)
+  (SIGNED  :binary)        ;; this column is _de facto_ binary
   ;
   (ARG_1_HI :i128)
   (ARG_1_LO :i128)
