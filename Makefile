@@ -79,8 +79,6 @@ MMU :=  $(wildcard mmu/*.lisp) \
 	$(wildcard mmu/instructions/*.lisp) \
 	$(wildcard mmu/instructions/any_to_ram_with_padding/*.lisp)
 
-MMIO_COLUMNS := mmio/columns.lisp
-
 MMIO := $(wildcard mmio/*lisp) \
 	$(wildcard mmio/lookups/*lisp) 
 
@@ -179,7 +177,7 @@ ZKEVM_MODULES_FOR_REFERENCE_TESTS := ${ALU} \
 				     ${LIBRARY} \
 				     ${LOG_DATA} \
 				     ${LOG_INFO} \
-                                     ${MMIO} \
+                     ${MMIO} \
 				     ${MMU} \
 				     ${MXP} \
 				     ${OOB} \
