@@ -196,12 +196,10 @@
 ;;    1.3.8 SELECTOR_KECCAK_RES    ;;
 ;;                                 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defconstraint set-esult-selector ()
-  (begin (eq! SELECTOR_KECCAK_RES_HI
-              (* IS_KECCAK_RESULT (- 1 INDEX)))
-         (eq! SELECTOR_SHA2_RES_HI
-              (* IS_SHA2_RESULT (- 1 INDEX)))
-         (eq! SELECTOR_RIPEMD_RES_HI
-              (* IS_RIPEMD_RESULT (- 1 INDEX)))))
+
+(defconstraint set-result-selector ()
+  (begin (eq!   SELECTOR_KECCAK_RES_HI   (* IS_KECCAK_RESULT   (-  1  INDEX)))
+         (eq!   SELECTOR_SHA2_RES_HI     (* IS_SHA2_RESULT     (-  1  INDEX)))
+         (eq!   SELECTOR_RIPEMD_RES_HI   (* IS_RIPEMD_RESULT   (-  1  INDEX)))))
 
 
