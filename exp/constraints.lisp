@@ -14,20 +14,6 @@
                                    (* MACRO (+ (* CT_MAX_MACRO_EXP_LOG    IS_EXP_LOG) (* CT_MAX_MACRO_MODEXP_LOG    IS_MODEXP_LOG)))
                                    (* PRPRC (+ (* CT_MAX_PRPRC_EXP_LOG    IS_EXP_LOG) (* CT_MAX_PRPRC_MODEXP_LOG    IS_MODEXP_LOG)))))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;                             ;;
-;;    2.2 binary constraints   ;;
-;;                             ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defconstraint   binary-constraints ()
-                 (begin (is-binary IS_EXP_LOG)
-                        (is-binary IS_MODEXP_LOG)
-                        (is-binary CMPTN)
-                        (is-binary MACRO)
-                        (is-binary PRPRC)
-                        (is-binary (flag_sum_perspective))
-                        (is-binary (flag_sum_macro))))
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                               ;;
 ;;    2.3 Flag sum perspectives  ;;
