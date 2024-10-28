@@ -49,9 +49,10 @@
 (defun    (R_LO)       (+ (* THETA (R_1)) (R_0)))
 (defun    (Q_HI)       (+ (* THETA (Q_3)) (Q_2)))
 (defun    (Q_LO)       (+ (* THETA (Q_1)) (Q_0)))
+
+;; absolute value shorthands
 (defun    (ABS_2_HI)       (+ (* THETA (B_3)) (B_2)))
 (defun    (ABS_2_LO)       (+ (* THETA (B_1)) (B_0)))
-
 (defun    (ABS_1_HI)   (+ (beta)
                           (H_1)
                           (* THETA (alpha))
@@ -60,7 +61,6 @@
                           (* (B_2) (Q_0))
                           (* THETA (H_2))
                           (R_HI)))
-
 (defun    (ABS_1_LO)   (- (+ (* (B_0) (Q_0))
                              (* THETA (H_0))
                              (R_LO))
