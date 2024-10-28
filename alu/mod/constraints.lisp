@@ -1,165 +1,75 @@
 (module mod)
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;                              ;;;;
-;;;;    _xxX=Aliases69420=Xxx_    ;;;;
-;;;;                              ;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defun (ARG1_3)
-  ACC_1_3)
+;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;
+;;;;               ;;;;
+;;;;    Aliases    ;;;;
+;;;;               ;;;;
+;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;
 
-(defun (ARG1_2)
-  ACC_1_2)
+(defun    (ARG1_3)     ACC_1_3)
+(defun    (ARG1_2)     ACC_1_2)
+(defun    (ARG2_3)     ACC_2_3)
+(defun    (ARG2_2)     ACC_2_2)
+(defun    (B_3)        ACC_B_3)
+(defun    (B_2)        ACC_B_2)
+(defun    (B_1)        ACC_B_1)
+(defun    (B_0)        ACC_B_0)
+(defun    (Q_3)        ACC_Q_3)
+(defun    (Q_2)        ACC_Q_2)
+(defun    (Q_1)        ACC_Q_1)
+(defun    (Q_0)        ACC_Q_0)
+(defun    (R_3)        ACC_R_3)
+(defun    (R_2)        ACC_R_2)
+(defun    (R_1)        ACC_R_1)
+(defun    (R_0)        ACC_R_0)
+(defun    (Delta_3)    ACC_DELTA_3)
+(defun    (Delta_2)    ACC_DELTA_2)
+(defun    (Delta_1)    ACC_DELTA_1)
+(defun    (Delta_0)    ACC_DELTA_0)
+(defun    (H_2)        ACC_H_2)
+(defun    (H_1)        ACC_H_1)
+(defun    (H_0)        ACC_H_0)
+(defun    (sgn_1)      (shift MSB_1 -7))
+(defun    (sgn_2)      (shift MSB_2 -7))
+(defun    (lt_0)       (shift CMP_1 -7))
+(defun    (eq_0)       (shift CMP_2 -7))
+(defun    (lt_1)       (shift CMP_1 -6))
+(defun    (eq_1)       (shift CMP_2 -6))
+(defun    (lt_2)       (shift CMP_1 -5))
+(defun    (eq_2)       (shift CMP_2 -5))
+(defun    (lt_3)       (shift CMP_1 -4))
+(defun    (eq_3)       (shift CMP_2 -4))
+(defun    (alpha)      (shift CMP_2 -3))
+(defun    (beta_0)     (shift CMP_2 -2))
+(defun    (beta_1)     (shift CMP_2 -1))
+(defun    (beta)       (+ (* 2 (beta_1)) (beta_0)))
+(defun    (R_HI)       (+ (* THETA (R_3)) (R_2)))
+(defun    (R_LO)       (+ (* THETA (R_1)) (R_0)))
+(defun    (Q_HI)       (+ (* THETA (Q_3)) (Q_2)))
+(defun    (Q_LO)       (+ (* THETA (Q_1)) (Q_0)))
+(defun    (B_LO)       (+ (* THETA (B_1)) (B_0)))
+(defun    (B_HI)       (+ (* THETA (B_3)) (B_2)))
 
-(defun (ARG2_3)
-  ACC_2_3)
+(defun (A_LO) (- (+ (* (B_0) (Q_0))
+                    (* THETA (H_0))
+                    (R_LO))
+                 (* THETA2 (beta))))
 
-(defun (ARG2_2)
-  ACC_2_2)
-
-(defun (B_3)
-  ACC_B_3)
-
-(defun (B_2)
-  ACC_B_2)
-
-(defun (B_1)
-  ACC_B_1)
-
-(defun (B_0)
-  ACC_B_0)
-
-(defun (Q_3)
-  ACC_Q_3)
-
-(defun (Q_2)
-  ACC_Q_2)
-
-(defun (Q_1)
-  ACC_Q_1)
-
-(defun (Q_0)
-  ACC_Q_0)
-
-(defun (R_3)
-  ACC_R_3)
-
-(defun (R_2)
-  ACC_R_2)
-
-(defun (R_1)
-  ACC_R_1)
-
-(defun (R_0)
-  ACC_R_0)
-
-(defun (Delta_3)
-  ACC_DELTA_3)
-
-(defun (Delta_2)
-  ACC_DELTA_2)
-
-(defun (Delta_1)
-  ACC_DELTA_1)
-
-(defun (Delta_0)
-  ACC_DELTA_0)
-
-(defun (H_2)
-  ACC_H_2)
-
-(defun (H_1)
-  ACC_H_1)
-
-(defun (H_0)
-  ACC_H_0)
-
-(defun (sgn_1)
-  (shift MSB_1 -7))
-
-(defun (sgn_2)
-  (shift MSB_2 -7))
-
-;aliases for the comparison columns
-(defun (lt_0)
-  (shift CMP_1 -7))
-
-(defun (eq_0)
-  (shift CMP_2 -7))
-
-(defun (lt_1)
-  (shift CMP_1 -6))
-
-(defun (eq_1)
-  (shift CMP_2 -6))
-
-(defun (lt_2)
-  (shift CMP_1 -5))
-
-(defun (eq_2)
-  (shift CMP_2 -5))
-
-(defun (lt_3)
-  (shift CMP_1 -4))
-
-(defun (eq_3)
-  (shift CMP_2 -4))
-
-(defun (alpha)
-  (shift CMP_2 -3))
-
-(defun (beta_0)
-  (shift CMP_2 -2))
-
-(defun (beta_1)
-  (shift CMP_2 -1))
-
-(defun (beta)
-  (+ (* 2 (beta_1)) (beta_0)))
-
-(defun (R_HI)
-  (+ (* THETA (R_3)) (R_2)))
-
-(defun (R_LO)
-  (+ (* THETA (R_1)) (R_0)))
-
-(defun (Q_HI)
-  (+ (* THETA (Q_3)) (Q_2)))
-
-(defun (Q_LO)
-  (+ (* THETA (Q_1)) (Q_0)))
-
-(defun (B_LO)
-  (+ (* THETA (B_1)) (B_0)))
-
-(defun (B_HI)
-  (+ (* THETA (B_3)) (B_2)))
-
-(defun (A_LO)
-  (- (+ (* (B_0) (Q_0)) (* THETA (H_0)) (R_LO))
-     (* THETA2 (beta))))
-
-(defun (A_HI)
-  (+ (beta)
-     (H_1)
-     (* THETA (alpha))
-     (* (B_0) (Q_2))
-     (* (B_1) (Q_1))
-     (* (B_2) (Q_0))
-     (* THETA (H_2))
-     (R_HI)))
+(defun (A_HI) (+ (beta)
+                 (H_1)
+                 (* THETA (alpha))
+                 (* (B_0) (Q_2))
+                 (* (B_1) (Q_1))
+                 (* (B_2) (Q_0))
+                 (* THETA (H_2))
+                 (R_HI)))
 
 ;; alisases for decoding inst
-(defun (flag_sum)
-  (force-bool (+ IS_SMOD IS_MOD IS_SDIV IS_DIV)))
-
-(defun (weight_sum)
-  (+ (* EVM_INST_SMOD IS_SMOD) (* EVM_INST_MOD IS_MOD) (* EVM_INST_SDIV IS_SDIV) (* EVM_INST_DIV IS_DIV)))
-
-(defun (signed_inst)
-  (force-bool (+ IS_SMOD IS_SDIV)))
+(defun (flag_sum) (force-bool (+ IS_SMOD IS_MOD IS_SDIV IS_DIV)))
+(defun (weight_sum) (+ (* EVM_INST_SMOD IS_SMOD) (* EVM_INST_MOD IS_MOD) (* EVM_INST_SDIV IS_SDIV) (* EVM_INST_DIV IS_DIV)))
+(defun (signed_inst) (force-bool (+ IS_SMOD IS_SDIV)))
 
 ;; bit decompositions of the most significant bytes
 (defun (bit-dec-msb1)
@@ -196,6 +106,7 @@
 ;;    5.5 instruction decoding    ;;
 ;;                                ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (defconstraint set-flag-sum ()
   (eq! (flag_sum) (~ STAMP)))
 
@@ -210,6 +121,7 @@
 ;;    5.6 OLI and MLI decoding    ;;
 ;;                                ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (defconstraint oli-and-mli-exclusivity ()
   (eq! (force-bool (+ OLI MLI))
        (flag_sum)))
@@ -226,6 +138,7 @@
 ;;    5.7 heartbeat    ;;
 ;;                     ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (defconstraint first-row (:domain {0})
   (vanishes! STAMP))
 
@@ -254,6 +167,7 @@
 ;;    5.9 Binary, bytehood and byte decomposition constraints    ;;
 ;;                                                               ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (defconstraint byte-decompositions ()
   (begin (byte-decomposition CT ACC_1_3 BYTE_1_3)
          (byte-decomposition CT ACC_1_2 BYTE_1_2)
@@ -284,6 +198,7 @@
 ;;    5.10 Auto Vanishing    ;;
 ;;                           ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (defconstraint oli-imply-trivial-result ()
   (if-eq OLI 1
          (begin (vanishes! RES_HI)
@@ -294,6 +209,7 @@
 ;;    5.12.2 Absolute values    ;;
 ;;                              ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (defun (set-absolute-value a_hi a_lo x_hi x_lo sgn)
   (if-zero sgn
            (begin (eq! a_hi x_hi)
@@ -314,6 +230,7 @@
 ;;    5.12.3 target constraints    ;;
 ;;                                 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (defconstraint target-constraints (:guard STAMP)
   (if-eq CT MMEDIUMMO
          (begin (= ARG_1_HI
@@ -349,6 +266,7 @@
 ;;    5.12.4 comp constraint    ;;
 ;;                              ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (defconstraint comparaison-constraint ()
   (if-eq CT MMEDIUMMO
          (begin (eq! (+ (Delta_3) (lt_3))
@@ -384,6 +302,7 @@
 ;;    5.12.5 result constraint  ;;
 ;;                              ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (defconstraint mod-result (:guard IS_MOD)
   (if-eq CT MMEDIUMMO
          (begin (eq! RES_HI (R_HI))
@@ -407,5 +326,3 @@
                      (begin (eq! RES_HI (Q_HI))
                             (eq! RES_LO (Q_LO)))
                      (set-negative RES_HI RES_LO (Q_HI) (Q_LO)))))
-
-
