@@ -49,22 +49,22 @@
 (defun    (R_LO)       (+ (* THETA (R_1)) (R_0)))
 (defun    (Q_HI)       (+ (* THETA (Q_3)) (Q_2)))
 (defun    (Q_LO)       (+ (* THETA (Q_1)) (Q_0)))
-(defun    (B_LO)       (+ (* THETA (B_1)) (B_0)))
-(defun    (B_HI)       (+ (* THETA (B_3)) (B_2)))
+(defun    (ABS_2_HI)       (+ (* THETA (B_3)) (B_2)))
+(defun    (ABS_2_LO)       (+ (* THETA (B_1)) (B_0)))
 
-(defun (A_LO) (- (+ (* (B_0) (Q_0))
-                    (* THETA (H_0))
-                    (R_LO))
-                 (* THETA2 (beta))))
+(defun    (ABS_1_HI)   (+ (beta)
+                          (H_1)
+                          (* THETA (alpha))
+                          (* (B_0) (Q_2))
+                          (* (B_1) (Q_1))
+                          (* (B_2) (Q_0))
+                          (* THETA (H_2))
+                          (R_HI)))
 
-(defun (A_HI) (+ (beta)
-                 (H_1)
-                 (* THETA (alpha))
-                 (* (B_0) (Q_2))
-                 (* (B_1) (Q_1))
-                 (* (B_2) (Q_0))
-                 (* THETA (H_2))
-                 (R_HI)))
+(defun    (ABS_1_LO)   (- (+ (* (B_0) (Q_0))
+                             (* THETA (H_0))
+                             (R_LO))
+                          (* THETA2 (beta))))
 
 ;; alisases for decoding inst
 (defun   (flag_sum)      (force-bool (+ IS_SMOD IS_MOD IS_SDIV IS_DIV)))
@@ -220,8 +220,8 @@
 
 (defconstraint set-absolute-values ()
   (if-eq CT MMEDIUMMO
-         (begin (set-absolute-value (A_HI) (A_LO) ARG_1_HI ARG_1_LO (* SIGNED (sgn_1)))
-                (set-absolute-value (B_HI) (B_LO) ARG_2_HI ARG_2_LO (* SIGNED (sgn_2))))))
+         (begin (set-absolute-value (ABS_1_HI) (ABS_1_LO) ARG_1_HI ARG_1_LO (* SIGNED (sgn_1)))
+                (set-absolute-value (ABS_2_HI) (ABS_2_LO) ARG_2_HI ARG_2_LO (* SIGNED (sgn_2))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                 ;;
@@ -243,15 +243,6 @@
                    (+ (* THETA2 (alpha)) (* THETA (H_1)) (H_0)))
                 (= (+ (* (B_0) (Q_3)) (* (B_1) (Q_2)) (* (B_2) (Q_1)) (* (B_3) (Q_0)))
                    (H_2))
-                (eq! (+ (* (B_0) (Q_0)) (* THETA (H_0)) (R_LO))
-                     (+ (A_LO) (* THETA2 (beta))))
-                (eq! (A_HI)
-                     (+ (beta)
-                        (H_1)
-                        (* THETA (alpha))
-                        (+ (* (B_0) (Q_2)) (* (B_1) (Q_1)) (* (B_2) (Q_0)))
-                        (* THETA (H_2))
-                        (R_HI)))
                 (vanishes! (+ (* (B_1) (Q_3))
                               (* (B_2) (Q_2))
                               (* (B_3) (Q_1))
