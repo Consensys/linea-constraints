@@ -56,6 +56,13 @@
 ;;                       ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(defun   (conflation-constancy   X)
+  (if-not-zero   ABS_LOG_NUM
+                 (will-remain-constant!   X)))
+
+(defconstraint   conflation-constancy-of-ABS_LOG_NUM_MAX   ()
+                 (conflation-constancy   ABS_LOG_NUM_MAX))
+
 (defun (log-constancy X)
   (if (remained-constant! ABS_LOG_NUM)
       (remained-constant! X)))
