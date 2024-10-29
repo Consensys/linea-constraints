@@ -37,7 +37,6 @@
     (* rlptxn.ADDR_HI (hub-into-rlp-txn-tgt-selector))
     (* rlptxn.ADDR_LO (hub-into-rlp-txn-tgt-selector))
     (* [rlptxn.INPUT 1] (rlp-txn-depth-2) (hub-into-rlp-txn-tgt-selector)) 
-    (* [rlptxn.INPUT 2] (rlp-txn-depth-2) (hub-into-rlp-txn-tgt-selector)))
   )
   ;; source columns
   (
