@@ -64,8 +64,8 @@
                  (conflation-constancy   ABS_LOG_NUM_MAX))
 
 (defun (log-constancy X)
-  (if (remained-constant! ABS_LOG_NUM)
-      (remained-constant! X)))
+  (if-not-zero   (did-inc!           ABS_LOG_NUM 1)
+                 (remained-constant! X)))
 
 (defconstraint log-constancies ()
   (begin (log-constancy SIZE_TOTAL)
