@@ -53,6 +53,7 @@
 ;;    2.2 Constancies    ;;
 ;;                       ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (defun (log-constancy X)
   (if (remained-constant! ABS_LOG_NUM)
       (remained-constant! X)))
@@ -61,14 +62,28 @@
   (begin (log-constancy SIZE_TOTAL)
          (debug (log-constancy LOGS_DATA))))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;                         ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                     ;;
 ;;    2.3 LOGS_DATA    ;;
-;;                         ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                     ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (defconstraint log-logs-data-definition ()
   (if-zero SIZE_TOTAL
            (vanishes! LOGS_DATA)
-           (eq! LOGS_DATA 1)))
+           (eq!       LOGS_DATA 1)))
 
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                     ;;
+;;    2.4 Range check for SIZE_LIMB    ;;
+;;                                     ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defun    (normalized-SIZE_LIMB)
+  (if-zero    ABS_LOG_NUM
+              SIZE_LIMB
+              (- SIZE_LIMB 1)))
+
+;; this constraint enforces in particular that the final value of SIZE_LIMB is in the range [1 , 16]
+(definrange    (normalized-SIZE_LIMB)   16)
