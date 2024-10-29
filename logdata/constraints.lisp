@@ -42,7 +42,9 @@
                              (did-inc! INDEX 1)))
          (if-not-zero (will-remain-constant! ABS_LOG_NUM)
                       (begin (eq! SIZE_TOTAL SIZE_ACC)
-                             (vanishes! (next INDEX))))))
+                             (vanishes! (next INDEX))))
+         (debug       (if-eq       SIZE_ACC   SIZE_TOTAL
+                      (will-inc!    ABS_LOG_NUM   1)))))
 
 (defconstraint final-row (:domain {-1} :guard ABS_LOG_NUM)
   (begin (eq! ABS_LOG_NUM ABS_LOG_NUM_MAX)
