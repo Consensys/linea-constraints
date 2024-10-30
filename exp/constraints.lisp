@@ -20,17 +20,16 @@
 ;;                             ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; done with binary@prove in columns.lisp
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                               ;;
 ;;    2.3 Flag sum perspectives  ;;
 ;;                               ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;; (flag_sum_perspective) is thus binary by construction
 (defconstraint   flag-sum-perspective-padding-non-padding ()
                  (if-zero STAMP
-                          (vanishes! (flag_sum_perspective))
+                          (eq! (flag_sum_perspective) 0)
                           (eq! (flag_sum_perspective) 1)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -39,9 +38,10 @@
 ;;                               ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;; (flag_sum_macro) is thus binary by construction
 (defconstraint   instruction-decoding-padding-non-padding ()
                  (if-zero STAMP
-                          (vanishes! (flag_sum_macro))
+                          (eq! (flag_sum_macro) 0)
                           (eq! (flag_sum_macro) 1)))
 
 (defconstraint   instruction-decoding-exp-inst (:perspective macro)
@@ -62,7 +62,6 @@
                         (counter-constancy CT MACRO)
                         (counter-constancy CT PRPRC)))
 
-;; perspective constancy constraint (TODO: in stdlib.lisp)
 (defpurefun ((perspective-constancy :@loob) PERSPECTIVE_SELECTOR X)
             (if-not-zero (* PERSPECTIVE_SELECTOR (prev PERSPECTIVE_SELECTOR))
                          (remained-constant! X)))
@@ -135,7 +134,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                             ;;
-;;    3.8 Bit decomposition   ;;
+;;    3.8 Bit decomposition    ;;
 ;;        constraints          ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
