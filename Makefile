@@ -181,7 +181,7 @@ ZKEVM_MODULES_FOR_REFERENCE_TESTS := ${ALU} \
 				     ${LOG_DATA} \
 				     ${LOG_INFO} \
 				     ${MMU} \
-				     ${MMIO_COLUMNS}
+				     ${MMIO_COLUMNS} \ 
 				     ${MXP} \
 				     ${OOB} \
 				     ${RLP_ADDR} \
