@@ -135,7 +135,7 @@ ZKEVM_MODULES := ${ALU} \
 		 ${EUC} \
 		 ${EXP} \
 		 ${GAS} \
-		 ${HUB_COLUMNS} \
+		 ${HUB} \
 		 ${LIBRARY} \
 		 ${LOG_DATA} \
 		 ${LOG_INFO} \
@@ -176,12 +176,12 @@ ZKEVM_MODULES_FOR_REFERENCE_TESTS := ${ALU} \
 				     ${EUC} \
 				     ${EXP} \
 				     ${GAS} \
-				     ${HUB_COLUMNS} \
+				     ${HUB} \
 				     ${LIBRARY} \
 				     ${LOG_DATA} \
 				     ${LOG_INFO} \
 				     ${MMU} \
-				     ${MMIO_COLUMNS} \
+				     ${MMIO_COLUMNS}
 				     ${MXP} \
 				     ${OOB} \
 				     ${RLP_ADDR} \
