@@ -65,11 +65,6 @@
                         (counter-constancy CT MACRO)
                         (counter-constancy CT PRPRC)))
 
-;; perspective constancy constraint (TODO: in stdlib.lisp)
-(defpurefun ((perspective-constancy :@loob) PERSPECTIVE_SELECTOR X)
-            (if-not-zero (* PERSPECTIVE_SELECTOR (prev PERSPECTIVE_SELECTOR))
-                         (remained-constant! X)))
-
 (defconstraint   computation-constancy (:perspective computation)
                  (begin (perspective-constancy CMPTN PLT_JMP)
                         (perspective-constancy CMPTN MSB)))
@@ -139,14 +134,6 @@
 ;;    3.8 Bit decomposition   ;;
 ;;        constraints          ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; bit decomposition constraint (TODO: add to stdlib.lisp)
-(defpurefun (bit-decomposition ct acc bits)
-            (if-zero ct
-                     (eq! acc bits)
-                     (eq! acc
-                          (+ (* 2 (prev acc))
-                             bits))))
-
 (defconstraint   bit-decompositions (:perspective computation :guard IS_MODEXP_LOG)
                  (bit-decomposition CT MSB_ACC MSB_BIT))
 
