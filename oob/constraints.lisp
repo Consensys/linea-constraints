@@ -419,8 +419,8 @@
 (defun (deployment---max-code-size-exception)          [DATA 7])
 (defun (deployment---exceeds-max-code-size)            OUTGOING_RES_LO)
 
-(defconstraint deployment---compare-24576-against-code-size (:guard (* (assumption---fresh-new-stamp) (deployment---standard-precondition)))
-  (call-to-LT 0 0 24576 (deployment---code-size-hi) (deployment---code-size-lo)))
+(defconstraint deployment---compare-max-code-size-against-code-size (:guard (* (assumption---fresh-new-stamp) (deployment---standard-precondition)))
+  (call-to-LT 0 0 MAX_CODE_SIZE (deployment---code-size-hi) (deployment---code-size-lo)))
 
 (defconstraint deployment---justify-hub-predictions (:guard (* (assumption---fresh-new-stamp) (deployment---standard-precondition)))
   (eq! (deployment---max-code-size-exception) (deployment---exceeds-max-code-size)))
