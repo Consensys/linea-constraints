@@ -145,14 +145,6 @@
 ;;        constraints          ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; bit decomposition constraint (TODO: add to stdlib.lisp)
-(defpurefun (bit-decomposition ct acc bits)
-            (if-zero ct
-                     (eq! acc bits)
-                     (eq! acc
-                          (+ (* 2 (prev acc))
-                             bits))))
-
 (defconstraint   bit-decompositions (:perspective computation :guard IS_MODEXP_LOG)
                  (bit-decomposition CT MSB_ACC MSB_BIT))
 
