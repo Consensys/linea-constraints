@@ -177,7 +177,7 @@ ZKEVM_MODULES_FOR_REFERENCE_TESTS := ${ALU} \
 				     ${LIBRARY} \
 				     ${LOG_DATA} \
 				     ${LOG_INFO} \
-                     ${MMIO} \
+				     ${MMIO} \
 				     ${MMU} \
 				     ${MXP} \
 				     ${OOB} \
