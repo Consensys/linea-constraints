@@ -113,12 +113,12 @@
 (defconstraint   storage-instruction---setting-storage-slot-values (:guard (storage-instruction---no-stack-exceptions))
                  (if-not-zero    (oogx-or-no-exception)
                                  (begin
-                                   (if-not-zero (force-bin (storage-instruction---is-SSTORE))
+                                   (if-not-zero (force-bin (storage-instruction---is-SLOAD))
                                                 (begin
                                                   (storage-reading 3)
                                                   (eq! (storage-instruction---loaded-value-hi)     (shift storage/VALUE_CURR_HI 3))
                                                   (eq! (storage-instruction---loaded-value-lo)     (shift storage/VALUE_CURR_LO 3))))
-                                   (if-not-zero (force-bin (storage-instruction---is-SLOAD))
+                                   (if-not-zero (force-bin (storage-instruction---is-SSTORE))
                                                 (begin
                                                   (eq! (storage-instruction---value-to-store-hi)   (shift storage/VALUE_NEXT_HI 3))
                                                   (eq! (storage-instruction---value-to-store-lo)   (shift storage/VALUE_NEXT_LO 3))))
