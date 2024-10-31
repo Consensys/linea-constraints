@@ -22,8 +22,8 @@
 (defconstraint    txn-instruction---setting-the-peeking-flags
                   (:guard (txn-instruction---standard-precondition))
                   (eq! NSR
-                       (+ (shift PEEK_AT_TRANSACTION    roff---txn-instruction---transaction-row)
-                          (* (shift PEEK_AT_CONTEXT     roff---txn-instruction---exceptional-context-row) CMC))))
+                       (+ (shift     PEEK_AT_TRANSACTION  roff---txn-instruction---transaction-row)
+                          (* (shift  PEEK_AT_CONTEXT      roff---txn-instruction---exceptional-context-row) CMC))))
 
 (defconstraint    txn-instruction---setting-the-gas-cost
                   (:guard (txn-instruction---standard-precondition))
