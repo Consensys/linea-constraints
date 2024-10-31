@@ -78,11 +78,12 @@
                                        (shift  PEEK_AT_CONTEXT         ROFF_REVERT___NO_XAHOY_CURRENT_CONTEXT_ROW)
                                        (shift  PEEK_AT_CONTEXT         ROFF_REVERT___NO_XAHOY_CALLER_CONTEXT_ROW )))))
 
-(defconstraint  revert-instruction---setting-the-context-rows                      (:guard (revert-instruction---standard-precondition))
+(defconstraint  revert-instruction---setting-the-context-rows---exceptional                      (:guard (revert-instruction---standard-precondition))
                 (if-not-zero  XAHOY
-                              ;; XAHOY ≡ 1
-                              (execution-provides-empty-return-data      ROFF_REVERT___XAHOY_CALLER_CONTEXT_ROW)
-                              ;; XAHOY ≡ 0
+                              (execution-provides-empty-return-data      ROFF_REVERT___XAHOY_CALLER_CONTEXT_ROW)))
+
+(defconstraint  revert-instruction---setting-the-context-rows---unexceptional                      (:guard (revert-instruction---standard-precondition))
+                (if-zero      XAHOY
                               (begin
                                 (read-context-data   ROFF_REVERT___NO_XAHOY_CURRENT_CONTEXT_ROW
                                                      (revert-instruction---current-context))
