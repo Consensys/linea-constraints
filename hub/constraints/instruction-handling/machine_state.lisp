@@ -87,7 +87,7 @@
                (:guard (machine-state-instruction---no-stack-exception))
                (if-zero    XAHOY
                            (if-not-zero   (machine-state-instruction---is-MSIZE)
-                                          (eq! (machine-state-instruction---result-lo)   (shift    misc/MXP_WORDS   ROFF_MACHINESTATE___MSIZE___MISC_ROW)))))
+                                          (eq! (machine-state-instruction---result-lo)   (shift    (*   misc/MXP_WORDS   WORD_SIZE)   ROFF_MACHINESTATE___MSIZE___MISC_ROW)))))
 
 (defconstraint machine-state-instruction---setting-stack-value---GAS-case
                (:guard (machine-state-instruction---no-stack-exception))
