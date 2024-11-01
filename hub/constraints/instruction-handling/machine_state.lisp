@@ -74,7 +74,8 @@
 
 (defconstraint machine-state-instruction---all-instructions-produce-zero-high-part
                (:guard (machine-state-instruction---no-stack-exception))
-               (vanishes!     (machine-state-instruction---result-hi)))
+               (if-zero    XAHOY
+                           (vanishes!     (machine-state-instruction---result-hi))))
 
 (defconstraint machine-state-instruction---setting-stack-value---PC-case
                (:guard (machine-state-instruction---no-stack-exception))
