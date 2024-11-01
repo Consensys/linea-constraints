@@ -90,7 +90,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defun    (normalized-SIZE_LIMB)
-  (if-zero    ABS_LOG_NUM
+  (if-zero    LOGS_DATA
               SIZE_LIMB
               (- SIZE_LIMB 1)))
 
