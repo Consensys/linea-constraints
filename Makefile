@@ -40,8 +40,6 @@ HUB :=  $(wildcard hub/columns/*lisp) \
 	hub/constants.lisp
 
 
- # Missing from the above
-
 ALU := $(wildcard alu/add/*.lisp) \
        $(wildcard alu/ext/*.lisp) \
        $(wildcard alu/mod/*.lisp) \
