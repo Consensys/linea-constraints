@@ -1,5 +1,5 @@
 (defun (exp-into-wcp-activation-flag)
-  (* exp.PRPRC exp.preprocessing/WCP_FLAG))
+  exp.preprocessing/WCP_FLAG)
 
 (deflookup 
   exp-into-wcp

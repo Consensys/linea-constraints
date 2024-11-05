@@ -103,6 +103,10 @@
                                (* PRPRC (next MACRO)))))
 
 ;; 6
+(defconstraint   wcp-flag-within-preprocessing ()
+                 (if-zero PRPRC
+                     (vanishes! WCP_FLAG)))
+;; 7
 (defconstraint   allowed-transitions ()
                  (if-not-zero STAMP
                               (if-eq CT CT_MAX
@@ -111,13 +115,13 @@
                                              (* PRPRC (next CMPTN)))
                                           1))))
 
-;; 7
+;; 8
 (defconstraint   instruction-counter-cycle ()
                  (if-eq-else CT CT_MAX
                              (eq! (next CT) 0)
                              (will-inc! CT 1)))
 
-;; 8
+;; 9
 (defconstraint   finalization (:domain {-1}) ;; ""
                  (if-not-zero STAMP
                               (begin (eq! PRPRC 1)
