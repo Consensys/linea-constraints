@@ -105,7 +105,7 @@
 ;; 6
 (defconstraint   wcp-flag-within-preprocessing ()
                  (if-zero PRPRC
-                     (vanishes! WCP_FLAG)))
+                     (vanishes! preprocessing/WCP_FLAG)))
 ;; 7
 (defconstraint   allowed-transitions ()
                  (if-not-zero STAMP
