@@ -14,7 +14,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-;; (defconstraint generalitie---setting-the-CONTEXT_MAY_CHANGE-flag ()
+;; (defconstraint generalities---setting-the-CONTEXT_MAY_CHANGE-flag ()
 ;;                (begin
 ;;                  (is-binary                             CMC)  ;; column already declared :binary@prove
 ;;                  (hub-stamp-constancy                   CMC)
