@@ -91,6 +91,7 @@
 ;;                          ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;; we deal with those constraints in context.lisp along side CMC
 ;; (defconstraint   generalities---exceptions---setting-the-EXCEPTIONS_AHOY-flag ()
 ;;                  (begin
 ;;                    (is-binary                             XAHOY)  ;; column already declared :binary@prove
