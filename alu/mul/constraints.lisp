@@ -110,7 +110,7 @@
                            ;; (ARG_2_HI != 0) et (BIT_NUM == 127)
                            (begin (will-inc! STAMP 1)
                                   (= EACC ARG_2_LO))
-                           ;; (ARG_2_HI != 0) et (BIT_NUM == 127)
+                           ;; (ARG_2_HI != 0) et (BIT_NUM != 127)
                            (begin (vanishes! (next SNM))
                                   (will-remain-constant! STAMP)
                                   (will-eq! ESRC 1)
@@ -214,9 +214,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defconstraint trivial-regime ()
-  ;; TODO: confirm that if-eq treats binary columns intelligently
-  ;; otherwise replace with if-not-zero OLI
-  ;; with OLI a binary column OLI != 0 <=> OLI == 1
   (if-eq OLI 1
          ;; since OLI != 0 we have STAMP != 0
          ;; thus INST ∈ {MUL, EXP}
