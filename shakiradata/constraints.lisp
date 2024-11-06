@@ -72,7 +72,7 @@
                                                     (next      (shakira---is-data)))))
 
 (defun (index-reset-bit)
-  (force-bool (+ (* (- 1 (shakira---is-data)) (next (shakira---is-data)))
+  (force-bool (+ (* (- 1 (shakira---is-data))   (next (shakira---is-data)))
                  (* (- 1 (shakira---is-result)) (next (shakira---is-result))))))
 
 (defun    (legal-transitions-bit)    (force-bool    (+    (* IS_KECCAK_DATA      (next (shakira---is-keccak)))
@@ -90,6 +90,7 @@
 ;;    X.3.3 Constancies    ;;
 ;;                         ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (defun (ripsha-stamp-constancy X)
   (if-not-zero (- SHAKIRA_STAMP
                   (+ 1 (prev SHAKIRA_STAMP)))
@@ -108,6 +109,7 @@
 ;;    X.3.4 Decoding constraints    ;;
 ;;                                  ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (defconstraint decoding-constraints ()
   (begin (debug (is-binary (flag-sum)))
          (if-zero SHAKIRA_STAMP
@@ -123,6 +125,7 @@
 ;;    X.3.5 Heartbeat    ;;
 ;;                       ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (defconstraint initial-vanishing-constraints (:domain {0})
   (vanishes! SHAKIRA_STAMP))
 
@@ -163,6 +166,7 @@
 ;;    X.3.6 nBYTES accumulation    ;;
 ;;                                 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (defconstraint initializing-nBYTES_ACC ()
   (if-not-zero (remained-constant! SHAKIRA_STAMP)
                (eq! nBYTES nBYTES_ACC)))
@@ -184,12 +188,10 @@
 ;;    1.3.8 SELECTOR_KECCAK_RES    ;;
 ;;                                 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defconstraint set-esult-selector ()
-  (begin (eq! SELECTOR_KECCAK_RES_HI
-              (* IS_KECCAK_RESULT (- 1 INDEX)))
-         (eq! SELECTOR_SHA2_RES_HI
-              (* IS_SHA2_RESULT (- 1 INDEX)))
-         (eq! SELECTOR_RIPEMD_RES_HI
-              (* IS_RIPEMD_RESULT (- 1 INDEX)))))
+
+(defconstraint set-result-selector ()
+  (begin (eq!   SELECTOR_KECCAK_RES_HI   (* IS_KECCAK_RESULT   (-  1  INDEX)))
+         (eq!   SELECTOR_SHA2_RES_HI     (* IS_SHA2_RESULT     (-  1  INDEX)))
+         (eq!   SELECTOR_RIPEMD_RES_HI   (* IS_RIPEMD_RESULT   (-  1  INDEX)))))
 
 

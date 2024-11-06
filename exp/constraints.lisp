@@ -20,14 +20,9 @@
 ;;                             ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defconstraint   binary-constraints ()
-                 (begin (is-binary IS_EXP_LOG)
-                        (is-binary IS_MODEXP_LOG)
-                        (is-binary CMPTN)
-                        (is-binary MACRO)
-                        (is-binary PRPRC)
-                        (is-binary (flag_sum_perspective))
-                        (is-binary (flag_sum_macro))))
+;; binary columns are already :binary@prove
+;; and both shorthands (flag_sum_perspective) and (flag_sum_macro)
+;; are de facto binary
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                               ;;
@@ -35,9 +30,10 @@
 ;;                               ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;; (flag_sum_perspective) is thus binary by construction
 (defconstraint   flag-sum-perspective-padding-non-padding ()
                  (if-zero STAMP
-                          (vanishes! (flag_sum_perspective))
+                          (eq! (flag_sum_perspective) 0)
                           (eq! (flag_sum_perspective) 1)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -46,9 +42,10 @@
 ;;                               ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;; (flag_sum_macro) is thus binary by construction
 (defconstraint   instruction-decoding-padding-non-padding ()
                  (if-zero STAMP
-                          (vanishes! (flag_sum_macro))
+                          (eq! (flag_sum_macro) 0)
                           (eq! (flag_sum_macro) 1)))
 
 (defconstraint   instruction-decoding-exp-inst (:perspective macro)
@@ -68,10 +65,6 @@
                  (begin (counter-constancy CT CMPTN)
                         (counter-constancy CT MACRO)
                         (counter-constancy CT PRPRC)))
-
-(defpurefun   ((perspective-constancy :@loob) PERSPECTIVE_SELECTOR X)
-              (if-not-zero (* PERSPECTIVE_SELECTOR (prev PERSPECTIVE_SELECTOR))
-                           (remained-constant! X)))
 
 (defconstraint   computation-constancy (:perspective computation)
                  (begin (perspective-constancy CMPTN PLT_JMP)
@@ -223,13 +216,6 @@
                                    (eq!   (shift preprocessing/WCP_ARG_2_HI   k) c)
                                    (eq!   (shift preprocessing/WCP_ARG_2_LO   k) d)))
 
-(defun (callToEQ k a b c d) (begin (eq!   (shift preprocessing/WCP_FLAG       k) 1)
-                                   (eq!   (shift preprocessing/WCP_INST       k) EVM_INST_EQ)
-                                   (eq!   (shift preprocessing/WCP_ARG_1_HI   k) a)
-                                   (eq!   (shift preprocessing/WCP_ARG_1_LO   k) b)
-                                   (eq!   (shift preprocessing/WCP_ARG_2_HI   k) c)
-                                   (eq!   (shift preprocessing/WCP_ARG_2_LO   k) d)))
-
 (defun (callToISZERO k a b) (begin (eq!                (shift preprocessing/WCP_FLAG       k) 1)
                                    (eq!                (shift preprocessing/WCP_INST       k) EVM_INST_ISZERO)
                                    (eq!                (shift preprocessing/WCP_ARG_1_HI   k) a)
@@ -252,7 +238,7 @@
 (defun (exponent_hi)          [ macro/DATA 1 ])
 (defun (exponent_lo)          [ macro/DATA 2 ])
 (defun (dyn_cost)             [ macro/DATA 5 ]) ;; ""
-(defun (expoennt_byte_length) (prev computation/TANZB_ACC))
+(defun (exponent_byte_length) (prev computation/TANZB_ACC))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                      ;;
@@ -287,8 +273,8 @@
 (defconstraint   exp-log---justify-hub-prediction (:perspective macro :guard IS_EXP_LOG)
                  (if-zero (expn_hi_is_zero)
                           (eq! (dyn_cost)
-                               (* GAS_CONST_G_EXP_BYTE (+ (expoennt_byte_length) 16)))
-                          (eq! (dyn_cost) (* GAS_CONST_G_EXP_BYTE (expoennt_byte_length)))))
+                               (* GAS_CONST_G_EXP_BYTE (+ (exponent_byte_length) 16)))
+                          (eq! (dyn_cost) (* GAS_CONST_G_EXP_BYTE (exponent_byte_length)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                    ;;
