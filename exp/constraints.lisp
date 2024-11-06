@@ -20,7 +20,9 @@
 ;;                             ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; done with binary@prove in columns.lisp
+;; binary columns are already :binary@prove
+;; and both shorthands (flag_sum_perspective) and (flag_sum_macro)
+;; are de facto binary
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                               ;;
@@ -28,9 +30,10 @@
 ;;                               ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;; (flag_sum_perspective) is thus binary by construction
 (defconstraint   flag-sum-perspective-padding-non-padding ()
                  (if-zero STAMP
-                          (vanishes! (flag_sum_perspective))
+                          (eq! (flag_sum_perspective) 0)
                           (eq! (flag_sum_perspective) 1)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -39,9 +42,10 @@
 ;;                               ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;; (flag_sum_macro) is thus binary by construction
 (defconstraint   instruction-decoding-padding-non-padding ()
                  (if-zero STAMP
-                          (vanishes! (flag_sum_macro))
+                          (eq! (flag_sum_macro) 0)
                           (eq! (flag_sum_macro) 1)))
 
 (defconstraint   instruction-decoding-exp-inst (:perspective macro)
@@ -130,7 +134,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                             ;;
-;;    3.8 Bit decomposition   ;;
+;;    3.8 Bit decomposition    ;;
 ;;        constraints          ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
