@@ -14,9 +14,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-;; (defconstraint setting-the-context-may-change-flag ()
+;; (defconstraint generalities---setting-the-CONTEXT_MAY_CHANGE-flag ()
 ;;                (begin
-;;                  (is-binary                             CMC)
+;;                  (is-binary                             CMC)  ;; column already declared :binary@prove
 ;;                  (hub-stamp-constancy                   CMC)
 ;;                  (if-zero TX_EXEC            (vanishes! CMC))
 ;;                  (if-not-zero PEEK_AT_STACK
@@ -32,14 +32,22 @@
                     stack/CREATE_FLAG
                     stack/HALT_FLAG))
 
-(defconstraint    generalities---setting-CMC-and-XAHOY ()
-                  (begin (hub-stamp-constancy                 (cmc_and_xahoy_weighted_sum))  ;; this settles hub-stamp-constancy for CMC and XAHOY simultaneously
-                         (if-zero TX_EXEC          (vanishes! (cmc_and_xahoy_weighted_sum))) ;; this forces the vanishing of CMC and XAHOY outside of execution rows
-                         (if-not-zero PEEK_AT_STACK
-                                      (begin (eq! (exception_flag_sum) XAHOY)
-                                             (if-zero (cmc_sum)
-                                                      (eq! CMC 0)
-                                                      (eq! CMC 1))))))
+(defconstraint    generalities---setting-CMC-and-XAHOY---stamp-constancies ()
+                  ;; this settles hub-stamp-constancy for CMC and XAHOY simultaneously
+                  (hub-stamp-constancy   (cmc_and_xahoy_weighted_sum)))
+
+(defconstraint    generalities---setting-CMC-and-XAHOY---automatic-vanishing ()
+                  ;; this forces the vanishing of CMC and XAHOY outside of execution rows
+                  (if-zero TX_EXEC
+                           (vanishes! (cmc_and_xahoy_weighted_sum))))
+
+(defconstraint    generalities---setting-CMC-and-XAHOY---nontrivial-values ()
+                  ;; nontrivial values for CMC and XAHOY
+                  (if-not-zero PEEK_AT_STACK
+                               (begin (eq! (exception_flag_sum) XAHOY)
+                                      (if-zero (cmc_sum)
+                                               (eq! CMC 0)
+                                               (eq! CMC 1)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                          ;;

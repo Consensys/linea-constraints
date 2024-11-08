@@ -20,7 +20,9 @@
 ;;                             ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; done with binary@prove in columns.lisp
+;; binary columns are already :binary@prove
+;; and both shorthands (flag_sum_perspective) and (flag_sum_macro)
+;; are de facto binary
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                               ;;
@@ -28,9 +30,10 @@
 ;;                               ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;; (flag_sum_perspective) is thus binary by construction
 (defconstraint   flag-sum-perspective-padding-non-padding ()
                  (if-zero STAMP
-                          (vanishes! (flag_sum_perspective))
+                          (eq! (flag_sum_perspective) 0)
                           (eq! (flag_sum_perspective) 1)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -39,9 +42,10 @@
 ;;                               ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;; (flag_sum_macro) is thus binary by construction
 (defconstraint   instruction-decoding-padding-non-padding ()
                  (if-zero STAMP
-                          (vanishes! (flag_sum_macro))
+                          (eq! (flag_sum_macro) 0)
                           (eq! (flag_sum_macro) 1)))
 
 (defconstraint   instruction-decoding-exp-inst (:perspective macro)
@@ -61,11 +65,6 @@
                  (begin (counter-constancy CT CMPTN)
                         (counter-constancy CT MACRO)
                         (counter-constancy CT PRPRC)))
-
-;; perspective constancy constraint (TODO: in stdlib.lisp)
-(defpurefun ((perspective-constancy :@loob) PERSPECTIVE_SELECTOR X)
-            (if-not-zero (* PERSPECTIVE_SELECTOR (prev PERSPECTIVE_SELECTOR))
-                         (remained-constant! X)))
 
 (defconstraint   computation-constancy (:perspective computation)
                  (begin (perspective-constancy CMPTN PLT_JMP)
@@ -135,17 +134,9 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                             ;;
-;;    3.8 Bit decomposition   ;;
+;;    3.8 Bit decomposition    ;;
 ;;        constraints          ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;; bit decomposition constraint (TODO: add to stdlib.lisp)
-(defpurefun (bit-decomposition ct acc bits)
-            (if-zero ct
-                     (eq! acc bits)
-                     (eq! acc
-                          (+ (* 2 (prev acc))
-                             bits))))
 
 (defconstraint   bit-decompositions (:perspective computation :guard IS_MODEXP_LOG)
                  (bit-decomposition CT MSB_ACC MSB_BIT))

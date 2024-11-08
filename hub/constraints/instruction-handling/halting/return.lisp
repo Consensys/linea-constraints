@@ -266,38 +266,38 @@
                  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                  (begin
                    (if-not-zero   (return-instruction---check-first-byte)
-                                  (set-MMU-instruction---invalid-code-prefix    ROFF_RETURN___1ST_MISC_ROW       ;; offset
-                                                                                CONTEXT_NUMBER                         ;; source ID
-                                                                                ;; tgt_id                              ;; target ID
-                                                                                ;; aux_id                              ;; auxiliary ID
-                                                                                ;; src_offset_hi                       ;; source offset high
-                                                                                (return-instruction---offset-lo)             ;; source offset low
-                                                                                ;; tgt_offset_lo                       ;; target offset low
-                                                                                ;; size                                ;; size
-                                                                                ;; ref_offset                          ;; reference offset
-                                                                                ;; ref_size                            ;; reference size
-                                                                                (return-instruction---exception-flag-ICPX)   ;; success bit
-                                                                                ;; limb_1                              ;; limb 1
-                                                                                ;; limb_2                              ;; limb 2
-                                                                                ;; exo_sum                             ;; weighted exogenous module flag sum
-                                                                                ;; phase                               ;; phase
+                                  (set-MMU-instruction---invalid-code-prefix    ROFF_RETURN___1ST_MISC_ROW                        ;; offset
+                                                                                CONTEXT_NUMBER                                    ;; source ID
+                                                                                ;; tgt_id                                         ;; target ID
+                                                                                ;; aux_id                                         ;; auxiliary ID
+                                                                                ;; src_offset_hi                                  ;; source offset high
+                                                                                (return-instruction---offset-lo)                  ;; source offset low
+                                                                                ;; tgt_offset_lo                                  ;; target offset low
+                                                                                ;; size                                           ;; size
+                                                                                ;; ref_offset                                     ;; reference offset
+                                                                                ;; ref_size                                       ;; reference size
+                                                                                (- 1 (return-instruction---exception-flag-ICPX))  ;; success bit; this double negation stuff will be resolved by spec issue #715
+                                                                                ;; limb_1                                         ;; limb 1
+                                                                                ;; limb_2                                         ;; limb 2
+                                                                                ;; exo_sum                                        ;; weighted exogenous module flag sum
+                                                                                ;; phase                                          ;; phase
                                                                                 ))
                    (if-not-zero   (return-instruction---write-return-data-to-caller-ram)
-                                  (set-MMU-instruction---ram-to-ram-sans-padding   ROFF_RETURN___1ST_MISC_ROW   ;; offset
-                                                                                   CONTEXT_NUMBER                      ;; source ID
-                                                                                   CALLER_CONTEXT_NUMBER               ;; target ID
-                                                                                   ;; aux_id                              ;; auxiliary ID
-                                                                                   ;; src_offset_hi                       ;; source offset high
+                                  (set-MMU-instruction---ram-to-ram-sans-padding   ROFF_RETURN___1ST_MISC_ROW                   ;; offset
+                                                                                   CONTEXT_NUMBER                               ;; source ID
+                                                                                   CALLER_CONTEXT_NUMBER                        ;; target ID
+                                                                                   ;; aux_id                                    ;; auxiliary ID
+                                                                                   ;; src_offset_hi                             ;; source offset high
                                                                                    (return-instruction---offset-lo)             ;; source offset low
-                                                                                   ;; tgt_offset_lo                                ;; target offset low
+                                                                                   ;; tgt_offset_lo                             ;; target offset low
                                                                                    (return-instruction---size-lo)               ;; size
                                                                                    (return-instruction---return-at-offset)      ;; reference offset
                                                                                    (return-instruction---return-at-capacity)    ;; reference size
-                                                                                   ;; success_bit                                  ;; success bit
-                                                                                   ;; limb_1                                       ;; limb 1
-                                                                                   ;; limb_2                                       ;; limb 2
-                                                                                   ;; exo_sum                                      ;; weighted exogenous module flag sum
-                                                                                   ;; phase                                        ;; phase
+                                                                                   ;; success_bit                               ;; success bit
+                                                                                   ;; limb_1                                    ;; limb 1
+                                                                                   ;; limb_2                                    ;; limb 2
+                                                                                   ;; exo_sum                                   ;; weighted exogenous module flag sum
+                                                                                   ;; phase                                     ;; phase
                                                                                    ))))
 
 (defconstraint   return-instruction---justifying-the-MXPX           (:guard   (return-instruction---standard-scenario-row))
@@ -358,20 +358,12 @@
 (defun   (return-instruction---message-call-scenario)   (*   PEEK_AT_SCENARIO   (scenario-shorthand---RETURN---message-call)))
 
 (defconstraint   return-instruction---setting-the-callers-new-return-data-message-call-case   (:guard (return-instruction---message-call-scenario))
-                 (if-not-zero   (force-bin   (return-instruction---is-root))
-                                ;; IS_ROOT = 1
-                                (read-context-data
-                                  ROFF_RETURN___CALLER_CONTEXT___MESSAGE_CALL ;; row offset
-                                  CONTEXT_NUMBER                                     ;; context number
-                                  )
-                                ;; IS_ROOT = 0
-                                (provide-return-data 
-                                  ROFF_RETURN___CALLER_CONTEXT___MESSAGE_CALL ;; row offset
-                                  CALLER_CONTEXT_NUMBER                                     ;; receiver context
-                                  CONTEXT_NUMBER                                            ;; provider context
-                                  (return-instruction---type-safe-return-data-offset)       ;; (type safe) rdo
-                                  (return-instruction---type-safe-return-data-size)         ;; (type safe) rds
-                                  )))
+                 (provide-return-data     ROFF_RETURN___CALLER_CONTEXT___MESSAGE_CALL           ;; row offset
+                                          CALLER_CONTEXT_NUMBER                                 ;; receiver context
+                                          CONTEXT_NUMBER                                        ;; provider context
+                                          (return-instruction---type-safe-return-data-offset)   ;; (type safe) rdo
+                                          (return-instruction---type-safe-return-data-size)     ;; (type safe) rds
+                                          ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                      ;;
@@ -420,22 +412,12 @@
                                   (DOM-SUB-stamps---revert-with-current        ROFF_RETURN___EMPTY_DEPLOYMENT___2ND_ACCOUNT_ROW    1)
                                   )))
 
-(defconstraint   return-instruction---setting-the-callers-new-return-data-empty-deployments    (:guard   (return-instruction---empty-deployment-scenario))
+(defconstraint   return-instruction---empty-deployment---squasing-the-creators-return-data    (:guard   (return-instruction---empty-deployment-scenario))
                  (begin
                    (if-not-zero   scenario/RETURN_FROM_DEPLOYMENT_EMPTY_CODE_WILL_REVERT
-                                  (if-not-zero   (force-bin   (return-instruction---is-root))
-                                                 ;; IS_ROOT  ≡  1
-                                                 (read-context-data                       ROFF_RETURN___CALLER_CONTEXT___EMPTY_DEPLOYMENT_WILL_REVERT    CONTEXT_NUMBER)
-                                                 ;; IS_ROOT  ≡  0
-                                                 (execution-provides-empty-return-data    ROFF_RETURN___CALLER_CONTEXT___EMPTY_DEPLOYMENT_WILL_REVERT)
-                                                 ))
+                                  (execution-provides-empty-return-data    ROFF_RETURN___CALLER_CONTEXT___EMPTY_DEPLOYMENT_WILL_REVERT))
                    (if-not-zero   scenario/RETURN_FROM_DEPLOYMENT_EMPTY_CODE_WONT_REVERT
-                                  (if-not-zero   (force-bin   (return-instruction---is-root))
-                                                 ;; IS_ROOT  ≡  1
-                                                 (read-context-data                       ROFF_RETURN___CALLER_CONTEXT___EMPTY_DEPLOYMENT_WONT_REVERT    CONTEXT_NUMBER)
-                                                 ;; IS_ROOT  ≡  0
-                                                 (execution-provides-empty-return-data    ROFF_RETURN___CALLER_CONTEXT___EMPTY_DEPLOYMENT_WONT_REVERT)
-                                                 ))))
+                                  (execution-provides-empty-return-data    ROFF_RETURN___CALLER_CONTEXT___EMPTY_DEPLOYMENT_WONT_REVERT))))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -506,18 +488,9 @@
                                   (DOM-SUB-stamps---revert-with-current        ROFF_RETURN___NONEMPTY_DEPLOYMENT___2ND_ACCOUNT_ROW    1)
                                   )))
 
-(defconstraint   return-instruction---setting-the-callers-new-return-data-nonempty-deployments    (:guard   (return-instruction---nonempty-deployment-scenario))
+(defconstraint   return-instruction---nonempty-deployment---squasing-the-creators-return-data    (:guard   (return-instruction---nonempty-deployment-scenario))
                  (begin
                    (if-not-zero   scenario/RETURN_FROM_DEPLOYMENT_NONEMPTY_CODE_WILL_REVERT
-                                  (if-not-zero   (force-bin   (return-instruction---is-root))
-                                                 ;; IS_ROOT  ≡  1
-                                                 (read-context-data                       ROFF_RETURN___CALLER_CONTEXT___NONEMPTY_DEPLOYMENT_WILL_REVERT    CONTEXT_NUMBER)
-                                                 ;; IS_ROOT  ≡  0
-                                                 (execution-provides-empty-return-data    ROFF_RETURN___CALLER_CONTEXT___NONEMPTY_DEPLOYMENT_WILL_REVERT)
-                                                 ))
+                                  (execution-provides-empty-return-data    ROFF_RETURN___CALLER_CONTEXT___NONEMPTY_DEPLOYMENT_WILL_REVERT))
                    (if-not-zero   scenario/RETURN_FROM_DEPLOYMENT_NONEMPTY_CODE_WONT_REVERT
-                                  (if-not-zero   (force-bin   (return-instruction---is-root))
-                                                 ;; IS_ROOT  ≡  1
-                                                 (read-context-data                       ROFF_RETURN___CALLER_CONTEXT___NONEMPTY_DEPLOYMENT_WONT_REVERT    CONTEXT_NUMBER)
-                                                 ;; IS_ROOT  ≡  0
-                                                 (execution-provides-empty-return-data    ROFF_RETURN___CALLER_CONTEXT___NONEMPTY_DEPLOYMENT_WONT_REVERT)))))
+                                  (execution-provides-empty-return-data    ROFF_RETURN___CALLER_CONTEXT___NONEMPTY_DEPLOYMENT_WONT_REVERT))))
