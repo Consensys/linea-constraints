@@ -93,19 +93,6 @@
                    (DOM-SUB-stamps---standard                     row-offset---tx-finl---success---coinbase-account-row
                                                                   1)))
 
-;; (defun (tx-finalization---success---coinbase-reward)
-;;   (if-zero   (force-bin   (shift    transaction/IS_TYPE2          row-offset---tx-finl---success---transaction-row))
-;;              ;; TYPE 0 / TYPE 1
-;;              (* (shift      transaction/GAS_PRICE                 row-offset---tx-finl---success---transaction-row)
-;;                 (- (shift   transaction/GAS_LIMIT                 row-offset---tx-finl---success---transaction-row)
-;;                    (shift   transaction/REFUND_EFFECTIVE          row-offset---tx-finl---success---transaction-row)))
-;;              ;; TYPE 2
-;;              (* (- (shift   transaction/GAS_PRICE                 row-offset---tx-finl---success---transaction-row)
-;;                    (shift   transaction/BASEFEE                   row-offset---tx-finl---success---transaction-row))
-;;                 (- (shift   transaction/GAS_LIMIT                 row-offset---tx-finl---success---transaction-row)
-;;                    (shift   transaction/REFUND_EFFECTIVE          row-offset---tx-finl---success---transaction-row)))))
-
-
 (defun    (tx-finalization---success---coinbase-reward)    (shift    (*    transaction/PRIORITY_FEE_PER_GAS    (-    transaction/GAS_LIMIT    transaction/REFUND_EFFECTIVE))
                                                                      row-offset---tx-finl---success---transaction-row))
 
@@ -177,19 +164,6 @@
                    (account-same-marked-for-selfdestruct          row-offset---tx-finl---failure---coinbase-account-row)
                    (DOM-SUB-stamps---standard                     row-offset---tx-finl---failure---coinbase-account-row
                                                                   2)))
-
-;; (defun (tx-finalization---failure---coinbase-reward)
-;;   (if-zero   (force-bin   (shift    transaction/IS_TYPE2          row-offset---tx-finl---failure---transaction-row))
-;;              ;; TYPE 0 / TYPE 1
-;;              (* (shift      transaction/GAS_PRICE                 row-offset---tx-finl---failure---transaction-row)
-;;                 (- (shift   transaction/GAS_LIMIT                 row-offset---tx-finl---failure---transaction-row)
-;;                    (shift   transaction/REFUND_EFFECTIVE          row-offset---tx-finl---failure---transaction-row)))
-;;              ;; TYPE 2
-;;              (* (- (shift   transaction/GAS_PRICE                 row-offset---tx-finl---failure---transaction-row)
-;;                    (shift   transaction/BASEFEE                   row-offset---tx-finl---failure---transaction-row))
-;;                 (- (shift   transaction/GAS_LIMIT                 row-offset---tx-finl---failure---transaction-row)
-;;                    (shift   transaction/REFUND_EFFECTIVE          row-offset---tx-finl---failure---transaction-row)))))
-
 
 (defun    (tx-finalization---failure---coinbase-reward)    (shift    (*    transaction/PRIORITY_FEE_PER_GAS    (-    transaction/GAS_LIMIT    transaction/REFUND_EFFECTIVE))
                                                                      row-offset---tx-finl---failure---transaction-row))
