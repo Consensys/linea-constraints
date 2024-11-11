@@ -99,11 +99,17 @@
 ;; justifying TXN_DATA predictions
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defconstraint   tx-finalization---success---justifying-txn-data-prediction            (:guard (tx-finalization---success---precondition))
-                 (begin
-                   (eq!   (shift transaction/STATUS_CODE               row-offset---tx-finl---success---transaction-row)   1)
-                   (eq!   (shift transaction/REFUND_COUNTER_INFINITY   row-offset---tx-finl---success---transaction-row)   (shift   REFUND_COUNTER   -1))
-                   (eq!   (shift transaction/GAS_LEFTOVER              row-offset---tx-finl---success---transaction-row)   (shift   GAS_NEXT         -1))))
+(defconstraint   tx-finalization---success---justifying-txn-data-prediction---status-code
+                 (:guard (tx-finalization---success---precondition))
+                 (eq!   (shift transaction/STATUS_CODE               row-offset---tx-finl---success---transaction-row)   1))
+
+(defconstraint   tx-finalization---success---justifying-txn-data-prediction---refund-counter
+                 (:guard (tx-finalization---success---precondition))
+                 (eq!   (shift transaction/REFUND_COUNTER_INFINITY   row-offset---tx-finl---success---transaction-row)   (shift   REFUND_COUNTER   -1)))
+
+(defconstraint   tx-finalization---success---justifying-txn-data-prediction---leftover-gas
+                 (:guard (tx-finalization---success---precondition))
+                 (eq!   (shift transaction/GAS_LEFTOVER              row-offset---tx-finl---success---transaction-row)   (shift   GAS_NEXT         -1)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                             ;;
