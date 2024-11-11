@@ -124,16 +124,16 @@
 ;;                             ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defun (tx-finalization---failure-precondition) (* (tx-finalization---precondition) (prev CONTEXT_WILL_REVERT)))
+(defun (tx-finalization---failure---precondition) (* (tx-finalization---precondition) (prev CONTEXT_WILL_REVERT)))
 
 ;; sender account
 ;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;
-(defconstraint   tx-finalization---failure-setting-sender-account-row                        (:guard (tx-finalization---failure-precondition))
+(defconstraint   tx-finalization---failure---setting-sender-account-row                        (:guard (tx-finalization---failure---precondition))
                  (begin
                    (eq!     (shift account/ADDRESS_HI             tx-finl---failure---row-offset---sender-account-row)     (shift    transaction/FROM_ADDRESS_HI    tx-finl---failure---row-offset---transaction-row))
                    (eq!     (shift account/ADDRESS_LO             tx-finl---failure---row-offset---sender-account-row)     (shift    transaction/FROM_ADDRESS_LO    tx-finl---failure---row-offset---transaction-row))
-                   (account-increment-balance-by                  tx-finl---failure---row-offset---sender-account-row      (tx-finalization---failure-sender-refund))
+                   (account-increment-balance-by                  tx-finl---failure---row-offset---sender-account-row      (tx-finalization---failure---sender-refund))
                    (account-same-nonce                            tx-finl---failure---row-offset---sender-account-row)
                    (account-same-code                             tx-finl---failure---row-offset---sender-account-row)
                    (account-same-deployment-number-and-status     tx-finl---failure---row-offset---sender-account-row)
@@ -142,14 +142,14 @@
                    (DOM-SUB-stamps---standard                     tx-finl---failure---row-offset---sender-account-row
                                                                   0)))
 
-(defun (tx-finalization---failure-sender-refund)    (+  (* (shift   transaction/GAS_PRICE           tx-finl---failure---row-offset---transaction-row)
+(defun (tx-finalization---failure---sender-refund)    (+  (* (shift   transaction/GAS_PRICE           tx-finl---failure---row-offset---transaction-row)
                                                            (shift   transaction/REFUND_EFFECTIVE    tx-finl---failure---row-offset---transaction-row))
                                                         (shift      transaction/VALUE               tx-finl---failure---row-offset---transaction-row)))
 
 ;; recipient account
 ;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;
-(defconstraint   tx-finalization---failure-setting-recipient-account-row                        (:guard (tx-finalization---failure-precondition))
+(defconstraint   tx-finalization---failure---setting-recipient-account-row                        (:guard (tx-finalization---failure---precondition))
                  (begin
                    (eq!     (shift account/ADDRESS_HI             tx-finl---failure---row-offset---recipient-account-row)     (shift    transaction/TO_ADDRESS_HI    tx-finl---failure---row-offset---transaction-row))
                    (eq!     (shift account/ADDRESS_LO             tx-finl---failure---row-offset---recipient-account-row)     (shift    transaction/TO_ADDRESS_LO    tx-finl---failure---row-offset---transaction-row))
@@ -165,11 +165,11 @@
 ;; coinbase address
 ;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;
-(defconstraint   tx-finalization---failure-setting-coinbase-account-row                      (:guard (tx-finalization---failure-precondition))
+(defconstraint   tx-finalization---failure---setting-coinbase-account-row                      (:guard (tx-finalization---failure---precondition))
                  (begin
                    (eq!     (shift account/ADDRESS_HI             tx-finl---failure---row-offset---coinbase-account-row)     (shift    transaction/COINBASE_ADDRESS_HI    tx-finl---failure---row-offset---transaction-row))
                    (eq!     (shift account/ADDRESS_LO             tx-finl---failure---row-offset---coinbase-account-row)     (shift    transaction/COINBASE_ADDRESS_LO    tx-finl---failure---row-offset---transaction-row))
-                   (account-increment-balance-by                  tx-finl---failure---row-offset---coinbase-account-row      (tx-finalization---failure-coinbase-reward))
+                   (account-increment-balance-by                  tx-finl---failure---row-offset---coinbase-account-row      (tx-finalization---failure---coinbase-reward))
                    (account-same-nonce                            tx-finl---failure---row-offset---coinbase-account-row)
                    (account-same-code                             tx-finl---failure---row-offset---coinbase-account-row)
                    (account-same-deployment-number-and-status     tx-finl---failure---row-offset---coinbase-account-row)
@@ -178,7 +178,7 @@
                    (DOM-SUB-stamps---standard                     tx-finl---failure---row-offset---coinbase-account-row
                                                                   2)))
 
-;; (defun (tx-finalization---failure-coinbase-reward)
+;; (defun (tx-finalization---failure---coinbase-reward)
 ;;   (if-zero   (force-bin   (shift    transaction/IS_TYPE2          tx-finl---failure---row-offset---transaction-row))
 ;;              ;; TYPE 0 / TYPE 1
 ;;              (* (shift      transaction/GAS_PRICE                 tx-finl---failure---row-offset---transaction-row)
@@ -191,13 +191,14 @@
 ;;                    (shift   transaction/REFUND_EFFECTIVE          tx-finl---failure---row-offset---transaction-row)))))
 
 
-(defun    (tx-finalization---failure-coinbase-reward)    (shift    (*    transaction/PRIORITY_FEE_PER_GAS    (-    transaction/GAS_LIMIT    transaction/REFUND_EFFECTIVE))
+(defun    (tx-finalization---failure---coinbase-reward)    (shift    (*    transaction/PRIORITY_FEE_PER_GAS    (-    transaction/GAS_LIMIT    transaction/REFUND_EFFECTIVE))
                                                                    tx-finl---failure---row-offset---transaction-row))
 
 ;; justifying TXN_DATA predictions
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defconstraint   tx-finalization---failure-justifying-txn-data-prediction            (:guard (tx-finalization---failure-precondition))
+
+(defconstraint   tx-finalization---failure---justifying-txn-data-prediction            (:guard (tx-finalization---failure---precondition))
                  (begin
                    (eq!   (shift transaction/STATUS_CODE               tx-finl---failure---row-offset---transaction-row)   0)
                    (eq!   (shift transaction/REFUND_COUNTER_INFINITY   tx-finl---failure---row-offset---transaction-row)   (shift   REFUND_COUNTER   -1))
