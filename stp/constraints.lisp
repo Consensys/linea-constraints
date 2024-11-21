@@ -204,7 +204,8 @@
                                                                  GAS_CONST_G_COLD_ACCOUNT_ACCESS))
 (defun (call---gas-value-transfer-cost)          (*    (call---transfers-value)
                                                        GAS_CONST_G_CALL_VALUE))
-(defun (call---gas-new-account-cost)             (*    (-    1    EXISTS)
+(defun (call---gas-new-account-cost)             (*    IS_CALL
+                                                       (-    1    EXISTS)
                                                        (call---transfers-value)
                                                        GAS_CONST_G_NEW_ACCOUNT))
 (defun (call---gas-extra)                        (+    (call---gas-access-cost)
