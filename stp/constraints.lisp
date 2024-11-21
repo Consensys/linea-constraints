@@ -105,9 +105,24 @@
 ;;    2.5 vanishing constraints    ;;
 ;;                                 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defconstraint callcode-impose-exists ()
-  (if-not-zero IS_CALLCODE
-               (eq! EXISTS 1)))
+
+(defconstraint    CREATE-type---debug---vanishing-constraints   (:guard    (is_create))
+                  (debug
+                    (begin
+                      (vanishes!    GAS_HI)
+                      (vanishes!    GAS_LO))))
+
+(defconstraint    CALL-type---debug---non-value-transferring-opcodes-have-zero-value    ()
+                  (debug
+                    (if-not-zero    (+    IS_DELEGATECALL    IS_STATICCALL)
+                                    (begin
+                                      (vanishes!    VAL_HI)
+                                      (vanishes!    VAL_LO)))))
+
+(defconstraint    CALL-type---debug---account-existence-only-matters-for-CALL    ()
+                  (debug
+                    (if-not-zero    (+    IS_CALLCODE    IS_DELEGATECALL    IS_STATICCALL)
+                                    (vanishes!    EXISTS))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                                ;;
