@@ -46,7 +46,7 @@
 ;;    2.3 heartbeat    ;;
 ;;                     ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;
-(defconstraint first-row (:domain {0})
+(defconstraint first-row (:domain {0}) ;; ""
   (vanishes! STAMP))
 
 (defconstraint stamp-increments ()
@@ -73,7 +73,7 @@
                            (eq!    CT_MAX    STP_CT_MAX_CREATE_OOGX)))))
 
 
-(defconstraint final-row (:domain {-1})
+(defconstraint final-row (:domain {-1}) ;; ""
   (if-not-zero STAMP
                (eq! CT CT_MAX)))
 
@@ -114,27 +114,14 @@
 ;;    3 Constraints for CREATE-type instructions  ;;
 ;;                                                ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defun (first-row-of-CREATE)
-  (* (- STAMP (prev STAMP))
-     (is_create)))
 
-(defun (first-row-of-unexceptional-CREATE)
-  (* (first-row-of-CREATE) (- 1 OOGX)))
-
-(defun (create-gActual)
-  GAS_ACTUAL)
-
-(defun (create-gPrelim)
-  (+ GAS_MXP    GAS_CONST_G_CREATE))
-
-(defun (create-gDiff)
-  (- (create-gActual) (create-gPrelim)))
-
-(defun (create-oneSixtyFourth)
-  (shift RES_LO 2))
-
-(defun (create-LgDiff)
-  (- (create-gDiff) (create-oneSixtyFourth)))
+(defun (first-row-of-CREATE)                 (* (- STAMP (prev STAMP)) (is_create)))
+(defun (first-row-of-unexceptional-CREATE)   (* (first-row-of-CREATE) (- 1 OOGX)))
+(defun (create-gActual)                         GAS_ACTUAL) ;; ""
+(defun (create-gPrelim)                      (+ GAS_MXP    GAS_CONST_G_CREATE))
+(defun (create-gDiff)                        (- (create-gActual) (create-gPrelim)))
+(defun (create-oneSixtyFourth)               (shift RES_LO 2))
+(defun (create-LgDiff)                       (- (create-gDiff) (create-oneSixtyFourth)))
 
 ;; common rows of all CREATE instructions
 (defconstraint    CREATE-type---common---row-i-plus-0
