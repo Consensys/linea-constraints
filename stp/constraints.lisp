@@ -107,22 +107,19 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defconstraint    CREATE-type---debug---vanishing-constraints   (:guard    (is_create))
-                  (debug
-                    (begin
-                      (vanishes!    GAS_HI)
-                      (vanishes!    GAS_LO))))
+                  (begin
+                    (vanishes!    GAS_HI)
+                    (vanishes!    GAS_LO)))
 
 (defconstraint    CALL-type---debug---non-value-transferring-opcodes-have-zero-value    ()
-                  (debug
-                    (if-not-zero    (+    IS_DELEGATECALL    IS_STATICCALL)
-                                    (begin
-                                      (vanishes!    VAL_HI)
-                                      (vanishes!    VAL_LO)))))
+                  (if-not-zero    (+    IS_DELEGATECALL    IS_STATICCALL)
+                                  (begin
+                                    (vanishes!    VAL_HI)
+                                    (vanishes!    VAL_LO))))
 
 (defconstraint    CALL-type---debug---account-existence-only-matters-for-CALL    ()
-                  (debug
-                    (if-not-zero    (+    IS_CALLCODE    IS_DELEGATECALL    IS_STATICCALL)
-                                    (vanishes!    EXISTS))))
+                  (if-not-zero    (+    IS_CALLCODE    IS_DELEGATECALL    IS_STATICCALL)
+                                  (vanishes!    EXISTS)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                                ;;
