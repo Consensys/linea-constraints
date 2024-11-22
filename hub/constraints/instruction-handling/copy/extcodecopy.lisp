@@ -24,18 +24,19 @@
 
 (defconstraint copy-instruction---EXTCODECOPY---the-OOGX-case (:guard (copy-instruction---standard-EXTCODECOPY))
                (if-not-zero stack/OOGX
-                            ;; account-row i + 2
-                            (begin (account-trim-address                        ROFF_EXTCODECOPY_OOGX_ACCOUNT_ROW (copy-instruction---raw-address-hi) (copy-instruction---raw-address-lo))
-                                   (vanishes! (shift account/ROMLEX_FLAG        ROFF_EXTCODECOPY_OOGX_ACCOUNT_ROW))
-                                   (account-same-balance                        ROFF_EXTCODECOPY_OOGX_ACCOUNT_ROW)
-                                   (account-same-nonce                          ROFF_EXTCODECOPY_OOGX_ACCOUNT_ROW)
-                                   (account-same-code                           ROFF_EXTCODECOPY_OOGX_ACCOUNT_ROW)
-                                   (account-same-deployment-number-and-status   ROFF_EXTCODECOPY_OOGX_ACCOUNT_ROW)
-                                   (account-same-warmth                         ROFF_EXTCODECOPY_OOGX_ACCOUNT_ROW)
-                                   (account-same-marked-for-selfdestruct        ROFF_EXTCODECOPY_OOGX_ACCOUNT_ROW)
-                                   (DOM-SUB-stamps---standard                   ROFF_EXTCODECOPY_OOGX_ACCOUNT_ROW 0))
-                            ;; context-row i + 3
-                            (execution-provides-empty-return-data               ROFF_EXTCODECOPY_OOGX_CONTEXT_ROW)))
+                            (begin
+                              ;; account-row i + 2
+                              (account-trim-address                        ROFF_EXTCODECOPY_OOGX_ACCOUNT_ROW (copy-instruction---raw-address-hi) (copy-instruction---raw-address-lo))
+                              (vanishes! (shift account/ROMLEX_FLAG        ROFF_EXTCODECOPY_OOGX_ACCOUNT_ROW))
+                              (account-same-balance                        ROFF_EXTCODECOPY_OOGX_ACCOUNT_ROW)
+                              (account-same-nonce                          ROFF_EXTCODECOPY_OOGX_ACCOUNT_ROW)
+                              (account-same-code                           ROFF_EXTCODECOPY_OOGX_ACCOUNT_ROW)
+                              (account-same-deployment-number-and-status   ROFF_EXTCODECOPY_OOGX_ACCOUNT_ROW)
+                              (account-same-warmth                         ROFF_EXTCODECOPY_OOGX_ACCOUNT_ROW)
+                              (account-same-marked-for-selfdestruct        ROFF_EXTCODECOPY_OOGX_ACCOUNT_ROW)
+                              (DOM-SUB-stamps---standard                   ROFF_EXTCODECOPY_OOGX_ACCOUNT_ROW 0)
+                              ;; context-row i + 3
+                              (execution-provides-empty-return-data        ROFF_EXTCODECOPY_OOGX_CONTEXT_ROW)))) ;; TODO: remove this constraint, it is redundant ...
 
 (defun (copy-instruction---trigger-CFI)
   (* (copy-instruction---is-EXTCODECOPY)
