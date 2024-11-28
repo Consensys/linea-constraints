@@ -82,6 +82,8 @@ MMU :=  $(wildcard mmu/*.lisp) \
 MMIO := $(wildcard mmio/*lisp) \
 	$(wildcard mmio/lookups/*lisp) 
 
+MMIO_COLUMNS := mmio/columns.lisp
+
 MXP := mxp
 
 OOB := oob
@@ -137,7 +139,7 @@ ZKEVM_MODULES := ${ALU} \
 		 ${LIBRARY} \
 		 ${LOG_DATA} \
 		 ${LOG_INFO} \
-		 ${MMIO} \
+		 ${MMIO_COLUMNS} \
 		 ${MMU} \
 		 ${MXP} \
 		 ${OOB} \
