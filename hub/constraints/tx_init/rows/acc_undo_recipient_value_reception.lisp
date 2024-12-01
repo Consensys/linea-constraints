@@ -1,14 +1,14 @@
 (module hub)
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;                                                    ;;
-;;   X     TX_INIT phase                              ;;
-;;   X.Y   Common constraints                         ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                                     ;;
+;;   X     TX_INIT phase                               ;;
+;;   X.Y   Common constraints                          ;;
 ;;   X.Y.Z Undoing recipient account value reception   ;;
-;;                                                    ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                                     ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defconstraint   tx-init---account-row---recipient-value-reception
+(defconstraint   tx-init---account-row---recipient-value-reception---undoing-row
                  (:guard (tx-init---standard-precondition))
                  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                  (begin

@@ -22,14 +22,14 @@
   tx-init---row-offset---ACC---sender-value-transfer---undoing          5
   tx-init---row-offset---ACC---recipient-value-reception---undoing      6
   tx-init---row-offset---CON---context-initialization-row---failure     7
-  tx-init---row-offset---first-execution-phase-row---failure-case       8
+  tx-init---row-offset---first-execution-phase-row---failure            8
   )
 
 
 
 (defun    (tx-init---standard-precondition)             (*    (shift    (- 1 TX_INIT)    tx-init---row-offset---row-preceding-the-init-phase)    TX_INIT))
 (defun    (tx-init---transaction-failure-prediction)    (shift    misc/CCSR_FLAG                 tx-init---row-offset---MISC))
-(defun    (tx-init---transaction-success-prediction)    (-   1    (tx-init---transaction-will-revert)))
+(defun    (tx-init---transaction-success-prediction)    (-   1    (tx-init---transaction-failure-prediction)))
 (defun    (tx-init---transaction-end-stamp)             (shift    misc/CCRS_STAMP                tx-init---row-offset---MISC))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun    (tx-init---sender-address-hi)                 (shift    transaction/FROM_ADDRESS_HI    tx-init---row-offset---TXN))

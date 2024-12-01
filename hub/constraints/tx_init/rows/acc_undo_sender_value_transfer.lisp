@@ -8,7 +8,7 @@
 ;;                                                 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defconstraint   tx-init---account-row---sender-value-transfer
+(defconstraint   tx-init---account-row---sender-value-transfer---undoing-row
                  (:guard (tx-init---standard-precondition))
                  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                  (begin
