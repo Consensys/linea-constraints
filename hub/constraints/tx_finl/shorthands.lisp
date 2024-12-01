@@ -22,8 +22,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun    (tx-finl---sender-address-hi)       (shift    transaction/FROM_ADDRESS_HI        tx-init---row-offset---TXN))
 (defun    (tx-finl---sender-address-lo)       (shift    transaction/FROM_ADDRESS_LO        tx-init---row-offset---TXN))
-(defun    (tx-finl---recipient-address-hi)    (shift    transaction/TO_ADDRESS_HI          tx-init---row-offset---TXN))
-(defun    (tx-finl---recipient-address-lo)    (shift    transaction/TO_ADDRESS_LO          tx-init---row-offset---TXN))
+(defun    (tx-finl---coinbase-address-hi)     (shift    transaction/COINBASE_ADDRESS_HI    tx-init---row-offset---TXN))
+(defun    (tx-finl---coinbase-address-lo)     (shift    transaction/COINBASE_ADDRESS_LO    tx-init---row-offset---TXN))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun    (tx-finl---effective-gas-price)     (shift    transaction/GAS_PRICE              tx-init---row-offset---TXN))
 (defun    (tx-finl---effective-gas-refund)    (shift    transaction/REFUND_EFFECTIVE       tx-init---row-offset---TXN))
