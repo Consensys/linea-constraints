@@ -69,13 +69,13 @@
 (defun    (create-instruction---init-code-hash-hi)    (*    (create-instruction---is-CREATE2)
                                                             (if-not-zero    (create-instruction---trigger_HASHINFO)
                                                                             ;; HASH_INFO required, nonempty code
-                                                                            (create-instruction---RLPADDR-keccak-hi)
+                                                                            (create-instruction---HASHINFO-keccak-hi)
                                                                             ;; HASH_INFO not required, empty code
                                                                             EMPTY_KECCAK_HI)))
 
 (defun    (create-instruction---init-code-hash-lo)    (*    (create-instruction---is-CREATE2)
                                                             (if-not-zero    (create-instruction---trigger_HASHINFO)
                                                                             ;; HASH_INFO needed to be triggered
-                                                                            (create-instruction---RLPADDR-keccak-lo)
+                                                                            (create-instruction---HASHINFO-keccak-lo)
                                                                             ;; HASH_INFO didn't need to be triggered
                                                                             EMPTY_KECCAK_LO)))
