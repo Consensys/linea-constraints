@@ -152,26 +152,30 @@
 (defun    (cold-slot)              (force-bin (- 1 (shift storage/WARMTH 3))))
 
 
-(defconstraint   storage-instruction---setting-gas-costs (:guard (storage-instruction---no-stack-exceptions))
+(defconstraint   storage-instruction---setting-gas-costs---SLOAD-case
+                 (:guard (storage-instruction---no-stack-exceptions))
+                 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                  (if-not-zero    (oogx-or-no-exception)
-                                 (if-zero (force-bin (storage-instruction---is-SSTORE))
-                                          ;; SLOAD case
-                                          ;;;;;;;;;;;;;
-                                          (if-zero (force-bin (shift storage/WARMTH 3))
-                                                   (eq!    GAS_COST    GAS_CONST_G_COLD_SLOAD)
-                                                   (eq!    GAS_COST    GAS_CONST_G_WARM_ACCESS))
-                                          ;; SSTORE case
-                                          ;;;;;;;;;;;;;;
-                                          (begin
-                                            (if-not-zero (next-is-curr)
-                                                         (eq!   GAS_COST   (+ GAS_CONST_G_WARM_ACCESS    (* (cold-slot)    GAS_CONST_G_COLD_SLOAD))))
-                                            (if-zero     (curr-is-orig)
-                                                         (eq!   GAS_COST   (+ GAS_CONST_G_WARM_ACCESS    (* (cold-slot)    GAS_CONST_G_COLD_SLOAD))))
-                                            (if-zero     (next-is-curr)
-                                                         (if-not-zero    (curr-is-orig)
-                                                                         (if-not-zero    (orig-is-zero) 
-                                                                                         (eq!   GAS_COST   (+ GAS_CONST_G_SSET     (* (cold-slot)   GAS_CONST_G_COLD_SLOAD)))
-                                                                                         (eq!   GAS_COST   (+ GAS_CONST_G_SRESET   (* (cold-slot)   GAS_CONST_G_COLD_SLOAD))))))))))
+                                 (if-not-zero (storage-instruction---is-SLOAD))
+                                 (if-zero (force-bin (shift storage/WARMTH 3))
+                                          (eq!    GAS_COST    GAS_CONST_G_COLD_SLOAD)
+                                          (eq!    GAS_COST    GAS_CONST_G_WARM_ACCESS))))
+
+(defconstraint   storage-instruction---setting-gas-costs---SSTORE-case
+                 (:guard (storage-instruction---no-stack-exceptions))
+                 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                 (if-not-zero    (oogx-or-no-exception)
+                                 (if-not-zero (storage-instruction---is-SSTORE)
+                                              (begin
+                                                (if-not-zero     (next-is-curr)
+                                                                 (eq!   GAS_COST   (+ GAS_CONST_G_WARM_ACCESS    (* (cold-slot)    GAS_CONST_G_COLD_SLOAD))))
+                                                (if-not-zero     (curr-not-orig)
+                                                                 (eq!   GAS_COST   (+ GAS_CONST_G_WARM_ACCESS    (* (cold-slot)    GAS_CONST_G_COLD_SLOAD))))
+                                                (if-not-zero     (next-not-curr)
+                                                                 (if-not-zero    (curr-is-orig)
+                                                                                 (if-not-zero    (orig-is-zero) 
+                                                                                                 (eq!   GAS_COST   (+ GAS_CONST_G_SSET     (* (cold-slot)   GAS_CONST_G_COLD_SLOAD)))
+                                                                                                 (eq!   GAS_COST   (+ GAS_CONST_G_SRESET   (* (cold-slot)   GAS_CONST_G_COLD_SLOAD))))))))))
 
 (defun    (r-clear-clear)    (*    (next-not-curr)
                                    (curr-is-orig)
