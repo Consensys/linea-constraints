@@ -1,5 +1,22 @@
 (module blockdata)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                          ;;
+;;  1.3 Module call macros  ;;
+;;                          ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defun (wcp-call-to-LT w a_hi a_lo b_hi b_lo)
+  (begin (eq! (shift WCP_FLAG w) 1)
+         (eq! (shift EXO_INST w) EVM_INST_LT)
+         (eq! (shift ARG_1_HI w) a_hi)
+         (eq! (shift ARG_1_LO w) a_lo)
+         (eq! (shift ARG_2_HI w) b_hi)
+         (eq! (shift ARG_2_LO w) b_lo)
+         (eq! (shift RES w) 1)))
+
+;; TODO: define the others
+
 ;; (defconstraint first-row (:domain {0})
 ;;   (vanishes! REL_BLOCK))
 
