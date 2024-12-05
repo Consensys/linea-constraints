@@ -51,7 +51,7 @@
  )
 
  (defalias 
-  ;; Check with Lorenzo on lower case
+  ;; TODO: update specs to make these aliases instead of shorthands
   IS_PREV PREVIOUS_CONFLATION
   IS_CURR CURRENT_CONFLATION
   IS_CB   IS_COINBASE

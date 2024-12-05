@@ -62,7 +62,7 @@
 ;;                          ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defun    (flag_sum)    (+ IS_CB
+(defun    (flag-sum)    (+ IS_CB
                            IS_TS
                            IS_NB
                            IS_DF
@@ -70,7 +70,7 @@
                            IS_ID
                            IS_BF))
 
-(defun    (wght_sum)    (+ ( * 1 IS_CB)
+(defun    (wght-sum)    (+ ( * 1 IS_CB)
                            ( * 2 IS_TS)
                            ( * 3 IS_NB)
                            ( * 4 IS_DF)
@@ -78,7 +78,7 @@
                            ( * 6 IS_ID)
                            ( * 7 IS_BF)))
 
-(defun    (inst_sum)    (+ (* EVM_INST_COINBASE   IS_CB)
+(defun    (inst-sum)    (+ (* EVM_INST_COINBASE   IS_CB)
                            (* EVM_INST_TIMESTAMP  IS_TS)
                            (* EVM_INST_NUMBER     IS_NB)
                            (* EVM_INST_DIFFICULTY IS_DF)
@@ -86,23 +86,23 @@
                            (* EVM_INST_CHAINID    IS_ID)
                            (* EVM_INST_BASEFEE    IS_BF)))
 
-(defun    (ct_max_sum)    (+ (* (- 1 BLOCKDATA_CT_MAX_CB) IS_CB)
-                             (* (- 1 BLOCKDATA_CT_MAX_TS) IS_TS)
-                             (* (- 1 BLOCKDATA_CT_MAX_NB) IS_NB)
-                             (* (- 1 BLOCKDATA_CT_MAX_DF) IS_DF)
-                             (* (- 1 BLOCKDATA_CT_MAX_GL) IS_GL)
-                             (* (- 1 BLOCKDATA_CT_MAX_ID) IS_ID)
-                             (* (- 1 BLOCKDATA_CT_MAX_BF) IS_BF)))
+(defun    (ct-max-sum)    (+ (* (- CT_MAX_CB 1) IS_CB)
+                             (* (- CT_MAX_TS 1) IS_TS)
+                             (* (- CT_MAX_NB 1) IS_NB)
+                             (* (- CT_MAX_DF 1) IS_DF)
+                             (* (- CT_MAX_GL 1) IS_GL)
+                             (* (- CT_MAX_ID 1) IS_ID)
+                             (* (- CT_MAX_BF 1) IS_BF)))
 
-(defun    (phase_entry)    (+ (* (- IS_CB 1) (shift IS_CB 1))
-                              (* (- IS_TS 1) (shift IS_TS 1))
-                              (* (- IS_NB 1) (shift IS_NB 1))
-                              (* (- IS_DF 1) (shift IS_DF 1))
-                              (* (- IS_GL 1) (shift IS_GL 1))
-                              (* (- IS_ID 1) (shift IS_ID 1))
-                              (* (- IS_BF 1) (shift IS_BF 1))))
+(defun    (phase-entry)    (+ (* (- 1 IS_CB) (shift IS_CB 1))
+                              (* (- 1 IS_TS) (shift IS_TS 1))
+                              (* (- 1 IS_NB) (shift IS_NB 1))
+                              (* (- 1 IS_DF) (shift IS_DF 1))
+                              (* (- 1 IS_GL) (shift IS_GL 1))
+                              (* (- 1 IS_ID) (shift IS_ID 1))
+                              (* (- 1 IS_BF) (shift IS_BF 1))))
 
-(defun    (same_phase)     (+ (* IS_CB (shift IS_CB 1))
+(defun    (same-phase)     (+ (* IS_CB (shift IS_CB 1))
                               (* IS_TS (shift IS_TS 1))
                               (* IS_NB (shift IS_NB 1))
                               (* IS_DF (shift IS_DF 1))
@@ -110,7 +110,7 @@
                               (* IS_ID (shift IS_ID 1))
                               (* IS_BF (shift IS_BF 1))))
 
-(defun    (allowable_transition)     (+ (* IS_CB (shift IS_TS 1))
+(defun    (allowable-transition)     (+ (* IS_CB (shift IS_TS 1))
                                         (* IS_TS (shift IS_NB 1))
                                         (* IS_NB (shift IS_DF 1))
                                         (* IS_DF (shift IS_GL 1))
@@ -118,7 +118,7 @@
                                         (* IS_ID (shift IS_BF 1))
                                         (* IS_BF (shift IS_CB 1))))
 
-(defun    (curr_prev_wght_sum)  (+ IS_CURR (* IS_PREV 2)))
+(defun    (curr-prev-wght-sum)  (+ IS_CURR (* 2 IS_PREV)))
 
 ;; TODO: define the others
 
