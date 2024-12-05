@@ -156,10 +156,10 @@
                  (:guard (storage-instruction---no-stack-exceptions))
                  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                  (if-not-zero    (oogx-or-no-exception)
-                                 (if-not-zero (storage-instruction---is-SLOAD))
-                                 (if-zero (force-bin (shift storage/WARMTH 3))
-                                          (eq!    GAS_COST    GAS_CONST_G_COLD_SLOAD)
-                                          (eq!    GAS_COST    GAS_CONST_G_WARM_ACCESS))))
+                                 (if-not-zero (storage-instruction---is-SLOAD)
+                                              (if-not-zero    (cold-slot)
+                                                              (eq!    GAS_COST    GAS_CONST_G_COLD_SLOAD)
+                                                              (eq!    GAS_COST    GAS_CONST_G_WARM_ACCESS)))))
 
 (defconstraint   storage-instruction---setting-gas-costs---SSTORE-case
                  (:guard (storage-instruction---no-stack-exceptions))
