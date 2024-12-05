@@ -184,8 +184,8 @@
       (vanishes! (shift CT 1))))
 
 (defconstraint counter-increase-or-instruction-transition ()
-  (if-not-zero (shift IOMF 1)
-      (if-not-zero CT CT_MAX
+  (if-not-zero IOMF
+      (if-not-zero (- CT CT_MAX)
           (eq! (shift CT 1) (+ 1 CT)))
           (eq! (allowable-transitions) 1)))
 
