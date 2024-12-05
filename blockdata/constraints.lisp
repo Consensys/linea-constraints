@@ -140,6 +140,26 @@
           (eq! CT_MAX (ct-max-sum))
           (eq! INST (inst-sum))))
 
+;;;;;;;;;;;;;;;;;;;;;;
+;;                  ;;
+;;  2.4 Contancies  ;;
+;;                  ;;
+;;;;;;;;;;;;;;;;;;;;;;
+
+(defconstraint counter-constancies ()
+  (begin (counter-constancy CT DATA_HI)
+         (counter-constancy CT DATA_LO)
+         (counter-constancy CT COINBASE_HI)
+         (counter-constancy CT COINBASE_LO)
+         (counter-constancy CT REL_TX_NUM_MAX)
+         (counter-constancy CT BLOCK_GAS_LIMIT)
+         (counter-constancy CT (wght-sum))))
+
+(defconstraint first-block-number-is-conflation-constant ()
+  (if-not-zero IOMF
+    (if-not-zero (shift IOMF 1)
+           (eq! (shift FIRST_BLOCK_NUMBER 1) FIRST_BLOCK_NUMBER))))
+
 ;; TODO: define the others
 
 ;; (defconstraint first-row (:domain {0})

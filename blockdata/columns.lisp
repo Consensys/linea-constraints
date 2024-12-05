@@ -39,7 +39,7 @@
  (FIRST_BLOCK_NUMBER :i48)
  (REL_BLOCK :i8)
  (REL_TX_NUM_MAX      :i10)
- (DATA_HIGH :i128)
+ (DATA_HI :i128)
  (DATA_LO :i128)
  (ARG_1_HI :i128)
  (ARG_1_LO :i128)
