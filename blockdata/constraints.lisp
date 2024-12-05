@@ -110,13 +110,13 @@
                               (* IS_ID (shift IS_ID 1))
                               (* IS_BF (shift IS_BF 1))))
 
-(defun    (allowable-transition)     (+ (* IS_CB (shift IS_TS 1))
-                                        (* IS_TS (shift IS_NB 1))
-                                        (* IS_NB (shift IS_DF 1))
-                                        (* IS_DF (shift IS_GL 1))
-                                        (* IS_GL (shift IS_ID 1))
-                                        (* IS_ID (shift IS_BF 1))
-                                        (* IS_BF (shift IS_CB 1))))
+(defun    (allowable-transitions)     (+ (* IS_CB (shift IS_TS 1))
+                                         (* IS_TS (shift IS_NB 1))
+                                         (* IS_NB (shift IS_DF 1))
+                                         (* IS_DF (shift IS_GL 1))
+                                         (* IS_GL (shift IS_ID 1))
+                                         (* IS_ID (shift IS_BF 1))
+                                         (* IS_BF (shift IS_CB 1))))
 
 (defun    (curr-prev-wght-sum)  (+ IS_CURR (* 2 IS_PREV)))
 
@@ -157,8 +157,31 @@
 
 (defconstraint first-block-number-is-conflation-constant ()
   (if-not-zero IOMF
-    (if-not-zero (shift IOMF 1)
+      (if-not-zero (shift IOMF 1)
            (eq! (shift FIRST_BLOCK_NUMBER 1) FIRST_BLOCK_NUMBER))))
+
+;;;;;;;;;;;;;;;;;;;;;
+;;                 ;;
+;;  2.5 Heartbeat  ;;
+;;                 ;;
+;;;;;;;;;;;;;;;;;;;;;
+
+(defconstraint first-row-iomf (:domain {0})
+  (vanishes! IOMF))
+
+(defconstraint padding-vanishing ()
+  (if-zero IOMF
+      (vanishes! CT)
+      (vanishes! (shift CT 1))))
+
+(defconstraint first-instruction-is-coinbase ()
+  (if-zero IOMF
+      (if-not-zero (shift IOMF 1)
+          (eq! (shift IS_CB 1) 1))))
+
+(defconstraint counter-reset-for-phase-entry ()
+  (if-not-zero (phase-entry)
+      (vanishes! (shift CT 1))))
 
 ;; TODO: define the others
 
