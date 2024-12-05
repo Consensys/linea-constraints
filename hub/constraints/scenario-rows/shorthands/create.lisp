@@ -105,7 +105,14 @@
 
 ;;  CREATE/compute_deployment_address
 (defun (scenario-shorthand---CREATE---compute-deployment-address)
-  (+ 
+  (+
+    (scenario-shorthand---CREATE---failure-condition)
+    (scenario-shorthand---CREATE---not-rebuffed)
+    ))
+
+;;  CREATE/load_createe_account
+(defun (scenario-shorthand---CREATE---load-createe-account)
+  (+
     (scenario-shorthand---CREATE---failure-condition)
     (scenario-shorthand---CREATE---not-rebuffed)
     ))
