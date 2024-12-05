@@ -183,6 +183,48 @@
   (if-not-zero (phase-entry)
       (vanishes! (shift CT 1))))
 
+(defconstraint counter-increase-or-instruction-transition ()
+  (if-not-zero (shift IOMF 1)
+      (if-not-zero CT CT_MAX
+          (eq! (shift CT 1) (+ 1 CT)))
+          (eq! (allowable-transitions) 1)))
+
+(defconstraint first-row-rel-block (:domain {0})
+  (vanishes! REL_BLOCK))
+
+(defconstraint rel-block-constant-or-increment ()
+  (or! (eq! (shift REL_BLOCK 1) REL_BLOCK ) (eq! (shift REL_BLOCK 1) (+ 1 REL_BLOCK))))
+
+(defconstraint rel-block-increment-from-basefee-to-coinbase ()
+  (eq! (shift REL_BLOCK 1) (+ REL_BLOCK ( * IS_BF (shift IS_CB 1)))))
+
+(defconstraint next-is-curr ()
+  (if-not-zero IS_CURR
+      (eq! (shift IS_CURR 1) 1)))
+
+(defconstraint is-prev-after-padding ()
+  (if-zero IOMF
+      (if-not-zero (shift IOMF 1)
+          (eq! (shift IS_PREV 1) 1))))
+
+(defconstraint curr-prev-wght-sum-constancy ()
+  (if-not-zero IOMF
+      (if-eq (shift REL_BLOCK 1) REL_BLOCK
+          (eq! (shift (curr-prev-wght-sum) 1) (curr-prev-wght-sum)))))
+
+(defconstraint switch-to-is-curr ()
+  (if-eq (shift REL_BLOCK 1) (+ 1 REL_BLOCK)
+      (eq! (shift IS_CURR 1) 1)))
+
+(defconstraint last-row-is-curr (:domain {-1})
+  (eq! IS_CURR 1))
+
+(defconstraint last-row-is-basefee (:domain {-1})
+  (eq! IS_BF 1))
+
+(defconstraint last-row-counter (:domain {-1})
+  (eq! CT CT_MAX))
+
 ;; TODO: define the others
 
 ;; (defconstraint first-row (:domain {0})
