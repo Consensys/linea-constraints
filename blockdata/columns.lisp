@@ -49,3 +49,15 @@
  (WCP_FLAG :binary@prove)
  (EUC_FLAG :binary@prove)
  )
+
+ (defalias 
+  ;; Check with Lorenzo on lower case
+  IS_PREV PREVIOUS_CONFLATION
+  IS_CURR CURRENT_CONFLATION
+  IS_CB   IS_COINBASE
+  IS_TS   IS_TIMESTAMP
+  IS_NB   IS_NUMBER
+  IS_DF   IS_DIFFICULTY
+  IS_GL   IS_GASLIMIT
+  IS_ID   IS_CHAINID
+  IS_BF   IS_BASEFEE  )

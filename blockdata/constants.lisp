@@ -10,4 +10,13 @@
 ;;   ROW_SHIFT_CHAINID       5
 ;;   ROW_SHIFT_BASEFEE       6)
 
+(defconst 
+  BLOCKDATA_CT_MAX_CB       1
+  BLOCKDATA_CT_MAX_TS       2
+  BLOCKDATA_CT_MAX_NB       2
+  BLOCKDATA_CT_MAX_DF       1
+  BLOCKDATA_CT_MAX_GL       5
+  BLOCKDATA_CT_MAX_ID       1
+  BLOCKDATA_CT_MAX_BF       1
+  )
 

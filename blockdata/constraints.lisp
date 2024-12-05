@@ -48,13 +48,52 @@
          (eq! (shift ARG_1_HI w) a_hi)
          (eq! (shift ARG_1_LO w) a_lo)
          (eq! (shift ARG_2_HI w) 0)
-         (eq! (shift ARG_2_LO w) 0))))
+         (eq! (shift ARG_2_LO w) 0)))
 
 (defun (euc-call w a b)
   (begin (eq! (shift EUC_FLAG w) 1)
          (eq! (shift ARG_1_HI w) a)
          (eq! (shift ARG_1_LO w) a)))
 
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                          ;;
+;;  2.2.1 Shorthands        ;;
+;;                          ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defun    (flag_sum)    (+ IS_CB
+                           IS_TS
+                           IS_NB
+                           IS_DF
+                           IS_GL
+                           IS_ID
+                           IS_BF))
+
+(defun    (wght_sum)    (+ ( * 1 IS_CB)
+                           ( * 2 IS_TS)
+                           ( * 3 IS_NB)
+                           ( * 4 IS_DF)
+                           ( * 5 IS_GL)
+                           ( * 6 IS_ID)
+                           ( * 7 IS_BF)))
+
+(defun    (inst_sum)    (+ (* EVM_INST_COINBASE   IS_CB)
+                           (* EVM_INST_TIMESTAMP  IS_TS)
+                           (* EVM_INST_NUMBER     IS_NB)
+                           (* EVM_INST_DIFFICULTY IS_DF)
+                           (* EVM_INST_GASLIMIT   IS_GL)
+                           (* EVM_INST_CHAINID    IS_ID)
+                           (* EVM_INST_BASEFEE    IS_BF)))
+
+(defun    (ct_max_sum)    (+ (* (- 1 BLOCKDATA_CT_MAX_CB) IS_CB)
+                             (* (- 1 BLOCKDATA_CT_MAX_TS) IS_TS)
+                             (* (- 1 BLOCKDATA_CT_MAX_NB) IS_NB)
+                             (* (- 1 BLOCKDATA_CT_MAX_DF) IS_DF)
+                             (* (- 1 BLOCKDATA_CT_MAX_GL) IS_GL)
+                             (* (- 1 BLOCKDATA_CT_MAX_ID) IS_ID)
+                             (* (- 1 BLOCKDATA_CT_MAX_BF) IS_BF)))
+                             
 ;; TODO: define the others
 
 ;; (defconstraint first-row (:domain {0})
