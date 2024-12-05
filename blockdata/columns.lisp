@@ -29,6 +29,7 @@
  (IS_DIFFICULTY :binary@prove)
  (IS_GASLIMIT :binary@prove)
  (IS_CHAINID :binary@prove)
+ ;; TODO: update spec for binary constraints on basefee
  (IS_BASEFEE :binary@prove)
  (INST :byte :display :opcode)
  (COINBASE_HI :i32)

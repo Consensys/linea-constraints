@@ -58,7 +58,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                          ;;
-;;  2.2.1 Shorthands        ;;
+;;  2.1 Shorthands          ;;
 ;;                          ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -119,6 +119,26 @@
                                         (* IS_BF (shift IS_CB 1))))
 
 (defun    (curr-prev-wght-sum)  (+ IS_CURR (* 2 IS_PREV)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                ;;
+;;    2.2 Binary constraints      ;;
+;;                                ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; done with binary@prove in columns.lisp
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                 ;;
+;;  2.3 Unconditional constraints  ;;
+;;                                 ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defconstraint unconditional-constraints ()
+   (begin (eq! IOMF (flag-sum))
+          (eq! IOMF (+ IS_PREV IS_CURR))
+          (eq! CT_MAX (ct-max-sum))
+          (eq! INST (inst-sum))))
 
 ;; TODO: define the others
 
