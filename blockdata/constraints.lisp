@@ -118,6 +118,8 @@
                                         (* IS_ID (shift IS_BF 1))
                                         (* IS_BF (shift IS_CB 1))))
 
+(defun    (curr_prev_wght_sum)  (+ IS_CURR (* IS_PREV 2)))
+
 ;; TODO: define the others
 
 ;; (defconstraint first-row (:domain {0})
