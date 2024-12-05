@@ -177,7 +177,7 @@
                                                                                                  (eq!   GAS_COST   (+ GAS_CONST_G_SSET     (* (cold-slot)   GAS_CONST_G_COLD_SLOAD)))
                                                                                                  (eq!   GAS_COST   (+ GAS_CONST_G_SRESET   (* (cold-slot)   GAS_CONST_G_COLD_SLOAD))))))))))
 
-(defun    (r-clear-clear)    (*    (next-not-curr)
+(defun    (r-clean-clear)    (*    (next-not-curr)
                                    (curr-is-orig)
                                    (next-is-zero)
                                    REFUND_CONST_R_SCLEAR))
@@ -199,6 +199,6 @@
                    (+    REFUND_COUNTER
                          (*    (context-wont-revert)
                                (storage-instruction---is-SSTORE)
-                               (+    (r-clear-clear)
+                               (+    (r-clean-clear)
                                      (r-dirty-clear)
                                      (r-dirty-reset))))))
