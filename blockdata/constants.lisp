@@ -10,7 +10,10 @@
 ;;   ROW_SHIFT_CHAINID       5
 ;;   ROW_SHIFT_BASEFEE       6)
 
-(defconst 
+(defconst
+  ;;
+  ;; CT MAX FOR BLOCKDATA COLUMNS
+  ;;
   BLOCKDATA_CT_MAX_CB       1
   BLOCKDATA_CT_MAX_TS       2
   BLOCKDATA_CT_MAX_NB       2

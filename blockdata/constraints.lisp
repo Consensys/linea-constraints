@@ -93,7 +93,31 @@
                              (* (- 1 BLOCKDATA_CT_MAX_GL) IS_GL)
                              (* (- 1 BLOCKDATA_CT_MAX_ID) IS_ID)
                              (* (- 1 BLOCKDATA_CT_MAX_BF) IS_BF)))
-                             
+
+(defun    (phase_entry)    (+ (* (- IS_CB 1) (shift IS_CB 1))
+                              (* (- IS_TS 1) (shift IS_TS 1))
+                              (* (- IS_NB 1) (shift IS_NB 1))
+                              (* (- IS_DF 1) (shift IS_DF 1))
+                              (* (- IS_GL 1) (shift IS_GL 1))
+                              (* (- IS_ID 1) (shift IS_ID 1))
+                              (* (- IS_BF 1) (shift IS_BF 1))))
+
+(defun    (same_phase)     (+ (* IS_CB (shift IS_CB 1))
+                              (* IS_TS (shift IS_TS 1))
+                              (* IS_NB (shift IS_NB 1))
+                              (* IS_DF (shift IS_DF 1))
+                              (* IS_GL (shift IS_GL 1))
+                              (* IS_ID (shift IS_ID 1))
+                              (* IS_BF (shift IS_BF 1))))
+
+(defun    (allowable_transition)     (+ (* IS_CB (shift IS_TS 1))
+                                        (* IS_TS (shift IS_NB 1))
+                                        (* IS_NB (shift IS_DF 1))
+                                        (* IS_DF (shift IS_GL 1))
+                                        (* IS_GL (shift IS_ID 1))
+                                        (* IS_ID (shift IS_BF 1))
+                                        (* IS_BF (shift IS_CB 1))))
+
 ;; TODO: define the others
 
 ;; (defconstraint first-row (:domain {0})
