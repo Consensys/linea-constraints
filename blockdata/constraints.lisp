@@ -15,6 +15,46 @@
          (eq! (shift ARG_2_LO w) b_lo)
          (eq! (shift RES w) 1)))
 
+(defun (wcp-call-to-GT w a_hi a_lo b_hi b_lo)
+  (begin (eq! (shift WCP_FLAG w) 1)
+         (eq! (shift EXO_INST w) EVM_INST_GT)
+         (eq! (shift ARG_1_HI w) a_hi)
+         (eq! (shift ARG_1_LO w) a_lo)
+         (eq! (shift ARG_2_HI w) b_hi)
+         (eq! (shift ARG_2_LO w) b_lo)
+         (eq! (shift RES w) 1)))
+
+(defun (wcp-call-to-LEQ w a_hi a_lo b_hi b_lo)
+  (begin (eq! (shift WCP_FLAG w) 1)
+         (eq! (shift EXO_INST w) EVM_INST_LEQ)
+         (eq! (shift ARG_1_HI w) a_hi)
+         (eq! (shift ARG_1_LO w) a_lo)
+         (eq! (shift ARG_2_HI w) b_hi)
+         (eq! (shift ARG_2_LO w) b_lo)
+         (eq! (shift RES w) 1)))
+
+(defun (wcp-call-to-GEQ w a_hi a_lo b_hi b_lo)
+  (begin (eq! (shift WCP_FLAG w) 1)
+         (eq! (shift EXO_INST w) EVM_INST_GEQ)
+         (eq! (shift ARG_1_HI w) a_hi)
+         (eq! (shift ARG_1_LO w) a_lo)
+         (eq! (shift ARG_2_HI w) b_hi)
+         (eq! (shift ARG_2_LO w) b_lo)
+         (eq! (shift RES w) 1)))
+
+(defun (wcp-call-to-ISZERO w a_hi a_lo)
+  (begin (eq! (shift WCP_FLAG w) 1)
+         (eq! (shift EXO_INST w) EVM_INST_ISZERO)
+         (eq! (shift ARG_1_HI w) a_hi)
+         (eq! (shift ARG_1_LO w) a_lo)
+         (eq! (shift ARG_2_HI w) 0)
+         (eq! (shift ARG_2_LO w) 0))))
+
+(defun (euc-call w a b)
+  (begin (eq! (shift EUC_FLAG w) 1)
+         (eq! (shift ARG_1_HI w) a)
+         (eq! (shift ARG_1_LO w) a)))
+
 ;; TODO: define the others
 
 ;; (defconstraint first-row (:domain {0})
