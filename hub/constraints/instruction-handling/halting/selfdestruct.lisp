@@ -172,8 +172,8 @@
 
 (defconstraint    selfdestruct-instruction---returning-empty-return-data (:guard (selfdestruct-instruction---scenario-precondition))
                   (begin
-                    (if-not-zero   (selfdestruct-instruction---STATICX)                             (execution-provides-empty-return-data 2))
-                    (if-not-zero   (selfdestruct-instruction---OOGX)                                (execution-provides-empty-return-data 4))
+                    (if-not-zero   (selfdestruct-instruction---STATICX)               (execution-provides-empty-return-data 2))
+                    (if-not-zero   (selfdestruct-instruction---OOGX)                  (execution-provides-empty-return-data 4))
                     (if-not-zero   scenario/SELFDESTRUCT_WILL_REVERT                  (execution-provides-empty-return-data 6))
                     (if-not-zero   scenario/SELFDESTRUCT_WONT_REVERT_ALREADY_MARKED   (execution-provides-empty-return-data 4))
                     (if-not-zero   scenario/SELFDESTRUCT_WONT_REVERT_NOT_YET_MARKED   (execution-provides-empty-return-data 5))))
