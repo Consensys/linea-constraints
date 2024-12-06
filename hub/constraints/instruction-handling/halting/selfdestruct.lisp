@@ -324,7 +324,7 @@
                     (account-undo-code-update                    ROFF_SELFDESTRUCT___ACCOUNT___2ND_UNDOING_ROW      ROFF_SELFDESTRUCT___ACCOUNT___2ND_DOING_ROW)
                     (account-undo-deployment-status-update       ROFF_SELFDESTRUCT___ACCOUNT___2ND_UNDOING_ROW      ROFF_SELFDESTRUCT___ACCOUNT___2ND_DOING_ROW)
                     (account-same-marked-for-selfdestruct        ROFF_SELFDESTRUCT___ACCOUNT___2ND_UNDOING_ROW)
-                    (DOM-SUB-stamps---revert-with-current        ROFF_SELFDESTRUCT___ACCOUNT___2ND_UNDOING_ROW 2)))
+                    (DOM-SUB-stamps---revert-with-current        ROFF_SELFDESTRUCT___ACCOUNT___2ND_UNDOING_ROW 3)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                                                                      ;;
