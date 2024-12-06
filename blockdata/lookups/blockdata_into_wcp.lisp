@@ -1,24 +1,24 @@
-;; (deflookup 
-;;   blockdata-into-wcp
-;;   ; target columns
-;;   (
-;;     wcp.ARGUMENT_1_HI
-;;     wcp.ARGUMENT_1_LO
-;;     wcp.ARGUMENT_2_HI
-;;     wcp.ARGUMENT_2_LO
-;;     wcp.RESULT
-;;     wcp.INST
-;;   )
-;;   ; source columns
-;;   (
-;;     (* blockdata.WCP_FLAG blockdata.DATA_HI)
-;;     (* blockdata.WCP_FLAG blockdata.DATA_LO)
-;;     (* blockdata.WCP_FLAG (shift blockdata.DATA_HI -7)) ;; -7 = (- 0 (+ MAX_CT 1))
+(defun (blockdata-into-wcp-selector)
+  blockdata.WCP_FLAG)
 
-;;     (* blockdata.WCP_FLAG (shift blockdata.DATA_LO -7)) ;; -7 = (- 0 (+ MAX_CT 1))
-
-;;     blockdata.WCP_FLAG
-;;     (* blockdata.WCP_FLAG EVM_INST_GT)
-;;   ))
-
+(deflookup 
+  blockdata-into-wcp
+  ;; targe columns
+  (
+    wcp.ARGUMENT_1_HI
+    wcp.ARGUMENT_1_LO
+    wcp.ARGUMENT_2_HI
+    wcp.ARGUMENT_2_LO
+    wcp.RESULT
+    wcp.INST
+  )
+  ;; source columns
+  (
+    (* blockdata.ARG_1_HI (blockdata-into-wcp-selector))
+    (* blockdata.ARG_1_LO (blockdata-into-wcp-selector))
+    (* blockdata.ARG_2_HI (blockdata-into-wcp-selector))
+    (* blockdata.ARG_2_LO (blockdata-into-wcp-selector))
+    (* blockdata.RES      (blockdata-into-wcp-selector))
+    (* blockdata.EXO_INST (blockdata-into-wcp-selector))
+  ))
 

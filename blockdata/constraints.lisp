@@ -193,7 +193,7 @@
   (vanishes! REL_BLOCK))
 
 (defconstraint rel-block-constant-or-increment ()
-  (or! (eq! (shift REL_BLOCK 1) REL_BLOCK ) (eq! (shift REL_BLOCK 1) (+ 1 REL_BLOCK))))
+  (any! (remained-constant! REL_BLOCK) (did-inc! REL_BLOCK 1)))
 
 (defconstraint rel-block-increment-from-basefee-to-coinbase ()
   (eq! (shift REL_BLOCK 1) (+ REL_BLOCK ( * IS_BF (shift IS_CB 1)))))
@@ -225,7 +225,46 @@
 (defconstraint last-row-counter (:domain {-1})
   (eq! CT CT_MAX))
 
-;; TODO: define the others
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                             ;;
+;;  3 Computations and checks  ;;
+;;                             ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;;;;;;;;;;;;;;;;;;;;;;;
+;;                    ;;
+;;  3.1 For COINBASE  ;;
+;;                    ;;
+;;;;;;;;;;;;;;;;;;;;;;;;
+(defun (coinbase-precondition)
+ (* (- 1 (prev IS_CB)) IS_CB))
+
+(defconstraint setting-coinbase (:guard (coinbase-precondition))
+  (begin (eq! DATA_HI COINBASE_HI)
+         (eq! DATA_LO COINBASE_LO)))
+
+(defconstraint gaslimit-deviation-lower-bound (:guard (coinbase-precondition))
+  (if-not-zero IS_CURR
+    (wcp-call-to-LT 0 DATA_HI DATA_LO (^ 256 4) 0)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                     ;;
+;;  3.2 For TIMESTAMP  ;;
+;;                     ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun (timestamp-precondition)
+ (* (- 1 (prev IS_TS)) IS_TS))
+
+
+(defconstraint timestamp-upperbound (:guard (timestamp-precondition))
+    (wcp-call-to-LT 0 DATA_HI DATA_LO 0 (^ 256 6)))
+
+(defconstraint timestamp-is-incrementing (:guard (timestamp-precondition))
+  (if-not-zero IS_CURR
+    (wcp-call-to-LT 1 DATA_HI DATA_LO (shift DATA_HI (- CT_MAX_DEPTH)) (shift DATA_LO (- CT_MAX_DEPTH)))))
+
+
+;; TODO: define the others, remember to use constants when available, e.g., LINEA_BASE_FEE, delete old implementation below
 
 ;; (defconstraint first-row (:domain {0})
 ;;   (vanishes! REL_BLOCK))
