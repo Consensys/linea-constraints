@@ -243,7 +243,8 @@
   (begin (eq! DATA_HI COINBASE_HI)
          (eq! DATA_LO COINBASE_LO)))
 
-(defconstraint gaslimit-deviation-lower-bound (:guard (coinbase-precondition))
+;; TODO: correct spec name
+(defconstraint coinbase-lower-bound (:guard (coinbase-precondition))
   (if-not-zero IS_CURR
     (wcp-call-to-LT 0 DATA_HI DATA_LO (^ 256 4) 0)))
 
@@ -310,6 +311,74 @@
 
 (defconstraint difficulty-bound (:guard (number-precondition))
     (wcp-call-to-GEQ 0 DATA_HI DATA_LO 0 0))
+
+;;;;;;;;;;;;;;;;;;;;;;;;
+;;                    ;;
+;;  3.5 For GASLIMIT  ;;
+;;                    ;;
+;;;;;;;;;;;;;;;;;;;;;;;;
+(defun (gaslimit-precondition)
+ (* (- 1 (prev IS_GL)) IS_GL))
+
+(defconstraint setting-gaslimit (:guard (gaslimit-precondition))
+  (begin (eq! DATA_HI 0)
+         (eq! DATA_LO BLOCK_GAS_LIMIT)))
+
+(defconstraint gaslimit-lowerbound (:guard (gaslimit-precondition))
+    (wcp-call-to-GEQ 0 DATA_HI DATA_LO 0 61000000))
+
+(defconstraint gaslimit-upperbound (:guard (gaslimit-precondition))
+    (wcp-call-to-LEQ 1 DATA_HI DATA_LO 0 2000000000))
+
+(defun (prev-gas-limit)
+ (shift BLOCK_GAS_LIMIT (- CT_MAX_DEPTH)))
+
+(defun (max-deviation)
+ (shift RES 2))
+
+(defconstraint gaslimit-maximum-deviation (:guard (gaslimit-precondition))
+  (if-not-zero IS_CURR
+      (euc-call 2 (prev-gas-limit) 1024)))
+
+(defconstraint gaslimit-deviation-upper-bound (:guard (gaslimit-precondition))
+  (if-not-zero IS_CURR
+      (wcp-call-to-LT 3 DATA_HI DATA_LO 0 (+ (prev-gas-limit) (max-deviation)))))
+
+(defconstraint gaslimit-deviation-lower-bound (:guard (gaslimit-precondition))
+  (if-not-zero IS_CURR
+      (wcp-call-to-GT 4 DATA_HI DATA_LO 0 (- (prev-gas-limit) (max-deviation)))))
+
+;;;;;;;;;;;;;;;;;;;;;;;
+;;                   ;;
+;;  3.6 For CHAINID  ;;
+;;                   ;;
+;;;;;;;;;;;;;;;;;;;;;;;
+(defun (chainid-precondition)
+ (* (- 1 (prev IS_ID)) IS_ID))
+
+(defconstraint chainid-permanence (:guard (chainid-precondition))
+  (if-not-zero IS_CURR
+      (eq! DATA_HI (shift DATA_HI (- CT_MAX_DEPTH)))
+      (eq! DATA_LO (shift DATA_LO (- CT_MAX_DEPTH)))))
+
+(defconstraint chainid-bound (:guard (chainid-precondition))
+    (wcp-call-to-GEQ 0 DATA_HI DATA_LO 0 0))
+
+;;;;;;;;;;;;;;;;;;;;;;;
+;;                   ;;
+;;  3.7 For BASEFEE  ;;
+;;                   ;;
+;;;;;;;;;;;;;;;;;;;;;;;
+(defun (basefee-precondition)
+ (* (- 1 (prev IS_BF)) IS_BF))
+
+(defconstraint setting-basefee (:guard (basefee-precondition))
+  (begin (eq! DATA_HI 0)
+         (eq! DATA_LO BASEFEE)))
+
+(defconstraint basefee-bound (:guard (basefee-precondition))
+    (wcp-call-to-GEQ 0 DATA_HI DATA_LO 0 0))
+
 
 ;; TODO: define the others, remember to use constants when available, e.g., LINEA_BASE_FEE, delete old implementation below
 
