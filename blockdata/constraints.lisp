@@ -263,6 +263,42 @@
   (if-not-zero IS_CURR
     (wcp-call-to-LT 1 DATA_HI DATA_LO (shift DATA_HI (- CT_MAX_DEPTH)) (shift DATA_LO (- CT_MAX_DEPTH)))))
 
+;;;;;;;;;;;;;;;;;;;;;;
+;;                  ;;
+;;  3.3 For NUMBER  ;;
+;;                  ;;
+;;;;;;;;;;;;;;;;;;;;;;
+(defun (number-precondition)
+ (* (- 1 (prev IS_NB)) IS_NB))
+
+(defconstraint number-comparing (:guard (number-precondition))
+    (wcp-call-to-ISZERO 0 0 FIRST_BLOCK_NUMBER))
+
+(defalias
+    first-block-is-genesis-block RES)
+
+(defconstraint number-upperbound (:guard (number-precondition))
+    (wcp-call-to-LT 1 DATA_HI DATA_LO 0 (^ 256 6)))
+
+(defconstraint setting-number-is-prev (:guard (number-precondition))
+  (if-not-zero IS_PREV
+      (if-not-zero first-block-is-genesis-block
+            (begin (vanishes! DATA_HI)
+                   (vanishes! DATA_LO)))
+      (begin (vanishes! DATA_HI)
+             (eq! DATA_LO (- FIRST_BLOCK_NUMBER 1)))))
+
+(defconstraint setting-number-is-curr (:guard (number-precondition))
+  (if-not-zero IS_CURR
+      (if-not-zero first-block-is-genesis-block
+            (if-not-zero (shift IS_PREV (- CT_MAX_DEPTH))
+                (begin (vanishes! DATA_HI)
+                       (vanishes! DATA_LO)))
+            (if-not-zero (shift IS_CURR (- CT_MAX_DEPTH))
+                (begin (eq! DATA_HI (shift DATA_HI (- CT_MAX_DEPTH)))
+                       (eq! DATA_LO (+ (shift DATA_LO (- CT_MAX_DEPTH)) 1)))))
+      (begin (eq! DATA_HI (shift DATA_HI (- CT_MAX_DEPTH)))
+              (eq! DATA_LO (+ (shift DATA_LO (- CT_MAX_DEPTH)) 1)))))
 
 ;; TODO: define the others, remember to use constants when available, e.g., LINEA_BASE_FEE, delete old implementation below
 
