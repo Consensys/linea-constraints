@@ -343,10 +343,11 @@
 ;;                                                                                      ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defun    (selfdestruct-instruction---scenario-WONT_REVERT_NOT_YET_MARKED-precondition) (* PEEK_AT_SCENARIO
-                                                                                           (scenario/SELFDESTRUCT_WONT_REVERT_NOT_YET_MARKED)))
+(defun    (selfdestruct-instruction---scenario-WONT_REVERT_NOT_YET_MARKED-precondition)    (*    PEEK_AT_SCENARIO    scenario/SELFDESTRUCT_WONT_REVERT_NOT_YET_MARKED))
 
-(defconstraint    selfdestruct-instruction---first-undoing-row-for-WONT_REVERT_NOT_YET_MARKED-scenario (:guard (selfdestruct-instruction---scenario-WILL_REVERT-precondition))
+(defconstraint    selfdestruct-instruction---first-undoing-row-for-WONT_REVERT_NOT_YET_MARKED-scenario
+                  (:guard (selfdestruct-instruction---scenario-WONT_REVERT_NOT_YET_MARKED-precondition))
+                  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                   (begin
                     (debug (eq! (shift account/ROMLEX_FLAG           ROFF_SELFDESTRUCT___ACCOUNT___1ST_UNDOING_ROW) 0))
                     (debug (eq! (shift account/TRM_FLAG              ROFF_SELFDESTRUCT___ACCOUNT___1ST_UNDOING_ROW) 0))
