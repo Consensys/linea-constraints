@@ -26,7 +26,7 @@
 
 (defun (wcp-call-to-LEQ w a_hi a_lo b_hi b_lo)
   (begin (eq! (shift WCP_FLAG w) 1)
-         (eq! (shift EXO_INST w) EVM_INST_LEQ)
+         (eq! (shift EXO_INST w) WCP_INST_LEQ)
          (eq! (shift ARG_1_HI w) a_hi)
          (eq! (shift ARG_1_LO w) a_lo)
          (eq! (shift ARG_2_HI w) b_hi)
@@ -35,7 +35,7 @@
 
 (defun (wcp-call-to-GEQ w a_hi a_lo b_hi b_lo)
   (begin (eq! (shift WCP_FLAG w) 1)
-         (eq! (shift EXO_INST w) EVM_INST_GEQ)
+         (eq! (shift EXO_INST w) WCP_INST_GEQ)
          (eq! (shift ARG_1_HI w) a_hi)
          (eq! (shift ARG_1_LO w) a_lo)
          (eq! (shift ARG_2_HI w) b_hi)
@@ -299,6 +299,17 @@
                        (eq! DATA_LO (+ (shift DATA_LO (- CT_MAX_DEPTH)) 1)))))
       (begin (eq! DATA_HI (shift DATA_HI (- CT_MAX_DEPTH)))
               (eq! DATA_LO (+ (shift DATA_LO (- CT_MAX_DEPTH)) 1)))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                      ;;
+;;  3.4 For DIFFICULTY  ;;
+;;                      ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun (difficulty-precondition)
+ (* (- 1 (prev IS_DF)) IS_DF))
+
+(defconstraint difficulty-bound (:guard (number-precondition))
+    (wcp-call-to-GEQ 0 DATA_HI DATA_LO 0 0))
 
 ;; TODO: define the others, remember to use constants when available, e.g., LINEA_BASE_FEE, delete old implementation below
 
