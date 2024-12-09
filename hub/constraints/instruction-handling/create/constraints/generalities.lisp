@@ -74,7 +74,9 @@
                                                                  (create-instruction---MXP-gas)         ;; memory expansion gas
                                                                  )))
 
-(defconstraint    create-instruction---setting-the-out-of-gas-exception                     (:guard    (create-instruction---generic-precondition))
+(defconstraint    create-instruction---setting-the-out-of-gas-exception
+                  (:guard    (create-instruction---generic-precondition))
+                  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                   (if-zero    (shift    misc/STP_FLAG    CREATE_miscellaneous_row___row_offset)
                               ;; STP_FLAG  ≡  0
                               (vanishes!    (create-instruction---STACK-oogx))
@@ -83,10 +85,9 @@
                                             (create-instruction---STP-oogx))
                               ))
 
-(defun    (create-instruction---createe-nonce)       (*    (create-instruction---trigger_RLPADDR)    (shift    account/NONCE       CREATE_first_createe_account_row___row_offset)))
-(defun    (create-instruction---createe-has-code)    (*    (create-instruction---trigger_RLPADDR)    (shift    account/HAS_CODE    CREATE_first_createe_account_row___row_offset)))
-
-(defconstraint    create-instruction---setting-the-OOB-instruction                          (:guard    (create-instruction---generic-precondition))
+(defconstraint    create-instruction---setting-the-OOB-instruction
+                  (:guard    (create-instruction---generic-precondition))
+                  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                   (if-not-zero    (shift    misc/OOB_FLAG    CREATE_miscellaneous_row___row_offset)
                                   (set-OOB-instruction---create    CREATE_miscellaneous_row___row_offset         ;; offset
                                                                    (create-instruction---STACK-value-hi)         ;; value    (high part)
@@ -97,6 +98,9 @@
                                                                    (create-instruction---current-context-csd)    ;; current  call  stack  depth
                                                                    (create-instruction---creator-nonce)          ;; creator account nonce
                                                                    )))
+
+(defun    (create-instruction---createe-nonce)       (*    (scenario-shorthand---CREATE---load-createe-account)    (shift    account/NONCE       CREATE_first_createe_account_row___row_offset)))
+(defun    (create-instruction---createe-has-code)    (*    (scenario-shorthand---CREATE---load-createe-account)    (shift    account/HAS_CODE    CREATE_first_createe_account_row___row_offset)))
 
 (defconstraint    create-instruction---setting-the-CREATE-scenario---exceptional
                   (:guard    (create-instruction---generic-precondition))
@@ -165,26 +169,27 @@
                     (if-not-zero    (scenario-shorthand---CREATE---no-context-change)                  (next-context-is-current))
                     (if-not-zero    (scenario-shorthand---CREATE---not-rebuffed-nonempty-init-code)    (next-context-is-new))))
 
+(defun   (create-instruction---upfront-gas-cost)   (+   GAS_CONST_G_CREATE
+                                                        (create-instruction---MXP-gas)))
+(defun   (create-instruction---full-gas-cost)      (+   (create-instruction---upfront-gas-cost)
+                                                        (create-instruction---STP-gas-paid-out-of-pocket)))
+
+
 (defconstraint    create-instruction---setting-GAS_COST                                     (:guard    (create-instruction---generic-precondition))
                   (begin
-                    (if-not-zero    (+    (create-instruction---STACK-staticx)     (create-instruction---STACK-mxpx))
-                                    (vanishes!    GAS_COST))
-                    (if-not-zero    (+    (create-instruction---STACK-oogx)        (scenario-shorthand---CREATE---unexceptional))
-                                    (eq!          GAS_COST    (+    GAS_CONST_G_CREATE
-                                                                    (create-instruction---MXP-gas))))
+                    (if-not-zero    (+    (create-instruction---STACK-staticx)
+                                          (create-instruction---STACK-mxpx))
+                                    (eq!  GAS_COST  0))
+                    (if-not-zero    (+    (create-instruction---STACK-oogx)
+                                          (scenario-shorthand---CREATE---unexceptional))
+                                    (eq!  GAS_COST  (create-instruction---upfront-gas-cost)))
                     ))
 
 (defconstraint    create-instruction---setting-GAS_NEXT                                     (:guard    (create-instruction---generic-precondition))
                   (begin
-                    (if-not-zero    scenario/CREATE_EXCEPTION
-                                    (vanishes!    GAS_NEXT))
-                    (if-not-zero    (scenario-shorthand---CREATE---no-context-change)
-                                    (eq!    GAS_NEXT
-                                            (-    GAS_ACTUAL
-                                                  GAS_COST)))
-                    (if-not-zero    (scenario-shorthand---CREATE---not-rebuffed-nonempty-init-code)
-                                    (eq!    GAS_NEXT
-                                            (-    GAS_ACTUAL
-                                                  GAS_COST
-                                                  (create-instruction---STP-gas-paid-out-of-pocket))))
+                    (if-not-zero    scenario/CREATE_EXCEPTION                                        (eq!   GAS_NEXT  0))
+                    (if-not-zero    scenario/CREATE_ABORT                                            (eq!   GAS_NEXT  (-  GAS_ACTUAL  (create-instruction---upfront-gas-cost))))
+                    (if-not-zero    (scenario-shorthand---CREATE---failure-condition)                (eq!   GAS_NEXT  (-  GAS_ACTUAL  (create-instruction---full-gas-cost))))
+                    (if-not-zero    (scenario-shorthand---CREATE---not-rebuffed-empty-init-code)     (eq!   GAS_NEXT  (-  GAS_ACTUAL  (create-instruction---upfront-gas-cost))))
+                    (if-not-zero    (scenario-shorthand---CREATE---not-rebuffed-nonempty-init-code)  (eq!   GAS_NEXT  (-  GAS_ACTUAL  (create-instruction---full-gas-cost))))
                     ))

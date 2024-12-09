@@ -195,7 +195,7 @@
                   (set-OOB-instruction---modexp-lead    precompile-processing---MODEXP---misc-row-offset---leading-word-analysis   ;; offset
                                                         (precompile-processing---MODEXP---bbs-lo)                                  ;; low part of bbs (base     byte size)
                                                         (precompile-processing---dup-cds)                                          ;; call data size
-                                                        (precompile-processing---MODEXP---bbs-lo)                                  ;; low part of ebs (exponent byte size)
+                                                        (precompile-processing---MODEXP---ebs-lo)                                  ;; low part of ebs (exponent byte size)
                                                         ))
 
 (defun    (precompile-processing---MODEXP---load-lead)     (*    (precompile-processing---MODEXP---extract-bbs)    (shift    [misc/OOB_DATA  4]    precompile-processing---MODEXP---misc-row-offset---leading-word-analysis)))
@@ -211,8 +211,8 @@
                                                                   ;; tgt_id                                                                                                     ;; target ID
                                                                   ;; aux_id                                                                                                     ;; auxiliary ID
                                                                   ;; src_offset_hi                                                                                              ;; source offset high
-                                                                  (+    (precompile-processing---dup-cdo)                                                                    
-                                                                        96                                                                                                   
+                                                                  (+    (precompile-processing---dup-cdo)
+                                                                        96
                                                                         (precompile-processing---MODEXP---bbs-lo))                                                              ;; source offset low
                                                                   ;; tgt_offset_lo                                                                                              ;; target offset low
                                                                   ;; size                                                                                                       ;; size
