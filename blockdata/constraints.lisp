@@ -213,7 +213,7 @@
           (eq! (shift (curr-prev-wght-sum) 1) (curr-prev-wght-sum)))))
 
 (defconstraint switch-to-is-curr ()
-  (if-eq (shift REL_BLOCK 1) (+ 1 REL_BLOCK)
+  (if-not-zero (will-remain-constant! REL_BLOCK)
       (eq! (shift IS_CURR 1) 1)))
 
 (defconstraint is-curr-finalziation (:domain {-1})
