@@ -53,7 +53,7 @@
 (defun (euc-call w a b)
   (begin (eq! (shift EUC_FLAG w) 1)
          (eq! (shift ARG_1_HI w) a)
-         (eq! (shift ARG_1_LO w) a)))
+         (eq! (shift ARG_1_LO w) b)))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -94,29 +94,29 @@
                              (* (- CT_MAX_ID 1) IS_ID)
                              (* (- CT_MAX_BF 1) IS_BF)))
 
-(defun    (phase-entry)    (+ (* (- 1 IS_CB) (shift IS_CB 1))
-                              (* (- 1 IS_TS) (shift IS_TS 1))
-                              (* (- 1 IS_NB) (shift IS_NB 1))
-                              (* (- 1 IS_DF) (shift IS_DF 1))
-                              (* (- 1 IS_GL) (shift IS_GL 1))
-                              (* (- 1 IS_ID) (shift IS_ID 1))
-                              (* (- 1 IS_BF) (shift IS_BF 1))))
+(defun    (phase-entry)    (+ (* (- 1 IS_CB) (next IS_CB))
+                              (* (- 1 IS_TS) (next IS_TS))
+                              (* (- 1 IS_NB) (next IS_NB))
+                              (* (- 1 IS_DF) (next IS_DF))
+                              (* (- 1 IS_GL) (next IS_GL))
+                              (* (- 1 IS_ID) (next IS_ID))
+                              (* (- 1 IS_BF) (next IS_BF))))
 
-(defun    (same-phase)     (+ (* IS_CB (shift IS_CB 1))
-                              (* IS_TS (shift IS_TS 1))
-                              (* IS_NB (shift IS_NB 1))
-                              (* IS_DF (shift IS_DF 1))
-                              (* IS_GL (shift IS_GL 1))
-                              (* IS_ID (shift IS_ID 1))
-                              (* IS_BF (shift IS_BF 1))))
+(defun    (same-phase)     (+ (* IS_CB (next IS_CB))
+                              (* IS_TS (next IS_TS))
+                              (* IS_NB (next IS_NB))
+                              (* IS_DF (next IS_DF))
+                              (* IS_GL (next IS_GL))
+                              (* IS_ID (next IS_ID))
+                              (* IS_BF (next IS_BF))))
 
-(defun    (allowable-transitions)     (+ (* IS_CB (shift IS_TS 1))
-                                         (* IS_TS (shift IS_NB 1))
-                                         (* IS_NB (shift IS_DF 1))
-                                         (* IS_DF (shift IS_GL 1))
-                                         (* IS_GL (shift IS_ID 1))
-                                         (* IS_ID (shift IS_BF 1))
-                                         (* IS_BF (shift IS_CB 1))))
+(defun    (allowable-transitions)     (+ (* IS_CB (next IS_TS))
+                                         (* IS_TS (next IS_NB))
+                                         (* IS_NB (next IS_DF))
+                                         (* IS_DF (next IS_GL))
+                                         (* IS_GL (next IS_ID))
+                                         (* IS_ID (next IS_BF))
+                                         (* IS_BF (next IS_CB))))
 
 (defun    (curr-prev-wght-sum)  (+ IS_CURR (* 2 IS_PREV)))
 
@@ -209,20 +209,20 @@
 
 (defconstraint curr-prev-wght-sum-constancy ()
   (if-not-zero IOMF
-      (if-eq (shift REL_BLOCK 1) REL_BLOCK
+      (if-not-zero (will-remain-constant! REL_BLOCK)
           (eq! (shift (curr-prev-wght-sum) 1) (curr-prev-wght-sum)))))
 
 (defconstraint switch-to-is-curr ()
   (if-eq (shift REL_BLOCK 1) (+ 1 REL_BLOCK)
       (eq! (shift IS_CURR 1) 1)))
 
-(defconstraint last-row-is-curr (:domain {-1})
+(defconstraint is-curr-finalziation (:domain {-1})
   (eq! IS_CURR 1))
 
-(defconstraint last-row-is-basefee (:domain {-1})
+(defconstraint is-basefee-finalization (:domain {-1})
   (eq! IS_BF 1))
 
-(defconstraint last-row-counter (:domain {-1})
+(defconstraint counter-finalization (:domain {-1})
   (eq! CT CT_MAX))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -331,14 +331,14 @@
          (eq! DATA_LO BLOCK_GAS_LIMIT)))
 
 (defconstraint gaslimit-lowerbound (:guard (gaslimit-precondition))
-    (wcp-call-to-GEQ 0 DATA_HI DATA_LO 0 61000000))
+    (wcp-call-to-GEQ 0 DATA_HI DATA_LO 0 LINEA_GAS_LIMIT_MINIMUM))
 
 (defconstraint gaslimit-upperbound (:guard (gaslimit-precondition))
-    (wcp-call-to-LEQ 1 DATA_HI DATA_LO 0 2000000000))
+    (wcp-call-to-LEQ 1 DATA_HI DATA_LO 0 LINEA_GAS_LIMIT_MAXIMUM))
 
 (defconstraint gaslimit-maximum-deviation (:guard (gaslimit-precondition))
   (if-not-zero IS_CURR
-      (euc-call 2 (prev-gas-limit) 1024)))
+      (euc-call 2 (prev-gas-limit) GAS_LIMIT_ADJUSTMENT_FACTOR)))
 
 (defconstraint gaslimit-deviation-upper-bound (:guard (gaslimit-precondition))
   (if-not-zero IS_CURR

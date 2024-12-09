@@ -3,7 +3,7 @@
 
 (deflookup 
   blockdata-into-wcp
-  ;; targe columns
+  ;; target columns
   (
     wcp.ARGUMENT_1_HI
     wcp.ARGUMENT_1_LO
