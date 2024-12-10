@@ -84,8 +84,6 @@ MMIO := $(wildcard mmio/*lisp) \
 
 MMIO_COLUMNS := mmio/columns.lisp
 
-MMIO_COLUMNS := mmio/columns.lisp
-
 MXP := mxp
 
 OOB := oob
