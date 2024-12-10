@@ -80,7 +80,9 @@ MMU :=  $(wildcard mmu/*.lisp) \
 	$(wildcard mmu/instructions/any_to_ram_with_padding/*.lisp)
 
 MMIO := $(wildcard mmio/*lisp) \
-	$(wildcard mmio/lookups/*lisp) 
+	$(wildcard mmio/lookups/*lisp)
+
+MMIO_COLUMNS := mmio/columns.lisp
 
 MXP := mxp
 
@@ -137,7 +139,7 @@ ZKEVM_MODULES := ${ALU} \
 		 ${LIBRARY} \
 		 ${LOG_DATA} \
 		 ${LOG_INFO} \
-		 ${MMIO} \
+		 ${MMIO_COLUMNS} \
 		 ${MMU} \
 		 ${MXP} \
 		 ${OOB} \
