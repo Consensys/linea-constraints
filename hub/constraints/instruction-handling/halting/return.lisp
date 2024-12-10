@@ -276,7 +276,7 @@
                                                                                 ;; size                                           ;; size
                                                                                 ;; ref_offset                                     ;; reference offset
                                                                                 ;; ref_size                                       ;; reference size
-                                                                                (- 1 (return-instruction---exception-flag-ICPX))  ;; success bit; this double negation stuff will be resolved by spec issue #715
+                                                                                (return-instruction---exception-flag-ICPX)        ;; success bit; this double negation stuff will be resolved by spec issue #715
                                                                                 ;; limb_1                                         ;; limb 1
                                                                                 ;; limb_2                                         ;; limb 2
                                                                                 ;; exo_sum                                        ;; weighted exogenous module flag sum
