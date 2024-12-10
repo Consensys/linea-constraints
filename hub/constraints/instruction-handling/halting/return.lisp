@@ -300,13 +300,15 @@
                                                                                    ;; phase                                     ;; phase
                                                                                    ))))
 
-(defconstraint   return-instruction---justifying-the-MXPX           (:guard   (return-instruction---standard-scenario-row))
-                 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defconstraint   return-instruction---justifying-the-MXPX
+                 (:guard   (return-instruction---standard-scenario-row))
+                 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                  (eq!   (return-instruction---exception-flag-MXPX)
                         (return-instruction---MXP-memory-expansion-exception)))
 
-(defconstraint   return-instruction---justifying-the-ICPX           (:guard   (return-instruction---standard-scenario-row))
-                 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defconstraint   return-instruction---justifying-the-ICPX
+                 (:guard   (return-instruction---standard-scenario-row))
+                 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                  (if-zero   (force-bool   (return-instruction---check-first-byte))
                             ;; check_first_byte ≡ 0
                             (vanishes!    (return-instruction---exception-flag-ICPX))
