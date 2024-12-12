@@ -175,7 +175,7 @@ ZKEVM_MODULES_FOR_REFERENCE_TESTS := ${ALU} \
 				     ${EUC} \
 				     ${EXP} \
 				     ${GAS} \
-				     ${HUB_COLUMNS} \
+				     ${HUB} \
 				     ${LIBRARY} \
 				     ${LOG_DATA} \
 				     ${LOG_INFO} \
