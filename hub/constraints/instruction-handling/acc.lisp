@@ -155,9 +155,17 @@
                                   (account-same-nonce                           ROFF_ACC___ACCOUNT_DOING_ROW)
                                   (account-same-code                            ROFF_ACC___ACCOUNT_DOING_ROW)
                                   (account-same-deployment-number-and-status    ROFF_ACC___ACCOUNT_DOING_ROW)
-                                  (account-turn-on-warmth                       ROFF_ACC___ACCOUNT_DOING_ROW)
+                                  ;; (account-turn-on-warmth                       ROFF_ACC___ACCOUNT_DOING_ROW)
                                   (account-same-marked-for-selfdestruct         ROFF_ACC___ACCOUNT_DOING_ROW)
                                   (DOM-SUB-stamps---standard                    ROFF_ACC___ACCOUNT_DOING_ROW    0)))))
+
+(defconstraint   account-instruction---foreign-address-opcode---doing-account-row---warmth-update
+                 (:guard (account-instruction---standard-hypothesis))
+                 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                 (if-not-zero   (account-instruction---touches-foreign-account)
+                                (if-not-zero    XAHOY
+                                                (account-turn-on-warmth   ROFF_ACC___ACCOUNT_DOING_ROW)
+                                                (account-same-warmth      ROFF_ACC___ACCOUNT_DOING_ROW))))
 
 
 (defconstraint   account-instruction---foreign-address-opcode---undoing-account-row
