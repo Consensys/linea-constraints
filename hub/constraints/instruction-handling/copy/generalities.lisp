@@ -216,7 +216,7 @@
 (defun (copy-instruction---source-id)         (+   (* (copy-instruction---is-CALLDATACOPY)      (copy-instruction---call-data-context))
                                                    (* (copy-instruction---is-RETURNDATACOPY)    (copy-instruction---return-data-context))
                                                    (* (copy-instruction---is-CODECOPY)          (copy-instruction---bytecode-address-code-fragment-index))
-                                                   (* (copy-instruction---is-EXTCODECOPY)       (copy-instruction---foreign-address-code-fragment-index))))
+                                                   (* (copy-instruction---is-EXTCODECOPY)       (copy-instruction---foreign-address-code-fragment-index)  (copy-instruction---foreign-address-has-code))))
 
 (defun (copy-instruction---reference-offset)  (+   (* (copy-instruction---is-CALLDATACOPY)      (copy-instruction---call-data-offset))
                                                    (* (copy-instruction---is-RETURNDATACOPY)    (copy-instruction---return-data-offset))))
