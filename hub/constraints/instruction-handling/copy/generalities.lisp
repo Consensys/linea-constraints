@@ -226,4 +226,5 @@
                                                    (* (copy-instruction---is-CODECOPY)          (copy-instruction---bytecode-address-code-size))
                                                    (* (copy-instruction---is-EXTCODECOPY)       (copy-instruction---foreign-address-code-size) (copy-instruction---foreign-address-has-code))))
 
-(defun (copy-instruction---exo-sum)           (*   (+ (copy-instruction---is-CODECOPY) (copy-instruction---is-EXTCODECOPY)) EXO_SUM_WEIGHT_ROM))
+(defun (copy-instruction---exo-sum)           (+   (* (copy-instruction---is-CODECOPY)          EXO_SUM_WEIGHT_ROM)
+                                                   (* (copy-instruction---is-EXTCODECOPY)       EXO_SUM_WEIGHT_ROM)))
