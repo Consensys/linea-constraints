@@ -171,8 +171,8 @@
 
 (defconstraint padding-vanishing ()
   (if-zero IOMF
-      (vanishes! CT)
-      (vanishes! (shift CT 1))))
+      (begin (vanishes! CT)
+             (vanishes! (shift CT 1)))))
 
 (defconstraint first-instruction-is-coinbase ()
   (if-zero IOMF
@@ -216,7 +216,7 @@
   (if-not-zero (will-remain-constant! REL_BLOCK)
       (eq! (shift IS_CURR 1) 1)))
 
-(defconstraint is-curr-finalziation (:domain {-1})
+(defconstraint is-curr-finalization (:domain {-1})
   (eq! IS_CURR 1))
 
 (defconstraint is-basefee-finalization (:domain {-1})
