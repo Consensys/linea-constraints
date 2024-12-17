@@ -186,8 +186,8 @@
 (defconstraint counter-increase-or-instruction-transition ()
   (if-not-zero IOMF
       (if-not-zero (- CT CT_MAX)
-          (eq! (shift CT 1) (+ 1 CT)))
-          (eq! (allowable-transitions) 1)))
+          (eq! (shift CT 1) (+ 1 CT))
+          (eq! (allowable-transitions) 1))))
 
 (defconstraint first-row-rel-block (:domain {0})
   (vanishes! REL_BLOCK))
