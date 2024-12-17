@@ -358,8 +358,8 @@
 
 (defconstraint chainid-permanence (:guard (chainid-precondition))
   (if-not-zero IS_CURR
-      (eq! DATA_HI (shift DATA_HI (- CT_MAX_DEPTH)))
-      (eq! DATA_LO (shift DATA_LO (- CT_MAX_DEPTH)))))
+      (begin (eq! DATA_HI (shift DATA_HI (- CT_MAX_DEPTH)))
+             (eq! DATA_LO (shift DATA_LO (- CT_MAX_DEPTH))))))
 
 (defconstraint chainid-bound (:guard (chainid-precondition))
     (wcp-call-to-GEQ 0 DATA_HI DATA_LO 0 0))
