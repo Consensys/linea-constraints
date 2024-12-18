@@ -209,7 +209,7 @@
 
 (defconstraint curr-prev-wght-sum-constancy ()
   (if-not-zero IOMF
-      (if-not-zero (will-remain-constant! REL_BLOCK)
+      (if-zero (will-remain-constant! REL_BLOCK)
           (eq! (shift (curr-prev-wght-sum) 1) (curr-prev-wght-sum)))))
 
 (defconstraint switch-to-is-curr ()
