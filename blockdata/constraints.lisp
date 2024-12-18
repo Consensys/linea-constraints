@@ -52,8 +52,8 @@
 
 (defun (euc-call w a b)
   (begin (eq! (shift EUC_FLAG w) 1)
-         (eq! (shift ARG_1_HI w) a)
-         (eq! (shift ARG_1_LO w) b)))
+         (eq! (shift ARG_1_LO w) a)
+         (eq! (shift ARG_2_LO w) b)))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
