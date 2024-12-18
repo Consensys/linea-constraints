@@ -285,9 +285,9 @@
   (if-not-zero IS_PREV
       (if-not-zero (first-block-is-genesis-block)
             (begin (vanishes! DATA_HI)
-                   (vanishes! DATA_LO)))
+                   (vanishes! DATA_LO))
       (begin (vanishes! DATA_HI)
-             (eq! DATA_LO (- FIRST_BLOCK_NUMBER 1)))))
+             (eq! DATA_LO (- FIRST_BLOCK_NUMBER 1))))))
 
 (defconstraint setting-number-is-curr (:guard (number-precondition))
   (if-not-zero IS_CURR
