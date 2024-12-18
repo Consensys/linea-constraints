@@ -261,7 +261,7 @@
 
 (defconstraint timestamp-is-incrementing (:guard (timestamp-precondition))
   (if-not-zero IS_CURR
-    (wcp-call-to-GT 1 DATA_HI DATA_LO (shift DATA_HI (- CT_MAX_DEPTH)) (shift DATA_LO (- CT_MAX_DEPTH)))))
+    (wcp-call-to-GT 1 DATA_HI DATA_LO (shift DATA_HI (* CT_MAX_DEPTH -1)) (shift DATA_LO (* CT_MAX_DEPTH -1)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;
 ;;                  ;;
@@ -321,7 +321,7 @@
  (* (- 1 (prev IS_GL)) IS_GL))
 
 (defun (prev-gas-limit)
- (shift BLOCK_GAS_LIMIT (- CT_MAX_DEPTH)))
+ (shift BLOCK_GAS_LIMIT (* CT_MAX_DEPTH -1)))
 
 (defun (max-deviation)
  (shift RES 2))
@@ -358,8 +358,8 @@
 
 (defconstraint chainid-permanence (:guard (chainid-precondition))
   (if-not-zero IS_CURR
-      (begin (eq! DATA_HI (shift DATA_HI (- CT_MAX_DEPTH)))
-             (eq! DATA_LO (shift DATA_LO (- CT_MAX_DEPTH))))))
+      (begin (eq! DATA_HI (shift DATA_HI (* CT_MAX_DEPTH -1)))
+             (eq! DATA_LO (shift DATA_LO (* CT_MAX_DEPTH -1))))))
 
 (defconstraint chainid-bound (:guard (chainid-precondition))
     (wcp-call-to-GEQ 0 DATA_HI DATA_LO 0 0))
