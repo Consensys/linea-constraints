@@ -309,7 +309,7 @@
 (defun (difficulty-precondition)
  (* (- 1 (prev IS_DF)) IS_DF))
 
-(defconstraint difficulty-bound (:guard (number-precondition))
+(defconstraint difficulty-bound (:guard (difficulty-precondition))
     (wcp-call-to-GEQ 0 DATA_HI DATA_LO 0 0))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;
