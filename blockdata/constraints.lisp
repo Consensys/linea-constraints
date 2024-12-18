@@ -292,14 +292,14 @@
 (defconstraint setting-number-is-curr (:guard (number-precondition))
   (if-not-zero IS_CURR
       (if-not-zero (first-block-is-genesis-block)
-            (if-not-zero (shift IS_PREV (- CT_MAX_DEPTH))
+            (if-not-zero (shift IS_PREV (* CT_MAX_DEPTH -1))
                 (begin (vanishes! DATA_HI)
                        (vanishes! DATA_LO)))
-            (if-not-zero (shift IS_CURR (- CT_MAX_DEPTH))
-                (begin (eq! DATA_HI (shift DATA_HI (- CT_MAX_DEPTH)))
-                       (eq! DATA_LO (+ (shift DATA_LO (- CT_MAX_DEPTH)) 1)))))
-      (begin (eq! DATA_HI (shift DATA_HI (- CT_MAX_DEPTH)))
-             (eq! DATA_LO (+ (shift DATA_LO (- CT_MAX_DEPTH)) 1)))))
+            (if-not-zero (shift IS_CURR (* CT_MAX_DEPTH -1))
+                (begin (eq! DATA_HI (shift DATA_HI (* CT_MAX_DEPTH -1)))
+                       (eq! DATA_LO (+ (shift DATA_LO (* CT_MAX_DEPTH -1)) 1)))))
+      (begin (eq! DATA_HI (shift DATA_HI (* CT_MAX_DEPTH -1)))
+             (eq! DATA_LO (+ (shift DATA_LO (* CT_MAX_DEPTH -1)) 1)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                      ;;
