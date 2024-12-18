@@ -28,7 +28,9 @@ HUB :=  $(wildcard hub/columns/*lisp) \
 	$(wildcard hub/constraints/tx_skip/*lisp) \
 	$(wildcard hub/constraints/tx_prewarm/*lisp) \
 	$(wildcard hub/constraints/tx_init/*lisp) \
+	$(wildcard hub/constraints/tx_init/rows/*lisp) \
 	$(wildcard hub/constraints/tx_finl/*lisp) \
+	$(wildcard hub/constraints/tx_finl/rows/*lisp) \
 	$(wildcard hub/constraints/*lisp) \
 	$(wildcard hub/lookups/*lisp) \
 	hub/constants.lisp
