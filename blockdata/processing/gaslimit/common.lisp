@@ -20,23 +20,9 @@
                  (begin (eq!  (curr-GASLIMIT-hi)  0)
                         (eq!  (curr-GASLIMIT-lo)  BLOCK_GAS_LIMIT)))
 
-(defconstraint   gaslimit---lowerbound
-                 (:guard (gaslimit-precondition))
-                 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-                 (wcp-call-to-GEQ   0
-                                    (curr-GASLIMIT-hi)
-                                    (curr-GASLIMIT-lo)
-                                    0
-                                    ETHEREUM_GAS_LIMIT_MINIMUM))
-
-(defconstraint   gaslimit---upperbound
-                 (:guard (gaslimit-precondition))
-                 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-                 (wcp-call-to-LEQ   1 
-                                    (curr-GASLIMIT-hi)
-                                    (curr-GASLIMIT-lo)
-                                    0
-                                    ETHEREUM_GAS_LIMIT_MAXIMUM))
+;; row i + 0
+;; row i + 1
+;; are ethereum vs. linea dependent, see ethereum.lisp and linea.lisp
 
 (defconstraint   gaslimit---compute-maximum-deviation
                  (:guard (gaslimit-precondition))
