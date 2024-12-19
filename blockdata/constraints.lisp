@@ -67,15 +67,15 @@
 (defconstraint   counter-increase-or-instruction-transition ()
                  (if-not-zero IOMF
                               (if-not-zero (- CT CT_MAX)
-                                           (eq! (next CT) (+ 1 CT))
-                                           (eq! (allowable-transitions) 1))))
+                                           (will-inc!  CT  1))
+                                           (eq!        (allowable-transitions) 1))))
 
 (defconstraint   first-row-rel-block (:domain {0}) ;; ""
                  (vanishes! REL_BLOCK))
 
 (defconstraint   rel-block-increments-by-0-or-1 ()
-                 (any!    (will-remain-constant! REL_BLOCK)
-                          (will-inc!             REL_BLOCK 1)))
+                 (any!  (will-inc!  REL_BLOCK  0)
+                        (will-inc!  REL_BLOCK  1)))
 
 (defconstraint   rel-block-exact-increments ()
                  (eq!    (next REL_BLOCK)
@@ -83,5 +83,5 @@
 
 (defconstraint   finalization-constraints (:domain {-1}) ;; ""
                  (begin
-                   (eq! IS_BF   1)
-                   (eq! CT      CT_MAX)))
+                   (eq!  IS_BF  1)
+                   (eq!  CT     CT_MAX)))
