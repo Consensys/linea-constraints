@@ -1,5 +1,4 @@
-(defun (blockdata-into-euc-selector)
-  blockdata.EUC_FLAG)
+(defun (blockdata-into-euc-selector) blockdata.EUC_FLAG)
 
 (deflookup 
   blockdata-into-euc
