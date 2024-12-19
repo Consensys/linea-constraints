@@ -44,44 +44,44 @@
 ;;                 ;;
 ;;;;;;;;;;;;;;;;;;;;;
 
-(defconstraint   iomf-initially-vanishes (:domain {0}) ;; ""
+(defconstraint   heartbeat---iomf-initially-vanishes (:domain {0}) ;; ""
                  (vanishes! IOMF))
 
-(defconstraint   iomf-is-non-decreasing ()
+(defconstraint   heartbeat---iomf-is-non-decreasing ()
                  (if-not-zero    IOMF
                                  (eq!    (next    IOMF)    1)))
 
-(defconstraint   padding-vanishing ()
+(defconstraint   heartbeat---padding-vanishing ()
                  (if-zero IOMF
                           (begin (vanishes! CT)
                                  (vanishes! (next CT)))))
 
-(defconstraint   first-instruction-is-coinbase ()
+(defconstraint   heartbeat---first-instruction-is-coinbase ()
                  (if-not-zero    (will-remain-constant!    IOMF)
                                  (will-eq!                 IS_CB 1)))
 
-(defconstraint   counter-reset-at-phase-entry ()
+(defconstraint   heartbeat---counter-reset-at-phase-entry ()
                  (if-not-zero (phase-entry)
                               (vanishes! (next CT))))
 
-(defconstraint   counter-increase-or-instruction-transition ()
+(defconstraint   heartbeat---counter-increase-or-instruction-transition ()
                  (if-not-zero IOMF
                               (if-not-zero (- CT CT_MAX)
                                            (will-inc!  CT  1)
                                            (eq!        (allowable-transitions) 1))))
 
-(defconstraint   first-row-rel-block (:domain {0}) ;; ""
+(defconstraint   heartbeat---first-row-rel-block (:domain {0}) ;; ""
                  (vanishes! REL_BLOCK))
 
-(defconstraint   rel-block-increments-by-0-or-1 ()
+(defconstraint   heartbeat---rel-block-increments-by-0-or-1 ()
                  (any!  (will-inc!  REL_BLOCK  0)
                         (will-inc!  REL_BLOCK  1)))
 
-(defconstraint   rel-block-exact-increments ()
+(defconstraint   heartbeat---rel-block-exact-increments ()
                  (eq!    (next REL_BLOCK)
                          (+ REL_BLOCK (* (-  1  IS_CB) (next IS_CB)))))
 
-(defconstraint   finalization-constraints (:domain {-1}) ;; ""
+(defconstraint   heartbeat---finalization-constraints (:domain {-1}) ;; ""
                  (begin
                    (eq!  IS_BF  1)
                    (eq!  CT     CT_MAX)))
