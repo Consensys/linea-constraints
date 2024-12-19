@@ -67,7 +67,7 @@
 (defconstraint   counter-increase-or-instruction-transition ()
                  (if-not-zero IOMF
                               (if-not-zero (- CT CT_MAX)
-                                           (will-inc!  CT  1))
+                                           (will-inc!  CT  1)
                                            (eq!        (allowable-transitions) 1))))
 
 (defconstraint   first-row-rel-block (:domain {0}) ;; ""
