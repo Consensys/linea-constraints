@@ -53,10 +53,19 @@ BIN := bin
 
 BLAKE2f_MODEXP_DATA := blake2fmodexpdata
 
-BLOCKDATA_FOR_REFERENCE_TESTS := blockdata/columns.lisp \
-				 blockdata/constants.lisp
+# with gaslimit for ethereum file
+BLOCKDATA_FOR_REFERENCE_TESTS := $(wildcard blockdata/*.lisp) \
+				 $(wildcard blockdata/processing/*.lisp) \
+				 $(wildcard blockdata/processing/gaslimit/common.lisp) \
+				 $(wildcard blockdata/processing/gaslimit/ethereum.lisp) \
+				 $(wildcard blockdata/lookups/*.lisp)
 
-BLOCKDATA := blockdata
+# with gaslimit for linea file
+BLOCKDATA := $(wildcard blockdata/*.lisp) \
+	     $(wildcard blockdata/processing/*.lisp) \
+	     $(wildcard blockdata/processing/gaslimit/common.lisp) \
+	     $(wildcard blockdata/processing/gaslimit/linea.lisp) \
+	     $(wildcard blockdata/lookups/*.lisp)
 
 BLOCKHASH := blockhash
 
@@ -201,3 +210,6 @@ ZKEVM_MODULES_FOR_REFERENCE_TESTS := ${ALU} \
 
 zkevm_for_reference_tests.bin: ${ZKEVM_MODULES_FOR_REFERENCE_TESTS}
 	${CORSET} compile -vv -o $@ ${ZKEVM_MODULES_FOR_REFERENCE_TESTS}
+
+
+
