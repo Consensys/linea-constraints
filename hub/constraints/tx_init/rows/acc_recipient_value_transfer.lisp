@@ -43,9 +43,9 @@
                   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                   (if-not-zero   (tx-init---is-deployment)
                                  (begin
-                                   (account-increment-nonce                tx-init---row-offset---ACC---recipient-value-reception))
-                                 (vanishes!   (shift    account/NONCE    tx-init---row-offset---ACC---recipient-value-reception))
-                                 ))
+                                   (account-increment-nonce                tx-init---row-offset---ACC---recipient-value-reception)
+                                   (vanishes!   (shift    account/NONCE    tx-init---row-offset---ACC---recipient-value-reception))
+                                   )))
 
 (defconstraint    tx-init---account-row---recipient-value-reception---deployment---code
                   (:guard (tx-init---standard-precondition))
