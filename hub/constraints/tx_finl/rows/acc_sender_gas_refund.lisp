@@ -21,5 +21,5 @@
                    (account-same-deployment-number-and-status     tx-finl---row-offset---ACC---sender-gas-refund)
                    (account-same-warmth                           tx-finl---row-offset---ACC---sender-gas-refund)
                    (account-same-marked-for-selfdestruct          tx-finl---row-offset---ACC---sender-gas-refund)
-                   (DOM-SUB-stamps---finalization                 tx-finl---row-offset---ACC---sender-gas-refund
-                                                                  1)))
+                   (DOM-SUB-stamps---standard                     tx-finl---row-offset---ACC---sender-gas-refund
+                                                                  0)))

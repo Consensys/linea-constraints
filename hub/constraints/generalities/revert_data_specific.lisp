@@ -112,12 +112,12 @@
                              sub_stamp_offset
                              ))
 
-(defun (DOM-SUB-stamps---finalization    rel_offset
-                                         sub_offset)
-  (undoing-dom-sub-stamps   rel_offset
-                            TX_END_STAMP
-                            DOM_SUB_STAMP_OFFSET___FINALIZATION
-                            sub_offset))
+;; (defun (DOM-SUB-stamps---finalization    rel_offset
+;;                                          sub_offset)
+;;   (undoing-dom-sub-stamps   rel_offset
+;;                             TX_END_STAMP
+;;                             DOM_SUB_STAMP_OFFSET___FINALIZATION
+;;                             sub_offset))
 
 (defun (selfdestruct-dom-sub-stamps relOffset) (undoing-dom-sub-stamps
                                                  relOffset

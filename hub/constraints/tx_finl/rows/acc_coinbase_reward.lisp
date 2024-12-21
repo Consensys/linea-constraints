@@ -24,5 +24,5 @@
                    (account-same-deployment-number-and-status     tx-finl---row-offset---ACC---coinbase-reward)
                    (account-same-warmth                           tx-finl---row-offset---ACC---coinbase-reward)
                    (account-same-marked-for-selfdestruct          tx-finl---row-offset---ACC---coinbase-reward)
-                   (DOM-SUB-stamps---finalization                 tx-finl---row-offset---ACC---coinbase-reward
-                                                                  0)))
+                   (DOM-SUB-stamps---standard                     tx-finl---row-offset---ACC---coinbase-reward
+                                                                  1)))
