@@ -190,8 +190,8 @@
 (defun    (r-dirty-reset)    (*    (next-not-curr)
                                    (curr-not-orig)
                                    (next-is-orig)
-                                   (+    (*    (orig-is-zero)     (-   GAS_CONST_G_SSET           GAS_CONST_G_WARM_ACCESS))
-                                         (*    (orig-not-zero)    (-   GAS_CONST_G_WARM_ACCESS    GAS_CONST_G_SRESET)))))
+                                   (+    (*    (orig-is-zero)     (-   GAS_CONST_G_SSET     GAS_CONST_G_WARM_ACCESS))
+                                         (*    (orig-not-zero)    (-   GAS_CONST_G_SRESET   GAS_CONST_G_WARM_ACCESS)))))
 
 (defconstraint   storage-instruction---setting-the-refund (:guard (storage-instruction---no-stack-exceptions))
                  (eq!
