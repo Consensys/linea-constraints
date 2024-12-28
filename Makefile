@@ -65,7 +65,9 @@ BLOCKDATA := $(wildcard blockdata/*.lisp) \
 	     $(wildcard blockdata/processing/gaslimit/linea.lisp) \
 	     $(wildcard blockdata/lookups/*.lisp)
 
-BLOCKHASH := blockhash
+BLOCKHASH := $(wildcard blockhash/columns/*.lisp) \
+	     $(wildcard blockhash/lookups/*.lisp) \
+	     $(wildcard blockhash/*.lisp)
 
 CONSTANTS := constants/constants.lisp
 
