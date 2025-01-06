@@ -233,8 +233,8 @@
                     (eq!    macro/BLOCKHASH_RES_HI    (*    (arg-in-bounds)   macro/BLOCKHASH_VAL_HI))
                     (eq!    macro/BLOCKHASH_RES_LO    (*    (arg-in-bounds)   macro/BLOCKHASH_VAL_LO))))
 
-(defun    (arg-in-bounds)    (*    (upper-bound-ok)
-                                   (lower-bound-ok)))
+(defun    (arg-in-bounds)    (*    (lower-bound-ok)
+                                   (upper-bound-ok)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -249,5 +249,5 @@
                                   (if-not-zero    (not-first)
                                                   (if-not-zero    (same-argument)
                                                                   (begin
-                                                                    (eq    macro/BLOCKHASH_VAL_HI    (shift    macro/BLOCKHASH_VAL_HI    BLOCKHASH_DEPTH))
-                                                                    (eq    macro/BLOCKHASH_VAL_LO    (shift    macro/BLOCKHASH_VAL_LO    BLOCKHASH_DEPTH)))))))
+                                                                    (eq    macro/BLOCKHASH_VAL_HI    (shift    macro/BLOCKHASH_VAL_HI    (- BLOCKHASH_DEPTH)))
+                                                                    (eq    macro/BLOCKHASH_VAL_LO    (shift    macro/BLOCKHASH_VAL_LO    (- BLOCKHASH_DEPTH))))))))
