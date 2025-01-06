@@ -105,9 +105,9 @@
 ;;                     ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defun  (not-first)                          (shift  IOMF                    (- BLOCKHASH_DEPTH)))
-(defun  (prev-BH-arg-hi)  (*   (not-first)   (shift  macro/BLOCKHASH_ARG_HI  (- BLOCKHASH_DEPTH))))
-(defun  (prev-BH-arg-lo)  (*   (not-first)   (shift  macro/BLOCKHASH_ARG_LO  (- BLOCKHASH_DEPTH))))
+(defun  (not-first)                          (shift  IOMF                    NEGATIVE_OF_BLOCKHASH_DEPTH))
+(defun  (prev-BH-arg-hi)  (*   (not-first)   (shift  macro/BLOCKHASH_ARG_HI  NEGATIVE_OF_BLOCKHASH_DEPTH)))
+(defun  (prev-BH-arg-lo)  (*   (not-first)   (shift  macro/BLOCKHASH_ARG_LO  NEGATIVE_OF_BLOCKHASH_DEPTH)))
 (defun  (curr-BH-arg-hi)                             macro/BLOCKHASH_ARG_HI                       )
 (defun  (curr-BH-arg-lo)                             macro/BLOCKHASH_ARG_LO                       ) ;; ""
 
@@ -249,5 +249,5 @@
                                   (if-not-zero    (not-first)
                                                   (if-not-zero    (same-argument)
                                                                   (begin
-                                                                    (eq    macro/BLOCKHASH_VAL_HI    (shift    macro/BLOCKHASH_VAL_HI    (- BLOCKHASH_DEPTH)))
-                                                                    (eq    macro/BLOCKHASH_VAL_LO    (shift    macro/BLOCKHASH_VAL_LO    (- BLOCKHASH_DEPTH))))))))
+                                                                    (eq    macro/BLOCKHASH_VAL_HI    (shift    macro/BLOCKHASH_VAL_HI    NEGATIVE_OF_BLOCKHASH_DEPTH))
+                                                                    (eq    macro/BLOCKHASH_VAL_LO    (shift    macro/BLOCKHASH_VAL_LO    NEGATIVE_OF_BLOCKHASH_DEPTH)))))))
