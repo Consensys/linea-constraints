@@ -47,7 +47,7 @@
 
 
 (defconstraint   heartbeat---IOMF---unconditional-setting        ()
-                 (eq!    IOMF    (+    MACRO    PRPRC)))
+                 (eq!    IOMF    (flag-sum)))
 
 (defconstraint   heartbeat---IOMF---initial-vanishing            (:domain {0}) ;; ""
                  (vanishes!    IOMF))
@@ -105,9 +105,9 @@
 ;;                     ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defun  (not-first)                          (shift  IOMF                    (- 0 BLOCKHASH_DEPTH)))
-(defun  (prev-BH-arg-hi)  (*   (not-first)   (shift  macro/BLOCKHASH_ARG_HI  (- 0 BLOCKHASH_DEPTH))))
-(defun  (prev-BH-arg-lo)  (*   (not-first)   (shift  macro/BLOCKHASH_ARG_LO  (- 0 BLOCKHASH_DEPTH))))
+(defun  (not-first)                          (shift  IOMF                    (- BLOCKHASH_DEPTH)))
+(defun  (prev-BH-arg-hi)  (*   (not-first)   (shift  macro/BLOCKHASH_ARG_HI  (- BLOCKHASH_DEPTH))))
+(defun  (prev-BH-arg-lo)  (*   (not-first)   (shift  macro/BLOCKHASH_ARG_LO  (- BLOCKHASH_DEPTH))))
 (defun  (curr-BH-arg-hi)                             macro/BLOCKHASH_ARG_HI                       )
 (defun  (curr-BH-arg-lo)                             macro/BLOCKHASH_ARG_LO                       ) ;; ""
 
