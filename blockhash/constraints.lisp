@@ -206,7 +206,7 @@
                                      0
                                      macro/ABS_BLOCK))
 
-(defun    (lower-bound-ok)    (shift    preprocessing/EXO_RES   ROFF___curr_BLOCKHASH_argument___comparison_to_max))
+(defun    (upper-bound-ok)    (shift    preprocessing/EXO_RES   ROFF___curr_BLOCKHASH_argument___comparison_to_max))
 
 (defconstraint    processing---row-5---blockhash-argument-vs-min
                   (:guard    MACRO)
@@ -218,7 +218,7 @@
                                      (curr-BH-arg-lo)
                                      ))
 
-(defun    (upper-bound-ok)    (shift    preprocessing/EXO_RES   ROFF___curr_BLOCKHASH_argument___comparison_to_min))
+(defun    (lower-bound-ok)    (shift    preprocessing/EXO_RES   ROFF___curr_BLOCKHASH_argument___comparison_to_min))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                             ;;
@@ -233,8 +233,8 @@
                     (eq!    macro/BLOCKHASH_RES_HI    (*    (arg-in-bounds)   macro/BLOCKHASH_VAL_HI))
                     (eq!    macro/BLOCKHASH_RES_LO    (*    (arg-in-bounds)   macro/BLOCKHASH_VAL_LO))))
 
-(defun    (arg-in-bounds)    (*    (lower-bound-ok)
-                                   (upper-bound-ok)))
+(defun    (arg-in-bounds)    (*    (upper-bound-ok)
+                                   (lower-bound-ok)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
