@@ -57,7 +57,7 @@
                              (begin
                                (vanishes!                CT)
                                (vanishes!                (next    PRPRC))
-                               (debug      (vanishes!    (next    CT)))
+                               (vanishes!                (next    CT))
                                (debug      (vanishes!    macro/BLOCKHASH_ARG_HI))
                                (debug      (vanishes!    macro/BLOCKHASH_ARG_LO))
                                (debug      (vanishes!    macro/BLOCKHASH_VAL_HI))
