@@ -176,7 +176,7 @@ define.go: ${ZKEVM_MODULES}
 zkevm.bin: ${ZKEVM_MODULES}
 	${CORSET} compile -vv -o $@ ${ZKEVM_MODULES}
 
-zkevm.gob: ${ZKEVM_MODULES}
+zkevm.go.bin: ${ZKEVM_MODULES}
 	${GO_CORSET} compile -o $@ ${ZKEVM_MODULES}
 
 
