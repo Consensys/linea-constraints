@@ -17,7 +17,7 @@
  (BLOCK_GAS_LIMIT     :i48)
  (BASEFEE             :i48)
  (FIRST_BLOCK_NUMBER  :i48)
- (REL_BLOCK           :i8)
+ (REL_BLOCK           :i16)
  (REL_TX_NUM_MAX      :i10)
  (DATA_HI             :i128)
  (DATA_LO             :i128)

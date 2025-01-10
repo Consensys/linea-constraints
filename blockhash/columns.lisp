@@ -12,7 +12,7 @@
                 MACRO
                 ;; macro-instruction fields
                 (
-                 (REL_BLOCK         :i8)
+                 (REL_BLOCK         :i16)
                  (ABS_BLOCK         :i48)
                  (BLOCKHASH_VAL_HI  :i128)
                  (BLOCKHASH_VAL_LO  :i128)
