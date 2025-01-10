@@ -249,5 +249,5 @@
                                   (if-not-zero    (not-first)
                                                   (if-not-zero    (same-argument)
                                                                   (begin
-                                                                    (eq    macro/BLOCKHASH_VAL_HI    (shift    macro/BLOCKHASH_VAL_HI    NEGATIVE_OF_BLOCKHASH_DEPTH))
-                                                                    (eq    macro/BLOCKHASH_VAL_LO    (shift    macro/BLOCKHASH_VAL_LO    NEGATIVE_OF_BLOCKHASH_DEPTH)))))))
+                                                                    (eq!   macro/BLOCKHASH_VAL_HI    (shift    macro/BLOCKHASH_VAL_HI    NEGATIVE_OF_BLOCKHASH_DEPTH))
+                                                                    (eq!   macro/BLOCKHASH_VAL_LO    (shift    macro/BLOCKHASH_VAL_LO    NEGATIVE_OF_BLOCKHASH_DEPTH)))))))
