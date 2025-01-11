@@ -26,7 +26,7 @@
  (ARG_2_HI            :i128)
  (ARG_2_LO            :i128)
  (RES                 :i128)
- (EXO_INST            :byte)
+ (EXO_INST            :byte :display :opcode)
  (WCP_FLAG            :binary@prove)
  (EUC_FLAG            :binary@prove)
  )
