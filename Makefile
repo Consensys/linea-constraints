@@ -179,7 +179,7 @@ zkevm.bin: ${ZKEVM_MODULES}
 ZKEVM_MODULES_FOR_REFERENCE_TESTS := ${ALU} \
 				     ${BIN} \
 				     ${BLAKE2f_MODEXP_DATA} \
-				     ${BLOCKDATA_FOR_REFERENCE_TESTS} \
+				     ${BLOCKDATA} \
 				     ${BLOCKHASH} \
 				     ${CONSTANTS} \
 				     ${EC_DATA} \
