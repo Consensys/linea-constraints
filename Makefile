@@ -61,11 +61,11 @@ BLOCKDATA_FOR_REFERENCE_TESTS := $(wildcard blockdata/*.lisp) \
 				 $(wildcard blockdata/lookups/*.lisp)
 
 # with gaslimit for linea file
-BLOCKDATA := $(wildcard blockdata/*.lisp) \
-	     $(wildcard blockdata/processing/*.lisp) \
-	     $(wildcard blockdata/processing/gaslimit/common.lisp) \
-	     $(wildcard blockdata/processing/gaslimit/linea.lisp) \
-	     $(wildcard blockdata/lookups/*.lisp)
+BLOCKDATA_FOR_LINEA := $(wildcard blockdata/*.lisp) \
+		       $(wildcard blockdata/processing/*.lisp) \
+		       $(wildcard blockdata/processing/gaslimit/common.lisp) \
+		       $(wildcard blockdata/processing/gaslimit/linea.lisp) \
+		       $(wildcard blockdata/lookups/*.lisp)
 
 BLOCKHASH := $(wildcard blockhash/columns/*.lisp) \
 	     $(wildcard blockhash/lookups/*.lisp) \
@@ -139,7 +139,7 @@ WCP := wcp
 ZKEVM_MODULES := ${ALU} \
 		 ${BIN} \
 		 ${BLAKE2f_MODEXP_DATA} \
-		 ${BLOCKDATA} \
+		 ${BLOCKDATA_FOR_LINEA} \
 		 ${BLOCKHASH} \
 		 ${CONSTANTS} \
 		 ${EC_DATA} \
@@ -179,7 +179,7 @@ zkevm.bin: ${ZKEVM_MODULES}
 ZKEVM_MODULES_FOR_REFERENCE_TESTS := ${ALU} \
 				     ${BIN} \
 				     ${BLAKE2f_MODEXP_DATA} \
-				     ${BLOCKDATA} \
+				     ${BLOCKDATA_FOR_REFERENCE_TESTS} \
 				     ${BLOCKHASH} \
 				     ${CONSTANTS} \
 				     ${EC_DATA} \
