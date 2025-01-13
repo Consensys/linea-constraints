@@ -19,13 +19,13 @@
 
 (defun (undo_account_nonce_update_v)
  (begin
-  (eq! account/NONCE (- (prev account/NONCE_NEW) 1))
+  (eq! account/NONCE  (- (prev account/NONCE_NEW) 1))
   (eq! account/NONCE_NEW (prev account/NONCE))))
 
 (defun (undo_previous_account_nonce_update_v)
  (begin
-  (eq! account/NONCE (- (shift account/NONCE_NEW -2) 1))
-  (eq! account/NONCE_NEW (shift account/NONCE -2))))
+  (eq! account/NONCE  (- (shift account/NONCE_NEW -2) 1))
+  (eq! account/NONCE_NEW (shift account/NONCE     -2))))
 
 ;; Balance constraints
 (defun (same_balance_h)
@@ -38,8 +38,8 @@
 
 (defun (undo_previous_account_balance_update_v)
  (begin
-  (eq! account/BALANCE (shift account/BALANCE_NEW -2))
-  (eq! account/BALANCE_NEW (shift account/BALANCE -2))))
+  (eq! account/BALANCE     (shift account/BALANCE_NEW -2))
+  (eq! account/BALANCE_NEW (shift account/BALANCE     -2))))
 
 ;; Warmth constraints
 (defun (same_account_warmth_h)
@@ -50,7 +50,7 @@
 
 (defun (undo_account_warmth_update_v)
  (begin
-  (eq! account/WARMTH (prev account/WARMTH_NEW))
+  (eq! account/WARMTH     (prev account/WARMTH_NEW))
   (eq! account/WARMTH_NEW (prev account/WARMTH))))
 
 ;; Code constraints
@@ -69,14 +69,14 @@
 
 (defun (undo_code_size_update_v)
  (begin
-  (eq! account/CODE_SIZE (prev account/CODE_SIZE_NEW))
+  (eq! account/CODE_SIZE     (prev account/CODE_SIZE_NEW))
   (eq! account/CODE_SIZE_NEW (prev account/CODE_SIZE))))
 
 (defun (undo_code_hash_update_v)
  (begin
-  (eq! account/CODE_HASH_HI (prev account/CODE_HASH_HI_NEW))
+  (eq! account/CODE_HASH_HI     (prev account/CODE_HASH_HI_NEW))
   (eq! account/CODE_HASH_HI_NEW (prev account/CODE_HASH_HI))
-  (eq! account/CODE_HASH_LO (prev account/CODE_HASH_LO_NEW))
+  (eq! account/CODE_HASH_LO     (prev account/CODE_HASH_LO_NEW))
   (eq! account/CODE_HASH_LO_NEW (prev account/CODE_HASH_LO))))
 
 ;; Deployment status constraints
@@ -93,12 +93,12 @@
 
 (defun (undo_dep_number_update_v)
  (begin
-  (eq! account/DEPLOYMENT_NUMBER (prev account/DEPLOYMENT_NUMBER_NEW))
+  (eq! account/DEPLOYMENT_NUMBER     (prev account/DEPLOYMENT_NUMBER_NEW))
   (eq! account/DEPLOYMENT_NUMBER_NEW (prev account/DEPLOYMENT_NUMBER))))
 
 (defun (undo_dep_status_update_v)
  (begin
-  (eq! account/DEPLOYMENT_STATUS (prev account/DEPLOYMENT_STATUS_NEW))
+  (eq! account/DEPLOYMENT_STATUS     (prev account/DEPLOYMENT_STATUS_NEW))
   (eq! account/DEPLOYMENT_STATUS_NEW (prev account/DEPLOYMENT_STATUS))))
 
 (defun (undo_dep_status_and_number_update_v)
@@ -220,11 +220,11 @@
   (is-binary EXISTS_NEW)))
 
 (defconstraint exists_is_on (:perspective account)
- (if-zero (+ (~ account/NONCE) (~ account/BALANCE) (~ HAS_CODE))
-    (vanishes! EXISTS)
-    (eq! EXISTS 1)))
+ (if-zero (+ (~ account/NONCE) (~ account/BALANCE) (~ account/HAS_CODE))
+    (vanishes! account/EXISTS)
+    (eq!       account/EXISTS 1)))
 
 (defconstraint exists_new_is_on (:perspective account)
  (if-zero (+ (~ account/NONCE_NEW) (~ account/BALANCE_NEW) (~ account/HAS_CODE_NEW))
-    (vanishes! EXISTS_NEW)
-    (eq! EXISTS_NEW 1)))
+    (vanishes! account/EXISTS_NEW)
+    (eq!       account/EXISTS_NEW 1)))
