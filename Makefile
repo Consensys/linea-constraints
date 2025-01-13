@@ -217,5 +217,8 @@ ZKEVM_MODULES_FOR_REFERENCE_TESTS := ${ALU} \
 zkevm_for_reference_tests.bin: ${ZKEVM_MODULES_FOR_REFERENCE_TESTS}
 	${CORSET} compile -vv -o $@ ${ZKEVM_MODULES_FOR_REFERENCE_TESTS}
 
+zkevm_for_reference_tests.go.bin: ${ZKEVM_MODULES_FOR_REFERENCE_TESTS}
+	${GO_CORSET} compile -o $@ ${ZKEVM_MODULES_FOR_REFERENCE_TESTS}
+
 
 
