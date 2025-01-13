@@ -195,9 +195,9 @@
 (defconstraint hascode_emptyness (:perspective account)
  (if-eq-else account/CODE_HASH_HI EMPTY_KECCAK_HI
     (if-eq-else account/CODE_HASH_LO EMPTY_KECCAK_LO
-        (vanishes! HAS_CODE)
-        (eq! HAS_CODE 1))
-    (eq! HAS_CODE 1)))
+        (vanishes! account/HAS_CODE)
+        (eq!       account/HAS_CODE 1))
+    (eq! account/HAS_CODE 1)))
 
 (defconstraint hascode_new_emptyness (:perspective account)
                (if-eq-else    account/CODE_HASH_HI_NEW    EMPTY_KECCAK_HI
@@ -216,8 +216,8 @@
 ;; TODO DEBUG Only
 (defconstraint exist_is_binary (:perspective account)
  (begin
-  (is-binary EXISTS)
-  (is-binary EXISTS_NEW)))
+  (is-binary account/EXISTS)
+  (is-binary account/EXISTS_NEW)))
 
 (defconstraint exists_is_on (:perspective account)
  (if-zero (+ (~ account/NONCE) (~ account/BALANCE) (~ account/HAS_CODE))
