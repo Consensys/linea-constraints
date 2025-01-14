@@ -1,4 +1,5 @@
 CORSET ?= corset
+GO_CORSET ?= go-corset
 
 HUB_COLUMNS :=  $(wildcard hub/columns/*lisp)
 
@@ -61,13 +62,15 @@ BLOCKDATA_FOR_REFERENCE_TESTS := $(wildcard blockdata/*.lisp) \
 				 $(wildcard blockdata/lookups/*.lisp)
 
 # with gaslimit for linea file
-BLOCKDATA := $(wildcard blockdata/*.lisp) \
-	     $(wildcard blockdata/processing/*.lisp) \
-	     $(wildcard blockdata/processing/gaslimit/common.lisp) \
-	     $(wildcard blockdata/processing/gaslimit/linea.lisp) \
-	     $(wildcard blockdata/lookups/*.lisp)
+BLOCKDATA_FOR_LINEA := $(wildcard blockdata/*.lisp) \
+		       $(wildcard blockdata/processing/*.lisp) \
+		       $(wildcard blockdata/processing/gaslimit/common.lisp) \
+		       $(wildcard blockdata/processing/gaslimit/linea.lisp) \
+		       $(wildcard blockdata/lookups/*.lisp)
 
-BLOCKHASH := blockhash
+BLOCKHASH := $(wildcard blockhash/columns/*.lisp) \
+	     $(wildcard blockhash/lookups/*.lisp) \
+	     $(wildcard blockhash/*.lisp)
 
 CONSTANTS := constants/constants.lisp
 
@@ -137,7 +140,7 @@ WCP := wcp
 ZKEVM_MODULES := ${ALU} \
 		 ${BIN} \
 		 ${BLAKE2f_MODEXP_DATA} \
-		 ${BLOCKDATA} \
+		 ${BLOCKDATA_FOR_LINEA} \
 		 ${BLOCKHASH} \
 		 ${CONSTANTS} \
 		 ${EC_DATA} \
@@ -172,6 +175,9 @@ define.go: ${ZKEVM_MODULES}
 
 zkevm.bin: ${ZKEVM_MODULES}
 	${CORSET} compile -vv -o $@ ${ZKEVM_MODULES}
+
+zkevm.go.bin: ${ZKEVM_MODULES}
+	${GO_CORSET} compile -o $@ ${ZKEVM_MODULES}
 
 
 ZKEVM_MODULES_FOR_REFERENCE_TESTS := ${ALU} \
@@ -210,6 +216,9 @@ ZKEVM_MODULES_FOR_REFERENCE_TESTS := ${ALU} \
 
 zkevm_for_reference_tests.bin: ${ZKEVM_MODULES_FOR_REFERENCE_TESTS}
 	${CORSET} compile -vv -o $@ ${ZKEVM_MODULES_FOR_REFERENCE_TESTS}
+
+zkevm_for_reference_tests.go.bin: ${ZKEVM_MODULES_FOR_REFERENCE_TESTS}
+	${GO_CORSET} compile -o $@ ${ZKEVM_MODULES_FOR_REFERENCE_TESTS}
 
 
 

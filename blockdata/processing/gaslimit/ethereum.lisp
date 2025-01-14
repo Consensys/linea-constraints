@@ -1,5 +1,9 @@
 (module blockdata)
 
+;; TODO add reference to global constants
+(defconst GAS_LIMIT_MINIMUM 5000)
+(defconst GAS_LIMIT_MAXIMUM 0xffffffffffffffff)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                 ;;
 ;;  3 Computations and checks      ;;
@@ -14,7 +18,7 @@
                                     (curr-GASLIMIT-hi)
                                     (curr-GASLIMIT-lo)
                                     0
-                                    ETHEREUM_GAS_LIMIT_MINIMUM))
+                                    GAS_LIMIT_MINIMUM))
 
 (defconstraint   gaslimit---upper-bound---ETHEREUM
                  (:guard (gaslimit-precondition))
@@ -23,4 +27,4 @@
                                     (curr-GASLIMIT-hi)
                                     (curr-GASLIMIT-lo)
                                     0
-                                    ETHEREUM_GAS_LIMIT_MAXIMUM))
+                                    GAS_LIMIT_MAXIMUM))
