@@ -1,5 +1,5 @@
 (module blockdata)
 
 ;; TODO add reference to global constants
-(defconst GAS_LIMIT_MINIMUM 5000)
-(defconst GAS_LIMIT_MAXIMUM 0xffffffffffffffff)
+(defconst GAS_LIMIT_MINIMUM ETHEREUM_GAS_LIMIT_MINIMUM)
+(defconst GAS_LIMIT_MAXIMUM ETHEREUM_GAS_LIMIT_MAXIMUM)
