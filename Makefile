@@ -185,9 +185,9 @@ zkevm.go.bin: ${ZKEVM_MODULES}
 ZKEVM_MODULES_FOR_REFERENCE_TESTS := ${ALU} \
 				     ${BIN} \
 				     ${BLAKE2f_MODEXP_DATA} \
+				     ${CONSTANTS} \
 				     ${BLOCKDATA_FOR_REFERENCE_TESTS} \
 				     ${BLOCKHASH} \
-				     ${CONSTANTS} \
 				     ${EC_DATA} \
 				     ${EUC} \
 				     ${EXP} \
