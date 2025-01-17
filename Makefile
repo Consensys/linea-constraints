@@ -17,6 +17,12 @@ HUB :=  $(wildcard hub/columns/*lisp) \
 	$(wildcard hub/constraints/instruction-handling/call/precompiles/ec_add_mul_pairing/*lisp) \
 	$(wildcard hub/constraints/instruction-handling/call/precompiles/modexp/*lisp) \
 	$(wildcard hub/constraints/instruction-handling/call/precompiles/blake/*lisp) \
+	$(wildcard hub/constraints/consistency/stack/*lisp) \
+	$(wildcard hub/constraints/consistency/*lisp) \
+	$(wildcard hub/constraints/consistency/account/*lisp) \
+	$(wildcard hub/constraints/consistency/context/*lisp) \
+	$(wildcard hub/constraints/consistency/execution_environment/*lisp) \
+	$(wildcard hub/constraints/consistency/storage/*lisp) \
 	$(wildcard hub/constraints/instruction-handling/copy/*lisp) \
 	$(wildcard hub/constraints/instruction-handling/create/*lisp) \
 	$(wildcard hub/constraints/instruction-handling/create/constraints/*lisp) \
@@ -38,12 +44,6 @@ HUB :=  $(wildcard hub/columns/*lisp) \
 
 
 # Missing from the above
-# $(wildcard hub/constraints/consistency/stack/*lisp) \
-# $(wildcard hub/constraints/consistency/*lisp) \
-# $(wildcard hub/constraints/consistency/account/*lisp) \
-# $(wildcard hub/constraints/consistency/context/*lisp) \
-# $(wildcard hub/constraints/consistency/execution_environment/*lisp) \
-# $(wildcard hub/constraints/consistency/storage/*lisp) \
 
 ALU := $(wildcard alu/add/*.lisp) \
        $(wildcard alu/ext/*.lisp) \
