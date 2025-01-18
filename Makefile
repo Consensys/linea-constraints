@@ -176,9 +176,6 @@ define.go: ${ZKEVM_MODULES}
 	${CORSET} wizard-iop -vv -o $@ ${ZKEVM_MODULES}
 
 zkevm.bin: ${ZKEVM_MODULES}
-	${CORSET} compile -vv -o $@ ${ZKEVM_MODULES}
-
-zkevm.go.bin: ${ZKEVM_MODULES}
 	${GO_CORSET} compile -o $@ ${ZKEVM_MODULES}
 
 
@@ -217,9 +214,6 @@ ZKEVM_MODULES_FOR_REFERENCE_TESTS := ${ALU} \
 #				     ${HUB} \
 
 zkevm_for_reference_tests.bin: ${ZKEVM_MODULES_FOR_REFERENCE_TESTS}
-	${CORSET} compile -vv -o $@ ${ZKEVM_MODULES_FOR_REFERENCE_TESTS}
-
-zkevm_for_reference_tests.go.bin: ${ZKEVM_MODULES_FOR_REFERENCE_TESTS}
 	${GO_CORSET} compile -o $@ ${ZKEVM_MODULES_FOR_REFERENCE_TESTS}
 
 
