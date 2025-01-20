@@ -57,6 +57,6 @@
 
 (defconstraint    any-to-ram-with-padding---common---justifing-the-pure-padding-vs-some-data-flag (:guard (* MACRO (is-any-to-ram-with-padding)))
                   (begin
-                    ;; justifyng the flag
+                    ;; justifying the flag
                     (eq! IS_ANY_TO_RAM_WITH_PADDING_PURE_PADDING (any-to-ram-with-padding---pure-padd))
                     (eq! IS_ANY_TO_RAM_WITH_PADDING_SOME_DATA (+ (any-to-ram-with-padding---mixed) (any-to-ram-with-padding---pure-data)))))
