@@ -1,4 +1,4 @@
-;;  Comparaison to 55 ;;
+;;  Comparison to 55 ;;
 (defpurefun (compTo55 length comp acc)
   (eq! acc
        (- (* (- (* 2 comp) 1)
