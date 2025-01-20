@@ -11,7 +11,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                ;;
 ;;    X.Y.1 Introduction          ;;
-;;    X.Y.2 Scenario row seting   ;;
+;;    X.Y.2 Scenario row setting  ;;
 ;;                                ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
