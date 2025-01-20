@@ -18,13 +18,6 @@
   (eq! CONTEXT_NUMBER_NEW
        CALLER_CONTEXT_NUMBER))
 
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;                                         ;;
-;;   6.1 Setting the next context number   ;;
-;;                                         ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
 (defun (initialize-context
          relative_row_offset                   ;; row offset
          cn                                    ;; context number
