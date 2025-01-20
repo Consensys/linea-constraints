@@ -11,7 +11,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                                               ;;
-;;    X.Y.Z.5 Final context row for CALL's to smart contracts    ;;
+;;    X.Y.Z.5 Final context row for CALLs to smart contracts    ;;
 ;;                                                               ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
