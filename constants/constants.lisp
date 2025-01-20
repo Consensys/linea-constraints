@@ -198,6 +198,10 @@
   GAS_CONST_G_KECCAK_256_WORD               6
   GAS_CONST_G_COPY                          3
   GAS_CONST_G_BLOCKHASH                     20
+  ETHEREUM_GAS_LIMIT_MINIMUM                5000
+  ETHEREUM_GAS_LIMIT_MAXIMUM                0xffffffffffffffff ;; maxUint64
+  LINEA_GAS_LIMIT_MINIMUM                   61000000
+  LINEA_GAS_LIMIT_MAXIMUM                   2000000000
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;           ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;  EVM MISC ;;
