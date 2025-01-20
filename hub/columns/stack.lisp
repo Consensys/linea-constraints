@@ -13,7 +13,7 @@
 
    ;; instruction and instruction decoded flags
    ( INSTRUCTION             :byte :display :opcode)
-   ( STATIC_GAS              :i32    )  ;; TODO: vastly exagerated, shouldn't carry values greater than 32_000 so :i16 should suffice)
+   ( STATIC_GAS              :i32    )  ;; TODO: vastly exaggerated, shouldn't carry values greater than 32_000 so :i16 should suffice)
    ( ACC_FLAG                :binary )
    ( ADD_FLAG                :binary )
    ( BIN_FLAG                :binary )
