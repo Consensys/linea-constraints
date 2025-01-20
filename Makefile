@@ -139,12 +139,13 @@ TXN_DATA_FOR_REFERENCE_TESTS :=  $(wildcard txndata/*.lisp) \
 
 WCP := wcp
 
-ZKEVM_MODULES := ${ALU} \
+# Corset is order sensitive - to compile, we load the constants first
+ZKEVM_MODULES := ${CONSTANTS} \
+		 ${ALU} \
 		 ${BIN} \
 		 ${BLAKE2f_MODEXP_DATA} \
 		 ${BLOCKDATA_FOR_LINEA} \
 		 ${BLOCKHASH} \
-		 ${CONSTANTS} \
 		 ${EC_DATA} \
 		 ${EUC} \
 		 ${EXP} \
@@ -181,13 +182,13 @@ zkevm.bin: ${ZKEVM_MODULES}
 zkevm.go.bin: ${ZKEVM_MODULES}
 	${GO_CORSET} compile -o $@ ${ZKEVM_MODULES}
 
-
-ZKEVM_MODULES_FOR_REFERENCE_TESTS := ${ALU} \
+# Corset is order sensitive - to compile, we load the constants first
+ZKEVM_MODULES_FOR_REFERENCE_TESTS := ${CONSTANTS} \
+					 ${ALU} \
 				     ${BIN} \
 				     ${BLAKE2f_MODEXP_DATA} \
 				     ${BLOCKDATA_FOR_REFERENCE_TESTS} \
 				     ${BLOCKHASH} \
-				     ${CONSTANTS} \
 				     ${EC_DATA} \
 				     ${EUC} \
 				     ${EXP} \
