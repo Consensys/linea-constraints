@@ -4,7 +4,7 @@
 
 (deflookup
   blake2fmodexpdata-into-wcp
-  ; target colums (in WCP)
+  ; target columns (in WCP)
   (
     wcp.ARG_1_HI
     wcp.ARG_1_LO
