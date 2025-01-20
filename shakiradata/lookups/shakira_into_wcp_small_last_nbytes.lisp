@@ -1,6 +1,6 @@
 (deflookup
   shakiradata-into-wcp-small-last-nbytes
-  ; target colums (in WCP)
+  ; target columns (in WCP)
   (
     wcp.ARG_1_HI
     wcp.ARG_1_LO
