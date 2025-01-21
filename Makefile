@@ -1,4 +1,3 @@
-CORSET ?= corset
 GO_CORSET ?= go-corset
 
 HUB_COLUMNS :=  $(wildcard hub/columns/*lisp)
@@ -171,9 +170,6 @@ ZKEVM_MODULES := ${ALU} \
 		 ${WCP}
 
 # ${HUB} \
-
-define.go: ${ZKEVM_MODULES}
-	${CORSET} wizard-iop -vv -o $@ ${ZKEVM_MODULES}
 
 zkevm.bin: ${ZKEVM_MODULES}
 	${GO_CORSET} compile -o $@ ${ZKEVM_MODULES}
