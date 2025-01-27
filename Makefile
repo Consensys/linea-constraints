@@ -58,7 +58,6 @@ BLOCKDATA_FOR_REFERENCE_TESTS := $(wildcard blockdata/*.lisp) \
 				 $(wildcard blockdata/processing/*.lisp) \
 				 $(wildcard blockdata/processing/gaslimit/common.lisp) \
 				 $(wildcard blockdata/processing/gaslimit/ethereum.lisp) \
-		       $(wildcard blockdata/processing/gaslimit/constants-ethereum.lisp) \
 				 $(wildcard blockdata/lookups/*.lisp)
 
 # with gaslimit for linea file
@@ -66,7 +65,6 @@ BLOCKDATA_FOR_LINEA := $(wildcard blockdata/*.lisp) \
 		       $(wildcard blockdata/processing/*.lisp) \
 		       $(wildcard blockdata/processing/gaslimit/common.lisp) \
 		       $(wildcard blockdata/processing/gaslimit/linea.lisp) \
-		       $(wildcard blockdata/processing/gaslimit/constants-linea.lisp) \
 		       $(wildcard blockdata/lookups/*.lisp)
 
 BLOCKHASH := $(wildcard blockhash/columns/*.lisp) \
@@ -138,12 +136,13 @@ TXN_DATA_FOR_REFERENCE_TESTS :=  $(wildcard txndata/*.lisp) \
 
 WCP := wcp
 
-ZKEVM_MODULES := ${ALU} \
+# Corset is order sensitive - to compile, we load the constants first
+ZKEVM_MODULES := ${CONSTANTS} \
+		 ${ALU} \
 		 ${BIN} \
 		 ${BLAKE2f_MODEXP_DATA} \
 		 ${BLOCKDATA_FOR_LINEA} \
 		 ${BLOCKHASH} \
-		 ${CONSTANTS} \
 		 ${EC_DATA} \
 		 ${EUC} \
 		 ${EXP} \
@@ -174,13 +173,13 @@ ZKEVM_MODULES := ${ALU} \
 zkevm.bin: ${ZKEVM_MODULES}
 	${GO_CORSET} compile -o $@ ${ZKEVM_MODULES}
 
-
-ZKEVM_MODULES_FOR_REFERENCE_TESTS := ${ALU} \
+# Corset is order sensitive - to compile, we load the constants first
+ZKEVM_MODULES_FOR_REFERENCE_TESTS := ${CONSTANTS} \
+					 ${ALU} \
 				     ${BIN} \
 				     ${BLAKE2f_MODEXP_DATA} \
 				     ${BLOCKDATA_FOR_REFERENCE_TESTS} \
 				     ${BLOCKHASH} \
-				     ${CONSTANTS} \
 				     ${EC_DATA} \
 				     ${EUC} \
 				     ${EXP} \
