@@ -51,19 +51,25 @@
 
 (defun   (account-consistency---repeat-account-row)    (*    (prev    acp_PEEK_AT_ACCOUNT)   acp_PEEK_AT_ACCOUNT))
 
-(defconstraint    account-consistency---FIRST-AGAIN-FINAL---repeat-encounter---conflation-level  (:guard   (account-consistency---repeat-account-row))
+(defconstraint    account-consistency---FIRST-AGAIN-FINAL---repeat-encounter---conflation-level
+                  (:guard   (account-consistency---repeat-account-row))
+                  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                   (if-not-zero  (remained-constant! (acp_full_address))
                                 (eq! (account-consistency---transition-conflation) 2)
                                 (eq! (account-consistency---transition-conflation) 0)))
 
-(defconstraint    account-consistency---FIRST-AGAIN-FINAL---repeat-encounter---block-level       (:guard   (account-consistency---repeat-account-row))
+(defconstraint    account-consistency---FIRST-AGAIN-FINAL---repeat-encounter---block-level
+                  (:guard   (account-consistency---repeat-account-row))
+                  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                   (begin
                     (if-not-zero (remained-constant!   (acp_full_address))              (eq! (account-consistency---transition-block) 2))
                     (if-not-zero (remained-constant!    acp_REL_BLK_NUM)                (eq! (account-consistency---transition-block) 2))
                     (if-zero     (remained-constant!   (acp_full_address))
                                  (if-zero    (remained-constant!    acp_REL_BLK_NUM)    (eq! (account-consistency---transition-block) 0)))))
 
-(defconstraint    account-consistency---FIRST-AGAIN-FINAL---repeat-encounter---transaction-level (:guard   (account-consistency---repeat-account-row))
+(defconstraint    account-consistency---FIRST-AGAIN-FINAL---repeat-encounter---transaction-level
+                  (:guard   (account-consistency---repeat-account-row))
+                  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                   (begin
                     (if-not-zero (remained-constant!   (acp_full_address))              (eq! (account-consistency---transition-transaction) 2))
                     (if-not-zero (remained-constant!    acp_ABS_TX_NUM)                 (eq! (account-consistency---transition-transaction) 2))
@@ -115,7 +121,9 @@
 ;;                                ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defconstraint    account-consistency---linking---conflation-level  (:guard   acp_AGAIN_IN_CNF)
+(defconstraint    account-consistency---linking---conflation-level
+                  (:guard   acp_AGAIN_IN_CNF)
+                  ;;;;;;;;;;;;;;;;;;;;;;;;;;;
                   (begin
                     (eq!   acp_NONCE                     (prev acp_NONCE_NEW)               )
                     (eq!   acp_BALANCE                   (prev acp_BALANCE_NEW)             )
