@@ -181,7 +181,7 @@
                   (:guard    acp_PEEK_AT_ACCOUNT)
                   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                   (if-not-zero    (-    acp_DEPLOYMENT_NUMBER_NEW    acp_DEPLOYMENT_NUMBER)
-                                  (if-zero   acp_DEPLOYMENT_NUMBER_NEW
+                                  (if-zero   acp_DEPLOYMENT_STATUS_NEW
                                              (begin
                                                ;; current account state
                                                (vanishes!   acp_DEPLOYMENT_STATUS)
@@ -194,7 +194,7 @@
                   (:guard    acp_PEEK_AT_ACCOUNT)
                   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                   (if-not-zero    (-    acp_DEPLOYMENT_NUMBER_NEW    acp_DEPLOYMENT_NUMBER)
-                                  (if-not-zero   acp_DEPLOYMENT_NUMBER_NEW
+                                  (if-not-zero   acp_DEPLOYMENT_STATUS_NEW
                                                  (begin
                                                    ;; current account state
                                                    (vanishes!   acp_NONCE)
