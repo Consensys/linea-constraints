@@ -38,21 +38,21 @@
   (fwd-changes-within    acp_PEEK_AT_ACCOUNT ;; perspective
                          acp_ADDRESS_HI      ;; columns
                          acp_ADDRESS_LO
-                         acp_ABS_TX_NUM
+                         acp_REL_BLK_NUM
                          ))
 (defcomputed
   (acp_AGAIN_IN_BLK)
   (fwd-unchanged-within    acp_PEEK_AT_ACCOUNT ;; perspective
                            acp_ADDRESS_HI      ;; columns
                            acp_ADDRESS_LO
-                           acp_ABS_TX_NUM
+                           acp_REL_BLK_NUM
                            ))
 (defcomputed
   (acp_FINAL_IN_BLK)
   (bwd-changes-within    acp_PEEK_AT_ACCOUNT ;; perspective
                          acp_ADDRESS_HI      ;; columns
                          acp_ADDRESS_LO
-                         acp_ABS_TX_NUM
+                         acp_REL_BLK_NUM
                          ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
