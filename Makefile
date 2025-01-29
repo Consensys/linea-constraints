@@ -205,11 +205,6 @@ ZKEVM_MODULES_FOR_REFERENCE_TESTS := ${CONSTANTS} \
 				     ${TXN_DATA_FOR_REFERENCE_TESTS} \
 				     ${WCP}
 
-#				     ${BLOCKDATA} \
-#				     ${HUB} \
 
 zkevm_for_reference_tests.bin: ${ZKEVM_MODULES_FOR_REFERENCE_TESTS}
 	${GO_CORSET} compile -o $@ ${ZKEVM_MODULES_FOR_REFERENCE_TESTS}
-
-
-
