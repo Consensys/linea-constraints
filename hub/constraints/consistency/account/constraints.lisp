@@ -129,7 +129,7 @@
 (defconstraint    account-consistency---linking---conflation-level---nonce
                   (:guard   acp_AGAIN_IN_CNF)
                   ;;;;;;;;;;;;;;;;;;;;;;;;;;;
-                    (eq!   acp_NONCE                     (prev acp_NONCE_NEW)               ))
+                  (eq!   acp_NONCE                     (prev acp_NONCE_NEW)               ))
 
 (defconstraint    account-consistency---linking---conflation-level---balance
                   (:guard   acp_AGAIN_IN_CNF)
@@ -151,7 +151,6 @@
                   (:guard   acp_AGAIN_IN_CNF)
                   ;;;;;;;;;;;;;;;;;;;;;;;;;;;
                   (begin
-                    (eq!   acp_PEEK_AT_ACCOUNT           1)
                     (eq!   acp_DEPLOYMENT_NUMBER         (prev acp_DEPLOYMENT_NUMBER_NEW)   )
                     (eq!   acp_DEPLOYMENT_STATUS         (prev acp_DEPLOYMENT_STATUS_NEW)   )))
 
