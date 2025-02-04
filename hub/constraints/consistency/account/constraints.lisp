@@ -121,33 +121,69 @@
 ;;                                ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defconstraint    account-consistency---linking---conflation-level
+
+;-----------------------------;
+;    X.5.5 Conflation level   ;
+;-----------------------------;
+
+(defconstraint    account-consistency---linking---conflation-level---nonce
+                  (:guard   acp_AGAIN_IN_CNF)
+                  ;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                    (eq!   acp_NONCE                     (prev acp_NONCE_NEW)               ))
+
+(defconstraint    account-consistency---linking---conflation-level---balance
                   (:guard   acp_AGAIN_IN_CNF)
                   ;;;;;;;;;;;;;;;;;;;;;;;;;;;
                   (begin
-                    (eq!   acp_NONCE                     (prev acp_NONCE_NEW)               )
-                    (eq!   acp_BALANCE                   (prev acp_BALANCE_NEW)             )
+                    (eq!   acp_BALANCE                   (prev acp_BALANCE_NEW)             )))
+
+(defconstraint    account-consistency---linking---conflation-level---code
+                  (:guard   acp_AGAIN_IN_CNF)
+                  ;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                  (begin
                     (eq!   acp_CODE_SIZE                 (prev acp_CODE_SIZE_NEW)           )
                     (eq!   acp_CODE_HASH_HI              (prev acp_CODE_HASH_HI_NEW)        )
                     (eq!   acp_CODE_HASH_LO              (prev acp_CODE_HASH_LO_NEW)        )
-                    (eq!   acp_DEPLOYMENT_NUMBER         (prev acp_DEPLOYMENT_NUMBER_NEW)   )
-                    (eq!   acp_DEPLOYMENT_STATUS         (prev acp_DEPLOYMENT_STATUS_NEW)   )
                     ;;
                     (eq!   acp_IS_PRECOMPILE             (prev acp_IS_PRECOMPILE)           )))
 
-(defconstraint    account-consistency---linking---block-level       (:guard   acp_AGAIN_IN_BLK)
+(defconstraint    account-consistency---linking---conflation-level---deployment-number-and-status
+                  (:guard   acp_AGAIN_IN_CNF)
+                  ;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                  (begin
+                    (eq!   acp_PEEK_AT_ACCOUNT           1)
+                    (eq!   acp_DEPLOYMENT_NUMBER         (prev acp_DEPLOYMENT_NUMBER_NEW)   )
+                    (eq!   acp_DEPLOYMENT_STATUS         (prev acp_DEPLOYMENT_STATUS_NEW)   )))
+
+
+;------------------------;
+;    X.5.5 Block level   ;
+;------------------------;
+
+(defconstraint    account-consistency---linking---block-level
+                  (:guard   acp_AGAIN_IN_BLK)
+                  ;;;;;;;;;;;;;;;;;;;;;;;;;;;
                   (begin
                     (remained-constant!    acp_DEPLOYMENT_NUMBER_FIRST_IN_BLOCK)
                     (remained-constant!    acp_DEPLOYMENT_NUMBER_FINAL_IN_BLOCK)))
 
-(defconstraint    account-consistency---linking---transaction-level (:guard   acp_AGAIN_IN_TXN)
+
+;------------------------------;
+;    X.5.5 Transaction level   ;
+;------------------------------;
+
+(defconstraint    account-consistency---linking---transaction-level
+                  (:guard   acp_AGAIN_IN_TXN)
+                  ;;;;;;;;;;;;;;;;;;;;;;;;;;;
                   (begin
                     (eq!   acp_WARMTH                     (prev    acp_WARMTH_NEW))
                     (eq!   acp_MARKED_FOR_SELFDESTRUCT    (prev    acp_MARKED_FOR_SELFDESTRUCT_NEW))
                     (if-not-zero    acp_MARKED_FOR_SELFDESTRUCT
                                     (eq!    acp_MARKED_FOR_SELFDESTRUCT_NEW    1))))
 
-(defconstraint    account-consistency---linking---for-CFI (:guard    acp_AGAIN_IN_CNF)
+(defconstraint    account-consistency---linking---for-CFI
+                  (:guard    acp_AGAIN_IN_CNF)
+                  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                   (if-eq    acp_DEPLOYMENT_NUMBER_NEW    acp_DEPLOYMENT_NUMBER
                             (if-eq    acp_DEPLOYMENT_STATUS_NEW    acp_DEPLOYMENT_STATUS
                                       (remained-constant!    acp_CODE_FRAGMENT_INDEX))))
