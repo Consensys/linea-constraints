@@ -1,6 +1,39 @@
 GO_CORSET ?= go-corset
 
-HUB_COLUMNS :=  $(wildcard hub/columns/*lisp)
+ALU := $(wildcard alu/add/*.lisp) \
+       $(wildcard alu/ext/*.lisp) \
+       $(wildcard alu/mod/*.lisp) \
+       $(wildcard alu/mul/*.lisp)
+
+BIN := bin   
+
+BLAKE2f_MODEXP_DATA := blake2fmodexpdata
+
+# with gaslimit for ethereum file
+BLOCKDATA_FOR_REFERENCE_TESTS := $(wildcard blockdata/*.lisp) \
+				 $(wildcard blockdata/processing/*.lisp) \
+				 $(wildcard blockdata/processing/gaslimit/common.lisp) \
+				 $(wildcard blockdata/processing/gaslimit/ethereum.lisp) \
+				 $(wildcard blockdata/lookups/*.lisp)
+
+# with gaslimit for linea file
+BLOCKDATA_FOR_LINEA := $(wildcard blockdata/*.lisp) \
+		       $(wildcard blockdata/processing/*.lisp) \
+		       $(wildcard blockdata/processing/gaslimit/common.lisp) \
+		       $(wildcard blockdata/processing/gaslimit/linea.lisp) \
+		       $(wildcard blockdata/lookups/*.lisp)
+
+BLOCKHASH := blockhash
+
+CONSTANTS := constants/constants.lisp
+
+EC_DATA := ecdata
+
+EUC := euc
+
+EXP := exp
+
+GAS := gas
 
 HUB :=  $(wildcard hub/columns/*lisp) \
 	$(wildcard hub/constraints/account-rows/*lisp) \
@@ -40,46 +73,6 @@ HUB :=  $(wildcard hub/columns/*lisp) \
 	$(wildcard hub/constraints/*lisp) \
 	$(wildcard hub/lookups/*lisp) \
 	hub/constants.lisp
-
-
-# Missing from the above
-
-ALU := $(wildcard alu/add/*.lisp) \
-       $(wildcard alu/ext/*.lisp) \
-       $(wildcard alu/mod/*.lisp) \
-       $(wildcard alu/mul/*.lisp)
-
-BIN := bin   
-
-BLAKE2f_MODEXP_DATA := blake2fmodexpdata
-
-# with gaslimit for ethereum file
-BLOCKDATA_FOR_REFERENCE_TESTS := $(wildcard blockdata/*.lisp) \
-				 $(wildcard blockdata/processing/*.lisp) \
-				 $(wildcard blockdata/processing/gaslimit/common.lisp) \
-				 $(wildcard blockdata/processing/gaslimit/ethereum.lisp) \
-				 $(wildcard blockdata/lookups/*.lisp)
-
-# with gaslimit for linea file
-BLOCKDATA_FOR_LINEA := $(wildcard blockdata/*.lisp) \
-		       $(wildcard blockdata/processing/*.lisp) \
-		       $(wildcard blockdata/processing/gaslimit/common.lisp) \
-		       $(wildcard blockdata/processing/gaslimit/linea.lisp) \
-		       $(wildcard blockdata/lookups/*.lisp)
-
-BLOCKHASH := $(wildcard blockhash/columns/*.lisp) \
-	     $(wildcard blockhash/lookups/*.lisp) \
-	     $(wildcard blockhash/*.lisp)
-
-CONSTANTS := constants/constants.lisp
-
-EC_DATA := ecdata
-
-EUC := euc
-
-EXP := exp
-
-GAS := gas
 
 LIBRARY := library/rlp_constraints_pattern.lisp
 
@@ -123,17 +116,6 @@ TRM := trm
 
 TXN_DATA := txndata
 
-TXN_DATA_FOR_REFERENCE_TESTS :=  $(wildcard txndata/*.lisp) \
-				 txndata/lookups/txndata_into_euc.lisp \
-				 txndata/lookups/txndata_into_rlpaddr.lisp \
-				 txndata/lookups/txndata_into_rlptxn.lisp \
-				 txndata/lookups/txndata_into_rlptxrcpt.lisp \
-				 txndata/lookups/txndata_into_romlex.lisp \
-				 txndata/lookups/txndata_into_wcp.lisp
-
-#				 txndata/lookups/txndata_into_blockdata.lisp \
-#				 txndata/lookups/txndata_into_hub.lispX \
-
 WCP := wcp
 
 # Corset is order sensitive - to compile, we load the constants first
@@ -168,8 +150,6 @@ ZKEVM_MODULES := ${CONSTANTS} \
 		 ${TXN_DATA} \
 		 ${WCP}
 
-# ${HUB} \
-
 zkevm.bin: ${ZKEVM_MODULES}
 	${GO_CORSET} compile -o $@ ${ZKEVM_MODULES}
 
@@ -202,7 +182,7 @@ ZKEVM_MODULES_FOR_REFERENCE_TESTS := ${CONSTANTS} \
 				     ${STP} \
 				     ${TABLES} \
 				     ${TRM} \
-				     ${TXN_DATA_FOR_REFERENCE_TESTS} \
+				     ${TXN_DATA} \
 				     ${WCP}
 
 
