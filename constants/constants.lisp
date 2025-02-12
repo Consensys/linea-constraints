@@ -198,6 +198,27 @@
   GAS_CONST_G_KECCAK_256_WORD               6
   GAS_CONST_G_COPY                          3
   GAS_CONST_G_BLOCKHASH                     20
+  GAS_CONST_ECREC                           3000
+  GAS_CONST_SHA256_MIN                      60
+  GAS_CONST_SHA256_FACTOR                   12
+  GAS_CONST_RIPEMD160_MIN                   600
+  GAS_CONST_RIPEMD160_FACTOR                120
+  GAS_CONST_IDENTITY                        15
+  GAS_CONST_IDENTITY_FACTOR                 3
+  GAS_CONST_MODEXP_MAX                      200 ;; TODO: do we need something else?
+  GAS_CONST_ECADD                           150
+  GAS_CONST_ECMUL                           6000
+  GAS_CONST_ECPAIRING_MIN                   45000
+  GAS_CONST_ECPAIRING_FACTOR                34000
+
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;               ;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; PRECOMPILES   ;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;               ;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  PRC_ECPAIRING_SIZE                        192
+  PRC_BLAKE2F_SIZE                          218
+
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;           ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;  EVM MISC ;;
