@@ -617,7 +617,7 @@
 (defun (prc-ecpairing---is-multiple_PRC_ECPAIRING_SIZE)           (shift OUTGOING_RES_LO 3))
 (defun (prc-ecpairing---insufficient-gas)                         (shift OUTGOING_RES_LO 4))
 (defun (prc-ecpairing---precompile-cost_PRC_ECPAIRING_SIZE)       (*    (prc-ecpairing---is-multiple_PRC_ECPAIRING_SIZE)
-                                                                  (+ (* GAS_CONST_ECPAIRING PRC_ECPAIRING_SIZE) (* GAS_CONST_ECPAIRING_WORD (prc---cds)))))
+                                                                  (+ (* GAS_CONST_ECPAIRING PRC_ECPAIRING_SIZE) (* GAS_CONST_ECPAIRING_PAIR (prc---cds)))))
 
 (defconstraint prc-ecpairing---mod-cds-by-PRC_ECPAIRING_SIZE (:guard (* (assumption---fresh-new-stamp) (prc-ecpairing---standard-precondition)))
   (call-to-MOD 2 0 (prc---cds) 0 PRC_ECPAIRING_SIZE))

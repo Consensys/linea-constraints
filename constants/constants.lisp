@@ -209,7 +209,7 @@
   GAS_CONST_ECADD                           150
   GAS_CONST_ECMUL                           6000
   GAS_CONST_ECPAIRING                       45000
-  GAS_CONST_ECPAIRING_WORD                  34000
+  GAS_CONST_ECPAIRING_PAIR                  34000
   GAS_CONST_BLAKE2_PER_ROUND                1
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
