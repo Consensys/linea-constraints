@@ -579,19 +579,12 @@
 (defun (prc-sha2-prc-ripemd-prc-identity---standard-precondition)     (+ IS_SHA2 IS_RIPEMD IS_IDENTITY))
 (defun (prc-sha2-prc-ripemd-prc-identity---ceil)                      (shift OUTGOING_RES_LO 2))
 (defun (prc-sha2-prc-ripemd-prc-identity---insufficient-gas)          (shift OUTGOING_RES_LO 3))
-(defun (prc-sha2-prc-ripemd-prc-identity---precompile-cost)           (+ 
-                                                                        (+ 
-                                                                          (* GAS_CONST_SHA256         IS_SHA2)
-                                                                          (* GAS_CONST_RIPEMD160      IS_RIPEMD)
-                                                                          (* GAS_CONST_IDENTITY       IS_IDENTITY)
-                                                                        )                                                                        
-                                                                        (* 
-                                                                          (prc-sha2-prc-ripemd-prc-identity---ceil) 
-                                                                          (* GAS_CONST_SHA256_WORD    IS_SHA2)
-                                                                          (* GAS_CONST_RIPEMD160_WORD IS_RIPEMD)
-                                                                          (* GAS_CONST_IDENTITY_WORD  IS_IDENTITY)
-                                                                        )
-                                                                      ))
+(defun (prc-sha2-prc-ripemd-prc-identity---sha2-cost)                 (+  GAS_CONST_SHA2       (* GAS_CONST_SHA2_WORD      (prc-sha2-prc-ripemd-prc-identity---ceil))))
+(defun (prc-sha2-prc-ripemd-prc-identity---ripemd-cost)               (+  GAS_CONST_RIPEMD     (* GAS_CONST_RIPEMD_WORD    (prc-sha2-prc-ripemd-prc-identity---ceil))))
+(defun (prc-sha2-prc-ripemd-prc-identity---identity-cost)             (+  GAS_CONST_IDENTITY   (* GAS_CONST_IDENTITY_WORD  (prc-sha2-prc-ripemd-prc-identity---ceil))))
+(defun (prc-sha2-prc-ripemd-prc-identity---precompile-cost)           (+  (*  (prc-sha2-prc-ripemd-prc-identity---sha2-cost)      IS_SHA2    )
+                                                                          (*  (prc-sha2-prc-ripemd-prc-identity---ripemd-cost)    IS_RIPEMD  )
+                                                                          (*  (prc-sha2-prc-ripemd-prc-identity---identity-cost)  IS_IDENTITY)))
 
 (defconstraint prc-sha2-prc-ripemd-prc-identity---div-cds-plus-31-by-32 (:guard (* (assumption---fresh-new-stamp) (prc-sha2-prc-ripemd-prc-identity---standard-precondition)))
   (call-to-DIV 2 0 (+ (prc---cds) 31) 0 32))

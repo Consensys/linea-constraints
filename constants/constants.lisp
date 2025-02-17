@@ -199,10 +199,10 @@
   GAS_CONST_G_COPY                          3
   GAS_CONST_G_BLOCKHASH                     20
   GAS_CONST_ECRECOVER                       3000
-  GAS_CONST_SHA256                          60
-  GAS_CONST_SHA256_WORD                     12
-  GAS_CONST_RIPEMD160                       600
-  GAS_CONST_RIPEMD160_WORD                  120
+  GAS_CONST_SHA2                            60
+  GAS_CONST_SHA2_WORD                       12
+  GAS_CONST_RIPEMD                          600
+  GAS_CONST_RIPEMD_WORD                     120
   GAS_CONST_IDENTITY                        15
   GAS_CONST_IDENTITY_WORD                   3
   GAS_CONST_MODEXP                          200 
