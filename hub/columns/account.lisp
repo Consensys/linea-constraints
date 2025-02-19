@@ -30,7 +30,8 @@
    (MARKED_FOR_SELFDESTRUCT_NEW :binary)   
    (DEPLOYMENT_NUMBER           :i32 :display :dec)
    (DEPLOYMENT_NUMBER_NEW       :i32 :display :dec)
-   (DEPLOYMENT_STATUS           :binary)             
+   (DEPLOYMENT_STATUS           :binary)   
+   (DEPLOYMENT_STATUS_NEW           :binary)           
 
    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
    ;;                               ;;

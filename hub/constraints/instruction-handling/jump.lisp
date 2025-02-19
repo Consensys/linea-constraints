@@ -58,9 +58,9 @@
 
 ;; TODO: allow for debug only constraints
 ;; TODO: remove ugly hack
-;;(defconstraint jump-instruction---allowable-exceptions                        (:guard (jump-instruction---no-stack-exception))
-;;               (begin
-;;                 (eq! XAHOY (+ stack/OOGX stack/JUMPX))))
+(defconstraint jump-instruction---allowable-exceptions                        (:guard (jump-instruction---no-stack-exception))
+               (begin
+                 (eq! XAHOY (+ stack/OOGX stack/JUMPX))))
 
 
 (defconstraint jump-instruction---setting-the-gas-cost                        (:guard (jump-instruction---no-stack-exception))
