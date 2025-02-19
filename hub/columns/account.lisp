@@ -6,7 +6,7 @@
   PEEK_AT_ACCOUNT
 
   ;; account-row columns
-  ((ADDRESS_HI                  :i32)                           ;; 4     bytes
+  ((ADDRESS_HI                  :i32)                          
    (ADDRESS_LO                  :i128)
    (NONCE                       :i64  :display :dec)
    (NONCE_NEW                   :i64  :display :dec)
@@ -18,22 +18,19 @@
    (CODE_HASH_LO                :i128)
    (CODE_HASH_HI_NEW            :i128)
    (CODE_HASH_LO_NEW            :i128)
-   (HAS_CODE                    :binary@prove)                    ;; TODO: demote to debug constraint
-   (HAS_CODE_NEW                :binary@prove)                ;; TODO: demote to debug constraint
+   (HAS_CODE                    :binary)                   
+   (HAS_CODE_NEW                :binary)                  
    (CODE_FRAGMENT_INDEX         :i32 :display :dec)
    (ROMLEX_FLAG                 :binary@prove)
-   (EXISTS                      :binary@prove)                      ;; TODO: demote to debug constraint, already fully constrained
-   (EXISTS_NEW                  :binary@prove)                  ;; TODO: demote to debug constraint, already fully constrained
-   (WARMTH                      :binary@prove)                      ;; TODO: demote to debug constraint
-   (WARMTH_NEW                  :binary@prove)                  ;; TODO: demote to debug constraint
-   (MARKED_FOR_SELFDESTRUCT     :binary@prove)     ;; TODO: demote to debug constraint
-   (MARKED_FOR_SELFDESTRUCT_NEW :binary@prove) ;; TODO: demote to debug constraint
+   (EXISTS                      :binary)                           
+   (EXISTS_NEW                  :binary)                       
+   (WARMTH                      :binary)                        
+   (WARMTH_NEW                  :binary)                    
+   (MARKED_FOR_SELFDESTRUCT     :binary)       
+   (MARKED_FOR_SELFDESTRUCT_NEW :binary)   
    (DEPLOYMENT_NUMBER           :i32 :display :dec)
    (DEPLOYMENT_NUMBER_NEW       :i32 :display :dec)
-   (DEPLOYMENT_NUMBER_INFTY     :i32 :display :dec)
-   (DEPLOYMENT_STATUS           :binary@prove)           ;; TODO: demote to debug constraint
-   (DEPLOYMENT_STATUS_NEW       :binary@prove)       ;; TODO: demote to debug constraint
-   (DEPLOYMENT_STATUS_INFTY     :binary@prove)     ;; TODO: demote to debug constraint
+   (DEPLOYMENT_STATUS           :binary)             
 
    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
    ;;                               ;;
@@ -42,7 +39,7 @@
    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
    (TRM_FLAG           :binary@prove)
-   (IS_PRECOMPILE      :binary@prove)               ;; TODO: demote to debug constraint
+   (IS_PRECOMPILE      :binary)                 
    (TRM_RAW_ADDRESS_HI :i128)
 
    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

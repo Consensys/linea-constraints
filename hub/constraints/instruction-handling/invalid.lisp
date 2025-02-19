@@ -28,16 +28,16 @@
 
 ;; already enforced in automatic-exception-flag-vanishing constraint
 ;; TODO: this is debug
-(defconstraint    invalid-instruction---setting-OPCX              (:guard (invalid-instruction---standard-hypothesis))
-                  (eq!    stack/OPCX    stack/INVALID_FLAG))
+;;(defconstraint    invalid-instruction---setting-OPCX              (:guard (invalid-instruction---standard-hypothesis))
+;;                  (eq!    stack/OPCX    stack/INVALID_FLAG))
 
 (defconstraint    invalid-instruction---setting-NSR               (:guard (invalid-instruction---standard-hypothesis))
                   (eq!    NSR    CMC))
 
 ;; TODO: this is debug
-(defconstraint    invalid-instruction---setting-the-peeking-flags (:guard (invalid-instruction---standard-hypothesis))
-                  (eq!    NSR
-                          (*   CMC   (next PEEK_AT_CONTEXT))))
+;;(defconstraint    invalid-instruction---setting-the-peeking-flags (:guard (invalid-instruction---standard-hypothesis))
+;;                  (eq!    NSR
+;;                          (*   CMC   (next PEEK_AT_CONTEXT))))
 
 (defconstraint    invalid-instruction---setting-the-gas-cost      (:guard (invalid-instruction---standard-hypothesis))
                   (eq!    GAS_COST    stack/STATIC_GAS))

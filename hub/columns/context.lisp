@@ -10,8 +10,8 @@
 		 ;; (immutable) context data
 		 ( CONTEXT_NUMBER                    :i32          )
 		 ( CALL_STACK_DEPTH                  :i11          ) ;; in the range [0 .. 1024] (inclusive)
-		 ( IS_ROOT                           :binary@prove ) ;; binaryness should be demoted to a debug cosntraint
-		 ( IS_STATIC                         :binary@prove ) ;; binaryness should be demoted to a debug cosntraint
+		 ( IS_ROOT                           :binary ) 
+		 ( IS_STATIC                         :binary ) 
 
 		 ;; (immutable) account
 		 ( ACCOUNT_ADDRESS_HI                :i32  )

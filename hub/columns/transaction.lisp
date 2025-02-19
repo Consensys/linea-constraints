@@ -17,8 +17,8 @@
                 ;; to account related
                 ( TO_ADDRESS_HI                :i32  )
                 ( TO_ADDRESS_LO                :i128 )
-                ( REQUIRES_EVM_EXECUTION       :binary@prove ) ;; TODO: demote to debug constraint
-                ( COPY_TXCD                    :binary@prove ) ;; TODO: demote to debug constraint
+                ( REQUIRES_EVM_EXECUTION       :binary )
+                ( COPY_TXCD                    :binary ) 
                 ( IS_DEPLOYMENT                :binary )
                 ( IS_TYPE2                     :binary )
 

@@ -10,7 +10,6 @@
 		( ADDRESS_HI                      :i32  )
 		( ADDRESS_LO                      :i128 )
 		( DEPLOYMENT_NUMBER               :i32  ) ;; TODO: vastly exagerated
-		( DEPLOYMENT_NUMBER_INFTY         :i32  ) ;; TODO: vastly exagerated
 		( STORAGE_KEY_HI                  :i128 )
 		( STORAGE_KEY_LO                  :i128 )
 		( VALUE_ORIG_HI                   :i128 )
