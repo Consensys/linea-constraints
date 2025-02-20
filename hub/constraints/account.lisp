@@ -213,12 +213,6 @@
 ;;                          ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; TODO DEBUG Only
-(defconstraint exist_is_binary (:perspective account)
- (begin
-  (is-binary account/EXISTS)
-  (is-binary account/EXISTS_NEW)))
-
 (defconstraint exists_is_on (:perspective account)
  (if-zero (+ (~ account/NONCE) (~ account/BALANCE) (~ account/HAS_CODE))
     (vanishes! account/EXISTS)
