@@ -35,10 +35,10 @@
   ;; original columns
   ;;;;;;;;;;;;;;;;;;;
   (
-    (↓ PEEK_AT_CONTEXT)
-    (↓ context/CONTEXT_NUMBER)
-    (↓ HUB_STAMP)
-    (↑ context/UPDATE)
+    (+ PEEK_AT_CONTEXT)
+    (+ context/CONTEXT_NUMBER)
+    (+ HUB_STAMP)
+    (+ context/UPDATE)
     context/CALL_STACK_DEPTH
     context/IS_ROOT
     context/IS_STATIC
