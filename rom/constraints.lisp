@@ -92,8 +92,7 @@
 ;; CODESIZE_REACHED Constraints
 (defconstraint codesizereached-trigger ()
   (if-eq PC (- CODE_SIZE 1)
-         (eq! (+ CODESIZE_REACHED (next CODESIZE_REACHED))
-              1)))
+         (eq! (next CODESIZE_REACHED) (+ CODESIZE_REACHED 1))))
 
 (defconstraint csr-impose-ctmax (:guard CFI)
   (if-zero CT
