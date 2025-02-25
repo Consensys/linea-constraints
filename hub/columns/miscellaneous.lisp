@@ -71,5 +71,5 @@
 
 		 ;; ``truly'' miscellaneous columns
 		 ( CCSR_FLAG                           :binary)  ;; Child Context Self Reverts Flag; 
-		 ( CCRS_STAMP                          :i32 )          ;; Child Context Revert Stamp
+		 ( CCRS_STAMP                          :i32 )    ;; Child Context Revert Stamp
 		 ))
