@@ -21,12 +21,12 @@
 
 ;; TODO: should be debug --- rmk: careful analysis should prove that they are indeed redundant; kepping them for now for safety;
 (defconstraint    gas-columns---automatic-vanishing ()
-                    (if-zero   TX_EXEC
-                              (begin
-                                 (vanishes! GAS_EXPECTED)
-                                 (vanishes! GAS_ACTUAL)
-                                 (vanishes! GAS_COST)
-                                 (vanishes! GAS_NEXT))))
+                  (if-zero   TX_EXEC
+                             (begin
+                               (vanishes! GAS_EXPECTED)
+                               (vanishes! GAS_ACTUAL)
+                               (vanishes! GAS_COST)
+                               (vanishes! GAS_NEXT))))
 
 ;; we drop the stack perspective preconditions
 (defconstraint    gas-columns---GAS_NEXT-vanishes-in-case-of-an-exception ()
