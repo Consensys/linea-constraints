@@ -19,7 +19,7 @@
   ;;
   (EXISTS               :binary)
   (WARM                 :binary)
-  (OUT_OF_GAS_EXCEPTION :binary)
+  (OUT_OF_GAS_EXCEPTION :binary@prove) ;; rmk: should be useless (as always set manually); we keep if for now for safety;
   ;;
   (GAS_ACTUAL           :i64)
   (GAS_MXP              :i64)
