@@ -61,9 +61,11 @@
                     (hub-stamp-constancy CN)
                     (hub-stamp-constancy CN_NEW)))
 
-(defconstraint    generalities---context-numbers---TX_EXEC-phase---CN-vanishes-outside-of-execution-phase ()
-                  (if-zero TX_EXEC
-                           (vanishes! CN)))
+(defconstraint    generalities---context-numbers---TX_EXEC-phase---CN-vanishes-precisely-when-TX_EXEC-does ()
+                  (if-not-zero   CN
+                                 (eq!   TX_EXEC   1)
+                                 (eq!   TX_EXEC   0)
+                                 ))
 
 (defconstraint    generalities---context-numbers---TX_INIT-phase ()
                   (if-not-zero TX_INIT
