@@ -13,12 +13,12 @@
                     (hub-stamp-constancy    HEIGHT)
                     (hub-stamp-constancy    HEIGHT_NEW)))
 
-;; TODO: this should be debug!
-;;(defconstraint    generalities---stack-height---automatic-vanishing   ()
-;;                  (if-zero    TX_EXEC
-;;                              (begin
-;;                                (vanishes!    HEIGHT)
-;;                                (vanishes!    HEIGHT_NEW))))
+;; ;; This is debug!
+;; (defconstraint    generalities---stack-height---automatic-vanishing   ()
+;;                   (if-zero    TX_EXEC
+;;                               (begin
+;;                                 (vanishes!    HEIGHT)
+;;                                 (vanishes!    HEIGHT_NEW))))
 
 (defconstraint    generalities---stack-height---update   (:perspective stack)
                   (if-not-zero    (stack-exceptions)

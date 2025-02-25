@@ -29,7 +29,7 @@
 (defconstraint    invalid-instruction---setting-NSR               (:guard (invalid-instruction---standard-hypothesis))
                   (eq!    NSR    CMC))
 
-;; ;; TODO: this is debug (formally follows from other constraints.)
+;; ;; If anything, this is debug (formally follows from other constraints.)
 ;; (defconstraint    invalid-instruction---setting-the-peeking-flags (:guard (invalid-instruction---standard-hypothesis))
 ;;                   (eq!    NSR
 ;;                           (*   CMC   (next PEEK_AT_CONTEXT))))
