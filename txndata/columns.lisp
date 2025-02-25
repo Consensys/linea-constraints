@@ -29,7 +29,7 @@
   (TYPE1 :binary@prove)
   (TYPE2 :binary@prove)
   (REQUIRES_EVM_EXECUTION :binary@prove)
-  (COPY_TXCD :binary)
+  (COPY_TXCD :binary@prove)
   (GAS_LEFTOVER :i128)
   (REFUND_COUNTER :i128)
   (REFUND_EFFECTIVE :i128)
