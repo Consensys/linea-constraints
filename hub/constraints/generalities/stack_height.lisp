@@ -22,5 +22,7 @@
 
 (defconstraint    generalities---stack-height---update   (:perspective stack)
                   (if-not-zero    (stack-exceptions)
+                                  ;; stack exception ≡ true
                                   (vanishes!    HEIGHT_NEW)
+                                  ;; stack exception ≡ false
                                   (eq!          HEIGHT_NEW    (+ (- HEIGHT stack/DELTA) stack/ALPHA))))
