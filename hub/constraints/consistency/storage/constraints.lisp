@@ -32,48 +32,48 @@
                                        scp_AGAIN_IN_TXN   scp_AGAIN_IN_BLK   scp_AGAIN_IN_CNF
                                        scp_FINAL_IN_TXN   scp_FINAL_IN_BLK   scp_FINAL_IN_CNF)))))
 
-(defun    (storage-consistency---transtion-conflation)    (+    (prev scp_FINAL_IN_CNF)    scp_FIRST_IN_CNF))
-(defun    (storage-consistency---transtion-block)         (+    (prev scp_FINAL_IN_BLK)    scp_FIRST_IN_BLK))
-(defun    (storage-consistency---transtion-transaction)   (+    (prev scp_FINAL_IN_TXN)    scp_FIRST_IN_TXN))
-(defun    (storage-consistency---transtion-sum)           (+    (storage-consistency---transtion-conflation)
-                                                                (storage-consistency---transtion-block)
-                                                                (storage-consistency---transtion-transaction)))
+(defun    (storage-consistency---transition-conflation)    (+    (prev scp_FINAL_IN_CNF)    scp_FIRST_IN_CNF))
+(defun    (storage-consistency---transition-block)         (+    (prev scp_FINAL_IN_BLK)    scp_FIRST_IN_BLK))
+(defun    (storage-consistency---transition-transaction)   (+    (prev scp_FINAL_IN_TXN)    scp_FIRST_IN_TXN))
+(defun    (storage-consistency---transition-sum)           (+    (storage-consistency---transition-conflation)
+                                                                (storage-consistency---transition-block)
+                                                                (storage-consistency---transition-transaction)))
 
 (defconstraint    storage-consistency---FIRST-AGAIN-FINAL---first-storage-row ()
                   (if-zero    (force-bool     (prev scp_PEEK_AT_STORAGE))
                               (if-not-zero    (force-bool    scp_PEEK_AT_STORAGE)
                                               (if-not-zero   scp_PEEK_AT_STORAGE
-                                                             (eq!    (storage-consistency---transtion-sum)
+                                                             (eq!    (storage-consistency---transition-sum)
                                                                      3)))))
 
 (defun   (storage-consistency---repeat-storage-row)    (*    (prev    scp_PEEK_AT_STORAGE)   scp_PEEK_AT_STORAGE))
 
 (defconstraint    storage-consistency---FIRST-AGAIN-FINAL---repeat-storage-row---change-in-storage-slot  (:guard   (storage-consistency---repeat-storage-row))
                   (begin
-                    (if-not-zero (remained-constant!   (scp_full_address))    (eq! (storage-consistency---transtion-sum)   6))
-                    (if-not-zero (remained-constant!   scp_STORAGE_KEY_HI)    (eq! (storage-consistency---transtion-sum)   6))
-                    (if-not-zero (remained-constant!   scp_STORAGE_KEY_LO)    (eq! (storage-consistency---transtion-sum)   6))))
+                    (if-not-zero (remained-constant!   (scp_full_address))    (eq! (storage-consistency---transition-sum)   6))
+                    (if-not-zero (remained-constant!   scp_STORAGE_KEY_HI)    (eq! (storage-consistency---transition-sum)   6))
+                    (if-not-zero (remained-constant!   scp_STORAGE_KEY_LO)    (eq! (storage-consistency---transition-sum)   6))))
 
 (defconstraint    storage-consistency---FIRST-AGAIN-FINAL---repeat-storage-row---no-change-in-storage-slot  (:guard   (storage-consistency---repeat-storage-row))
                   (if-zero (remained-constant!   (scp_full_address))
                            (if-zero (remained-constant!   scp_STORAGE_KEY_HI)
                                     (if-zero (remained-constant!   scp_STORAGE_KEY_LO)
-                                             (eq! (storage-consistency---transtion-conflation) 0)))))
+                                             (eq! (storage-consistency---transition-conflation) 0)))))
 
 (defconstraint    storage-consistency---FIRST-AGAIN-FINAL---repeat-encounter-of-storage-slot    (:guard    (*   scp_PEEK_AT_STORAGE    (-   1   scp_FIRST_IN_CNF)))
                   (begin
                     (if-not-zero    (remained-constant!    scp_REL_BLK_NUM)
-                                    (eq!    (storage-consistency---transtion-block)   2)
-                                    (eq!    (storage-consistency---transtion-block)   0))
+                                    (eq!    (storage-consistency---transition-block)   2)
+                                    (eq!    (storage-consistency---transition-block)   0))
                     (if-not-zero    (remained-constant!    scp_ABS_TX_NUM)
-                                    (eq!    (storage-consistency---transtion-transaction)   2)
-                                    (eq!    (storage-consistency---transtion-transaction)   0))))
+                                    (eq!    (storage-consistency---transition-transaction)   2)
+                                    (eq!    (storage-consistency---transition-transaction)   0))))
 
 (defconstraint    storage-consistency---FIRST-AGAIN-FINAL---final-row-with-room-to-spare ()
                   (if-not-zero (prev scp_PEEK_AT_STORAGE)
                                (if-zero    (force-bool    scp_PEEK_AT_STORAGE)
                                            (eq!    3
-                                                   (storage-consistency---transtion-sum)))))
+                                                   (storage-consistency---transition-sum)))))
 
 (defconstraint    storage-consistency---FIRST-AGAIN-FINAL---final-row-of-the-trace       (:domain {-1})
                   (if-not-zero scp_PEEK_AT_STORAGE
