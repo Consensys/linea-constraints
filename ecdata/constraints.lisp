@@ -92,10 +92,9 @@
          (counter-constancy CT G2MTR)
          (counter-constancy CT NOT_ON_G2)
          (counter-constancy CT NOT_ON_G2_ACC)
-         (counter-constancy INDEX PHASE) ;; NOTE: PHASE, NOT_ON_G2_ACC_MAX, INDEX_MAX, TRIVIAL_PAIRING (when IS_ECPAIRING_RESULT = 1) are said to be index-constant
+         (counter-constancy INDEX PHASE) ;; NOTE: PHASE, NOT_ON_G2_ACC_MAX, INDEX_MAX are said to be index-constant
          (counter-constancy INDEX NOT_ON_G2_ACC_MAX)
-         (counter-constancy INDEX INDEX_MAX)
-         (if-not-zero IS_ECPAIRING_RESULT (counter-constancy INDEX TRIVIAL_PAIRING))))
+         (counter-constancy INDEX INDEX_MAX)))
 
 (defconstraint pair-of-points-constancy ()
   (if-not-zero ACC_PAIRINGS
@@ -242,21 +241,17 @@
   (if-zero (is_ecpairing)
            (vanishes! TRIVIAL_PAIRING)))
 
-;; the constraint below is equivalent:
-;; (defconstraint set-trivial-pairing-init-using-expression ()
-;;   (if-zero (+ (prev IS_ECPAIRING_DATA) (- 1 IS_ECPAIRING_DATA))
-;;            (eq! TRIVIAL_PAIRING 1)))
 (defconstraint set-trivial-pairing-init ()
   (if-zero (prev IS_ECPAIRING_DATA)
            (if-not-zero IS_ECPAIRING_DATA
                         (eq! TRIVIAL_PAIRING 1))))
 
+(defconstraint conditional-index-constancy ()
+  (if-zero IS_ECPAIRING_RESULT
+           (counter-constancy INDEX TRIVIAL_PAIRING)))
+
 (defconstraint transition-large-to-small ()
   (if-not-zero (transition_from_large_to_small)
-               (will-remain-constant! TRIVIAL_PAIRING)))
-
-(defconstraint transition-to-result ()
-  (if-not-zero (transition_to_result)
                (will-remain-constant! TRIVIAL_PAIRING)))
 
 (defconstraint transition-small-to-large ()
@@ -264,6 +259,10 @@
                (if-zero TRIVIAL_PAIRING
                         (vanishes! (next TRIVIAL_PAIRING))
                         (eq! (next TRIVIAL_PAIRING) (next IS_INFINITY)))))
+
+(defconstraint transition-to-result ()
+  (if-not-zero (transition_to_result)
+               (will-remain-constant! TRIVIAL_PAIRING)))
 
 (defconstraint set-pairing-result-when-trivial-pairngs ()
   (let ((pairing_result_hi (next LIMB))
