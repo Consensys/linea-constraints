@@ -247,7 +247,7 @@
                         (eq! TRIVIAL_PAIRING 1))))
 
 (defconstraint conditional-index-constancy ()
-  (if-zero IS_ECPAIRING_RESULT
+  (if-not-zero IS_ECPAIRING_RESULT
            (counter-constancy INDEX TRIVIAL_PAIRING)))
 
 (defconstraint transition-large-to-small ()
