@@ -741,7 +741,7 @@
 (defconstraint ecpairing-circuit-selector ()
   (begin 
     (if-not-zero IS_ECPAIRING_DATA (eq! CS_ECPAIRING ACCPC))
-    (if-not-zero IS_ECPAIRING_RESULT (eq! CS_ECPAIRING (* SUCCESS_BIT TRIVIAL_PAIRING)))
+    (if-not-zero IS_ECPAIRING_RESULT (eq! CS_ECPAIRING (* SUCCESS_BIT (- 1 TRIVIAL_PAIRING))))
     (if-zero (is_ecpairing) (vanishes! CS_ECPAIRING))
   )
 )
