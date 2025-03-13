@@ -92,9 +92,10 @@
          (counter-constancy CT G2MTR)
          (counter-constancy CT NOT_ON_G2)
          (counter-constancy CT NOT_ON_G2_ACC)
-         (counter-constancy INDEX PHASE) ;; NOTE: PHASE, NOT_ON_G2_ACC_MAX, INDEX_MAX are said to be index-constant
+         (counter-constancy INDEX PHASE) ;; NOTE: PHASE, NOT_ON_G2_ACC_MAX, INDEX_MAX, TRIVIAL_PAIRING (when IS_ECPAIRING_RESULT = 1) are said to be index-constant
          (counter-constancy INDEX NOT_ON_G2_ACC_MAX)
-         (counter-constancy INDEX INDEX_MAX)))
+         (counter-constancy INDEX INDEX_MAX)
+         (if-not-zero IS_ECPAIRING_RESULT (counter-constancy INDEX TRIVIAL_PAIRING))))
 
 (defconstraint pair-of-points-constancy ()
   (if-not-zero ACC_PAIRINGS
@@ -238,7 +239,7 @@
 ;;                                  ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defconstraint set-trivial-pairing-outside-ecpairing-data ()
-  (if-zero IS_ECPAIRING_DATA
+  (if-zero (is_ecpairing)
            (vanishes! TRIVIAL_PAIRING)))
 
 ;; the constraint below is equivalent:
@@ -252,6 +253,10 @@
 
 (defconstraint transition-large-to-small ()
   (if-not-zero (transition_from_large_to_small)
+               (will-remain-constant! TRIVIAL_PAIRING)))
+
+(defconstraint transition-to-result ()
+  (if-not-zero (transition_to_result)
                (will-remain-constant! TRIVIAL_PAIRING)))
 
 (defconstraint transition-small-to-large ()
@@ -735,7 +740,12 @@
   (eq! CS_ECMUL (* ICP (is_ecmul))))
 
 (defconstraint ecpairing-circuit-selector ()
-  (eq! CS_ECPAIRING ACCPC))
+  (begin 
+    (if-not-zero IS_ECPAIRING_DATA (eq! CS_ECPAIRING ACCPC))
+    (if-not-zero IS_ECPAIRING_RESULT (eq! CS_ECPAIRING (* SUCCESS_BIT TRIVIAL_PAIRING)))
+    (if-zero (is_ecpairing) (vanishes! CS_ECPAIRING))
+  )
+)
 
 (defconstraint g2-membership-circuit-selector ()
   (eq! CS_G2_MEMBERSHIP G2MTR))
