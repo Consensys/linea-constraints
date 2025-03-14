@@ -230,7 +230,7 @@
 (defconstraint set-accpc ()
   (if-not-zero ACCPC
                (begin (eq! SUCCESS_BIT 1)
-                      (eq! (is_ecpairing) 1))))
+                      (eq! IS_ECPAIRING_DATA 1))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                  ;;
