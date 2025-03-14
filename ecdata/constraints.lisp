@@ -19,19 +19,19 @@
 ;;    decoding and shorthands     ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun (is_ecrecover)
-  (+ IS_ECRECOVER_DATA IS_ECRECOVER_RESULT))
+  (force-bool (+ IS_ECRECOVER_DATA IS_ECRECOVER_RESULT)))
 
 (defun (is_ecadd)
-  (+ IS_ECADD_DATA IS_ECADD_RESULT))
+  (force-bool (+ IS_ECADD_DATA IS_ECADD_RESULT)))
 
 (defun (is_ecmul)
-  (+ IS_ECMUL_DATA IS_ECMUL_RESULT))
+  (force-bool (+ IS_ECMUL_DATA IS_ECMUL_RESULT)))
 
 (defun (is_ecpairing)
-  (+ IS_ECPAIRING_DATA IS_ECPAIRING_RESULT))
+  (force-bool (+ IS_ECPAIRING_DATA IS_ECPAIRING_RESULT)))
 
 (defun (flag_sum)
-  (+ (is_ecrecover) (is_ecadd) (is_ecmul) (is_ecpairing)))
+  (force-bool (+ (is_ecrecover) (is_ecadd) (is_ecmul) (is_ecpairing))))
 
 (defun (address_sum)
   (+ (* ECRECOVER (is_ecrecover))
@@ -50,19 +50,19 @@
      (* PHASE_ECPAIRING_RESULT IS_ECPAIRING_RESULT)))
 
 (defun (is_data)
-  (+ IS_ECRECOVER_DATA IS_ECADD_DATA IS_ECMUL_DATA IS_ECPAIRING_DATA))
+  (force-bool (+ IS_ECRECOVER_DATA IS_ECADD_DATA IS_ECMUL_DATA IS_ECPAIRING_DATA)))
 
 (defun (is_result)
-  (+ IS_ECRECOVER_RESULT IS_ECADD_RESULT IS_ECMUL_RESULT IS_ECPAIRING_RESULT))
+  (force-bool (+ IS_ECRECOVER_RESULT IS_ECADD_RESULT IS_ECMUL_RESULT IS_ECPAIRING_RESULT)))
 
 (defun (transition_to_data)
-  (* (- 1 (is_data)) (next (is_data))))
+  (force-bool (* (- 1 (is_data)) (next (is_data)))))
 
 (defun (transition_to_result)
-  (* (- 1 (is_result)) (next (is_result))))
+  (force-bool (* (- 1 (is_result)) (next (is_result)))))
 
 (defun (transition_bit)
-  (+ (transition_to_data) (transition_to_result)))
+  (force-bool (+ (transition_to_data) (transition_to_result))))
 
 (defconstraint padding ()
   (if-zero STAMP
