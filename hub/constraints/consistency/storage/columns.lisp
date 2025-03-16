@@ -27,7 +27,11 @@
     scp_WARMTH
     scp_WARMTH_NEW
     scp_DEPLOYMENT_NUMBER
-
+    ;;
+    scp_PREWARMING_OPERATION
+    scp_SLOAD_OPERATION
+    scp_SSTORE_OPERATION
+    scp_EXCEPTIONAL_OPERATION
   )
   ;; original columns
   ;;;;;;;;;;;;;;;;;;;
@@ -53,6 +57,10 @@
     storage/WARMTH
     storage/WARMTH_NEW
     storage/DEPLOYMENT_NUMBER
+    ;;
+    TX_WARM
+    storage/SLOAD_OPERATION
+    storage/SSTORE_OPERATION
+    XAHOY
     )
   )
-
