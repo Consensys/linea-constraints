@@ -30,18 +30,18 @@
 
 (defconstraint heartbeat (:guard STAMP)
   (begin  
-         (if-not-zero (- TRM_CT_MAX CT)
-                      (begin
-                      (will-remain-constant! STAMP)
-                      (will-inc! CT 1)))
          (if-zero (- TRM_CT_MAX CT)
+         ;; CT = CT MAX
                       (begin
                       (will-inc! STAMP 1)
-                      (vanishes! (next CT))))))
+                      (vanishes! (next CT)))
+        ;; CT != CT MAX
+                      (begin
+                      (will-remain-constant! STAMP)
+                      (will-inc! CT 1)))))
 
-(defconstraint last-row (:domain {-1})
-  (if-not-zero STAMP
-               (eq! CT TRM_CT_MAX)))
+(defconstraint last-row (:domain {-1} :guard STAMP)
+               (eq! CT TRM_CT_MAX))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                          ;;
@@ -72,7 +72,7 @@
 
 (defconstraint address-is-twenty-bytes (:guard FIRST)
   (begin 
-  (wcpcall-leq ROW_OFFSET_ADDRESS 0 TRM_ADDRESS_HI RAW_ADDRESS_LO TWOFIFTYSIX_TO_THE_FOUR 0)
+  (wcpcall-leq ROW_OFFSET_ADDRESS TRM_ADDRESS_HI RAW_ADDRESS_LO TWOFIFTYSIX_TO_THE_FOUR 0)
   (result-is-true ROW_OFFSET_ADDRESS)))
 
 (defconstraint leading-bytes-is-twelve-bytes (:guard FIRST)
