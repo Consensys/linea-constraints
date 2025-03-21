@@ -58,8 +58,8 @@
 ;;    2.4 setting WCP calls   ;;
 ;;                            ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defun (wcpcall-leq offset arg1hi arg1lo arg2hi arg2lo)
-(begin (eq! (shift INST offset) WCP_INST_LEQ)
+(defun (wcpcall offset inst arg1hi arg1lo arg2hi arg2lo)
+(begin (eq! (shift INST offset) inst)
        (eq! (shift ARG_1_HI offset) arg1hi)
        (eq! (shift ARG_1_LO offset) arg1lo)
        (eq! (shift ARG_2_HI offset) arg2hi)
@@ -70,7 +70,7 @@
 
 (defconstraint address-is-twenty-bytes (:guard FIRST)
   (begin 
-  (wcpcall-leq ROW_OFFSET_ADDRESS TRM_ADDRESS_HI RAW_ADDRESS_LO TWOFIFTYSIX_TO_THE_FOUR 0)
+  (wcpcall ROW_OFFSET_ADDRESS EVM_INST_LT TRM_ADDRESS_HI RAW_ADDRESS_LO TWOFIFTYSIX_TO_THE_FIVE 0)
   (result-is-true ROW_OFFSET_ADDRESS)))
 
 (defconstraint leading-bytes-is-twelve-bytes (:guard FIRST)
@@ -89,7 +89,7 @@
   ))
 
 (defconstraint address-is-prc-range (:guard FIRST)
-(wcpcall-leq ROW_OFFSET_PRC_ADDR TRM_ADDRESS_HI RAW_ADDRESS_LO 0 NUMBER_OF_PRECOMPILES))
+(wcpcall ROW_OFFSET_PRC_ADDR WCP_INST_LEQ TRM_ADDRESS_HI RAW_ADDRESS_LO 0 NUMBER_OF_PRECOMPILES))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                            ;;

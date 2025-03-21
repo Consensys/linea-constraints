@@ -259,10 +259,12 @@
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   TWOFIFTYSIX_TO_THE_FOUR                   (^ 256 4)
   TWOFIFTYSIX_TO_THE_FOUR_MO                (- TWOFIFTYSIX_TO_THE_FOUR 1)
+  TWOFIFTYSIX_TO_THE_FIVE                   (^ 256 5)
   TWOFIFTYSIX_TO_THE_TWELVE                 (^ 256 12)
   TWOFIFTYSIX_TO_THE_TWELVE_MO              (- TWOFIFTYSIX_TO_THE_TWELVE 1)
   TWOFIFTYSIX_TO_THE_TWENTY                 (^ 256 20)
   TWOFIFTYSIX_TO_THE_TWENTY_MO              (- TWOFIFTYSIX_TO_THE_TWENTY 1)
+  TWOFIFTYSIX_TO_THE_TWENTY_ONE             (^ 256 21)
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;               ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; PRECOMPILES   ;;
