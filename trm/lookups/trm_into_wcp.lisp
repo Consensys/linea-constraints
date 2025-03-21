@@ -11,10 +11,10 @@
   )
   ; source columns
   (
-    trm.ARGUMENT_1_HI
-    trm.ARGUMENT_1_LO
-    trm.ARGUMENT_2_HI
-    trm.ARGUMENT_2_LO
+    trm.ARG_1_HI
+    trm.ARG_1_LO
+    trm.ARG_2_HI
+    trm.ARG_2_LO
     trm.RESULT
     trm.INST
   ))
