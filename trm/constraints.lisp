@@ -20,9 +20,7 @@
                   (vanishes! TRM_ADDRESS_HI)
                   (vanishes! IS_PRECOMPILE)
                   (vanishes! (next CT))
-                  (debug (vanishes! CT))
-                  (debug (vanishes! BYTE_HI))
-                  (debug (vanishes! BYTE_LO)))))
+                  (debug (vanishes! CT)))))
 
 (defconstraint setting-first ()
   (eq! FIRST
@@ -101,7 +99,7 @@
 (defconstraint setting-precompile (:guard FIRST)
  (eq! IS_PRECOMPILE
       (* (shift RES ROW_OFFSET_PRC_ADDR)
-         (- 1 (shift RES ROW_OFFSET_NON_ZERA_ADDR)))))
+         (- 1 (shift RES ROW_OFFSET_NON_ZERO_ADDR)))))
 
 (defun (leading-byte) 
   (shift ARG_1_LO ROW_OFFSET_ADDRESS_TRM))

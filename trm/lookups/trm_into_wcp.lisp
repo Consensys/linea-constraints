@@ -15,6 +15,6 @@
     trm.ARG_1_LO
     trm.ARG_2_HI
     trm.ARG_2_LO
-    trm.RESULT
+    trm.RES
     trm.INST
   ))
