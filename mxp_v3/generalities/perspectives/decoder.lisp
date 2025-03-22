@@ -1,15 +1,5 @@
 (module mxp_v3)
 
-(defconst
-  ROW_OFFSET___DECDR_TO_MACRO   1
-  ROW_OFFSET___DECDR_TO_SCNRI   2
-  ROW_OFFSET___MACRO_TO_SCNRI   1
-  ;;
-  ROW_OFFSET___MACRO_TO_DECDR   ROW_OFFSET___DECDR_TO_MACRO
-  ROW_OFFSET___SCNRI_TO_DECDR   ROW_OFFSET___DECDR_TO_SCNRI
-  ROW_OFFSET___SCNRI_TO_MACRO   ROW_OFFSET___MACRO_TO_SCNRI
-  )
-
 (defconstraint  generalies---perspectives---decoder---MSIZE-vanishings   (:guard DECODER)
 		(if-not-zero   decoder/IS_MSIZE
 			       (begin
