@@ -1,7 +1,7 @@
 (module mxp_v3)
 
 
-(defconstraint  computation---MSIZE-scenario---setting-macro/RES
+(defconstraint  computation---MSIZE-scenario---setting-macro-RES
 		(:guard (mxp-guard---msize))
 		(begin
 		  (eq!        (shift  macro/RES   NEGATIVE_ROW_OFFSET___SCNRI_TO_MACRO)  scenario/WORDS)
