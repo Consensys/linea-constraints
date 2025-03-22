@@ -7,27 +7,27 @@
 	))
 
 (defun  (mxp-scenario-shorthand---no-state-update)
-  (+    MSIZE
-	TRIVIAL
-	MXPX
-	;; STATE_UPDATE_WORD_PRICING
-	;; STATE_UPDATE_BYTE_PRICING
+  (+    scenario/MSIZE
+	scenario/TRIVIAL
+	scenario/MXPX
+	;; scenario/STATE_UPDATE_WORD_PRICING
+	;; scenario/STATE_UPDATE_BYTE_PRICING
 	))
 
 (defun  (mxp-scenario-shorthand---state-update)
-  (+    ;; MSIZE
-        ;; TRIVIAL
-        ;; MXPX
-        STATE_UPDATE_WORD_PRICING
-        STATE_UPDATE_BYTE_PRICING
+  (+    ;; scenario/MSIZE
+        ;; scenario/TRIVIAL
+        ;; scenario/MXPX
+        scenario/STATE_UPDATE_WORD_PRICING
+        scenario/STATE_UPDATE_BYTE_PRICING
         ))
 
 (defun  (mxp-scenario-shorthand---not-msize-nor-trivial)
   (+    (mxp-scenario-shorthand---state-update)
-	MXPX
+	scenario/MXPX
 	))
 
 (defun  (mxp-scenario-shorthand---not-msize)
   (+    (mxp-scenario-shorthand---not-msize-nor-trivial)
-	  TRIVIAL
-	  ))
+	scenario/TRIVIAL
+	))
