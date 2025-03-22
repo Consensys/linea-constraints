@@ -78,3 +78,18 @@
 
 (defun   (mxp-shorthand---single-offset-instruction)   (shift   decoder/IS_SINGLE_MAX_OFFSET   NEGATIVE_ROW_OFFSET___SCNRI_TO_DECDR))
 (defun   (mxp-shorthand---double-offset-instruction)   (shift   decoder/IS_DOUBLE_MAX_OFFSET   NEGATIVE_ROW_OFFSET___SCNRI_TO_DECDR))
+(defun   (mxp-shorthand---word-pricing-instruction)    (shift   decoder/IS_WORD_PRICING        NEGATIVE_ROW_OFFSET___SCNRI_TO_DECDR))
+(defun   (mxp-shorthand---byte-pricing-instruction)    (shift   decoder/IS_BYTE_PRICING        NEGATIVE_ROW_OFFSET___SCNRI_TO_DECDR))
+
+
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; ;;                             ;;
+;; ;;   Scenario-row shorthands   ;;
+;; ;;                             ;;
+;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;;
+;; (defun   (mxp-shorthand---words)       scenario/WORDS     )
+;; (defun   (mxp-shorthand---words-new)   scenario/WORDS_NEW )
+;; (defun   (mxp-shorthand---c_mem)       scenario/C_MEM     )
+;; (defun   (mxp-shorthand---c_mem-new)   scenario/C_MEM_NEW )
