@@ -8,13 +8,13 @@
 (defconstraint  computations---generalities---setting-MSIZE-scenario-flag
 		(:guard    SCENARIO)
 		(eq!   scenario/MSIZE
-		       (shift   decoder/IS_MSIZE    (- 0 ROW_OFFSET___SCNRI_TO_DECDR))))
+		       (shift   decoder/IS_MSIZE    NEGATIVE_ROW_OFFSET___SCNRI_TO_DECDR)))
 
 
 (defconstraint  computations---generalities---setting-MXPX-scenario-flag
 		(:guard    SCENARIO)
 		(eq!   scenario/MXPX
-		       (shift   macro/MXPX    (- 0 ROW_OFFSET___SCNRI_TO_MACRO))))
+		       (shift   macro/MXPX    NEGATIVE_ROW_OFFSET___SCNRI_TO_MACRO)))
 
 (defconstraint  computations---generalities---no-state-update-scenario-enforces-no-state-update
 		(:guard    SCENARIO)
@@ -27,5 +27,5 @@
 (defconstraint  computations---generalities---no-state-update-scenario-enforces-zero-GAS_MXP
 		(:guard    SCENARIO)
 		(if-not-zero    (mxp-scenario-shorthand---no-state-update)
-				(vanishes!   (shift   macro/GAS_MXPX    (- 0 ROW_OFFSET___SCNRI_TO_MACRO)))
+				(vanishes!   (shift   macro/GAS_MXPX    NEGATIVE_ROW_OFFSET___SCNRI_TO_MACRO))
 				))
