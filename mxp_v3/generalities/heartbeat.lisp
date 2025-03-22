@@ -28,7 +28,7 @@
 (defun   (mxp-stamp-increment)   (*  (-  1  DECODER)   (next   DECODER)))
 
 (defconstraint  generalities---heartbeat---MXP-stamp-increments   ()
-		(eq!   (will-inc!   MXP_STAMP   (mxp-stamp-increment))))
+		(will-inc!   MXP_STAMP   (mxp-stamp-increment)))
 
 (defconstraint  generalities---heartbeat---automatic-vanishing-during-padding ()
 		(if-zero   (force-bool (mxp-perspective-sum))

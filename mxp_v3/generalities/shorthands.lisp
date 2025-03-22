@@ -13,11 +13,11 @@
 	(*   4   CMPTN )))
 
 (defun  (mxp-ct-max-sum)
-  (+    (*   CT_MAX_MSIZE    MSIZE                     )
-	(*   CT_MAX_TRIV     TRIVIAL                   )
-	(*   CT_MAX_MXPX     MXPX                      )
-	(*   CT_MAX_UPDT_W   STATE_UPDATE_WORD_PRICING )
-	(*   CT_MAX_UPDT_B   STATE_UPDATE_BYTE_PRICING )
+  (+    (*   CT_MAX_MSIZE    scenario/MSIZE                     )
+	(*   CT_MAX_TRIV     scenario/TRIVIAL                   )
+	(*   CT_MAX_MXPX     scenario/MXPX                      )
+	(*   CT_MAX_UPDT_W   scenario/STATE_UPDATE_WORD_PRICING )
+	(*   CT_MAX_UPDT_B   scenario/STATE_UPDATE_BYTE_PRICING )
 	))
 
 
