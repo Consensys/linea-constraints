@@ -11,4 +11,3 @@
 (defconstraint  computation---MSIZE-scenario---both-module-lookup-flags-are-off
 		(:guard (mxp-guard---msize))
 		(vanishes!   (shift  (+   computation/WCP_FLAG   computation/EUC_FLAG)   1)))
-
