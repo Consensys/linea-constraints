@@ -17,7 +17,7 @@
   ROW_OFFSET___FLOOR_OF_MAX_OFFSET_OVER_32      8
   ROW_OFFSET___FLOOR_OF_SQUARE_OVER_512         9
   ROW_OFFSET___COMPARISON_OF_WORDS_AND_EYP_A   10
-  ROW_OFFSET___CEILING_OF_SIZE_OVER_512        11
+  ROW_OFFSET___CEILING_OF_SIZE_OVER_32         11
   )
 
 
@@ -80,6 +80,7 @@
 (defun   (mxp-shorthand---double-offset-instruction)   (shift   decoder/IS_DOUBLE_MAX_OFFSET   NEGATIVE_ROW_OFFSET___SCNRI_TO_DECDR))
 (defun   (mxp-shorthand---word-pricing-instruction)    (shift   decoder/IS_WORD_PRICING        NEGATIVE_ROW_OFFSET___SCNRI_TO_DECDR))
 (defun   (mxp-shorthand---byte-pricing-instruction)    (shift   decoder/IS_BYTE_PRICING        NEGATIVE_ROW_OFFSET___SCNRI_TO_DECDR))
+(defun   (mxp-shorthand---byte-price)                  (shift   decoder/G_BYTE                 NEGATIVE_ROW_OFFSET___SCNRI_TO_DECDR))
 
 
 ;; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
