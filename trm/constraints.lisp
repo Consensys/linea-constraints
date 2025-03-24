@@ -90,7 +90,7 @@
 
 (defconstraint address-decomposition-constraint (:guard FIRST)
                (eq! RAW_ADDRESS_HI
-                    (+ (* TWOFIFTYSIX_TO_THE_FOUR (leading-byte))
+                    (+ (* TWOFIFTYSIX_TO_THE_FOUR (leading-bytes))
                        TRM_ADDRESS_HI)))
 
 (defconstraint iszero-check-for-address (:guard FIRST)
