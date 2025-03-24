@@ -31,7 +31,7 @@
                       (vanishes! (next CT)))
          (if-not-zero STAMP
                       (begin (or! (eq! INST EVM_INST_ADD) (eq! INST EVM_INST_SUB))
-                             (if (eq CT CT_MAX)
+                             (if-eq-else CT CT_MAX
                                  (will-inc! STAMP 1)
                                  (will-inc! CT 1))
                              (eq! (~ (* (- CT LLARGE) CT_MAX))

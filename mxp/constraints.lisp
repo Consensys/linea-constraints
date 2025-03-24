@@ -360,7 +360,7 @@
               (+ (* GBYTE SIZE_1_LO) (* GWORD ACC_W)))))
 
 (defconstraint setting-gas-mxp (:guard (* (standing-hypothesis) (offsets-are-in-bounds)))
-  (if (eq! INST EVM_INST_RETURN)
+  (if-eq-else INST EVM_INST_RETURN
       (eq! GAS_MXP
            (+ QUAD_COST (* DEPLOYS LIN_COST)))
       (eq! GAS_MXP (+ QUAD_COST LIN_COST))))

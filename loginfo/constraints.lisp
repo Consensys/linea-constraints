@@ -37,7 +37,7 @@
                   (begin (did-inc! ABS_LOG_NUM 1)
                          (eq! CT_MAX
                               (+ 1 (- INST EVM_INST_LOG0)))))
-         (if (eq! CT CT_MAX)
+         (if-eq-else CT CT_MAX
              ;; CT == CT_MAX
              (begin (or! (will-inc! ABS_TXN_NUM 1) (will-inc! ABS_LOG_NUM 1))
                     (will-inc! ABS_LOG_NUM (next TXN_EMITS_LOGS)))
