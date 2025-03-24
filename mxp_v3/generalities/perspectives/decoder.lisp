@@ -14,7 +14,7 @@
 				 (vanishes!   (shift   macro/SIZE_2_LO         ROW_OFFSET___DECDR_TO_MACRO))
 				 (vanishes!   (shift   macro/S2NZNOMXPX        ROW_OFFSET___DECDR_TO_MACRO)) ;; end of 2nd parameter set
 				 (vanishes!   (shift   macro/MXPX              ROW_OFFSET___DECDR_TO_MACRO))
-				 (vanishes!   (shift   macro/GAS_MXPX          ROW_OFFSET___DECDR_TO_MACRO))
+				 (vanishes!   (shift   macro/GAS_MXP           ROW_OFFSET___DECDR_TO_MACRO))
 				 (vanishes!   (shift   macro/MAY_TRIGGER_MMU   ROW_OFFSET___DECDR_TO_MACRO))
 				 )))
 

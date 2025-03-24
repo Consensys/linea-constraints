@@ -19,5 +19,5 @@
 (defconstraint  computations---state-update---byte-pricing---justifying-the-memory-expansion-gas
 		(:guard   (mxp-guard---state-update-word-pricing))
 		(eq!      (shift  macro/GAS_MXP  NEGATIVE_ROW_OFFSET___SCNRI_TO_MACRO)
-			  (+  (-  C_MEM_NEW  C_MEM)
+			  (+  (-  scenario/C_MEM_NEW  scenario/C_MEM)
 			      (mxp-shorthand---extra-byte-cost))))
