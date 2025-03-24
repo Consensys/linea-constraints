@@ -27,7 +27,7 @@
                                                       (will-inc! STAMP 1)
                                                       (begin (will-inc! CT 1)
                                                              (vanishes! (next OLI)))))
-                             (vanishes! (* (- INST EVM_INST_MULMOD) (- INST EVM_INST_ADDMOD)))))))
+                             (or! (- INST EVM_INST_MULMOD) (- INST EVM_INST_ADDMOD))))))
 
 (defconstraint last-row (:domain {-1} :guard STAMP)
   (if-zero OLI

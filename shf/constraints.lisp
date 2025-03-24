@@ -11,7 +11,7 @@
 
 ;; 2.1.2
 (defconstraint    stamp-increments ()
-                  (vanishes! (* (will-inc! STAMP 0) (will-inc! STAMP 1))))
+                  (or! (will-inc! STAMP 0) (will-inc! STAMP 1)))
 
 ;; 2.1.3 and 4
 (defconstraint    zero-row ()
@@ -28,9 +28,9 @@
 (defconstraint    INST-inside-and-outside-of-padding ()
                   (if-zero    IOMF
                               (vanishes!    INST)
-                              (vanishes!    (*    (-    INST    EVM_INST_SHL)
-                                                  (-    INST    EVM_INST_SHR)
-                                                  (-    INST    EVM_INST_SAR)))))
+                              (or!    (-    INST    EVM_INST_SHL)
+                                      (-    INST    EVM_INST_SHR)
+                                      (-    INST    EVM_INST_SAR))))
 
 ;; 2.1.7
 (defconstraint    heartbeat ()

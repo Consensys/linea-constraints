@@ -263,8 +263,8 @@
 (defconstraint offsets-out-of-bounds (:guard (standing-hypothesis))
   (if-eq MXPX 1
          (if-eq CT CT_MAX_NON_TRIVIAL_BUT_MXPX
-                (vanishes! (* (- (- MAX_OFFSET_1 TWO_POW_32) [ACC 1])
-                              (- (- MAX_OFFSET_2 TWO_POW_32) [ACC 2]))))))
+                (or! (- (- MAX_OFFSET_1 TWO_POW_32) [ACC 1])
+                     (- (- MAX_OFFSET_2 TWO_POW_32) [ACC 2])))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                ;;
@@ -341,8 +341,8 @@
               (+ (* 512 (large-quotient))
                  (+ (* 256 (prev BYTE_QQ))
                     BYTE_QQ)))
-         (vanishes! (* (prev BYTE_QQ)
-                       (- 1 (prev BYTE_QQ))))))
+         (or! (prev BYTE_QQ)
+              (- 1 (prev BYTE_QQ)))))
 
 (defconstraint setting-c-mem-new (:guard (* (standing-hypothesis) (expansion-happened)))
   (eq! C_MEM_NEW

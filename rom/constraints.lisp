@@ -156,7 +156,7 @@
                   (eq! OPCODE PBCB))))
 
 (defconstraint ispush-ispushdata-exclusivity ()
-  (vanishes! (* IS_PUSH IS_PUSH_DATA)))
+  (or! IS_PUSH IS_PUSH_DATA))
 
 (defconstraint ispush-implies-next-pushdata ()
   (if-not-zero IS_PUSH (eq! (next IS_PUSH_DATA) 1)))

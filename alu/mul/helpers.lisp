@@ -67,6 +67,5 @@
                                 (vanishes! sumx)))
                         (if-not-zero (- ct MMEDIUMMO)
                             (begin
-                             (vanishes! (* (will-remain-constant! x)
-                                          (will-inc! x 1)))
+                             (or! (will-remain-constant! x) (will-inc! x 1))
                              (will-eq! sumx (+ sumx (next x)))))))

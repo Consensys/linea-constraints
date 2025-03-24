@@ -18,7 +18,7 @@
                   (vanishes! INDEX))))
 
 (defconstraint number-increments ()
-  (vanishes! (* (remained-constant! ABS_LOG_NUM) (did-inc! ABS_LOG_NUM 1))))
+  (or! (remained-constant! ABS_LOG_NUM) (did-inc! ABS_LOG_NUM 1)))
 
 (defconstraint index-reset ()
   (if-not-zero (remained-constant! ABS_LOG_NUM)

@@ -16,7 +16,7 @@
   (vanishes! STAMP))
 
 (defconstraint stamp-update ()
-  (vanishes! (* (will-inc! STAMP 1) (will-remain-constant! STAMP))))
+  (or! (will-inc! STAMP 1) (will-remain-constant! STAMP)))
 
 (defconstraint vanishing ()
   (if-zero STAMP
@@ -35,7 +35,7 @@
 
 (defconstraint instruction-constraining ()
   (if-not-zero STAMP
-               (vanishes! (* (- INST EVM_INST_MUL) (- INST EVM_INST_EXP)))))
+               (or! (- INST EVM_INST_MUL) (- INST EVM_INST_EXP))))
 
 (defconstraint reset-stuff ()
   (if-not-zero (will-remain-constant! STAMP)
