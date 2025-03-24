@@ -98,8 +98,8 @@
 (defconstraint noop-consequences (:guard NOOP)
   (begin (vanishes! QUAD_COST)
          (vanishes! LIN_COST)
-         (= WORDS_NEW WORDS)
-         (= C_MEM_NEW C_MEM)))
+         (eq! WORDS_NEW WORDS)
+         (eq! C_MEM_NEW C_MEM)))
 
 ;;;;;;;;;;;;;;;;;;;;
 ;;                ;;

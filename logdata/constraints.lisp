@@ -34,7 +34,7 @@
 
 (defconstraint log-logs-data (:guard LOGS_DATA)
   (begin (if-not-zero (remained-constant! ABS_LOG_NUM)
-                      (= SIZE_ACC SIZE_LIMB))
+                      (eq! SIZE_ACC SIZE_LIMB))
          (if-not-zero (did-inc! ABS_LOG_NUM 1)
                       (begin (eq! SIZE_ACC
                                   (+ (prev SIZE_ACC) SIZE_LIMB))

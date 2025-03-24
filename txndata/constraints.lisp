@@ -177,20 +177,20 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defun (setting_phase_numbers)
-  (begin (= (shift PHASE_RLP_TXN 0) COMMON_RLP_TXN_PHASE_NUMBER_0)
-         (= (shift PHASE_RLP_TXN 1) COMMON_RLP_TXN_PHASE_NUMBER_1)
-         (= (shift PHASE_RLP_TXN 2) COMMON_RLP_TXN_PHASE_NUMBER_2)
-         (= (shift PHASE_RLP_TXN 3) COMMON_RLP_TXN_PHASE_NUMBER_3)
-         (= (shift PHASE_RLP_TXN 4) COMMON_RLP_TXN_PHASE_NUMBER_4)
-         (= (shift PHASE_RLP_TXN 5) COMMON_RLP_TXN_PHASE_NUMBER_5)
+  (begin (eq! (shift PHASE_RLP_TXN 0) COMMON_RLP_TXN_PHASE_NUMBER_0)
+         (eq! (shift PHASE_RLP_TXN 1) COMMON_RLP_TXN_PHASE_NUMBER_1)
+         (eq! (shift PHASE_RLP_TXN 2) COMMON_RLP_TXN_PHASE_NUMBER_2)
+         (eq! (shift PHASE_RLP_TXN 3) COMMON_RLP_TXN_PHASE_NUMBER_3)
+         (eq! (shift PHASE_RLP_TXN 4) COMMON_RLP_TXN_PHASE_NUMBER_4)
+         (eq! (shift PHASE_RLP_TXN 5) COMMON_RLP_TXN_PHASE_NUMBER_5)
          ;;
-         (if-not-zero TYPE0 (= (shift PHASE_RLP_TXN 6) TYPE_0_RLP_TXN_PHASE_NUMBER_6))
+         (if-not-zero TYPE0 (eq! (shift PHASE_RLP_TXN 6) TYPE_0_RLP_TXN_PHASE_NUMBER_6))
          ;;
-         (if-not-zero TYPE1 (= (shift PHASE_RLP_TXN 6) TYPE_1_RLP_TXN_PHASE_NUMBER_6))
-         (if-not-zero TYPE1 (= (shift PHASE_RLP_TXN 7) TYPE_1_RLP_TXN_PHASE_NUMBER_7))
+         (if-not-zero TYPE1 (eq! (shift PHASE_RLP_TXN 6) TYPE_1_RLP_TXN_PHASE_NUMBER_6))
+         (if-not-zero TYPE1 (eq! (shift PHASE_RLP_TXN 7) TYPE_1_RLP_TXN_PHASE_NUMBER_7))
          ;;
-         (if-not-zero TYPE2 (= (shift PHASE_RLP_TXN 6) TYPE_2_RLP_TXN_PHASE_NUMBER_6))
-         (if-not-zero TYPE2 (= (shift PHASE_RLP_TXN 7) TYPE_2_RLP_TXN_PHASE_NUMBER_7))))
+         (if-not-zero TYPE2 (eq! (shift PHASE_RLP_TXN 6) TYPE_2_RLP_TXN_PHASE_NUMBER_6))
+         (if-not-zero TYPE2 (eq! (shift PHASE_RLP_TXN 7) TYPE_2_RLP_TXN_PHASE_NUMBER_7))))
 
 (defun (data_transfer)
   (begin (eq! (tx_type)                       (+ TYPE1 (* 2 TYPE2))) ;;(+ (* 0 TYPE0) (* 1 TYPE1) (* 2 TYPE2))
