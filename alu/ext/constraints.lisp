@@ -13,7 +13,7 @@
   (vanishes! STAMP))
 
 (defconstraint heartbeat ()
-  (begin (* (will-remain-constant! STAMP) (will-inc! STAMP 1))
+  (begin (or! (will-remain-constant! STAMP) (will-inc! STAMP 1))
          (if-zero STAMP
                   (begin (vanishes! CT)
                          (vanishes! OLI)

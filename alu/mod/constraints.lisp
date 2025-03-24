@@ -141,7 +141,7 @@
   (vanishes! STAMP))
 
 (defconstraint heartbeat ()
-  (begin (* (will-remain-constant! STAMP) (will-inc! STAMP 1))
+  (begin (or! (will-remain-constant! STAMP) (will-inc! STAMP 1))
          (if-not-zero (will-remain-constant! STAMP)
                       (vanishes! (next CT)))
          (if-eq OLI 1 (will-inc! STAMP 1))
