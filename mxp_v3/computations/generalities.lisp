@@ -27,5 +27,5 @@
 (defconstraint  computations---generalities---no-state-update-scenario-enforces-zero-GAS_MXP
 		(:guard    SCENARIO)
 		(if-not-zero    (mxp-scenario-shorthand---no-state-update)
-				(vanishes!   (shift   macro/GAS_MXPX    NEGATIVE_ROW_OFFSET___SCNRI_TO_MACRO))
+				(vanishes!   (shift   macro/GAS_MXP   NEGATIVE_ROW_OFFSET___SCNRI_TO_MACRO))
 				))
