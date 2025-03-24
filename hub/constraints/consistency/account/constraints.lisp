@@ -225,7 +225,7 @@
 (defconstraint    account-consistency---other---monotony-of-deployment-number
                   (:guard    acp_PEEK_AT_ACCOUNT)
                   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-                  (any!    (eq!   acp_DEPLOYMENT_NUMBER_NEW    acp_DEPLOYMENT_NUMBER)
+                  (or!    (eq!   acp_DEPLOYMENT_NUMBER_NEW    acp_DEPLOYMENT_NUMBER)
                            (eq!   acp_DEPLOYMENT_NUMBER_NEW    (+    1    acp_DEPLOYMENT_NUMBER))))
 
 

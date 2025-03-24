@@ -50,7 +50,7 @@
   (vanishes! STAMP))
 
 (defconstraint stamp-increments ()
-  (vanishes! (any! (will-inc! STAMP 1) (will-remain-constant! STAMP))))
+  (vanishes! (or! (will-inc! STAMP 1) (will-remain-constant! STAMP))))
 
 (defconstraint initial-vanishings ()
   (if-zero STAMP

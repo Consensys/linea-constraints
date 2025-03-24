@@ -12,7 +12,7 @@
 
 ;; constraint imposing that STAMP[i + 1] ∈ { STAMP[i], 1 + STAMP[i] }
 (defpurefun (stamp-progression STAMP)
-            (vanishes! (any! (will-remain-constant! STAMP) (will-inc! STAMP 1))))
+            (vanishes! (or! (will-remain-constant! STAMP) (will-inc! STAMP 1))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                     ;;

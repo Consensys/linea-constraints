@@ -176,7 +176,7 @@
                   (vanishes! (+ (lookup-sum 0) (flag-sum))))))
 
 (defconstraint stamp-increments ()
-  (any! (remained-constant! STAMP) (did-inc! STAMP 1)))
+  (or! (remained-constant! STAMP) (did-inc! STAMP 1)))
 
 (defconstraint counter-reset ()
   (if-not-zero (remained-constant! STAMP)

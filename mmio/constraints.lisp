@@ -78,7 +78,7 @@
   (vanishes! MMIO_STAMP))
 
 (defconstraint stamp-increment ()
-  (any! (will-remain-constant! STAMP) (will-inc! STAMP 1)))
+  (or! (will-remain-constant! STAMP) (will-inc! STAMP 1)))
 
 (defconstraint stamp-reset-ct ()
   (if-not-zero (- STAMP (prev STAMP))

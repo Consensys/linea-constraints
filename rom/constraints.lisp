@@ -124,7 +124,7 @@
                (vanishes! INDEX)))
 
 (defconstraint new-ct-increment-index ()
-  (if-not-zero (any! CFI
+  (if-not-zero (or! CFI
                      (did-inc! CFI 1)
                      (- 1 (~ CT)))
                (did-inc! INDEX 1)))

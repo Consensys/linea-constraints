@@ -31,7 +31,7 @@
 (defconstraint    stack-consistency---first-and-repeat-encounter-of-context ()
                   (begin
                     (if-not-zero    stkcp_FIRST_CTXT    (vanishes!   stkcp_HEIGHT_1234))
-                    (if-not-zero    stkcp_AGAIN_CTXT    (any!        (remained-constant!    stkcp_HEIGHT_1234)
+                    (if-not-zero    stkcp_AGAIN_CTXT    (or!        (remained-constant!    stkcp_HEIGHT_1234)
                                                                      (did-inc!    stkcp_HEIGHT_1234   1)))))
 
 

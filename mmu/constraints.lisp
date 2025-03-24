@@ -76,7 +76,7 @@
 (defun (stamp-decrementing X)
   (if-not-zero (- STAMP
                   (+ (prev STAMP) 1))
-               (any! (remained-constant! X) (did-dec! X 1))))
+               (or! (remained-constant! X) (did-dec! X 1))))
 
 (defconstraint stamp-decrementings ()
   (begin (stamp-decrementing TOT)

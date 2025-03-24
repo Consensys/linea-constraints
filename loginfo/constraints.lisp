@@ -22,8 +22,8 @@
                   (vanishes! CT))))
 
 (defconstraint number-increments ()
-  (begin (any! (will-remain-constant! ABS_TXN_NUM) (will-inc! ABS_TXN_NUM 1))
-         (any! (will-remain-constant! ABS_LOG_NUM) (will-inc! ABS_LOG_NUM 1))))
+  (begin (or! (will-remain-constant! ABS_TXN_NUM) (will-inc! ABS_TXN_NUM 1))
+         (or! (will-remain-constant! ABS_LOG_NUM) (will-inc! ABS_LOG_NUM 1))))
 
 (defconstraint no-logs-transaction (:guard ABS_TXN_NUM)
   (if-zero TXN_EMITS_LOGS
