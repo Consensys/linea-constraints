@@ -49,7 +49,9 @@ MMU :=  mmu
 
 MMIO := mmio 
 
-MXP := mxp_v3
+MXP := mxp
+
+MXP_v3 := mxp_v3
 
 OOB_LONDON := oob/london
 
