@@ -17,7 +17,7 @@
                  ( SIZE_2_LO       :i128   )
                  ( RES             :i32    )
                  ( MXPX            :binary )
-                 ( GAS_MXPX        :i64    )
+                 ( GAS_MXP         :i64    )
                  ( MAY_TRIGGER_MMU :binary )
                  ( S1NZNOMXPX      :binary )
                  ( S2NZNOMXPX      :binary )
