@@ -63,7 +63,7 @@
 
 (defconstraint address-is-twenty-bytes (:guard FIRST)
   (begin 
-  (wcpcall ROW_OFFSET_ADDRESS EVM_INST_LT TRM_ADDRESS_HI RAW_ADDRESS_LO TWOFIFTYSIX_TO_THE_FIVE 0)
+  (wcpcall ROW_OFFSET_ADDRESS EVM_INST_LT TRM_ADDRESS_HI RAW_ADDRESS_LO TWOFIFTYSIX_TO_THE_FOUR 0)
   (result-is-true ROW_OFFSET_ADDRESS)))
 
 (defconstraint leading-bytes-is-twelve-bytes (:guard FIRST)
