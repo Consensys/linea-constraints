@@ -7,14 +7,14 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 1
 (defconstraint first-row (:domain {0})
-  (vanishes! STAMP))
+  (vanishes! IOMF))
 
-(defconstraint stamp-increment ()
- (or! (will-remain-constant! STAMP) (will-inc! STAMP 1)))
+(defconstraint iomf-increment ()
+ (or! (will-remain-constant! IOMF) (will-inc! IOMF 1)))
 
 ;; 3
 (defconstraint null-stamp-null-columns ()
-  (if-zero STAMP
+  (if-zero IOMF
            (begin (vanishes! RAW_ADDRESS_HI)
                   (vanishes! RAW_ADDRESS_LO)
                   (vanishes! TRM_ADDRESS_HI)
@@ -22,23 +22,16 @@
                   (vanishes! (next CT))
                   (debug (vanishes! CT)))))
 
-(defconstraint setting-first ()
-  (eq! FIRST
-       (- STAMP (prev STAMP))))
-
-(defconstraint heartbeat (:guard STAMP)
+(defconstraint heartbeat (:guard IOMF)
   (begin  
-         (if-zero (- TRM_CT_MAX CT)
-         ;; CT = CT MAX
-                      (begin
-                      (will-inc! STAMP 1)
-                      (vanishes! (next CT)))
+        (if-zero CT (eq! FIRST 1))
+        (if-zero (- TRM_CT_MAX CT)
+        ;; CT = CT MAX
+                      (vanishes! (next CT))
         ;; CT != CT MAX
-                      (begin
-                      (will-remain-constant! STAMP)
-                      (will-inc! CT 1)))))
+                      (will-inc! CT 1))))
 
-(defconstraint last-row (:domain {-1} :guard STAMP)
+(defconstraint last-row (:domain {-1} :guard IOMF)
                (eq! CT TRM_CT_MAX))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -47,10 +40,10 @@
 ;;                          ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defconstraint stamp-constancies ()
-  (begin (stamp-constancy STAMP RAW_ADDRESS_HI)
-         (stamp-constancy STAMP RAW_ADDRESS_LO)
-         (stamp-constancy STAMP IS_PRECOMPILE)
-         (stamp-constancy STAMP TRM_ADDRESS_HI)))
+  (begin (counter-constancy CT RAW_ADDRESS_HI)
+         (counter-constancy CT RAW_ADDRESS_LO)
+         (counter-constancy CT IS_PRECOMPILE)
+         (counter-constancy CT TRM_ADDRESS_HI)))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -85,7 +78,7 @@
   (begin 
   (eq! (shift INST ROW_OFFSET_NON_ZERO_ADDR) EVM_INST_ISZERO)
   (eq! (shift ARG_1_HI ROW_OFFSET_NON_ZERO_ADDR) TRM_ADDRESS_HI)
-  (eq! (shift ARG_2_HI ROW_OFFSET_NON_ZERO_ADDR) RAW_ADDRESS_LO)
+  (eq! (shift ARG_1_LO ROW_OFFSET_NON_ZERO_ADDR) RAW_ADDRESS_LO)
   ))
 
 (defconstraint address-is-prc-range (:guard FIRST)
