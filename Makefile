@@ -41,7 +41,9 @@ MMU :=  mmu
 
 MMIO := mmio 
 
-MXP := mxp_v3
+MXP := mxp
+
+MXP_v3 := mxp_v3
 
 OOB := oob
 
@@ -106,7 +108,7 @@ zkevm.bin: ${ZKEVM_MODULES}
 
 # for debugging purposes
 
-DEBUGGING := ${CONSTANTS} ${WCP} ${EUC} ${MXP} ${TABLES}
+DEBUGGING := ${CONSTANTS} ${WCP} ${EUC} ${MXP_v3} ${TABLES}
 
 debug.bin: ${DEBUGGING}
 	${GO_CORSET_COMPILE} -o $@ ${DEBUGGING}
