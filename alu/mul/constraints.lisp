@@ -35,7 +35,7 @@
 
 (defconstraint instruction-constraining ()
   (if-not-zero STAMP
-               (or! (- INST EVM_INST_MUL) (- INST EVM_INST_EXP))))
+               (or! (eq! INST EVM_INST_MUL) (eq! INST EVM_INST_EXP))))
 
 (defconstraint reset-stuff ()
   (if-not-zero (will-remain-constant! STAMP)

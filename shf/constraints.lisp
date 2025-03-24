@@ -28,9 +28,9 @@
 (defconstraint    INST-inside-and-outside-of-padding ()
                   (if-zero    IOMF
                               (vanishes!    INST)
-                              (or!    (-    INST    EVM_INST_SHL)
-                                      (-    INST    EVM_INST_SHR)
-                                      (-    INST    EVM_INST_SAR))))
+                              (or!    (eq!    INST    EVM_INST_SHL)
+                                      (eq!    INST    EVM_INST_SHR)
+                                      (eq!    INST    EVM_INST_SAR))))
 
 ;; 2.1.7
 (defconstraint    heartbeat ()

@@ -8,7 +8,7 @@
   )
 
 (defconstraint exclusive-flags ()
-  (or! WCP_FLAG MOD_FLAG))
+  (or! (eq! WCP_FLAG 0) (eq! MOD_FLAG 0)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                         ;;

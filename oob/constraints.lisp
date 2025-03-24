@@ -696,7 +696,7 @@
   (call-to-ISZERO 2 0 (prc-modexp-xbs---xbs-lo)))
 
 (defconstraint additional-prc-modexp-xbs (:guard (* (assumption---fresh-new-stamp) (prc-modexp-xbs---standard-precondition)))
-  (begin (or! (prc-modexp-xbs---compute-max) (- 1 (prc-modexp-xbs---compute-max)))
+  (begin (or! (eq! 0 (prc-modexp-xbs---compute-max)) (eq! 1 (prc-modexp-xbs---compute-max)))
          (eq! (prc-modexp-xbs---compo-to_512) 1)))
 
 (defconstraint prc-modexp-xbs---justify-hub-predictions (:guard (* (assumption---fresh-new-stamp) (prc-modexp-xbs---standard-precondition)))

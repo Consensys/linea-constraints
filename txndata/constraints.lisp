@@ -224,7 +224,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defconstraint   euc-and-wcp-exclusivity ()
-                 (or! EUC_FLAG WCP_FLAG))
+                 (or! (eq! EUC_FLAG 0) (eq! WCP_FLAG 0)))
 
 (defun (small-call-to-LT row arg1 arg2)
   (begin (eq! (shift WCP_FLAG row) 1)

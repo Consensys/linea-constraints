@@ -120,9 +120,9 @@
                (vanishes! INDEX)))
 
 (defconstraint new-ct-increment-index ()
-  (if-not-zero (or! CFI
-                     (did-inc! CFI 1)
-                     (- 1 (~ CT)))
+  (if-not-zero (or! (eq! CFI 0)
+                    (did-inc! CFI 1)
+                    (neq! CT 0))
                (did-inc! INDEX 1)))
 
 (defconstraint index-inc-in-middle-padding ()
@@ -152,7 +152,7 @@
                   (eq! OPCODE PBCB))))
 
 (defconstraint ispush-ispushdata-exclusivity ()
-  (or! IS_PUSH IS_PUSH_DATA))
+  (or! (eq! IS_PUSH 0) (eq! IS_PUSH_DATA 0)))
 
 (defconstraint ispush-implies-next-pushdata ()
   (if-not-zero IS_PUSH (eq! (next IS_PUSH_DATA) 1)))

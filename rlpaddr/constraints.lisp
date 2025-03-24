@@ -23,8 +23,8 @@
                   (debug (vanishes! BIT1)))))
 
 (defconstraint stamp-increments ()
-  (or! (~ (- STAMP (prev STAMP)))
-       (~ (- STAMP (+ (prev STAMP) 1)))))
+  (or! (eq! STAMP (prev STAMP))
+       (eq! STAMP (+ (prev STAMP) 1))))
 
 (defconstraint ct-reset ()
   (if-not-zero (remained-constant! STAMP)
@@ -61,8 +61,8 @@
 
 (defpurefun (ct-incrementing ct X)
   (if-not-zero ct
-               (or! (~ (remained-constant! X))
-                    (~ (did-inc! X 1)))))
+               (or! (remained-constant! X)
+                    (did-inc! X 1))))
 
 (defconstraint ct-incrementings ()
   (begin (ct-incrementing ct INDEX)
