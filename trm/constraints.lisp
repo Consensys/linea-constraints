@@ -57,16 +57,24 @@
 ;;                       ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defun (wcpcall offset inst arg1hi arg1lo arg2hi arg2lo)
-(begin (eq! (shift INST offset) inst)
-       (eq! (shift ARG_1_HI offset) arg1hi)
-       (eq! (shift ARG_1_LO offset) arg1lo)
-       (eq! (shift ARG_2_HI offset) arg2hi)
-       (eq! (shift ARG_2_LO offset) arg2lo)))
+(defun (wcpcall   offset
+                  inst
+                  arg1hi
+                  arg1lo
+                  arg2hi
+                  arg2lo)
+  (begin (eq! (shift INST     offset) inst)
+         (eq! (shift ARG_1_HI offset) arg1hi)
+         (eq! (shift ARG_1_LO offset) arg1lo)
+         (eq! (shift ARG_2_HI offset) arg2hi)
+         (eq! (shift ARG_2_LO offset) arg2lo)))
 
 (defun (result-is-true offset)
   (eq! (shift RES offset) 1))
 
+;;
+;; Processing row n°0
+;;
 (defconstraint trimmed-address-is-20-bytes-integer (:guard FIRST)
                (begin
                  (wcpcall ROW_OFFSET_ADDRESS
@@ -77,6 +85,9 @@
                           0)
                  (result-is-true ROW_OFFSET_ADDRESS)))
 
+;;
+;; Processing row n°1
+;;
 (defconstraint leading-bytes-is-twelve-bytes (:guard FIRST)
   (begin
   (eq!        (shift  INST      ROW_OFFSET_ADDRESS_TRM) WCP_INST_LEQ)
@@ -93,6 +104,9 @@
                     (+ (* TWOFIFTYSIX_TO_THE_FOUR (leading-bytes))
                        TRM_ADDRESS_HI)))
 
+;;
+;; Processing row n°2
+;;
 (defconstraint iszero-check-for-address (:guard FIRST)
   (begin
   (eq!  (shift  INST      ROW_OFFSET_NON_ZERO_ADDR)  EVM_INST_ISZERO)
@@ -103,6 +117,9 @@
 (defun (address-is-zero)    (shift  RES  ROW_OFFSET_NON_ZERO_ADDR))
 (defun (address-is-nonzero) (- 1 (address-is-zero)))
 
+;;
+;; Processing row n°3
+;;
 (defconstraint address-is-prc-range (:guard FIRST)
                (wcpcall   ROW_OFFSET_PRC_ADDR
                           WCP_INST_LEQ
