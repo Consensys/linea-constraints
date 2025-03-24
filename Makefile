@@ -101,10 +101,12 @@ ZKEVM_MODULES := ${CONSTANTS} \
 		 ${TXN_DATA} \
 		 ${WCP}
 
-DEBUGGING := ${CONSTANTS} ${MXP}
-
 zkevm.bin: ${ZKEVM_MODULES}
 	${GO_CORSET_COMPILE} -o $@ ${ZKEVM_MODULES}
 
-debug: ${DEBUGGING}
+# for debugging purposes
+
+DEBUGGING := ${CONSTANTS} ${WCP} ${EUC} ${MXP} ${TABLES}
+
+debug.bin: ${DEBUGGING}
 	${GO_CORSET_COMPILE} -o $@ ${DEBUGGING}
