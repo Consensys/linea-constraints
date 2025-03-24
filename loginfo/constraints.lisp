@@ -97,16 +97,16 @@
 ;;                           ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun (is-log0-to-log4)
-  (force-bool (reduce + (for k [0 : 4] [IS_LOG_X k]))))
+  (reduce + (for k [0 : 4] [IS_LOG_X k])))
 
 (defun (is-log1-to-log4)
-  (force-bool (reduce + (for k [1 : 4] [IS_LOG_X k]))))
+  (reduce + (for k [1 : 4] [IS_LOG_X k])))
 
 (defun (is-log2-to-log4)
-  (force-bool (reduce + (for k [2 : 4] [IS_LOG_X k]))))
+  (reduce + (for k [2 : 4] [IS_LOG_X k])))
 
 (defun (is-log3-to-log4)
-  (force-bool (+ [IS_LOG_X 3] [IS_LOG_X 4])))
+  (+ [IS_LOG_X 3] [IS_LOG_X 4]))
 
 (defun (is-log4)
   [IS_LOG_X 4])

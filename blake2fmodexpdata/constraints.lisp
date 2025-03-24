@@ -51,22 +51,21 @@
                   (vanishes! (next INDEX)))))
 
 (defun (stamp-increment)
-  (force-bool (+ (* (- 1 IS_MODEXP_BASE) (next IS_MODEXP_BASE))
-                 (* (- 1 IS_BLAKE_DATA) (next IS_BLAKE_DATA)))))
+  (+ (* (- 1 IS_MODEXP_BASE) (next IS_MODEXP_BASE))
+     (* (- 1 IS_BLAKE_DATA) (next IS_BLAKE_DATA))))
 
 (defconstraint stamp-increases ()
   (will-inc! STAMP (stamp-increment)))
 
 (defun (transition-bit)
-  (force-bool (+ (* IS_MODEXP_BASE (next IS_MODEXP_EXPONENT))
-                 (* IS_MODEXP_EXPONENT (next IS_MODEXP_MODULUS))
-                 (* IS_MODEXP_MODULUS (next IS_MODEXP_RESULT))
-                 (* IS_MODEXP_RESULT
-                    (+ (next IS_MODEXP_BASE) (next IS_BLAKE_DATA)))
-                 (* IS_BLAKE_DATA (next IS_BLAKE_PARAMS))
-                 (* IS_BLAKE_PARAMS (next IS_BLAKE_RESULT))
-                 (* IS_BLAKE_RESULT
-                    (+ (next IS_MODEXP_BASE) (next IS_BLAKE_DATA))))))
+  (+ (* IS_MODEXP_BASE (next IS_MODEXP_EXPONENT))
+     (* IS_MODEXP_EXPONENT (next IS_MODEXP_MODULUS))
+     (* IS_MODEXP_MODULUS (next IS_MODEXP_RESULT))
+     (* IS_MODEXP_RESULT (+ (next IS_MODEXP_BASE) (next IS_BLAKE_DATA)))
+     (* IS_BLAKE_DATA (next IS_BLAKE_PARAMS))
+     (* IS_BLAKE_PARAMS (next IS_BLAKE_RESULT))
+     (* IS_BLAKE_RESULT
+        (+ (next IS_MODEXP_BASE) (next IS_BLAKE_DATA)))))
 
 (defconstraint heartbeat (:guard STAMP)
   (if-zero (- INDEX_MAX INDEX)

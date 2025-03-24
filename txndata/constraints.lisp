@@ -6,9 +6,7 @@
                          else))
 
 ;; sum of transaction type flags
-(defun (tx-type-sum) (force-bool (+ TYPE0
-                                    TYPE1
-                                    TYPE2)))
+(defun (tx-type-sum) (+ TYPE0 TYPE1 TYPE2))
 
 ;; constraint imposing that STAMP[i + 1] ∈ { STAMP[i], 1 + STAMP[i] }
 (defpurefun (stamp-progression STAMP)
@@ -300,12 +298,12 @@
 (defconstraint    comparison---final-refund-counter-vs-refund-limit    (:guard (first-row-of-new-transaction))
                   (small-call-to-LT    row-offset---effective-refund-comparison REF_CNT (refund_limit)))
 
-(defun (get_full_refund) (force-bool (shift RES row-offset---effective-refund-comparison)))
+(defun (get_full_refund) (shift RES row-offset---effective-refund-comparison))
 
 (defconstraint    comparison---detect-empty-data-in-transaction    (:guard (first-row-of-new-transaction))
                   (small-call-to-ISZERO    row-offset---detecting-empty-call-data-comparison (data_size)))
 
-(defun (nonzero-data-size) (force-bool (- 1 (shift RES row-offset---detecting-empty-call-data-comparison))))
+(defun (nonzero-data-size) (- 1 (shift RES row-offset---detecting-empty-call-data-comparison)))
 
 (defconstraint    comparison---comparing-the-maximum-gas-price-against-the-basefee    (:guard (first-row-of-new-transaction))
                   (begin
@@ -327,7 +325,7 @@
 (defconstraint    comparison-for-type-2---computing-the-effective-gas-price         (:guard    (*   (first-row-of-new-transaction)   TYPE2))
                   (small-call-to-LEQ   row-offset---computing-effective-gas-price-comparison (+ (max_priority_fee) BASEFEE) (max_fee)))
 
-(defun (get_full_tip) (force-bool (shift RES row-offset---computing-effective-gas-price-comparison)))
+(defun (get_full_tip) (shift RES row-offset---computing-effective-gas-price-comparison))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                    ;;

@@ -67,9 +67,9 @@
                           (* THETA2 (beta))))
 
 ;; alisases for decoding inst
-(defun   (flag_sum)      (force-bool (+ IS_SMOD IS_MOD IS_SDIV IS_DIV)))
+(defun   (flag_sum)      (+ IS_SMOD IS_MOD IS_SDIV IS_DIV))
 (defun   (weight_sum)    (+ (* EVM_INST_SMOD IS_SMOD) (* EVM_INST_MOD IS_MOD) (* EVM_INST_SDIV IS_SDIV) (* EVM_INST_DIV IS_DIV)))
-(defun   (signed_inst)   (force-bool (+ IS_SMOD IS_SDIV)))
+(defun   (signed_inst)   (+ IS_SMOD IS_SDIV))
 
 ;; bit decompositions of the most significant bytes
 (defun   (bit-dec-msb1)   (+ (* 128 (shift MSB_1 -7))
@@ -121,8 +121,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defconstraint oli-and-mli-exclusivity ()
-  (eq! (force-bool (+ OLI MLI))
-       (flag_sum)))
+  (eq! (+ OLI MLI) (flag_sum)))
 
 (defconstraint set-oli-and-mli (:guard STAMP)
   (if-zero ARG_2_HI

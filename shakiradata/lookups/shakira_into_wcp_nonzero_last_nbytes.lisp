@@ -1,13 +1,12 @@
 (defun (is-result)
-  (force-bool (+  ;; shakiradata.IS_KECCAK_DATA
-                 shakiradata.IS_KECCAK_RESULT
-                 ;; shakiradata.IS_SHA2_DATA
-                 shakiradata.IS_SHA2_RESULT
-                 ;; shakiradata.IS_RIPEMD_DATA
-                 shakiradata.IS_RIPEMD_RESULT)))
+  (+  ;; shakiradata.IS_KECCAK_DATA
+      shakiradata.IS_KECCAK_RESULT
+      ;; shakiradata.IS_SHA2_DATA
+      shakiradata.IS_SHA2_RESULT
+      ;; shakiradata.IS_RIPEMD_DATA
+      shakiradata.IS_RIPEMD_RESULT))
 
-(defun (is-final-data-row)
-  (force-bool (* (is-data) (next (is-result)))))
+(defun (is-final-data-row) (* (is-data) (next (is-result))))
 
 (deflookup
   shakiradata-into-wcp-nonzero-last-nbytes
