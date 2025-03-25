@@ -195,7 +195,7 @@
 
 (defconstraint final-row (:domain {-1})
   (if-not-zero STAMP
-               (if-zero (+ ROOB NOOP)
+               (if-zero (force-bool (+ ROOB NOOP))
                         (eq! CT (if-zero MXPX
                                       CT_MAX_NON_TRIVIAL
                                       CT_MAX_NON_TRIVIAL_BUT_MXPX)))))
