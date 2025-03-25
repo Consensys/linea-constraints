@@ -9,7 +9,7 @@
   (vanishes! STAMP))
 
 (defconstraint no-stamp-no-things ()
-  (if-zero (force-bool (+ RECIPE_1 RECIPE_2))
+  (if-zero (force-bin (+ RECIPE_1 RECIPE_2))
            (begin (debug (vanishes! ct))
                   (vanishes! ADDR_HI)
                   (vanishes! ADDR_LO)
