@@ -226,7 +226,7 @@
                   (:guard    acp_PEEK_AT_ACCOUNT)
                   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                   (or!    (eq!   acp_DEPLOYMENT_NUMBER_NEW    acp_DEPLOYMENT_NUMBER)
-                           (eq!   acp_DEPLOYMENT_NUMBER_NEW    (+    1    acp_DEPLOYMENT_NUMBER))))
+                          (eq!   acp_DEPLOYMENT_NUMBER_NEW    (+    1    acp_DEPLOYMENT_NUMBER))))
 
 
 (defconstraint    account-consistency---other---vanishing-constraints-upon-trivial-deployments

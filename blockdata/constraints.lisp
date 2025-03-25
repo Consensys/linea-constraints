@@ -75,7 +75,7 @@
 
 (defconstraint   heartbeat---rel-block-increments-by-0-or-1 ()
                  (or!  (will-inc!  REL_BLOCK  0)
-                        (will-inc!  REL_BLOCK  1)))
+                       (will-inc!  REL_BLOCK  1)))
 
 (defconstraint   heartbeat---rel-block-exact-increments ()
                  (eq!    (next REL_BLOCK)
