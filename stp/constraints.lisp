@@ -59,8 +59,8 @@
                   (vanishes! (+ WCP_FLAG MOD_FLAG)))))
 
 (defconstraint counter-reset ()
-  (if-not-zero (will-remain-constant! STAMP)
-               (vanishes! (next CT))))
+  (if-not (will-remain-constant! STAMP)
+          (vanishes! (next CT))))
 
 (defconstraint heartbeat (:guard STAMP)
   (begin (if-eq-else CT CT_MAX (will-inc! STAMP 1) (will-inc! CT 1))
@@ -192,7 +192,7 @@
 ;;                                                ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defun (call---first-row-common)                 (*    (remained-constant! STAMP) (is_call)))
+(defun (call---first-row-common)                 (or!    (remained-constant! STAMP) (is_call)))
 (defun (call---first-row-unexceptional)          (*    (call---first-row-common) (- 1 OOGX)))
 
 
