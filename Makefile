@@ -43,6 +43,8 @@ MMIO := mmio
 
 MXP := mxp
 
+MXP_v3 := mxp_v3
+
 OOB := oob
 
 RLP_ADDR := rlpaddr
@@ -103,3 +105,10 @@ ZKEVM_MODULES := ${CONSTANTS} \
 
 zkevm.bin: ${ZKEVM_MODULES}
 	${GO_CORSET_COMPILE} -o $@ ${ZKEVM_MODULES}
+
+# for debugging purposes
+
+DEBUGGING := ${CONSTANTS} ${WCP} ${EUC} ${MXP_v3} ${TABLES}
+
+debug.bin: ${DEBUGGING}
+	${GO_CORSET_COMPILE} -o $@ ${DEBUGGING}
