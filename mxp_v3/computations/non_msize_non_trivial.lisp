@@ -9,21 +9,21 @@
 
 (defconstraint  computations---non-msize-non-trivial---smallness-test-for-SIZE_1
 		(:guard   (mxp-guard---not-msize-not-trivial))
-		(wcp-call-to-LT   ROW_OFFSET___1ST_SIZE___SMALLNESS_TEST
-				  (mxp-shorthand---size-1-hi)
-				  (mxp-shorthand---size-1-lo)
-				  0
-				  MXPX_THRESHOLD
-				  ))
+		(wcp-call-to-LEQ   ROW_OFFSET___1ST_SIZE___SMALLNESS_TEST
+				   (mxp-shorthand---size-1-hi)
+				   (mxp-shorthand---size-1-lo)
+				   0
+				   MXPX_THRESHOLD
+				   ))
 
 (defconstraint  computations---non-msize-non-trivial---smallness-test-for-SIZE_2
 		(:guard   (mxp-guard---not-msize-not-trivial))
-		(wcp-call-to-LT   ROW_OFFSET___2ND_SIZE___SMALLNESS_TEST
-				  (mxp-shorthand---size-2-hi)
-				  (mxp-shorthand---size-2-lo)
-				  0
-				  MXPX_THRESHOLD
-				  ))
+		(wcp-call-to-LEQ   ROW_OFFSET___2ND_SIZE___SMALLNESS_TEST
+				   (mxp-shorthand---size-2-hi)
+				   (mxp-shorthand---size-2-lo)
+				   0
+				   MXPX_THRESHOLD
+				   ))
 
 
 (defun   (mxp-shorthand---size-1-is-small)   (shift computation/RES_A ROW_OFFSET___1ST_SIZE___SMALLNESS_TEST))
@@ -40,21 +40,21 @@
 
 (defconstraint  computations---non-msize-non-trivial---smallness-test-for-OFFSET_1
 		(:guard   (mxp-guard---not-msize-not-trivial))
-		(wcp-call-to-LT   ROW_OFFSET___1ST_OFFSET___SMALLNESS_TEST
-				  (mxp-shorthand---offset-1-hi)
-				  (mxp-shorthand---offset-1-lo)
-				  0
-				  MXPX_THRESHOLD
-				  ))
+		(wcp-call-to-LEQ   ROW_OFFSET___1ST_OFFSET___SMALLNESS_TEST
+				   (mxp-shorthand---offset-1-hi)
+				   (mxp-shorthand---offset-1-lo)
+				   0
+				   MXPX_THRESHOLD
+				   ))
 
 (defconstraint  computations---non-msize-non-trivial---smallness-test-for-OFFSET_2
 		(:guard   (mxp-guard---not-msize-not-trivial))
-		(wcp-call-to-LT   ROW_OFFSET___2ND_OFFSET___SMALLNESS_TEST
-				  (mxp-shorthand---offset-2-hi)
-				  (mxp-shorthand---offset-2-lo)
-				  0
-				  MXPX_THRESHOLD
-				  ))
+		(wcp-call-to-LEQ   ROW_OFFSET___2ND_OFFSET___SMALLNESS_TEST
+				   (mxp-shorthand---offset-2-hi)
+				   (mxp-shorthand---offset-2-lo)
+				   0
+				   MXPX_THRESHOLD
+				   ))
 
 
 (defun   (mxp-shorthand---offset-1-is-small)   (shift computation/RES_A ROW_OFFSET___1ST_OFFSET___SMALLNESS_TEST))
