@@ -12,17 +12,18 @@
   tx-init---row-offset---row-preceding-the-init-phase                  -1
   tx-init---row-offset---MISC                                           0
   tx-init---row-offset---TXN                                            1
-  tx-init---row-offset---ACC---sender-pay-for-gas                       2
-  tx-init---row-offset---ACC---sender-value-transfer                    3
-  tx-init---row-offset---ACC---recipient-value-reception                4
+  tx-init---row-offset---ACC---coinbase-warm                            2
+  tx-init---row-offset---ACC---sender-pay-for-gas                       3
+  tx-init---row-offset---ACC---sender-value-transfer                    4
+  tx-init---row-offset---ACC---recipient-value-reception                5
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  tx-init---row-offset---CON---context-initialization-row---success     5
-  tx-init---row-offset---first-execution-phase-row---success            6
+  tx-init---row-offset---CON---context-initialization-row---success     6
+  tx-init---row-offset---first-execution-phase-row---success            7
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  tx-init---row-offset---ACC---sender-value-transfer---undoing          5
-  tx-init---row-offset---ACC---recipient-value-reception---undoing      6
-  tx-init---row-offset---CON---context-initialization-row---failure     7
-  tx-init---row-offset---first-execution-phase-row---failure            8
+  tx-init---row-offset---ACC---sender-value-transfer---undoing          6
+  tx-init---row-offset---ACC---recipient-value-reception---undoing      7
+  tx-init---row-offset---CON---context-initialization-row---failure     8
+  tx-init---row-offset---first-execution-phase-row---failure            9
   )
 
 
