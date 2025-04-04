@@ -1,4 +1,4 @@
-(module mxp)
+(module mxp_v2)
 
 (defconst
   CT_MAX_TRIVIAL              0

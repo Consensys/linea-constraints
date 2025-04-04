@@ -1,4 +1,4 @@
-(module mxp)
+(module mxp_v2)
 
 (defcolumns
   (STAMP :i32)

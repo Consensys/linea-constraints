@@ -103,3 +103,10 @@ ZKEVM_MODULES := ${CONSTANTS} \
 
 zkevm.bin: ${ZKEVM_MODULES}
 	${GO_CORSET_COMPILE} -o $@ ${ZKEVM_MODULES}
+
+# for debugging purposes
+
+DEBUGGING := ${CONSTANTS} ${WCP} ${EUC} ${TABLES}
+
+debug.bin: ${DEBUGGING}
+	${GO_CORSET_COMPILE} -o $@ ${DEBUGGING}
