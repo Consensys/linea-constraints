@@ -45,3 +45,5 @@
 (defun    (tx-init---call-data-context-number)          (*     HUB_STAMP    (shift   transaction/COPY_TXCD    tx-init---row-offset---TXN)))
 (defun    (tx-init---call-data-size)                    (shift    transaction/CALL_DATA_SIZE    tx-init---row-offset---TXN))
 (defun    (tx-init---init-code-size)                    (shift    transaction/INIT_CODE_SIZE    tx-init---row-offset---TXN))
+(defun    (tx-init---coinbase-addrsee-hi)               (shift    transaction/COINBASE_ADDRESS_HI    tx-init---row-offset---TXN))
+(defun    (tx-init---coinbase-addrsee-lo)               (shift    transaction/COINBASE_ADDRESS_LO    tx-init---row-offset---TXN))
