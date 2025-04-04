@@ -27,7 +27,7 @@
                    (account-retrieve-code-fragment-index          tx-init---row-offset---ACC---recipient-value-reception)
                    (account-isnt-precompile                       tx-init---row-offset---ACC---recipient-value-reception)
                    (DOM-SUB-stamps---standard                     tx-init---row-offset---ACC---recipient-value-reception
-                                                                  2)))
+                                                                  3)))
 
 (defconstraint    tx-init---account-row---recipient-value-reception---message-call
                   (:guard (tx-init---standard-precondition))
