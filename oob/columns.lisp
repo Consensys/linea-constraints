@@ -4,7 +4,7 @@
   (STAMP :i32)
   (CT :i3)
   (CT_MAX :i3)
-  (DATA :i128 :array [9])
+  (DATA :i128 :array [10])
   (OOB_INST :i16)
   (IS_JUMP :binary@prove)
   (IS_JUMPI :binary@prove)
