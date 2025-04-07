@@ -211,12 +211,14 @@
   GAS_CONST_ECPAIRING                       45000
   GAS_CONST_ECPAIRING_PAIR                  34000
   GAS_CONST_BLAKE2_PER_ROUND                1
+  GAS_CONST_INIT_CODE_WORD                  2 ;; post Shanghai EIP-3860
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;           ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;  EVM MISC ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;           ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   MAX_CODE_SIZE                             24576
+  INIT_CODE_SIZE_MAX                        (* MAX_CODE_SIZE 2)
   EIP_3541_MARKER                           0xEF
   BLOCKHASH_MAX_HISTORY                     256
   MAX_REFUND_QUOTIENT                       5
