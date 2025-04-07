@@ -282,8 +282,8 @@
                     (call-to-EUC    row-offset---init-code-pricing (+ (data_size) WORD_SIZE_MO)  WORD_SIZE ))))
 
 (defun (init_code_cost)
-  (* (shift RES row-offset---init-code-pricing)) 
-     GAS_CONST_INIT_CODE_WORD)
+  (* (shift RES row-offset---init-code-pricing) 
+     GAS_CONST_INIT_CODE_WORD))
 
 (defun (upfront_gas_cost)
   (+   (*   TYPE0   (legacy_upfront_gas_cost))
