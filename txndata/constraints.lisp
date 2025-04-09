@@ -273,7 +273,7 @@
 (defconstraint comparaison---code-size-limit-check (:guard (first-row-of-new-transaction))
     (if-eq (is_dep) 1 
     (begin 
-      (small-call-to-LEQ    row-offset---init-code-size-limit (data_size) INIT_CODE_SIZE_MAX)
+      (small-call-to-LEQ    row-offset---init-code-size-limit (data_size) MAX_INIT_CODE_SIZE)
       (result-must-be-true  row-offset---init-code-size-limit))))
 
 (defconstraint    init-code-words   (:guard (first-row-of-new-transaction))

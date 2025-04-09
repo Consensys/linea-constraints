@@ -218,7 +218,7 @@
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;           ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   MAX_CODE_SIZE                             24576
-  INIT_CODE_SIZE_MAX                        (* MAX_CODE_SIZE 2)
+  MAX_INIT_CODE_SIZE                        (* MAX_CODE_SIZE 2)
   EIP_3541_MARKER                           0xEF
   BLOCKHASH_MAX_HISTORY                     256
   MAX_REFUND_QUOTIENT                       5
