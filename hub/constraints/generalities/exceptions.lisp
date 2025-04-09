@@ -42,23 +42,6 @@
 
 
 
-;; ;; These columns are already marked binary@prove in their respective definitions
-;; (defconstraint   generalities---exceptions---stack-exception-flags-are-binary (:perspective stack)
-;;                  (begin
-;;                    (is-binary  SUX     )
-;;                    (is-binary  SOX     )
-;;                    (is-binary  MXPX    )
-;;                    (is-binary  OOGX    )
-;;                    (is-binary  RDCX    )
-;;                    (is-binary  JUMPX   )
-;;                    (is-binary  STATICX )
-;;                    (is-binary  SSTOREX )
-;;                    (is-binary  ICPX    )
-;;                    (is-binary  MAXCSX  )
-;;                    (is-binary  OPCX    )
-;;                    ))
-
-
 (defconstraint   generalities---exceptions---stack-exception-flags-are-exclusive (:perspective stack)
                  (is-binary (exception_flag_sum)))
 
@@ -82,7 +65,11 @@
                    (if-zero        STATIC_FLAG                                    (vanishes!    STATICX))
                    (if-not-zero    (-  INSTRUCTION    EVM_INST_RETURNDATACOPY)    (vanishes!    RDCX))
                    (if-not-zero    (-  INSTRUCTION    EVM_INST_SSTORE)            (vanishes!    SSTOREX))
-                   (if-not-zero    (-  INSTRUCTION    EVM_INST_RETURN)            (vanishes!    (+ ICPX MAXCSX)))))
+                   (if-not-zero    (-  INSTRUCTION    EVM_INST_RETURN)            (vanishes!    ICPX))
+                   (if-not-zero    (-  INSTRUCTION    EVM_INST_RETURN)
+                                   (if-not-zero       CREATE_FLAG                 (vanishes!    MAXCSX)))
+                   )
+                 )
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

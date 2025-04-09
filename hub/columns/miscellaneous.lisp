@@ -53,7 +53,7 @@
 
 		 ;; OOB columns
 		 (OOB_INST                 :i16  )
-		 (OOB_DATA                 :array[1:9] :i128 )
+		 (OOB_DATA                 :array[1:10] :i128 )
 
 		 ;; STP columns
 		 ( STP_INSTRUCTION               :byte )

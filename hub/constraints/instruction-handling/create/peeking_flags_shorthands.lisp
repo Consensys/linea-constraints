@@ -26,6 +26,10 @@
                                                           (shift    PEEK_AT_CONTEXT         CREATE_exception_caller_context_row___row_offset)
                                                           ))
 
+(defun    (create-instruction---flag-sum-maxcsx)     (+   (create-instruction---std-prefix)
+                                                          (shift    PEEK_AT_CONTEXT         CREATE_exception_caller_context_row___row_offset)
+                                                          ))
+
 (defun    (create-instruction---flag-sum-mxpx)       (+   (create-instruction---std-prefix)
                                                           (shift    PEEK_AT_CONTEXT         CREATE_exception_caller_context_row___row_offset)
                                                           ))
