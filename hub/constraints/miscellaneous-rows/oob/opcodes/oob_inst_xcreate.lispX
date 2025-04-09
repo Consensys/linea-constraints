@@ -1,6 +1,9 @@
 (module hub)
 
 
+;; XXXXXX has to be uncommented (lispX -> lisp)
+
+
 (defun (set-OOB-instruction---xcreate    kappa              ;; offset
                                          init_code_size_hi  ;; high part of initialization code size argument of CREATE(2)
                                          init_code_size_lo  ;; low  part of initialization code size argument of CREATE(2)
