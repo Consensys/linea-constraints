@@ -18,6 +18,7 @@
 (defun    (create-instruction---is-CREATE)                    (shift   [stack/DEC_FLAG 1]                CREATE_first_stack_row___row_offset))
 (defun    (create-instruction---is-CREATE2)                   (shift   [stack/DEC_FLAG 2]                CREATE_first_stack_row___row_offset))
 (defun    (create-instruction---STACK-staticx)                (shift   stack/STATICX                     CREATE_first_stack_row___row_offset))
+(defun    (create-instruction---STACK-maxcsx)                 (shift   stack/MAXCSX                      CREATE_first_stack_row___row_offset))
 (defun    (create-instruction---STACK-mxpx)                   (shift   stack/MXPX                        CREATE_first_stack_row___row_offset))
 (defun    (create-instruction---STACK-oogx)                   (shift   stack/OOGX                        CREATE_first_stack_row___row_offset))
 (defun    (create-instruction---STACK-offset-hi)              (shift   [stack/STACK_ITEM_VALUE_HI 1]     CREATE_first_stack_row___row_offset))
