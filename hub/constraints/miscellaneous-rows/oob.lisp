@@ -22,6 +22,7 @@
                                       ;; (eq! (shift [ misc/OOB_DATA 7 ]    kappa) )
                                       ;; (eq! (shift [ misc/OOB_DATA 8 ]    kappa) )
                                       ;; (eq! (shift [ misc/OOB_DATA 9 ]    kappa) )
+                                      ;; (eq! (shift [ misc/OOB_DATA 10]    kappa) )
                                       ))
 
 (defun (set-OOB-instruction---jumpi    kappa               ;; offset
@@ -41,6 +42,7 @@
                                        ;; (eq! (shift [ misc/OOB_DATA 7 ]    kappa) )
                                        ;; (eq! (shift [ misc/OOB_DATA 8 ]    kappa) )
                                        ;; (eq! (shift [ misc/OOB_DATA 9 ]    kappa) )
+                                       ;; (eq! (shift [ misc/OOB_DATA 10]    kappa) )
                                        ))
 
 (defun (set-OOB-instruction---sstore    kappa               ;; offset
@@ -56,6 +58,7 @@
                                         ;; (eq! (shift [ misc/OOB_DATA 7 ]    kappa) )
                                         ;; (eq! (shift [ misc/OOB_DATA 8 ]    kappa) )
                                         ;; (eq! (shift [ misc/OOB_DATA 9 ]    kappa) )
+                                        ;; (eq! (shift [ misc/OOB_DATA 10]    kappa) )
                                         ))
 
 (defun (set-OOB-instruction---cdl    kappa               ;; row offset
@@ -73,6 +76,7 @@
                                      ;; (eq! (shift [ misc/OOB_DATA 7 ]    kappa) )
                                      ;; (eq! (shift [ misc/OOB_DATA 8 ]    kappa) )
                                      ;; (eq! (shift [ misc/OOB_DATA 9 ]    kappa) )
+                                     ;; (eq! (shift [ misc/OOB_DATA 10]    kappa) )
                                      ))
 
 (defun (set-OOB-instruction---rdc    kappa                   ;; row offset
@@ -92,6 +96,7 @@
                                      ;; (eq! (shift [ misc/OOB_DATA 7 ]    kappa) )
                                      ;; (eq! (shift [ misc/OOB_DATA 8 ]    kappa) )
                                      ;; (eq! (shift [ misc/OOB_DATA 9 ]    kappa) )
+                                     ;; (eq! (shift [ misc/OOB_DATA 10]    kappa) )
                                      ))
 
 (defun (set-OOB-instruction---deployment    kappa                            ;; offset
@@ -108,6 +113,7 @@
                                             ;; (eq! (shift [ misc/OOB_DATA 7 ]    kappa) )    ;; max code size exception
                                             ;; (eq! (shift [ misc/OOB_DATA 8 ]    kappa) )
                                             ;; (eq! (shift [ misc/OOB_DATA 9 ]    kappa) )
+                                            ;; (eq! (shift [ misc/OOB_DATA 10]    kappa) )
                                             ))
 
 
@@ -125,6 +131,7 @@
                                        ;; (eq!    (shift [ misc/OOB_DATA 7 ]    kappa) )    ;; value_is_nonzero
                                        ;; (eq!    (shift [ misc/OOB_DATA 8 ]    kappa) )    ;; value_is_zero    ... I don't remember why I ask for both ...
                                        ;; (eq!    (shift [ misc/OOB_DATA 9 ]    kappa) )
+                                       ;; (eq!    (shift [ misc/OOB_DATA 10]    kappa) )
                                        ))
 
 
@@ -144,7 +151,26 @@
                                       ;; (eq!    (shift [ misc/OOB_DATA 7 ]    kappa) )    ;; value_is_nonzero
                                       ;; (eq!    (shift [ misc/OOB_DATA 8 ]    kappa) )    ;; aborting condition
                                       ;; (eq!    (shift [ misc/OOB_DATA 9 ]    kappa) )
+                                      ;; (eq! (shift [ misc/OOB_DATA 10]    kappa) )
                                       ))
+
+
+(defun (set-OOB-instruction---xcreate    kappa              ;; offset
+                                         init_code_size_hi  ;; high part of initialization code size argument of CREATE(2)
+                                         init_code_size_lo  ;; low  part of initialization code size argument of CREATE(2)
+                                         ) (begin
+                                         (eq! (shift misc/OOB_INST          kappa)   OOB_INST_XCREATE        )
+                                         (eq! (shift [ misc/OOB_DATA 1 ]    kappa)   init_code_size_hi       )
+                                         (eq! (shift [ misc/OOB_DATA 2 ]    kappa)   init_code_size_lo       )
+                                         ;; (eq! (shift [ misc/OOB_DATA 3 ]    kappa) )
+                                         ;; (eq! (shift [ misc/OOB_DATA 4 ]    kappa) )
+                                         ;; (eq! (shift [ misc/OOB_DATA 5 ]    kappa) )
+                                         ;; (eq! (shift [ misc/OOB_DATA 6 ]    kappa) )
+                                         ;; (eq! (shift [ misc/OOB_DATA 7 ]    kappa) )    ;; value_is_nonzero
+                                         ;; (eq! (shift [ misc/OOB_DATA 8 ]    kappa) )    ;; value_is_zero    ... I don't remember why I ask for both ...
+                                         ;; (eq! (shift [ misc/OOB_DATA 9 ]    kappa) )
+                                         ;; (eq! (shift [ misc/OOB_DATA 10]    kappa) )
+                                         ))
 
 
 (defun (set-OOB-instruction---create    kappa              ;; offset
@@ -166,6 +192,7 @@
                                         ;; (eq!    (shift [ misc/OOB_DATA 7 ]    kappa) )    ;; value_is_nonzero
                                         ;; (eq!    (shift [ misc/OOB_DATA 8 ]    kappa) )    ;; aborting condition
                                         (eq!    (shift [ misc/OOB_DATA 9 ]    kappa)   creator_nonce    )
+                                        ;; (eq! (shift [ misc/OOB_DATA 10]    kappa) )
                                         ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -191,6 +218,7 @@
                                         ;; (eq! (shift [ misc/OOB_DATA 7 ]    kappa) )
                                         ;; (eq! (shift [ misc/OOB_DATA 8 ]    kappa) )
                                         ;; (eq! (shift [ misc/OOB_DATA 9 ]    kappa) )
+                                        ;; (eq! (shift [ misc/OOB_DATA 10]    kappa) )
                                         ))
 
 
@@ -207,6 +235,7 @@
                                             ;; (eq! (shift [ misc/OOB_DATA 7 ]    kappa) )
                                             ;; (eq! (shift [ misc/OOB_DATA 8 ]    kappa) )
                                             ;; (eq! (shift [ misc/OOB_DATA 9 ]    kappa) )
+                                            ;; (eq! (shift [ misc/OOB_DATA 10]    kappa) )
                                             ))
 
 
@@ -226,6 +255,7 @@
                                             ;; (eq! (shift [ misc/OOB_DATA 7 ]    kappa) )
                                             ;; (eq! (shift [ misc/OOB_DATA 8 ]    kappa) )
                                             ;; (eq! (shift [ misc/OOB_DATA 9 ]    kappa) )
+                                            ;; (eq! (shift [ misc/OOB_DATA 10]    kappa) )
                                             ))
 
 
@@ -244,6 +274,7 @@
                                              ;; (eq! (shift [ misc/OOB_DATA 7 ]    kappa) )
                                              ;; (eq! (shift [ misc/OOB_DATA 8 ]    kappa) )
                                              ;; (eq! (shift [ misc/OOB_DATA 9 ]    kappa) )
+                                             ;; (eq! (shift [ misc/OOB_DATA 10]    kappa) )
                                              ))
 
 
@@ -263,6 +294,7 @@
                                                 (eq! (shift [ misc/OOB_DATA 7 ]    kappa) max_mbs_bbs )
                                                 ;; (eq! (shift [ misc/OOB_DATA 8 ]    kappa) )
                                                 ;; (eq! (shift [ misc/OOB_DATA 9 ]    kappa) )
+                                                ;; (eq! (shift [ misc/OOB_DATA 10]    kappa) )
                                                 ))
 
 
@@ -282,6 +314,7 @@
                                                 ;; (eq! (shift [ misc/OOB_DATA 7 ]    kappa) )
                                                 ;; (eq! (shift [ misc/OOB_DATA 8 ]    kappa) )
                                                 ;; (eq! (shift [ misc/OOB_DATA 9 ]    kappa) )
+                                                ;; (eq! (shift [ misc/OOB_DATA 10]    kappa) )
                                                 ))
 
 
@@ -299,6 +332,7 @@
                                            ;; (eq! (shift [ misc/OOB_DATA 7 ]    kappa) )
                                            ;; (eq! (shift [ misc/OOB_DATA 8 ]    kappa) )
                                            ;; (eq! (shift [ misc/OOB_DATA 9 ]    kappa) )
+                                           ;; (eq! (shift [ misc/OOB_DATA 10]    kappa) )
                                            ))
 
 
@@ -317,6 +351,7 @@
                                               (eq! (shift [ misc/OOB_DATA 7 ]    kappa) blake_f )
                                               ;; (eq! (shift [ misc/OOB_DATA 8 ]    kappa) )
                                               ;; (eq! (shift [ misc/OOB_DATA 9 ]    kappa) )
+                                              ;; (eq! (shift [ misc/OOB_DATA 10]    kappa) )
                                               ))
 
 
@@ -333,4 +368,5 @@
 ;;          ;; (eq! (shift [ misc/OOB_DATA 7 ]    kappa) )
 ;;          ;; (eq! (shift [ misc/OOB_DATA 8 ]    kappa) )
 ;;          ;; (eq! (shift [ misc/OOB_DATA 9 ]    kappa) )
+;;          ;; (eq! (shift [ misc/OOB_DATA 10]    kappa) )
 ;;          ))
