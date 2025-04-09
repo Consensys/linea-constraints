@@ -66,6 +66,7 @@
 ;;    2.2 Constancies    ;;
 ;;                       ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (defun (transaction-constant X)
   (if-not-zero CT
                (eq! X (prev X))))
@@ -254,53 +255,69 @@
 
 (defun (result-must-be-false row-offset) (vanishes! (shift RES row-offset)))
 (defun (result-must-be-true  row-offset) (eq!       (shift RES row-offset) 1))
+
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                               ;;
 ;;    2.9 Shared computations    ;;
 ;;                               ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defconstraint    comparison---nonce-must-not-exceed-EIP-2681-max-nonce    (:guard (first-row-of-new-transaction))
+(defconstraint    comparison---nonce-must-not-exceed-EIP-2681-max-nonce
+                  (:guard (first-row-of-new-transaction))
                   (begin
                     (small-call-to-LT    row-offset---nonce-comparison NONCE EIP2681_MAX_NONCE)
                     (result-must-be-true row-offset---nonce-comparison)))
 
-(defconstraint    comparison---initial-balance-must-cover-value-plus-maximal-gas-cost    (:guard (first-row-of-new-transaction))
+(defconstraint    comparison---initial-balance-must-cover-value-plus-maximal-gas-cost
+                  (:guard (first-row-of-new-transaction))
                   (begin
                     (small-call-to-LEQ    row-offset---initial-balance-comparison (+ (value) (* (max_fee) (gas_limit))) INITIAL_BALANCE)
                     (result-must-be-true  row-offset---initial-balance-comparison)))
 
-(defconstraint comparaison---code-size-limit-check (:guard (first-row-of-new-transaction))
-    (if-eq (is_dep) 1 
-    (begin 
-      (small-call-to-LEQ    row-offset---init-code-size-limit (data_size) MAX_INIT_CODE_SIZE)
-      (result-must-be-true  row-offset---init-code-size-limit))))
+(defconstraint    comparaison---code-size-limit-check
+                  (:guard (first-row-of-new-transaction))
+                  (if-not-zero (is_dep)
+                               (begin 
+                                 (small-call-to-LEQ    row-offset---init-code-size-limit
+                                                       (data_size)
+                                                       MAX_INIT_CODE_SIZE)
+                                 (result-must-be-true  row-offset---init-code-size-limit))))
 
-(defconstraint    init-code-words   (:guard (first-row-of-new-transaction))
-                  (if-eq (is_dep) 1
-                  (begin
-                    (call-to-EUC    row-offset---init-code-pricing (+ (data_size) WORD_SIZE_MO)  WORD_SIZE ))))
+(defconstraint    euc-call---computing-number-of-words-in-init-code
+                  (:guard (first-row-of-new-transaction))
+                  (if-not-zero (is_dep)
+                               (begin
+                                 (call-to-EUC    row-offset---init-code-pricing
+                                                 (+ (data_size) WORD_SIZE_MO)
+                                                 WORD_SIZE))))
 
-(defun (init_code_cost)
-  (* (shift RES row-offset---init-code-pricing) 
-     GAS_CONST_INIT_CODE_WORD))
+(defun   (number_of_words_in_init_code)   (shift RES row-offset---init-code-pricing))
 
-(defun (upfront_gas_cost)
-  (+   (*   TYPE0   (legacy_upfront_gas_cost))
-       (*   TYPE1   (access_upfront_gas_cost))
-       (*   TYPE2   (access_upfront_gas_cost))))
-(defun (legacy_upfront_gas_cost)
-  (+   (data_cost)
-       GAS_CONST_G_TRANSACTION
-       (* (is_dep) GAS_CONST_G_TX_CREATE)
-       (* (is_dep)   (init_code_cost))))
-(defun (access_upfront_gas_cost)
-  (+   (data_cost)
-       GAS_CONST_G_TRANSACTION
-       (* (is_dep)   GAS_CONST_G_TX_CREATE)
-       (* (is_dep)   (init_code_cost))
-       (* (num_addr) GAS_CONST_G_ACCESS_LIST_ADRESS)
-       (* (num_keys) GAS_CONST_G_ACCESS_LIST_STORAGE)))
+(defun   (init_code_cost)
+  (*     GAS_CONST_INIT_CODE_WORD
+         (number_of_words_in_init_code)
+         ))
+
+(defun   (upfront_gas_cost)
+  (+     (*   TYPE0   (legacy_upfront_gas_cost))
+         (*   TYPE1   (access_upfront_gas_cost))
+         (*   TYPE2   (access_upfront_gas_cost))))
+
+(defun   (legacy_upfront_gas_cost)
+  (+     (data_cost)
+         (* (is_dep)   GAS_CONST_G_TX_CREATE)
+         (* (is_dep)   (init_code_cost))
+         GAS_CONST_G_TRANSACTION
+         ))
+
+(defun   (access_upfront_gas_cost)
+  (+     (data_cost)
+         (* (is_dep)   GAS_CONST_G_TX_CREATE)
+         (* (is_dep)   (init_code_cost))
+         GAS_CONST_G_TRANSACTION
+         (* (num_addr) GAS_CONST_G_ACCESS_LIST_ADRESS)
+         (* (num_keys) GAS_CONST_G_ACCESS_LIST_STORAGE)))
 
 (defconstraint    comparison---gas-limit-must-cover-upfront-gas-cost    (:guard (first-row-of-new-transaction))
                   (begin
