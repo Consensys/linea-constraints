@@ -22,4 +22,4 @@
                    (account-same-marked-for-selfdestruct          tx-init---row-offset---ACC---sender-value-transfer)
                    (account-isnt-precompile                       tx-init---row-offset---ACC---sender-value-transfer)
                    (DOM-SUB-stamps---standard                     tx-init---row-offset---ACC---sender-value-transfer
-                                                                  1)))
+                                                                  2)))
