@@ -50,5 +50,5 @@
 
 (defconstraint    push-pop-instruction---setting-PC_NEW---PUSH-case
                   (:guard (push-pop-instruction---standard-hypothesis))
-                  (if-not-zero (+ (force-bin (push-pop-instruction---is-PUSH) (push-pop-instruction---is-PUSH-ZERO)))
+                  (if-not-zero (force-bin (+ (push-pop-instruction---is-PUSH) (push-pop-instruction---is-PUSH-ZERO)))
                                (eq! PC_NEW (+ 1 PC (- stack/INSTRUCTION EVM_INST_PUSH0)))))
