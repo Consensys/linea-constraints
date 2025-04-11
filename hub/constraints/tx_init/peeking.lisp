@@ -12,7 +12,7 @@
                   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                   (eq!    (+    (shift    PEEK_AT_MISCELLANEOUS   tx-init---row-offset---MISC)
                                 (shift    PEEK_AT_TRANSACTION     tx-init---row-offset---TXN)
-                                (shift    PEEK_AT_ACCOUNT         tx-init---row-offset---ACC---coinbase-warm))
+                                (shift    PEEK_AT_ACCOUNT         tx-init---row-offset---ACC---coinbase-warming))
                           3))
 
 (defconstraint    tx-init---setting-peeking-flags---transaction-failure
@@ -21,7 +21,7 @@
                   (if-not-zero    (tx-init---transaction-failure-prediction)
                                   (eq!    (+    (shift    PEEK_AT_MISCELLANEOUS    tx-init---row-offset---MISC                                      )
                                                 (shift    PEEK_AT_TRANSACTION      tx-init---row-offset---TXN                                       )
-                                                (shift    PEEK_AT_ACCOUNT          tx-init---row-offset---ACC---coinbase-warm)
+                                                (shift    PEEK_AT_ACCOUNT          tx-init---row-offset---ACC---coinbase-warming)
                                                 (shift    PEEK_AT_ACCOUNT          tx-init---row-offset---ACC---sender-pay-for-gas                  )
                                                 (shift    PEEK_AT_ACCOUNT          tx-init---row-offset---ACC---sender-value-transfer               )
                                                 (shift    PEEK_AT_ACCOUNT          tx-init---row-offset---ACC---recipient-value-reception           )
@@ -36,7 +36,7 @@
                   (if-not-zero    (tx-init---transaction-success-prediction)
                                   (eq!    (+    (shift    PEEK_AT_MISCELLANEOUS    tx-init---row-offset---MISC                                      )
                                                 (shift    PEEK_AT_TRANSACTION      tx-init---row-offset---TXN                                       )
-                                                (shift    PEEK_AT_ACCOUNT         tx-init---row-offset---ACC---coinbase-warm)
+                                                (shift    PEEK_AT_ACCOUNT          tx-init---row-offset---ACC---coinbase-warming)
                                                 (shift    PEEK_AT_ACCOUNT          tx-init---row-offset---ACC---sender-pay-for-gas                  )
                                                 (shift    PEEK_AT_ACCOUNT          tx-init---row-offset---ACC---sender-value-transfer               )
                                                 (shift    PEEK_AT_ACCOUNT          tx-init---row-offset---ACC---recipient-value-reception           )
