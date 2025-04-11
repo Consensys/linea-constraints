@@ -26,8 +26,7 @@
                    (account-same-marked-for-selfdestruct          tx-init---row-offset---ACC---sender-pay-for-gas)
                    (account-isnt-precompile                       tx-init---row-offset---ACC---sender-pay-for-gas)
                    (DOM-SUB-stamps---standard                     tx-init---row-offset---ACC---sender-pay-for-gas
-                                                                  0)))
-
+                                                                  1)))
 
 (defconstraint   tx-init---EIP-3607---reject-transactions-from-senders-with-deployed-code
                  (:guard (tx-init---standard-precondition))

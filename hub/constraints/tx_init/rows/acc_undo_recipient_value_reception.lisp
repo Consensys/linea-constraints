@@ -21,5 +21,5 @@
                                   (account-undo-deployment-status-update         tx-init---row-offset---ACC---recipient-value-reception---undoing   tx-init---row-offset---ACC---recipient-value-reception)
                                   (account-same-marked-for-selfdestruct          tx-init---row-offset---ACC---recipient-value-reception---undoing)
                                   (DOM-SUB-stamps---revert-with-child            tx-init---row-offset---ACC---recipient-value-reception---undoing
-                                                                                 4
+                                                                                 5
                                                                                  (tx-init---transaction-end-stamp)))))
