@@ -7,7 +7,6 @@
 ;;                      ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-
 (defun (xcreate---standard-precondition)                       IS_XCREATE      )
 (defun (xcreate---init-code-size-hi)                           [DATA  1]       )
 (defun (xcreate---init-code-size-lo)                           [DATA  2]       ) ;; ""

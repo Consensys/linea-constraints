@@ -23,4 +23,3 @@
                                         (eq!    (shift    (misc_oob_data_9)    kappa)   creator_nonce    )
                                         (eq!    (shift    (misc_oob_data_10)   kappa)   init_code_size   )
                                         ))
-
