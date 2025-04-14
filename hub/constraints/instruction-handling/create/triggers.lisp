@@ -22,7 +22,10 @@
 (defun    (create-instruction---trigger_STP)        (+    (create-instruction---STACK-oogx)
                                                           (scenario-shorthand---CREATE---unexceptional)))
 
-(defun    (create-instruction---trigger_OOB)        (+    (scenario-shorthand---CREATE---unexceptional)))
+(defun    (create-instruction---trigger_OOB_X)      (+    (create-instruction---STACK-maxcsx)           ))
+(defun    (create-instruction---trigger_OOB_U)      (+    (scenario-shorthand---CREATE---unexceptional) ))
+(defun    (create-instruction---trigger_OOB)        (+    (create-instruction---trigger_OOB_X)
+                                                          (create-instruction---trigger_OOB_U)          ))
 
 (defun    (create-instruction---trigger_MMU)        (+    (create-instruction---hash-init-code)
                                                           (create-instruction---hash-init-code-and-send-to-ROM)

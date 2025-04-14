@@ -6,7 +6,7 @@
                                                   IS_CDL
                                                   IS_XCALL
                                                   IS_CALL
-                                                  ;; IS_XCREATE ;; XXXXXX
+                                                  IS_XCREATE
                                                   IS_CREATE
                                                   IS_SSTORE
                                                   IS_DEPLOYMENT))
@@ -41,7 +41,7 @@
                                                   (* OOB_INST_CDL              IS_CDL)
                                                   (* OOB_INST_XCALL            IS_XCALL)
                                                   (* OOB_INST_CALL             IS_CALL)
-                                                  ;; (* OOB_INST_XCREATE          IS_XCREATE) ;; XXXXXX
+                                                  (* OOB_INST_XCREATE          IS_XCREATE)
                                                   (* OOB_INST_CREATE           IS_CREATE)
                                                   (* OOB_INST_SSTORE           IS_SSTORE)
                                                   (* OOB_INST_DEPLOYMENT       IS_DEPLOYMENT)))
@@ -76,7 +76,7 @@
                                                   (* CT_MAX_CDL                IS_CDL)
                                                   (* CT_MAX_XCALL              IS_XCALL)
                                                   (* CT_MAX_CALL               IS_CALL)
-                                                  ;; (* CT_MAX_XCREATE            IS_XCREATE) ;; XXXXXX
+                                                  (* CT_MAX_XCREATE            IS_XCREATE)
                                                   (* CT_MAX_CREATE             IS_CREATE)
                                                   (* CT_MAX_SSTORE             IS_SSTORE)
                                                   (* CT_MAX_DEPLOYMENT         IS_DEPLOYMENT)))

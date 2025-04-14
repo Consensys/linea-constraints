@@ -85,10 +85,19 @@
                                             (create-instruction---STP-oogx))
                               ))
 
-(defconstraint    create-instruction---setting-the-OOB-instruction
+(defconstraint    create-instruction---setting-the-OOB-instruction---exceptional-case
                   (:guard    (create-instruction---generic-precondition))
                   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-                  (if-not-zero    (shift    misc/OOB_FLAG    CREATE_miscellaneous_row___row_offset)
+                  (if-not-zero    (create-instruction---trigger_OOB_X)
+                                  (set-OOB-instruction---xcreate    CREATE_miscellaneous_row___row_offset         ;; offset
+                                                                    (create-instruction---STACK-size-hi)          ;; init code size    (high part)
+                                                                    (create-instruction---STACK-size-lo)          ;; init code size    (low  part,  stack argument of CREATE-type instruction)
+                                                                    )))
+
+(defconstraint    create-instruction---setting-the-OOB-instruction---unexceptional-case
+                  (:guard    (create-instruction---generic-precondition))
+                  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                  (if-not-zero    (create-instruction---trigger_OOB_U)
                                   (set-OOB-instruction---create    CREATE_miscellaneous_row___row_offset         ;; offset
                                                                    (create-instruction---STACK-value-hi)         ;; value    (high part)
                                                                    (create-instruction---STACK-value-lo)         ;; value    (low  part,  stack argument of CALL-type instruction)
@@ -97,6 +106,7 @@
                                                                    (create-instruction---createe-has-code)       ;; callee's HAS_CODE
                                                                    (create-instruction---current-context-csd)    ;; current  call  stack  depth
                                                                    (create-instruction---creator-nonce)          ;; creator account nonce
+                                                                   (create-instruction---init-code-size)         ;; init code size
                                                                    )))
 
 (defun    (create-instruction---createe-nonce)       (*    (scenario-shorthand---CREATE---load-createe-account)    (shift    account/NONCE       CREATE_first_createe_account_row___row_offset)))

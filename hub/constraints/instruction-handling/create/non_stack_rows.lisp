@@ -33,6 +33,7 @@
 (defconstraint    create-instruction---setting-the-peeking-flags    (:guard    (create-instruction---standard-precondition))
                   (eq!    (shift    NON_STACK_ROWS    CREATE_first_stack_row___row_offset)
                           (+    (*  (create-instruction---flag-sum-staticx)                            (create-instruction---STACK-staticx)                   )
+                          (+    (*  (create-instruction---flag-sum-maxcsx)                             (create-instruction---STACK-maxcsx)                    )
                                 (*  (create-instruction---flag-sum-mxpx)                               (create-instruction---STACK-mxpx)                      )
                                 (*  (create-instruction---flag-sum-oogx)                               (create-instruction---STACK-oogx)                      )
                                 (*  (create-instruction---flag-sum-abort)                              scenario/CREATE_ABORT                                  )
@@ -46,4 +47,4 @@
                                 (*  (create-instruction---flag-sum-nonempty-init-success-wont-revert)  scenario/CREATE_NONEMPTY_INIT_CODE_SUCCESS_WONT_REVERT )
                                 )
                           )
-                  )
+                  ))
