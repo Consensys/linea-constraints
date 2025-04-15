@@ -132,7 +132,7 @@
          (begin (vanishes! (shift INDEX -7))
                 (eq! ACC NONCE)
                 (eq! BIT_ACC BYTE1)
-                (if (and! (eq! ACC_BYTESIZE 1) (shift BIT1 -7))
+                (if (and! (eq! ACC_BYTESIZE 1) (eq! (shift BIT1 -7) 0))
                           (eq! 1 TINY_NON_ZERO_NONCE)
                           (vanishes! TINY_NON_ZERO_NONCE))
                 (eq! (+ (shift LC -4) (shift LC -3))
