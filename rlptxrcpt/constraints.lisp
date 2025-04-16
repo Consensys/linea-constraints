@@ -1,9 +1,5 @@
 (module rlptxrcpt)
 
-(defpurefun (if-not-eq x y then)
-  (if-not-zero (- x y)
-               then))
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                              ;;
 ;;    4.1 Global Constraints    ;;
