@@ -74,6 +74,7 @@
   EVM_INST_MSIZE                            0x59
   EVM_INST_GAS                              0x5A
   EVM_INST_JUMPDEST                         0x5B
+  EVM_INST_MCOPY                            0x5E
   ;; Push Operations
   EVM_INST_PUSH0                            0x5F ;; post Shanghai
   EVM_INST_PUSH1                            0x60
