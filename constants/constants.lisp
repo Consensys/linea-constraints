@@ -400,6 +400,7 @@
   OOB_INST_CDL                              0x35
   OOB_INST_XCALL                            0xCC
   OOB_INST_CALL                             0xCA
+  OOB_INST_XCREATE                          0xCD
   OOB_INST_CREATE                           0xCE
   OOB_INST_SSTORE                           0x55
   OOB_INST_DEPLOYMENT                       0xF3
