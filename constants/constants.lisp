@@ -75,7 +75,7 @@
   EVM_INST_GAS                              0x5A
   EVM_INST_JUMPDEST                         0x5B
   ;; Push Operations
-  EVM_INST_PUSH0                            0x5F
+  EVM_INST_PUSH0                            0x5F ;; post Shanghai
   EVM_INST_PUSH1                            0x60
   EVM_INST_PUSH2                            0x61
   EVM_INST_PUSH3                            0x62
@@ -212,12 +212,14 @@
   GAS_CONST_ECPAIRING                       45000
   GAS_CONST_ECPAIRING_PAIR                  34000
   GAS_CONST_BLAKE2_PER_ROUND                1
+  GAS_CONST_INIT_CODE_WORD                  2 ;; post Shanghai EIP-3860
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;           ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;  EVM MISC ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;           ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   MAX_CODE_SIZE                             24576
+  MAX_INIT_CODE_SIZE                        (* MAX_CODE_SIZE 2)
   EIP_3541_MARKER                           0xEF
   BLOCKHASH_MAX_HISTORY                     256
   MAX_REFUND_QUOTIENT                       5
@@ -399,6 +401,7 @@
   OOB_INST_CDL                              0x35
   OOB_INST_XCALL                            0xCC
   OOB_INST_CALL                             0xCA
+  OOB_INST_XCREATE                          0xCD
   OOB_INST_CREATE                           0xCE
   OOB_INST_SSTORE                           0x55
   OOB_INST_DEPLOYMENT                       0xF3
