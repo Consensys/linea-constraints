@@ -4,12 +4,13 @@
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; EVM Forks        ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;                  ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  EVM_LONDON_FORK                             14
-  EVM_PARIS                 (+ 2 EVM_LONDON_FORK)
-  EVM_SHANGHAI              (+ 2 EVM_LONDON_FORK)
-  EVM_CANCUN                (+ 3 EVM_LONDON_FORK)
+  EVM_LONDON                             14
+  EVM_PARIS                 (+ 1 EVM_LONDON)
+  EVM_SHANGHAI              (+ 2 EVM_LONDON)
+  EVM_CANCUN                (+ 3 EVM_LONDON)
+  EVM_PRAGUE                (+ 4 EVM_LONDON)
   ;; Default fork
-  (EVM_FORK :i8 :extern)         EVM_LONDON_FORK
+  (EVM_FORK :i8 :extern)         EVM_LONDON
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;                  ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; EVM INSTRUCTIONS ;;
