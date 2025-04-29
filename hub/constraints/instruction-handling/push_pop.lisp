@@ -1,6 +1,6 @@
 (module hub)
 
-(defun    (push-pop-instruction---standard-hypothesis)   (* PEEK_AT_STACK stack/PUSHPOP_FLAG (- 1 stack/SUX stack/SOX)))
+(defun    (push-pop-instruction---standard-hypothesis)   (force-bin (* PEEK_AT_STACK stack/PUSHPOP_FLAG (- 1 stack/SUX stack/SOX))))
 (defun    (push-pop-instruction---result-hi)             [ stack/STACK_ITEM_VALUE_HI  4 ])
 (defun    (push-pop-instruction---result-lo)             [ stack/STACK_ITEM_VALUE_LO  4 ])
 (defun    (push-pop-instruction---is-POP)                [ stack/DEC_FLAG             1 ])
@@ -14,7 +14,7 @@
 
 (defconstraint    push-pop-instruction---setting-the-stack-pattern---PUSH-case
                   (:guard (push-pop-instruction---standard-hypothesis))
-                  (if-not-zero (+ (push-pop-instruction---is-PUSH) (push-pop-instruction---is-PUSH-ZERO) )
+                  (if-not-zero (force-bin (+ (push-pop-instruction---is-PUSH) (push-pop-instruction---is-PUSH-ZERO)))
                                (stack-pattern-0-1)))
 
 (defconstraint    push-pop-instruction---setting-NSR
@@ -39,9 +39,10 @@
 
 (defconstraint    push-pop-instruction---setting-stack-values---PUSH0-case
                   (:guard (push-pop-instruction---standard-hypothesis))
+                  (if (>= EVM_FORK EVM_SHANGHAI)
                   (if-not-zero (push-pop-instruction---is-PUSH-ZERO)
                                (begin (vanishes! (push-pop-instruction---result-hi))
-                                      (vanishes! (push-pop-instruction---result-lo)))))
+                                      (vanishes! (push-pop-instruction---result-lo))))))
 
 (defconstraint    push-pop-instruction---setting-PC_NEW---POP-case
                   (:guard (push-pop-instruction---standard-hypothesis))
