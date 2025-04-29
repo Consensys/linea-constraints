@@ -5,7 +5,10 @@
 (defun    (push-pop-instruction---result-lo)             [ stack/STACK_ITEM_VALUE_LO  4 ])
 (defun    (push-pop-instruction---is-POP)                [ stack/DEC_FLAG             1 ])
 (defun    (push-pop-instruction---is-PUSH)               [ stack/DEC_FLAG             2 ])
-(defun    (push-pop-instruction---is-PUSH-ZERO)          [ stack/DEC_FLAG             3 ]) ;; ""
+(defun    (push-pop-instruction---is-PUSH-ZERO)          
+              (if (>= EVM_FORK EVM_SHANGHAI)
+                     [ stack/DEC_FLAG             3 ]
+                     0)) ;; ""
 
 (defconstraint    push-pop-instruction---setting-the-stack-pattern---POP-case
                   (:guard (push-pop-instruction---standard-hypothesis))
