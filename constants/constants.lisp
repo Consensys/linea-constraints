@@ -1,6 +1,18 @@
 (defconst
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;                  ;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; EVM Forks        ;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;                  ;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  EVM_LONDON                             14
+  EVM_PARIS                 (+ 1 EVM_LONDON)
+  EVM_SHANGHAI              (+ 2 EVM_LONDON)
+  EVM_CANCUN                (+ 3 EVM_LONDON)
+  EVM_PRAGUE                (+ 4 EVM_LONDON)
+  ;; Default fork
+  (EVM_FORK :i8 :extern)         EVM_LONDON
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;                  ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; EVM INSTRUCTIONS ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;                  ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -75,6 +87,7 @@
   EVM_INST_GAS                              0x5A
   EVM_INST_JUMPDEST                         0x5B
   ;; Push Operations
+  EVM_INST_PUSH0                            0x5F ;; post Shanghai
   EVM_INST_PUSH1                            0x60
   EVM_INST_PUSH2                            0x61
   EVM_INST_PUSH3                            0x62
@@ -211,6 +224,7 @@
   GAS_CONST_ECPAIRING                       45000
   GAS_CONST_ECPAIRING_PAIR                  34000
   GAS_CONST_BLAKE2_PER_ROUND                1
+  GAS_CONST_INIT_CODE_WORD                  2 ;; post Shanghai EIP-3860
   GAS_CONST_INIT_CODE_WORD                  2 ;; post Shanghai EIP-3860
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;           ;;
@@ -400,6 +414,7 @@
   OOB_INST_CDL                              0x35
   OOB_INST_XCALL                            0xCC
   OOB_INST_CALL                             0xCA
+  OOB_INST_XCREATE                          0xCD
   OOB_INST_XCREATE                          0xCD
   OOB_INST_CREATE                           0xCE
   OOB_INST_SSTORE                           0x55

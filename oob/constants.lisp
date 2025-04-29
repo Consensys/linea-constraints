@@ -8,9 +8,15 @@
   CT_MAX_XCALL          0
   CT_MAX_CALL           2
   CT_MAX_XCREATE        0
+<<<<<<< HEAD
   CT_MAX_CREATE_LONDON         3
   CT_MAX_CREATE_SHANGHAI         4
   CT_MAX_CREATE         CT_MAX_CREATE_LONDON
+=======
+  CT_MAX_CREATE_LONDON  3
+  CT_MAX_CREATE_SHANGHAI         4
+  CT_MAX_CREATE         3 ;;TODO fix me
+>>>>>>> shanghai-hard-fork
   CT_MAX_SSTORE         0
   CT_MAX_DEPLOYMENT     0
   CT_MAX_ECRECOVER      2

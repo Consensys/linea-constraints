@@ -53,7 +53,11 @@
 
 		 ;; OOB columns
 		 (OOB_INST                 :i16  )
+<<<<<<< HEAD
 		 (OOB_DATA                 :array[1:10] :i128 )
+=======
+		 (OOB_DATA                 :array[1:10] :i128 ) ;; TODO: only 9 for LONDON
+>>>>>>> shanghai-hard-fork
 
 		 ;; STP columns
 		 ( STP_INSTRUCTION               :byte )
