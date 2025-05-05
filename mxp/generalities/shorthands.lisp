@@ -34,3 +34,11 @@
   CT_MAX_UPDT_W   (-  nROWS_UPDT_W  1)
   CT_MAX_UPDT_B   (-  nROWS_UPDT_B  1)
   )
+
+;; Adding mxp constants before redesign to be able to compile bef we have fork feature
+(defconst
+  CT_MAX_TRIVIAL              0
+  CT_MAX_NON_TRIVIAL          3
+  CT_MAX_NON_TRIVIAL_BUT_MXPX 16
+  TWO_POW_32                  4294967296
+  )
