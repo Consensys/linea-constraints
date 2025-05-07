@@ -66,8 +66,9 @@
                    (if-not-zero    (-  INSTRUCTION    EVM_INST_RETURNDATACOPY)    (vanishes!    RDCX))
                    (if-not-zero    (-  INSTRUCTION    EVM_INST_SSTORE)            (vanishes!    SSTOREX))
                    (if-not-zero    (-  INSTRUCTION    EVM_INST_RETURN)            (vanishes!    ICPX))
-                   (if-not-zero    (-  INSTRUCTION    EVM_INST_RETURN)
-                                   (if-not-zero       CREATE_FLAG                 (vanishes!    MAXCSX)))
+                   (if-not-zero    (*   (-  INSTRUCTION    EVM_INST_RETURN)
+                                        (- 1 CREATE_FLAG))               
+                                                                                  (vanishes!    MAXCSX))
                    )
                  )
 
