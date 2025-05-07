@@ -5,24 +5,24 @@
   hub-into-mxp
   ;; target columns
   (
-    mxp_v2.STAMP
-    mxp_v2.CN
-    mxp_v2.INST
-    mxp_v2.MXPX
-    mxp_v2.DEPLOYS
-    mxp_v2.OFFSET_1_HI
-    mxp_v2.OFFSET_1_LO
-    mxp_v2.OFFSET_2_HI
-    mxp_v2.OFFSET_2_LO
-    mxp_v2.SIZE_1_HI
-    mxp_v2.SIZE_1_LO
-    mxp_v2.SIZE_2_HI
-    mxp_v2.SIZE_2_LO
-    mxp_v2.WORDS
-    mxp_v2.GAS_MXP
-    mxp_v2.MTNTOP
-    mxp_v2.SIZE_1_NONZERO_NO_MXPX
-    mxp_v2.SIZE_2_NONZERO_NO_MXPX
+    mxplon.STAMP
+    mxplon.CN
+    mxplon.INST
+    mxplon.MXPX
+    mxplon.DEPLOYS
+    mxplon.OFFSET_1_HI
+    mxplon.OFFSET_1_LO
+    mxplon.OFFSET_2_HI
+    mxplon.OFFSET_2_LO
+    mxplon.SIZE_1_HI
+    mxplon.SIZE_1_LO
+    mxplon.SIZE_2_HI
+    mxplon.SIZE_2_LO
+    mxplon.WORDS
+    mxplon.GAS_MXP
+    mxplon.MTNTOP
+    mxplon.SIZE_1_NONZERO_NO_MXPX
+    mxplon.SIZE_2_NONZERO_NO_MXPX
   )
   ;; source columns
   (
