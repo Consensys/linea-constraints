@@ -49,7 +49,19 @@ MMU :=  mmu
 
 MMIO := mmio 
 
-MXP := mxp
+# mxp cancun version, while waiting for forks feat
+MXPCAN := $(wildcard mxp/mxpcan/columns/*.lisp) \
+		$(wildcard mxp/mxpcan/columns/computation/*.lisp) \
+		$(wildcard mxp/mxpcan/columns/scenario/*.lisp) \
+		$(wildcard mxp/mxpcan/computations/*.lisp) \
+		$(wildcard mxp/mxpcan/consistency/*.lisp) \
+		$(wildcard mxp/mxpcan/generalities/*.lisp) \
+		$(wildcard mxp/mxpcan/generalities/perspectives/*.lisp) \
+		$(wildcard mxp/mxpcan/lookups/*.lisp) \
+
+# mxp london version, while waiting for forks feat
+MXPLON := $(wildcard mxp/mxplon/*.lisp) \
+			$(wildcard mxp/mxplon/lookups/*.lisp) \
 
 MXP_v3 := mxp_v3
 
