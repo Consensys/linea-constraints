@@ -22,10 +22,10 @@
   ;; Empty initialization code (will or won't revert)
   CREATE_empty_init_code_will_revert_current_context_row___row_offset            7
   CREATE_empty_init_code_wont_revert_current_context_row___row_offset            5
-  ;; Nonmpty initialization code failure (will or won't revert)
+  ;; Nonempty initialization code failure (will or won't revert)
   CREATE_nonempty_init_code_failure_will_revert_new_context_row___row_offset     9
   CREATE_nonempty_init_code_failure_wont_revert_new_context_row___row_offset     7
-  ;; Nonmpty initialization code success (will or won't revert)
+  ;; Nonempty initialization code success (will or won't revert)
   CREATE_nonempty_init_code_success_will_revert_new_context_row___row_offset     7
   CREATE_nonempty_init_code_success_wont_revert_new_context_row___row_offset     5
   )
