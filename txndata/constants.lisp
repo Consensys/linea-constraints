@@ -1,5 +1,7 @@
 (module txndata)
 
+;; TODO: this is SHANGHAI
+
 (defconst
   CT_MAX_TYPE_0                                         9
   CT_MAX_TYPE_1                                         10
