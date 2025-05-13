@@ -41,8 +41,10 @@ MMU :=  mmu
 
 MMIO := mmio 
 
+MXP := mxp
+
 # mxp cancun version, while waiting for forks feat
-MXPCAN := $(wildcard mxp/mxpcan/columns/*.lisp) \
+# MXPCAN := $(wildcard mxp/mxpcan/columns/*.lisp) \
 		$(wildcard mxp/mxpcan/columns/computation/*.lisp) \
 		$(wildcard mxp/mxpcan/columns/scenario/*.lisp) \
 		$(wildcard mxp/mxpcan/computations/*.lisp) \
@@ -52,7 +54,7 @@ MXPCAN := $(wildcard mxp/mxpcan/columns/*.lisp) \
 		$(wildcard mxp/mxpcan/lookups/*.lisp) \
 
 # mxp london version, while waiting for forks feat
-MXPLON := $(wildcard mxp/mxplon/*.lisp) \
+# MXPLON := $(wildcard mxp/mxplon/*.lisp) \
 			$(wildcard mxp/mxplon/lookups/*.lisp) \
 
 OOB := oob
@@ -98,8 +100,7 @@ ZKEVM_MODULES := ${CONSTANTS} \
 		 ${LOG_INFO} \
 		 ${MMIO} \
 		 ${MMU} \
-		 ${MXPCAN} \
-		 ${MXPLON} \
+		 ${MXP} \
 		 ${OOB} \
 		 ${RLP_ADDR} \
 		 ${RLP_TXN} \
