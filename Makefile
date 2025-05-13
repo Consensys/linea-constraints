@@ -49,6 +49,8 @@ MMU :=  mmu
 
 MMIO := mmio 
 
+MXP := mxp
+
 # mxp cancun version, while waiting for forks feat
 MXPCAN := $(wildcard mxp/mxpcan/columns/*.lisp) \
 		$(wildcard mxp/mxpcan/columns/computation/*.lisp) \
