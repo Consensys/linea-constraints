@@ -1,4 +1,5 @@
-(module mxpcan)
+(module mxpcan (>= EVM_FORK EVM_CANCUN))
+;; mdule will be used from Cancun fork and on
 
 (defcolumns
   ( MXP_STAMP   :i16          )
