@@ -5,6 +5,7 @@
 ;;   9.2 MISC/MXP constraints   ;;
 ;;                              ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (defun (set-MXP-instruction-type-1 kappa)
   (eq! (shift misc/MXP_INST kappa) EVM_INST_MSIZE))
 
