@@ -1,4 +1,4 @@
-(module instdecoder_lon
+(module instdecoder
         (< EVM_FORK EVM_CANCUN))
 
 (defcolumns
