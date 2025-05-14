@@ -15,7 +15,7 @@
 ;;                          ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defun (stack-pattern-3-1)
+(defun (stack-pattern-3-0)
                 (begin
                     ;; stack item 1:
                     (inc-frst-row-stack-item-X-height-by-Y       1 0)

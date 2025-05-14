@@ -14,12 +14,12 @@
 ;;                              ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defun (mcopy-instruction---target-offset-hi) [ STACK_ITEM_VALUE_HI 1 ] )
-(defun (mcopy-instruction---target-offset-lo) [ STACK_ITEM_VALUE_HI 1 ] )
-(defun (mcopy-instruction---source-offset-hi) [ STACK_ITEM_VALUE_HI 2 ] )
-(defun (mcopy-instruction---source-offset-lo) [ STACK_ITEM_VALUE_HI 2 ] )
-(defun (mcopy-instruction---size-hi)          [ STACK_ITEM_VALUE_HI 3 ] )
-(defun (mcopy-instruction---size-lo)          [ STACK_ITEM_VALUE_HI 3 ] ) ;; ""
+(defun (mcopy-instruction---target-offset-hi) [ stack/STACK_ITEM_VALUE_HI 1 ] )
+(defun (mcopy-instruction---target-offset-lo) [ stack/STACK_ITEM_VALUE_HI 1 ] )
+(defun (mcopy-instruction---source-offset-hi) [ stack/STACK_ITEM_VALUE_HI 2 ] )
+(defun (mcopy-instruction---source-offset-lo) [ stack/STACK_ITEM_VALUE_HI 2 ] )
+(defun (mcopy-instruction---size-hi)          [ stack/STACK_ITEM_VALUE_HI 3 ] )
+(defun (mcopy-instruction---size-lo)          [ stack/STACK_ITEM_VALUE_HI 3 ] ) ;; ""
 
 (defun (mcopy-instruction---MXP-mxpx)       (shift misc/MXP_MXPX                   MCOPY_ROFF___1ST_MISC_ROW ))
 (defun (mcopy-instruction---MXP-gas-mxp)    (shift misc/MXP_GAS_MXP                MCOPY_ROFF___1ST_MISC_ROW ))

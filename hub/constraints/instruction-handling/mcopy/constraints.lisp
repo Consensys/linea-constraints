@@ -23,9 +23,10 @@
 (defconstraint   mcopy-instruction---the-first-row-must-be-misc-and-we-call-MXP
                  (:guard (mcopy-instruction---standard-precondition))
                  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-                 (eq! (shift PEEK_AT_MISCELLANEOUS MCOPY_ROFF___1ST_MISC_ROW) 1)
-                 (eq! (shift misc/MXP_FLAG         MCOPY_ROFF___1ST_MISC_ROW) 1)
-                 )
+                 (begin
+                   (eq! (shift PEEK_AT_MISCELLANEOUS MCOPY_ROFF___1ST_MISC_ROW) 1)
+                   (eq! (shift misc/MXP_FLAG         MCOPY_ROFF___1ST_MISC_ROW) 1)
+                   ))
 
 (defconstraint   mcopy-instruction---defining-the-MXP-instruction
                  (:guard (mcopy-instruction---standard-precondition))
