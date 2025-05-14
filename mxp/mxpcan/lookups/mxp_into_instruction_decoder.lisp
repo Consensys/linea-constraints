@@ -5,13 +5,13 @@
            ;; target columns
            ;;
 	   (
-	     instdecoder.IS_MXP_INSTRUCTION
+	     instdecoder.MXP_FLAG
 	     instdecoder.OPCODE
 	     instdecoder.IS_MSIZE
 	     instdecoder.IS_RETURN
 	     instdecoder.IS_MCOPY
-	     instdecoder.IS_FIXED_SIZE_1
 	     instdecoder.IS_FIXED_SIZE_32
+	     instdecoder.IS_FIXED_SIZE_1
 	     instdecoder.IS_SINGLE_MAX_OFFSET
 	     instdecoder.IS_DOUBLE_MAX_OFFSET
 	     instdecoder.IS_WORD_PRICING
