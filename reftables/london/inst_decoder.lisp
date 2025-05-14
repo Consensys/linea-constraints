@@ -45,7 +45,6 @@
     ;;
     ;; Billing settings
     ;;
-    (IS_MXP_INSTRUCTION   :binary)
     (BILLING_PER_WORD     :byte)
     (BILLING_PER_BYTE     :byte)
     (IS_MSIZE             :binary)
