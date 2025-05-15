@@ -52,14 +52,14 @@
                           (* MISC_WEIGHT_MMU (keccak-instruction---trigger_MMU)))))
 
 (defconstraint    keccak-instruction---setting-MXP-parameters (:guard (keccak-instruction---no-stack-exceptions))
-                  (set-MXP-instruction-type-4 1                                  ;; row offset kappa
-                                              EVM_INST_SHA3                      ;; instruction
-                                              0                                  ;; deploys (bit modifying the behaviour of RETURN pricing)
-                                              (keccak-instruction---offset-hi)   ;; source offset high
-                                              (keccak-instruction---offset-lo)   ;; source offset low
-                                              (keccak-instruction---size-hi)     ;; source size high
-                                              (keccak-instruction---size-lo)     ;; source size low
-                                              ))
+                  (set-MXP-instruction---single-mxp-offset-instructions   1                                  ;; row offset kappa
+                                                                          EVM_INST_SHA3                      ;; instruction
+                                                                          0                                  ;; deploys (bit modifying the behaviour of RETURN pricing)
+                                                                          (keccak-instruction---offset-hi)   ;; source offset high
+                                                                          (keccak-instruction---offset-lo)   ;; source offset low
+                                                                          (keccak-instruction---size-hi)     ;; source size high
+                                                                          (keccak-instruction---size-lo)     ;; source size low
+                                                                          ))
 
 (defconstraint    keccak-instruction---setting-MMU-parameters (:guard (keccak-instruction---no-stack-exceptions))
                   (if-not-zero misc/MMU_FLAG
