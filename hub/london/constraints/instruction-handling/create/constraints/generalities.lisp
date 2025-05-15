@@ -126,7 +126,7 @@
                   (:guard    (create-instruction---generic-precondition))
                   (if-not-zero    (scenario-shorthand---CREATE---not-rebuffed)
                                   (eq!    (scenario-shorthand---CREATE---not-rebuffed-nonempty-init-code)
-                                          (create-instruction---MXP-mtntop))))
+                                          (create-instruction---MXP-s1nznomxpx))))
 
 (defconstraint    create-instruction---setting-the-CREATE-scenario---not-rebuffed-nonempty-init-code
                   (:guard    (create-instruction---generic-precondition))

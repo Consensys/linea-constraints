@@ -157,7 +157,7 @@
 
 (defun (copy-instruction---trigger_OOB)    (copy-instruction---is-RETURNDATACOPY))
 (defun (copy-instruction---trigger_MXP)    (- 1 stack/RDCX))
-(defun (copy-instruction---trigger_MMU)    (* (- 1 XAHOY) (shift misc/MXP_MTNTOP ROFF_COPY_INST_MISCELLANEOUS_ROW)))
+(defun (copy-instruction---trigger_MMU)    (* (- 1 XAHOY) (shift misc/MXP_SIZE_1_NONZERO_NO_MXPX ROFF_COPY_INST_MISCELLANEOUS_ROW)))
 
 (defconstraint    copy-instruction---misc-row---setting-OOB-instruction (:guard (copy-instruction---standard-precondition))
                   (if-not-zero (shift misc/OOB_FLAG ROFF_COPY_INST_MISCELLANEOUS_ROW)

@@ -110,7 +110,7 @@
                                                             (log-instruction---size-lo))))      ;; size low
 
 (defun (trigger_MMU) (* (- 1 CONTEXT_WILL_REVERT)
-                        (shift misc/MXP_MTNTOP ROFF_LOG___MISCELLANEOUS_ROW)))
+                        (shift misc/MXP_SIZE_1_NONZERO_NO_MXPX ROFF_LOG___MISCELLANEOUS_ROW)))
 
 (defconstraint    log-instruction---MISC-row-setting-MMU-data                        (:guard (log-instruction---standard-hypothesis))
                   (if-zero (force-bin stack/STATICX)
