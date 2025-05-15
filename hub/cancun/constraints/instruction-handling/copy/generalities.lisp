@@ -178,13 +178,13 @@
 
 (defconstraint    copy-instruction---misc-row---setting-MXP-instruction (:guard (copy-instruction---standard-precondition))
                   (if-not-zero (shift misc/MXP_FLAG ROFF_COPY_INST_MISCELLANEOUS_ROW)
-                               (set-MXP-instruction-type-4 ROFF_COPY_INST_MISCELLANEOUS_ROW ;; row offset kappa
-                                                           stack/INSTRUCTION                      ;; instruction
-                                                           0                                      ;; deploys (bit modifying the behaviour of RETURN pricing)
-                                                           (copy-instruction---target-offset-hi)  ;; offset high
-                                                           (copy-instruction---target-offset-lo)  ;; offset low
-                                                           (copy-instruction---size-hi)           ;; size high
-                                                           (copy-instruction---size-lo))))        ;; size low
+                               (set-MXP-instruction---single-mxp-offset-instructions   ROFF_COPY_INST_MISCELLANEOUS_ROW ;; row offset kappa
+                                                                                       stack/INSTRUCTION                      ;; instruction
+                                                                                       0                                      ;; deploys (bit modifying the behaviour of RETURN pricing)
+                                                                                       (copy-instruction---target-offset-hi)  ;; offset high
+                                                                                       (copy-instruction---target-offset-lo)  ;; offset low
+                                                                                       (copy-instruction---size-hi)           ;; size high
+                                                                                       (copy-instruction---size-lo))))        ;; size low
 
 (defconstraint    copy-instruction---misc-row---setting-MXPX (:guard (copy-instruction---standard-precondition))
                   (if-zero    (shift    misc/MXP_FLAG    ROFF_COPY_INST_MISCELLANEOUS_ROW)
