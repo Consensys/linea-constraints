@@ -242,15 +242,15 @@
 
 (defconstraint   return-instruction---setting-MXP-data              (:guard   (return-instruction---standard-scenario-row))
                  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-                 (if-not-zero   (shift   misc/MXP_FLAG        ROFF_RETURN___1ST_MISC_ROW)
-                                (set-MXP-instruction-type-4   ROFF_RETURN___1ST_MISC_ROW   ;; row offset kappa
-                                                              (return-instruction---instruction)           ;; instruction
-                                                              (return-instruction---is-deployment)         ;; bit modifying the behaviour of RETURN pricing
-                                                              (return-instruction---offset-hi)             ;; offset high
-                                                              (return-instruction---offset-lo)             ;; offset low
-                                                              (return-instruction---size-hi)               ;; size high
-                                                              (return-instruction---size-lo)               ;; size low
-                                                              )))
+                 (if-not-zero   (shift   misc/MXP_FLAG                                  ROFF_RETURN___1ST_MISC_ROW)
+                                (set-MXP-instruction---single-mxp-offset-instructions   ROFF_RETURN___1ST_MISC_ROW   ;; row offset kappa
+                                                                                        (return-instruction---instruction)           ;; instruction
+                                                                                        (return-instruction---is-deployment)         ;; bit modifying the behaviour of RETURN pricing
+                                                                                        (return-instruction---offset-hi)             ;; offset high
+                                                                                        (return-instruction---offset-lo)             ;; offset low
+                                                                                        (return-instruction---size-hi)               ;; size high
+                                                                                        (return-instruction---size-lo)               ;; size low
+                                                                                        )))
 
 (defconstraint   return-instruction---setting-OOB-data              (:guard   (return-instruction---standard-scenario-row))
                  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
