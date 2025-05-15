@@ -1,4 +1,5 @@
-(module instdecoder)
+(module instdecoder_cancun
+        (>= EVM_FORK EVM_CANCUN))
 
 (defcolumns
     (OPCODE :byte :display :opcode)
@@ -17,6 +18,7 @@
     (FAMILY_CONTEXT                        :binary)
     (FAMILY_ACCOUNT                        :binary)
     (FAMILY_COPY                           :binary)
+    (FAMILY_MCOPY                          :binary)
     (FAMILY_TRANSACTION                    :binary)
     (FAMILY_BATCH                          :binary)
     (FAMILY_STACK_RAM                      :binary)
@@ -45,17 +47,21 @@
     ;;
     ;; Billing settings
     ;;
-    (BILLING_PER_WORD       :byte)
-    (BILLING_PER_BYTE       :byte)
-    (MXP_TYPE_1             :binary)
-    (MXP_TYPE_2             :binary)
-    (MXP_TYPE_3             :binary)
-    (MXP_TYPE_4             :binary)
-    (MXP_TYPE_5             :binary)
+    (BILLING_PER_WORD     :byte)
+    (BILLING_PER_BYTE     :byte)
+    (IS_MSIZE             :binary)
+    (IS_RETURN            :binary)
+    (IS_MCOPY             :binary)
+    (IS_FIXED_SIZE_1      :binary)
+    (IS_FIXED_SIZE_32     :binary)
+    (IS_SINGLE_MAX_OFFSET :binary)
+    (IS_DOUBLE_MAX_OFFSET :binary)
+    (IS_WORD_PRICING      :binary)
+    (IS_BYTE_PRICING      :binary)
 
     ;;
     ;; ROM columns
     ;;
-    (IS_PUSH     :binary)
-    (IS_JUMPDEST :binary)
+    (IS_PUSH              :binary)
+    (IS_JUMPDEST          :binary)
     )
