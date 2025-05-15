@@ -1,4 +1,4 @@
-(module txndata (< EVM_FORK EVM_SHANGHAI))
+(module txndata)
 
 (defcolumns
   (ABS_TX_NUM_MAX          :i16)

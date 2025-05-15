@@ -1,7 +1,5 @@
 (module txndata)
 
-
-
 (defconst
 ;; TODO: this is LONDON
   CT_MAX_TYPE_0_LONDON                                         7
@@ -42,9 +40,8 @@
   TYPE_1_RLP_TXN_PHASE_NUMBER_7                          RLP_TXN_PHASE_ACCESS_LIST
   TYPE_2_RLP_TXN_PHASE_NUMBER_6                          RLP_TXN_PHASE_MAX_FEE_PER_GAS
   TYPE_2_RLP_TXN_PHASE_NUMBER_7                          RLP_TXN_PHASE_ACCESS_LIST
-  ;;
 
-  ;; TODO: this is LONDON
+  ;;
   row-offset---nonce-comparison                         0
   row-offset---initial-balance-comparison               1
   row-offset---sufficient-gas-comparison                2
@@ -53,7 +50,6 @@
   row-offset---detecting-empty-call-data-comparison     5
   row-offset---max-fee-and-basefee-comparison           6
   row-offset---max-fee-and-max-priority-fee-comparison  7
-  row-offset---computing-effective-gas-price-comparison 8
-  )
+  row-offset---computing-effective-gas-price-comparison 8)
 
 
