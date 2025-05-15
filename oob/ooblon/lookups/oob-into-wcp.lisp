@@ -1,4 +1,4 @@
-(defun (oob-into-wcp-flag)
+(defun (oob-into-wcp-activation-flag)
   ooblon.WCP_FLAG)
 
 (deflookup
@@ -12,12 +12,12 @@
     wcp.INST
   )
   (
-    (* [ooblon.OUTGOING_DATA 1] (oob-into-wcp-flag))
-    (* [ooblon.OUTGOING_DATA 2] (oob-into-wcp-flag))
-    (* [ooblon.OUTGOING_DATA 3] (oob-into-wcp-flag))
-    (* [ooblon.OUTGOING_DATA 4] (oob-into-wcp-flag))
-    (* ooblon.OUTGOING_RES_LO (oob-into-wcp-flag))
-    (* ooblon.OUTGOING_INST (oob-into-wcp-flag))
+    (* [ooblon.OUTGOING_DATA 1] (oob-into-wcp-activation-flag))
+    (* [ooblon.OUTGOING_DATA 2] (oob-into-wcp-activation-flag))
+    (* [ooblon.OUTGOING_DATA 3] (oob-into-wcp-activation-flag))
+    (* [ooblon.OUTGOING_DATA 4] (oob-into-wcp-activation-flag))
+    (* ooblon.OUTGOING_RES_LO (oob-into-wcp-activation-flag))
+    (* ooblon.OUTGOING_INST (oob-into-wcp-activation-flag))
   ))
 
 

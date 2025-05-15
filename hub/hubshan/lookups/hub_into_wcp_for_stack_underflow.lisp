@@ -1,4 +1,4 @@
-(defun (hub-into-wcp-for-sux-activation-flag) hubshan.PEEK_AT_STACK)
+(defun (hub-into-wcp-for-sux-activation-flag-shan) hubshan.PEEK_AT_STACK)
 
 (deflookup hub-into-wcp-for-sux
     ;; target columns
@@ -12,11 +12,11 @@
     )
     ;; source columns
     (
-        (* EVM_INST_LT         (hub-into-wcp-for-sux-activation-flag))
+        (* EVM_INST_LT         (hub-into-wcp-for-sux-activation-flag-shan))
         0
-        (* hubshan.HEIGHT          (hub-into-wcp-for-sux-activation-flag))
+        (* hubshan.HEIGHT          (hub-into-wcp-for-sux-activation-flag-shan))
         0
-        (* hubshan.stack/DELTA     (hub-into-wcp-for-sux-activation-flag))
-        (* hubshan.stack/SUX       (hub-into-wcp-for-sux-activation-flag))
+        (* hubshan.stack/DELTA     (hub-into-wcp-for-sux-activation-flag-shan))
+        (* hubshan.stack/SUX       (hub-into-wcp-for-sux-activation-flag-shan))
     )
 )

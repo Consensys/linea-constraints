@@ -1,4 +1,4 @@
-(defun (hub-into-rom-lex-trigger)
+(defun (hub-into-rom-lex-trigger-shan)
   (* hubshan.PEEK_AT_ACCOUNT
      hubshan.account/ROMLEX_FLAG))
 
@@ -17,13 +17,13 @@
            )
            ;; source columns
 	   (
-	     (* hubshan.account/CODE_FRAGMENT_INDEX      (hub-into-rom-lex-trigger))
-	     (* hubshan.account/CODE_SIZE_NEW            (hub-into-rom-lex-trigger))
-	     (* hubshan.account/ADDRESS_HI               (hub-into-rom-lex-trigger))
-	     (* hubshan.account/ADDRESS_LO               (hub-into-rom-lex-trigger))
-	     (* hubshan.account/DEPLOYMENT_NUMBER_NEW    (hub-into-rom-lex-trigger))
-	     (* hubshan.account/DEPLOYMENT_STATUS_NEW    (hub-into-rom-lex-trigger))
-	     (* hubshan.account/CODE_HASH_HI_NEW         (hub-into-rom-lex-trigger))
-	     (* hubshan.account/CODE_HASH_LO_NEW         (hub-into-rom-lex-trigger))
+	     (* hubshan.account/CODE_FRAGMENT_INDEX      (hub-into-rom-lex-trigger-shan))
+	     (* hubshan.account/CODE_SIZE_NEW            (hub-into-rom-lex-trigger-shan))
+	     (* hubshan.account/ADDRESS_HI               (hub-into-rom-lex-trigger-shan))
+	     (* hubshan.account/ADDRESS_LO               (hub-into-rom-lex-trigger-shan))
+	     (* hubshan.account/DEPLOYMENT_NUMBER_NEW    (hub-into-rom-lex-trigger-shan))
+	     (* hubshan.account/DEPLOYMENT_STATUS_NEW    (hub-into-rom-lex-trigger-shan))
+	     (* hubshan.account/CODE_HASH_HI_NEW         (hub-into-rom-lex-trigger-shan))
+	     (* hubshan.account/CODE_HASH_LO_NEW         (hub-into-rom-lex-trigger-shan))
            )
 )

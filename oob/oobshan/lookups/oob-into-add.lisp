@@ -1,4 +1,4 @@
-(defun (oob-into-add-activation-flag)
+(defun (oob-into-add-activation-flag-shan)
   oobshan.ADD_FLAG)
 
 (deflookup
@@ -15,13 +15,13 @@
   )
   ;target columns
   (
-    (* [oobshan.OUTGOING_DATA 1] (oob-into-add-activation-flag))
-    (* [oobshan.OUTGOING_DATA 2] (oob-into-add-activation-flag))
-    (* [oobshan.OUTGOING_DATA 3] (oob-into-add-activation-flag))
-    (* [oobshan.OUTGOING_DATA 4] (oob-into-add-activation-flag))
-    (* (next [oobshan.OUTGOING_DATA 1]) (oob-into-add-activation-flag))
-    (* (next [oobshan.OUTGOING_DATA 2]) (oob-into-add-activation-flag))
-    (* oobshan.OUTGOING_INST (oob-into-add-activation-flag))
+    (* [oobshan.OUTGOING_DATA 1] (oob-into-add-activation-flag-shan))
+    (* [oobshan.OUTGOING_DATA 2] (oob-into-add-activation-flag-shan))
+    (* [oobshan.OUTGOING_DATA 3] (oob-into-add-activation-flag-shan))
+    (* [oobshan.OUTGOING_DATA 4] (oob-into-add-activation-flag-shan))
+    (* (next [oobshan.OUTGOING_DATA 1]) (oob-into-add-activation-flag-shan))
+    (* (next [oobshan.OUTGOING_DATA 2]) (oob-into-add-activation-flag-shan))
+    (* oobshan.OUTGOING_INST (oob-into-add-activation-flag-shan))
   ))
 
 

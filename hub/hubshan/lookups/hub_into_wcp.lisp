@@ -1,5 +1,5 @@
-(defun (hub-into-wcp-activation-flag)
-  (* (unexceptional-stack-row)
+(defun (hub-into-wcp-activation-flag-shan)
+  (* (unexceptional-stack-row-shan)
       hubshan.stack/WCP_FLAG))
 
 (deflookup hub-into-wcp
@@ -14,11 +14,11 @@
     )
     ;; source columns
     (
-        (* [hubshan.stack/STACK_ITEM_VALUE_HI 1]     (hub-into-wcp-activation-flag))
-        (* [hubshan.stack/STACK_ITEM_VALUE_LO 1]     (hub-into-wcp-activation-flag))
-        (* [hubshan.stack/STACK_ITEM_VALUE_HI 2]     (hub-into-wcp-activation-flag))
-        (* [hubshan.stack/STACK_ITEM_VALUE_LO 2]     (hub-into-wcp-activation-flag))
-        (* [hubshan.stack/STACK_ITEM_VALUE_LO 4]     (hub-into-wcp-activation-flag))
-        (* hubshan.stack/INSTRUCTION                 (hub-into-wcp-activation-flag))
+        (* [hubshan.stack/STACK_ITEM_VALUE_HI 1]     (hub-into-wcp-activation-flag-shan))
+        (* [hubshan.stack/STACK_ITEM_VALUE_LO 1]     (hub-into-wcp-activation-flag-shan))
+        (* [hubshan.stack/STACK_ITEM_VALUE_HI 2]     (hub-into-wcp-activation-flag-shan))
+        (* [hubshan.stack/STACK_ITEM_VALUE_LO 2]     (hub-into-wcp-activation-flag-shan))
+        (* [hubshan.stack/STACK_ITEM_VALUE_LO 4]     (hub-into-wcp-activation-flag-shan))
+        (* hubshan.stack/INSTRUCTION                 (hub-into-wcp-activation-flag-shan))
     )
 )

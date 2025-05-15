@@ -1,4 +1,4 @@
-(module hubshan)
+(module hubshan (>= EVM_FORK EVM_SHANGHAI))
 
 (defcolumns
     ( ABSOLUTE_TRANSACTION_NUMBER               :i16 )

@@ -1,4 +1,4 @@
-(defun (hub-into-rlp-addr-trigger)
+(defun (hub-into-rlp-addr-trigger-shan)
   (* hubshan.PEEK_AT_ACCOUNT
      hubshan.account/RLPADDR_FLAG))
 
@@ -19,15 +19,15 @@
            )
            ;; source columns
 	   (
-	     (* hubshan.account/RLPADDR_RECIPE                         (hub-into-rlp-addr-trigger))
-	     (* hubshan.account/ADDRESS_HI                             (hub-into-rlp-addr-trigger))
-	     (* hubshan.account/ADDRESS_LO                             (hub-into-rlp-addr-trigger))
-	     (* hubshan.account/NONCE                                  (hub-into-rlp-addr-trigger))
-	     (* hubshan.account/RLPADDR_DEP_ADDR_HI                    (hub-into-rlp-addr-trigger))
-	     (* hubshan.account/RLPADDR_DEP_ADDR_LO                    (hub-into-rlp-addr-trigger))
-	     (* hubshan.account/RLPADDR_SALT_HI                        (hub-into-rlp-addr-trigger))
-	     (* hubshan.account/RLPADDR_SALT_LO                        (hub-into-rlp-addr-trigger))
-	     (* hubshan.account/RLPADDR_KEC_HI                         (hub-into-rlp-addr-trigger))
-	     (* hubshan.account/RLPADDR_KEC_LO                         (hub-into-rlp-addr-trigger))
+	     (* hubshan.account/RLPADDR_RECIPE                         (hub-into-rlp-addr-trigger-shan))
+	     (* hubshan.account/ADDRESS_HI                             (hub-into-rlp-addr-trigger-shan))
+	     (* hubshan.account/ADDRESS_LO                             (hub-into-rlp-addr-trigger-shan))
+	     (* hubshan.account/NONCE                                  (hub-into-rlp-addr-trigger-shan))
+	     (* hubshan.account/RLPADDR_DEP_ADDR_HI                    (hub-into-rlp-addr-trigger-shan))
+	     (* hubshan.account/RLPADDR_DEP_ADDR_LO                    (hub-into-rlp-addr-trigger-shan))
+	     (* hubshan.account/RLPADDR_SALT_HI                        (hub-into-rlp-addr-trigger-shan))
+	     (* hubshan.account/RLPADDR_SALT_LO                        (hub-into-rlp-addr-trigger-shan))
+	     (* hubshan.account/RLPADDR_KEC_HI                         (hub-into-rlp-addr-trigger-shan))
+	     (* hubshan.account/RLPADDR_KEC_LO                         (hub-into-rlp-addr-trigger-shan))
            )
 )

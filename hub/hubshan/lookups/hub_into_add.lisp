@@ -1,5 +1,5 @@
-(defun (hub-into-add-activation-flag)
-  (* (unexceptional-stack-row) hubshan.stack/ADD_FLAG))
+(defun (hub-into-add-activation-flag-shan)
+  (* (unexceptional-stack-row-shan) hubshan.stack/ADD_FLAG))
 
 (deflookup
   hub-into-add
@@ -15,13 +15,13 @@
   )
   ;; source columns
   (
-    (* [hubshan.stack/STACK_ITEM_VALUE_HI 1] (hub-into-add-activation-flag)) ;; arg1
-    (* [hubshan.stack/STACK_ITEM_VALUE_LO 1] (hub-into-add-activation-flag))
-    (* [hubshan.stack/STACK_ITEM_VALUE_HI 2] (hub-into-add-activation-flag)) ;; arg2
-    (* [hubshan.stack/STACK_ITEM_VALUE_LO 2] (hub-into-add-activation-flag))
-    (* [hubshan.stack/STACK_ITEM_VALUE_HI 4] (hub-into-add-activation-flag)) ;; result
-    (* [hubshan.stack/STACK_ITEM_VALUE_LO 4] (hub-into-add-activation-flag))
-    (* hubshan.stack/INSTRUCTION             (hub-into-add-activation-flag)) ;; instruction
+    (* [hubshan.stack/STACK_ITEM_VALUE_HI 1] (hub-into-add-activation-flag-shan)) ;; arg1
+    (* [hubshan.stack/STACK_ITEM_VALUE_LO 1] (hub-into-add-activation-flag-shan))
+    (* [hubshan.stack/STACK_ITEM_VALUE_HI 2] (hub-into-add-activation-flag-shan)) ;; arg2
+    (* [hubshan.stack/STACK_ITEM_VALUE_LO 2] (hub-into-add-activation-flag-shan))
+    (* [hubshan.stack/STACK_ITEM_VALUE_HI 4] (hub-into-add-activation-flag-shan)) ;; result
+    (* [hubshan.stack/STACK_ITEM_VALUE_LO 4] (hub-into-add-activation-flag-shan))
+    (* hubshan.stack/INSTRUCTION             (hub-into-add-activation-flag-shan)) ;; instruction
   ))
 
 

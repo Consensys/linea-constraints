@@ -1,4 +1,4 @@
-(defun (hub-into-rom-instruction-fetching-trigger) hubshan.PEEK_AT_STACK)
+(defun (hub-into-rom-instruction-fetching-trigger-shan) hubshan.PEEK_AT_STACK)
 
 (deflookup hub-into-rom-instruction-fetching
            ;; target columns
@@ -11,10 +11,10 @@
            )
            ;; source columns
 	   (
-	     (* hubshan.CFI                    (hub-into-rom-instruction-fetching-trigger))
-	     (* hubshan.PC                     (hub-into-rom-instruction-fetching-trigger))
-	     (* hubshan.stack/INSTRUCTION      (hub-into-rom-instruction-fetching-trigger))
-	     (* hubshan.stack/PUSH_VALUE_HI    (hub-into-rom-instruction-fetching-trigger))
-	     (* hubshan.stack/PUSH_VALUE_LO    (hub-into-rom-instruction-fetching-trigger))
+	     (* hubshan.CFI                    (hub-into-rom-instruction-fetching-trigger-shan))
+	     (* hubshan.PC                     (hub-into-rom-instruction-fetching-trigger-shan))
+	     (* hubshan.stack/INSTRUCTION      (hub-into-rom-instruction-fetching-trigger-shan))
+	     (* hubshan.stack/PUSH_VALUE_HI    (hub-into-rom-instruction-fetching-trigger-shan))
+	     (* hubshan.stack/PUSH_VALUE_LO    (hub-into-rom-instruction-fetching-trigger-shan))
            )
 )
