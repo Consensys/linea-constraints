@@ -1,4 +1,4 @@
-(module blockhash (>= EVM_FORK EVM_SHANGHAI))
+(module blockhash (< EVM_FORK EVM_SHANGHAI))
 
 (defcolumns
   (IOMF              :binary@prove)

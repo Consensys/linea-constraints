@@ -5,16 +5,16 @@
 (deflookup hub-into-oob
            ;; target columns
 	   (
-	     ooblon.OOB_INST
-	     [ooblon.DATA 1]
-	     [ooblon.DATA 2]
-	     [ooblon.DATA 3]
-	     [ooblon.DATA 4]
-	     [ooblon.DATA 5]
-	     [ooblon.DATA 6]
-	     [ooblon.DATA 7]
-	     [ooblon.DATA 8]
-	     [ooblon.DATA 9]
+	     oob.OOB_INST
+	     [oob.DATA 1]
+	     [oob.DATA 2]
+	     [oob.DATA 3]
+	     [oob.DATA 4]
+	     [oob.DATA 5]
+	     [oob.DATA 6]
+	     [oob.DATA 7]
+	     [oob.DATA 8]
+	     [oob.DATA 9]
            )
            ;; source columns
 	   (

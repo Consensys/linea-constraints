@@ -1,4 +1,4 @@
-(module ooblon (< EVM_FORK EVM_SHANGHAI))
+(module oob (< EVM_FORK EVM_SHANGHAI))
 
 (defcolumns
   (STAMP :i32)
