@@ -104,16 +104,18 @@
         ;; trigger_MMU == 1
         (eq! FLAG (+ MISC_WEIGHT_MXP MISC_WEIGHT_MMU)))))
 
-(defconstraint  revert-instruction---setting-the-MXP-data                          (:guard (revert-instruction---standard-precondition))
-                (set-MXP-instruction-type-4 ROFF_REVERT___MISC_ROW   ;; row offset kappa
-                                            (revert-instruction---instruction)             ;; instruction
-                                            0                                     ;; bit modifying the behaviour of RETURN pricing
-                                            (revert-instruction---offset-hi)               ;; offset high
-                                            (revert-instruction---offset-lo)               ;; offset low
-                                            (revert-instruction---size-hi)                 ;; size high
-                                            (revert-instruction---size-lo)))               ;; size low
+(defconstraint  revert-instruction---setting-the-MXP-instruction
+                (:guard (revert-instruction---standard-precondition))
+                (set-MXP-instruction---single-mxp-offset-instructions   ROFF_REVERT___MISC_ROW                 ;; row offset kappa
+                                                                        (revert-instruction---instruction)     ;; instruction
+                                                                        0                                      ;; bit modifying the behaviour of RETURN pricing
+                                                                        (revert-instruction---offset-hi)       ;; offset high
+                                                                        (revert-instruction---offset-lo)       ;; offset low
+                                                                        (revert-instruction---size-hi)         ;; size high
+                                                                        (revert-instruction---size-lo)))       ;; size low
 
-(defconstraint  revert-instruction---setting-the-MXPX                              (:guard (revert-instruction---standard-precondition))
+(defconstraint  revert-instruction---setting-the-MXPX
+                (:guard (revert-instruction---standard-precondition))
                 (eq!  stack/MXPX  (shift  misc/MXP_MXPX  ROFF_REVERT___MISC_ROW)))
 
 (defconstraint  revert-instruction---setting-the-MMU-data                          (:guard (revert-instruction---standard-precondition))
