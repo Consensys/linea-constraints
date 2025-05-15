@@ -18,6 +18,7 @@
     (FAMILY_CONTEXT                        :binary)
     (FAMILY_ACCOUNT                        :binary)
     (FAMILY_COPY                           :binary)
+    (FAMILY_MCOPY                          :binary)
     (FAMILY_TRANSACTION                    :binary)
     (FAMILY_BATCH                          :binary)
     (FAMILY_STACK_RAM                      :binary)
