@@ -19,6 +19,8 @@ BLOCKDATA := $(wildcard blockdata/*.lisp) \
 
 BLOCKHASH := blockhash
 
+BLS := bls
+
 CONSTANTS := constants/constants.lisp
 
 EC_DATA := ecdata
@@ -76,6 +78,7 @@ ZKEVM_MODULES := ${CONSTANTS} \
 		 ${BLAKE2f_MODEXP_DATA} \
 		 ${BLOCKDATA} \
 		 ${BLOCKHASH} \
+		 ${BLS} \
 		 ${EC_DATA} \
 		 ${EUC} \
 		 ${EXP} \
