@@ -21,10 +21,10 @@
   NB_ROWS_TYPE_0_SHANGHAI                                         (+ CT_MAX_TYPE_0_SHANGHAI 1)
   NB_ROWS_TYPE_1_SHANGHAI                                         (+ CT_MAX_TYPE_1_SHANGHAI 1)
   NB_ROWS_TYPE_2_SHANGHAI                                         (+ CT_MAX_TYPE_2_SHANGHAI 1)
-  ;; TODO: this is SHANGHAI
-  CT_MAX_TYPE_0                                         9
-  CT_MAX_TYPE_1                                         10
-  CT_MAX_TYPE_2                                         10
+  ;; TODO: this is LONDON
+  CT_MAX_TYPE_0                                         7
+  CT_MAX_TYPE_1                                         8
+  CT_MAX_TYPE_2                                         8
   ;;
   NB_ROWS_TYPE_0                                         (+ CT_MAX_TYPE_0 1)
   NB_ROWS_TYPE_1                                         (+ CT_MAX_TYPE_1 1)
@@ -44,17 +44,16 @@
   TYPE_2_RLP_TXN_PHASE_NUMBER_7                          RLP_TXN_PHASE_ACCESS_LIST
   ;;
 
-  ;; TODO: this is SHANGHAI
+  ;; TODO: this is LONDON
   row-offset---nonce-comparison                         0
   row-offset---initial-balance-comparison               1
-  row-offset---init-code-size-limit                     2
-  row-offset---init-code-pricing                        3
-  row-offset---sufficient-gas-comparison                4
-  row-offset---upper-limit-refunds-comparison           5
-  row-offset---effective-refund-comparison              6
-  row-offset---detecting-empty-call-data-comparison     7
-  row-offset---max-fee-and-basefee-comparison           8
-  row-offset---max-fee-and-max-priority-fee-comparison  9
-  row-offset---computing-effective-gas-price-comparison 10)
+  row-offset---sufficient-gas-comparison                2
+  row-offset---upper-limit-refunds-comparison           3
+  row-offset---effective-refund-comparison              4
+  row-offset---detecting-empty-call-data-comparison     5
+  row-offset---max-fee-and-basefee-comparison           6
+  row-offset---max-fee-and-max-priority-fee-comparison  7
+  row-offset---computing-effective-gas-price-comparison 8
+  )
 
 
