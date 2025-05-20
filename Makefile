@@ -33,27 +33,21 @@ EXP := exp
 
 GAS := gas
 
-# In the constraints folder, we filter out the shanghai file marked with _shan
-HUB_LON :=  $(wildcard hub/*.lisp) \
-                  	       $(wildcard hub/columns/*.lisp) \
-                  	       $(wildcard hub/constraints/*.lisp) \
-                  	       $(wildcard hub/constraints/**/*.lisp) \
-						   $(filter-out %_shan.lisp, $(wildcard hub/constraints/**/**/*.lisp)) \
-                  	       $(wildcard hub/constraints/**/**/**/*.lisp) \
-                  	       $(wildcard hub/constraints/**/**/**/**/*.lisp) \
-                  	       $(wildcard hub/lookups/*.lisp) \
-                  	       $(wildcard hub/lookups/hub-into-oob-fork/hub_into_oob_lon.lisp)
+# In the folders, we filter out the shanghai files marked with _shan
+HUB_LON :=  $(filter-out %_shan.lisp, $(wildcard hub/*.lisp)) \
+			$(filter-out %_shan.lisp, $(wildcard hub/**/*.lisp)) \
+			$(filter-out %_shan.lisp, $(wildcard hub/**/**/*.lisp)) \
+			$(filter-out %_shan.lisp, $(wildcard hub/**/**/**/*.lisp)) \
+			$(filter-out %_shan.lisp, $(wildcard hub/**/**/**/**/*.lisp)) \
+			$(filter-out %_shan.lisp, $(wildcard hub/**/**/**/**/**/*.lisp))
 
-# In the constraints folder, we filter out the london file marked with _lon
-HUB_SHAN :=  $(wildcard hub/*.lisp) \
-                              	       $(wildcard hub/columns/*.lisp) \
-									   $(wildcard hub/constraints/*.lisp) \
-									   $(wildcard hub/constraints/**/*.lisp) \
-									   $(filter-out %_lon.lisp, $(wildcard hub/constraints/**/**/*.lisp)) \
-									   $(wildcard hub/constraints/**/**/**/*.lisp) \
-									   $(wildcard hub/constraints/**/**/**/**/*.lisp) \
-                              	       $(wildcard hub/lookups/*.lisp) \
-                              	       $(wildcard hub/lookups/hub-into-oob-fork/hub_into_oob_shan.lisp)
+# In the folders, we filter out the london files marked with _lon
+HUB_SHAN :=  $(filter-out %_lon.lisp, $(wildcard hub/*.lisp)) \
+           			$(filter-out %_lon.lisp, $(wildcard hub/**/*.lisp)) \
+           			$(filter-out %_lon.lisp, $(wildcard hub/**/**/*.lisp)) \
+           			$(filter-out %_lon.lisp, $(wildcard hub/**/**/**/*.lisp)) \
+           			$(filter-out %_lon.lisp, $(wildcard hub/**/**/**/**/*.lisp)) \
+           			$(filter-out %_lon.lisp, $(wildcard hub/**/**/**/**/**/*.lisp))
 
 LIBRARY := library
 
