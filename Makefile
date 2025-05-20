@@ -89,7 +89,11 @@ TABLES := reftables
 
 TRM := trm
 
-TXN_DATA := txndata
+TXN_DATA_LON := $(wildcard txndata/txndata-lon/*.lisp) \
+			    $(wildcard txndata/txndata-lon/**/*.lisp)
+
+TXN_DATA_SHAN := $(wildcard txndata/txndata-shan/*.lisp) \
+			     $(wildcard txndata/txndata-shan/**/*.lisp)
 
 WCP := wcp
 
@@ -122,7 +126,7 @@ ZKEVM_MODULES_LONDON := ${CONSTANTS} \
 		 ${STP} \
 		 ${TABLES} \
 		 ${TRM} \
-		 ${TXN_DATA} \
+		 ${TXN_DATA_LON} \
 		 ${WCP}
 
  # Corset is order sensitive - to compile, we load the constants first
@@ -154,7 +158,7 @@ ZKEVM_MODULES_LONDON := ${CONSTANTS} \
 		 ${STP} \
 		 ${TABLES} \
 		 ${TRM} \
-		 ${TXN_DATA} \
+		 ${TXN_DATA_SHAN} \
 		 ${WCP}
 
 zkevm.bin: ${ZKEVM_MODULES}
