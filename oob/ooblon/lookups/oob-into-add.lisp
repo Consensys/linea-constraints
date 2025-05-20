@@ -1,5 +1,5 @@
 (defun (mxp-into-add-activation-flag)
-  ooblon.ADD_FLAG)
+  oob.ADD_FLAG)
 
 (deflookup
   oob-into-add
@@ -15,13 +15,13 @@
   )
   ;target columns
   (
-    (* [ooblon.OUTGOING_DATA 1] (mxp-into-add-activation-flag))
-    (* [ooblon.OUTGOING_DATA 2] (mxp-into-add-activation-flag))
-    (* [ooblon.OUTGOING_DATA 3] (mxp-into-add-activation-flag))
-    (* [ooblon.OUTGOING_DATA 4] (mxp-into-add-activation-flag))
-    (* (next [ooblon.OUTGOING_DATA 1]) (mxp-into-add-activation-flag))
-    (* (next [ooblon.OUTGOING_DATA 2]) (mxp-into-add-activation-flag))
-    (* ooblon.OUTGOING_INST (mxp-into-add-activation-flag))
+    (* [oob.OUTGOING_DATA 1] (mxp-into-add-activation-flag))
+    (* [oob.OUTGOING_DATA 2] (mxp-into-add-activation-flag))
+    (* [oob.OUTGOING_DATA 3] (mxp-into-add-activation-flag))
+    (* [oob.OUTGOING_DATA 4] (mxp-into-add-activation-flag))
+    (* (next [oob.OUTGOING_DATA 1]) (mxp-into-add-activation-flag))
+    (* (next [oob.OUTGOING_DATA 2]) (mxp-into-add-activation-flag))
+    (* oob.OUTGOING_INST (mxp-into-add-activation-flag))
   ))
 
 

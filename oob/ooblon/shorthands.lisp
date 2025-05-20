@@ -1,4 +1,4 @@
-(module ooblon)
+(module oob)
 
 
 (defun (flag-sum-inst)                      (+    IS_JUMP IS_JUMPI
