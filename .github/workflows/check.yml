@@ -17,8 +17,5 @@ jobs:
       shell: bash
       run: go install github.com/consensys/go-corset/cmd/go-corset@v1.1.7
 
-    - name: Build Constraints For London
-      run: make -B zkevm_london.bin
-
-    - name: Build Constraints For Shanghai
-      run: make -B zkevm_shanghai.bin
+    - name: Build all forks
+      run: make -B all

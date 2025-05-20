@@ -35,19 +35,19 @@ GAS := gas
 
 # In the folders, we filter out the shanghai files marked with _shan
 HUB_LON :=  $(filter-out %_shan.lisp, $(wildcard hub/*.lisp)) \
-			$(filter-out %_shan.lisp, $(wildcard hub/**/*.lisp)) \
-			$(filter-out %_shan.lisp, $(wildcard hub/**/**/*.lisp)) \
-			$(filter-out %_shan.lisp, $(wildcard hub/**/**/**/*.lisp)) \
-			$(filter-out %_shan.lisp, $(wildcard hub/**/**/**/**/*.lisp)) \
-			$(filter-out %_shan.lisp, $(wildcard hub/**/**/**/**/**/*.lisp))
+		$(filter-out %_shan.lisp, $(wildcard hub/**/*.lisp)) \
+		$(filter-out %_shan.lisp, $(wildcard hub/**/**/*.lisp)) \
+		$(filter-out %_shan.lisp, $(wildcard hub/**/**/**/*.lisp)) \
+		$(filter-out %_shan.lisp, $(wildcard hub/**/**/**/**/*.lisp)) \
+		$(filter-out %_shan.lisp, $(wildcard hub/**/**/**/**/**/*.lisp))
 
 # In the folders, we filter out the london files marked with _lon
 HUB_SHAN :=  $(filter-out %_lon.lisp, $(wildcard hub/*.lisp)) \
-           			$(filter-out %_lon.lisp, $(wildcard hub/**/*.lisp)) \
-           			$(filter-out %_lon.lisp, $(wildcard hub/**/**/*.lisp)) \
-           			$(filter-out %_lon.lisp, $(wildcard hub/**/**/**/*.lisp)) \
-           			$(filter-out %_lon.lisp, $(wildcard hub/**/**/**/**/*.lisp)) \
-           			$(filter-out %_lon.lisp, $(wildcard hub/**/**/**/**/**/*.lisp))
+		$(filter-out %_lon.lisp, $(wildcard hub/**/*.lisp)) \
+		$(filter-out %_lon.lisp, $(wildcard hub/**/**/*.lisp)) \
+		$(filter-out %_lon.lisp, $(wildcard hub/**/**/**/*.lisp)) \
+		$(filter-out %_lon.lisp, $(wildcard hub/**/**/**/**/*.lisp)) \
+		$(filter-out %_lon.lisp, $(wildcard hub/**/**/**/**/**/*.lisp))
 
 LIBRARY := library
 
@@ -62,12 +62,12 @@ MMIO := mmio
 MXP := mxp
 
 OOB_LON := $(wildcard oob/oob-lon/*.lisp) \
-       	       $(wildcard oob/oob-lon/**/*.lisp) \
-       	       $(wildcard oob/oob-lon/**/**/*.lisp)
+           $(wildcard oob/oob-lon/**/*.lisp) \
+           $(wildcard oob/oob-lon/**/**/*.lisp)
 
 OOB_SHAN := $(wildcard oob/oob-shan/*.lisp) \
-       	       $(wildcard oob/oob-shan/**/*.lisp) \
-       	       $(wildcard oob/oob-shan/**/**/*.lisp)
+	    $(wildcard oob/oob-shan/**/*.lisp) \
+	    $(wildcard oob/oob-shan/**/**/*.lisp)
 
 RLP_ADDR := rlpaddr
 
@@ -90,15 +90,14 @@ TABLES := reftables
 TRM := trm
 
 TXN_DATA_LON := $(wildcard txndata/txndata-lon/*.lisp) \
-			    $(wildcard txndata/txndata-lon/**/*.lisp)
+	        $(wildcard txndata/txndata-lon/**/*.lisp)
 
 TXN_DATA_SHAN := $(wildcard txndata/txndata-shan/*.lisp) \
-			     $(wildcard txndata/txndata-shan/**/*.lisp)
+                 $(wildcard txndata/txndata-shan/**/*.lisp)
 
 WCP := wcp
 
-# Corset is order sensitive - to compile, we load the constants first
-ZKEVM_MODULES_LONDON := ${CONSTANTS} \
+ZKEVM_MODULES_COMMON := ${CONSTANTS} \
 		 ${ALU} \
 		 ${BIN} \
 		 ${BLAKE2f_MODEXP_DATA} \
@@ -108,14 +107,12 @@ ZKEVM_MODULES_LONDON := ${CONSTANTS} \
 		 ${EUC} \
 		 ${EXP} \
 		 ${GAS} \
-		 ${HUB_LON} \
 		 ${LIBRARY} \
 		 ${LOG_DATA} \
 		 ${LOG_INFO} \
 		 ${MMIO} \
 		 ${MMU} \
 		 ${MXP} \
-		 ${OOB_LON} \
 		 ${RLP_ADDR} \
 		 ${RLP_TXN} \
 		 ${RLP_TXRCPT} \
@@ -126,40 +123,19 @@ ZKEVM_MODULES_LONDON := ${CONSTANTS} \
 		 ${STP} \
 		 ${TABLES} \
 		 ${TRM} \
-		 ${TXN_DATA_LON} \
 		 ${WCP}
 
- # Corset is order sensitive - to compile, we load the constants first
- ZKEVM_MODULES_SHANGHAI := ${CONSTANTS} \
-		 ${ALU} \
-		 ${BIN} \
-		 ${BLAKE2f_MODEXP_DATA} \
-		 ${BLOCKDATA} \
-		 ${BLOCKHASH} \
-		 ${EC_DATA} \
-		 ${EUC} \
-		 ${EXP} \
-		 ${GAS} \
+ZKEVM_MODULES_LONDON := ${ZKEVM_MODULES_COMMON} \
+		 ${HUB_LON} \
+		 ${OOB_LON} \
+		 ${TXN_DATA_LON}
+
+ ZKEVM_MODULES_SHANGHAI := ${ZKEVM_MODULES_COMMON} \
 		 ${HUB_SHAN} \
-		 ${LIBRARY} \
-		 ${LOG_DATA} \
-		 ${LOG_INFO} \
-		 ${MMIO} \
-		 ${MMU} \
-		 ${MXP} \
 		 ${OOB_SHAN} \
-		 ${RLP_ADDR} \
-		 ${RLP_TXN} \
-		 ${RLP_TXRCPT} \
-		 ${ROM} \
-		 ${ROM_LEX} \
-		 ${SHAKIRA_DATA} \
-		 ${SHIFT} \
-		 ${STP} \
-		 ${TABLES} \
-		 ${TRM} \
-		 ${TXN_DATA_SHAN} \
-		 ${WCP}
+		 ${TXN_DATA_SHAN}
+
+all: zkevm_london.bin zkevm_shanghai.bin
 
 zkevm_london.bin: ${ZKEVM_MODULES_LONDON}
 	${GO_CORSET_COMPILE} -o $@ ${ZKEVM_MODULES_LONDON}
