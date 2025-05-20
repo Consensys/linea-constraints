@@ -12,7 +12,6 @@
   (IS_CDL :binary@prove)
   (IS_XCALL :binary@prove)
   (IS_CALL :binary@prove)
-  ;; (IS_XCREATE :binary@prove)
   (IS_CREATE :binary@prove)
   (IS_SSTORE :binary@prove)
   (IS_DEPLOYMENT :binary@prove)

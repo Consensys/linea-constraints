@@ -17,7 +17,7 @@
 (defun (create---aborting-condition)        [DATA  7])
 (defun (create---failure-condition)         [DATA  8])
 (defun (create---creator-nonce)             [DATA  9])
-(defun (create---init-code-size)            [DATA 10]) ;; ""
+(defun (create---init-code-size)            [DATA 10])
 
 
 (defconstraint create---compare-balance-against-value

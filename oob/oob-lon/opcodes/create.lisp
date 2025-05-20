@@ -17,7 +17,6 @@
 (defun (create---aborting-condition)                   [DATA 7])
 (defun (create---failure-condition)                    [DATA 8])
 (defun (create---creator-nonce)                        [DATA 9])
-;; (defun (create---init-code-size)                       [DATA 10])  ;; XXXXXX
 (defun (create---insufficient-balance-abort)           OUTGOING_RES_LO)
 (defun (create---stack-depth-abort)                    (- 1 (next OUTGOING_RES_LO)))
 (defun (create---nonzero-nonce)                        (- 1 (shift OUTGOING_RES_LO 2)))

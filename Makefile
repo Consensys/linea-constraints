@@ -4,6 +4,10 @@ GIT_TAGS := $(shell git -P tag --points-at)
 TIMESTAMP := $(shell date)
 GO_CORSET_COMPILE := ${GO_CORSET} compile -Dtags="${GIT_TAGS}" -Dcommit="${GIT_COMMIT}" -Dtimestamp="${TIMESTAMP}"
 
+# Modules setting
+## Some modules set below are fork specific. Eg. For OOB, OOB_LON is the OOB module for London and OOB_SHAN the OOB module for Shanghai.
+## The discrimination is done by having one bin file per fork - see command line below
+
 ALU := alu
 
 BIN := bin   
@@ -29,7 +33,27 @@ EXP := exp
 
 GAS := gas
 
-HUB :=  hub
+# In the constraints folder, we filter out the shanghai file marked with _shan
+HUB_LON :=  $(wildcard hub/*.lisp) \
+                  	       $(wildcard hub/columns/*.lisp) \
+                  	       $(wildcard hub/constraints/*.lisp) \
+                  	       $(wildcard hub/constraints/**/*.lisp) \
+						   $(filter-out %_shan.lisp, $(wildcard hub/constraints/**/**/*.lisp)) \
+                  	       $(wildcard hub/constraints/**/**/**/*.lisp) \
+                  	       $(wildcard hub/constraints/**/**/**/**/*.lisp) \
+                  	       $(wildcard hub/lookups/*.lisp) \
+                  	       $(wildcard hub/lookups/hub-into-oob-fork/hub_into_oob_lon.lisp)
+
+# In the constraints folder, we filter out the london file marked with _lon
+HUB_SHAN :=  $(wildcard hub/*.lisp) \
+                              	       $(wildcard hub/columns/*.lisp) \
+									   $(wildcard hub/constraints/*.lisp) \
+									   $(wildcard hub/constraints/**/*.lisp) \
+									   $(filter-out %_lon.lisp, $(wildcard hub/constraints/**/**/*.lisp)) \
+									   $(wildcard hub/constraints/**/**/**/*.lisp) \
+									   $(wildcard hub/constraints/**/**/**/**/*.lisp) \
+                              	       $(wildcard hub/lookups/*.lisp) \
+                              	       $(wildcard hub/lookups/hub-into-oob-fork/hub_into_oob_shan.lisp)
 
 LIBRARY := library
 
@@ -43,19 +67,13 @@ MMIO := mmio
 
 MXP := mxp
 
-OOBLON := $(wildcard oob/ooblon/*.lisp) \
-       	       $(wildcard oob/ooblon/lookups/*.lisp) \
-       	       $(wildcard oob/ooblon/opcodes/*.lisp) \
-       	       $(wildcard oob/ooblon/precompiles/blake2f/*.lisp) \
-       	       $(wildcard oob/ooblon/precompiles/common/*.lisp) \
-       	       $(wildcard oob/ooblon/precompiles/modexp/*.lisp)
+OOB_LON := $(wildcard oob/oob-lon/*.lisp) \
+       	       $(wildcard oob/oob-lon/**/*.lisp) \
+       	       $(wildcard oob/oob-lon/**/**/*.lisp)
 
-OOBSHAN := $(wildcard oob/oobshan/*.lisp) \
-       	       $(wildcard oob/oobshan/lookups/*.lisp) \
-       	       $(wildcard oob/oobshan/opcodes/*.lisp) \
-       	       $(wildcard oob/oobshan/precompiles/blake2f/*.lisp) \
-       	       $(wildcard oob/oobshan/precompiles/common/*.lisp) \
-       	       $(wildcard oob/oobshan/precompiles/modexp/*.lisp)
+OOB_SHAN := $(wildcard oob/oob-shan/*.lisp) \
+       	       $(wildcard oob/oob-shan/**/*.lisp) \
+       	       $(wildcard oob/oob-shan/**/**/*.lisp)
 
 RLP_ADDR := rlpaddr
 
@@ -92,14 +110,14 @@ ZKEVM_MODULES_LONDON := ${CONSTANTS} \
 		 ${EUC} \
 		 ${EXP} \
 		 ${GAS} \
-		 ${HUB} \
+		 ${HUB_LON} \
 		 ${LIBRARY} \
 		 ${LOG_DATA} \
 		 ${LOG_INFO} \
 		 ${MMIO} \
 		 ${MMU} \
 		 ${MXP} \
-		 ${OOBLON} \
+		 ${OOB_LON} \
 		 ${RLP_ADDR} \
 		 ${RLP_TXN} \
 		 ${RLP_TXRCPT} \
@@ -124,14 +142,14 @@ ZKEVM_MODULES_LONDON := ${CONSTANTS} \
 		 ${EUC} \
 		 ${EXP} \
 		 ${GAS} \
-		 ${HUB} \
+		 ${HUB_SHAN} \
 		 ${LIBRARY} \
 		 ${LOG_DATA} \
 		 ${LOG_INFO} \
 		 ${MMIO} \
 		 ${MMU} \
 		 ${MXP} \
-		 ${OOBSHAN} \
+		 ${OOB_SHAN} \
 		 ${RLP_ADDR} \
 		 ${RLP_TXN} \
 		 ${RLP_TXRCPT} \
@@ -148,8 +166,8 @@ ZKEVM_MODULES_LONDON := ${CONSTANTS} \
 zkevm.bin: ${ZKEVM_MODULES}
 	${GO_CORSET_COMPILE} -o $@ ${ZKEVM_MODULES}
 
-zkevm-london.bin: ${ZKEVM_MODULES_LONDON}
+zkevm_london.bin: ${ZKEVM_MODULES_LONDON}
 	${GO_CORSET_COMPILE} -o $@ ${ZKEVM_MODULES_LONDON}
 
-zkevm-shanghai.bin: ${ZKEVM_MODULES_SHANGHAI}
+zkevm_shanghai.bin: ${ZKEVM_MODULES_SHANGHAI}
 	${GO_CORSET_COMPILE} -o $@ ${ZKEVM_MODULES_SHANGHAI}
