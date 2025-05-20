@@ -1,4 +1,4 @@
-(defun (oob-into-mod-activation-flag)
+(defun (oob-into-mod-activation-flag-shan)
   oobshan.MOD_FLAG)
 
 (deflookup
@@ -15,13 +15,13 @@
   )
   ;target columns
   (
-    (* [oobshan.OUTGOING_DATA 1] (oob-into-mod-activation-flag))
-    (* [oobshan.OUTGOING_DATA 2] (oob-into-mod-activation-flag))
-    (* [oobshan.OUTGOING_DATA 3] (oob-into-mod-activation-flag))
-    (* [oobshan.OUTGOING_DATA 4] (oob-into-mod-activation-flag))
-    (* 0 (oob-into-mod-activation-flag))
-    (* oobshan.OUTGOING_RES_LO (oob-into-mod-activation-flag))
-    (* oobshan.OUTGOING_INST (oob-into-mod-activation-flag))
+    (* [oobshan.OUTGOING_DATA 1] (oob-into-mod-activation-flag-shan))
+    (* [oobshan.OUTGOING_DATA 2] (oob-into-mod-activation-flag-shan))
+    (* [oobshan.OUTGOING_DATA 3] (oob-into-mod-activation-flag-shan))
+    (* [oobshan.OUTGOING_DATA 4] (oob-into-mod-activation-flag-shan))
+    (* 0 (oob-into-mod-activation-flag-shan))
+    (* oobshan.OUTGOING_RES_LO (oob-into-mod-activation-flag-shan))
+    (* oobshan.OUTGOING_INST (oob-into-mod-activation-flag-shan))
   ))
 
 

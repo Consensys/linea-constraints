@@ -1,4 +1,4 @@
-(defun (oob-into-wcp-activation-flag)
+(defun (oob-into-wcp-activation-flag-shan)
   oobshan.WCP_FLAG)
 
 (deflookup
@@ -12,12 +12,12 @@
     wcp.INST
   )
   (
-    (* [oobshan.OUTGOING_DATA 1] (oob-into-wcp-activation-flag))
-    (* [oobshan.OUTGOING_DATA 2] (oob-into-wcp-activation-flag))
-    (* [oobshan.OUTGOING_DATA 3] (oob-into-wcp-activation-flag))
-    (* [oobshan.OUTGOING_DATA 4] (oob-into-wcp-activation-flag))
-    (* oobshan.OUTGOING_RES_LO (oob-into-wcp-activation-flag))
-    (* oobshan.OUTGOING_INST (oob-into-wcp-activation-flag))
+    (* [oobshan.OUTGOING_DATA 1] (oob-into-wcp-activation-flag-shan))
+    (* [oobshan.OUTGOING_DATA 2] (oob-into-wcp-activation-flag-shan))
+    (* [oobshan.OUTGOING_DATA 3] (oob-into-wcp-activation-flag-shan))
+    (* [oobshan.OUTGOING_DATA 4] (oob-into-wcp-activation-flag-shan))
+    (* oobshan.OUTGOING_RES_LO (oob-into-wcp-activation-flag-shan))
+    (* oobshan.OUTGOING_INST (oob-into-wcp-activation-flag-shan))
   ))
 
 

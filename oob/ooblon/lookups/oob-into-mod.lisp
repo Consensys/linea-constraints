@@ -1,4 +1,4 @@
-(defun (oob-into-mod-flag)
+(defun (oob-into-mod-activation-flag)
   ooblon.MOD_FLAG)
 
 (deflookup
@@ -15,11 +15,11 @@
   )
   ;target columns
   (
-    (* [ooblon.OUTGOING_DATA 1] (oob-into-mod-flag))
-    (* [ooblon.OUTGOING_DATA 2] (oob-into-mod-flag))
-    (* [ooblon.OUTGOING_DATA 3] (oob-into-mod-flag))
-    (* [ooblon.OUTGOING_DATA 4] (oob-into-mod-flag))
-    (* 0 (ooblon-into-mod-activation-flag))
+    (* [ooblon.OUTGOING_DATA 1] (oob-into-mod-activation-flag))
+    (* [ooblon.OUTGOING_DATA 2] (oob-into-mod-activation-flag))
+    (* [ooblon.OUTGOING_DATA 3] (oob-into-mod-activation-flag))
+    (* [ooblon.OUTGOING_DATA 4] (oob-into-mod-activation-flag))
+    (* 0 (oob-into-mod-activation-flag))
     (* ooblon.OUTGOING_RES_LO (oob-into-mod-activation-flag))
     (* ooblon.OUTGOING_INST (oob-into-mod-activation-flag))
   ))

@@ -1,5 +1,5 @@
-(defun (hub-into-ext-activation-flag)
-  (* (unexceptional-stack-row)
+(defun (hub-into-ext-activation-flag-shan)
+  (* (unexceptional-stack-row-shan)
       hubshan.stack/EXT_FLAG))
 
 (deflookup hub-into-ext
@@ -17,14 +17,14 @@
     )
     ;; source columns
     (
-        (* [hubshan.stack/STACK_ITEM_VALUE_HI 1]     (hub-into-ext-activation-flag))
-        (* [hubshan.stack/STACK_ITEM_VALUE_LO 1]     (hub-into-ext-activation-flag))
-        (* [hubshan.stack/STACK_ITEM_VALUE_HI 2]     (hub-into-ext-activation-flag))
-        (* [hubshan.stack/STACK_ITEM_VALUE_LO 2]     (hub-into-ext-activation-flag))
-        (* [hubshan.stack/STACK_ITEM_VALUE_HI 3]     (hub-into-ext-activation-flag))
-        (* [hubshan.stack/STACK_ITEM_VALUE_LO 3]     (hub-into-ext-activation-flag))
-        (* [hubshan.stack/STACK_ITEM_VALUE_HI 4]     (hub-into-ext-activation-flag))
-        (* [hubshan.stack/STACK_ITEM_VALUE_LO 4]     (hub-into-ext-activation-flag))
-        (*  hubshan.stack/INSTRUCTION                (hub-into-ext-activation-flag))
+        (* [hubshan.stack/STACK_ITEM_VALUE_HI 1]     (hub-into-ext-activation-flag-shan))
+        (* [hubshan.stack/STACK_ITEM_VALUE_LO 1]     (hub-into-ext-activation-flag-shan))
+        (* [hubshan.stack/STACK_ITEM_VALUE_HI 2]     (hub-into-ext-activation-flag-shan))
+        (* [hubshan.stack/STACK_ITEM_VALUE_LO 2]     (hub-into-ext-activation-flag-shan))
+        (* [hubshan.stack/STACK_ITEM_VALUE_HI 3]     (hub-into-ext-activation-flag-shan))
+        (* [hubshan.stack/STACK_ITEM_VALUE_LO 3]     (hub-into-ext-activation-flag-shan))
+        (* [hubshan.stack/STACK_ITEM_VALUE_HI 4]     (hub-into-ext-activation-flag-shan))
+        (* [hubshan.stack/STACK_ITEM_VALUE_LO 4]     (hub-into-ext-activation-flag-shan))
+        (*  hubshan.stack/INSTRUCTION                (hub-into-ext-activation-flag-shan))
     )
 )

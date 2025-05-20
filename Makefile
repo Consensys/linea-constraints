@@ -11,11 +11,17 @@ BIN := bin
 BLAKE2f_MODEXP_DATA := blake2fmodexpdata
 
 # constraints used in prod for LINEA, with linea block gas limit
-BLOCKDATA := $(wildcard blockdata/*.lisp) \
-	       $(wildcard blockdata/processing/*.lisp) \
-	       $(wildcard blockdata/processing/gaslimit/common.lisp) \
-	       $(wildcard blockdata/processing/gaslimit/linea.lisp) \
-	       $(wildcard blockdata/lookups/*.lisp)
+BLOCKDATALON := $(wildcard blockdata/blockdatalon/*.lisp) \
+	       $(wildcard blockdata/blockdatalon/processing/*.lisp) \
+	       $(wildcard blockdata/blockdatalon/processing/gaslimit/common.lisp) \
+	       $(wildcard blockdata/blockdatalon/processing/gaslimit/linea.lisp) \
+	       $(wildcard blockdata/blockdatalon/lookups/*.lisp)
+
+BLOCKDATASHAN := $(wildcard blockdata/blockdatashan/*.lisp) \
+	   $(wildcard blockdata/blockdatashan/processing/*.lisp) \
+	   $(wildcard blockdata/blockdatashan/processing/gaslimit/common.lisp) \
+	   $(wildcard blockdata/blockdatashan/processing/gaslimit/linea.lisp) \
+	   $(wildcard blockdata/blockdatashan/lookups/*.lisp)
 
 BLOCKHASH := blockhash
 
@@ -74,7 +80,8 @@ ZKEVM_MODULES := ${CONSTANTS} \
 		 ${ALU} \
 		 ${BIN} \
 		 ${BLAKE2f_MODEXP_DATA} \
-		 ${BLOCKDATA} \
+		 ${BLOCKDATALON} \
+		 ${BLOCKDATASHAN} \
 		 ${BLOCKHASH} \
 		 ${EC_DATA} \
 		 ${EUC} \

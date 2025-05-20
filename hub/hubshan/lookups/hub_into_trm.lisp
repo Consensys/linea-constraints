@@ -1,4 +1,4 @@
-(defun (hub-into-trm-trigger)
+(defun (hub-into-trm-trigger-shan)
   (* hubshan.PEEK_AT_ACCOUNT
      hubshan.account/TRM_FLAG))
 
@@ -12,9 +12,9 @@
              )
            ;; source columns
            (
-            (* hubshan.account/ADDRESS_HI                    (hub-into-trm-trigger))
-            (* hubshan.account/TRM_RAW_ADDRESS_HI            (hub-into-trm-trigger))
-            (* hubshan.account/ADDRESS_LO                    (hub-into-trm-trigger))
-            (* hubshan.account/IS_PRECOMPILE                 (hub-into-trm-trigger))
+            (* hubshan.account/ADDRESS_HI                    (hub-into-trm-trigger-shan))
+            (* hubshan.account/TRM_RAW_ADDRESS_HI            (hub-into-trm-trigger-shan))
+            (* hubshan.account/ADDRESS_LO                    (hub-into-trm-trigger-shan))
+            (* hubshan.account/IS_PRECOMPILE                 (hub-into-trm-trigger-shan))
             )
            )

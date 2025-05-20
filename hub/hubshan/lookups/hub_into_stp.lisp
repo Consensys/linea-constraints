@@ -1,4 +1,4 @@
-(defun (hub-into-stp-trigger)
+(defun (hub-into-stp-trigger-shan)
   (* hubshan.PEEK_AT_MISCELLANEOUS hubshan.misc/STP_FLAG))
 
 (deflookup
@@ -21,19 +21,19 @@
   )
   ;; source columns
   (
-    (* hubshan.misc/STP_INSTRUCTION            (hub-into-stp-trigger))
-    (* hubshan.misc/STP_GAS_HI                 (hub-into-stp-trigger))
-    (* hubshan.misc/STP_GAS_LO                 (hub-into-stp-trigger))
-    (* hubshan.misc/STP_VALUE_HI               (hub-into-stp-trigger))
-    (* hubshan.misc/STP_VALUE_LO               (hub-into-stp-trigger))
-    (* hubshan.misc/STP_EXISTS                 (hub-into-stp-trigger))
-    (* hubshan.misc/STP_WARMTH                 (hub-into-stp-trigger))
-    (* hubshan.misc/STP_OOGX                   (hub-into-stp-trigger))
-    (* hubshan.GAS_ACTUAL                      (hub-into-stp-trigger))
-    (* hubshan.misc/STP_GAS_UPFRONT_GAS_COST   (hub-into-stp-trigger))
-    (* hubshan.misc/STP_GAS_MXP                (hub-into-stp-trigger))
-    (* hubshan.misc/STP_GAS_PAID_OUT_OF_POCKET (hub-into-stp-trigger))
-    (* hubshan.misc/STP_GAS_STIPEND            (hub-into-stp-trigger))
+    (* hubshan.misc/STP_INSTRUCTION            (hub-into-stp-trigger-shan))
+    (* hubshan.misc/STP_GAS_HI                 (hub-into-stp-trigger-shan))
+    (* hubshan.misc/STP_GAS_LO                 (hub-into-stp-trigger-shan))
+    (* hubshan.misc/STP_VALUE_HI               (hub-into-stp-trigger-shan))
+    (* hubshan.misc/STP_VALUE_LO               (hub-into-stp-trigger-shan))
+    (* hubshan.misc/STP_EXISTS                 (hub-into-stp-trigger-shan))
+    (* hubshan.misc/STP_WARMTH                 (hub-into-stp-trigger-shan))
+    (* hubshan.misc/STP_OOGX                   (hub-into-stp-trigger-shan))
+    (* hubshan.GAS_ACTUAL                      (hub-into-stp-trigger-shan))
+    (* hubshan.misc/STP_GAS_UPFRONT_GAS_COST   (hub-into-stp-trigger-shan))
+    (* hubshan.misc/STP_GAS_MXP                (hub-into-stp-trigger-shan))
+    (* hubshan.misc/STP_GAS_PAID_OUT_OF_POCKET (hub-into-stp-trigger-shan))
+    (* hubshan.misc/STP_GAS_STIPEND            (hub-into-stp-trigger-shan))
   )
   )
 

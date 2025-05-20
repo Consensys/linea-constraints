@@ -1,4 +1,4 @@
-(defun (hub-into-rom-jump-destination-vetting-trigger)
+(defun (hub-into-rom-jump-destination-vetting-trigger-shan)
   (* hubshan.PEEK_AT_STACK
      hubshan.stack/JUMP_DESTINATION_VETTING_REQUIRED))
 
@@ -11,8 +11,8 @@
            )
            ;; source columns
 	   (
-	     (* hubshan.CFI                                (hub-into-rom-jump-destination-vetting-trigger))
-	     (* [hubshan.stack/STACK_ITEM_VALUE_LO 1]      (hub-into-rom-jump-destination-vetting-trigger))
-	     (* (- 1 hubshan.stack/JUMPX)                  (hub-into-rom-jump-destination-vetting-trigger))
+	     (* hubshan.CFI                                (hub-into-rom-jump-destination-vetting-trigger-shan))
+	     (* [hubshan.stack/STACK_ITEM_VALUE_LO 1]      (hub-into-rom-jump-destination-vetting-trigger-shan))
+	     (* (- 1 hubshan.stack/JUMPX)                  (hub-into-rom-jump-destination-vetting-trigger-shan))
            )
 )

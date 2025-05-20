@@ -1,7 +1,7 @@
-(defun (hub-into-wcp-for-sox-activation-flag)
+(defun (hub-into-wcp-for-sox-activation-flag-shan)
   (* hubshan.PEEK_AT_STACK (- 1 hubshan.stack/SUX)))
 
-(defun (projected-height)
+(defun (projected-height-shan)
   (- (+ hubshan.HEIGHT hubshan.stack/ALPHA) hubshan.stack/DELTA))
 
 (deflookup
@@ -17,12 +17,12 @@
   )
   ;; source columns
   (
-    (* EVM_INST_GT (hub-into-wcp-for-sox-activation-flag))
+    (* EVM_INST_GT (hub-into-wcp-for-sox-activation-flag-shan))
     0
-    (* (projected-height) (hub-into-wcp-for-sox-activation-flag))
+    (* (projected-height-shan) (hub-into-wcp-for-sox-activation-flag-shan))
     0
-    (* 1024 (hub-into-wcp-for-sox-activation-flag))
-    (* hubshan.stack/SOX (hub-into-wcp-for-sox-activation-flag))
+    (* 1024 (hub-into-wcp-for-sox-activation-flag-shan))
+    (* hubshan.stack/SOX (hub-into-wcp-for-sox-activation-flag-shan))
   ))
 
 

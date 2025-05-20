@@ -1,4 +1,4 @@
-(defun (hub-into-exp-trigger)
+(defun (hub-into-exp-trigger-shan)
   (* hubshan.PEEK_AT_MISCELLANEOUS
      hubshan.misc/EXP_FLAG))
 
@@ -15,12 +15,12 @@
              )
            ;; source columns
            (
-            (* 1                         (hub-into-exp-trigger))
-            (* hubshan.misc/EXP_INST         (hub-into-exp-trigger))
-            (* [hubshan.misc/EXP_DATA 1]     (hub-into-exp-trigger))
-            (* [hubshan.misc/EXP_DATA 2]     (hub-into-exp-trigger))
-            (* [hubshan.misc/EXP_DATA 3]     (hub-into-exp-trigger))
-            (* [hubshan.misc/EXP_DATA 4]     (hub-into-exp-trigger))
-            (* [hubshan.misc/EXP_DATA 5]     (hub-into-exp-trigger))
+            (* 1                         (hub-into-exp-trigger-shan))
+            (* hubshan.misc/EXP_INST         (hub-into-exp-trigger-shan))
+            (* [hubshan.misc/EXP_DATA 1]     (hub-into-exp-trigger-shan))
+            (* [hubshan.misc/EXP_DATA 2]     (hub-into-exp-trigger-shan))
+            (* [hubshan.misc/EXP_DATA 3]     (hub-into-exp-trigger-shan))
+            (* [hubshan.misc/EXP_DATA 4]     (hub-into-exp-trigger-shan))
+            (* [hubshan.misc/EXP_DATA 5]     (hub-into-exp-trigger-shan))
             )
            )
