@@ -43,7 +43,19 @@ MMIO := mmio
 
 MXP := mxp
 
-OOB := oob
+OOBLON := $(wildcard oob/ooblon/*.lisp) \
+       	       $(wildcard oob/ooblon/lookups/*.lisp) \
+       	       $(wildcard oob/ooblon/opcodes/*.lisp) \
+       	       $(wildcard oob/ooblon/precompiles/blake2f/*.lisp) \
+       	       $(wildcard oob/ooblon/precompiles/common/*.lisp) \
+       	       $(wildcard oob/ooblon/precompiles/modexp/*.lisp)
+
+OOBSHAN := $(wildcard oob/oobshan/*.lisp) \
+       	       $(wildcard oob/oobshan/lookups/*.lisp) \
+       	       $(wildcard oob/oobshan/opcodes/*.lisp) \
+       	       $(wildcard oob/oobshan/precompiles/blake2f/*.lisp) \
+       	       $(wildcard oob/oobshan/precompiles/common/*.lisp) \
+       	       $(wildcard oob/oobshan/precompiles/modexp/*.lisp)
 
 RLP_ADDR := rlpaddr
 
@@ -70,7 +82,7 @@ TXN_DATA := txndata
 WCP := wcp
 
 # Corset is order sensitive - to compile, we load the constants first
-ZKEVM_MODULES := ${CONSTANTS} \
+ZKEVM_MODULES_LONDON := ${CONSTANTS} \
 		 ${ALU} \
 		 ${BIN} \
 		 ${BLAKE2f_MODEXP_DATA} \
@@ -87,7 +99,39 @@ ZKEVM_MODULES := ${CONSTANTS} \
 		 ${MMIO} \
 		 ${MMU} \
 		 ${MXP} \
-		 ${OOB} \
+		 ${OOBLON} \
+		 ${RLP_ADDR} \
+		 ${RLP_TXN} \
+		 ${RLP_TXRCPT} \
+		 ${ROM} \
+		 ${ROM_LEX} \
+		 ${SHAKIRA_DATA} \
+		 ${SHIFT} \
+		 ${STP} \
+		 ${TABLES} \
+		 ${TRM} \
+		 ${TXN_DATA} \
+		 ${WCP}
+
+ # Corset is order sensitive - to compile, we load the constants first
+ ZKEVM_MODULES_SHANGHAI := ${CONSTANTS} \
+		 ${ALU} \
+		 ${BIN} \
+		 ${BLAKE2f_MODEXP_DATA} \
+		 ${BLOCKDATA} \
+		 ${BLOCKHASH} \
+		 ${EC_DATA} \
+		 ${EUC} \
+		 ${EXP} \
+		 ${GAS} \
+		 ${HUB} \
+		 ${LIBRARY} \
+		 ${LOG_DATA} \
+		 ${LOG_INFO} \
+		 ${MMIO} \
+		 ${MMU} \
+		 ${MXP} \
+		 ${OOBSHAN} \
 		 ${RLP_ADDR} \
 		 ${RLP_TXN} \
 		 ${RLP_TXRCPT} \
@@ -103,3 +147,9 @@ ZKEVM_MODULES := ${CONSTANTS} \
 
 zkevm.bin: ${ZKEVM_MODULES}
 	${GO_CORSET_COMPILE} -o $@ ${ZKEVM_MODULES}
+
+zkevm-london.bin: ${ZKEVM_MODULES_LONDON}
+	${GO_CORSET_COMPILE} -o $@ ${ZKEVM_MODULES_LONDON}
+
+zkevm-shanghai.bin: ${ZKEVM_MODULES_SHANGHAI}
+	${GO_CORSET_COMPILE} -o $@ ${ZKEVM_MODULES_SHANGHAI}
