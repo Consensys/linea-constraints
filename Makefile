@@ -119,7 +119,7 @@ TXN_DATA_SHANGHAI := $(wildcard txndata/shanghai/*.lisp) \
 TXN_DATA_CANCUN := $(wildcard txndata/cancun/*.lisp) \
                  $(wildcard txndata/cancun/**/*.lisp)
 
-WCP := wcp
+WCP := wcp/wcp.zkasm
 
 LISPX := $(shell find * -name *.lispX)
 # Warn about any lispX files
@@ -169,14 +169,14 @@ ZKEVM_MODULES_PARIS := ${ZKEVM_MODULES_COMMON} \
 		 ${TXN_DATA_LONDON}
 
 ZKEVM_MODULES_SHANGHAI := ${ZKEVM_MODULES_COMMON} \
- 		 ${BLOCKDATA_PARIS} \
+		 ${BLOCKDATA_PARIS} \
 		 ${HUB_SHANGHAI} \
 		 ${OOB_SHANGHAI} \
 		 ${INST_DECODER_LONDON} \
 		 ${TXN_DATA_SHANGHAI}
 
 ZKEVM_MODULES_CANCUN := ${ZKEVM_MODULES_COMMON} \
- 		 ${BLOCKDATA_CANCUN} \
+		 ${BLOCKDATA_CANCUN} \
 		 ${HUB_CANCUN} \
 		 ${OOB_SHANGHAI} \
 		 ${INST_DECODER_CANCUN} \

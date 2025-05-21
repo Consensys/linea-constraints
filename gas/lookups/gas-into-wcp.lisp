@@ -4,11 +4,11 @@
 (deflookup
   gas-into-wcp
   (
-    wcp.ARG_1_HI
-    wcp.ARG_1_LO
-    wcp.ARG_2_HI
-    wcp.ARG_2_LO
-    wcp.RES
+    wcp.ARGUMENT_1'1
+    wcp.ARGUMENT_1'0
+    wcp.ARGUMENT_2'1
+    wcp.ARGUMENT_2'0
+    wcp.RESULT
     wcp.INST
   )
   (
