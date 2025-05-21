@@ -11,17 +11,11 @@ BIN := bin
 BLAKE2f_MODEXP_DATA := blake2fmodexpdata
 
 # constraints used in prod for LINEA, with linea block gas limit
-BLOCKDATALON := $(wildcard blockdata/blockdatalon/*.lisp) \
-	       $(wildcard blockdata/blockdatalon/processing/*.lisp) \
-	       $(wildcard blockdata/blockdatalon/processing/gaslimit/common.lisp) \
-	       $(wildcard blockdata/blockdatalon/processing/gaslimit/linea.lisp) \
-	       $(wildcard blockdata/blockdatalon/lookups/*.lisp)
-
-BLOCKDATASHAN := $(wildcard blockdata/blockdatashan/*.lisp) \
-	   $(wildcard blockdata/blockdatashan/processing/*.lisp) \
-	   $(wildcard blockdata/blockdatashan/processing/gaslimit/common.lisp) \
-	   $(wildcard blockdata/blockdatashan/processing/gaslimit/linea.lisp) \
-	   $(wildcard blockdata/blockdatashan/lookups/*.lisp)
+BLOCKDATA := $(wildcard blockdata/*.lisp) \
+	       $(wildcard blockdata/processing/*.lisp) \
+	       $(wildcard blockdata/processing/gaslimit/common.lisp) \
+	       $(wildcard blockdata/processing/gaslimit/linea.lisp) \
+	       $(wildcard blockdata/lookups/*.lisp)
 
 BLOCKHASH := blockhash
 
@@ -35,7 +29,19 @@ EXP := exp
 
 GAS := gas
 
-HUB :=  hub
+HUB_LON :=  $(wildcard hub/london/*.lisp) \
+			$(wildcard hub/london/**/*.lisp) \
+			$(wildcard hub/london/**/**/*.lisp) \
+			$(wildcard hub/london/**/**/**/*.lisp) \
+			$(wildcard hub/london/**/**/**/**/*.lisp) \
+			$(wildcard hub/london/**/**/**/**/**/*.lisp)
+
+HUB_SHAN :=  $(wildcard hub/shanghai/*.lisp) \
+	 		 $(wildcard hub/shanghai/**/*.lisp) \
+	 		 $(wildcard hub/shanghai/**/**/*.lisp) \
+			 $(wildcard hub/shanghai/**/**/**/*.lisp) \
+			 $(wildcard hub/shanghai/**/**/**/**/*.lisp) \
+			 $(wildcard hub/shanghai/**/**/**/**/**/*.lisp)
 
 LIBRARY := library
 
@@ -49,7 +55,13 @@ MMIO := mmio
 
 MXP := mxp
 
-OOB := oob
+OOB_LON := $(wildcard oob/london/*.lisp) \
+	       $(wildcard oob/london/**/*.lisp) \
+	       $(wildcard oob/london/**/**/*.lisp)
+
+OOB_SHAN := $(wildcard oob/shanghai/*.lisp) \
+	        $(wildcard oob/shanghai/**/*.lisp) \
+	        $(wildcard oob/shanghai/**/**/*.lisp)
 
 RLP_ADDR := rlpaddr
 
@@ -71,30 +83,30 @@ TABLES := reftables
 
 TRM := trm
 
-TXN_DATA := txndata
+TXN_DATA_LON := $(wildcard txndata/london/*.lisp) \
+                $(wildcard txndata/london/**/*.lisp)
+
+TXN_DATA_SHAN := $(wildcard txndata/shanghai/*.lisp) \
+                 $(wildcard txndata/shanghai/**/*.lisp)
 
 WCP := wcp
 
-# Corset is order sensitive - to compile, we load the constants first
-ZKEVM_MODULES := ${CONSTANTS} \
+ZKEVM_MODULES_COMMON := ${CONSTANTS} \
 		 ${ALU} \
 		 ${BIN} \
 		 ${BLAKE2f_MODEXP_DATA} \
-		 ${BLOCKDATALON} \
-		 ${BLOCKDATASHAN} \
+		 ${BLOCKDATA} \
 		 ${BLOCKHASH} \
 		 ${EC_DATA} \
 		 ${EUC} \
 		 ${EXP} \
 		 ${GAS} \
-		 ${HUB} \
 		 ${LIBRARY} \
 		 ${LOG_DATA} \
 		 ${LOG_INFO} \
 		 ${MMIO} \
 		 ${MMU} \
 		 ${MXP} \
-		 ${OOB} \
 		 ${RLP_ADDR} \
 		 ${RLP_TXN} \
 		 ${RLP_TXRCPT} \
@@ -105,8 +117,12 @@ ZKEVM_MODULES := ${CONSTANTS} \
 		 ${STP} \
 		 ${TABLES} \
 		 ${TRM} \
-		 ${TXN_DATA} \
 		 ${WCP}
 
+ZKEVM_MODULES_LON := ${ZKEVM_MODULES_COMMON} \
+					 ${HUB_LON} \
+					 ${OOB_LON} \
+					 ${TXN_DATA_LON}
+
 zkevm.bin: ${ZKEVM_MODULES}
-	${GO_CORSET_COMPILE} -o $@ ${ZKEVM_MODULES}
+	${GO_CORSET_COMPILE} -o $@ ${ZKEVM_MODULES_LON}
