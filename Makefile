@@ -93,7 +93,7 @@ TXN_DATA_LON := $(wildcard txndata/london/*.lisp) \
 TXN_DATA_SHAN := $(wildcard txndata/shanghai/*.lisp) \
                  $(wildcard txndata/shanghai/**/*.lisp)
 
-WCP := wcp
+WCP := wcp/wcp.zkasm
 
 ZKEVM_MODULES_COMMON := ${CONSTANTS} \
 		 ${ALU} \
