@@ -10,27 +10,26 @@
   (PHASE        :i16)
   (SUCCESS_BIT  :binary@prove)
 
-  (DATA_POINT_EVALUATION    :binary@prove) ;; TODO: flags?
-  (DATA_G1_ADD              :binary@prove)
-  (DATA_G1_MSM              :binary@prove)
-  (DATA_G2_ADD              :binary@prove)
-  (DATA_G2_MSM              :binary@prove)
-  (DATA_PAIRING_CHECK       :binary@prove)
-  (DATA_MAP_FP_TO_G1        :binary@prove)
-  (DATA_MAP_FP2_TO_G2       :binary@prove)
+  (DATA_POINT_EVALUATION_FLAG         :binary@prove) 
+  (DATA_G1_ADD_FLAG                   :binary@prove)
+  (DATA_G1_MSM_FLAG                   :binary@prove)
+  (DATA_G2_ADD_FLAG                   :binary@prove)
+  (DATA_G2_MSM_FLAG                   :binary@prove)
+  (DATA_PAIRING_CHECK_FLAG            :binary@prove)
+  (DATA_MAP_FP_TO_G1_FLAG             :binary@prove)
+  (DATA_MAP_FP2_TO_G2_FLAG            :binary@prove)
   
-  (RSLT_POINT_EVALUATION  :binary@prove)
-  (RSLT_G1_ADD            :binary@prove)
-  (RSLT_G1_MSM            :binary@prove)
-  (RSLT_G2_ADD            :binary@prove)
-  (RSLT_G2_MSM            :binary@prove)
-  (RSLT_PAIRING_CHECK     :binary@prove)
-  (RSLT_MAP_FP_TO_G1      :binary@prove)
-  (RSLT_MAP_FP2_TO_G2     :binary@prove)
+  (RSLT_POINT_EVALUATION_FLAG         :binary@prove)
+  (RSLT_G1_ADD_FLAG                   :binary@prove)
+  (RSLT_G1_MSM_FLAG                   :binary@prove)
+  (RSLT_G2_ADD_FLAG                   :binary@prove)
+  (RSLT_G2_MSM_FLAG                   :binary@prove)
+  (RSLT_PAIRING_CHECK_FLAG            :binary@prove)
+  (RSLT_MAP_FP_TO_G1_FLAG             :binary@prove)
+  (RSLT_MAP_FP2_TO_G2_FLAG            :binary@prove)
  
   (ACC_INPUTS                                    :i16)
   (BYTE_DELTA                                    :byte@prove)
-
 
   (MALFORMED_DATA_INTERNAL_BIT                    :binary@prove)
   (MALFORMED_DATA_INTERNAL_ACC                    :binary@prove)
@@ -71,7 +70,16 @@
 
 ;; aliases
 (defalias
-  ;; TODO: add missing
+  MINT_BIT            MALFORMED_DATA_INTERNAL_BIT
+  MINT_ACC            MALFORMED_DATA_INTERNAL_ACC
+  MINT                MALFORMED_DATA_INTERNAL_ACC_TOT
+  MEXT_BIT            MALFORMED_DATA_EXTERNAL_BIT
+  MEXT_ACC            MALFORMED_DATA_EXTERNAL_ACC
+  MEXT                MALFORMED_DATA_EXTERNAL_ACC_TOT
+  WTRV                WELLFORMED_DATA_TRIVIAL
+  WNON                WELLFORMED_DATA_NONTRIVIAL
+  NONTRIVIAL_POP_BIT  NONTRIVIAL_PAIR_OF_POINTS_BIT
+  NONTRIVIAL_POP_ACC  NONTRIVIAL_PAIR_OF_POINTS_ACC
   CS_POINT_EVALUATION CIRCUIT_SELECTOR_POINT_EVALUATION
   CS_C1_MEMBERSHIP    CIRCUIT_SELECTOR_C1_MEMBERSHIP
   CS_G1_MEMBERSHIP    CIRCUIT_SELECTOR_G1_MEMBERSHIP
