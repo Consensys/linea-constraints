@@ -34,10 +34,10 @@
        (is_map_fp_to_g1)
        (is_map_fp2_to_g2)))
 
-(defconstraint first-row (:domain {0})
+(defconstraint first-row-sanity-check (:domain {0})
     (debug (vanishes! (flag_sum))))
 
-(defconstraint non-decreasing ()
+(defconstraint non-decreasing-sanity-check ()
     (debug (if-not-zero (flag_sum) (next (eq! (flag_sum) 1)))))
 
 (defconstraint flag-sum-when-stamp-is-zero ()
