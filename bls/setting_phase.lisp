@@ -18,6 +18,12 @@
        (* PHASE_DATA_MAP_FP2_TO_G2 DATA_MAP_FP2_TO_G2_FLAG)
        (* PHASE_RSLT_MAP_FP2_TO_G2 RSLT_MAP_FP2_TO_G2_FLAG)))
 
+(defconstraint stamp-constancy ()
+    (stamp-constancy STAMP PHASE))
+
+(defconstraint setting-phase ()
+    (eq! PHASE (phase_sum)))
+
     
    
    

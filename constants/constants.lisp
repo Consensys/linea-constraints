@@ -347,20 +347,22 @@
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; BLS MODULE ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;            ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  PHASE_DATA_POINT_EVALUATION ;; TODO
-  PHASE_RSLT_POINT_EVALUATION
-  PHASE_DATA_G1_ADD
-  PHASE_RSLT_G1_ADD
-  PHASE_DATA_G1_MSM
-  PHASE_RSLT_G1_MSM
-  PHASE_DATA_G2_ADD
-  PHASE_RSLT_G2_ADD
-  PHASE_DATA_G2_MSM
-  PHASE_RSLT_G2_MSM
-  PHASE_DATA_MAP_FP_TO_G1
-  PHASE_RSLT_MAP_FP_TO_G1
-  PHASE_DATA_MAP_FP2_TO_G2
-  PHASE_RSLT_MAP_FP2_TO_G2
+  PHASE_DATA_POINT_EVALUATION               0x100A
+  PHASE_RSLT_POINT_EVALUATION               0x100B
+  PHASE_DATA_G1_ADD                         0x110A
+  PHASE_RSLT_G1_ADD                         0x110B
+  PHASE_DATA_G1_MSM                         0x120A
+  PHASE_RSLT_G1_MSM                         0x120B
+  PHASE_DATA_G2_ADD                         0x130A
+  PHASE_RSLT_G2_ADD                         0x130B
+  PHASE_DATA_G2_MSM                         0x140A
+  PHASE_RSLT_G2_MSM                         0x140B
+  PHASE_DATA_PAIRING_CHECK                  0x150A
+  PHASE_RSLT_PAIRING_CHECK                  0x150B
+  PHASE_DATA_MAP_FP_TO_G1                   0x160A
+  PHASE_RSLT_MAP_FP_TO_G1                   0x160B
+  PHASE_DATA_MAP_FP2_TO_G2                  0x170A
+  PHASE_RSLT_MAP_FP2_TO_G2                  0x170B
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;            ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; EXP MODULE ;;
