@@ -162,8 +162,8 @@ ZKEVM_MODULES_SHANGHAI := ${ZKEVM_MODULES_COMMON} \
 ZKEVM_MODULES_CANCUN := ${ZKEVM_MODULES_COMMON} \
  		 ${BLOCKDATA_CANCUN} \
 		 ${HUB_CANCUN} \
-		 ${OOB_SHANGHAIGHAI} \
-		 ${TXN_DATA_SHANGHAI}
+		 ${OOB_SHANGHAI} \
+		 ${TXN_DATA_CANCUN}
 
 all: zkevm_london.bin zkevm_paris.bin zkevm_shanghai.bin zkevm_cancun.bin
 
