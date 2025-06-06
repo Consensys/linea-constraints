@@ -11,6 +11,7 @@
  (IS_GASLIMIT         :binary@prove)
  (IS_CHAINID          :binary@prove)
  (IS_BASEFEE          :binary@prove)
+ (IS_BLOBBASEFEE      :binary@prove)
  (INST                :byte :display :opcode)
  (COINBASE_HI         :i32)
  (COINBASE_LO         :i128)
