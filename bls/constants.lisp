@@ -8,28 +8,28 @@
   BLS_PRIME_1                                    0x64774b84f38512bf6730d2a0f6b0f624
   BLS_PRIME_0                                    0x1eabfffeb153ffffb9feffffffffaaab
   
-  INDEX_MAX_POINT_EVALUATION_DATA                11
-  INDEX_MAX_POINT_EVALUATION_RESULT              3
-  INDEX_MAX_G1_ADD_DATA                          15
-  INDEX_MAX_G1_ADD_RESULT                        7
-  INDEX_MAX_G1_MSM_DATA_MIN                      9
-  INDEX_MAX_G1_MSM_RESULT                        7
-  INDEX_MAX_G2_ADD_DATA                          31
-  INDEX_MAX_G2_ADD_RESULT                        15
-  INDEX_MAX_G2_MSM_DATA_MIN                      17
-  INDEX_MAX_G2_MSM_RESULT                        15
-  INDEX_MAX_PAIRING_CHECK_DATA_MIN               23
-  INDEX_MAX_PAIRING_CHECK_RESULT                 1
-  INDEX_MAX_MAP_FP_TO_G1_DATA                    3
-  INDEX_MAX_MAP_FP_TO_G1_RESULT                  7
-  INDEX_MAX_MAP_FP2_TO_G2_DATA                   7
-  INDEX_MAX_MAP_FP2_TO_G2_RESULT                 15
+  INDEX_MAX_DATA_POINT_EVALUATION                11
+  INDEX_MAX_RSLT_POINT_EVALUATION                3
+  INDEX_MAX_DATA_G1_ADD                          15
+  INDEX_MAX_RSLT_G1_ADD                          7
+  INDEX_MAX_DATA_G1_MSM_MIN                      9
+  INDEX_MAX_RSLT_G1_MSM                          7
+  INDEX_MAX_DATA_G2_ADD                          31
+  INDEX_MAX_RSLT_G2_ADD                          15
+  INDEX_MAX_DATA_G2_MSM_MIN                      17
+  INDEX_MAX_RSLT_G2_MSM                          15
+  INDEX_MAX_DATA_PAIRING_CHECK_MIN               23
+  INDEX_MAX_RSLT_PAIRING_CHECK                   1
+  INDEX_MAX_DATA_MAP_FP_TO_G1                    3
+  INDEX_MAX_RSLT_MAP_FP_TO_G1                    7
+  INDEX_MAX_DATA_MAP_FP2_TO_G2                   7
+  INDEX_MAX_RSLT_MAP_FP2_TO_G2                   15
 
   CT_MAX_POINT_EVALUATION                        11
   CT_MAX_SMALL_POINT                             7
   CT_MAX_LARGE_POINT                             15
   CT_MAX_SCALAR                                  1
-  CT_MAX_FP_TO_G1                                3
+  CT_MAX_MAP_FP_TO_G1                            3
   CT_MAX_MAP_FP2_TO_G2                           7
 )
 

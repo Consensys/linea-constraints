@@ -10,6 +10,9 @@
   (PHASE        :i16)
   (SUCCESS_BIT  :binary@prove)
 
+  (CT           :i4)
+  (CT_MAX       :i4)
+
   (DATA_POINT_EVALUATION_FLAG         :binary@prove) 
   (DATA_G1_ADD_FLAG                   :binary@prove)
   (DATA_G1_MSM_FLAG                   :binary@prove)
