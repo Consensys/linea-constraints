@@ -10,4 +10,3 @@
   (if-eq-else CT CT_MAX
               (vanishes! (next CT))
               (eq! (next CT) (+ 1 CT))))
-
