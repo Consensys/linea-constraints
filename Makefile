@@ -112,6 +112,9 @@ TXN_DATA_LONDON := $(wildcard txndata/london/*.lisp) \
 TXN_DATA_SHANGHAI := $(wildcard txndata/shanghai/*.lisp) \
                  $(wildcard txndata/shanghai/**/*.lisp)
 
+TXN_DATA_CANCUN := $(wildcard txndata/cancun/*.lisp) \
+                 $(wildcard txndata/cancun/**/*.lisp)
+
 WCP := wcp
 
 ZKEVM_MODULES_COMMON := ${CONSTANTS} \
