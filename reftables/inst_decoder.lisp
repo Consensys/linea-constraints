@@ -21,6 +21,7 @@
     (FAMILY_BATCH                          :binary)
     (FAMILY_STACK_RAM                      :binary)
     (FAMILY_STORAGE                        :binary)
+    (FAMILY_TRANSIENT                      :binary)
     (FAMILY_JUMP                           :binary)
     (FAMILY_MACHINE_STATE                  :binary)
     (FAMILY_PUSH_POP                       :binary)
