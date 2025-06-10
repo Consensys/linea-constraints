@@ -37,7 +37,6 @@
 	     instdecoder.FAMILY_SHF
 	     instdecoder.FAMILY_STACK_RAM
 	     instdecoder.FAMILY_STORAGE
-	     instdecoder.FAMILY_TRANSIENT
 	     instdecoder.FAMILY_SWAP
 	     instdecoder.FAMILY_TRANSACTION
 	     instdecoder.FAMILY_WCP
@@ -80,7 +79,6 @@
 	     (* hub.stack/SHF_FLAG                    (hub-into-instruction-decoder-trigger))
 	     (* hub.stack/STACKRAM_FLAG               (hub-into-instruction-decoder-trigger))
 	     (* hub.stack/STO_FLAG                    (hub-into-instruction-decoder-trigger))
-	     (* hub.stack/TRANS_FLAG                  (hub-into-instruction-decoder-trigger))
 	     (* hub.stack/SWAP_FLAG                   (hub-into-instruction-decoder-trigger))
 	     (* hub.stack/TXN_FLAG                    (hub-into-instruction-decoder-trigger))
 	     (* hub.stack/WCP_FLAG                    (hub-into-instruction-decoder-trigger))
