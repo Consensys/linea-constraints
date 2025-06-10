@@ -30,6 +30,10 @@
                         (counter-constancy CT DATA_LO)
                         (counter-constancy CT COINBASE_HI)
                         (counter-constancy CT COINBASE_LO)
+<<<<<<< HEAD
+=======
+                        (counter-constancy CT REL_TX_NUM_MAX)
+>>>>>>> master
                         (counter-constancy CT BLOCK_GAS_LIMIT)
                         (counter-constancy CT (wght-sum))))
 
@@ -82,5 +86,9 @@
 
 (defconstraint   heartbeat---finalization-constraints (:domain {-1}) ;; ""
                  (begin
+<<<<<<< HEAD
                    (eq!  IS_BL  1)
+=======
+                   (eq!  IS_BF  1)
+>>>>>>> master
                    (eq!  CT     CT_MAX)))

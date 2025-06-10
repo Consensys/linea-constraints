@@ -12,6 +12,7 @@
                            IS_PR
                            IS_GL
                            IS_ID
+<<<<<<< HEAD
                            IS_BF
                            IS_BL))
 
@@ -32,6 +33,25 @@
                            (* EVM_INST_CHAINID        IS_ID)
                            (* EVM_INST_BASEFEE        IS_BF)
                            (* EVM_INST_BLOBBASEFEE    IS_BL)))
+=======
+                           IS_BF))
+
+(defun    (wght-sum)    (+ ( * 1 IS_CB)
+                           ( * 2 IS_TS)
+                           ( * 3 IS_NB)
+                           ( * 4 IS_PR)
+                           ( * 5 IS_GL)
+                           ( * 6 IS_ID)
+                           ( * 7 IS_BF)))
+
+(defun    (inst-sum)    (+ (* EVM_INST_COINBASE   IS_CB)
+                           (* EVM_INST_TIMESTAMP  IS_TS)
+                           (* EVM_INST_NUMBER     IS_NB)
+                           (* EVM_INST_PREVRANDAO IS_PR)
+                           (* EVM_INST_GASLIMIT   IS_GL)
+                           (* EVM_INST_CHAINID    IS_ID)
+                           (* EVM_INST_BASEFEE    IS_BF)))
+>>>>>>> master
 
 (defun    (ct-max-sum)    (+ (* (- nROWS_CB 1) IS_CB)
                              (* (- nROWS_TS 1) IS_TS)
@@ -39,8 +59,12 @@
                              (* (- nROWS_PV 1) IS_PR)
                              (* (- nROWS_GL 1) IS_GL)
                              (* (- nROWS_ID 1) IS_ID)
+<<<<<<< HEAD
                              (* (- nROWS_BF 1) IS_BF)
                              (* (- nROWS_BL 1) IS_BL)))
+=======
+                             (* (- nROWS_BF 1) IS_BF)))
+>>>>>>> master
 
 (defun    (phase-entry)    (+ (* (- 1 IS_CB) (next IS_CB))
                               (* (- 1 IS_TS) (next IS_TS))
@@ -48,8 +72,12 @@
                               (* (- 1 IS_PR) (next IS_PR))
                               (* (- 1 IS_GL) (next IS_GL))
                               (* (- 1 IS_ID) (next IS_ID))
+<<<<<<< HEAD
                               (* (- 1 IS_BF) (next IS_BF))
                               (* (- 1 IS_BL) (next IS_BL))))
+=======
+                              (* (- 1 IS_BF) (next IS_BF))))
+>>>>>>> master
 
 (defun    (same-phase)     (+ (* IS_CB (next IS_CB))
                               (* IS_TS (next IS_TS))
@@ -57,8 +85,12 @@
                               (* IS_PR (next IS_PR))
                               (* IS_GL (next IS_GL))
                               (* IS_ID (next IS_ID))
+<<<<<<< HEAD
                               (* IS_BF (next IS_BF))
                               (* IS_BL (next IS_BL))))
+=======
+                              (* IS_BF (next IS_BF))))
+>>>>>>> master
 
 (defun    (allowable-transitions)     (+ (* IS_CB (next IS_TS))
                                          (* IS_TS (next IS_NB))
@@ -66,8 +98,12 @@
                                          (* IS_PR (next IS_GL))
                                          (* IS_GL (next IS_ID))
                                          (* IS_ID (next IS_BF))
+<<<<<<< HEAD
                                          (* IS_BF (next IS_BL))
                                          (* IS_BL (next IS_CB))))
+=======
+                                         (* IS_BF (next IS_CB))))
+>>>>>>> master
 
 (defun  (curr-data-hi)                            DATA_HI                     )
 (defun  (curr-data-lo)                            DATA_LO                     )
