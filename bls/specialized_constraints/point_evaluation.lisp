@@ -8,7 +8,7 @@
         (z_lo (shift LIMB 3))
         (y_hi (shift LIMB 4))
         (y_lo (shift LIMB 5))
-        (z_is_in_range (shift WCP_RES 0))
+        (z_is_in_range WCP_RES)
         (y_is_in_range (shift WCP_RES 1))
         (internal_checks_passed (- 1 MINT_BIT)))
        (begin (wcpCallToLT 0 z_hi z_lo POINT_EVALUATION_PRIME_HI POINT_EVALUATION_PRIME_LO)
