@@ -1,9 +1,9 @@
 (module bls)
 
 (defun (is_variable_size_data)
-    (+ DATA_G1_MSM_FLAG
-       DATA_G2_MSM_FLAG
-       DATA_PAIRING_CHECK_FLAG))
+    (+ DATA_BLS_G1_MSM_FLAG
+       DATA_BLS_G2_MSM_FLAG
+       DATA_BLS_PAIRING_CHECK_FLAG))
 
 (defconstraint acc-inputs-init ()
     (if-zero (is_variable_size_data)

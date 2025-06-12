@@ -35,11 +35,11 @@
                     (eq! WNON NONTRIVIAL_POP_ACC))))))
 
 (defconstraint setting-mint-bit-along-g1-msm-scalar ()
-    (if-not-zero DATA_G1_MSM_FLAG
+    (if-not-zero DATA_BLS_G1_MSM_FLAG
         (if-not-zero IS_SECOND_INPUT
             (vanishes! MINT_BIT))))
 
 (defconstraint setting-mint-bit-along-g2-msm-scalar ()
-    (if-not-zero DATA_G2_MSM_FLAG
+    (if-not-zero DATA_BLS_G2_MSM_FLAG
         (if-not-zero IS_SECOND_INPUT
             (vanishes! MINT_BIT))))

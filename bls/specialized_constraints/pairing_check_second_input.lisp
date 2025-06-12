@@ -1,7 +1,7 @@
 (module bls)
 
 (defun (pairing-check-second-input-hypothesis)
-  (* DATA_PAIRING_CHECK_FLAG (first_row_of_new_second_input)))
+  (* DATA_BLS_PAIRING_CHECK_FLAG (first_row_of_new_second_input)))
 
 (defconstraint internal-checks-pairing-check-second-input (:guard (pairing-check-second-input-hypothesis))
   (let ((B_x_Im_3 LIMB)

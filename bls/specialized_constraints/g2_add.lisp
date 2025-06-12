@@ -1,7 +1,7 @@
 (module bls)
 
 (defun (g2-add-hypothesis)
-  (* DATA_G2_ADD_FLAG (first_row_of_new_input)))
+  (* DATA_BLS_G2_ADD_FLAG (first_row_of_new_input)))
 
 (defconstraint internal-checks-g2-add (:guard (g2-add-hypothesis))
   (let ((A_x_Im_3 LIMB)

@@ -1,16 +1,16 @@
 (module bls)
 
 (defun (two_input_type_prc_data)
-    (+ DATA_G1_ADD_FLAG
-       DATA_G1_MSM_FLAG
-       DATA_G2_ADD_FLAG
-       DATA_G2_MSM_FLAG
-       DATA_PAIRING_CHECK_FLAG))
+    (+ DATA_BLS_G1_ADD_FLAG
+       DATA_BLS_G1_MSM_FLAG
+       DATA_BLS_G2_ADD_FLAG
+       DATA_BLS_G2_MSM_FLAG
+       DATA_BLS_PAIRING_CHECK_FLAG))
 
 (defun (one_input_type_prc_data)
     (+ DATA_POINT_EVALUATION_FLAG
-       DATA_MAP_FP_TO_G1_FLAG
-       DATA_MAP_FP2_TO_G2_FLAG))
+       DATA_BLS_MAP_FP_TO_G1_FLAG
+       DATA_BLS_MAP_FP2_TO_G2_FLAG))
 
 (defun (will_switch_from_first_to_second)
     (* IS_FIRST_INPUT (next IS_SECOND_INPUT)))

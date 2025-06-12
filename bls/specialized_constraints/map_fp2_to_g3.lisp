@@ -1,7 +1,7 @@
 (module bls)
 
 (defun (map-fp2-to-g2-hypothesis)
-  (* DATA_MAP_FP2_TO_G2_FLAG (first_row_of_new_first_input)))
+  (* DATA_BLS_MAP_FP2_TO_G2_FLAG (first_row_of_new_first_input)))
 
 (defconstraint internal-checks-map-fp2-to-g2 (:guard (map-fp2-to-g2-hypothesis))
   (let ((e_Im_3 LIMB)

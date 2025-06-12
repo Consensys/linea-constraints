@@ -1,7 +1,7 @@
 (module bls)
 
 (defun (g1-msm-hypothesis)
-  (* DATA_G1_MSM_FLAG (first_row_of_new_first_input)))
+  (* DATA_BLS_G1_MSM_FLAG (first_row_of_new_first_input)))
 
 (defconstraint internal-checks-g1-msm (:guard (g1-msm-hypothesis))
   (let ((A_x_3 LIMB)

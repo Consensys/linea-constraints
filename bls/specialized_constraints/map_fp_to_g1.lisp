@@ -1,7 +1,7 @@
 (module bls)
 
 (defun (map-fp-to-g1-hypothesis)
-  (* DATA_MAP_FP_TO_G1_FLAG (first_row_of_new_first_input)))
+  (* DATA_BLS_MAP_FP_TO_G1_FLAG (first_row_of_new_first_input)))
 
 (defconstraint internal-checks-map-fp-to-g1 (:guard (map-fp-to-g1-hypothesis))
   (let ((e_3 LIMB)
