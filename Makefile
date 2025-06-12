@@ -35,6 +35,8 @@ BLOCKDATA_CANCUN := $(wildcard blockdata/cancun/*.lisp) \
 
 BLOCKHASH := blockhash
 
+BLS := bls
+
 CONSTANTS := constants/constants.lisp
 
 EC_DATA := ecdata
@@ -170,6 +172,7 @@ ZKEVM_MODULES_SHANGHAI := ${ZKEVM_MODULES_COMMON} \
 
 ZKEVM_MODULES_CANCUN := ${ZKEVM_MODULES_COMMON} \
  		 ${BLOCKDATA_CANCUN} \
+		 ${BLS} \
 		 ${HUB_CANCUN} \
 		 ${OOB_SHANGHAI} \
 		 ${TXN_DATA_CANCUN}
