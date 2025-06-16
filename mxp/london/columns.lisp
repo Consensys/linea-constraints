@@ -1,4 +1,4 @@
-(module mxplon (< EVM_FORK EVM_CANCUN))
+(module mxp)
 ;; module will be used until Shanghai and then switch to mxpcan
 
 (defcolumns

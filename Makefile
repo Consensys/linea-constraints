@@ -47,25 +47,19 @@ LOG_INFO := loginfo
 
 MMU :=  mmu
 
-MMIO := mmio 
+MMIO := mmio
 
-MXP := mxp
+MXP_LONDON := $(wildcard mxp/london/*.lisp) \
+			$(wildcard mxp/london/lookups/*.lisp) \
 
-# mxp cancun version, while waiting for forks feat
-MXPCAN := $(wildcard mxp/mxpcan/columns/*.lisp) \
-		$(wildcard mxp/mxpcan/columns/computation/*.lisp) \
-		$(wildcard mxp/mxpcan/columns/scenario/*.lisp) \
-		$(wildcard mxp/mxpcan/computations/*.lisp) \
-		$(wildcard mxp/mxpcan/consistency/*.lisp) \
-		$(wildcard mxp/mxpcan/generalities/*.lisp) \
-		$(wildcard mxp/mxpcan/generalities/perspectives/*.lisp) \
-		$(wildcard mxp/mxpcan/lookups/*.lisp) \
-
-# mxp london version, while waiting for forks feat
-MXPLON := $(wildcard mxp/mxplon/*.lisp) \
-			$(wildcard mxp/mxplon/lookups/*.lisp) \
-
-MXP_v3 := mxp_v3
+MXP_CANCUN := $(wildcard mxp/cancun/columns/*.lisp) \
+		$(wildcard mxp/cancun/columns/computation/*.lisp) \
+		$(wildcard mxp/cancun/columns/scenario/*.lisp) \
+		$(wildcard mxp/cancun/computations/*.lisp) \
+		$(wildcard mxp/cancun/consistency/*.lisp) \
+		$(wildcard mxp/cancun/generalities/*.lisp) \
+		$(wildcard mxp/cancun/generalities/perspectives/*.lisp) \
+		$(wildcard mxp/cancun/lookups/*.lisp) \
 
 OOB_LONDON := oob/london
 
@@ -87,6 +81,9 @@ SHIFT :=  shf
 
 STP := stp
 
+TABLES_LONDON := $(wildcard reftables/london/*.lisp)
+
+TABLES_CANCUN := $(wildcard reftables/cancun/*.lisp)
 TABLES := reftables/*.lisp
 
 INST_DECODER_LONDON := reftables/london/inst_decoder.lisp
@@ -139,29 +136,37 @@ ZKEVM_MODULES_COMMON := ${CONSTANTS} \
 ZKEVM_MODULES_LONDON := ${ZKEVM_MODULES_COMMON} \
 		 ${BLOCKDATA_LONDON} \
 		 ${HUB_LONDON} \
+		 ${MXP_LONDON} \
 		 ${OOB_LONDON} \
+		 ${TABLES_LONDON} \
 		 ${INST_DECODER_LONDON} \
 		 ${TXN_DATA_LONDON}
 
 ZKEVM_MODULES_PARIS := ${ZKEVM_MODULES_COMMON} \
 		 ${BLOCKDATA_PARIS} \
 		 ${HUB_LONDON} \
+		 ${MXP_LONDON} \
 		 ${OOB_LONDON} \
+		 ${TABLES_LONDON} \
 		 ${INST_DECODER_LONDON} \
 		 ${TXN_DATA_LONDON}
 
 ZKEVM_MODULES_SHANGHAI := ${ZKEVM_MODULES_COMMON} \
  		 ${BLOCKDATA_PARIS} \
 		 ${HUB_SHANGHAI} \
+		 ${MXP_LONDON} \
 		 ${OOB_SHANGHAI} \
 		 ${INST_DECODER_LONDON} \
+		 ${TABLES_LONDON} \
 		 ${TXN_DATA_SHANGHAI}
 
 ZKEVM_MODULES_CANCUN := ${ZKEVM_MODULES_COMMON} \
  		 ${BLOCKDATA_CANCUN} \
 		 ${HUB_CANCUN} \
+		 ${MXP_CANCUN} \
 		 ${OOB_SHANGHAI} \
 		 ${INST_DECODER_CANCUN} \
+		 ${TABLES_CANCUN} \
 		 ${TXN_DATA_CANCUN}
 
 all: zkevm_london.bin zkevm_paris.bin zkevm_shanghai.bin zkevm_cancun.bin
