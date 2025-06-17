@@ -242,10 +242,10 @@
                                  (if-not-zero (selfdestruct-instruction---OOGX)
                                               (begin
                                                 (account-same-balance                      ROFF_SELFDESTRUCT___ACCOUNT___1ST_DOING_ROW)
-                                                (account-same-marked-for-selfdestruct      ROFF_SELFDESTRUCT___ACCOUNT___1ST_DOING_ROW)))
+                                                (account-same-marked-for-deletion          ROFF_SELFDESTRUCT___ACCOUNT___1ST_DOING_ROW)))
                                  (if-not-zero (scenario-shorthand---SELFDESTRUCT---unexceptional)     (account-decrement-balance-by              ROFF_SELFDESTRUCT___ACCOUNT___1ST_DOING_ROW      (selfdestruct-instruction---balance)))
-                                 (if-not-zero scenario/SELFDESTRUCT_WILL_REVERT                   (account-same-marked-for-selfdestruct      ROFF_SELFDESTRUCT___ACCOUNT___1ST_DOING_ROW))
-                                 (if-not-zero scenario/SELFDESTRUCT_WONT_REVERT_ALREADY_MARKED    (account-same-marked-for-selfdestruct      ROFF_SELFDESTRUCT___ACCOUNT___1ST_DOING_ROW))
+                                 (if-not-zero scenario/SELFDESTRUCT_WILL_REVERT                   (account-same-marked-for-deletion          ROFF_SELFDESTRUCT___ACCOUNT___1ST_DOING_ROW))
+                                 (if-not-zero scenario/SELFDESTRUCT_WONT_REVERT_ALREADY_MARKED    (account-same-marked-for-deletion          ROFF_SELFDESTRUCT___ACCOUNT___1ST_DOING_ROW))
                                  (if-not-zero scenario/SELFDESTRUCT_WONT_REVERT_NOT_YET_MARKED    (account-mark-account-for-selfdestruct     ROFF_SELFDESTRUCT___ACCOUNT___1ST_DOING_ROW)))))
 
 (defconstraint    selfdestruct-instruction---generalities-for-the-second-account-row
@@ -263,7 +263,7 @@
                                    ;; warmth
                                    (account-same-code                                   ROFF_SELFDESTRUCT___ACCOUNT___2ND_DOING_ROW)
                                    (account-same-deployment-number-and-status           ROFF_SELFDESTRUCT___ACCOUNT___2ND_DOING_ROW)
-                                   (account-same-marked-for-selfdestruct                ROFF_SELFDESTRUCT___ACCOUNT___2ND_DOING_ROW)
+                                   (account-same-marked-for-deletion                    ROFF_SELFDESTRUCT___ACCOUNT___2ND_DOING_ROW)
                                    (DOM-SUB-stamps---standard                           ROFF_SELFDESTRUCT___ACCOUNT___2ND_DOING_ROW 1 )))))
 
 (defconstraint    selfdestruct-instruction---balance-and-warmth-for-second-account-row
@@ -319,7 +319,7 @@
                     (account-undo-warmth-update                  ROFF_SELFDESTRUCT___ACCOUNT___1ST_UNDOING_ROW      ROFF_SELFDESTRUCT___ACCOUNT___1ST_DOING_ROW)
                     (account-undo-code-update                    ROFF_SELFDESTRUCT___ACCOUNT___1ST_UNDOING_ROW      ROFF_SELFDESTRUCT___ACCOUNT___1ST_DOING_ROW)
                     (account-undo-deployment-status-update       ROFF_SELFDESTRUCT___ACCOUNT___1ST_UNDOING_ROW      ROFF_SELFDESTRUCT___ACCOUNT___1ST_DOING_ROW)
-                    (account-same-marked-for-selfdestruct        ROFF_SELFDESTRUCT___ACCOUNT___1ST_UNDOING_ROW)
+                    (account-same-marked-for-deletion            ROFF_SELFDESTRUCT___ACCOUNT___1ST_UNDOING_ROW)
                     (DOM-SUB-stamps---revert-with-current        ROFF_SELFDESTRUCT___ACCOUNT___1ST_UNDOING_ROW 2)))
 
 (defconstraint    selfdestruct-instruction---second-undoing-row-for-WILL_REVERT-scenario
@@ -334,7 +334,7 @@
                     (account-undo-warmth-update                  ROFF_SELFDESTRUCT___ACCOUNT___2ND_UNDOING_ROW      ROFF_SELFDESTRUCT___ACCOUNT___2ND_DOING_ROW)
                     (account-undo-code-update                    ROFF_SELFDESTRUCT___ACCOUNT___2ND_UNDOING_ROW      ROFF_SELFDESTRUCT___ACCOUNT___2ND_DOING_ROW)
                     (account-undo-deployment-status-update       ROFF_SELFDESTRUCT___ACCOUNT___2ND_UNDOING_ROW      ROFF_SELFDESTRUCT___ACCOUNT___2ND_DOING_ROW)
-                    (account-same-marked-for-selfdestruct        ROFF_SELFDESTRUCT___ACCOUNT___2ND_UNDOING_ROW)
+                    (account-same-marked-for-deletion            ROFF_SELFDESTRUCT___ACCOUNT___2ND_UNDOING_ROW)
                     (DOM-SUB-stamps---revert-with-current        ROFF_SELFDESTRUCT___ACCOUNT___2ND_UNDOING_ROW 3)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -393,7 +393,7 @@
 (defconstraint    selfdestruct-instruction---account-deletion-row---no-change-in-MARKED_FOR_SELFDESTRUCT
                   (:guard (selfdestruct-instruction---scenario-WONT_REVERT_NOT_YET_MARKED-precondition))
                   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-                  (account-same-marked-for-selfdestruct            ROFF_SELFDESTRUCT___ACCOUNT_DELETION_ROW))
+                  (account-same-marked-for-deletion                ROFF_SELFDESTRUCT___ACCOUNT_DELETION_ROW))
 
 (defconstraint    selfdestruct-instruction---account-deletion-row---DOM_SUB-stamps
                   (:guard (selfdestruct-instruction---scenario-WONT_REVERT_NOT_YET_MARKED-precondition))
