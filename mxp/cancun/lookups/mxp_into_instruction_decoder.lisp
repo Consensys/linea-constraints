@@ -5,19 +5,19 @@
            ;; target columns
            ;;
 	   (
-	     instdecoder_cancun.MXP_FLAG
-	     instdecoder_cancun.OPCODE
-	     instdecoder_cancun.IS_MSIZE
-	     instdecoder_cancun.IS_RETURN
-	     instdecoder_cancun.IS_MCOPY
-	     instdecoder_cancun.IS_FIXED_SIZE_32
-	     instdecoder_cancun.IS_FIXED_SIZE_1
-	     instdecoder_cancun.IS_SINGLE_MAX_OFFSET
-	     instdecoder_cancun.IS_DOUBLE_MAX_OFFSET
-	     instdecoder_cancun.IS_WORD_PRICING
-	     instdecoder_cancun.IS_BYTE_PRICING
-	     instdecoder_cancun.BILLING_PER_WORD
-	     instdecoder_cancun.BILLING_PER_BYTE
+	     instdecoder.MXP_FLAG
+	     instdecoder.OPCODE
+	     instdecoder.IS_MSIZE
+	     instdecoder.IS_RETURN
+	     instdecoder.IS_MCOPY
+	     instdecoder.IS_FIXED_SIZE_32
+	     instdecoder.IS_FIXED_SIZE_1
+	     instdecoder.IS_SINGLE_MAX_OFFSET
+	     instdecoder.IS_DOUBLE_MAX_OFFSET
+	     instdecoder.IS_WORD_PRICING
+	     instdecoder.IS_BYTE_PRICING
+	     instdecoder.BILLING_PER_WORD
+	     instdecoder.BILLING_PER_BYTE
            )
            ;;
            ;; source columns
