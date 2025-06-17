@@ -1,6 +1,5 @@
 (module mxp)
 
-
 (defconst
   ROW_OFFSET___DECDR_TO_MACRO   1
   ROW_OFFSET___DECDR_TO_SCNRI   2

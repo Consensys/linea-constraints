@@ -50,16 +50,10 @@ MMU :=  mmu
 MMIO := mmio
 
 MXP_LONDON := $(wildcard mxp/london/*.lisp) \
-			$(wildcard mxp/london/lookups/*.lisp) \
+			$(wildcard mxp/london/**/*.lisp) \
 
-MXP_CANCUN := $(wildcard mxp/cancun/columns/*.lisp) \
-		$(wildcard mxp/cancun/columns/computation/*.lisp) \
-		$(wildcard mxp/cancun/columns/scenario/*.lisp) \
-		$(wildcard mxp/cancun/computations/*.lisp) \
-		$(wildcard mxp/cancun/consistency/*.lisp) \
-		$(wildcard mxp/cancun/generalities/*.lisp) \
-		$(wildcard mxp/cancun/generalities/perspectives/*.lisp) \
-		$(wildcard mxp/cancun/lookups/*.lisp) \
+MXP_CANCUN := $(wildcard mxp/cancun/**/*.lisp) \
+		$(wildcard mxp/cancun/**/**/*.lisp)
 
 OOB_LONDON := oob/london
 
