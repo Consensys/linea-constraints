@@ -188,7 +188,7 @@
                   (begin
                     (eq! acp_HAD_CODE_INITIALLY              (prev acp_HAD_CODE_INITIALLY))
                     (eq!   acp_WARMTH                        (prev    acp_WARMTH_NEW))
-                    (eq!   acp_MARKED_FOR_SELFDESTRUCT       (prev    acp_MARKED_FOR_SELFDESTRUCT_NEW))
+                    (eq!   acp_MARKED_FOR_DELETION           (prev    acp_MARKED_FOR_DELETION_NEW))
                     (if-not-zero    acp_MARKED_FOR_DELETION  (eq!    acp_MARKED_FOR_DELETION_NEW    1))))
 
 (defconstraint    account-consistency---linking---for-CFI

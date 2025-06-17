@@ -69,7 +69,8 @@
 ;;
 (defun    (selfdestruct-instruction---balance)                   (shift account/BALANCE                     ROFF_SELFDESTRUCT___ACCOUNT___1ST_DOING_ROW))
 (defun    (selfdestruct-instruction---is-marked)                 (shift account/MARKED_FOR_DELETION         ROFF_SELFDESTRUCT___ACCOUNT___1ST_DOING_ROW))
-(defun    (selfdestruct-instruction---had-no-code-initially)     (shift account/HAD_NO_CODE_INITIALLY       ROFF_SELFDESTRUCT___ACCOUNT___1ST_DOING_ROW))
+(defun    (selfdestruct-instruction---had-no-code-initially)     (force-bin (- 1 
+                                                                 (shift account/HAD_CODE_INITIALLY          ROFF_SELFDESTRUCT___ACCOUNT___1ST_DOING_ROW))))
 ;;
 (defun    (selfdestruct-instruction---recipient-address-hi)      (shift account/ADDRESS_HI                  ROFF_SELFDESTRUCT___ACCOUNT___2ND_DOING_ROW))
 (defun    (selfdestruct-instruction---recipient-address-lo)      (shift account/ADDRESS_LO                  ROFF_SELFDESTRUCT___ACCOUNT___2ND_DOING_ROW))
@@ -162,7 +163,7 @@
                                                                                        (shift PEEK_AT_CONTEXT  ROFF_SELFDESTRUCT___1ST_CONTEXT_ROW        )
                                                                                        (shift PEEK_AT_ACCOUNT  ROFF_SELFDESTRUCT___ACCOUNT___1ST_DOING_ROW)
                                                                                        (shift PEEK_AT_ACCOUNT  ROFF_SELFDESTRUCT___ACCOUNT___2ND_DOING_ROW)
-                                                                                       (shift PEEK_AT_CONTEXT  ROFF_SELFDESTRUCT___FINAL_CONTEXT_WONT_REVERT_ALREADY_YET_MARKED)))))
+                                                                                       (shift PEEK_AT_CONTEXT  ROFF_SELFDESTRUCT___FINAL_CONTEXT_WONT_REVERT_ALREADY_YET_MARKED))))))
 
 (defconstraint    selfdestruct-instruction---setting-NSR-and-peeking-flags---WONT_REVERT_NOT_YET_MARKED-case
                   (:guard (selfdestruct-instruction---scenario-precondition))
