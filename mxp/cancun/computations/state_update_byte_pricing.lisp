@@ -1,4 +1,4 @@
-(module mxpcan)
+(module mxp)
 
 
 (defun  (mxp-shorthand---is-deploying)     (force-bin  (shift  macro/DEPLOYING    NEGATIVE_ROW_OFFSET___SCNRI_TO_MACRO)))

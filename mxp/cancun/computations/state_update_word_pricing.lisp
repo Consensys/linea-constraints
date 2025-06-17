@@ -1,4 +1,4 @@
-(module mxpcan)
+(module mxp)
 
 
 (defconstraint  computations---state-update---word-pricing---computing-the-number-of-input-words

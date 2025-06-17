@@ -1,4 +1,4 @@
-(module mxplon)
+(module mxp)
 
 (defconst
   CT_MAX_TRIVIAL              0

@@ -1,4 +1,4 @@
-(module mxpcan)
+(module mxp)
 
 (defconstraint  computations---generalities---precisely-one-scenario-is-active
 		(:guard    SCENARIO)

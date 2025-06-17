@@ -1,4 +1,4 @@
-(module mxpcan)
+(module mxp)
 
 
 (defconstraint  computation---MSIZE-scenario---setting-macro-RES

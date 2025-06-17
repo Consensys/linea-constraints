@@ -47,13 +47,13 @@
 
 (defconstraint    create-instruction---setting-the-MXP-instruction                          (:guard    (create-instruction---generic-precondition))
                   (if-not-zero    (shift    misc/MXP_FLAG    CREATE_miscellaneous_row___row_offset)
-                                  (set-MXP-instruction---single-mxp-offset-instructions   CREATE_miscellaneous_row___row_offset       ;; row offset kappa
-                                                                                          (create-instruction---instruction)          ;; instruction
-                                                                                          0                                           ;; bit modifying the behaviour of RETURN pricing
-                                                                                          (create-instruction---STACK-offset-hi)      ;; offset high
-                                                                                          (create-instruction---STACK-offset-lo)      ;; offset low
-                                                                                          (create-instruction---STACK-size-hi)        ;; size high
-                                                                                          (create-instruction---STACK-size-lo))       ;; size low
+                                  (set-MXP-instruction-type-4    CREATE_miscellaneous_row___row_offset       ;; row offset kappa
+                                                                 (create-instruction---instruction)          ;; instruction
+                                                                 0                                           ;; bit modifying the behaviour of RETURN pricing
+                                                                 (create-instruction---STACK-offset-hi)      ;; offset high
+                                                                 (create-instruction---STACK-offset-lo)      ;; offset low
+                                                                 (create-instruction---STACK-size-hi)        ;; size high
+                                                                 (create-instruction---STACK-size-lo))       ;; size low
                                   ))
 
 (defconstraint    create-instruction---setting-the-memory-expansion-exception               (:guard    (create-instruction---generic-precondition))
@@ -126,7 +126,7 @@
                   (:guard    (create-instruction---generic-precondition))
                   (if-not-zero    (scenario-shorthand---CREATE---not-rebuffed)
                                   (eq!    (scenario-shorthand---CREATE---not-rebuffed-nonempty-init-code)
-                                          (create-instruction---MXP-s1nznomxpx))))
+                                          (create-instruction---MXP-mtntop))))
 
 (defconstraint    create-instruction---setting-the-CREATE-scenario---not-rebuffed-nonempty-init-code
                   (:guard    (create-instruction---generic-precondition))

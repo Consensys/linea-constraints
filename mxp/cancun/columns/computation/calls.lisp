@@ -1,4 +1,4 @@
-(module mxpcan)
+(module mxp)
 
 (defun  (euc-call  relof
 		   a
