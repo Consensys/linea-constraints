@@ -1,5 +1,4 @@
 (module mxp)
-;; module will be used until Shanghai and then switch to mxpcan
 
 (defcolumns
   (STAMP :i32)

@@ -1,4 +1,4 @@
-(defun (mxp-into-instruction-decoder-selector) mxpcan.DECODER) ;; ""
+(defun (mxp-into-instruction-decoder-selector) mxp.DECODER) ;; ""
 
 (deflookup hub-into-instdecoder
            ;;
@@ -24,18 +24,18 @@
            ;;
 	   (
 	     (* 1                                   (mxp-into-instruction-decoder-selector))
-	     (* mxpcan.decoder/INST                 (mxp-into-instruction-decoder-selector))
-	     (* mxpcan.decoder/IS_MSIZE             (mxp-into-instruction-decoder-selector))
-	     (* mxpcan.decoder/IS_RETURN            (mxp-into-instruction-decoder-selector))
-	     (* mxpcan.decoder/IS_MCOPY             (mxp-into-instruction-decoder-selector))
-	     (* mxpcan.decoder/IS_FIXED_SIZE_32     (mxp-into-instruction-decoder-selector))
-	     (* mxpcan.decoder/IS_FIXED_SIZE_1      (mxp-into-instruction-decoder-selector))
-	     (* mxpcan.decoder/IS_SINGLE_MAX_OFFSET (mxp-into-instruction-decoder-selector))
-	     (* mxpcan.decoder/IS_DOUBLE_MAX_OFFSET (mxp-into-instruction-decoder-selector))
-	     (* mxpcan.decoder/IS_WORD_PRICING      (mxp-into-instruction-decoder-selector))
-	     (* mxpcan.decoder/IS_BYTE_PRICING      (mxp-into-instruction-decoder-selector))
-	     (* mxpcan.decoder/G_WORD               (mxp-into-instruction-decoder-selector))
-	     (* mxpcan.decoder/G_BYTE               (mxp-into-instruction-decoder-selector))
+	     (* mxp.decoder/INST                 (mxp-into-instruction-decoder-selector))
+	     (* mxp.decoder/IS_MSIZE             (mxp-into-instruction-decoder-selector))
+	     (* mxp.decoder/IS_RETURN            (mxp-into-instruction-decoder-selector))
+	     (* mxp.decoder/IS_MCOPY             (mxp-into-instruction-decoder-selector))
+	     (* mxp.decoder/IS_FIXED_SIZE_32     (mxp-into-instruction-decoder-selector))
+	     (* mxp.decoder/IS_FIXED_SIZE_1      (mxp-into-instruction-decoder-selector))
+	     (* mxp.decoder/IS_SINGLE_MAX_OFFSET (mxp-into-instruction-decoder-selector))
+	     (* mxp.decoder/IS_DOUBLE_MAX_OFFSET (mxp-into-instruction-decoder-selector))
+	     (* mxp.decoder/IS_WORD_PRICING      (mxp-into-instruction-decoder-selector))
+	     (* mxp.decoder/IS_BYTE_PRICING      (mxp-into-instruction-decoder-selector))
+	     (* mxp.decoder/G_WORD               (mxp-into-instruction-decoder-selector))
+	     (* mxp.decoder/G_BYTE               (mxp-into-instruction-decoder-selector))
 	     ;;
            )
 )

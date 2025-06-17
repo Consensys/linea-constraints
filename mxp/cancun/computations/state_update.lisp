@@ -1,4 +1,4 @@
-(module mxpcan)
+(module mxp)
 
 (defconstraint  computations---state-update---justifying-state-update-scenario-WORD-vs-BYTE
 		(:guard   (mxp-guard---state-update))

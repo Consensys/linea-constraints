@@ -1,6 +1,6 @@
 (defun
   (mxp-to-euc-selector)
-  (* mxpcan.COMPUTATION mxpcan.computation/EUC_FLAG)
+  (* mxp.COMPUTATION mxp.computation/EUC_FLAG)
   )
 
 (deflookup
@@ -15,9 +15,9 @@
   )
   ;source columns
   (
-    (* mxpcan.computation/ARG_1_LO (mxp-to-euc-selector))
-    (* mxpcan.computation/ARG_2_LO (mxp-to-euc-selector))
-    (* mxpcan.computation/RES_A    (mxp-to-euc-selector))
-    (* mxpcan.computation/RES_B    (mxp-to-euc-selector))
+    (* mxp.computation/ARG_1_LO (mxp-to-euc-selector))
+    (* mxp.computation/ARG_2_LO (mxp-to-euc-selector))
+    (* mxp.computation/RES_A    (mxp-to-euc-selector))
+    (* mxp.computation/RES_B    (mxp-to-euc-selector))
     (mxp-to-euc-selector)
   ))

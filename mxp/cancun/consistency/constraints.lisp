@@ -1,4 +1,4 @@
-(module mxpcan)
+(module mxp)
 
 ;; mscp_SCENARIO
 ;; mscp_CN

@@ -1,3 +1,3 @@
-(module mxpcan)
+(module mxp)
 
 ;; we're done

@@ -1,4 +1,4 @@
-(module mxpcan)
+(module mxp)
 
 (defconstraint    counter-constancies   ()
 		  (begin

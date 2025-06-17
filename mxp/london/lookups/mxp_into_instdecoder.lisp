@@ -12,13 +12,13 @@
     )
     ;target columns
     (
-        mxplon.INST
-        mxplon.GWORD
-        mxplon.GBYTE
-        [mxplon.MXP_TYPE 1] ;; TYPE_1 in the specs
-        [mxplon.MXP_TYPE 2] ;; TYPE_2 in the specs
-        [mxplon.MXP_TYPE 3] ;; TYPE_3 in the specs
-        [mxplon.MXP_TYPE 4] ;; TYPE_4 in the specs
-        [mxplon.MXP_TYPE 5] ;; TYPE_5 in the specs
+        mxp.INST
+        mxp.GWORD
+        mxp.GBYTE
+        [mxp.MXP_TYPE 1] ;; TYPE_1 in the specs
+        [mxp.MXP_TYPE 2] ;; TYPE_2 in the specs
+        [mxp.MXP_TYPE 3] ;; TYPE_3 in the specs
+        [mxp.MXP_TYPE 4] ;; TYPE_4 in the specs
+        [mxp.MXP_TYPE 5] ;; TYPE_5 in the specs
     )
 )

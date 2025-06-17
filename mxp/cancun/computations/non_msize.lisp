@@ -1,4 +1,4 @@
-(module mxpcan)
+(module mxp)
 
 
 (defconstraint  computations---non-msize---ISZERO-test-for-SIZE_1

@@ -1,4 +1,4 @@
-(module mxpcan)
+(module mxp)
 
 (defun  (mxp-perspective-sum)
   (+    DECDR

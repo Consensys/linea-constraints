@@ -1,4 +1,4 @@
-(module mxpcan)
+(module mxp)
 
 (defconstraint  generalies---perspectives---decoder---MSIZE-vanishings
 		(:guard DECODER)
