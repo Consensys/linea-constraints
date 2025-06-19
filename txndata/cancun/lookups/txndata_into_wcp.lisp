@@ -2,10 +2,10 @@
   txndata-into-wcp
   ; target columns
   (
-    wcp.ARGUMENT_1_HI
-    wcp.ARGUMENT_1_LO
-    wcp.ARGUMENT_2_HI
-    wcp.ARGUMENT_2_LO
+    wcp.ARGUMENT_1'1
+    wcp.ARGUMENT_1'0
+    wcp.ARGUMENT_2'1
+    wcp.ARGUMENT_2'0
     wcp.RESULT
     wcp.INST
   )
