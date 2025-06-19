@@ -49,11 +49,9 @@ MMU :=  mmu
 
 MMIO := mmio
 
-MXP_LONDON := $(wildcard mxp/london/*.lisp) \
-			$(wildcard mxp/london/**/*.lisp) \
+MXP_LONDON := mxp/london
 
-MXP_CANCUN := $(wildcard mxp/cancun/**/*.lisp) \
-		$(wildcard mxp/cancun/**/**/*.lisp)
+MXP_CANCUN := mxp/cancun
 
 OOB_LONDON := oob/london
 
