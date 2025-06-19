@@ -17,17 +17,17 @@
 (deflookup
   hub-into-rlptxn
   ;; target columns
-  ;; TODO: multiplication by selector likely unnecessary but as we multiply by the same column for the lookup tlptxn into hub ...
+  ;; Removed unnecessary multiplication by selector for performance optimization
   (
-    (* 1                                    (hub-into-rlp-txn-tgt-selector))
-    (* rlptxn.ABS_TX_NUM                    (hub-into-rlp-txn-tgt-selector))
-    (* (- 1 (rlp-txn-depth-2))              (hub-into-rlp-txn-tgt-selector))
-    (* (rlp-txn-depth-2)                    (hub-into-rlp-txn-tgt-selector))
+    1
+    rlptxn.ABS_TX_NUM
+    (- 1 (rlp-txn-depth-2))
+    (rlp-txn-depth-2)
 
-    (* rlptxn.ADDR_HI                       (hub-into-rlp-txn-tgt-selector))
-    (* rlptxn.ADDR_LO                       (hub-into-rlp-txn-tgt-selector))
-    (* [rlptxn.INPUT 1] (rlp-txn-depth-2)   (hub-into-rlp-txn-tgt-selector))
-    (* [rlptxn.INPUT 2] (rlp-txn-depth-2)   (hub-into-rlp-txn-tgt-selector)) ;; ""
+    rlptxn.ADDR_HI
+    rlptxn.ADDR_LO
+    (* [rlptxn.INPUT 1] (rlp-txn-depth-2))
+    (* [rlptxn.INPUT 2] (rlp-txn-depth-2)) ;; ""
   )
   ;; source columns
   (
