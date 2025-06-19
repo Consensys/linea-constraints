@@ -41,14 +41,19 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defconst
-  ROFF_SELFDESTRUCT___STACK_ROW                   -1
-  ROFF_SELFDESTRUCT___SCENARIO_ROW                 0
-  ROFF_SELFDESTRUCT___1ST_CONTEXT_ROW              1
-  ROFF_SELFDESTRUCT___ACCOUNT___1ST_DOING_ROW      2
-  ROFF_SELFDESTRUCT___ACCOUNT___2ND_DOING_ROW      3
-  ROFF_SELFDESTRUCT___ACCOUNT___1ST_UNDOING_ROW    4
-  ROFF_SELFDESTRUCT___ACCOUNT___2ND_UNDOING_ROW    5
-  ROFF_SELFDESTRUCT___ACCOUNT_DELETION_ROW         4
+  ROFF_SELFDESTRUCT___STACK_ROW                                           -1
+  ROFF_SELFDESTRUCT___SCENARIO_ROW                                         0
+  ROFF_SELFDESTRUCT___1ST_CONTEXT_ROW                                      1
+  ROFF_SELFDESTRUCT___ACCOUNT___1ST_DOING_ROW                              2
+  ROFF_SELFDESTRUCT___ACCOUNT___2ND_DOING_ROW                              3
+  ROFF_SELFDESTRUCT___ACCOUNT___1ST_UNDOING_ROW                            4
+  ROFF_SELFDESTRUCT___ACCOUNT___2ND_UNDOING_ROW                            5
+  ROFF_SELFDESTRUCT___ACCOUNT_DELETION_ROW                                 4
+  ROFF_SELFDESTRUCT___FINAL_CONTEXT_STATICX                                2
+  ROFF_SELFDESTRUCT___FINAL_CONTEXT_OOGX                                   4
+  ROFF_SELFDESTRUCT___FINAL_CONTEXT_WILL_REVERT                            6
+  ROFF_SELFDESTRUCT___FINAL_CONTEXT_WONT_REVERT_ALREADY_YET_MARKED         4
+  ROFF_SELFDESTRUCT___FINAL_CONTEXT_WONT_REVERT_NOT_YET_MARKED             5
   )
 
 ;;
@@ -63,7 +68,9 @@
 (defun    (selfdestruct-instruction---account-address-lo)        (shift context/ACCOUNT_ADDRESS_LO          ROFF_SELFDESTRUCT___1ST_CONTEXT_ROW))
 ;;
 (defun    (selfdestruct-instruction---balance)                   (shift account/BALANCE                     ROFF_SELFDESTRUCT___ACCOUNT___1ST_DOING_ROW))
-(defun    (selfdestruct-instruction---is-marked)                 (shift account/MARKED_FOR_SELFDESTRUCT     ROFF_SELFDESTRUCT___ACCOUNT___1ST_DOING_ROW))
+(defun    (selfdestruct-instruction---is-marked)                 (shift account/MARKED_FOR_DELETION         ROFF_SELFDESTRUCT___ACCOUNT___1ST_DOING_ROW))
+(defun    (selfdestruct-instruction---had-no-code-initially)     (force-bin (- 1 
+                                                                 (shift account/HAD_CODE_INITIALLY          ROFF_SELFDESTRUCT___ACCOUNT___1ST_DOING_ROW))))
 ;;
 (defun    (selfdestruct-instruction---recipient-address-hi)      (shift account/ADDRESS_HI                  ROFF_SELFDESTRUCT___ACCOUNT___2ND_DOING_ROW))
 (defun    (selfdestruct-instruction---recipient-address-lo)      (shift account/ADDRESS_LO                  ROFF_SELFDESTRUCT___ACCOUNT___2ND_DOING_ROW))
@@ -73,6 +80,11 @@
 
 (defun    (selfdestruct-instruction---account-address)           (+ (* (^ 256 LLARGE) (selfdestruct-instruction---account-address-hi))   (selfdestruct-instruction---account-address-lo)))
 (defun    (selfdestruct-instruction---recipient-address)         (+ (* (^ 256 LLARGE) (selfdestruct-instruction---recipient-address-hi)) (selfdestruct-instruction---recipient-address-lo)))  ;; ""
+
+(defun    (selfdestruct-instruction---trigger-future-acc-deletion)          
+          (* (- 1 (selfdestruct-instruction---is-marked))
+             (selfdestruct-instruction---had-no-code-initially)))
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                        ;;
@@ -102,8 +114,8 @@
                     (if-zero CONTEXT_WILL_REVERT
                              (begin
                                (eq! (scenario-shorthand---SELFDESTRUCT---wont-revert)    1)
-                               (eq! scenario/SELFDESTRUCT_WONT_REVERT_ALREADY_MARKED (selfdestruct-instruction---is-marked))
-                               (eq! scenario/SELFDESTRUCT_WONT_REVERT_NOT_YET_MARKED (- 1 (selfdestruct-instruction---is-marked)))))))
+                               (eq! scenario/SELFDESTRUCT_WONT_REVERT_ALREADY_MARKED (- 1 (selfdestruct-instruction---trigger-future-acc-deletion)))
+                               (eq! scenario/SELFDESTRUCT_WONT_REVERT_NOT_YET_MARKED (selfdestruct-instruction---trigger-future-acc-deletion))))))
 
 (defconstraint    selfdestruct-instruction---setting-NSR-and-peeking-flags---STATICX-case
                   (:guard (selfdestruct-instruction---scenario-precondition))
@@ -113,7 +125,7 @@
                                  (eq! (shift   NSR   ROFF_SELFDESTRUCT___STACK_ROW) 3)
                                  (eq! (shift   NSR   ROFF_SELFDESTRUCT___STACK_ROW) (+ (shift PEEK_AT_SCENARIO  ROFF_SELFDESTRUCT___SCENARIO_ROW   )
                                                                                        (shift PEEK_AT_CONTEXT   ROFF_SELFDESTRUCT___1ST_CONTEXT_ROW)
-                                                                                       (shift PEEK_AT_CONTEXT   2))))))
+                                                                                       (shift PEEK_AT_CONTEXT   ROFF_SELFDESTRUCT___FINAL_CONTEXT_STATICX))))))
 
 (defconstraint    selfdestruct-instruction---setting-NSR-and-peeking-flags---OOGX-case
                   (:guard (selfdestruct-instruction---scenario-precondition))
@@ -125,7 +137,7 @@
                                                                                        (shift PEEK_AT_CONTEXT   ROFF_SELFDESTRUCT___1ST_CONTEXT_ROW        )
                                                                                        (shift PEEK_AT_ACCOUNT   ROFF_SELFDESTRUCT___ACCOUNT___1ST_DOING_ROW)
                                                                                        (shift PEEK_AT_ACCOUNT   ROFF_SELFDESTRUCT___ACCOUNT___2ND_DOING_ROW)
-                                                                                       (shift PEEK_AT_CONTEXT   4))))))
+                                                                                       (shift PEEK_AT_CONTEXT   ROFF_SELFDESTRUCT___FINAL_CONTEXT_OOGX))))))
 
 (defconstraint    selfdestruct-instruction---setting-NSR-and-peeking-flags---WILL_REVERT-case
                   (:guard (selfdestruct-instruction---scenario-precondition))
@@ -139,7 +151,7 @@
                                                                                        (shift PEEK_AT_ACCOUNT   ROFF_SELFDESTRUCT___ACCOUNT___2ND_DOING_ROW  )
                                                                                        (shift PEEK_AT_ACCOUNT   ROFF_SELFDESTRUCT___ACCOUNT___1ST_UNDOING_ROW)
                                                                                        (shift PEEK_AT_ACCOUNT   ROFF_SELFDESTRUCT___ACCOUNT___2ND_UNDOING_ROW)
-                                                                                       (shift PEEK_AT_CONTEXT   6))))))
+                                                                                       (shift PEEK_AT_CONTEXT   ROFF_SELFDESTRUCT___FINAL_CONTEXT_WILL_REVERT))))))
 
 (defconstraint    selfdestruct-instruction---setting-NSR-and-peeking-flags---WONT_REVERT_ALREADY_MARKED-case
                   (:guard (selfdestruct-instruction---scenario-precondition))
@@ -151,7 +163,7 @@
                                                                                        (shift PEEK_AT_CONTEXT  ROFF_SELFDESTRUCT___1ST_CONTEXT_ROW        )
                                                                                        (shift PEEK_AT_ACCOUNT  ROFF_SELFDESTRUCT___ACCOUNT___1ST_DOING_ROW)
                                                                                        (shift PEEK_AT_ACCOUNT  ROFF_SELFDESTRUCT___ACCOUNT___2ND_DOING_ROW)
-                                                                                       (shift PEEK_AT_CONTEXT  4))))))
+                                                                                       (shift PEEK_AT_CONTEXT  ROFF_SELFDESTRUCT___FINAL_CONTEXT_WONT_REVERT_ALREADY_YET_MARKED))))))
 
 (defconstraint    selfdestruct-instruction---setting-NSR-and-peeking-flags---WONT_REVERT_NOT_YET_MARKED-case
                   (:guard (selfdestruct-instruction---scenario-precondition))
@@ -164,7 +176,7 @@
                                                                                        (shift PEEK_AT_ACCOUNT  ROFF_SELFDESTRUCT___ACCOUNT___1ST_DOING_ROW)
                                                                                        (shift PEEK_AT_ACCOUNT  ROFF_SELFDESTRUCT___ACCOUNT___2ND_DOING_ROW)
                                                                                        (shift PEEK_AT_ACCOUNT  ROFF_SELFDESTRUCT___ACCOUNT_DELETION_ROW   )
-                                                                                       (shift PEEK_AT_CONTEXT  5))))))
+                                                                                       (shift PEEK_AT_CONTEXT  ROFF_SELFDESTRUCT___FINAL_CONTEXT_WONT_REVERT_NOT_YET_MARKED))))))
 
 (defconstraint    selfdestruct-instruction---reading-context-data (:guard (selfdestruct-instruction---scenario-precondition))
                   (read-context-data    ROFF_SELFDESTRUCT___1ST_CONTEXT_ROW       ;; row offset
@@ -172,11 +184,11 @@
 
 (defconstraint    selfdestruct-instruction---returning-empty-return-data (:guard (selfdestruct-instruction---scenario-precondition))
                   (begin
-                    (if-not-zero   (selfdestruct-instruction---STATICX)               (execution-provides-empty-return-data 2))
-                    (if-not-zero   (selfdestruct-instruction---OOGX)                  (execution-provides-empty-return-data 4))
-                    (if-not-zero   scenario/SELFDESTRUCT_WILL_REVERT                  (execution-provides-empty-return-data 6))
-                    (if-not-zero   scenario/SELFDESTRUCT_WONT_REVERT_ALREADY_MARKED   (execution-provides-empty-return-data 4))
-                    (if-not-zero   scenario/SELFDESTRUCT_WONT_REVERT_NOT_YET_MARKED   (execution-provides-empty-return-data 5))))
+                    (if-not-zero   (selfdestruct-instruction---STATICX)               (execution-provides-empty-return-data ROFF_SELFDESTRUCT___FINAL_CONTEXT_STATICX))
+                    (if-not-zero   (selfdestruct-instruction---OOGX)                  (execution-provides-empty-return-data ROFF_SELFDESTRUCT___FINAL_CONTEXT_OOGX))
+                    (if-not-zero   scenario/SELFDESTRUCT_WILL_REVERT                  (execution-provides-empty-return-data ROFF_SELFDESTRUCT___FINAL_CONTEXT_WILL_REVERT))
+                    (if-not-zero   scenario/SELFDESTRUCT_WONT_REVERT_ALREADY_MARKED   (execution-provides-empty-return-data ROFF_SELFDESTRUCT___FINAL_CONTEXT_WONT_REVERT_ALREADY_YET_MARKED))
+                    (if-not-zero   scenario/SELFDESTRUCT_WONT_REVERT_NOT_YET_MARKED   (execution-provides-empty-return-data ROFF_SELFDESTRUCT___FINAL_CONTEXT_WONT_REVERT_NOT_YET_MARKED))))
 
 (defconstraint    selfdestruct-instruction---justifying-the-static-exception (:guard (selfdestruct-instruction---scenario-precondition))
                   (eq!   (selfdestruct-instruction---STATICX)
@@ -218,11 +230,11 @@
                   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                   (if-zero     (selfdestruct-instruction---STATICX)
                                (begin
-                                 (if-not-zero XAHOY
-                                              ;; XAHOY = 1
+                                 (if-not-zero (selfdestruct-instruction---OOGX)
+                                              ;; OOGX = 1
                                               (begin (account-same-code                             ROFF_SELFDESTRUCT___ACCOUNT___1ST_DOING_ROW)
                                                      (account-same-deployment-number-and-status     ROFF_SELFDESTRUCT___ACCOUNT___1ST_DOING_ROW))
-                                              ;; XAHOY = 0
+                                              ;; OOGX = 0
                                               (if-zero (force-bin (selfdestruct-instruction---is-deployment))
                                                        (begin (account-same-code                             ROFF_SELFDESTRUCT___ACCOUNT___1ST_DOING_ROW)
                                                               (account-same-deployment-number-and-status     ROFF_SELFDESTRUCT___ACCOUNT___1ST_DOING_ROW))
@@ -242,11 +254,11 @@
                                  (if-not-zero (selfdestruct-instruction---OOGX)
                                               (begin
                                                 (account-same-balance                      ROFF_SELFDESTRUCT___ACCOUNT___1ST_DOING_ROW)
-                                                (account-same-marked-for-selfdestruct      ROFF_SELFDESTRUCT___ACCOUNT___1ST_DOING_ROW)))
+                                                (account-same-marked-for-deletion          ROFF_SELFDESTRUCT___ACCOUNT___1ST_DOING_ROW)))
                                  (if-not-zero (scenario-shorthand---SELFDESTRUCT---unexceptional)     (account-decrement-balance-by              ROFF_SELFDESTRUCT___ACCOUNT___1ST_DOING_ROW      (selfdestruct-instruction---balance)))
-                                 (if-not-zero scenario/SELFDESTRUCT_WILL_REVERT                   (account-same-marked-for-selfdestruct      ROFF_SELFDESTRUCT___ACCOUNT___1ST_DOING_ROW))
-                                 (if-not-zero scenario/SELFDESTRUCT_WONT_REVERT_ALREADY_MARKED    (account-same-marked-for-selfdestruct      ROFF_SELFDESTRUCT___ACCOUNT___1ST_DOING_ROW))
-                                 (if-not-zero scenario/SELFDESTRUCT_WONT_REVERT_NOT_YET_MARKED    (account-mark-account-for-selfdestruct     ROFF_SELFDESTRUCT___ACCOUNT___1ST_DOING_ROW)))))
+                                 (if-not-zero scenario/SELFDESTRUCT_WILL_REVERT                   (account-same-marked-for-deletion          ROFF_SELFDESTRUCT___ACCOUNT___1ST_DOING_ROW))
+                                 (if-not-zero scenario/SELFDESTRUCT_WONT_REVERT_ALREADY_MARKED    (account-same-marked-for-deletion          ROFF_SELFDESTRUCT___ACCOUNT___1ST_DOING_ROW))
+                                 (if-not-zero scenario/SELFDESTRUCT_WONT_REVERT_NOT_YET_MARKED    (account-mark-account-for-deletion         ROFF_SELFDESTRUCT___ACCOUNT___1ST_DOING_ROW)))))
 
 (defconstraint    selfdestruct-instruction---generalities-for-the-second-account-row
                   (:guard (selfdestruct-instruction---scenario-precondition))
@@ -263,7 +275,7 @@
                                    ;; warmth
                                    (account-same-code                                   ROFF_SELFDESTRUCT___ACCOUNT___2ND_DOING_ROW)
                                    (account-same-deployment-number-and-status           ROFF_SELFDESTRUCT___ACCOUNT___2ND_DOING_ROW)
-                                   (account-same-marked-for-selfdestruct                ROFF_SELFDESTRUCT___ACCOUNT___2ND_DOING_ROW)
+                                   (account-same-marked-for-deletion                    ROFF_SELFDESTRUCT___ACCOUNT___2ND_DOING_ROW)
                                    (DOM-SUB-stamps---standard                           ROFF_SELFDESTRUCT___ACCOUNT___2ND_DOING_ROW 1 )))))
 
 (defconstraint    selfdestruct-instruction---balance-and-warmth-for-second-account-row
@@ -277,13 +289,17 @@
                     (if-not-zero (scenario-shorthand---SELFDESTRUCT---unexceptional)
                                  (begin
                                    (account-turn-on-warmth             ROFF_SELFDESTRUCT___ACCOUNT___2ND_DOING_ROW)
-                                   (if-eq-else (selfdestruct-instruction---account-address) (selfdestruct-instruction---recipient-address)
-                                               ;; self destructing account address = recipient address
-                                               (begin
-                                                 ;;(debug (vanishes! account/BALANCE     ROFF_SELFDESTRUCT___ACCOUNT___2ND_DOING_ROW))
-                                                 (account-same-balance                 ROFF_SELFDESTRUCT___ACCOUNT___2ND_DOING_ROW))
-                                               ;; self destructing account address ≠ recipient address
-                                               (account-increment-balance-by           ROFF_SELFDESTRUCT___ACCOUNT___2ND_DOING_ROW    (selfdestruct-instruction---balance)))))))
+
+                                   (if-not-zero (selfdestruct-instruction---had-no-code-initially)
+                                   ;; case HAD_CODE_INITIALLY = 1
+                                      (if-eq-else (selfdestruct-instruction---account-address) (selfdestruct-instruction---recipient-address)
+                                                   ;; self destructing account address = recipient address
+                                                   (begin
+                                                     ;;(debug (vanishes! account/BALANCE     ROFF_SELFDESTRUCT___ACCOUNT___2ND_DOING_ROW))
+                                                    (account-same-balance                 ROFF_SELFDESTRUCT___ACCOUNT___2ND_DOING_ROW))
+                                                      ;; self destructing account address ≠ recipient address
+                                                    (account-increment-balance-by           ROFF_SELFDESTRUCT___ACCOUNT___2ND_DOING_ROW    (selfdestruct-instruction---balance)))
+                                   )))))
 
 
 ;; (defconstraint    selfdestruct-instruction---returning-empty-return-data (:guard (selfdestruct-instruction---scenario-precondition))
@@ -319,7 +335,7 @@
                     (account-undo-warmth-update                  ROFF_SELFDESTRUCT___ACCOUNT___1ST_UNDOING_ROW      ROFF_SELFDESTRUCT___ACCOUNT___1ST_DOING_ROW)
                     (account-undo-code-update                    ROFF_SELFDESTRUCT___ACCOUNT___1ST_UNDOING_ROW      ROFF_SELFDESTRUCT___ACCOUNT___1ST_DOING_ROW)
                     (account-undo-deployment-status-update       ROFF_SELFDESTRUCT___ACCOUNT___1ST_UNDOING_ROW      ROFF_SELFDESTRUCT___ACCOUNT___1ST_DOING_ROW)
-                    (account-same-marked-for-selfdestruct        ROFF_SELFDESTRUCT___ACCOUNT___1ST_UNDOING_ROW)
+                    (account-same-marked-for-deletion            ROFF_SELFDESTRUCT___ACCOUNT___1ST_UNDOING_ROW)
                     (DOM-SUB-stamps---revert-with-current        ROFF_SELFDESTRUCT___ACCOUNT___1ST_UNDOING_ROW 2)))
 
 (defconstraint    selfdestruct-instruction---second-undoing-row-for-WILL_REVERT-scenario
@@ -334,7 +350,7 @@
                     (account-undo-warmth-update                  ROFF_SELFDESTRUCT___ACCOUNT___2ND_UNDOING_ROW      ROFF_SELFDESTRUCT___ACCOUNT___2ND_DOING_ROW)
                     (account-undo-code-update                    ROFF_SELFDESTRUCT___ACCOUNT___2ND_UNDOING_ROW      ROFF_SELFDESTRUCT___ACCOUNT___2ND_DOING_ROW)
                     (account-undo-deployment-status-update       ROFF_SELFDESTRUCT___ACCOUNT___2ND_UNDOING_ROW      ROFF_SELFDESTRUCT___ACCOUNT___2ND_DOING_ROW)
-                    (account-same-marked-for-selfdestruct        ROFF_SELFDESTRUCT___ACCOUNT___2ND_UNDOING_ROW)
+                    (account-same-marked-for-deletion            ROFF_SELFDESTRUCT___ACCOUNT___2ND_UNDOING_ROW)
                     (DOM-SUB-stamps---revert-with-current        ROFF_SELFDESTRUCT___ACCOUNT___2ND_UNDOING_ROW 3)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -393,7 +409,7 @@
 (defconstraint    selfdestruct-instruction---account-deletion-row---no-change-in-MARKED_FOR_SELFDESTRUCT
                   (:guard (selfdestruct-instruction---scenario-WONT_REVERT_NOT_YET_MARKED-precondition))
                   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-                  (account-same-marked-for-selfdestruct            ROFF_SELFDESTRUCT___ACCOUNT_DELETION_ROW))
+                  (account-same-marked-for-deletion                ROFF_SELFDESTRUCT___ACCOUNT_DELETION_ROW))
 
 (defconstraint    selfdestruct-instruction---account-deletion-row---DOM_SUB-stamps
                   (:guard (selfdestruct-instruction---scenario-WONT_REVERT_NOT_YET_MARKED-precondition))
