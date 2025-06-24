@@ -85,7 +85,7 @@
                                                                                        (shift PEEK_AT_CONTEXT  ROFF_SELFDESTRUCT___1ST_CONTEXT_ROW        )
                                                                                        (shift PEEK_AT_ACCOUNT  ROFF_SELFDESTRUCT___ACCOUNT___1ST_DOING_ROW)
                                                                                        (shift PEEK_AT_ACCOUNT  ROFF_SELFDESTRUCT___ACCOUNT___2ND_DOING_ROW)
-                                                                                       (shift PEEK_AT_CONTEXT  ROFF_SELFDESTRUCT___FINAL_CONTEXT_WONT_REVERT_ALREADY_YET_MARKED))))))
+                                                                                       (shift PEEK_AT_CONTEXT  ROFF_SELFDESTRUCT___FINAL_CONTEXT_WONT_REVERT_ALREADY_MARKED))))))
 
 (defconstraint    selfdestruct-instruction---setting-NSR-and-peeking-flags---WONT_REVERT_NOT_YET_MARKED-case
                   (:guard (selfdestruct-instruction---scenario-precondition))
@@ -109,7 +109,7 @@
                     (if-not-zero   (selfdestruct-instruction---STATICX)               (execution-provides-empty-return-data ROFF_SELFDESTRUCT___FINAL_CONTEXT_STATICX))
                     (if-not-zero   (selfdestruct-instruction---OOGX)                  (execution-provides-empty-return-data ROFF_SELFDESTRUCT___FINAL_CONTEXT_OOGX))
                     (if-not-zero   scenario/SELFDESTRUCT_WILL_REVERT                  (execution-provides-empty-return-data ROFF_SELFDESTRUCT___FINAL_CONTEXT_WILL_REVERT))
-                    (if-not-zero   scenario/SELFDESTRUCT_WONT_REVERT_ALREADY_MARKED   (execution-provides-empty-return-data ROFF_SELFDESTRUCT___FINAL_CONTEXT_WONT_REVERT_ALREADY_YET_MARKED))
+                    (if-not-zero   scenario/SELFDESTRUCT_WONT_REVERT_ALREADY_MARKED   (execution-provides-empty-return-data ROFF_SELFDESTRUCT___FINAL_CONTEXT_WONT_REVERT_ALREADY_MARKED))
                     (if-not-zero   scenario/SELFDESTRUCT_WONT_REVERT_NOT_YET_MARKED   (execution-provides-empty-return-data ROFF_SELFDESTRUCT___FINAL_CONTEXT_WONT_REVERT_NOT_YET_MARKED))))
 
 (defconstraint    selfdestruct-instruction---justifying-the-static-exception (:guard (selfdestruct-instruction---scenario-precondition))
