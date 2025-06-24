@@ -1,6 +1,6 @@
 (module mxp)
 
-(defconstraint  generalies---perspectives---decoder---MSIZE-vanishings
+(defconstraint  generalities---perspectives---decoder---MSIZE-vanishings
 		(:guard DECODER)
 		(if-not-zero   decoder/IS_MSIZE
 			       (begin
@@ -16,15 +16,14 @@
 				 (vanishes!   (shift   macro/S2NZNOMXPX        ROW_OFFSET___DECDR_TO_MACRO)) ;; end of 2nd parameter set
 				 (vanishes!   (shift   macro/MXPX              ROW_OFFSET___DECDR_TO_MACRO))
 				 (vanishes!   (shift   macro/GAS_MXP           ROW_OFFSET___DECDR_TO_MACRO))
-				 (vanishes!   (shift   macro/MAY_TRIGGER_MMU   ROW_OFFSET___DECDR_TO_MACRO))
 				 )))
 
-(defconstraint  generalies---perspectives---decoder---RES-is-zero-if-not-MSIZE
+(defconstraint  generalities---perspectives---decoder---RES-is-zero-if-not-MSIZE
 		(:guard DECODER)
 		(if-zero   decoder/IS_MSIZE
 			   (vanishes!   (shift   macro/RES   ROW_OFFSET___DECDR_TO_MACRO))))
 
-(defconstraint  generalies---perspectives---decoder---imposing-SIZE_1-for-is-fixed-size-instructions
+(defconstraint  generalities---perspectives---decoder---imposing-SIZE_1-for-is-fixed-size-instructions
 		(:guard DECODER)
 		(begin
 		  (if-not-zero   decoder/IS_FIXED_SIZE_32
@@ -38,7 +37,7 @@
 		  ))
 
 
-(defconstraint  generalies---perspectives---decoder---2nd-parameters-vanish-for-single-parameter-set-instructions
+(defconstraint  generalities---perspectives---decoder---2nd-parameters-vanish-for-single-parameter-set-instructions
 		(:guard DECODER)
 		(if-zero   decoder/IS_DOUBLE_MAX_OFFSET
 			   (begin
@@ -49,7 +48,7 @@
 			     (vanishes!   (shift   macro/S2NZNOMXPX        ROW_OFFSET___DECDR_TO_MACRO)) ;; end of 2nd parameter set
 			     )))
 
-(defconstraint  generalies---perspectives---decoder---MCOPY-expects-equal-first-and-second-size-parameters
+(defconstraint  generalities---perspectives---decoder---MCOPY-expects-equal-first-and-second-size-parameters
 		(:guard DECODER)
 		(if-not-zero   decoder/IS_MCOPY
 			       (begin

@@ -12,7 +12,7 @@
 							    (mxp-shorthand---byte-price))
 							))
 (defun  (mxp-shorthand---number-of-bytes)  (mxp-shorthand---size-1-lo))
-(defun  (mxp-shorthand---extra-byte-cost)  (*   (mxp-shorthand---size-1-lo)
+(defun  (mxp-shorthand---extra-byte-cost)  (*   (mxp-shorthand---number-of-bytes)
 						(mxp-shorthand---real-byte-price)))
 
 

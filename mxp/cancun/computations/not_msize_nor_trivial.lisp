@@ -7,7 +7,7 @@
 ;;                               ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defconstraint  computations---non-msize-non-trivial---smallness-test-for-SIZE_1
+(defconstraint  computations---not-msize-nor-trivial---smallness-test-for-SIZE_1
 		(:guard   (mxp-guard---not-msize-not-trivial))
 		(wcp-call-to-LEQ   ROW_OFFSET___1ST_SIZE___SMALLNESS_TEST
 				   (mxp-shorthand---size-1-hi)
@@ -16,7 +16,7 @@
 				   MXPX_THRESHOLD
 				   ))
 
-(defconstraint  computations---non-msize-non-trivial---smallness-test-for-SIZE_2
+(defconstraint  computations---not-msize-nor-trivial---smallness-test-for-SIZE_2
 		(:guard   (mxp-guard---not-msize-not-trivial))
 		(wcp-call-to-LEQ   ROW_OFFSET___2ND_SIZE___SMALLNESS_TEST
 				   (mxp-shorthand---size-2-hi)
@@ -38,7 +38,7 @@
 ;;                                 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defconstraint  computations---non-msize-non-trivial---smallness-test-for-OFFSET_1
+(defconstraint  computations---not-msize-nor-trivial---smallness-test-for-OFFSET_1
 		(:guard   (mxp-guard---not-msize-not-trivial))
 		(wcp-call-to-LEQ   ROW_OFFSET___1ST_OFFSET___SMALLNESS_TEST
 				   (mxp-shorthand---offset-1-hi)
@@ -47,7 +47,7 @@
 				   MXPX_THRESHOLD
 				   ))
 
-(defconstraint  computations---non-msize-non-trivial---smallness-test-for-OFFSET_2
+(defconstraint  computations---not-msize-nor-trivial---smallness-test-for-OFFSET_2
 		(:guard   (mxp-guard---not-msize-not-trivial))
 		(wcp-call-to-LEQ   ROW_OFFSET___2ND_OFFSET___SMALLNESS_TEST
 				   (mxp-shorthand---offset-2-hi)
@@ -80,7 +80,7 @@
 (defun   (mxp-shorthand---mxpx-expression)   (+  (mxp-shorthand---mxpx-expression-1)
 						 (mxp-shorthand---mxpx-expression-2)))
 
-(defconstraint  computations---non-msize-non-trivial---justifying-the-MXPX-scenario-flag
+(defconstraint  computations---not-msize-nor-trivial---justifying-the-MXPX-scenario-flag
 		(:guard    (mxp-guard---not-msize-not-trivial))
 		(if-zero   (mxp-shorthand---mxpx-expression)
 			   ;; zero case

@@ -18,7 +18,6 @@
                  ( RES             :i32    )
                  ( MXPX            :binary )
                  ( GAS_MXP         :i64    )
-                 ( MAY_TRIGGER_MMU :binary )
                  ( S1NZNOMXPX      :binary )
                  ( S2NZNOMXPX      :binary )
                  )
