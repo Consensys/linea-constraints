@@ -82,8 +82,6 @@ TABLES_CANCUN := reftables/*.lisp \
 				reftables/cancun/inst_decoder.lisp \
 				reftables/cancun/power.lisp
 
-POWER := reftables/cancun/power.lisp
-
 TRM := trm
 
 TXN_DATA_LONDON := txndata/london
