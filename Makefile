@@ -57,9 +57,13 @@ OOB_SHANGHAI := oob/shanghai
 
 RLP_ADDR := rlpaddr
 
-RLP_TXN := rlptxn
+RLP_TXN_LONDON := rlptxn/london
+
+RLP_TXN_CANCUN := rlptxn/cancun
 
 RLP_TXRCPT := rlptxrcpt			
+
+RLP_UTILS_CANCUN :=rlputils/cancun
 
 ROM := rom
 
@@ -71,11 +75,14 @@ SHIFT :=  shf
 
 STP := stp
 
-TABLES := reftables/*.lisp
+TABLES_LONDON := reftables/*.lisp \
+				reftables/london/inst_decoder.lisp
 
-INST_DECODER_LONDON := reftables/london/inst_decoder.lisp
+TABLES_CANCUN := reftables/*.lisp \
+				reftables/cancun/inst_decoder.lisp \
+				reftables/cancun/power.lisp
 
-INST_DECODER_CANCUN := reftables/cancun/inst_decoder.lisp
+POWER := reftables/cancun/power.lisp
 
 TRM := trm
 
@@ -109,43 +116,46 @@ ZKEVM_MODULES_COMMON := ${CONSTANTS} \
 		 ${MMU} \
 		 ${MXP} \
 		 ${RLP_ADDR} \
-		 ${RLP_TXN} \
 		 ${RLP_TXRCPT} \
 		 ${ROM} \
 		 ${ROM_LEX} \
 		 ${SHAKIRA_DATA} \
 		 ${SHIFT} \
 		 ${STP} \
-		 ${TABLES} \
 		 ${TRM} \
 		 ${WCP}
 
 ZKEVM_MODULES_LONDON := ${ZKEVM_MODULES_COMMON} \
+		 ${TABLES_LONDON} \
 		 ${BLOCKDATA_LONDON} \
 		 ${HUB_LONDON} \
 		 ${OOB_LONDON} \
-		 ${INST_DECODER_LONDON} \
+		 ${RLP_TXN_LONDON} \
 		 ${TXN_DATA_LONDON}
 
 ZKEVM_MODULES_PARIS := ${ZKEVM_MODULES_COMMON} \
+		 ${TABLES_LONDON} \
 		 ${BLOCKDATA_PARIS} \
 		 ${HUB_LONDON} \
 		 ${OOB_LONDON} \
-		 ${INST_DECODER_LONDON} \
+		 ${RLP_TXN_LONDON} \
 		 ${TXN_DATA_LONDON}
 
 ZKEVM_MODULES_SHANGHAI := ${ZKEVM_MODULES_COMMON} \
+		 ${TABLES_LONDON} \
  		 ${BLOCKDATA_PARIS} \
 		 ${HUB_SHANGHAI} \
 		 ${OOB_SHANGHAI} \
-		 ${INST_DECODER_LONDON} \
+		 ${RLP_TXN_LONDON} \
 		 ${TXN_DATA_SHANGHAI}
 
 ZKEVM_MODULES_CANCUN := ${ZKEVM_MODULES_COMMON} \
+		 ${TABLES_CANCUN} \
  		 ${BLOCKDATA_CANCUN} \
 		 ${HUB_CANCUN} \
 		 ${OOB_SHANGHAI} \
-		 ${INST_DECODER_CANCUN} \
+		 ${RLP_TXN_CANCUN} \
+		 ${RLP_UTILS_CANCUN} \
 		 ${TXN_DATA_CANCUN}
 
 all: zkevm_london.bin zkevm_paris.bin zkevm_shanghai.bin zkevm_cancun.bin
