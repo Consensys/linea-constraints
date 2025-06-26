@@ -6,7 +6,7 @@
   ;; target columns
   (
     mxp.MACRO
-    mxp.STAMP
+    mxp.MXP_STAMP
     mxp.CN
     mxp.macro/INST
     mxp.macro/DEPLOYING
