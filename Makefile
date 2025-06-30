@@ -51,7 +51,9 @@ MMIO_LONDON := mmio/london
 
 MMIO_CANCUN := mmio/cancun
 
-MXP := mxp
+MXP_LONDON := mxp/london
+
+MXP_CANCUN := mxp/cancun
 
 OOB_LONDON := oob/london
 
@@ -113,7 +115,6 @@ ZKEVM_MODULES_COMMON := ${CONSTANTS} \
 		 ${LOG_DATA} \
 		 ${LOG_INFO} \
 		 ${MMU} \
-		 ${MXP} \
 		 ${RLP_ADDR} \
 		 ${RLP_TXRCPT} \
 		 ${ROM} \
@@ -129,6 +130,7 @@ ZKEVM_MODULES_LONDON := ${ZKEVM_MODULES_COMMON} \
 		 ${BLOCKDATA_LONDON} \
 		 ${HUB_LONDON} \
 		 ${MMIO_LONDON} \
+		 ${MXP_LONDON} \
 		 ${OOB_LONDON} \
 		 ${RLP_TXN_LONDON} \
 		 ${TXN_DATA_LONDON}
@@ -138,6 +140,7 @@ ZKEVM_MODULES_PARIS := ${ZKEVM_MODULES_COMMON} \
 		 ${BLOCKDATA_PARIS} \
 		 ${HUB_LONDON} \
 		 ${MMIO_LONDON} \
+		 ${MXP_LONDON} \
 		 ${OOB_LONDON} \
 		 ${RLP_TXN_LONDON} \
 		 ${TXN_DATA_LONDON}
@@ -147,6 +150,7 @@ ZKEVM_MODULES_SHANGHAI := ${ZKEVM_MODULES_COMMON} \
  		 ${BLOCKDATA_PARIS} \
 		 ${HUB_SHANGHAI} \
 		 ${MMIO_LONDON} \
+		 ${MXP_LONDON} \
 		 ${OOB_SHANGHAI} \
 		 ${RLP_TXN_LONDON} \
 		 ${TXN_DATA_SHANGHAI}
@@ -156,6 +160,7 @@ ZKEVM_MODULES_CANCUN := ${ZKEVM_MODULES_COMMON} \
  		 ${BLOCKDATA_CANCUN} \
 		 ${HUB_CANCUN} \
 		 ${MMIO_MMIO} \
+		 ${MXP_CANCUN} \
 		 ${OOB_SHANGHAI} \
 		 ${RLP_TXN_CANCUN} \
 		 ${RLP_UTILS_CANCUN} \
