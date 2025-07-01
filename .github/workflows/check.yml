@@ -15,7 +15,7 @@ jobs:
 
     - name: Install Go Corset
       shell: bash
-      run: go install github.com/consensys/go-corset/cmd/go-corset@8b2a00a8
+      run: go install github.com/consensys/go-corset/cmd/go-corset@v1.1.13
 
     - name: Build all forks
       run: make -B all
