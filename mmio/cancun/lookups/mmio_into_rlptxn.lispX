@@ -12,11 +12,11 @@
   mmio.EXO_IS_TXCD
   ;; source columns
   (
-    mmio.EXO_IS_TXCD
-    mmio.EXO_IS_TXCD
-    mmio.EXO_IS_TXCD
-    mmio.EXO_IS_TXCD
-    mmio.EXO_IS_TXCD
+    mmio.EXO_ID
+    1
+    mmio.PHASE
+    mmio.INDEX_X
+    mmio.LIMB
   ))
 
 
