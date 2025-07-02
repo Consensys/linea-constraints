@@ -2,7 +2,8 @@
   (* hub.PEEK_AT_STACK (- 1 hub.stack/SUX)))
 
 (defun (projected-height)
-  (- (+ hub.HEIGHT hub.stack/ALPHA) hub.stack/DELTA))
+  (* (- (+ hub.HEIGHT hub.stack/ALPHA) hub.stack/DELTA)
+     (- 1 hub.stack/SUX)))
 
 (defclookup
   hub-into-wcp-for-sox
@@ -25,6 +26,4 @@
     0
     1024
     hub.stack/SOX
-  ))
-
-
+ ))
