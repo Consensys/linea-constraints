@@ -1,5 +1,7 @@
 (module txndata)
 
+;;TODO: rewrite me completely
+
 (defcolumns
   (ABS_TX_NUM_MAX          :i16)
   (ABS_TX_NUM              :i16)

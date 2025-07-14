@@ -1,0 +1,22 @@
+(defclookup
+  mmio-into-rlptxn
+  ;; target columns
+  (
+    rlptxn.ABS_TX_NUM
+    rlptxn.LC
+    rlptxn.PHASE
+    rlptxn.INDEX_DATA
+    rlptxn.LIMB
+  )
+  ;; source columns
+  mmio.EXO_IS_TXCD
+  ;; source columns
+  (
+    mmio.EXO_ID
+    1
+    mmio.PHASE
+    mmio.INDEX_X
+    mmio.LIMB
+  ))
+
+

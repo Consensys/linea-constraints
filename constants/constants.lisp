@@ -248,6 +248,10 @@
   ETHEREUM_GAS_LIMIT_MINIMUM                5000
   ETHEREUM_GAS_LIMIT_MAXIMUM                0xffffffffffffffff ;; maxUint64
   MIN_BASE_FEE_PER_BLOB_GAS                 1
+  UNPROTECTED_V                             27
+  UNPROTECTED_V_PO                          (+ UNPROTECTED_V 1)
+  PROTECTED_BASE_V                          35
+  PROTECTED_BASE_V_PO                       (+ PROTECTED_BASE_V 1)
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;             ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;  LINEA MISC ;;
@@ -510,6 +514,13 @@
   ;;
   RLP_ADDR_RECIPE_1                         1                                  ;; for RlpAddr, used to discriminate between recipe for create
   RLP_ADDR_RECIPE_2                         2                                  ;; for RlpAddr, used to discriminate between recipe for create
+  ;;
+  ;; RLP_UTILS instruction
+  ;;
+  RLP_UTILS_INST_INTEGER                    1
+  RLP_UTILS_INST_BYTE_STRING_PREFIX         2
+  RLP_UTILS_INST_BYTES32                    4
+  RLP_UTILS_INST_DATA_PRICING               8
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;                ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; SHAKIRA MODULE ;;
