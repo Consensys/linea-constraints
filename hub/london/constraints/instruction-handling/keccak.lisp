@@ -26,10 +26,10 @@
 (defun   (keccak-instruction---size-lo)               [ stack/STACK_ITEM_VALUE_LO 2 ])
 (defun   (keccak-instruction---result-hi)             [ stack/STACK_ITEM_VALUE_HI 4 ])
 (defun   (keccak-instruction---result-lo)             [ stack/STACK_ITEM_VALUE_LO 4 ]) ;; ""
-(defun   (keccak-instruction---mxpx)                  (shift    misc/MXP_MXPX                      ROFF___KEC___MISCELLANEOUS_ROW))
-(defun   (keccak-instruction---mxp-gas)               (shift    misc/MXP_GAS_MXP                   ROFF___KEC___MISCELLANEOUS_ROW))
-(defun   (keccak-instruction---mxp-s1nznomxpx)        (shift    misc/MXP_SIZE_1_NONZERO_NO_MXPX    ROFF___KEC___MISCELLANEOUS_ROW))
-(defun   (keccak-instruction---trigger_MMU)           (* (- 1 XAHOY) (keccak-instruction---mxp-s1nznomxpx)))
+(defun   (keccak-instruction---mxpx)                  (shift    misc/MXP_MXPX      ROFF___KEC___MISCELLANEOUS_ROW))
+(defun   (keccak-instruction---mxp-gas)               (shift    misc/MXP_GAS_MXP   ROFF___KEC___MISCELLANEOUS_ROW))
+(defun   (keccak-instruction---mxp-MTNTOP)            (shift    misc/MXP_MTNTOP    ROFF___KEC___MISCELLANEOUS_ROW))
+(defun   (keccak-instruction---trigger_MMU)           (* (- 1 XAHOY) (keccak-instruction---mxp-MTNTOP)))
 (defun   (keccak-instruction---no-stack-exceptions)   (* PEEK_AT_STACK stack/KEC_FLAG (- 1 stack/SUX stack/SOX)))
 
 (defconstraint    keccak-instruction---setting-stack-pattern
