@@ -106,7 +106,7 @@
                    (eq!    (weighted-MISC-flag-sum-sans-MMU       ROFF_STACK_RAM___MISC_ROW)
                            (+   (*   MISC_WEIGHT_MXP   (stack-ram---trigger_MXP))
                                 (*   MISC_WEIGHT_OOB   (stack-ram---trigger_OOB))))
-                   (eq!    (shift    misc/MMU_FLAG    ROFF_STACK_RAM___MISC_ROW)    (*   MISC_WEIGHT_MMU   (stack-ram---trigger_MMU)))))
+                   (eq!    (shift    misc/MMU_FLAG    ROFF_STACK_RAM___MISC_ROW)    (stack-ram---trigger_MMU))))
 
 (defun    (stack-ram---trigger_MXP)     (stack-ram---is-MXX))
 (defun    (stack-ram---trigger_OOB)     (stack-ram---is-CDL))
