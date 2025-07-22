@@ -40,10 +40,10 @@
 (defconstraint    create-instruction---setting-the-module-flags-of-the-miscellaneous-row    (:guard    (create-instruction---generic-precondition))
                   (begin
                     (eq!    (shift    misc/EXP_FLAG    CREATE_miscellaneous_row___row_offset)    0)
-                    (eq!    (shift    misc/MMU_FLAG    CREATE_miscellaneous_row___row_offset)    (*    MISC_WEIGHT_MMU    (create-instruction---trigger_MMU)))
-                    (eq!    (shift    misc/MXP_FLAG    CREATE_miscellaneous_row___row_offset)    (*    MISC_WEIGHT_MXP    (create-instruction---trigger_MXP)))
-                    (eq!    (shift    misc/OOB_FLAG    CREATE_miscellaneous_row___row_offset)    (*    MISC_WEIGHT_OOB    (create-instruction---trigger_OOB)))
-                    (eq!    (shift    misc/STP_FLAG    CREATE_miscellaneous_row___row_offset)    (*    MISC_WEIGHT_STP    (create-instruction---trigger_STP)))
+                    (eq!    (shift    misc/MMU_FLAG    CREATE_miscellaneous_row___row_offset)    (create-instruction---trigger_MMU))
+                    (eq!    (shift    misc/MXP_FLAG    CREATE_miscellaneous_row___row_offset)    (create-instruction---trigger_MXP))
+                    (eq!    (shift    misc/OOB_FLAG    CREATE_miscellaneous_row___row_offset)    (create-instruction---trigger_OOB))
+                    (eq!    (shift    misc/STP_FLAG    CREATE_miscellaneous_row___row_offset)    (create-instruction---trigger_STP))
                     ))
 
 (defconstraint    create-instruction---setting-the-MXP-instruction                          (:guard    (create-instruction---generic-precondition))
