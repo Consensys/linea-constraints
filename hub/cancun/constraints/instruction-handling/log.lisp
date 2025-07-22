@@ -97,7 +97,7 @@
                   (if-zero   stack/STATICX
                              (begin
                                (eq!    (weighted-MISC-flag-sum-sans-MMU    ROFF_LOG___MISCELLANEOUS_ROW)    MISC_WEIGHT_MXP)
-                               (eq!    (shift    misc/MMU_FLAG             ROFF_LOG___MISCELLANEOUS_ROW)    (* MISC_WEIGHT_MMU (log-instruction---trigger-MMU))))))
+                               (eq!    (shift    misc/MMU_FLAG             ROFF_LOG___MISCELLANEOUS_ROW)    (log-instruction---trigger-MMU)))))
 
 
 (defconstraint    log-instruction---MISC-row-setting-MXP-data                        (:guard (log-instruction---standard-hypothesis))
