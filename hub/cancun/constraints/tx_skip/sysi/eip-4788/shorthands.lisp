@@ -32,5 +32,5 @@
 (defun    (tx-skip---precondition---SYSI-4788)    (*   (-  TOTL_TXN_NUMBER  (prev  TOTL_TXN_NUMBER))
                                                        SYSI
                                                        TX_SKIP
-                                                       transaction/EIP_4788
+                                                       (shift    transaction/EIP_4788    tx-skip---SYSI-4788---row-offset---TXN)
                                                        ))
