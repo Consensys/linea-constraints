@@ -13,7 +13,7 @@
 
 
 (defconstraint    tx-skip---SYSI-4788---setting-the-peeking-flags
-                  (:guard (tx-skip---precondition---SYSI---4788))
+                  (:guard (tx-skip---precondition---SYSI-4788))
                   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                   (eq!    (+    (shift    PEEK_AT_TRANSACTION    tx-skip---SYSI-4788---row-offset---TXN                                    )
                                 (shift    PEEK_AT_ACCOUNT        tx-skip---SYSI-4788---row-offset---ACC---loading-the-beacon-root-account  )

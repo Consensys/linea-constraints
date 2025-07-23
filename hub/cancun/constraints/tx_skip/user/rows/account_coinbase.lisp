@@ -18,8 +18,8 @@
                  (:guard (tx-skip---precondition---USER))
                  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                  (begin
-                   (eq!    (shift account/ADDRESS_HI             tx-skip---USER---row-offset---ACC---coinbase)   (shift transaction/COINBASE_ADDRESS_HI tx-skip---row-offset---TXN))
-                   (eq!    (shift account/ADDRESS_LO             tx-skip---USER---row-offset---ACC---coinbase)   (shift transaction/COINBASE_ADDRESS_LO tx-skip---row-offset---TXN))
+                   (eq!    (shift account/ADDRESS_HI             tx-skip---USER---row-offset---ACC---coinbase)   (shift transaction/COINBASE_ADDRESS_HI   tx-skip---USER---row-offset---TXN))
+                   (eq!    (shift account/ADDRESS_LO             tx-skip---USER---row-offset---ACC---coinbase)   (shift transaction/COINBASE_ADDRESS_LO   tx-skip---USER---row-offset---TXN))
                    (account-increment-balance-by                 tx-skip---USER---row-offset---ACC---coinbase    (tx-skip---coinbase-fee))
                    (account-same-nonce                           tx-skip---USER---row-offset---ACC---coinbase)
                    (account-same-code                            tx-skip---USER---row-offset---ACC---coinbase)

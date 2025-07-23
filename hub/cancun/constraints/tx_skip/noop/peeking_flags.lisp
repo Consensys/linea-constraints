@@ -20,7 +20,6 @@
 
 
 (defproperty   tx-skip---NOOP---sanity-checks
-	       (:guard (tx-skip---precondition---NOOP))
 	       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	       (begin
 		 (eq!    TX_SKIP                1)
