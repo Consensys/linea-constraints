@@ -64,7 +64,7 @@
 		    (if-not-zero    TX_EXEC
 				    (begin
 				      (eq!  (next  (+  TX_EXEC  TX_FINL))  1)
-				      (if-not-zero  (will-remain-constant!    HUB_STAMP)
+				      (if-not       (will-remain-constant!    HUB_STAMP)
 						    (if-not-zero    CN_NEW
 								    ;; CN_NEW ≠ 0
 								    (eq!    (next    TX_EXEC)    1)
@@ -73,7 +73,7 @@
 				      )))
 
 (defproperty    phase-flags---legal-transitions-out-of-TX_EXEC---formal-consequences
-		(if-not-zero  (will-inc!  HUB_STAMP  1)
+		(if-not       (will-inc!  HUB_STAMP  1)
 			      (eq!    (next    TX_EXEC)    1)
 			      ))
 

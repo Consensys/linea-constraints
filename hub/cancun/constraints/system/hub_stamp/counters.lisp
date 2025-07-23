@@ -20,10 +20,10 @@
 				(vanishes!    NSR))))
 
 (defconstraint    system-counters---automatic-vanishing-constraints-for-counters---at-HUB_STAMP-transitions ()
-		  (if-not-zero    (remained-constant!    HUB_STAMP)
-				  (begin
-				    (vanishes!    COUNTER_TLI)
-				    (vanishes!    COUNTER_NSR))))
+		  (if-not    (remained-constant!    HUB_STAMP)
+			     (begin
+			       (vanishes!    COUNTER_TLI)
+			       (vanishes!    COUNTER_NSR))))
 
 (defproperty      system-counters---automatic-vanishing-constraints-for-counters---outside-of-execution-rows
 		  (if-zero    TX_EXEC
@@ -34,19 +34,21 @@
 (defconstraint    system-counters---progression-constraints ()
 		  (if-not-zero    TX_EXEC
 				  (if-not-zero    (- COUNTER_TLI TLI)
-						  ;; COUNTER_TLI ≠ TLI
-						  (begin
-						    (will-inc!               COUNTER_TLI    1)
-						    (will-remain-constant!   COUNTER_NSR)
-						    (vanishes!               COUNTER_NSR))
-						  ;; COUNTER_TLI = TLI
-						  (if-not-zero    (-    COUNTER_NSR    NSR)
-								  ;; COUNTER_NSR ≠ NSR
-								  (will-remain-constant!   COUNTER_TLI)
-								  (will-inc!               COUNTER_NSR    1)
-								  ;; COUNTER_NSR = NSR
-								  (will-inc!    HUB_STAMP    1)
-								  ))))
+					     ;; COUNTER_TLI ≠ TLI
+					     (begin
+					       (will-inc!               COUNTER_TLI    1)
+					       (will-remain-constant!   COUNTER_NSR)
+					       (vanishes!               COUNTER_NSR))
+					     ;; COUNTER_TLI = TLI
+					     (if-not-zero    (-    COUNTER_NSR    NSR)
+							     ;; COUNTER_NSR ≠ NSR
+							     (begin
+							       (will-remain-constant!   COUNTER_TLI)
+							       (will-inc!               COUNTER_NSR    1)
+							       )
+							     ;; COUNTER_NSR = NSR
+							     (will-inc!    HUB_STAMP    1)
+							     ))))
 
 (defconstraint    system-counters---pegging-CT_NSR-to-PEEK_AT_STACK ()
 		  (if-not-zero    TX_EXEC

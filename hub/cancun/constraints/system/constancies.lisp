@@ -19,4 +19,4 @@
 (defun (stack-row-constancy    col) (if-not-zero PEEK_AT_STACK
                                                  (if-not-zero     COUNTER_TLI
                                                                   (remained-constant!    col))))
-(defun (context-constancy      col) (if-zero (remained-constant! CN) (remained-constant!    col)))
+(defun (context-constancy      col) (if (remained-constant! CN) (remained-constant!    col)))
