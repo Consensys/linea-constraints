@@ -1,8 +1,6 @@
 (module hub)
 
 (defcolumns
-    ( ABSOLUTE_TRANSACTION_NUMBER               :i16 ) ;; TODO to delete
-    ( RELATIVE_BLOCK_NUMBER                     :i16 ) ;; TODO to delete
 
     ;; system transactions vs user transaction flags
     ( SYSI                                      :binary@prove )
