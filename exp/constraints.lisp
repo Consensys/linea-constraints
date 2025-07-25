@@ -148,8 +148,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defconstraint   plateau-constraints (:perspective computation)
-                 (begin (if-not-zero IS_EXP_LOG (vanishes! PLT_BIT))
-                        (plateau-constraint CT PLT_BIT PLT_JMP)))
+                 (plateau-constraint CT PLT_BIT PLT_JMP))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                               ;;
