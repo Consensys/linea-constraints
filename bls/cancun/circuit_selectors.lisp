@@ -22,10 +22,10 @@
     (+ (* DATA_BLS_PAIRING_CHECK_FLAG NONTRIVIAL_POP_BIT) RSLT_BLS_PAIRING_CHECK_FLAG))  
 
 (defconstraint set-cs-c1-membership ()
-    (eq! CS_G1_MEMBERSHIP (* MEXT_BIT DATA_BLS_G1_ADD_FLAG)))
+    (eq! CS_C1_MEMBERSHIP (* MEXT_BIT DATA_BLS_G1_ADD_FLAG)))
 
 (defconstraint set-cs-c2-membership ()
-    (eq! CS_G2_MEMBERSHIP (* MEXT_BIT DATA_BLS_G2_MSM_FLAG)))
+    (eq! CS_C2_MEMBERSHIP (* MEXT_BIT DATA_BLS_G2_MSM_FLAG)))
 
 (defconstraint set-cs-g1-membership ()
     (eq! CS_G1_MEMBERSHIP 
