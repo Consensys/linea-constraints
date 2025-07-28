@@ -9,7 +9,7 @@
 
     ;; block and transaction accounting
     ( BLK_NUMBER                                :i24 )
-    ( TOTL_TXN_NUMBER                           :i24 )
+    ;; ( TOTL_TXN_NUMBER                           :i24 )
     ( SYSI_TXN_NUMBER                           :i24 )
     ( USER_TXN_NUMBER                           :i24 )
     ( SYSF_TXN_NUMBER                           :i24 )
