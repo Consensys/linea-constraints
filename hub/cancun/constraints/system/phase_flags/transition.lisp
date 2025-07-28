@@ -19,13 +19,14 @@
 					  1)))
 
 (defproperty    phase-flags---legal-transitions-out-of-TX_SKIP---formal-consequences
+	(if-not-zero    TX_SKIP
 		(if-zero    CON
 			    ;; CON = 0
 			    (eq!  (next  TX_SKIP)      1)
 			    ;; CON = 1
 			    (eq!  (next  (+  TX_SKIP
 					     TX_WARM
-					     TX_INIT)) 1)))
+					     TX_INIT)) 1))))
 
 
 ; TX_WARM case
