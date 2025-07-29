@@ -16,9 +16,10 @@
 (defconstraint    system---hub-stamp-increments---at-the-end-of-TX_FINL       ()    (if-not-zero    TX_FINL                              (will-inc!    HUB_STAMP    CON)))
 
 (defconstraint    system---hub-stamp-increments---when-both-counters-are-maxed-out-in-TX_EXEC ()
+	(if-not-zero TX_EXEC
 		  (begin
 		    (if-not-zero    (-    CT_TLI    TLI)    (will-remain-constant!    HUB_STAMP))
 		    (if-not-zero    (-    CT_NSR    NSR)    (will-remain-constant!    HUB_STAMP))
 		    (if-eq                CT_TLI    TLI
 				    (if-eq                CT_NSR    NSR
-						    (will-inc!    HUB_STAMP    1)))))
+						    (will-inc!    HUB_STAMP    1))))))
