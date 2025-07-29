@@ -74,9 +74,10 @@
 				      )))
 
 (defproperty    phase-flags---legal-transitions-out-of-TX_EXEC---formal-consequences
-		(if-not       (will-inc!  HUB_STAMP  1)
-			      (eq!    (next    TX_EXEC)    1)
-			      ))
+			(if-not-zero    TX_EXEC
+					(if-not       (will-inc!  HUB_STAMP  1)
+			    		  (eq!    (next    TX_EXEC)    1)
+			      		  )))
 
 
 ; TX_FINL case

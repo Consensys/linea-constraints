@@ -20,8 +20,9 @@
 
 
 (defproperty   tx-skip---NOOP---sanity-checks
+	(if-not-zero  (tx-skip---precondition---NOOP)
 	       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	       (begin
 		 (eq!    TX_SKIP                1)
 		 (eq!    PEEK_AT_TRANSACTION    1)
-		 ))
+		 )))
