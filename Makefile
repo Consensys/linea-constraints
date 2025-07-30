@@ -68,6 +68,8 @@ OOB_LONDON := oob/london
 
 OOB_SHANGHAI := oob/shanghai
 
+OOB_CANCUN := oob/cancun
+
 RLP_ADDR := rlpaddr
 
 RLP_TXN_LONDON := rlptxn/london
@@ -174,7 +176,7 @@ ZKEVM_MODULES_CANCUN := ${ZKEVM_MODULES_COMMON} \
 		 ${LOG_INFO_CANCUN} \
 		 ${MMIO_CANCUN} \
 		 ${MXP_CANCUN} \
-		 ${OOB_SHANGHAI} \
+		 ${OOB_CANCUN} \
 		 ${RLP_TXN_CANCUN} \
 		 ${RLP_UTILS_CANCUN} \
 		 ${TXN_DATA_CANCUN}
