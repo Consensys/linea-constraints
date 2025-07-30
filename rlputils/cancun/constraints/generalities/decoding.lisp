@@ -15,7 +15,14 @@
               (* RLP_UTILS_INST_BYTES32                    IS_BYTE32            )
               (* RLP_UTILS_INST_DATA_PRICING               IS_DATA_PRICING      )))
 
-(defcomputedcolumn (IOMF :binary@prove) (flag-sum))
+;; TODO: (defcomputedcolumn (IOMF :binary@prove) (flag-sum))
+(defcomputedcolumn (IOMF :binary@prove) 
+        (+ 
+            IS_INTEGER           
+            IS_BYTE_STRING_PREFIX
+            IS_BYTE32            
+            IS_DATA_PRICING ))
+
 
 (defconstraint inst-decoding-macro-row (:guard MACRO)
     (eq! (wght-flag-sum) macro/INST))
