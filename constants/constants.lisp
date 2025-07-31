@@ -238,6 +238,8 @@
   GAS_CONST_BLS_G2ADD                       600
   GAS_CONST_BLS_MAP_FP_TO_G1                5500
   GAS_CONST_BLS_MAP_FP2_TO_G2               23800
+  GAS_CONST_BLS_PAIRING_CHECK               37700
+  GAS_CONST_BLS_PAIRING_CHECK_PAIR          32600
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;           ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;  EVM MISC ;;
@@ -320,6 +322,7 @@
   PRC_BLS_MAP_FP2_TO_G2_SIZE                128
   PRC_BLS_G1MSM_SIZE_MIN                    160
   PRC_BLS_G2MSM_SIZE_MIN                    288
+  PRC_BLS_PAIRING_CHECK_SIZE_MIN            384
   PRC_BLS_G1MSM_MAX_DISCOUNT                519
   PRC_BLS_G2MSM_MAX_DISCOUNT                524
   PRC_BLS_G1MSM_MULTIPLICATION_COST         12000
