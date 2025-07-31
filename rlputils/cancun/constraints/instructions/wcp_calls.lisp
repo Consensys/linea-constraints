@@ -19,3 +19,10 @@
     (eq! (shift compt/ARG_1_HI offset)   int1-hi       )
     (eq! (shift compt/ARG_1_LO offset)   int1-lo       )
     (eq! (shift compt/ARG_2_LO offset)   int2-lo       )))
+
+(defun (wcp-call-eq      offset         int1-lo int2-lo)
+    (begin
+    (eq! (shift compt/INST     offset)   EVM_INST_EQ   )
+    (eq! (shift compt/ARG_1_HI offset)   0             )
+    (eq! (shift compt/ARG_1_LO offset)   int1-lo       )
+    (eq! (shift compt/ARG_2_LO offset)   int2-lo       )))
