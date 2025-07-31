@@ -16,7 +16,7 @@
 
 ;; constraints
 (defconstraint integer--setting-ct-max (:guard (integer-instruction-precondition)) 
-    (eq! CT_MAX CT_MAX_INST_INTEGER))
+    (eq! (next CT_MAX) CT_MAX_INST_INTEGER))
 
 ;; first row
 (defconstraint integer--first-wcp-call   (:guard (integer-instruction-precondition))  (wcp-call-iszero  1 (integer--in-integer-hi) (integer--in-integer-lo)))

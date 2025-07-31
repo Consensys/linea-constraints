@@ -20,7 +20,7 @@
 
 ;; constraints
 (defconstraint bytestring--setting-ct-max (:guard (bytestring--instruction-precondition)) 
-    (eq! CT_MAX CT_MAX_INST_BYTE_STRING_PREFIX))
+    (eq! (next CT_MAX) CT_MAX_INST_BYTE_STRING_PREFIX))
 
 ;; first row
 (defconstraint bytestring--first-wcp-call   (:guard (bytestring--instruction-precondition))  
