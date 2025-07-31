@@ -42,7 +42,8 @@
 (defun (integer--integer-byte-size)                                 (+ (integer--leading-limb-byte-size) (* (integer--integer-is-nonzero) LLARGE)))
 
 ;; setting results
-(defconstraint integer--setting-shift-factor (:guard (integer-instruction-precondition)) (conditionally-get-shifting-factor 3 (integer--integer-hi-is-nonzero) (integer--leading-limb-byte-size)))
+(defconstraint integer--setting-shift-factor (:guard (integer-instruction-precondition)) 
+    (conditionally-get-shifting-factor 3 (integer--integer-is-nonzero) (integer--leading-limb-byte-size)))
 
 (defun (integer--shifting-factor)                                   (shift compt/SHF_POWER 3))
 (defun (integer--leading-limb)                                      (+ (* (integer--integer-hi-is-nonzero) (integer--in-integer-hi))
