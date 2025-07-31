@@ -19,7 +19,7 @@
     (eq! CT_MAX CT_MAX_INST_INTEGER))
 
 ;; first row
-(defconstraint integer--first-wcp-call   (:guard (integer-instruction-precondition))  (wcp-call-is-zero 1 (integer--in-integer-hi) (integer--in-integer-lo)))
+(defconstraint integer--first-wcp-call   (:guard (integer-instruction-precondition))  (wcp-call-iszero  1 (integer--in-integer-hi) (integer--in-integer-lo)))
 
 (defun (integer--integer-is-zero)                                   (shift compt/RES 1))
 (defun (integer--integer-is-nonzero)                                (- 1 (integer--integer-is-zero)))

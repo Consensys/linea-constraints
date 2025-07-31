@@ -24,7 +24,7 @@
 
 ;; first row
 (defconstraint bytestring--first-wcp-call   (:guard (bytestring--instruction-precondition))  
-    (wcp-call-is-zero 1 0 (bytestring--in-byte-string-length)))
+    (wcp-call-iszero 1 0 (bytestring--in-byte-string-length)))
 
 (defun (bytestring--bs-is-empty)                                       (shift compt/RES 1))
 (defun (bytestring--bs-is-nonempty)                                    (- 1 (bytestring--bs-is-empty)))
