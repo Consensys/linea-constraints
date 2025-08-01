@@ -34,12 +34,12 @@
 ;; third row
 (defconstraint integer--third-wcp-call   (:guard (integer-instruction-precondition))  (wcp-call-lt      3  0               (integer--in-integer-lo) RLP_PREFIX_INT_SHORT))
 
-(defun (integer--integer-is-lt-one-two-eight)                       (* (integer--integer-is-zero) (shift compt/RES 3)))
+(defun (integer--integer-is-lt-one-two-eight)                       (* (integer--integer-hi-is-zero) (shift compt/RES 3)))
 (defun (integer--integer-is-geq-one-two-eight)                      (- 1 (integer--integer-is-lt-one-two-eight)))
 (defun (integer--integer-lo-byte-size)                              (+ (shift compt/WCP_CT_MAX 3) (integer--integer-is-nonzero)))
 (defun (integer--leading-limb-byte-size)                            (+ (* (integer--integer-hi-is-nonzero) (integer--integer-hi-byte-size))
                                                                        (* (integer--integer-hi-is-zero)    (integer--integer-lo-byte-size))))
-(defun (integer--integer-byte-size)                                 (+ (integer--leading-limb-byte-size) (* (integer--integer-is-nonzero) LLARGE)))
+(defun (integer--integer-byte-size)                                 (+ (integer--leading-limb-byte-size) (* (integer--integer-hi-is-nonzero) LLARGE)))
 
 ;; setting results
 (defconstraint integer--setting-shift-factor (:guard (integer-instruction-precondition)) 

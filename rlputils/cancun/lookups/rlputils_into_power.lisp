@@ -7,7 +7,7 @@
     power.POWER
     )
   ; source selector
-  rlputils.compt/SHF_FLAG
+  (* rlputils.COMPT rlputils.compt/SHF_FLAG)
   ; source columns
   (
     1
