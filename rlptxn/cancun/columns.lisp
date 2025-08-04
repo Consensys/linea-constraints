@@ -9,8 +9,8 @@
   (LX                               :binary)
   ;; (INDEX_LT                         :i32)
   ;; (INDEX_LX                         :i32)
-  (LT_BYTESIZE_COUNTDOWN            :i32)
-  (LX_BYTESIZE_COUNTDOWN            :i32)
+  (LT_BYTE_SIZE_COUNTDOWN           :i32)
+  (LX_BYTE_SIZE_COUNTDOWN           :i32)
   ;; (TO_HASH_BY_PROVER                :binary)
   (CODE_FRAGMENT_INDEX              :i24)
   (TYPE_0                           :binary@prove)
@@ -37,12 +37,13 @@
   (CT                               :i16)
   (CT_MAX                           :i16)
   ;; (DONE                             :binary)
-  (REPLAY_PROTECTION                :binary)
-  (Y_PARITY                         :binary)
+  (REPLAY_PROTECTION                :binary@prove)
+  (Y_PARITY                         :binary@prove)
   (IS_PREFIX_OF_ACCESS_LIST_ITEM    :binary@prove)
   (IS_PREFIX_OF_STORAGE_KEY_LIST    :binary@prove)
   (IS_OF_ACCESS_LIST_ADDRESS        :binary@prove)
   (IS_ACCESS_LIST_STORAGE_KEY_LIST  :binary@prove)
+  (REQUIRES_EVM_EXECUTION           :binary)
 )
 
 
@@ -65,7 +66,6 @@ TXN
   (NUMBER_OF_NONZERO_BYTES          :i32)
   (NUMBER_OF_PREWARMED_ADDRESSES    :i32)
   (NUMBER_OF_PREWARMED_STORAGE_KEYS :i32)
-  (REQUIRES_EVM_EXECUTION           :binary)
 ))
 
 (defperspective cmp
