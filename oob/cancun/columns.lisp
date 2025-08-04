@@ -41,6 +41,7 @@
   (WCP_FLAG :binary@prove)
   (ADD_FLAG :binary@prove)
   (MOD_FLAG :binary@prove)
+  (BLS_REF_TABLE_FLAG :binary@prove)
   (OUTGOING_INST :byte :display :opcode)
   (OUTGOING_DATA :i128 :array [4])
   (OUTGOING_RES_LO :i128))

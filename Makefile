@@ -94,6 +94,7 @@ TABLES_LONDON := reftables/*.lisp \
 				reftables/london/inst_decoder.lisp
 
 TABLES_CANCUN := reftables/*.lisp \
+				reftables/cancun/bls_reftable.lisp \
 				reftables/cancun/inst_decoder.lisp \
 				reftables/cancun/power.lisp
 
