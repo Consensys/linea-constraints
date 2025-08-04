@@ -13,11 +13,11 @@
 
 
 (defconst
-  tx-skip---SYSI-2935---row-offset---TXN                                     0
-  tx-skip---SYSI-2935---row-offset---ACC---loading-the-beacon-root-account   1
-  tx-skip---SYSI-2935---row-offset---STO---storing-the-time-stamp            2
-  tx-skip---SYSI-2935---row-offset---CON---final-zero-context                3
-  tx-skip---SYSI-2935---NSR                                                  4
+  tx-skip---SYSI-2935---row-offset---TXN                                          0
+  tx-skip---SYSI-2935---row-offset---ACC---loading-the-block-hash-history-account 1
+  tx-skip---SYSI-2935---row-offset---STO---storing-the-previous-block-hash        2
+  tx-skip---SYSI-2935---row-offset---CON---final-zero-context                     3
+  tx-skip---SYSI-2935---NSR                                                       4
   )
 
 
