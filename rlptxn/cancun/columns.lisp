@@ -41,8 +41,8 @@
   (Y_PARITY                         :binary@prove)
   (IS_PREFIX_OF_ACCESS_LIST_ITEM    :binary@prove)
   (IS_PREFIX_OF_STORAGE_KEY_LIST    :binary@prove)
-  (IS_OF_ACCESS_LIST_ADDRESS        :binary@prove)
-  (IS_ACCESS_LIST_STORAGE_KEY_LIST  :binary@prove)
+  (IS_ACCESS_LIST_ADDRESS           :binary@prove)
+  (IS_ACCESS_LIST_STORAGE_KEY       :binary@prove)
   (REQUIRES_EVM_EXECUTION           :binary)
 )
 

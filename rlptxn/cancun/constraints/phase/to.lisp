@@ -1,7 +1,7 @@
 (module rlptxn)
 
 (defconstraint phase-to ()
-    (if-not-zero (* IS_PHASE_TO TXN)
+    (if-not-zero (* IS_TO TXN)
         (if-zero txn/IS_DEPLOYMENT
             ;; message call case
             (begin

@@ -7,7 +7,7 @@
 
 (defproperty ct-max-is-zero-in-prefix-phase (if-not-zero IS_RLP_PREFIX (vanishes! CT_MAX)))
 
-(defconstraint setting-first-byte-tx-type-prefix (:guard (first-row-of-rlp-prefix))
+(defconstraint setting-first-byte-tx-type-prefix (:guard (* IS_RLP_PREFIX TXN))
     (begin
     ;; row i+1
     (limb-of-both-lt-and-lx 1)

@@ -6,7 +6,7 @@
 (defun (rlptxn---data-first-byte-or-zero)            (* (rlptxn---data-payload-is-nonempty) (rlptxn---data-maybe-first-byte-of-payload)))
 (defun (rlptxn---data-maybe-first-byte-of-payload)   (next cmp/EXO_DATA_8)) 
 (defun (rlptxn---data-payload-is-nonempty)           cmp/EXO_DATA_4) 
-(defun (rlptxn---data-payload-is-empty)              (force-bin (- 1 (rlptxn---data-payload-is-empty)))) 
+(defun (rlptxn---data-payload-is-empty)              (force-bin (- 1 (rlptxn---data-payload-is-nonempty)))) 
 
 (defconstraint phase-data-size-analysis-row ()
     (if-not-zero (is-payload-size-analysis-row)
