@@ -18,7 +18,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-(defun    (precompile-processing---common---precondition)    (*    PEEK_AT_SCENARIO    (scenario-shorthand---PRC---common-address-bit-sum)))
+(defun    (precompile-processing---common---precondition)    (force-bin   (*    PEEK_AT_SCENARIO
+                                                                                (scenario-shorthand---PRC---common-address-bit-sum))))
 
 
 (defconstraint    precompile-processing---common---setting-MISC-module-flags
@@ -70,14 +71,14 @@
 (defun    (precompile-processing---common---OOB-r@c-nonzero)          (shift    [misc/OOB_DATA    8]    precompile-processing---common---1st-misc-row---row-offset)) ;; ""
 
 (defproperty      precompile-processing---common---sanity-checks-for-BLS-precompiles
-                  (if (precompile-processing---common---precondition)
-                    (if (scenario-shorthand---PRC---common-BLS-address-bit-sum)
-                      (begin
-                        (eq!    (precompile-processing---common---OOB-extract-call-data)
-                                (precompile-processing---common---OOB-hub-success))
-                        (eq!    (precompile-processing---common---OOB-empty-call-data)
-                                0)
-                        ))))
+                  (if-not-zero (precompile-processing---common---precondition)
+                               (if-not-zero (scenario-shorthand---PRC---common-BLS-address-bit-sum)
+                                            (begin
+                                              (eq!    (precompile-processing---common---OOB-extract-call-data)
+                                                      (precompile-processing---common---OOB-hub-success))
+                                              (eq!    (precompile-processing---common---OOB-empty-call-data)
+                                                      0)
+                                              ))))
 
 (defconstraint    precompile-processing---common---setting-MMU-instruction    (:guard    (precompile-processing---common---precondition))
                   (if-not-zero    (shift    misc/MMU_FLAG    precompile-processing---common---1st-misc-row---row-offset)
@@ -116,8 +117,8 @@
                                                                                                       (precompile-processing---common---MMU-exo-sum)               ;; weighted exogenous module flag sum
                                                                                                       (precompile-processing---common---MMU-phase)                 ;; phase
                                                                                                       ))
-                                  )
-                  ))
+                                    )
+                                  ))
 
 (defun    (precompile-processing---common---MMU-success-bit)
   (shift    misc/MMU_SUCCESS_BIT    precompile-processing---common---1st-misc-row---row-offset))
