@@ -127,9 +127,9 @@
                                                   (* CT_MAX_MODEXP_PRICING IS_MODEXP_PRICING)
                                                   (* CT_MAX_MODEXP_EXTRACT IS_MODEXP_EXTRACT)))
 
-(defun (maxct-sum-prc-eip-blob-transactions) (+   (* CT_MAX_POINT_EVALUATION IS_POINT_EVALUATION)))
+(defun (maxct-sum-prc-eip-blob-transactions)(+   (* CT_MAX_POINT_EVALUATION IS_POINT_EVALUATION)))
 
-(defun (maxct-sum-prc-eip-bls12-precompiles) (+   (* CT_MAX_BLS_G1ADD IS_BLS_G1ADD)
+(defun (maxct-sum-prc-eip-bls12-precompiles)(+   (* CT_MAX_BLS_G1ADD IS_BLS_G1ADD)
                                                   (* CT_MAX_BLS_G1MSM IS_BLS_G1MSM)
                                                   (* CT_MAX_BLS_G2ADD IS_BLS_G2ADD)
                                                   (* CT_MAX_BLS_G2MSM IS_BLS_G2MSM)
@@ -149,10 +149,14 @@
 
 (defun (lookup-sum k)                       (+    (shift ADD_FLAG k)
                                                   (shift MOD_FLAG k)
-                                                  (shift WCP_FLAG k)))
+                                                  (shift WCP_FLAG k)
+                                                  (shift BLS_REF_TABLE_FLAG k)))
 
 (defun (wght-lookup-sum k)                  (+    (* 1 (shift ADD_FLAG k))
                                                   (* 2 (shift MOD_FLAG k))
-                                                  (* 3 (shift WCP_FLAG k))))
+                                                  (* 3 (shift WCP_FLAG k))
+                                                  (* 4 (shift BLS_REF_TABLE_FLAG k))))
 
 (defun (assumption---fresh-new-stamp)       (- STAMP (prev STAMP)))
+
+;; TODO: change maxct ot ct-max
