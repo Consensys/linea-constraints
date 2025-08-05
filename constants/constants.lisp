@@ -320,6 +320,7 @@
   EXO_SUM_INDEX_ECDATA                      4
   EXO_SUM_INDEX_RIPSHA                      5
   EXO_SUM_INDEX_BLAKEMODEXP                 6
+  EXO_SUM_INDEX_BLSDATA                     7
   EXO_SUM_WEIGHT_ROM                        (^ 2 EXO_SUM_INDEX_ROM)
   EXO_SUM_WEIGHT_KEC                        (^ 2 EXO_SUM_INDEX_KEC)
   EXO_SUM_WEIGHT_LOG                        (^ 2 EXO_SUM_INDEX_LOG)
@@ -327,6 +328,7 @@
   EXO_SUM_WEIGHT_ECDATA                     (^ 2 EXO_SUM_INDEX_ECDATA)
   EXO_SUM_WEIGHT_RIPSHA                     (^ 2 EXO_SUM_INDEX_RIPSHA)
   EXO_SUM_WEIGHT_BLAKEMODEXP                (^ 2 EXO_SUM_INDEX_BLAKEMODEXP)
+  EXO_SUM_WEIGHT_BLSDATA                    (^ 2 EXO_SUM_INDEX_BLSDATA)
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;                ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; HASH CONSTANTS ;;
@@ -363,6 +365,27 @@
   PHASE_ECMUL_RESULT                        0x070B
   PHASE_ECPAIRING_DATA                      0x080A
   PHASE_ECPAIRING_RESULT                    0x080B
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;                 ;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; BLS DATA MODULE ;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;                 ;;
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  PHASE_POINT_EVALUATION_DATA               0x0A0A
+  PHASE_POINT_EVALUATION_RESULT             0x0A0B
+  PHASE_BLS_G1_ADD_DATA                     0x0B0A
+  PHASE_BLS_G1_ADD_RESULT                   0x0B0B
+  PHASE_BLS_G1_MSM_DATA                     0x0C0A
+  PHASE_BLS_G1_MSM_RESULT                   0x0C0B
+  PHASE_BLS_G2_ADD_DATA                     0x0D0A
+  PHASE_BLS_G2_ADD_RESULT                   0x0D0B
+  PHASE_BLS_G2_MSM_DATA                     0x0E0A
+  PHASE_BLS_G2_MSM_RESULT                   0x0E0B
+  PHASE_BLS_PAIRING_CHECK_DATA              0x0F0A
+  PHASE_BLS_PAIRING_CHECK_RESULT            0x0F0B
+  PHASE_BLS_MAP_FP_TO_G1_DATA               0x100A
+  PHASE_BLS_MAP_FP_TO_G1_RESULT             0x100B
+  PHASE_BLS_MAP_FP2_TO_G2_DATA              0x110A
+  PHASE_BLS_MAP_FP2_TO_G2_RESULT            0x110B
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;            ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; EXP MODULE ;;
