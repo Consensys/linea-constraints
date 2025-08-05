@@ -23,8 +23,11 @@
 (defun    (precompile-processing---ECADD_MUL_PAIRING_and_BLS---success-case)    (*    PEEK_AT_SCENARIO
                                                                                       (+    scenario/PRC_ECADD
                                                                                             scenario/PRC_ECMUL
-                                                                                            scenario/PRC_ECPAIRING)
-                                                                                      (scenario-shorthand---PRC---success)))
+                                                                                            scenario/PRC_ECPAIRING
+                                                                                            (scenario-shorthand---PRC---common-BLS-address-bit-sum)
+                                                                                            )
+                                                                                      (scenario-shorthand---PRC---success)
+                                                                                      ))
 
 (defun    (precompile-processing---ECADD_MUL_PAIRING_and_BLS---nontrivial-ECADD)        (*    (precompile-processing---common---OOB-extract-call-data)    scenario/PRC_ECADD))
 (defun    (precompile-processing---ECADD_MUL_PAIRING_and_BLS---nontrivial-ECMUL)        (*    (precompile-processing---common---OOB-extract-call-data)    scenario/PRC_ECMUL))
@@ -32,8 +35,10 @@
 (defun    (precompile-processing---ECADD_MUL_PAIRING_and_BLS---trivial-ECPAIRING)       (*    (precompile-processing---common---OOB-empty-call-data)      scenario/PRC_ECPAIRING))
 
 (defun    (precompile-processing---ECADD_MUL_PAIRING_and_BLS---nontrivial-cases)        (+    (precompile-processing---ECADD_MUL_PAIRING_and_BLS---nontrivial-ECADD)
-                                                                                      (precompile-processing---ECADD_MUL_PAIRING_and_BLS---nontrivial-ECMUL)
-                                                                                      (precompile-processing---ECADD_MUL_PAIRING_and_BLS---nontrivial-ECPAIRING)))
+                                                                                              (precompile-processing---ECADD_MUL_PAIRING_and_BLS---nontrivial-ECMUL)
+                                                                                              (precompile-processing---ECADD_MUL_PAIRING_and_BLS---nontrivial-ECPAIRING)
+                                                                                              (scenario-shorthand---PRC---common-BLS-address-bit-sum)
+                                                                                              ))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -47,9 +52,11 @@
                           (*    MISC_WEIGHT_MMU    (precompile-processing---ECADD_MUL_PAIRING_and_BLS---trigger_MMU))))
 
 (defun    (precompile-processing---ECADD_MUL_PAIRING_and_BLS---trigger_MMU)    (+    (precompile-processing---ECADD_MUL_PAIRING_and_BLS---nontrivial-ECADD)
-                                                                             (precompile-processing---ECADD_MUL_PAIRING_and_BLS---nontrivial-ECMUL)
-                                                                             (precompile-processing---ECADD_MUL_PAIRING_and_BLS---nontrivial-ECPAIRING)
-                                                                             (precompile-processing---ECADD_MUL_PAIRING_and_BLS---trivial-ECPAIRING)))
+                                                                                     (precompile-processing---ECADD_MUL_PAIRING_and_BLS---nontrivial-ECMUL)
+                                                                                     (precompile-processing---ECADD_MUL_PAIRING_and_BLS---nontrivial-ECPAIRING)
+                                                                                     (precompile-processing---ECADD_MUL_PAIRING_and_BLS---trivial-ECPAIRING)
+                                                                                     (scenario-shorthand---PRC---common-BLS-address-bit-sum)
+                                                                                     ))
 
 (defconstraint    precompile-processing---ECADD_MUL_PAIRING_and_BLS---setting-MMU-instruction---full-return-data-transfer---trivial-case
                   (:guard    (precompile-processing---ECADD_MUL_PAIRING_and_BLS---success-case))
@@ -87,17 +94,46 @@
                                                                                    ;; success_bit                                                                               ;; success bit
                                                                                    ;; limb_1                                                                                    ;; limb 1
                                                                                    ;; limb_2                                                                                    ;; limb 2
-                                                                                   EXO_SUM_WEIGHT_ECDATA                                                                     ;; weighted exogenous module flag sum
+                                                                                   (precompile-processing---ECADD_MUL_PAIRING_and_BLS---exo-sum)                             ;; weighted exogenous module flag sum
                                                                                    (precompile-processing---ECADD_MUL_PAIRING_and_BLS---return-data-phase)                           ;; phase
                                                                                    )))
 
-(defun    (precompile-processing---ECADD_MUL_PAIRING_and_BLS---return-data-size)               (+    (*    ECADD_RETURN_DATA_SIZE        (precompile-processing---ECADD_MUL_PAIRING_and_BLS---nontrivial-ECADD))
-                                                                                             (*    ECMUL_RETURN_DATA_SIZE        (precompile-processing---ECADD_MUL_PAIRING_and_BLS---nontrivial-ECMUL))
-                                                                                             (*    ECPAIRING_RETURN_DATA_SIZE    (precompile-processing---ECADD_MUL_PAIRING_and_BLS---nontrivial-ECPAIRING))))
+(defun    (precompile-processing---ECADD_MUL_PAIRING_and_BLS---return-data-size)     (+    (*    ECADD_RETURN_DATA_SIZE                (precompile-processing---ECADD_MUL_PAIRING_and_BLS---nontrivial-ECADD)     )
+                                                                                           (*    ECMUL_RETURN_DATA_SIZE                (precompile-processing---ECADD_MUL_PAIRING_and_BLS---nontrivial-ECMUL)     )
+                                                                                           (*    ECPAIRING_RETURN_DATA_SIZE            (precompile-processing---ECADD_MUL_PAIRING_and_BLS---nontrivial-ECPAIRING) )
+                                                                                           (*    POINT_EVALUATION_RETURN_DATA_SIZE      scenario/PRC_POINT_EVALUATION                                             )
+                                                                                           (*    BLS_G1_ADD_RETURN_DATA_SIZE            scenario/PRC_BLS_G1_ADD                                                   )
+                                                                                           (*    BLS_G1_MSM_RETURN_DATA_SIZE            scenario/PRC_BLS_G1_MSM                                                   )
+                                                                                           (*    BLS_G2_ADD_RETURN_DATA_SIZE            scenario/PRC_BLS_G2_ADD                                                   )
+                                                                                           (*    BLS_G2_MSM_RETURN_DATA_SIZE            scenario/PRC_BLS_G2_MSM                                                   )
+                                                                                           (*    BLS_PAIRING_CHECK_RETURN_DATA_SIZE     scenario/PRC_BLS_PAIRING_CHECK                                            )
+                                                                                           (*    BLS_MAP_FP_TO_G1_RETURN_DATA_SIZE      scenario/PRC_BLS_MAP_FP_TO_G1                                             )
+                                                                                           (*    BLS_MAP_FP2_TO_G2_RETURN_DATA_SIZE     scenario/PRC_BLS_MAP_FP2_TO_G2                                            )
+                                                                                           ))
 
-(defun    (precompile-processing---ECADD_MUL_PAIRING_and_BLS---return-data-phase)              (+    (*    PHASE_ECADD_RESULT            (precompile-processing---ECADD_MUL_PAIRING_and_BLS---nontrivial-ECADD))
-                                                                                             (*    PHASE_ECMUL_RESULT            (precompile-processing---ECADD_MUL_PAIRING_and_BLS---nontrivial-ECMUL))
-                                                                                             (*    PHASE_ECPAIRING_RESULT        (precompile-processing---ECADD_MUL_PAIRING_and_BLS---nontrivial-ECPAIRING))))
+(defun    (precompile-processing---ECADD_MUL_PAIRING_and_BLS---return-data-phase)              (+    (*    PHASE_ECADD_RESULT                (precompile-processing---ECADD_MUL_PAIRING_and_BLS---nontrivial-ECADD)     )
+                                                                                                     (*    PHASE_ECMUL_RESULT                (precompile-processing---ECADD_MUL_PAIRING_and_BLS---nontrivial-ECMUL)     )
+                                                                                                     (*    PHASE_ECPAIRING_RESULT            (precompile-processing---ECADD_MUL_PAIRING_and_BLS---nontrivial-ECPAIRING) )
+                                                                                                     (*    PHASE_POINT_EVALUATION_RESULT      scenario/PRC_POINT_EVALUATION                                             )
+                                                                                                     (*    PHASE_BLS_G1_ADD_RESULT            scenario/PRC_BLS_G1_ADD                                                   )
+                                                                                                     (*    PHASE_BLS_G1_MSM_RESULT            scenario/PRC_BLS_G1_MSM                                                   )
+                                                                                                     (*    PHASE_BLS_G2_ADD_RESULT            scenario/PRC_BLS_G2_ADD                                                   )
+                                                                                                     (*    PHASE_BLS_G2_MSM_RESULT            scenario/PRC_BLS_G2_MSM                                                   )
+                                                                                                     (*    PHASE_BLS_PAIRING_CHECK_RESULT     scenario/PRC_BLS_PAIRING_CHECK                                            )
+                                                                                                     (*    PHASE_BLS_MAP_FP_TO_G1_RESULT      scenario/PRC_BLS_MAP_FP_TO_G1                                             )
+                                                                                                     (*    PHASE_BLS_MAP_FP2_TO_G2_RESULT     scenario/PRC_BLS_MAP_FP2_TO_G2                                            )
+                                                                                                     ))
+
+
+(defun    (precompile-processing---ECADD_MUL_PAIRING_and_BLS---exo-sum)    (+    (*    EXO_SUM_WEIGHT_ECDATA      scenario/PRC_ECADD                                     )
+                                                                                 (*    EXO_SUM_WEIGHT_ECDATA      scenario/PRC_ECMUL                                     )
+                                                                                 (*    EXO_SUM_WEIGHT_ECDATA      scenario/PRC_ECPAIRING                                 )
+                                                                                 (*    EXO_SUM_WEIGHT_BLSDATA    (scenario-shorthand---PRC---common-BLS-address-bit-sum) )
+                                                                                 ))
+
+
+
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Miscellaneous-row i + 3 ;;
@@ -131,9 +167,18 @@
                                                                                     ;; phase                                                                                ;; phase
                                                                                     )))
 
-(defun    (precompile-processing---ECADD_MUL_PAIRING_and_BLS---return-data-reference-size)     (+    (*    ECADD_RETURN_DATA_SIZE        scenario/PRC_ECADD    )
-                                                                                             (*    ECMUL_RETURN_DATA_SIZE        scenario/PRC_ECMUL    )
-                                                                                             (*    ECPAIRING_RETURN_DATA_SIZE    scenario/PRC_ECPAIRING)))
+(defun    (precompile-processing---ECADD_MUL_PAIRING_and_BLS---return-data-reference-size)     (+    (*    ECADD_RETURN_DATA_SIZE                 scenario/PRC_ECADD              )
+                                                                                                     (*    ECMUL_RETURN_DATA_SIZE                 scenario/PRC_ECMUL              )
+                                                                                                     (*    ECPAIRING_RETURN_DATA_SIZE             scenario/PRC_ECPAIRING          )
+                                                                                                     (*    POINT_EVALUATION_RETURN_DATA_SIZE      scenario/PRC_POINT_EVALUATION   )
+                                                                                                     (*    BLS_G1_ADD_RETURN_DATA_SIZE            scenario/PRC_BLS_G1_ADD         )
+                                                                                                     (*    BLS_G1_MSM_RETURN_DATA_SIZE            scenario/PRC_BLS_G1_MSM         )
+                                                                                                     (*    BLS_G2_ADD_RETURN_DATA_SIZE            scenario/PRC_BLS_G2_ADD         )
+                                                                                                     (*    BLS_G2_MSM_RETURN_DATA_SIZE            scenario/PRC_BLS_G2_MSM         )
+                                                                                                     (*    BLS_PAIRING_CHECK_RETURN_DATA_SIZE     scenario/PRC_BLS_PAIRING_CHECK  )
+                                                                                                     (*    BLS_MAP_FP_TO_G1_RETURN_DATA_SIZE      scenario/PRC_BLS_MAP_FP_TO_G1   )
+                                                                                                     (*    BLS_MAP_FP2_TO_G2_RETURN_DATA_SIZE     scenario/PRC_BLS_MAP_FP2_TO_G2  )
+                                                                                                     ))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;
