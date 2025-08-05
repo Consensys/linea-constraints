@@ -66,7 +66,8 @@
                                                   (* OOB_INST_IDENTITY         IS_IDENTITY)
                                                   (* OOB_INST_ECADD            IS_ECADD)
                                                   (* OOB_INST_ECMUL            IS_ECMUL)
-                                                  (* OOB_INST_ECPAIRING        IS_ECPAIRING)))
+                                                  (* OOB_INST_ECPAIRING        IS_ECPAIRING)
+                                                  (wght-sum-prc-bls)))
 
 (defun (wght-sum-prc-blake)                 (+    (* OOB_INST_BLAKE_CDS        IS_BLAKE2F_CDS)
                                                   (* OOB_INST_BLAKE_PARAMS     IS_BLAKE2F_PARAMS)))
@@ -76,6 +77,19 @@
                                                   (* OOB_INST_MODEXP_LEAD      IS_MODEXP_LEAD)
                                                   (* OOB_INST_MODEXP_PRICING   IS_MODEXP_PRICING)
                                                   (* OOB_INST_MODEXP_EXTRACT   IS_MODEXP_EXTRACT)))
+
+(defun (wght-sum-prc-eip-blob-transactions) (+    (* OOB_INST_POINT_EVALUATION IS_POINT_EVALUATION)))
+
+(defun (wght-sum-prc-eip-bls12-precompiles) (+    (* OOB_INST_BLS_G1ADD        IS_BLS_G1ADD)
+                                                  (* OOB_INST_BLS_G1MSM        IS_BLS_G1MSM)
+                                                  (* OOB_INST_BLS_G2ADD        IS_BLS_G2ADD)
+                                                  (* OOB_INST_BLS_G2MSM        IS_BLS_G2MSM)
+                                                  (* OOB_INST_BLS_PAIRING_CHECK IS_BLS_PAIRING_CHECK)
+                                                  (* OOB_INST_BLS_MAP_FP_TO_G1 IS_BLS_MAP_FP_TO_G1)
+                                                  (* OOB_INST_BLS_MAP_FP2_TO_G2 IS_BLS_MAP_FP2_TO_G2)))
+
+(defun (wght-sum-prc-bls)                   (+    (wght-sum-prc-eip-blob-transactions)
+                                                  (wght-sum-prc-eip-bls12-precompiles)))
 
 (defun (wght-sum-prc)                       (+    (wght-sum-prc-common)
                                                   (wght-sum-prc-blake)
