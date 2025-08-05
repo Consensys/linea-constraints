@@ -383,49 +383,27 @@
   PHASE_ECMUL_RESULT                        0x070B
   PHASE_ECPAIRING_DATA                      0x080A
   PHASE_ECPAIRING_RESULT                    0x080B
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;            ;;
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; BLS MODULE ;;
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;            ;;
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  PHASE_DATA_POINT_EVALUATION               0x100A
-  PHASE_RSLT_POINT_EVALUATION               0x100B
-  PHASE_DATA_G1_ADD                         0x110A
-  PHASE_RSLT_G1_ADD                         0x110B
-  PHASE_DATA_G1_MSM                         0x120A
-  PHASE_RSLT_G1_MSM                         0x120B
-  PHASE_DATA_G2_ADD                         0x130A
-  PHASE_RSLT_G2_ADD                         0x130B
-  PHASE_DATA_G2_MSM                         0x140A
-  PHASE_RSLT_G2_MSM                         0x140B
-  PHASE_DATA_PAIRING_CHECK                  0x150A
-  PHASE_RSLT_PAIRING_CHECK                  0x150B
-  PHASE_DATA_MAP_FP_TO_G1                   0x160A
-  PHASE_RSLT_MAP_FP_TO_G1                   0x160B
-  PHASE_DATA_MAP_FP2_TO_G2                  0x170A
-  PHASE_RSLT_MAP_FP2_TO_G2                  0x170B
-;; TODO: update naming and constants
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;                 ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; BLS DATA MODULE ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;                 ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  ;;PHASE_POINT_EVALUATION_DATA               0x0A0A
-  ;;PHASE_POINT_EVALUATION_RESULT             0x0A0B
-  ;;PHASE_BLS_G1_ADD_DATA                     0x0B0A
-  ;;PHASE_BLS_G1_ADD_RESULT                   0x0B0B
-  ;;PHASE_BLS_G1_MSM_DATA                     0x0C0A
-  ;;PHASE_BLS_G1_MSM_RESULT                   0x0C0B
-  ;;PHASE_BLS_G2_ADD_DATA                     0x0D0A
-  ;;PHASE_BLS_G2_ADD_RESULT                   0x0D0B
-  ;;PHASE_BLS_G2_MSM_DATA                     0x0E0A
-  ;;PHASE_BLS_G2_MSM_RESULT                   0x0E0B
-  ;;PHASE_BLS_PAIRING_CHECK_DATA              0x0F0A
-  ;;PHASE_BLS_PAIRING_CHECK_RESULT            0x0F0B
-  ;;PHASE_BLS_MAP_FP_TO_G1_DATA               0x100A
-  ;;PHASE_BLS_MAP_FP_TO_G1_RESULT             0x100B
-  ;;PHASE_BLS_MAP_FP2_TO_G2_DATA              0x110A
-  ;;PHASE_BLS_MAP_FP2_TO_G2_RESULT            0x110B
+  PHASE_POINT_EVALUATION_DATA               0x0A0A
+  PHASE_POINT_EVALUATION_RESULT             0x0A0B
+  PHASE_BLS_G1_ADD_DATA                     0x0B0A
+  PHASE_BLS_G1_ADD_RESULT                   0x0B0B
+  PHASE_BLS_G1_MSM_DATA                     0x0C0A
+  PHASE_BLS_G1_MSM_RESULT                   0x0C0B
+  PHASE_BLS_G2_ADD_DATA                     0x0D0A
+  PHASE_BLS_G2_ADD_RESULT                   0x0D0B
+  PHASE_BLS_G2_MSM_DATA                     0x0E0A
+  PHASE_BLS_G2_MSM_RESULT                   0x0E0B
+  PHASE_BLS_PAIRING_CHECK_DATA              0x0F0A
+  PHASE_BLS_PAIRING_CHECK_RESULT            0x0F0B
+  PHASE_BLS_MAP_FP_TO_G1_DATA               0x100A
+  PHASE_BLS_MAP_FP_TO_G1_RESULT             0x100B
+  PHASE_BLS_MAP_FP2_TO_G2_DATA              0x110A
+  PHASE_BLS_MAP_FP2_TO_G2_RESULT            0x110B
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;            ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; EXP MODULE ;;

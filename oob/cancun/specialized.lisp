@@ -52,7 +52,7 @@
          (debug (vanishes! (shift [OUTGOING_DATA 3] k)))
          (debug (vanishes! (shift [OUTGOING_DATA 4] k)))))
 
-(defun (call-to-bls-ref-table k prc_name num inputs)
+(defun (call-to-bls-ref-table k prc_name num_inputs)
   (begin (eq! (wght-lookup-sum k) 4)
          (eq! (shift OUTGOING_INST k) prc_name)
          (eq! (shift [OUTGOING_DATA 1] k) num_inputs)
