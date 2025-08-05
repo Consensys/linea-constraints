@@ -17,7 +17,8 @@
                                                   IS_IDENTITY
                                                   IS_ECADD
                                                   IS_ECMUL
-                                                  IS_ECPAIRING))
+                                                  IS_ECPAIRING
+                                                  (flag-sum-prc-bls)))
 
 (defun (flag-sum-prc-blake)                 (+    IS_BLAKE2F_CDS
                                                   IS_BLAKE2F_PARAMS))
@@ -27,6 +28,19 @@
                                                   IS_MODEXP_LEAD
                                                   IS_MODEXP_PRICING
                                                   IS_MODEXP_EXTRACT))
+
+(defun (flag-sum-eip-blob-transactions)     IS_POINT_EVALUATION)
+
+(defun (flag-sum-eip-bls12-precompiles)     (+    IS_BLS_G1ADD
+                                                  IS_BLS_G1MSM
+                                                  IS_BLS_G2ADD
+                                                  IS_BLS_G2MSM
+                                                  IS_BLS_PAIRING_CHECK
+                                                  IS_BLS_MAP_FP_TO_G1
+                                                  IS_BLS_MAP_FP2_TO_G2))
+
+(defun (flag-sum-prc-bls)                   (+    (flag-sum-eip-blob-transactions)
+                                                  (flag-sum-eip-bls12-precompiles)))
 
 (defun (flag-sum-prc)                       (+    (flag-sum-prc-common)
                                                   (flag-sum-prc-blake)
