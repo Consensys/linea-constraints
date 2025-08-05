@@ -475,6 +475,14 @@
   OOB_INST_MODEXP_LEAD                      0xFC05
   OOB_INST_MODEXP_PRICING                   0xFD05
   OOB_INST_MODEXP_EXTRACT                   0xFE05
+  OOB_INST_POINT_EVALUATION                 0xFF0A
+  OOB_INST_BLS_G1_ADD                       0xFF0B
+  OOB_INST_BLS_G1_MSM                       0xFF0C
+  OOB_INST_BLS_G2_ADD                       0xFF0D
+  OOB_INST_BLS_G2_MSM                       0xFF0E
+  OOB_INST_BLS_PAIRING_CHECK                0xFF0F
+  OOB_INST_BLS_MAP_FP_TO_G1                 0xFF10
+  OOB_INST_BLS_MAP_FP2_TO_G2                0xFF11
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;             ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; RLP* MODULE ;;
