@@ -115,7 +115,8 @@
                                                   (* CT_MAX_IDENTITY           IS_IDENTITY)
                                                   (* CT_MAX_ECADD              IS_ECADD)
                                                   (* CT_MAX_ECMUL              IS_ECMUL)
-                                                  (* CT_MAX_ECPAIRING          IS_ECPAIRING)))
+                                                  (* CT_MAX_ECPAIRING          IS_ECPAIRING)
+                                                  (maxct-sum-prc-bls)))
 
 (defun (maxct-sum-prc-blake)                (+    (* CT_MAX_BLAKE2F_CDS IS_BLAKE2F_CDS)
                                                   (* CT_MAX_BLAKE2F_PARAMS IS_BLAKE2F_PARAMS)))
@@ -125,6 +126,19 @@
                                                   (* CT_MAX_MODEXP_LEAD IS_MODEXP_LEAD)
                                                   (* CT_MAX_MODEXP_PRICING IS_MODEXP_PRICING)
                                                   (* CT_MAX_MODEXP_EXTRACT IS_MODEXP_EXTRACT)))
+
+(defun (maxct-sum-prc-eip-blob-transactions) (+   (* CT_MAX_POINT_EVALUATION IS_POINT_EVALUATION)))
+
+(defun (maxct-sum-prc-eip-bls12-precompiles) (+   (* CT_MAX_BLS_G1ADD IS_BLS_G1ADD)
+                                                  (* CT_MAX_BLS_G1MSM IS_BLS_G1MSM)
+                                                  (* CT_MAX_BLS_G2ADD IS_BLS_G2ADD)
+                                                  (* CT_MAX_BLS_G2MSM IS_BLS_G2MSM)
+                                                  (* CT_MAX_BLS_PAIRING_CHECK IS_BLS_PAIRING_CHECK)
+                                                  (* CT_MAX_BLS_MAP_FP_TO_G1 IS_BLS_MAP_FP_TO_G1)
+                                                  (* CT_MAX_BLS_MAP_FP2_TO_G2 IS_BLS_MAP_FP2_TO_G2)))
+
+(defun (maxct-sum-prc-bls)                  (+    (maxct-sum-prc-eip-blob-transactions)
+                                                  (maxct-sum-prc-eip-bls12-precompiles)))
 
 (defun (maxct-sum-prc)                      (+    (maxct-sum-prc-common)
                                                   (maxct-sum-prc-blake)
