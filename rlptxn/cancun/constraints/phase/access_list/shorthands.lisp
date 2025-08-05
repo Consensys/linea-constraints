@@ -8,8 +8,9 @@
 (defun (AL-item-countdown)               cmp/AUX_CCC_1)
 (defun (storage-key-countdown)           cmp/AUX_CCC_2)
 (defun (storage-key-list-countdown)      cmp/AUX_CCC_3)
-(defun (rlptxn---AL-address-hi)          cmp/AUX_CCC_4)
-(defun (rlptxn---AL-address-lo)          cmp/AUX_CCC_5)
+;;define outside of the module to be accessible by lookup files
+;; (defun (rlptxn---AL-address-hi)          rlptxn.cmp/AUX_CCC_4)
+;; (defun (rlptxn---AL-address-lo)          rlptxn.cmp/AUX_CCC_5)
 
 (defun (storage-stuff)                   (force-bin (+ IS_PREFIX_OF_STORAGE_KEY_LIST IS_ACCESS_LIST_STORAGE_KEY)))
 (defun (not-storage-stuff)               (force-bin (- 1 (storage-stuff))))
