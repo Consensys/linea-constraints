@@ -12,7 +12,6 @@
 (defun (prc-blspairingcheck---cds-is-multiple-of-min-bls-pairing-check-size)           (shift OUTGOING_RES_LO 3))
 (defun (prc-blspairingcheck---insufficient-gas)                                        (shift OUTGOING_RES_LO 4))
 (defun (prc-blspairingcheck---sufficient-gas)                                          (- 1 (prc-blspairingcheck---insufficient-gas)))
-
 (defun (prc-blspairingcheck---precompile-cost_PRC_BLS_PAIRING_CHECK_SIZE_MIN)       (*    (prc-blspairingcheck---cds-is-multiple-of-min-bls-pairing-check-size)
                                                                   (+ (* GAS_CONST_BLS_PAIRING_CHECK PRC_BLS_PAIRING_CHECK_SIZE_MIN) (* GAS_CONST_BLS_PAIRING_CHECK_PAIR (prc---cds)))))
 
