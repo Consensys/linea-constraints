@@ -27,4 +27,6 @@
 
 (defconstraint computation-follows-transaction-row () (if-not-zero TXN (eq! (next CMP) 1)))
 
-(defproperty all-type-phase-transition (if-not-zero (phase-flag-sum) (eq! (about-to-enter-new-phase) (upcoming-phase-transition))))
+(defproperty all-type-phase-transition 
+    (if-not-zero (phase-flag-sum) 
+        (eq! (about-to-enter-new-phase) (upcoming-phase-transition))))

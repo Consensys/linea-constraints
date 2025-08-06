@@ -21,8 +21,8 @@
 
 (defun (phase-appropriate-integer-hi)
     (+ 
-    (* IS_R cmp/EXO_DATA_1)                       
-    (* IS_S cmp/EXO_DATA_1)))
+    (* IS_R (next cmp/EXO_DATA_1))                       
+    (* IS_S (next cmp/EXO_DATA_1))))
 
 (defun (phase-appropriate-integer-lo)
     (+
@@ -34,8 +34,8 @@
         (* IS_GAS_LIMIT                  txn/GAS_LIMIT                 )
         (* IS_VALUE                      txn/VALUE                     )
         (* IS_Y                          Y_PARITY                      )
-        (* IS_R                          cmp/EXO_DATA_2                )
-        (* IS_S                          cmp/EXO_DATA_2                )
+        (* IS_R                          (next cmp/EXO_DATA_2)         )
+        (* IS_S                          (next cmp/EXO_DATA_2)         )
     ))
 
 (defconstraint integer-phase-constraints ()

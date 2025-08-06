@@ -3,7 +3,7 @@
 (defun (rlp-compound-integer w integer-hi integer-lo is-end-of-phase)
     (begin 
     (eq! (shift CT_MAX                                      w)      RLP_TXN_CT_MAX_INTEGER)
-    (eq! (shift PHASE_END  (+ w (- RLP_TXN_CT_MAX_INTEGER 1)))      is-end-of-phase)
+    (eq! (shift PHASE_END  (+ w RLP_TXN_CT_MAX_INTEGER))            is-end-of-phase)
     (rlputils-call-integer                                   w      integer-hi integer-lo)
     (conditionally-set-limb                                  w      (rlptxn---integer-out-rlp-prefix-required w) 
                                                                     (rlptxn---integer-out-rlp-prefix w) 

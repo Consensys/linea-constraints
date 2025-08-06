@@ -115,7 +115,9 @@
     )))
 
 (defun (upcoming-phase-transition) 
-        (force-bin (+ (upcoming-phase-transition-type-0) (upcoming-phase-transition-type-1) (upcoming-phase-transition-type-2))))
+        (force-bin (+ (* (upcoming-phase-transition-type-0) TYPE_0) 
+                      (* (upcoming-phase-transition-type-1) TYPE_1) 
+                      (* (upcoming-phase-transition-type-2) TYPE_2))))
 
 (defconstraint type-0-phases ()
     (if-not-zero TYPE_0 (eq! (+ (upcoming-phase-transition-type-0) (will-remain-in-same-phase-type-0)) 1)))
