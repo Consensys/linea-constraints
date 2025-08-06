@@ -299,15 +299,26 @@
   TWOFIFTYSIX_TO_THE_TWELVE                 (^ 256 12)
   TWOFIFTYSIX_TO_THE_TWELVE_MO              (- TWOFIFTYSIX_TO_THE_TWELVE 1)
   TWOFIFTYSIX_TO_THE_TWENTY                 (^ 256 20)
-  TWOFIFTYSIX_TO_THE_TWENTY_MO              (- TWOFIFTYSIX_TO_THE_TWENTY 1)
+  TWOFIFTYSIX_TO_THE_TWENTY_MO              (- TWOFIFTYSIX_TO_THE_TWENTY 1) ;; ""
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;               ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; PRECOMPILES   ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;               ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  MAX_PRC_ADDRESS                           9                        ;;London value
-  PRC_ECPAIRING_SIZE                        (* 6 WORD_SIZE)
-  PRC_BLAKE2F_SIZE                          213
+  MAX_PRC_ADDRESS                                          9                        ;;London value
+  PRC_ECPAIRING_SIZE                                       (* 6 WORD_SIZE)
+  PRECOMPILE_CALL_DATA_SIZE___BLAKE2F                      213
+  PRECOMPILE_RETURN_DATA_SIZE___ECADD                       64
+  PRECOMPILE_RETURN_DATA_SIZE___ECMUL                       64
+  PRECOMPILE_RETURN_DATA_SIZE___ECPAIRING                   32
+  PRECOMPILE_RETURN_DATA_SIZE___POINT_EVALUATION            64
+  PRECOMPILE_RETURN_DATA_SIZE___BLS_G1_ADD                 128
+  PRECOMPILE_RETURN_DATA_SIZE___BLS_G1_MSM                 128
+  PRECOMPILE_RETURN_DATA_SIZE___BLS_G2_ADD                 256
+  PRECOMPILE_RETURN_DATA_SIZE___BLS_G2_MSM                 256
+  PRECOMPILE_RETURN_DATA_SIZE___BLS_PAIRING_CHECK           32
+  PRECOMPILE_RETURN_DATA_SIZE___BLS_MAP_FP_TO_G1           128
+  PRECOMPILE_RETURN_DATA_SIZE___BLS_MAP_FP2_TO_G2          256
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;         ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; EXO SUM ;;
@@ -328,7 +339,7 @@
   EXO_SUM_WEIGHT_ECDATA                     (^ 2 EXO_SUM_INDEX_ECDATA)
   EXO_SUM_WEIGHT_RIPSHA                     (^ 2 EXO_SUM_INDEX_RIPSHA)
   EXO_SUM_WEIGHT_BLAKEMODEXP                (^ 2 EXO_SUM_INDEX_BLAKEMODEXP)
-  EXO_SUM_WEIGHT_BLSDATA                    (^ 2 EXO_SUM_INDEX_BLSDATA)
+  EXO_SUM_WEIGHT_BLSDATA                    (^ 2 EXO_SUM_INDEX_BLSDATA)       ;; ""
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;                ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; HASH CONSTANTS ;;

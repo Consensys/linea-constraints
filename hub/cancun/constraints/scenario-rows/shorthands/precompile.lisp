@@ -32,6 +32,7 @@
                     (scenario-shorthand---PRC---common-BLS-address-bit-sum)
                     )))
 
+
 ;;  PRC/sum
 (defun (scenario-shorthand---PRC---common-BLS-address-bit-sum)
   (force-bin   (+
