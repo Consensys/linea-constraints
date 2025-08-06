@@ -1,4 +1,4 @@
-(defun (sel-rlptxn-to-blockdata) (force-bin (* rlptxn.TXN (- 1 rlptxn.REPLAY_PROTECTION))))
+(defun (sel-rlptxn-to-blockdata) (force-bin (* rlptxn.TXN rlptxn.REPLAY_PROTECTION)))
 
 (defclookup
   rlptxn-into-blockdata

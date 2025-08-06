@@ -37,7 +37,7 @@
   (CT                               :i24)
   (CT_MAX                           :i24)
   ;; (DONE                             :binary)
-  (REPLAY_PROTECTION                :binary@prove)
+  (REPLAY_PROTECTION                :binary)
   (Y_PARITY                         :binary@prove)
   (IS_PREFIX_OF_ACCESS_LIST_ITEM    :binary@prove)
   (IS_PREFIX_OF_STORAGE_KEY_LIST    :binary@prove)
