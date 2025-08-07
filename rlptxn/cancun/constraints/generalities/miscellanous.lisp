@@ -6,6 +6,6 @@
             (eq!       REPLAY_PROTECTION 1)
             (vanishes! REPLAY_PROTECTION))))
 
-(defproperty only-frontier-tx-are-not-replay-protection 
+(defconstraint only-frontier-tx-are-not-replay-protection ()
     (if-not-zero TXN
-        (if-zero TYPE_0 (vanishes! REPLAY_PROTECTION))))
+        (if-zero TYPE_0 (eq! REPLAY_PROTECTION 1))))
