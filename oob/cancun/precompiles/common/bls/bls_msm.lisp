@@ -8,17 +8,17 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defun (prc-g1msm-prc-g2msm---standard-precondition)     
-                                                                    (+ IS_BLS_G1MSM 
-                                                                       IS_BLS_G2MSM))
+                                                                    (+ IS_BLS_G1_MSM 
+                                                                       IS_BLS_G2_MSM))
 (defun (msm-pair-size) 
-                                                                    (+  (* PRC_BLS_G1MSM_PAIR_SIZE             IS_BLS_G1MSM)                                                                
-                                                                        (* PRC_BLS_G2MSM_PAIR_SIZE             IS_BLS_G2MSM)))
+                                                                    (+  (* PRC_BLS_G1_MSM_PAIR_SIZE             IS_BLS_G1_MSM)                                                                
+                                                                        (* PRC_BLS_G2_MSM_PAIR_SIZE             IS_BLS_G2_MSM)))
 (defun (max-discount) 
-                                                                    (+  (* PRC_BLS_G1MSM_MAX_DISCOUNT         IS_BLS_G1MSM)                                                                
-                                                                        (* PRC_BLS_G2MSM_MAX_DISCOUNT         IS_BLS_G2MSM)))
+                                                                    (+  (* PRC_BLS_G1_MSM_MAX_DISCOUNT         IS_BLS_G1_MSM)                                                                
+                                                                        (* PRC_BLS_G2_MSM_MAX_DISCOUNT         IS_BLS_G2_MSM)))
 (defun (msm-multiplication-cost) 
-                                                                    (+  (* PRC_BLS_G1MSM_MULTIPLICATION_COST  IS_BLS_G1MSM)                                                                
-                                                                        (* PRC_BLS_G2MSM_MULTIPLICATION_COST  IS_BLS_G2MSM)))
+                                                                    (+  (* PRC_BLS_G1_MSM_MULTIPLICATION_COST  IS_BLS_G1_MSM)                                                                
+                                                                        (* PRC_BLS_G2_MSM_MULTIPLICATION_COST  IS_BLS_G2_MSM)))
 (defun (prc-g1msm-prc-g2msm---remainder)                                               (shift OUTGOING_RES_LO 2))
 (defun (prc-g1msm-prc-g2msm---cds-is-multiple-of-msm-pair-size)                         (shift OUTGOING_RES_LO 3))
 (defun (prc-g1msm-prc-g2msm---num-inputs_msm-pair-size)                                 (prc---cds))

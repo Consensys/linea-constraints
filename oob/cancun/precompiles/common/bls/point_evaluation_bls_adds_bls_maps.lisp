@@ -3,26 +3,26 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;                                             
 ;;                                                                                     ;;
-;;   For POINT_EVALUATION, BLS_G1ADD, BLS_G2ADD, BLS_MAP_FP_TO_G1, BLS_MAP_FP2_TO_G2   ;;
+;;   For POINT_EVALUATION, BLS_G1_ADD, BLS_G2_ADD, BLS_MAP_FP_TO_G1, BLS_MAP_FP2_TO_G2 ;;
 ;;                                                                                     ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defun (prc-pointevaluation-prc-blsg1add-prc-blsg2add-prc-blsmapfptog1-prc-blsmapfp2tog2---standard-precondition)     
                                                                     (+ IS_POINT_EVALUATION 
-                                                                       IS_BLS_G1ADD 
-                                                                       IS_BLS_G2ADD 
+                                                                       IS_BLS_G1_ADD 
+                                                                       IS_BLS_G2_ADD 
                                                                        IS_BLS_MAP_FP_TO_G1 
                                                                        IS_BLS_MAP_FP2_TO_G2))
 (defun (fixed-cds) 
                                                                     (+  (* PRC_POINT_EVALUATION_SIZE  IS_POINT_EVALUATION)
-                                                                        (* PRC_BLS_G1ADD_SIZE         IS_BLS_G1ADD)                                                                
-                                                                        (* PRC_BLS_G2ADD_SIZE         IS_BLS_G2ADD)                                                       
+                                                                        (* PRC_BLS_G1_ADD_SIZE         IS_BLS_G1_ADD)                                                                
+                                                                        (* PRC_BLS_G2_ADD_SIZE         IS_BLS_G2_ADD)                                                       
                                                                         (* PRC_BLS_MAP_FP_TO_G1_SIZE  IS_BLS_MAP_FP_TO_G1)
                                                                         (* PRC_BLS_MAP_FP2_TO_G2_SIZE IS_BLS_MAP_FP2_TO_G2)))
 (defun (fixed-gast-cost)
                                                                     (+  (* GAS_CONST_POINT_EVALUATION  IS_POINT_EVALUATION)
-                                                                        (* GAS_CONST_BLS_G1ADD         IS_BLS_G1ADD)                                                                
-                                                                        (* GAS_CONST_BLS_G2ADD         IS_BLS_G2ADD)                                                       
+                                                                        (* GAS_CONST_BLS_G1_ADD         IS_BLS_G1_ADD)                                                                
+                                                                        (* GAS_CONST_BLS_G2_ADD         IS_BLS_G2_ADD)                                                       
                                                                         (* GAS_CONST_BLS_MAP_FP_TO_G1  IS_BLS_MAP_FP_TO_G1)
                                                                         (* GAS_CONST_BLS_MAP_FP2_TO_G2 IS_BLS_MAP_FP2_TO_G2)))
 (defun (prc-pointevaluation-prc-blsg1add-prc-blsg2add-prc-blsmapfptog1-prc-blsmapfp2tog2---precompile-cost)          (fixed-gast-cost))     

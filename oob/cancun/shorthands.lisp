@@ -31,10 +31,10 @@
 
 (defun (flag-sum-eip-blob-transactions)     IS_POINT_EVALUATION)
 
-(defun (flag-sum-eip-bls12-precompiles)     (+    IS_BLS_G1ADD
-                                                  IS_BLS_G1MSM
-                                                  IS_BLS_G2ADD
-                                                  IS_BLS_G2MSM
+(defun (flag-sum-eip-bls12-precompiles)     (+    IS_BLS_G1_ADD
+                                                  IS_BLS_G1_MSM
+                                                  IS_BLS_G2_ADD
+                                                  IS_BLS_G2_MSM
                                                   IS_BLS_PAIRING_CHECK
                                                   IS_BLS_MAP_FP_TO_G1
                                                   IS_BLS_MAP_FP2_TO_G2))
@@ -80,10 +80,10 @@
 
 (defun (wght-sum-prc-eip-blob-transactions) (+    (* OOB_INST_POINT_EVALUATION IS_POINT_EVALUATION)))
 
-(defun (wght-sum-prc-eip-bls12-precompiles) (+    (* OOB_INST_BLS_G1ADD        IS_BLS_G1ADD)
-                                                  (* OOB_INST_BLS_G1MSM        IS_BLS_G1MSM)
-                                                  (* OOB_INST_BLS_G2ADD        IS_BLS_G2ADD)
-                                                  (* OOB_INST_BLS_G2MSM        IS_BLS_G2MSM)
+(defun (wght-sum-prc-eip-bls12-precompiles) (+    (* OOB_INST_BLS_G1_ADD        IS_BLS_G1_ADD)
+                                                  (* OOB_INST_BLS_G1_MSM        IS_BLS_G1_MSM)
+                                                  (* OOB_INST_BLS_G2_ADD        IS_BLS_G2_ADD)
+                                                  (* OOB_INST_BLS_G2_MSM        IS_BLS_G2_MSM)
                                                   (* OOB_INST_BLS_PAIRING_CHECK IS_BLS_PAIRING_CHECK)
                                                   (* OOB_INST_BLS_MAP_FP_TO_G1 IS_BLS_MAP_FP_TO_G1)
                                                   (* OOB_INST_BLS_MAP_FP2_TO_G2 IS_BLS_MAP_FP2_TO_G2)))
@@ -129,10 +129,10 @@
 
 (defun (maxct-sum-prc-eip-blob-transactions)(+   (* CT_MAX_POINT_EVALUATION IS_POINT_EVALUATION)))
 
-(defun (maxct-sum-prc-eip-bls12-precompiles)(+   (* CT_MAX_BLS_G1ADD IS_BLS_G1ADD)
-                                                  (* CT_MAX_BLS_G1MSM IS_BLS_G1MSM)
-                                                  (* CT_MAX_BLS_G2ADD IS_BLS_G2ADD)
-                                                  (* CT_MAX_BLS_G2MSM IS_BLS_G2MSM)
+(defun (maxct-sum-prc-eip-bls12-precompiles)(+   (* CT_MAX_BLS_G1_ADD IS_BLS_G1_ADD)
+                                                  (* CT_MAX_BLS_G1_MSM IS_BLS_G1_MSM)
+                                                  (* CT_MAX_BLS_G2_ADD IS_BLS_G2_ADD)
+                                                  (* CT_MAX_BLS_G2_MSM IS_BLS_G2_MSM)
                                                   (* CT_MAX_BLS_PAIRING_CHECK IS_BLS_PAIRING_CHECK)
                                                   (* CT_MAX_BLS_MAP_FP_TO_G1 IS_BLS_MAP_FP_TO_G1)
                                                   (* CT_MAX_BLS_MAP_FP2_TO_G2 IS_BLS_MAP_FP2_TO_G2)))

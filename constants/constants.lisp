@@ -234,8 +234,8 @@
   GAS_CONST_INIT_CODE_WORD                  2 ;; post Shanghai EIP-3860
   GAS_CONST_HASH_OPCODE_GAS                 3 ;; gas cost of BLOBHASH, EIP-4844 in Cancun         
   GAS_CONST_POINT_EVALUATION                50000
-  GAS_CONST_BLS_G1ADD                       375
-  GAS_CONST_BLS_G2ADD                       600
+  GAS_CONST_BLS_G1_ADD                       375
+  GAS_CONST_BLS_G2_ADD                       600
   GAS_CONST_BLS_MAP_FP_TO_G1                5500
   GAS_CONST_BLS_MAP_FP2_TO_G2               23800
   GAS_CONST_BLS_PAIRING_CHECK               37700
@@ -316,17 +316,17 @@
   PRC_ECPAIRING_SIZE                        (* 6 WORD_SIZE)
   PRC_BLAKE2F_SIZE                          213
   PRC_POINT_EVALUATION_SIZE                 192
-  PRC_BLS_G1ADD_SIZE                        256
-  PRC_BLS_G2ADD_SIZE                        512
+  PRC_BLS_G1_ADD_SIZE                       256
+  PRC_BLS_G2_ADD_SIZE                       512
   PRC_BLS_MAP_FP_TO_G1_SIZE                 64
   PRC_BLS_MAP_FP2_TO_G2_SIZE                128
-  PRC_BLS_G1MSM_PAIR_SIZE                   160
-  PRC_BLS_G2MSM_PAIR_SIZE                   288
+  PRC_BLS_G1_MSM_PAIR_SIZE                  160
+  PRC_BLS_G2_MSM_PAIR_SIZE                  288
   PRC_BLS_PAIRING_CHECK_PAIR_SIZE           384
-  PRC_BLS_G1MSM_MAX_DISCOUNT                519
-  PRC_BLS_G2MSM_MAX_DISCOUNT                524
-  PRC_BLS_G1MSM_MULTIPLICATION_COST         12000
-  PRC_BLS_G2MSM_MULTIPLICATION_COST         22500
+  PRC_BLS_G1_MSM_MAX_DISCOUNT               519
+  PRC_BLS_G2_MSM_MAX_DISCOUNT               524
+  PRC_BLS_G1_MSM_MULTIPLICATION_COST        12000
+  PRC_BLS_G2_MSM_MULTIPLICATION_COST        22500
   PRC_BLS_MULTIPLICATION_MULTIPLIER         1000
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;         ;;
@@ -494,10 +494,10 @@
   OOB_INST_MODEXP_PRICING                   0xFD05
   OOB_INST_MODEXP_EXTRACT                   0xFE05
   OOB_INST_POINT_EVALUATION                 0xFF10
-  OOB_INST_BLS_G1ADD                        0xFF11
-  OOB_INST_BLS_G1MSM                        0xFF12
-  OOB_INST_BLS_G2ADD                        0xFF13
-  OOB_INST_BLS_G2MSM                        0xFF14
+  OOB_INST_BLS_G1_ADD                        0xFF11
+  OOB_INST_BLS_G1_MSM                        0xFF12
+  OOB_INST_BLS_G2_ADD                        0xFF13
+  OOB_INST_BLS_G2_MSM                        0xFF14
   OOB_INST_BLS_PAIRING_CHECK                0xFF15
   OOB_INST_BLS_MAP_FP_TO_G1                 0xFF16
   OOB_INST_BLS_MAP_FP2_TO_G2                0xFF17
