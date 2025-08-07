@@ -1,7 +1,7 @@
 (module rlptxn)
 
 (defconstraint setting-first-row-after-prefix ()
-    (if-not-zero (is-payload-size-analysis-row)
+    (if-not-zero (is-access-list-prefix)
         (eq! (next IS_PREFIX_OF_ACCESS_LIST_ITEM) (next IS_ACCESS_LIST))))
 
 (defconstraint setting-flag-after-rlp-tuple ()
@@ -25,6 +25,6 @@
 (defconstraint setting-flag-after-storage-key ()
     (if-not-zero IS_ACCESS_LIST_STORAGE_KEY
         (begin 
-        (eq! (+ IS_ACCESS_LIST_STORAGE_KEY IS_PREFIX_OF_ACCESS_LIST_ITEM)                       (next IS_ACCESS_LIST))
+        (eq! (+ (next IS_ACCESS_LIST_STORAGE_KEY) (next IS_PREFIX_OF_ACCESS_LIST_ITEM))                       (next IS_ACCESS_LIST))
         (if-not-zero (next IS_PREFIX_OF_ACCESS_LIST_ITEM)
             (eq! DONE 1)))))
