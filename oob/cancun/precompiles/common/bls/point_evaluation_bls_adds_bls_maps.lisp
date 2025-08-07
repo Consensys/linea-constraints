@@ -50,7 +50,7 @@
                   (vanishes! (shift [OUTGOING_DATA 3] 4))
                   (eq! (shift [OUTGOING_DATA 4] 4) 128))))
 
-(defconstraint prc-g1-msm-prc-g2-msm---compute-discount (:guard :guard (* (assumption---fresh-new-stamp) (prc-g1msm-prc-g2msm---standard-precondition)))
+(defconstraint prc-g1-msm-prc-g2-msm---compute-discount (:guard (* (assumption---fresh-new-stamp) (prc-g1msm-prc-g2msm---standard-precondition)))
   (if-zero (prc-g1msm-prc-g2msm---cds-is-multiple-of-min-msm-size)
            (noCall 5)
            (if-not-zero (prc-g1msm-prc-g2msm---num-inputs-leq-128)

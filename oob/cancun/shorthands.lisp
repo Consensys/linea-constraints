@@ -159,4 +159,7 @@
 
 (defun (assumption---fresh-new-stamp)       (- STAMP (prev STAMP)))
 
+(defconstraint cancun ()
+    (vanishes! (flag-sum-eip-bls12-precompiles)))
+
 ;; TODO: change maxct ot ct-max
