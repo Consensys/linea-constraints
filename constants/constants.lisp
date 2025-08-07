@@ -306,15 +306,16 @@
   TWOFIFTYSIX_TO_THE_TWELVE                 (^ 256 12)
   TWOFIFTYSIX_TO_THE_TWELVE_MO              (- TWOFIFTYSIX_TO_THE_TWELVE 1)
   TWOFIFTYSIX_TO_THE_TWENTY                 (^ 256 20)
-  TWOFIFTYSIX_TO_THE_TWENTY_MO              (- TWOFIFTYSIX_TO_THE_TWENTY 1)
+  TWOFIFTYSIX_TO_THE_TWENTY_MO              (- TWOFIFTYSIX_TO_THE_TWENTY 1) ;; ""
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;               ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; PRECOMPILES   ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;               ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  MAX_PRC_ADDRESS                           23                      ;;Cancun value
-  PRC_ECPAIRING_SIZE                        (* 6 WORD_SIZE)
-  PRC_BLAKE2F_SIZE                          213
+  ;; MAX_PRC_ADDRESS                         9                        ;;London value
+  ;; MAX_PRC_ADDRESS                        10                        ;;Cancun value
+  MAX_PRC_ADDRESS                           17                        ;;Prague value
+
   PRC_POINT_EVALUATION_SIZE                 192
   PRC_BLS_G1_ADD_SIZE                       256
   PRC_BLS_G2_ADD_SIZE                       512
@@ -328,6 +329,20 @@
   PRC_BLS_G1_MSM_MULTIPLICATION_COST        12000
   PRC_BLS_G2_MSM_MULTIPLICATION_COST        22500
   PRC_BLS_MULTIPLICATION_MULTIPLIER         1000
+
+  PRC_ECPAIRING_SIZE                           (* 6 WORD_SIZE)
+  PRECOMPILE_CALL_DATA_SIZE___BLAKE2F                      213
+  PRECOMPILE_RETURN_DATA_SIZE___ECADD                       64
+  PRECOMPILE_RETURN_DATA_SIZE___ECMUL                       64
+  PRECOMPILE_RETURN_DATA_SIZE___ECPAIRING                   32
+  PRECOMPILE_RETURN_DATA_SIZE___POINT_EVALUATION            64
+  PRECOMPILE_RETURN_DATA_SIZE___BLS_G1_ADD                 128
+  PRECOMPILE_RETURN_DATA_SIZE___BLS_G1_MSM                 128
+  PRECOMPILE_RETURN_DATA_SIZE___BLS_G2_ADD                 256
+  PRECOMPILE_RETURN_DATA_SIZE___BLS_G2_MSM                 256
+  PRECOMPILE_RETURN_DATA_SIZE___BLS_PAIRING_CHECK           32
+  PRECOMPILE_RETURN_DATA_SIZE___BLS_MAP_FP_TO_G1           128
+  PRECOMPILE_RETURN_DATA_SIZE___BLS_MAP_FP2_TO_G2          256
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;         ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; EXO SUM ;;
@@ -340,6 +355,7 @@
   EXO_SUM_INDEX_ECDATA                      4
   EXO_SUM_INDEX_RIPSHA                      5
   EXO_SUM_INDEX_BLAKEMODEXP                 6
+  EXO_SUM_INDEX_BLSDATA                     7
   EXO_SUM_WEIGHT_ROM                        (^ 2 EXO_SUM_INDEX_ROM)
   EXO_SUM_WEIGHT_KEC                        (^ 2 EXO_SUM_INDEX_KEC)
   EXO_SUM_WEIGHT_LOG                        (^ 2 EXO_SUM_INDEX_LOG)
@@ -347,6 +363,7 @@
   EXO_SUM_WEIGHT_ECDATA                     (^ 2 EXO_SUM_INDEX_ECDATA)
   EXO_SUM_WEIGHT_RIPSHA                     (^ 2 EXO_SUM_INDEX_RIPSHA)
   EXO_SUM_WEIGHT_BLAKEMODEXP                (^ 2 EXO_SUM_INDEX_BLAKEMODEXP)
+  EXO_SUM_WEIGHT_BLSDATA                    (^ 2 EXO_SUM_INDEX_BLSDATA)       ;; ""
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;                ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; HASH CONSTANTS ;;
@@ -493,14 +510,14 @@
   OOB_INST_MODEXP_LEAD                      0xFC05
   OOB_INST_MODEXP_PRICING                   0xFD05
   OOB_INST_MODEXP_EXTRACT                   0xFE05
-  OOB_INST_POINT_EVALUATION                 0xFF10
-  OOB_INST_BLS_G1_ADD                        0xFF11
-  OOB_INST_BLS_G1_MSM                        0xFF12
-  OOB_INST_BLS_G2_ADD                        0xFF13
-  OOB_INST_BLS_G2_MSM                        0xFF14
-  OOB_INST_BLS_PAIRING_CHECK                0xFF15
-  OOB_INST_BLS_MAP_FP_TO_G1                 0xFF16
-  OOB_INST_BLS_MAP_FP2_TO_G2                0xFF17
+  OOB_INST_POINT_EVALUATION                 0xFF0A
+  OOB_INST_BLS_G1_ADD                       0xFF0B
+  OOB_INST_BLS_G1_MSM                       0xFF0C
+  OOB_INST_BLS_G2_ADD                       0xFF0D
+  OOB_INST_BLS_G2_MSM                       0xFF0E
+  OOB_INST_BLS_PAIRING_CHECK                0xFF0F
+  OOB_INST_BLS_MAP_FP_TO_G1                 0xFF10
+  OOB_INST_BLS_MAP_FP2_TO_G2                0xFF11
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;             ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; RLP* MODULE ;;
