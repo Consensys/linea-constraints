@@ -9,10 +9,10 @@
 
 (defun (prc-blspairingcheck---standard-precondition)                                   IS_BLS_PAIRING_CHECK)
 (defun (prc-blspairingcheck---remainder)                                               (shift OUTGOING_RES_LO 2))
-(defun (prc-blspairingcheck---cds-is-multiple-of-min-bls-pairing-check-pair-size)           (shift OUTGOING_RES_LO 3))
+(defun (prc-blspairingcheck---cds-is-multiple-of-bls-pairing-check-pair-size)           (shift OUTGOING_RES_LO 3))
 (defun (prc-blspairingcheck---insufficient-gas)                                        (shift OUTGOING_RES_LO 4))
 (defun (prc-blspairingcheck---sufficient-gas)                                          (- 1 (prc-blspairingcheck---insufficient-gas)))
-(defun (prc-blspairingcheck---precompile-cost_PRC_BLS_PAIRING_CHECK_PAIR_SIZE)       (*    (prc-blspairingcheck---cds-is-multiple-of-min-bls-pairing-check-pair-size)
+(defun (prc-blspairingcheck---precompile-cost_PRC_BLS_PAIRING_CHECK_PAIR_SIZE)       (*    (prc-blspairingcheck---cds-is-multiple-of-bls-pairing-check-pair-size)
                                                                   (+ (* GAS_CONST_BLS_PAIRING_CHECK PRC_BLS_PAIRING_CHECK_PAIR_SIZE) (* GAS_CONST_BLS_PAIRING_CHECK_PAIR (prc---cds)))))
 
 (defconstraint prc-blspairingcheck---mod-cds-by-PRC_BLS_PAIRING_CHECK_PAIR_SIZE (:guard (* (assumption---fresh-new-stamp) (prc-blspairingcheck---standard-precondition)))
@@ -22,7 +22,7 @@
   (call-to-ISZERO 3 0 (prc-blspairingcheck---remainder)))
 
 (defconstraint prc-blspairingcheck---compare-call-gas-against-precompile-cost (:guard (* (assumption---fresh-new-stamp) (prc-blspairingcheck---standard-precondition)))
-  (if-zero (prc-blspairingcheck---cds-is-multiple-of-min-bls-pairing-check-pair-size)
+  (if-zero (prc-blspairingcheck---cds-is-multiple-of-bls-pairing-check-pair-size)
            (noCall 4)
            (begin (vanishes! (shift ADD_FLAG 4))
                   (vanishes! (shift MOD_FLAG 4))
@@ -37,7 +37,7 @@
 
 (defconstraint prc-blspairingcheck---justify-hub-predictions (:guard (* (assumption---fresh-new-stamp) (prc-blspairingcheck---standard-precondition)))
   (begin (eq! (prc---hub-success)
-              (* (prc---cds-is-non-zero) (prc-blspairingcheck---cds-is-multiple-of-min-bls-pairing-check-pair-size) (prc-blspairingcheck---sufficient-gas)))
+              (* (prc---cds-is-non-zero) (prc-blspairingcheck---cds-is-multiple-of-bls-pairing-check-pair-size) (prc-blspairingcheck---sufficient-gas)))
          (if-zero (prc---hub-success)
                   (vanishes! (prc---return-gas))
                   (eq! (* (prc---return-gas) PRC_BLS_PAIRING_CHECK_PAIR_SIZE)
