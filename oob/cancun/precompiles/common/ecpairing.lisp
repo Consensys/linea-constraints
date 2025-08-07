@@ -26,6 +26,7 @@
            (begin (vanishes! (shift ADD_FLAG 4))
                   (vanishes! (shift MOD_FLAG 4))
                   (eq! (shift WCP_FLAG 4) 1)
+                  (vanishes! (shift BLS_REF_TABLE_FLAG 4))
                   (eq! (shift OUTGOING_INST 4) EVM_INST_LT)
                   (vanishes! (shift [OUTGOING_DATA 1] 4))
                   (eq! (shift [OUTGOING_DATA 2] 4) (prc---callee-gas))
