@@ -320,9 +320,9 @@
   PRC_BLS_G2ADD_SIZE                        512
   PRC_BLS_MAP_FP_TO_G1_SIZE                 64
   PRC_BLS_MAP_FP2_TO_G2_SIZE                128
-  PRC_BLS_G1MSM_SIZE_MIN                    160
-  PRC_BLS_G2MSM_SIZE_MIN                    288
-  PRC_BLS_PAIRING_CHECK_SIZE_MIN            384
+  PRC_BLS_G1MSM_SIZE_PAIR                   160
+  PRC_BLS_G2MSM_SIZE_PAIR                   288
+  PRC_BLS_PAIRING_CHECK_SIZE_PAIR           384
   PRC_BLS_G1MSM_MAX_DISCOUNT                519
   PRC_BLS_G2MSM_MAX_DISCOUNT                524
   PRC_BLS_G1MSM_MULTIPLICATION_COST         12000
