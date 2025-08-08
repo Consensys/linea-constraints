@@ -22,20 +22,20 @@
 (defconstraint integer--first-wcp-call   (:guard (integer-instruction-precondition))  (wcp-call-iszero  1 (integer--in-integer-hi) (integer--in-integer-lo)))
 
 (defun (integer--integer-is-zero)                                   (shift compt/RES 1))
-(defun (integer--integer-is-nonzero)                                (- 1 (integer--integer-is-zero)))
+(defun (integer--integer-is-nonzero)                                (force-bin (- 1 (integer--integer-is-zero))))
 
 ;;second row
 (defconstraint integer--second-wcp-call  (:guard (integer-instruction-precondition))  (wcp-call-gt      2  0               (integer--in-integer-hi) 0))
 
 (defun (integer--integer-hi-is-nonzero)                             (shift compt/RES 2))
-(defun (integer--integer-hi-is-zero)                                (- 1 (integer--integer-hi-is-nonzero)))
+(defun (integer--integer-hi-is-zero)                                (force-bin (- 1 (integer--integer-hi-is-nonzero))))
 (defun (integer--integer-hi-byte-size)                              (+ (shift compt/WCP_CT_MAX 2) (integer--integer-hi-is-nonzero)))
 
 ;; third row
 (defconstraint integer--third-wcp-call   (:guard (integer-instruction-precondition))  (wcp-call-lt      3  0               (integer--in-integer-lo) RLP_PREFIX_INT_SHORT))
 
 (defun (integer--integer-is-lt-one-two-eight)                       (* (integer--integer-hi-is-zero) (shift compt/RES 3)))
-(defun (integer--integer-is-geq-one-two-eight)                      (- 1 (integer--integer-is-lt-one-two-eight)))
+(defun (integer--integer-is-geq-one-two-eight)                      (force-bin (- 1 (integer--integer-is-lt-one-two-eight))))
 (defun (integer--integer-lo-byte-size)                              (+ (shift compt/WCP_CT_MAX 3) (integer--integer-is-nonzero)))
 (defun (integer--leading-limb-byte-size)                            (+ (* (integer--integer-hi-is-nonzero) (integer--integer-hi-byte-size))
                                                                        (* (integer--integer-hi-is-zero)    (integer--integer-lo-byte-size))))
