@@ -25,6 +25,13 @@ BLOCKDATA_CANCUN := blockdata/cancun
 
 BLOCKHASH := blockhash
 
+BLS_CANCUN := $(wildcard bls/cancun/*.lisp) \
+	       $(wildcard bls/cancun/generalities/*.lisp) \
+	       $(wildcard bls/cancun/lookups/*.lisp) \
+	       $(wildcard bls/cancun/specialized_constraints/*.lisp) \
+	       $(wildcard bls/cancun/top_level_flags_mint_mext_wtrv_wnon/*.lisp) \
+		   $(wildcard bls/cancun/utilities/*.lisp) \
+
 CONSTANTS := constants/constants.lisp
 
 EC_DATA := ecdata
@@ -89,6 +96,7 @@ TABLES_LONDON := reftables/*.lisp \
 				reftables/london/inst_decoder.lisp
 
 TABLES_CANCUN := reftables/*.lisp \
+				reftables/cancun/bls_reftable.lisp \
 				reftables/cancun/inst_decoder.lisp \
 				reftables/cancun/power.lisp
 
@@ -168,7 +176,8 @@ ZKEVM_MODULES_SHANGHAI := ${ZKEVM_MODULES_COMMON} \
 ZKEVM_MODULES_CANCUN := ${ZKEVM_MODULES_COMMON} \
 		 ${ALU} \
 		 ${TABLES_CANCUN} \
-		 ${BLOCKDATA_CANCUN} \
+ 		 ${BLOCKDATA_CANCUN} \
+		 ${BLS_CANCUN} \
 		 ${HUB_CANCUN} \
 		 ${LOG_INFO_CANCUN} \
 		 ${MMIO_CANCUN} \
