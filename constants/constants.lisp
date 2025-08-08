@@ -312,9 +312,12 @@
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; PRECOMPILES   ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;               ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  ;; MAX_PRC_ADDRESS                         9                        ;;London value
-  ;; MAX_PRC_ADDRESS                        10                        ;;Cancun value
-  MAX_PRC_ADDRESS                           17                        ;;Prague value
+  MAX_PRC_ADDRESS_LONDON                    0x09
+  MAX_PRC_ADDRESS_PARIS                     0x09
+  MAX_PRC_ADDRESS_SHANGHAI                  0x09
+  MAX_PRC_ADDRESS_CANCUN                    0x0a
+  MAX_PRC_ADDRESS_PRAGUE                    0x11
+  MAX_PRC_ADDRESS                           MAX_PRC_ADDRESS_PRAGUE ;; TODO: find a solution for fork dependent constants
 
   PRC_POINT_EVALUATION_SIZE                 192
   PRC_BLS_G1_ADD_SIZE                       256
