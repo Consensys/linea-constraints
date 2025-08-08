@@ -44,6 +44,7 @@
   (IS_ACCESS_LIST_ADDRESS           :binary@prove)
   (IS_ACCESS_LIST_STORAGE_KEY       :binary@prove)
   (REQUIRES_EVM_EXECUTION           :binary)
+  (IS_DEPLOYMENT                    :binary)
 )
 
 
@@ -52,7 +53,6 @@
 TXN
 (
   (TX_TYPE                          :i8)
-  (IS_DEPLOYMENT                    :binary)
   (CHAIN_ID                         :i64)
   (NONCE                            :i64)
   (GAS_PRICE                        :i64)

@@ -1,4 +1,4 @@
-(defun (sel-rlptxn-to-rom) (* (~ rlptxn.CODE_FRAGMENT_INDEX) (is-limb-content-analysis-row)))
+(defun (sel-rlptxn-to-rom) (* rlptxn.IS_DEPLOYMENT rlptxn.REQUIRES_EVM_EXECUTION (is-limb-content-analysis-row)))
 
 (defun (is-limb-content-analysis-row)           (* (prev rlptxn.CMP) rlptxn.CMP rlptxn.IS_DATA))
 

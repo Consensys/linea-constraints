@@ -2,7 +2,7 @@
 
 (defconstraint phase-to ()
     (if-not-zero (* IS_TO TXN)
-        (if-zero txn/IS_DEPLOYMENT
+        (if-zero IS_DEPLOYMENT
             ;; message call case
             (begin
             (rlp-compound-address    1 txn/TO_HI txn/TO_LO)
