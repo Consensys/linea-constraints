@@ -27,7 +27,7 @@
     (wcp-call-iszero 1 0 (bytestring--in-byte-string-length)))
 
 (defun (bytestring--bs-is-empty)                                       (shift compt/RES 1))
-(defun (bytestring--bs-is-nonempty)                                    (- 1 (bytestring--bs-is-empty)))
+(defun (bytestring--bs-is-nonempty)                                    (force-bin (- 1 (bytestring--bs-is-empty))))
 
 (defconstraint bytestring--justifying-empty-byte-string   (:guard (bytestring--instruction-precondition)) 
     (eq! (bytestring--out-byte-string-is-nonempty) (bytestring--bs-is-nonempty)))

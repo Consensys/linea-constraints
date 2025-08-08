@@ -42,7 +42,7 @@
         (eq! compt/ACC compt/ARG_1_LO)
         (eq! compt/ACC (+ (* 256 (prev compt/ACC))
                           compt/ARG_1_LO)))
-    (wcp-call-leq     0 0 0 255)
+    (wcp-call-leq     0 0 compt/ARG_1_LO 255)
     (result-must-be-true 0)
     ;; decrementing the counter
     (eq! ZERO_COUNTER (- (prev ZERO_COUNTER) (data-pricing--is-zero-byte)))
