@@ -11,8 +11,8 @@
                                                                     (+ IS_BLS_G1_MSM 
                                                                        IS_BLS_G2_MSM))
 (defun (msm-pair-size) 
-                                                                    (+  (* PRC_BLS_G1_MSM_PAIR_SIZE             IS_BLS_G1_MSM)                                                                
-                                                                        (* PRC_BLS_G2_MSM_PAIR_SIZE             IS_BLS_G2_MSM)))
+                                                                    (+  (* PRECOMPILE_CALL_DATA_UNIT_SIZE___BLS_G1_MSM             IS_BLS_G1_MSM)                                                                
+                                                                        (* PRECOMPILE_CALL_DATA_UNIT_SIZE___BLS_G2_MSM             IS_BLS_G2_MSM)))
 (defun (max-discount) 
                                                                     (+  (* PRC_BLS_G1_MSM_MAX_DISCOUNT         IS_BLS_G1_MSM)                                                                
                                                                         (* PRC_BLS_G2_MSM_MAX_DISCOUNT         IS_BLS_G2_MSM)))

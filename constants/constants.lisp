@@ -319,21 +319,16 @@
   MAX_PRC_ADDRESS_PRAGUE                    0x11
   MAX_PRC_ADDRESS                           MAX_PRC_ADDRESS_PRAGUE ;; TODO: find a solution for fork dependent constants
 
-  PRC_POINT_EVALUATION_SIZE                 192
-  PRC_BLS_G1_ADD_SIZE                       256
-  PRC_BLS_G2_ADD_SIZE                       512
-  PRC_BLS_MAP_FP_TO_G1_SIZE                 64
-  PRC_BLS_MAP_FP2_TO_G2_SIZE                128
-  PRC_BLS_G1_MSM_PAIR_SIZE                  160
-  PRC_BLS_G2_MSM_PAIR_SIZE                  288
-  PRC_BLS_PAIRING_CHECK_PAIR_SIZE           384
-  PRC_BLS_G1_MSM_MAX_DISCOUNT               519
-  PRC_BLS_G2_MSM_MAX_DISCOUNT               524
-  PRC_BLS_G1_MSM_MULTIPLICATION_COST        12000
-  PRC_BLS_G2_MSM_MULTIPLICATION_COST        22500
-  PRC_BLS_MULTIPLICATION_MULTIPLIER         1000
+  PRECOMPILE_CALL_DATA_UNIT_SIZE___ECPAIRING               192
+  PRECOMPILE_CALL_DATA_SIZE___POINT_EVALUATION             192
+  PRECOMPILE_CALL_DATA_SIZE___G1_ADD                       256
+  PRECOMPILE_CALL_DATA_UNIT_SIZE___BLS_G1_MSM              160
+  PRECOMPILE_CALL_DATA_SIZE___G2_ADD                       512
+  PRECOMPILE_CALL_DATA_UNIT_SIZE___BLS_G2_MSM              288
+  PRECOMPILE_CALL_DATA_UNIT_SIZE___BLS_PAIRING_CHECK       384
+  PRECOMPILE_CALL_DATA_SIZE___FP_TO_G1                      64
+  PRECOMPILE_CALL_DATA_SIZE___FP2_TO_G2                    128
 
-  PRC_ECPAIRING_SIZE                           (* 6 WORD_SIZE)
   PRECOMPILE_CALL_DATA_SIZE___BLAKE2F                      213
   PRECOMPILE_RETURN_DATA_SIZE___ECADD                       64
   PRECOMPILE_RETURN_DATA_SIZE___ECMUL                       64
@@ -346,6 +341,12 @@
   PRECOMPILE_RETURN_DATA_SIZE___BLS_PAIRING_CHECK           32
   PRECOMPILE_RETURN_DATA_SIZE___BLS_MAP_FP_TO_G1           128
   PRECOMPILE_RETURN_DATA_SIZE___BLS_MAP_FP2_TO_G2          256
+
+  PRC_BLS_G1_MSM_MAX_DISCOUNT                              519
+  PRC_BLS_G2_MSM_MAX_DISCOUNT                              524
+  PRC_BLS_G1_MSM_MULTIPLICATION_COST                     12000
+  PRC_BLS_G2_MSM_MULTIPLICATION_COST                     22500
+  PRC_BLS_MULTIPLICATION_MULTIPLIER                       1000
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;         ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; EXO SUM ;;
