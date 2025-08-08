@@ -30,10 +30,10 @@
 ;; compt rows
 
 (defun (data-pricing--is-zero-byte)                                      
-    (if-zero compt/ARG_1_LO 
-        1 
-        0))
-(defun (data-pricing--is-nonz-byte)     (- 1 (data-pricing--is-zero-byte)))
+    (force-bin (if-zero compt/ARG_1_LO 
+                1 
+                0)))
+(defun (data-pricing--is-nonz-byte)     (force-bin (- 1 (data-pricing--is-zero-byte))))
 
 (defconstraint  data-pricing--compt-rows (:guard (data-pricing--instruction-precondition-compt-row))
     (begin 
