@@ -3,7 +3,7 @@
 (defconstraint rlptxn-AL---rlp-storage-key ()
     (if-not-zero (* IS_ACCESS_LIST_STORAGE_KEY (prev DONE))
         (begin 
-        (rlp-compound-bytes32    0 (rlptxn---storage-hi) (rlptxn---storage-lo))
+        (rlp-compound-constraint---BYTES32    0 (rlptxn---storage-hi) (rlptxn---storage-lo))
         (if-not-zero (storage-key-list-countdown)
             (eq! (shift IS_ACCESS_LIST_STORAGE_KEY         3) 1)
             (if-not-zero (AL-item-countdown)

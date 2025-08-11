@@ -1,18 +1,26 @@
 (module rlptxn)
 
-(defun (rlp-compound-constraint---BYTE_STRING_PREFIX-non-trivial    relOffset length is-list must-be-non-trivial)
-    (begin 
-      ;; setting CT_MAX
+(defun (rlp-compound-constraint---BYTE_STRING_PREFIX-non-trivial    relOffset
+                                                                    length
+                                                                    is-list
+                                                                    must-be-non-trivial)
+  (begin 
+    ;; setting CT_MAX
     (vanishes! (shift CT_MAX relOffset))
     ;; RLP_UTILS instruction call
-    (rlputils-call-byte-string-prefix-non-trivial   relOffset
-                                                    length
-                                                    is-list)
+    (rlputils-call---BYTE_STRING_PREFIX-non-trivial   relOffset
+                                                      length
+                                                      is-list)
     ;; enshrining the byte string's RLP prefix into the RLP string
     (conditionally-set-limb   relOffset
                               (rlptxn---BYTE_STRING_PREFIX---rlp-prefix-required    relOffset)
                               (rlptxn---BYTE_STRING_PREFIX---rlp-prefix             relOffset)
                               (rlptxn---BYTE_STRING_PREFIX---rlp-prefix-byte-size   relOffset))
+    ;; imposing nontriviality
+    (if-not-zero    must-be-non-trivial
+                    (begin
+                      (eq!    (rlptxn---BYTE_STRING_PREFIX---rlp-prefix-required    relOffset)    1)
+                      (eq!    (rlptxn---BYTE_STRING_PREFIX---bs-is-non-empty        relOffset)    1)))
     ))
 
 (defun (rlp-compound-constraint---BYTE_STRING_PREFIX    relOffset
@@ -20,16 +28,24 @@
                                                         first-byte
                                                         is-list
                                                         must-be-non-trivial)
-    (begin 
+  (begin 
+    ;; setting CT_MAX
     (vanishes! (shift CT_MAX relOffset))
-    (rlputils-call-byte-string-prefix    relOffset
-                                         length
-                                         first-byte
-                                         is-list)
+    ;; RLP_UTILS instruction call
+    (rlputils-call---BYTE_STRING_PREFIX    relOffset
+                                           length
+                                           first-byte
+                                           is-list)
+    ;; enshrining the byte string's RLP prefix into the RLP string
     (conditionally-set-limb    relOffset
                                (rlptxn---BYTE_STRING_PREFIX---rlp-prefix-required    relOffset)
                                (rlptxn---BYTE_STRING_PREFIX---rlp-prefix             relOffset)
                                (rlptxn---BYTE_STRING_PREFIX---rlp-prefix-byte-size   relOffset))
+    ;; imposing nontriviality
+    (if-not-zero    must-be-non-trivial
+                    (begin
+                      (eq!    (rlptxn---BYTE_STRING_PREFIX---rlp-prefix-required    relOffset)    1)
+                      (eq!    (rlptxn---BYTE_STRING_PREFIX---bs-is-non-empty        relOffset)    1)))
     ))
 
 ;; defining shorthands

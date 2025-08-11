@@ -5,7 +5,7 @@
         (if-zero IS_DEPLOYMENT
             ;; message call case
             (begin
-            (rlp-compound-address    1 txn/TO_HI txn/TO_LO)
+            (rlp-compound-constraint---ADDRESS    1 txn/TO_HI txn/TO_LO)
             (eq! (shift PHASE_END 3) 1)
             )
 

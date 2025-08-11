@@ -6,7 +6,7 @@
 (defconstraint data-limb-analysis ()
     (if-not-zero (is-limb-content-analysis-row)
         (begin  
-        (rlputils-call-data-pricing 0 cmp/LIMB cmp/LIMB_SIZE)
+        (rlputils-call---DATA_PRICING 0 cmp/LIMB cmp/LIMB_SIZE)
         (eq! (zeros-countdown) (- (prev (zeros-countdown)) (zeros-in-limb)))
         (eq! (nonzs-countdown) (- (prev (nonzs-countdown)) (nonzs-in-limb)))
         (if-zero PHASE_END (eq! cmp/LIMB_SIZE LLARGE))

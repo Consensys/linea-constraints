@@ -1,38 +1,49 @@
 (module rlptxn)
 
-(defun (rlputils-call-integer w integer-hi integer-lo)
-    (begin 
-    (eq! (shift cmp/RLPUTILS_FLAG w) 1)
-    (eq! (shift cmp/RLPUTILS_INST w) RLP_UTILS_INST_INTEGER)
-    (eq! (shift cmp/EXO_DATA_1    w) integer-hi)
-    (eq! (shift cmp/EXO_DATA_2    w) integer-lo)))
+(defun (rlputils-call---INTEGER   relOffset
+                                  integer-hi
+                                  integer-lo)
+  (begin 
+    (eq! (shift cmp/RLPUTILS_FLAG   relOffset) 1)
+    (eq! (shift cmp/RLPUTILS_INST   relOffset) RLP_UTILS_INST_INTEGER)
+    (eq! (shift cmp/EXO_DATA_1      relOffset) integer-hi)
+    (eq! (shift cmp/EXO_DATA_2      relOffset) integer-lo)))
 
-(defun (rlputils-call-byte-string-prefix-non-trivial w length is-list)
-    (begin 
-    (eq! (shift cmp/RLPUTILS_FLAG w) 1)
-    (eq! (shift cmp/RLPUTILS_INST w) RLP_UTILS_INST_BYTE_STRING_PREFIX)
-    (eq! (shift cmp/EXO_DATA_1    w) length)
-    ;; (eq! (shift cmp/EXO_DATA_2    w) first-byte)
-    (eq! (shift cmp/EXO_DATA_3    w) is-list)))
+(defun (rlputils-call---BYTE_STRING_PREFIX-non-trivial   relOffset
+                                                         length
+                                                         is-list)
+  (begin 
+    (eq! (shift cmp/RLPUTILS_FLAG   relOffset) 1)
+    (eq! (shift cmp/RLPUTILS_INST   relOffset) RLP_UTILS_INST_BYTE_STRING_PREFIX)
+    (eq! (shift cmp/EXO_DATA_1      relOffset) length)
+    ;; (eq! (shift cmp/EXO_DATA_2      relOffset) first-byte)
+    (eq! (shift cmp/EXO_DATA_3      relOffset) is-list)))
 
-(defun (rlputils-call-byte-string-prefix w length first-byte is-list)
-    (begin 
-    (eq! (shift cmp/RLPUTILS_FLAG w) 1)
-    (eq! (shift cmp/RLPUTILS_INST w) RLP_UTILS_INST_BYTE_STRING_PREFIX)
-    (eq! (shift cmp/EXO_DATA_1    w) length)
-    (eq! (shift cmp/EXO_DATA_2    w) first-byte)
-    (eq! (shift cmp/EXO_DATA_3    w) is-list)))
+(defun (rlputils-call---BYTE_STRING_PREFIX   relOffset
+                                             length
+                                             first-byte
+                                             is-list)
+  (begin 
+    (eq! (shift cmp/RLPUTILS_FLAG   relOffset) 1)
+    (eq! (shift cmp/RLPUTILS_INST   relOffset) RLP_UTILS_INST_BYTE_STRING_PREFIX)
+    (eq! (shift cmp/EXO_DATA_1      relOffset) length)
+    (eq! (shift cmp/EXO_DATA_2      relOffset) first-byte)
+    (eq! (shift cmp/EXO_DATA_3      relOffset) is-list)))
 
-(defun (rlputils-call-bytes32 w data-hi data-lo)
-    (begin 
-    (eq! (shift cmp/RLPUTILS_FLAG w) 1)
-    (eq! (shift cmp/RLPUTILS_INST w) RLP_UTILS_INST_BYTES32)
-    (eq! (shift cmp/EXO_DATA_1    w) data-hi)
-    (eq! (shift cmp/EXO_DATA_2    w) data-lo)))
+(defun (rlputils-call---BYTES32   relOffset
+                                  data-hi
+                                  data-lo)
+  (begin 
+    (eq! (shift cmp/RLPUTILS_FLAG   relOffset) 1)
+    (eq! (shift cmp/RLPUTILS_INST   relOffset) RLP_UTILS_INST_BYTES32)
+    (eq! (shift cmp/EXO_DATA_1      relOffset) data-hi)
+    (eq! (shift cmp/EXO_DATA_2      relOffset) data-lo)))
 
-(defun (rlputils-call-data-pricing w limb n-bytes)
-    (begin 
-    (eq! (shift cmp/RLPUTILS_FLAG w) 1)
-    (eq! (shift cmp/RLPUTILS_INST w) RLP_UTILS_INST_DATA_PRICING)
-    (eq! (shift cmp/EXO_DATA_1    w) limb)
-    (eq! (shift cmp/EXO_DATA_2    w) n-bytes)))
+(defun (rlputils-call---DATA_PRICING   relOffset
+                                     limb
+                                     n-bytes)
+  (begin 
+    (eq! (shift cmp/RLPUTILS_FLAG   relOffset) 1)
+    (eq! (shift cmp/RLPUTILS_INST   relOffset) RLP_UTILS_INST_DATA_PRICING)
+    (eq! (shift cmp/EXO_DATA_1      relOffset) limb)
+    (eq! (shift cmp/EXO_DATA_2      relOffset) n-bytes)))

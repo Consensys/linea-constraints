@@ -10,9 +10,9 @@
     ;; constraining PHASE_END
     (eq! (shift PHASE_END  (+ relOffset RLP_TXN_CT_MAX_INTEGER))     is-end-of-phase)
     ;; RLP_UTILS instruction call
-    (rlputils-call-integer   relOffset
-                             integer-hi
-                             integer-lo)
+    (rlputils-call---INTEGER   relOffset
+                               integer-hi
+                               integer-lo)
     ;; enshrining the integer's RLP prefix into the RLP string
     (conditionally-set-limb  relOffset
                              (rlptxn---INTEGER---OUT-rlp-prefix-required   relOffset)

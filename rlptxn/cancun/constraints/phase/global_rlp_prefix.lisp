@@ -17,10 +17,10 @@
     (vanishes! (next PHASE_END))    
     ;; row i+2
     (limb-of-lt-only        2)
-    (rlputils-call-byte-string-prefix-non-trivial 2 LT_BYTE_SIZE_COUNTDOWN 1)
+    (rlputils-call---BYTE_STRING_PREFIX-non-trivial 2 LT_BYTE_SIZE_COUNTDOWN 1)
     (vanishes! (shift PHASE_END 2))
     ;; row i+3
     (limb-of-lx-only        3)
-    (rlputils-call-byte-string-prefix-non-trivial 3 LX_BYTE_SIZE_COUNTDOWN 1)
+    (rlputils-call---BYTE_STRING_PREFIX-non-trivial 3 LX_BYTE_SIZE_COUNTDOWN 1)
     (eq! (shift PHASE_END 3) 1)
     ))
