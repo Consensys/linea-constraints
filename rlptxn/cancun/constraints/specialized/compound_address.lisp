@@ -12,8 +12,8 @@
     (eq! (shift cmp/EXO_DATA_2    relOffset)      address-lo)
     ;; enshrining the RLP-prefix into the RLP string
     (set-limb    relOffset
-                 (* 148 (^ 256 LLARGEMO))
-                 1) ;; "" ...
+                 (* 148 (^ 256 LLARGEMO)) ;; "" ... ""
+                 1)
     ;; enshrining the hi part of the address into the RLP string
     (set-limb    (+ relOffset 1)
                  (* address-hi (^ 256 12))
