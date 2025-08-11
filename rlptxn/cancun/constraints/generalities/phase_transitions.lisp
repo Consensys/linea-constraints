@@ -114,6 +114,7 @@
         (* IS_S                         (next IS_S                       ))
     )))
 
+;; this shorthand isn't defined in the spec AFAICT
 (defun (upcoming-phase-transition) 
         (force-bin (+ (* (upcoming-phase-transition-type-0) TYPE_0) 
                       (* (upcoming-phase-transition-type-1) TYPE_1) 

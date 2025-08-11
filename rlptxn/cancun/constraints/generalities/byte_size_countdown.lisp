@@ -1,6 +1,6 @@
 (module rlptxn)
 
-(defconstraint byte-size-countdown-update ()
+(defconstraint byte-size-countdown-update-constraints ()
     (if-zero IS_RLP_PREFIX
         (begin
         (eq! LT_BYTE_SIZE_COUNTDOWN 
@@ -10,7 +10,7 @@
              (- (prev LX_BYTE_SIZE_COUNTDOWN)
                 (* LC LX cmp/LIMB_SIZE))))))
 
-(defconstraint end-transaction ()
+(defconstraint byte-size-countdown-finalization-constraints ()
     (if-not-zero (* IS_S PHASE_END)
         (begin
         (vanishes! LT_BYTE_SIZE_COUNTDOWN)

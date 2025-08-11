@@ -19,4 +19,7 @@
         (* IS_S                            (- 1 (next IS_S                        )))
     )))
 
+(defproperty about-to-exit-current-phase-shorthand-is-binary
+             (is-binary   (about-to-exit-current-phase)))
+
 (defcomputedcolumn (PHASE_END :binary) (about-to-exit-current-phase))

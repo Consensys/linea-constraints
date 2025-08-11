@@ -1,8 +1,8 @@
 (module rlptxn)
 
-(defconstraint ct-constancy-of-ct-max () (counter-constant CT_MAX CT))
+(defconstraint counter-constancy-of-ct-max () (counter-constant CT_MAX CT))
 
-(defconstraint counter-vanishes-outside-computation ()
+(defconstraint automatic-vanishing-of-counters-outside-of-computation-rows ()
     (if-zero CMP 
         (begin 
         (vanishes! CT)
