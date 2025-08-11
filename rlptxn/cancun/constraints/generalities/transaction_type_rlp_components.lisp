@@ -57,6 +57,6 @@
     IS_S
     ))
 
-(defproperty  admissible-RLP-components-for-type-0-transactions  (if  TYPE_0  (eq!  (RLP-components-of-type-0-transactions)  1)))
-(defproperty  admissible-RLP-components-for-type-1-transactions  (if  TYPE_1  (eq!  (RLP-components-of-type-1-transactions)  1)))
-(defproperty  admissible-RLP-components-for-type-2-transactions  (if  TYPE_2  (eq!  (RLP-components-of-type-2-transactions)  1)))
+(defproperty  admissible-RLP-components-for-type-0-transactions  (if  (==  TYPE_0  1)  (eq!  (RLP-components-of-type-0-transactions)  1)))
+(defproperty  admissible-RLP-components-for-type-1-transactions  (if  (==  TYPE_1  1)  (eq!  (RLP-components-of-type-1-transactions)  1)))
+(defproperty  admissible-RLP-components-for-type-2-transactions  (if  (==  TYPE_2  1)  (eq!  (RLP-components-of-type-2-transactions)  1)))

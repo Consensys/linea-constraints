@@ -40,7 +40,7 @@
 
 (defconstraint integer-phase-constraints ()
     (if-not-zero (* (is-integer-phase) TXN)
-        (rlp-compound-integer       1 
-                                    (phase-appropriate-integer-hi) 
-                                    (phase-appropriate-integer-lo) 
-                                    1)))
+        (rlp-compound-constraint---INTEGER   1 
+                                             (phase-appropriate-integer-hi) 
+                                             (phase-appropriate-integer-lo) 
+                                             1)))

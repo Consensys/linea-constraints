@@ -1,32 +1,47 @@
 (module rlptxn)
 
-(defun (rlp-compound-integer w integer-hi integer-lo is-end-of-phase)
-    (begin 
-    (eq! (shift CT_MAX                                      w)      RLP_TXN_CT_MAX_INTEGER)
-    (eq! (shift PHASE_END  (+ w RLP_TXN_CT_MAX_INTEGER))            is-end-of-phase)
-    (rlputils-call-integer                                   w      integer-hi integer-lo)
-    (conditionally-set-limb                                  w      (rlptxn---integer-out-rlp-prefix-required w) 
-                                                                    (rlptxn---integer-out-rlp-prefix w) 
-                                                                    1)
-    (conditionally-set-limb                            (+ w 1)      (rlptxn---integer-out-integer-has-non-zero-hi-part w) 
-                                                                    (rlptxn---integer-out-leading-limb-left-shifted w) 
-                                                                    (rlptxn---integer-out-leading-limb-byte-size w))
-    (conditionally-set-limb                            (+ w 2)      (rlptxn---integer-out-integer-is-non-zero w) 
-                                                                    (rlptxn---integer-last-limb integer-lo w) 
-                                                                    (rlptxn---integer-last-limb-byte-size w))
+(defun (rlp-compound-constraint---INTEGER   relOffset
+                                            integer-hi
+                                            integer-lo
+                                            is-end-of-phase)
+  (begin
+    ;; setting CT_MAX
+    (eq! (shift CT_MAX   relOffset)   RLP_TXN_CT_MAX_INTEGER)
+    ;; constraining PHASE_END
+    (eq! (shift PHASE_END  (+ relOffset RLP_TXN_CT_MAX_INTEGER))     is-end-of-phase)
+    ;; RLP_UTILS instruction call
+    (rlputils-call-integer   relOffset
+                             integer-hi
+                             integer-lo)
+    ;; enshrining the integer's RLP prefix into the RLP string
+    (conditionally-set-limb  relOffset
+                             (rlptxn---INTEGER---OUT-rlp-prefix-required   relOffset)
+                             (rlptxn---INTEGER---OUT-rlp-prefix            relOffset)
+                             1)
+    ;; enshrining the hi part of a (nonzero) integer into the RLP string
+    (conditionally-set-limb   (+ relOffset 1)
+                              (rlptxn---INTEGER---OUT-integer-has-non-zero-hi-part   relOffset)
+                              (rlptxn---INTEGER---OUT-leading-limb-left-shifted      relOffset)
+                              (rlptxn---INTEGER---OUT-leading-limb-byte-size         relOffset))
+    ;; enshrining the lo part of a (nonzero) integer into the RLP string
+    (conditionally-set-limb   (+ relOffset 2)
+                              (rlptxn---INTEGER---OUT-integer-is-non-zero   relOffset)
+                              (rlptxn---INTEGER---last-limb integer-lo      relOffset)
+                              (rlptxn---INTEGER---last-limb-byte-size       relOffset))
     ))
 
-(defun (rlptxn---integer-out-integer-is-non-zero w)                         (shift cmp/EXO_DATA_3 w))
-(defun (rlptxn---integer-out-integer-has-non-zero-hi-part w)                (shift cmp/EXO_DATA_4 w))
-(defun (rlptxn---integer-out-rlp-prefix-required w)                         (shift cmp/EXO_DATA_5 w))
-(defun (rlptxn---integer-out-rlp-prefix w)                                  (shift cmp/EXO_DATA_6 w))
-(defun (rlptxn---integer-out-leading-limb-left-shifted w)                   (shift cmp/EXO_DATA_7 w))
-(defun (rlptxn---integer-out-leading-limb-byte-size w)                      (shift cmp/EXO_DATA_8 w))
-(defun (rlptxn---integer-last-limb integer-lo w)  
-    (if-zero (rlptxn---integer-out-integer-has-non-zero-hi-part w)
-        (rlptxn---integer-out-leading-limb-left-shifted w)
-        integer-lo))
-(defun (rlptxn---integer-last-limb-byte-size w)  
-    (if-zero (rlptxn---integer-out-integer-has-non-zero-hi-part w)
-        (rlptxn---integer-out-leading-limb-byte-size w)
-        LLARGE))
+;; deriving shorthands
+(defun (rlptxn---INTEGER---OUT-integer-is-non-zero                relOffset)   (shift  cmp/EXO_DATA_3  relOffset))
+(defun (rlptxn---INTEGER---OUT-integer-has-non-zero-hi-part       relOffset)   (shift  cmp/EXO_DATA_4  relOffset))
+(defun (rlptxn---INTEGER---OUT-rlp-prefix-required                relOffset)   (shift  cmp/EXO_DATA_5  relOffset))
+(defun (rlptxn---INTEGER---OUT-rlp-prefix                         relOffset)   (shift  cmp/EXO_DATA_6  relOffset))
+(defun (rlptxn---INTEGER---OUT-leading-limb-left-shifted          relOffset)   (shift  cmp/EXO_DATA_7  relOffset))
+(defun (rlptxn---INTEGER---OUT-leading-limb-byte-size             relOffset)   (shift  cmp/EXO_DATA_8  relOffset))
+(defun (rlptxn---INTEGER---last-limb     integer-lo               relOffset)
+  (if-zero (rlptxn---INTEGER---OUT-integer-has-non-zero-hi-part   relOffset)
+           (rlptxn---INTEGER---OUT-leading-limb-left-shifted      relOffset)
+           integer-lo))
+(defun (rlptxn---INTEGER---last-limb-byte-size relOffset)
+  (if-zero (rlptxn---INTEGER---OUT-integer-has-non-zero-hi-part   relOffset)
+           (rlptxn---INTEGER---OUT-leading-limb-byte-size         relOffset)
+           LLARGE))

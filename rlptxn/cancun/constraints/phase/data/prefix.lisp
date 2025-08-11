@@ -11,7 +11,7 @@
 (defconstraint phase-data-size-analysis-row ()
     (if-not-zero (is-payload-size-analysis-row)
         (begin
-        (rlp-compound-byte-string    0 (payload-size) (rlptxn---data-first-byte-or-zero) 0 0)
+        (rlp-compound-constraint---BYTE_STRING_PREFIX    0 (payload-size) (rlptxn---data-first-byte-or-zero) 0 0)
         (eq! (zeros-countdown)      (zeros-in-payload))
         (eq! (nonzs-countdown)      (nonzs-in-payload))
         (if-not-zero (rlptxn---data-payload-is-empty)
