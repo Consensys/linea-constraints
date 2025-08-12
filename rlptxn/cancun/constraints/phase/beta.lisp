@@ -1,28 +1,44 @@
 (module rlptxn)
 
-(defun (tw-scalar) 
-       (if-zero REPLAY_PROTECTION
-            (+ UNPROTECTED_V  Y_PARITY)
-            (+ (* 2 txn/CHAIN_ID)
-               PROTECTED_BASE_V
-               Y_PARITY)))
 
-(defconstraint phase-beta-tw ()
-    (if-not-zero (* IS_BETA TXN)
-        (begin
-        (limb-of-lt-only  1)
-        (rlp-compound-constraint---INTEGER 1 0 (tw-scalar) (- 1 REPLAY_PROTECTION))
-        )))
+(defun    (first-row-of-beta-phase)                           (*   IS_BETA                   TXN))
+(defun    (first-row-of-beta-phase-with-replay-protection)    (*   (first-row-of-beta-phase) REPLAY_PROTECTION))
+(defun    (beta-phase---Tw-scalar)     (if-zero   REPLAY_PROTECTION
+                                                  ;; replay_protection ≡ <false>
+                                                  (+ UNPROTECTED_V  Y_PARITY)
+                                                  ;; replay_protection ≡ <true>
+                                                  (+ (* 2 txn/CHAIN_ID)
+                                                     PROTECTED_BASE_V
+                                                     Y_PARITY)))
 
-(defconstraint phase-beta-beta ()
-    (if-not-zero (* IS_BETA TXN REPLAY_PROTECTION)
-        (begin
-        (limb-of-lx-only  (+ 3 1))
-        (rlp-compound-constraint---INTEGER (+ 3 1) 0 txn/CHAIN_ID 0)
-        (limb-of-lx-only  (+ 3 3 1))
-        (set-limb         (+ 3 3 1)
-                          (+ (* RLP_PREFIX_INT_SHORT (^ 256 LLARGEMO))
-                             (* RLP_PREFIX_INT_SHORT (^ 256 14))) 
-                          2)
-        (eq! (shift PHASE_END (+ 3 3 1)) 1)
-        )))
+(defconstraint    beta-phase---RLP-ization-of-Tw
+                  (:guard   (first-row-of-beta-phase))
+                  (let ((ROFF 1))
+                    (begin
+                      (limb-of-lt-only                     ROFF)
+                      (rlp-compound-constraint---INTEGER   ROFF
+                                                           0
+                                                           (beta-phase---Tw-scalar)
+                                                           (- 1 REPLAY_PROTECTION)))))
+
+(defconstraint    beta-phase---RLP-ization-of-the-transactions-chain-id
+                  (:guard (first-row-of-beta-phase-with-replay-protection))
+                  (let  ((ROFF   (+ 3 1)))
+                    (begin
+                      (limb-of-lx-only                     ROFF)
+                      (rlp-compound-constraint---INTEGER   ROFF
+                                                           0
+                                                           txn/CHAIN_ID
+                                                           0))))
+
+(defconstraint    beta-phase---accounting-for-RLP-empty-RLP-empty-in-the-RLP-string
+                  (:guard (first-row-of-beta-phase-with-replay-protection))
+                  (let  ((ROFF   (+ 3 3 1)))
+                  (begin
+                    (limb-of-lx-only  ROFF)
+                    (set-limb         ROFF
+                                      (+ (* RLP_PREFIX_INT_SHORT (^ 256 LLARGEMO))
+                                         (* RLP_PREFIX_INT_SHORT (^ 256 14))) 
+                                      2)
+                    (eq! (shift PHASE_END ROFF) 1)
+                    )))
