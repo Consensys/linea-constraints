@@ -23,7 +23,7 @@
 
 (defun (rlptxn---access-list---AL-RLP-length-countdown)         cmp/AUX_1)
 (defun (rlptxn---access-list---AL-item-RLP-length-countdown)    cmp/AUX_2)
-(defun (rlptxn---access-list---item-countdown)                  cmp/AUX_CCC_1)
+(defun (rlptxn---access-list---access-list-item-countdown)      cmp/AUX_CCC_1)
 (defun (rlptxn---access-list---storage-key-countdown)           cmp/AUX_CCC_2)
 (defun (rlptxn---access-list---storage-key-list-countdown)      cmp/AUX_CCC_3) ;; ""
 

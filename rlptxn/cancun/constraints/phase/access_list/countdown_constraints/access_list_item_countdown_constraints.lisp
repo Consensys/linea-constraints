@@ -9,7 +9,7 @@
 
 (defconstraint rlptxn---access-list-item-countdown---initialization ()
                (if-not-zero (is-access-list-prefix)
-                            (eq! (rlptxn---access-list---item-countdown)
+                            (eq! (rlptxn---access-list---access-list-item-countdown)
                                  (prev txn/NUMBER_OF_PREWARMED_ADDRESSES))))
 
 (defun   (rlptxn---access-list---new-access-list-item)   (* IS_PREFIX_OF_ACCESS_LIST_ITEM
@@ -17,6 +17,6 @@
 
 (defconstraint rlptxn---access-list-item-countdown---update ()
                (if-not-zero (is-access-list-data)
-                            (did-dec! (rlptxn---access-list---item-countdown)
+                            (did-dec! (rlptxn---access-list---access-list-item-countdown)
                                       (rlptxn---access-list---new-access-list-item))))
 
