@@ -12,9 +12,9 @@
   ( BLK_NUMBER      :i16          )
   ( TOTL_TXN_NUMBER :i16          )
   ( USER_TXN_NUMBER :i16          )
-  ( SYSI            :binary@prove )
-  ( USER            :binary@prove )
-  ( SYSF            :binary@prove )
+  ( SYSI            :binary       ) ;; binarity is inherited from the HUB
+  ( USER            :binary       ) ;; same
+  ( SYSF            :binary       ) ;; same
   ;; perspective flags
   ( CMPTN           :binary@prove )
   ( HUB             :binary@prove )

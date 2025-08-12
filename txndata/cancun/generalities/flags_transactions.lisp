@@ -1,0 +1,22 @@
+(module txndata)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                      ;;
+;;    X.Y.Z txn_flag_sum constraints    ;;
+;;                                      ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+(defun    (txn-flag-sum)    (+    SYSI
+				  USER
+				  SYSF))
+
+(defconstraint    txn-flag-sum-constraints---binary-constraint ()
+		  (is-binary    (txn-flag-sum)))
+
+(defconstraint    txn-flag-sum-constraints---initially-zero    (:domain {-1}) ;; ""
+		  (vanishes!    (txn-flag-sum)))
+
+(defconstraint    txn-flag-sum-constraints---monotonicity ()
+		  (if-not-zero    (txn-flag-sum)
+				  (will-eq!    (txn-flag-sum)    1)))
