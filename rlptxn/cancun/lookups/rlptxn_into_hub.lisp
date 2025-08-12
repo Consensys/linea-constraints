@@ -4,8 +4,8 @@
    (+ rlptxn.IS_ACCESS_LIST_ADDRESS rlptxn.IS_ACCESS_LIST_STORAGE_KEY ) 
    (prev rlptxn.DONE))))
 
-(defun (rlptxn---AL-address-hi)          rlptxn.cmp/AUX_CCC_4)
-(defun (rlptxn---AL-address-lo)          rlptxn.cmp/AUX_CCC_5)
+(defun (rlptxn---AL---address-hi)          rlptxn.cmp/AUX_CCC_4)
+(defun (rlptxn---AL---address-lo)          rlptxn.cmp/AUX_CCC_5)
 
 (defclookup 
   rlptxn-into-hub
@@ -28,8 +28,8 @@
    rlptxn.USER_TXN_NUMBER
    rlptxn.IS_ACCESS_LIST_ADDRESS
    rlptxn.IS_ACCESS_LIST_STORAGE_KEY
-   (rlptxn---AL-address-hi)
-   (rlptxn---AL-address-lo)
+   (rlptxn---AL---address-hi)
+   (rlptxn---AL---address-lo)
    (* rlptxn.cmp/EXO_DATA_1 rlptxn.IS_ACCESS_LIST_STORAGE_KEY)
    (* rlptxn.cmp/EXO_DATA_2 rlptxn.IS_ACCESS_LIST_STORAGE_KEY)
    )
