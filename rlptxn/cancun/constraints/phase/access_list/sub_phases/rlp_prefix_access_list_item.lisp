@@ -1,5 +1,5 @@
 (module rlptxn)
 
-(defconstraint rlptxn-AL---rlp-prefix-tuple ()
+(defconstraint access-list---rlp-prefix-tuple ()
     (if-not-zero (* IS_PREFIX_OF_ACCESS_LIST_ITEM (prev DONE))
-        (rlp-compound-constraint---BYTE_STRING_PREFIX-non-trivial  0 (rlptxn---access-list---AL-item-rlp-length-countdown) 1 1)))
+        (rlp-compound-constraint---BYTE_STRING_PREFIX-non-trivial  0 (rlptxn---access-list---AL-item-RLP-length-countdown) 1 1)))

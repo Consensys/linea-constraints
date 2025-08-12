@@ -8,7 +8,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-(defconstraint    rlptxn---access-list---AL-rlp-length-countdown---update ()
+(defconstraint    rlptxn---access-list---AL-RLP-length-countdown---update ()
                   (if-not-zero    (is-access-list-data)
-                                  (did-dec!   (rlptxn---access-list---AL-rlp-length-countdown)
+                                  (did-dec!   (rlptxn---access-list---AL-RLP-length-countdown)
                                               (* LC cmp/LIMB_SIZE))))
