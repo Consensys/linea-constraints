@@ -21,15 +21,15 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-(defun (rlptxn---AL---rlp-length-countdown)            cmp/AUX_1)
-(defun (rlptxn---AL---item-rlp-length-countdown)       cmp/AUX_2)
-(defun (rlptxn---AL---item-countdown)                  cmp/AUX_CCC_1)
-(defun (rlptxn---AL---storage-key-countdown)           cmp/AUX_CCC_2)
-(defun (rlptxn---AL---storage-key-list-countdown)      cmp/AUX_CCC_3) ;; ""
+(defun (rlptxn---access-list---AL-rlp-length-countdown)         cmp/AUX_1)
+(defun (rlptxn---access-list---AL-item-rlp-length-countdown)    cmp/AUX_2)
+(defun (rlptxn---access-list---item-countdown)                  cmp/AUX_CCC_1)
+(defun (rlptxn---access-list---storage-key-countdown)           cmp/AUX_CCC_2)
+(defun (rlptxn---access-list---storage-key-list-countdown)      cmp/AUX_CCC_3) ;; ""
 
 ;; ;; shorthand defined outside of the module to be accessible in lookups
-;; (defun (rlptxn---AL---address-hi)          rlptxn.cmp/AUX_CCC_4)
-;; (defun (rlptxn---AL---address-lo)          rlptxn.cmp/AUX_CCC_5)
+;; (defun (rlptxn---access-list---address-hi)          rlptxn.cmp/AUX_CCC_4)
+;; (defun (rlptxn---access-list---address-lo)          rlptxn.cmp/AUX_CCC_5)
 
 (defun (storage-stuff)                   (force-bin (+ IS_PREFIX_OF_STORAGE_KEY_LIST IS_ACCESS_LIST_STORAGE_KEY)))
 (defun (not-storage-stuff)               (force-bin (- 1 (storage-stuff))))

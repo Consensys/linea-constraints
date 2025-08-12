@@ -3,7 +3,7 @@
 (defconstraint rlptxn-AL---rlp-prefix-full-access-list ()
     (if-not-zero (is-access-list-prefix)
         (begin
-        (rlp-compound-constraint---BYTE_STRING_PREFIX-non-trivial  0 (rlptxn---AL---rlp-length-countdown) 1 0)
+        (rlp-compound-constraint---BYTE_STRING_PREFIX-non-trivial  0 (rlptxn---access-list---AL-rlp-length-countdown) 1 0)
         (eq! PHASE_END (access-list-is-empty)))))
 
 (defun (access-list-is-non-empty)        cmp/EXO_DATA_4)

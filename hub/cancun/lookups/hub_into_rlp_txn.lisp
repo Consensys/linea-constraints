@@ -17,8 +17,8 @@
   rlptxn.USER_TXN_NUMBER
    rlptxn.IS_ACCESS_LIST_ADDRESS
    rlptxn.IS_ACCESS_LIST_STORAGE_KEY
-   (rlptxn---AL-address-hi)
-   (rlptxn---AL-address-lo)
+   (rlptxn---access-list---address-hi)
+   (rlptxn---access-list---address-lo)
    (* rlptxn.cmp/EXO_DATA_1 rlptxn.IS_ACCESS_LIST_STORAGE_KEY)
    (* rlptxn.cmp/EXO_DATA_2 rlptxn.IS_ACCESS_LIST_STORAGE_KEY)
   )
