@@ -9,9 +9,5 @@
 
 (defconstraint access-list-flag-exclusivity ()
                (eq! (is-access-list-data)
-                    (+   IS_PREFIX_OF_ACCESS_LIST_ITEM
-                         IS_PREFIX_OF_STORAGE_KEY_LIST
-                         IS_ACCESS_LIST_ADDRESS
-                         IS_ACCESS_LIST_STORAGE_KEY
-                         )))
+                    (* (prev CMP) CMP IS_ACCESS_LIST)))
 

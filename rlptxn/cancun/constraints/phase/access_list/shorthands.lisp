@@ -1,7 +1,11 @@
 (module rlptxn)
 
 (defun    (is-access-list-prefix)    (* (prev TXN)     IS_ACCESS_LIST))
-(defun    (is-access-list-data)      (* (prev CMP) CMP IS_ACCESS_LIST))
+(defun    (is-access-list-data)      (force-bin (+   IS_PREFIX_OF_ACCESS_LIST_ITEM
+                                                     IS_PREFIX_OF_STORAGE_KEY_LIST
+                                                     IS_ACCESS_LIST_ADDRESS
+                                                     IS_ACCESS_LIST_STORAGE_KEY
+                                                     )))
 
 (defun (AL-rlp-length-countdown)         cmp/AUX_1)
 (defun (AL-item-rlp-length-countdown)    cmp/AUX_2)
