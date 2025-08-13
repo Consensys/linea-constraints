@@ -7,9 +7,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-(defun    (txn-flag-sum)    (+    SYSI
-				  USER
-				  SYSF))
+(defun    (txn-flag-sum)    (force-bin  (+  SYSI  USER  SYSF)))
 
 (defconstraint    txn-flag-sum-constraints---binary-constraint ()
 		  (is-binary    (txn-flag-sum)))

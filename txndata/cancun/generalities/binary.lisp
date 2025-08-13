@@ -37,7 +37,7 @@
 		  ;; ( is-binary hub/EIP_2935                   )
 		  ;; ( is-binary hub/NOOP                       )
 
-		  ;; cmptn/ columns
+		  ;; computation/ columns
 		  ;; ( is-binary cmptn/EUC_FLAG )
 		  ;; ( is-binary cmptn/WCP_FLAG )
 		  ))
