@@ -49,19 +49,7 @@
   (NONTRIVIAL_PAIR_OF_POINTS_BIT                 :binary@prove)
   (NONTRIVIAL_PAIR_OF_POINTS_ACC                 :binary@prove)
 
-  (CIRCUIT_SELECTOR_POINT_EVALUATION           :binary@prove)
-  (CIRCUIT_SELECTOR_POINT_EVALUATION_FAILURE   :binary@prove)
-  (CIRCUIT_SELECTOR_C1_MEMBERSHIP              :binary@prove)
-  (CIRCUIT_SELECTOR_G1_MEMBERSHIP              :binary@prove)
-  (CIRCUIT_SELECTOR_C2_MEMBERSHIP              :binary@prove)
-  (CIRCUIT_SELECTOR_G2_MEMBERSHIP              :binary@prove)
-  (CIRCUIT_SELECTOR_BLS_PAIRING_CHECK          :binary@prove)
-  (CIRCUIT_SELECTOR_BLS_G1_ADD                 :binary@prove)
-  (CIRCUIT_SELECTOR_BLS_G2_ADD                 :binary@prove)
-  (CIRCUIT_SELECTOR_BLS_G1_MSM                 :binary@prove)
-  (CIRCUIT_SELECTOR_BLS_G2_MSM                 :binary@prove)
-  (CIRCUIT_SELECTOR_BLS_MAP_FP_TO_G1           :binary@prove)
-  (CIRCUIT_SELECTOR_BLS_MAP_FP2_TO_G2          :binary@prove)
+  ;; Circuit selector columns are defined using defcomputedcolumn in circuit_selectors.lisp
 
   (WCP_FLAG     :binary@prove)
   (WCP_ARG1_HI  :i128)

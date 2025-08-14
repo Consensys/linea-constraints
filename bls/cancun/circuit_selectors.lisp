@@ -3,7 +3,7 @@
 (defun (cs_G1MT_for_g1_msm)
     (* DATA_BLS_G1_MSM_FLAG IS_FIRST_INPUT MEXT_BIT))
 
-(defun (cs_G1MT_for_g2_msm)
+(defun (cs_G2MT_for_g2_msm)
     (* DATA_BLS_G2_MSM_FLAG IS_FIRST_INPUT MEXT_BIT))
 
 (defun (cs_G1MT_for_pairing_malformed)
@@ -21,47 +21,47 @@
 (defun (is_nontrivial_pairing_data_or_result)
     (+ (* DATA_BLS_PAIRING_CHECK_FLAG NONTRIVIAL_POP_BIT) RSLT_BLS_PAIRING_CHECK_FLAG))  
 
-(defconstraint set-cs-c1-membership ()
-    (eq! CS_C1_MEMBERSHIP (* MEXT_BIT DATA_BLS_G1_ADD_FLAG)))
+;; Circuit selector column definitions
 
-(defconstraint set-cs-c2-membership ()
-    (eq! CS_C2_MEMBERSHIP (* MEXT_BIT DATA_BLS_G2_MSM_FLAG)))
+(defcomputedcolumn (CIRCUIT_SELECTOR_C1_MEMBERSHIP :binary@prove) 
+    (* MEXT_BIT DATA_BLS_G1_ADD_FLAG))
 
-(defconstraint set-cs-g1-membership ()
-    (eq! CS_G1_MEMBERSHIP 
+(defcomputedcolumn (CIRCUIT_SELECTOR_C2_MEMBERSHIP :binary@prove) 
+    (* MEXT_BIT DATA_BLS_G2_MSM_FLAG))
+
+(defcomputedcolumn (CIRCUIT_SELECTOR_G1_MEMBERSHIP :binary@prove) 
     (+ (cs_G1MT_for_g1_msm)
        (cs_G1MT_for_pairing_malformed)
-       (cs_G1MT_for_pairing_wellformed))))
+       (cs_G1MT_for_pairing_wellformed)))
 
-(defconstraint set-cs-g2-membership ()
-    (eq! CS_G2_MEMBERSHIP 
-    (+ (cs_G1MT_for_g2_msm)
+(defcomputedcolumn (CIRCUIT_SELECTOR_G2_MEMBERSHIP :binary@prove)
+    (+ (cs_G2MT_for_g2_msm)
        (cs_G2MT_for_pairing_malformed)
-       (cs_G2MT_for_pairing_wellformed))))
+       (cs_G2MT_for_pairing_wellformed)))
 
-(defconstraint set-cs-point-evaluation ()
-    (eq! CS_POINT_EVALUATION (* WNON (is_point_evaluation))))
+(defcomputedcolumn (CIRCUIT_SELECTOR_POINT_EVALUATION :binary@prove) 
+    (* WNON (is_point_evaluation)))
 
-(defconstraint set-cs-point-evaluation-failure ()
-    (eq! CS_POINT_EVALUATION_FAILURE (* MEXT (is_point_evaluation))))
+(defcomputedcolumn (CIRCUIT_SELECTOR_POINT_EVALUATION_FAILURE :binary@prove) 
+    (* MEXT (is_point_evaluation)))
 
-(defconstraint set-cs-g1-add ()
-    (eq! CS_BLS_G1_ADD (* WNON (is_g1_add))))
+(defcomputedcolumn (CIRCUIT_SELECTOR_BLS_G1_ADD :binary@prove) 
+    (* WNON (is_g1_add)))
 
-(defconstraint set-cs-g1-msm ()
-    (eq! CS_BLS_G1_MSM (* WNON (is_g1_msm))))
+(defcomputedcolumn (CIRCUIT_SELECTOR_BLS_G1_MSM :binary@prove) 
+    (* WNON (is_g1_msm)))
 
-(defconstraint set-cs-g2-add ()
-    (eq! CS_BLS_G2_ADD (* WNON (is_g2_add))))
+(defcomputedcolumn (CIRCUIT_SELECTOR_BLS_G2_ADD :binary@prove) 
+    (* WNON (is_g2_add)))
 
-(defconstraint set-cs-g2-msm ()
-    (eq! CS_BLS_G2_MSM (* WNON (is_g2_msm))))
+(defcomputedcolumn (CIRCUIT_SELECTOR_BLS_G2_MSM :binary@prove) 
+    (* WNON (is_g2_msm)))
 
-(defconstraint set-cs-pairing-check ()
-    (eq! CS_BLS_PAIRING_CHECK (* WNON (is_nontrivial_pairing_data_or_result))))
+(defcomputedcolumn (CIRCUIT_SELECTOR_BLS_PAIRING_CHECK :binary@prove) 
+    (* WNON (is_nontrivial_pairing_data_or_result)))
 
-(defconstraint set-cs-map-fp-to-g1 ()
-    (eq! CS_BLS_MAP_FP_TO_G1 (* WNON (is_map_fp_to_g1))))
+(defcomputedcolumn (CIRCUIT_SELECTOR_BLS_MAP_FP_TO_G1 :binary@prove) 
+    (* WNON (is_map_fp_to_g1)))
 
-(defconstraint set-cs-map-fp2-to-g2 ()
-    (eq! CS_BLS_MAP_FP2_TO_G2 (* WNON (is_map_fp2_to_g2))))
+(defcomputedcolumn (CIRCUIT_SELECTOR_BLS_MAP_FP2_TO_G2 :binary@prove) 
+    (* WNON (is_map_fp2_to_g2)))
