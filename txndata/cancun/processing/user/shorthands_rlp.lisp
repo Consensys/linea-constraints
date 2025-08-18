@@ -3,7 +3,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                      ;;
 ;;    X. USER transaction processing    ;;
-;;    X.Y Prelude                       ;;
+;;    X.Y RLP shorthands                ;;
 ;;                                      ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -23,10 +23,12 @@
 (defun   (USER-transaction---RLP---number-of-access-list-addresses)   (shift   rlp/NUMBER_OF_ACCESS_LIST_ADDRESSES      ROFF___USER___RLP_ROW))
 
 (defun   (USER-transaction---RLP---is-message-call)    (-   1    (USER-transaction---RLP---is-deployment)))
+
 (defun   (USER-transaction---data-size)                (+   (USER-transaction---RLP---number-of-zero-bytes)
                                                             (USER-transaction---RLP---number-of-nonzero-bytes)))
-(defun   (USER-transaction---weighted-byte-count)      (+   (USER-transaction---RLP---number-of-zero-bytes)
-                                                            (USER-transaction---RLP---number-of-nonzero-bytes)))
-(defun   (USER-transaction---data-cost)                (*   (USER-transaction---weighted-byte-count)))
-(defun   (USER-transaction---data-floor-cost)          (*   (USER-transaction---weighted-byte-count)))
+(defun   (USER-transaction---weighted-byte-count)      (+   (*   1    (USER-transaction---RLP---number-of-zero-bytes))
+                                                            (*   4    (USER-transaction---RLP---number-of-nonzero-bytes))))
+
+(defun   (USER-transaction---data-cost)                (*   STANDARD_TOKEN_COST    (USER-transaction---weighted-byte-count)))
+(defun   (USER-transaction---data-floor-cost)          (*   FLOOR_TOKEN_COST       (USER-transaction---weighted-byte-count)))
 
