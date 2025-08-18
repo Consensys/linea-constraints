@@ -25,6 +25,8 @@ BLOCKDATA_CANCUN := blockdata/cancun
 
 BLOCKHASH := blockhash
 
+CONSTANTS := constants/constants.lisp
+
 CONSTANTS_LONDON := constants/london
 
 CONSTANTS_CANCUN := constants/cancun
@@ -110,10 +112,10 @@ define warn_lispX
 	@for FILE in ${LISPX}; do (echo "WARNING: $$FILE"); done
 endef
 
-ZKEVM_MODULES_COMMON := ${ALU} \
-		 ${BIN} \
+ZKEVM_MODULES_COMMON := ${BIN} \
 		 ${BLAKE2f_MODEXP_DATA} \
 		 ${BLOCKHASH} \
+		 ${CONSTANTS} \
 		 ${EC_DATA} \
 		 ${EUC} \
 		 ${EXP} \
