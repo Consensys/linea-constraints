@@ -9,6 +9,7 @@
 
 
 (defun   (USER-transaction---HUB---basefee)                      (shift   hub/btc_BASEFEE                  ROFF___USER___HUB_ROW))
+(defun   (USER-transaction---HUB---block-gas-limit)              (shift   hub/btc_BLOCK_GAS_LIMIT          ROFF___USER___HUB_ROW))
 (defun   (USER-transaction---HUB---nonce)                        (shift   hub/NONCE                        ROFF___USER___HUB_ROW))
 (defun   (USER-transaction---HUB---initial-balance)              (shift   hub/INIT_BALANCE                 ROFF___USER___HUB_ROW))
 (defun   (USER-transaction---HUB---gas-limit)                    (shift   hub/GAS_LIMIT                    ROFF___USER___HUB_ROW))

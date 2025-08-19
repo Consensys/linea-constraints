@@ -33,7 +33,7 @@
                   (if-not-zero    (USER-transaction---RLP---is-deployment)
                                   (eq!   (USER-transaction---HUB---copy-txcd)    0)))
 
-(defconstraint    USER-transaction-processing---common-computations---setting-REQUIRES_EVM_EXECTION---the-deployment-transaction-case
+(defconstraint    USER-transaction-processing---common-computations---setting-REQUIRES_EVM_EXECTION---deployment-transaction-case
                   (:guard    (first-row-of-USER-transaction))
                   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                   (if-not-zero    (USER-transaction---RLP---is-deployment)

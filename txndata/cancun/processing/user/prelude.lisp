@@ -7,7 +7,9 @@
 ;;                                      ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defun    (first-row-of-USER-transaction)    (force-bin    (- TOTL_TXN_NUMBER (prev TOTL_TXN_NUMBER))   USER))
+(defun    (first-row-of-USER-transaction)                                (force-bin    (*   (- TOTL_TXN_NUMBER (prev TOTL_TXN_NUMBER))   USER)))
+(defun    (first-row-of-USER-transaction-with-EIP-1559-gas-semantics)    (force-bin    (*   (first-row-of-USER-transaction)
+											    (USER-transaction---HUB---has-eip-1559-gas-semantics))))
 
 
 (defconstraint    USER-transaction-processing---prelude---setting-the-first-few-perspective-flags
