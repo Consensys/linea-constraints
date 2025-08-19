@@ -27,5 +27,5 @@
                   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                   (if-not-zero   (get-full-tip)
                            (if-not-zero (get-full-tip)
-                                        (eq!   (USER-transaction---HUB---gas-price)   (+   (USER-transaction---HUB---basefee)   (USER-transaction---RLP---max-priority-fee)))
-                                        (eq!   (USER-transaction---HUB---gas-price)   (max_fee)))))
+                                        (eq!   (USER-transaction---HUB---gas-price)   (+   (USER-transaction---RLP---max-priority-fee)    (USER-transaction---HUB---basefee)))
+                                        (eq!   (USER-transaction---HUB---gas-price)        (USER-transaction---RLP---max-fee)))))
