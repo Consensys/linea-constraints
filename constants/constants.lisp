@@ -68,8 +68,8 @@
   EVM_INST_COINBASE                         0x41
   EVM_INST_TIMESTAMP                        0x42
   EVM_INST_NUMBER                           0x43
-  EVM_INST_DIFFICULTY                       0x44          ;; disappears in Paris                     
-  EVM_INST_PREVRANDAO                       0x44          ;; appears in Paris 
+  EVM_INST_DIFFICULTY                       0x44          ;; disappears in Paris
+  EVM_INST_PREVRANDAO                       0x44          ;; appears in Paris
   EVM_INST_GASLIMIT                         0x45
   EVM_INST_CHAINID                          0x46
   EVM_INST_SELFBALANCE                      0x47
@@ -225,7 +225,7 @@
   GAS_CONST_RIPEMD_WORD                     120
   GAS_CONST_IDENTITY                        15
   GAS_CONST_IDENTITY_WORD                   3
-  GAS_CONST_MODEXP                          200 
+  GAS_CONST_MODEXP                          200
   GAS_CONST_ECADD                           150
   GAS_CONST_ECMUL                           6000
   GAS_CONST_ECPAIRING                       45000
@@ -234,8 +234,8 @@
   GAS_CONST_INIT_CODE_WORD                  2 ;; post Shanghai EIP-3860
   GAS_CONST_HASH_OPCODE_GAS                 3 ;; gas cost of BLOBHASH, EIP-4844 in Cancun         
   GAS_CONST_POINT_EVALUATION                50000
-  GAS_CONST_BLS_G1_ADD                       375
-  GAS_CONST_BLS_G2_ADD                       600
+  GAS_CONST_BLS_G1_ADD                      375
+  GAS_CONST_BLS_G2_ADD                      600
   GAS_CONST_BLS_MAP_FP_TO_G1                5500
   GAS_CONST_BLS_MAP_FP2_TO_G2               23800
   GAS_CONST_BLS_PAIRING_CHECK               37700
@@ -312,13 +312,6 @@
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; PRECOMPILES   ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;               ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  MAX_PRC_ADDRESS_LONDON                    0x09
-  MAX_PRC_ADDRESS_PARIS                     0x09
-  MAX_PRC_ADDRESS_SHANGHAI                  0x09
-  MAX_PRC_ADDRESS_CANCUN                    0x0a
-  MAX_PRC_ADDRESS_PRAGUE                    0x11
-  MAX_PRC_ADDRESS                           MAX_PRC_ADDRESS_PRAGUE ;; TODO: find a solution for fork dependent constants
-
   PRECOMPILE_CALL_DATA_UNIT_SIZE___ECPAIRING               192
   PRECOMPILE_CALL_DATA_SIZE___POINT_EVALUATION             192
   PRECOMPILE_CALL_DATA_SIZE___G1_ADD                       256
@@ -329,6 +322,7 @@
   PRECOMPILE_CALL_DATA_SIZE___FP_TO_G1                      64
   PRECOMPILE_CALL_DATA_SIZE___FP2_TO_G2                    128
 
+  PRC_ECPAIRING_SIZE                                       (* 6 WORD_SIZE)
   PRECOMPILE_CALL_DATA_SIZE___BLAKE2F                      213
   PRECOMPILE_RETURN_DATA_SIZE___ECADD                       64
   PRECOMPILE_RETURN_DATA_SIZE___ECMUL                       64
