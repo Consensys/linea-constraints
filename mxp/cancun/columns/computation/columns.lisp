@@ -14,6 +14,6 @@
 		 ( ARG_2_HI :i128         )
 		 ( ARG_2_LO :i128         )
 		 ( RES_A    :i64          )
-		 ( RES_B    :i64          )
+		 ( RES_B    :i32          )
 		 )
 		)
