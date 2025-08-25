@@ -20,7 +20,7 @@
 
 (defconstraint    EIP-4788---computing-the-timestamp-modulo-8191---committing-to-SYST_TXN_DATA
 		  (:guard   (first-row-of-EIP-4788-transaction))
-		  (eq!   (EIP-4788---computing-the-timestamp-modulo-8191)
+		  (eq!   (EIP-4788---timestamp-mod-8191)
 			 (shift   computation/RES   ROFF___EIP_4788___TIMESTAMP_MOD_8191)))
 
 (defconstraint    EIP-4788---detecting-the-genesis-block---WCP-call

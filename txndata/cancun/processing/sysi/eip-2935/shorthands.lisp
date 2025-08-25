@@ -14,6 +14,7 @@
 (defun   (EIP-2935---prev-block-hash-lo)               (shift  [ hub/SYST_TXN_DATA 4 ]  ROFF___SYSI___HUB_ROW)) ;; ""
 (defun   (EIP-2935---current-block-is-genesis-block)   (shift  [ hub/SYST_TXN_DATA 5 ]  ROFF___SYSI___HUB_ROW)) ;; ""
 (defun   (EIP-2935---block-number)                     (shift    hub/btc_BLOCK_NUMBER   ROFF___SYSI___HUB_ROW)) ;; ""
+(defun   (EIP-2935---timestamp)                        (shift    hub/btc_TIMESTAMP      ROFF___SYSI___HUB_ROW)) ;; ""
 
 (defun   (first-row-of-EIP-2935-transaction)   (*   (first-row-of-SYSI-transaction)   (shift   hub/EIP_2935   ROFF___SYSI___HUB_ROW)))
 

@@ -17,4 +17,5 @@
                                            GAS_CUMULATIVE
                                            (USER-transaction---HUB---block-gas-limit))
                     (result-must-be-true   ROFF___USER___CMPTN_ROW___CUMULATIVE_GAS_CONSUMPTION_MUST_NOT_EXCEED_BLOCK_GAS_LIMIT)
+                    ))
 

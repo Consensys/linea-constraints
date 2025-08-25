@@ -17,6 +17,6 @@
                                   WORD_SIZE)
                   )
 
-(defun    (USER-transaction---init-code-words)   (shift   computation/RES    ROFF___USER___CMPTN_ROW___EIP-3860___INIT_CODE_WORD_PRICING)
+(defun    (USER-transaction---init-code-words)   (shift   computation/RES    ROFF___USER___CMPTN_ROW___EIP-3860___INIT_CODE_WORD_PRICING))
 (defun    (USER-transaction---init-code-cost)    (*   GAS_CONST_INIT_CODE_WORD    (USER-transaction---init-code-words)))
 

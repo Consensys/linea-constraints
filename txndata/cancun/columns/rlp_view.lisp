@@ -37,5 +37,5 @@
 	 ( NUMBER_OF_ACCESS_LIST_STORAGE_KEYS :i24          )
 	 ( CHAIN_ID                           :i32          )
 	 ( CFI                                :i16          )
-	 ( REQUIRES_EVM_EXEUCTION             :binary@prove )
+	 ( REQUIRES_EVM_EXECUTION             :binary@prove )
 	 ))

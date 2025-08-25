@@ -3,12 +3,12 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                      ;;
 ;;    X. USER transaction processing    ;;
-;;    X.Y Data transfer HUB <-- RLP     ;;
+;;    X.Y Data transfer HUB -from- RLP     ;;
 ;;                                      ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-(defconstraint   USER-transaction---data-transfer---HUB<==RLP---is-deployment-nonce-value-and-gas-limit
+(defconstraint   USER-transaction---data-transfer---HUB-from-RLP---is-deployment-nonce-value-and-gas-limit
 		 (:guard   (first-row-of-USER-transaction))
 		 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 		 (begin
@@ -18,7 +18,7 @@
 		   (eq!   (USER-transaction---HUB---gas-limit)       (USER-transaction---RLP---gas-limit))
 		   ))
 
-(defconstraint   USER-transaction---data-transfer---HUB<==RLP---call-data-size-and-init-code-size
+(defconstraint   USER-transaction---data-transfer---HUB-from-RLP---call-data-size-and-init-code-size
 		 (:guard   (first-row-of-USER-transaction))
 		 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 		 (begin
@@ -26,14 +26,14 @@
 		   (eq!   (USER-transaction---HUB---init-code-size)   (*   (USER-transaction---RLP---is-deployment)     (USER-transaction---data-size)))
 		   ))
 
-(defconstraint   USER-transaction---data-transfer---HUB<==RLP---conditionally-setting-the-gas-price
+(defconstraint   USER-transaction---data-transfer---HUB-from-RLP---conditionally-setting-the-gas-price
 		 (:guard   (first-row-of-USER-transaction))
 		 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 		 (if-not-zero   (USER-transaction---tx-decoding---tx-type-with-fixed-gas-price)
 				(eq!   (USER-transaction---HUB---gas-price)
 				       (USER-transaction---RLP---gas-price))))
 
-(defconstraint   USER-transaction---data-transfer---HUB<==RLP---conditionally-set-the-address
+(defconstraint   USER-transaction---data-transfer---HUB-from-RLP---conditionally-set-the-address
 		 (:guard   (first-row-of-USER-transaction))
 		 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 		 (if-not-zero   (USER-transaction---RLP---is-message-call)
@@ -42,7 +42,7 @@
 				  (eq!   (shift   hub/TO_ADDRESS_LO   ROFF___USER___HUB_ROW)   (USER-transaction---RLP---to-address-lo-or-zero))
 				  )))
 
-(defconstraint   USER-transaction---data-transfer---HUB<==RLP---marking-transactions-following-EIP-1550-gas-semantics
+(defconstraint   USER-transaction---data-transfer---HUB-from-RLP---marking-transactions-following-EIP-1550-gas-semantics
 		 (:guard   (first-row-of-USER-transaction))
 		 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 		 (eq!   (USER-transaction---HUB---has-eip-1559-gas-semantics)
