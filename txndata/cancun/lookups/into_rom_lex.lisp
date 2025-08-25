@@ -3,10 +3,10 @@
                                                 txndata.hub/IS_DEPLOYMENT
                                                 txndata.hub/INIT_CODE_SIZE
                                                 ))
-(defun   (txn-data-into-rom-lex-selector)   (if-zero   (txn-data-into-rom-lex-product)
-                                                       0 ;; zero
-                                                       1 ;; nonzero
-                                                       ))
+(defun   (txn-data-into-rom-lex-selector)   (if-not-zero   (txn-data-into-rom-lex-product)
+                                                           1 ;; nonzero
+                                                           0 ;; zero
+                                                           ))
 
 (defclookup
   txndata-into-rom-lex
