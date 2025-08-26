@@ -260,8 +260,6 @@
   BEACON_ROOTS_ADDRESS_LO                   0xd732807ef1319fb7b8bb8522d0beac02
   HISTORY_STORAGE_ADDRESS_HI                0x0000f908
   HISTORY_STORAGE_ADDRESS_LO                0x27f1c53a10cb7a02335b175320002935
-  LINEA_CANCUN_FORK_TIMESTAMP               0x7fffffffffffffff ;; TODO: find actual values
-  LINEA_PRAGUE_FORK_TIMESTAMP               0xffffffffffffffff ;; TODO: find actual values
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;             ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;  LINEA MISC ;;
@@ -280,6 +278,8 @@
   LINEA_BLOCK_GAS_LIMIT                     LINEA_GAS_LIMIT_MAXIMUM
   LINEA_BLOB_BASE_FEE                       MIN_BASE_FEE_PER_BLOB_GAS
   LINEA_BLOB_PER_TRANSACTION_MAXIMUM        0
+  LINEA_CANCUN_FORK_TIMESTAMP               0x7fffffffffffffff ;; TODO: find actual values
+  LINEA_PRAGUE_FORK_TIMESTAMP               0xffffffffffffffff ;; TODO: find actual values
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;               ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; SIZE / LENGTH ;;
