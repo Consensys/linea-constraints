@@ -68,8 +68,8 @@
   EVM_INST_COINBASE                         0x41
   EVM_INST_TIMESTAMP                        0x42
   EVM_INST_NUMBER                           0x43
-  EVM_INST_DIFFICULTY                       0x44          ;; disappears in Paris                     
-  EVM_INST_PREVRANDAO                       0x44          ;; appears in Paris 
+  EVM_INST_DIFFICULTY                       0x44          ;; disappears in Paris
+  EVM_INST_PREVRANDAO                       0x44          ;; appears in Paris
   EVM_INST_GASLIMIT                         0x45
   EVM_INST_CHAINID                          0x46
   EVM_INST_SELFBALANCE                      0x47
@@ -225,7 +225,7 @@
   GAS_CONST_RIPEMD_WORD                     120
   GAS_CONST_IDENTITY                        15
   GAS_CONST_IDENTITY_WORD                   3
-  GAS_CONST_MODEXP                          200 
+  GAS_CONST_MODEXP                          200
   GAS_CONST_ECADD                           150
   GAS_CONST_ECMUL                           6000
   GAS_CONST_ECPAIRING                       45000
@@ -309,7 +309,6 @@
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; PRECOMPILES   ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;               ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  MAX_PRC_ADDRESS                                          9                        ;;London value
   PRC_ECPAIRING_SIZE                                       (* 6 WORD_SIZE)
   PRECOMPILE_CALL_DATA_SIZE___BLAKE2F                      213
   PRECOMPILE_RETURN_DATA_SIZE___ECADD                       64
