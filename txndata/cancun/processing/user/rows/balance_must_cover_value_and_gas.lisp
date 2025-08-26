@@ -27,4 +27,4 @@
 
 (defun    (USER-transaction---max-gas-price)
   (+    (*   (USER-transaction---tx-decoding---tx-type-with-fixed-gas-price)    (USER-transaction---RLP---gas-price))
-        (*   (USER-transaction---tx-decoding---tx-type-sans-fixed-gas-price)    (USER-transaction---RLP---max-priority-fee))))
+        (*   (USER-transaction---tx-decoding---tx-type-sans-fixed-gas-price)    (USER-transaction---RLP---max-fee))))
