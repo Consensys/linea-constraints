@@ -46,5 +46,5 @@
                 ( EIP_4788                   :binary@prove )
                 ( EIP_2935                   :binary@prove )
                 ( NOOP                       :binary@prove )
-		( SYST_TXN_DATA              :i128 :display :bytes :array [6] )
+		( SYST_TXN_DATA              :i128 :display :bytes :array [5] )
 		))
