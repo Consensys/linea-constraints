@@ -11,7 +11,7 @@
 		  (counter-constancy    GAS_CUMULATIVE    CT))
 
 (defconstraint    GAS_CUMULATIVE-constraints---it-vanishes-outside-of-USER-and-SYSF-rows  ()
-		  (if-zero   (force-bin   (+   USER   SYSF))
+		  (if-zero   USER
 			     (vanishes!   GAS_CUMULATIVE)))
 
 (defconstraint    GAS_CUMULATIVE-constraints---update-at-USER-transaction-boundaries      ()
@@ -21,6 +21,3 @@
 				    (will-inc!   GAS_CUMULATIVE
 						 (next   (-   hub/GAS_LIMIT   hub/REFUND_EFFECTIVE))))))
 
-(defconstraint    GAS_CUMULATIVE-constraints---it-remains-constant-during-FINL-rows       ()
-		  (if-not-zero   SYSF
-				 (remained-constant!   GAS_CUMULATIVE)))
