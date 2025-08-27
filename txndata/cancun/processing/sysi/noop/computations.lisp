@@ -14,6 +14,6 @@
   )
 
 
-(defconstraint   SYSI-NOOP---nothing-happens
-		 (:guard (first-row-of-SYSI-NOOP-transaction))
-		 (vanishes!   (shift   (+   computation/WCP_FLAG   computation/EUC_FLAG)   ROFF_SYSI_NOOP___FIRST_AND_ONLY_COMPUTATION_ROW)))
+(defproperty   SYSI-NOOP---nothing-happens
+	       (if-not-zero (first-row-of-SYSI-NOOP-transaction)
+			    (vanishes!   (shift   (+   computation/WCP_FLAG   computation/EUC_FLAG)   ROFF_SYSI_NOOP___FIRST_AND_ONLY_COMPUTATION_ROW))))
