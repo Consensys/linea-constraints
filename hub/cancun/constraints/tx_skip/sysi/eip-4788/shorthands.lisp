@@ -27,7 +27,7 @@
   tx-skip---SYSI-4788---NSR---unconditional                                     3
   )
 
-(defun (tx-skip---SYSI-4788---sys-smc-exists)               (shift     account/EXISTS                    tx-skip---SYSI-4788---row-offset---ACC)) ;; ""
+(defun (tx-skip---SYSI-4788---sys-smc-exists)               (shift     account/EXISTS                    tx-skip---SYSI-4788---row-offset---ACC---loading-the-beacon-root-account)) ;; ""
 (defun (tx-skip---SYSI-4788---timestamp)                    (shift   [ transaction/SYST_TXN_DATA   1 ]   tx-skip---SYSI-4788---row-offset---TXN)) ;; ""
 (defun (tx-skip---SYSI-4788---timestamp-mod-8191)           (shift   [ transaction/SYST_TXN_DATA   2 ]   tx-skip---SYSI-4788---row-offset---TXN)) ;; ""
 (defun (tx-skip---SYSI-4788---beacon-root-hi)               (shift   [ transaction/SYST_TXN_DATA   3 ]   tx-skip---SYSI-4788---row-offset---TXN)) ;; ""
