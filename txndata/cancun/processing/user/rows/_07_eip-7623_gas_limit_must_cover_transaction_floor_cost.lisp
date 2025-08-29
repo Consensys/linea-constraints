@@ -13,14 +13,14 @@
                   (:guard   (first-row-of-USER-transaction))
                   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                   (small-call-to-LEQ    ROFF___USER___CMPTN_ROW___GAS_LIMIT_MUST_COVER_THE_TRANSACTION_FLOOR_COST
-                                        (USER-transaction---data-floor-cost)
+                                        (USER-transaction---transaction-floor-cost)
                                         (USER-transaction---RLP---gas-limit))
                   )
 
-;; TODO: this must be uncommented for Prague
-(defconstraint    USER-transaction---common-computations---PRAGUE---gas-limit-must-cover-transaction-floor-cost
-                  (:guard   (first-row-of-USER-transaction))
-                  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-                  (result-must-be-true    ROFF___USER___CMPTN_ROW___GAS_LIMIT_MUST_COVER_THE_TRANSACTION_FLOOR_COST)
-                  )
+;; ;; TODO: this must be uncommented for Prague
+;; (defconstraint    USER-transaction---common-computations---PRAGUE---gas-limit-must-cover-transaction-floor-cost
+;;                   (:guard   (first-row-of-USER-transaction))
+;;                   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                   (result-must-be-true    ROFF___USER___CMPTN_ROW___GAS_LIMIT_MUST_COVER_THE_TRANSACTION_FLOOR_COST)
+;;                   )
 

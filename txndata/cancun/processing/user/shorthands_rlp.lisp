@@ -29,6 +29,7 @@
 (defun   (USER-transaction---weighted-byte-count)      (+   (*   1    (USER-transaction---RLP---number-of-zero-bytes))
                                                             (*   4    (USER-transaction---RLP---number-of-nonzero-bytes))))
 
-(defun   (USER-transaction---data-cost)                (*   STANDARD_TOKEN_COST    (USER-transaction---weighted-byte-count)))
-(defun   (USER-transaction---data-floor-cost)          (*   FLOOR_TOKEN_COST       (USER-transaction---weighted-byte-count)))
+(defun   (USER-transaction---data-cost)                (*   STANDARD_TOKEN_COST       (USER-transaction---weighted-byte-count)))
+(defun   (USER-transaction---data-floor-cost)          (*   FLOOR_TOKEN_COST          (USER-transaction---weighted-byte-count)))
+(defun   (USER-transaction---transaction-floor-cost)   (+   GAS_CONST_G_TRANSACTION   (USER-transaction---data-floor-cost)))
 
