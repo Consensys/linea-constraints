@@ -47,6 +47,10 @@
                 ( NOOP                         :binary@prove )
                 ( EIP_4788                     :binary@prove )
                 ( EIP_2935                     :binary@prove ) ;; should be Pectra only
-                ( SYST_TXN_DATA    :array [5]  :i128         ) ;; ""
+                ( SYST_TXN_DATA_1              :i64          )
+                ( SYST_TXN_DATA_2              :i16          )
+                ( SYST_TXN_DATA_3              :i128         )
+                ( SYST_TXN_DATA_4              :i128         )
+                ( SYST_TXN_DATA_5              :binary       )
         )
 )
