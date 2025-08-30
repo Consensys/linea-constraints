@@ -22,8 +22,8 @@
 		 (:guard   (first-row-of-USER-transaction))
 		 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 		 (begin
-		   (eq!   (USER-transaction---HUB---call-data-size)   (*   (USER-transaction---RLP---is-message-call)   (USER-transaction---data-size)))
-		   (eq!   (USER-transaction---HUB---init-code-size)   (*   (USER-transaction---RLP---is-deployment)     (USER-transaction---data-size)))
+		   (eq!   (USER-transaction---HUB---call-data-size)   (*   (USER-transaction---RLP---is-message-call)   (USER-transaction---payload-size)))
+		   (eq!   (USER-transaction---HUB---init-code-size)   (*   (USER-transaction---RLP---is-deployment)     (USER-transaction---payload-size)))
 		   ))
 
 (defconstraint   USER-transaction---data-transfer---HUB-from-RLP---conditionally-setting-the-gas-price

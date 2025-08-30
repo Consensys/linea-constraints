@@ -20,7 +20,7 @@
                     ))
 
 (defun    (USER-transaction---upfront-gas-cost)
-  (+    (USER-transaction---data-cost)
+  (+    (USER-transaction---payload-cost)
         (USER-transaction---init-code-cost)
         GAS_CONST_G_TRANSACTION
         (*  (USER-transaction---RLP---is-deployment)  GAS_CONST_G_TX_CREATE)

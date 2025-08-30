@@ -14,7 +14,7 @@
                   (:guard    (first-row-of-USER-transaction))
                   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                   (small-call-to-ISZERO    ROFF___USER___CMPTN_ROW___DETECTING_EMPTY_CALL_DATA
-                                           (USER-transaction---data-size)))
+                                           (USER-transaction---payload-size)))
 
 (defun    (USER-transaction---nonzero-data-size)   (- 1 (shift  computation/RES  ROFF___USER___CMPTN_ROW___DETECTING_EMPTY_CALL_DATA)))
 

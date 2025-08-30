@@ -24,12 +24,12 @@
 
 (defun   (USER-transaction---RLP---is-message-call)    (-   1    (USER-transaction---RLP---is-deployment)))
 
-(defun   (USER-transaction---data-size)                (+   (USER-transaction---RLP---number-of-zero-bytes)
+(defun   (USER-transaction---payload-size)             (+   (USER-transaction---RLP---number-of-zero-bytes)
                                                             (USER-transaction---RLP---number-of-nonzero-bytes)))
 (defun   (USER-transaction---weighted-byte-count)      (+   (*   1    (USER-transaction---RLP---number-of-zero-bytes))
                                                             (*   4    (USER-transaction---RLP---number-of-nonzero-bytes))))
 
-(defun   (USER-transaction---data-cost)                (*   STANDARD_TOKEN_COST       (USER-transaction---weighted-byte-count)))
-(defun   (USER-transaction---data-floor-cost)          (*   FLOOR_TOKEN_COST          (USER-transaction---weighted-byte-count)))
-(defun   (USER-transaction---transaction-floor-cost)   (+   GAS_CONST_G_TRANSACTION   (USER-transaction---data-floor-cost)))
+(defun   (USER-transaction---payload-cost)             (*   STANDARD_TOKEN_COST       (USER-transaction---weighted-byte-count)))
+(defun   (USER-transaction---payload-floor-cost)       (*   FLOOR_TOKEN_COST          (USER-transaction---weighted-byte-count)))
+(defun   (USER-transaction---transaction-floor-cost)   (+   GAS_CONST_G_TRANSACTION   (USER-transaction---payload-floor-cost)))
 
