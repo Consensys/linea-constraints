@@ -31,7 +31,8 @@
        (* RSLT_BLS_MAP_FP2_TO_G2_FLAG (next RSLT_BLS_MAP_FP2_TO_G2_FLAG))))
 
 (defconstraint legal-transitions ()
-    (eq! (+ (same_data_to_data)
-            (same_data_to_result)
-            (same_result_to_result)
-            (transition_to_data)) 1)) 
+    (if-not-zero STAMP 
+        (eq! (+ (same_data_to_data)
+                (same_data_to_result)
+                (same_result_to_result)
+                (transition_to_data)) 1))) 
