@@ -18,8 +18,8 @@
        (* PHASE_BLS_MAP_FP2_TO_G2_DATA DATA_BLS_MAP_FP2_TO_G2_FLAG)
        (* PHASE_BLS_MAP_FP2_TO_G2_RESULT RSLT_BLS_MAP_FP2_TO_G2_FLAG)))
 
-(defconstraint stamp-constancy ()
-    (stamp-constancy STAMP PHASE))
+(defconstraint index-constancy ()
+    (counter-constancy INDEX PHASE)) ;; NOTE: PHASE is said to be index-constant
 
 (defconstraint setting-phase ()
     (eq! PHASE (phase_sum)))
