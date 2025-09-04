@@ -106,7 +106,7 @@ TXN_DATA_SHANGHAI := txndata/shanghai
 
 TXN_DATA_CANCUN := txndata/cancun
 
-WCP := wcp
+WCP := wcp/wcp.zkasm
 
 LISPX := $(shell find * -name "*.lispX")
 # Warn about any lispX files

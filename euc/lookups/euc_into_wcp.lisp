@@ -2,10 +2,8 @@
   euc-into-wcp
   ;; target columns
   (
-    wcp.ARG_1_HI
-    wcp.ARG_1_LO
-    wcp.ARG_2_HI
-    wcp.ARG_2_LO
+    wcp.ARG_1
+    wcp.ARG_2
     wcp.RES
     wcp.INST
   )
@@ -13,9 +11,7 @@
   euc.DONE
   ;; source columns
   (
-    0
     euc.REMAINDER
-    0
     euc.DIVISOR
     1
     EVM_INST_LT
