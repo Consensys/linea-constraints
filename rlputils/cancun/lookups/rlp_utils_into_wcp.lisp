@@ -4,24 +4,20 @@
   rlp-utils-into-wcp
   ; target columns
   (
-    wcp.ARGUMENT_1_HI
-    wcp.ARGUMENT_1_LO
-    wcp.ARGUMENT_2_HI
-    wcp.ARGUMENT_2_LO
-    wcp.RESULT
+    wcp.ARG_1
+    wcp.ARG_2
+    wcp.RES
     wcp.INST
     )
   ; source selector
   rlputils.COMPT
   ; source columns
   (
-    compt/ARG_1_HI
-    compt/ARG_1_LO
-    0
+    (:: compt/ARG_1_HI compt/ARG_1_LO)
     compt/ARG_2_LO
     compt/RES
     compt/INST
-    ))
+ ))
 
 (defcall
   ;; return(s)
