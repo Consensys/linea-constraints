@@ -8,7 +8,7 @@
 
 
 (defconstraint    GAS_CUMULATIVE-constraints---counter-constancy                          ()
-		  (counter-constancy    GAS_CUMULATIVE    CT))
+		  (counter-constancy    CT   GAS_CUMULATIVE))
 
 (defconstraint    GAS_CUMULATIVE-constraints---it-vanishes-outside-of-USER-and-SYSF-rows  ()
 		  (if-zero   USER

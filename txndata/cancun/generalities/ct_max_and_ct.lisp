@@ -8,7 +8,7 @@
 
 
 (defconstraint    CT_MAX-and-CT-constraints---CT_MAX-counter-constancy  ()
-		  (counter-constancy    CT_MAX    CT))
+		  (counter-constancy    CT   CT_MAX))
 
 (defconstraint    CT_MAX-and-CT-constraints---automatic-vanishing ()
 		  (if-zero   (txn-flag-sum)
