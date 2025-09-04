@@ -37,7 +37,7 @@ EUC := euc
 
 EXP := exp
 
-GAS := gas
+GAS := gas/gas.zkasm
 
 HUB_LONDON :=  hub/london
 
