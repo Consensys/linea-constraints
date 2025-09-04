@@ -12,7 +12,7 @@
 (defconstraint    txn-flag-sum-constraints---binary-constraint ()
 		  (is-binary    (txn-flag-sum)))
 
-(defconstraint    txn-flag-sum-constraints---initially-zero    (:domain {-1}) ;; ""
+(defconstraint    txn-flag-sum-constraints---initially-zero    (:domain {0}) ;; ""
 		  (vanishes!    (txn-flag-sum)))
 
 (defconstraint    txn-flag-sum-constraints---monotonicity ()
