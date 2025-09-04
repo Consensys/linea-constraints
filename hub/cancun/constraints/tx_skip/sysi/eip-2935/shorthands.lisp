@@ -27,7 +27,7 @@
   )
 
 
-(defun (tx-skip---SYSI-2935---sys-smc-exists)               (shift   account/HAS_CODE              tx-skip---SYSI-2935---row-offset---ACC---loading-the-beacon-root-account)) ;; ""
+(defun (tx-skip---SYSI-2935---sys-smc-has-code)             (shift   account/HAS_CODE              tx-skip---SYSI-2935---row-offset---ACC---loading-the-beacon-root-account)) ;; ""
 ;; we don't need "prev-block-number" itself
 (defun (tx-skip---SYSI-2935---prev-block-number-mod-8191)   (shift   transaction/SYST_TXN_DATA_2   tx-skip---SYSI-2935---row-offset---TXN)) ;; ""
 (defun (tx-skip---SYSI-2935---prev-block-hash-hi)           (shift   transaction/SYST_TXN_DATA_3   tx-skip---SYSI-2935---row-offset---TXN)) ;; ""
@@ -36,7 +36,7 @@
 (defun (tx-skip---SYSI-2935---current-block-isnt-genesis)   (force-bin (-  1  (tx-skip---SYSI-2935---current-block-is-genesis))))
 
 
-(defun (tx-skip---SYSI-2935---sys-txn-is-nontrivial)      (force-bin (*  (tx-skip---SYSI-2935---sys-smc-exists)
+(defun (tx-skip---SYSI-2935---sys-txn-is-nontrivial)      (force-bin (*  (tx-skip---SYSI-2935---sys-smc-has-code)
                                                                          (tx-skip---SYSI-2935---current-block-isnt-genesis))))
 (defun (tx-skip---SYSI-2935---sys-txn-is-trivial)         (force-bin (-  1   (tx-skip---SYSI-2935---sys-txn-is-nontrivial))))
 
