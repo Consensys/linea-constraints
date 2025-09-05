@@ -20,5 +20,5 @@
 (defun    (USER-transaction---execution-gas-cost)    (-   (USER-transaction---RLP---gas-limit)
                                                           (USER-transaction---HUB---gas-leftover)))
 
-(defun    (USER-transaction---refund-limit)    (shift   computation/EUC_REMAINDER   ROFF___USER___CMPTN_ROW___UPPER_LIMIT_FOR_GAS_REFUNDS))
+(defun    (USER-transaction---refund-limit)    (shift   computation/EUC_QUOTIENT   ROFF___USER___CMPTN_ROW___UPPER_LIMIT_FOR_GAS_REFUNDS))
 
