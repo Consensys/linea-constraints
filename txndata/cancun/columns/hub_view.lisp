@@ -15,7 +15,7 @@
 	;; HUB view columns
         (
                 ;; block data from BTC module
-                ( btc_BLOCK_NUMBER           :i16          )
+                ( btc_BLOCK_NUMBER           :i32          )
                 ( btc_BLOCK_GAS_LIMIT        :i32          )
                 ( btc_BASEFEE                :i8           )
                 ( btc_TIMESTAMP              :i64          )
