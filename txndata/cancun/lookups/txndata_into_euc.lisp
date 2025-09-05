@@ -7,7 +7,7 @@
    euc.DONE
    euc.DIVIDEND
    euc.DIVISOR
-   euc.QUOTIENT
+   euc.REMAINDER
    )
   ; source selector
   (txn-data-into-euc-selector)

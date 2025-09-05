@@ -7,11 +7,16 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
+;; HUB row
+;;;;;;;;;;
+
 (defconstraint    EIP-4788---setting-the-timestamp
 		  (:guard   (first-row-of-EIP-4788-transaction))
-		  (eq!   (EIP-4788---timestamp)    (shift    hub/btc_TIMESTAMP   ROFF___SYSI___HUB_ROW)))
+		  (eq!   (EIP-4788---timestamp)
+			 (shift    hub/btc_TIMESTAMP   ROFF___SYSI___HUB_ROW)))
 
 
+;; computing TIMESTAMP % 8191
 (defconstraint    EIP-4788---computing-the-timestamp-modulo-8191---EUC-call
 		  (:guard   (first-row-of-EIP-4788-transaction))
 		  (call-to-EUC   ROFF___EIP_4788___TIMESTAMP_MOD_8191
