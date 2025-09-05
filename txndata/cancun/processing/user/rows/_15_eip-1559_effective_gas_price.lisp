@@ -19,7 +19,7 @@
                                           )))
 
 
-(defun   (get-full-tip)   (force-bin   (shift   computation/RES   ROFF___USER___CMPTN_ROW___COMPUTING_THE_EFFECTIVE_GAS_PRICE)))
+(defun   (get-full-tip)   (force-bin   (shift   computation/WCP_RES   ROFF___USER___CMPTN_ROW___COMPUTING_THE_EFFECTIVE_GAS_PRICE)))
 
 
 (defconstraint    USER-transaction-processing---specialized-computations---setting-the-gas-price-for-transactions-with-EIP-1559-gas-semantics

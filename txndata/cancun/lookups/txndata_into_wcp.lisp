@@ -19,7 +19,7 @@
    txndata.computation/ARG_1_LO
    0
    txndata.computation/ARG_2_LO
-   txndata.computation/RES
+   txndata.computation/WCP_RES
    txndata.computation/INST
    )
   )
