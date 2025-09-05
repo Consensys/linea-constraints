@@ -9,7 +9,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-(defconstraint    USER-transaction-processing---common-computations---comparing-consumed-gas-after-refunds
+(defconstraint    USER-transaction-processing---common-computations---comparing-consumed-gas-after-refunds-with-transaction-floor-cost
                   (:guard    (first-row-of-USER-transaction))
                   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                   (small-call-to-LT    ROFF___USER___CMPTN_ROW___EFFECTIVE_GAS_REFUND_VS_TRANSACTION_CALL_DATA_FLOOR_PRICE_COMPARISON
