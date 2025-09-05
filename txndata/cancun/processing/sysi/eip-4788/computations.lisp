@@ -26,7 +26,7 @@
 (defconstraint    EIP-4788---computing-the-timestamp-modulo-8191---committing-to-SYST_TXN_DATA
 		  (:guard   (first-row-of-EIP-4788-transaction))
 		  (eq!   (EIP-4788---timestamp-mod-8191)
-			 (shift   computation/RES   ROFF___EIP_4788___TIMESTAMP_MOD_8191)))
+			 (shift   computation/EUC_REMAINDER   ROFF___EIP_4788___TIMESTAMP_MOD_8191)))
 
 (defconstraint    EIP-4788---detecting-the-genesis-block---WCP-call
 		  (:guard   (first-row-of-EIP-4788-transaction))
@@ -36,7 +36,7 @@
 (defconstraint    EIP-4788---detecting-the-genesis-block---commiting-to-SYST_TXN_DATA
 		  (:guard   (first-row-of-EIP-4788-transaction))
 		  (eq!   (EIP-4788---current-block-is-genesis-block)
-			 (shift   computation/RES   ROFF___EIP_4788___DETECTING_THE_GENESIS_BLOCK)))
+			 (shift   computation/WCP_RES   ROFF___EIP_4788___DETECTING_THE_GENESIS_BLOCK)))
 
 (defconstraint    EIP-4788---detecting-the-genesis-block---enforcing-trivial-beacon-root-for-the-genesis-block
 		  (:guard   (first-row-of-EIP-4788-transaction))
