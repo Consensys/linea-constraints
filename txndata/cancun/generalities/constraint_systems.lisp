@@ -44,5 +44,5 @@
     (eq!  (shift  computation/ARG_1_LO  relOffset)  arg1)
     (eq!  (shift  computation/ARG_2_LO  relOffset)  arg2)))
 
-(defun   (result-must-be-true    relOffset)   (eq!   (shift   computation/RES   relOffset)   1))
-(defun   (result-must-be-false   relOffset)   (eq!   (shift   computation/RES   relOffset)   0))
+(defun   (result-must-be-true    relOffset)   (eq!   (shift   computation/WCP_RES   relOffset)   1))
+(defun   (result-must-be-false   relOffset)   (eq!   (shift   computation/WCP_RES   relOffset)   0))
