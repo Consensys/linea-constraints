@@ -7,6 +7,7 @@
    euc.DONE
    euc.DIVIDEND
    euc.DIVISOR
+   euc.QUOTIENT
    euc.REMAINDER
    )
   ; source selector
@@ -16,7 +17,8 @@
    1
    txndata.computation/ARG_1_LO
    txndata.computation/ARG_2_LO
-   txndata.computation/RES
+   txndata.computation/EUC_QUOTIENT
+   txndata.computation/EUC_REMAINDER
    )
   )
 
