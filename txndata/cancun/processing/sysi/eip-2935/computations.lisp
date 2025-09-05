@@ -15,7 +15,7 @@
 (defconstraint    EIP-2935---defining-the-previous-block-number---committing-to-SYST_TXN_DATA---I
 		  (:guard (first-row-of-EIP-2935-transaction))
 		  (eq!    (EIP-2935---current-block-is-genesis-block)
-			  (shift    computation/RES    ROFF___EIP_2935___DEFINING_THE_PREVIOUS_BLOCK_NUMBER)))
+			  (shift    computation/WCP_RES    ROFF___EIP_2935___DEFINING_THE_PREVIOUS_BLOCK_NUMBER)))
 
 (defconstraint    EIP-2935---defining-the-previous-block-number---committing-to-SYST_TXN_DATA---II
 		  (:guard (first-row-of-EIP-2935-transaction))
@@ -33,7 +33,7 @@
 (defconstraint    EIP-2935---computing-the-previous-block-number-modulo-8191---committing-to-SYST_TXN_DATA
 		  (:guard (first-row-of-EIP-2935-transaction))
 		  (eq!    (EIP-2935---prev-block-number-mod-8191)
-			  (shift   computation/RES   ROFF___EIP_2935___COMPUTING_THE_PREVIOUS-BLOCK_NUMBER_MOD_8191)))
+			  (shift   computation/EUC_REMAINDER   ROFF___EIP_2935___COMPUTING_THE_PREVIOUS-BLOCK_NUMBER_MOD_8191)))
 
 (defconstraint    EIP-2935---comparing-the-timestamp-to-the-PRAGUE-hardfork-timestamp
 		  (:guard (first-row-of-EIP-2935-transaction))
