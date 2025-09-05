@@ -16,7 +16,7 @@
                   (begin
                     (small-call-to-LEQ     ROFF___USER___CMPTN_ROW___INITIAL_BALANCE_MUST_COVER_VALUE_AND_GAS
                                            (USER-transaction---max-cost-in-wei)
-                                           (USER-transaction---HUB---initial-gas))
+                                           (USER-transaction---HUB---initial-balance))
                     (result-must-be-true   ROFF___USER___CMPTN_ROW___INITIAL_BALANCE_MUST_COVER_VALUE_AND_GAS)
                     ))
 
