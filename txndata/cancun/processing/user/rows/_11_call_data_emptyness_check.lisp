@@ -16,7 +16,7 @@
                   (small-call-to-ISZERO    ROFF___USER___CMPTN_ROW___DETECTING_EMPTY_CALL_DATA
                                            (USER-transaction---payload-size)))
 
-(defun    (USER-transaction---nonzero-data-size)   (- 1 (shift  computation/RES  ROFF___USER___CMPTN_ROW___DETECTING_EMPTY_CALL_DATA)))
+(defun    (USER-transaction---nonzero-data-size)   (- 1 (shift  computation/WCP_RES  ROFF___USER___CMPTN_ROW___DETECTING_EMPTY_CALL_DATA)))
 
 
 (defconstraint    USER-transaction-processing---common-computations---setting-COPY_TXCD---message-call-case

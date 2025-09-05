@@ -17,7 +17,7 @@
                                        (USER-transaction---transaction-floor-cost)
                                        ))
 
-(defun    (USER-transaction---pay-floor-price)    (shift    computation/RES    ROFF___USER___CMPTN_ROW___EFFECTIVE_GAS_REFUND_VS_TRANSACTION_CALL_DATA_FLOOR_PRICE_COMPARISON))
+(defun    (USER-transaction---pay-floor-price)    (shift    computation/WCP_RES    ROFF___USER___CMPTN_ROW___EFFECTIVE_GAS_REFUND_VS_TRANSACTION_CALL_DATA_FLOOR_PRICE_COMPARISON))
 
 
 ;; ;; TODO: disable for Prague
