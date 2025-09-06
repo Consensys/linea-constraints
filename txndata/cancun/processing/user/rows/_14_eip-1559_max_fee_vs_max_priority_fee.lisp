@@ -13,7 +13,7 @@
                   (:guard   (first-row-of-USER-transaction-with-EIP-1559-gas-semantics))
                   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                   (begin
-                    (small-call-to-LT      ROFF___USER___CMPTN_ROW___COMPARING_MAX_FEE_AND_MAX_PRIORITY_FEE
+                    (small-call-to-LEQ     ROFF___USER___CMPTN_ROW___COMPARING_MAX_FEE_AND_MAX_PRIORITY_FEE
                                            (USER-transaction---RLP---max-priority-fee)
                                            (USER-transaction---RLP---max-fee))
                     (result-must-be-true   ROFF___USER___CMPTN_ROW___COMPARING_MAX_FEE_AND_MAX_PRIORITY_FEE)
