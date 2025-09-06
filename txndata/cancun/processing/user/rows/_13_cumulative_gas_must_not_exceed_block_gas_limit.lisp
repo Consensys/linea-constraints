@@ -1,15 +1,15 @@
 (module txndata)
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;                                                         ;;
-;;    X. USER transaction processing                       ;;
-;;    X.Y Common computations                              ;;
-;;    X.Y.Z Comparing the maximum gas price and basefee    ;;
-;;                                                         ;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                                            ;;
+;;    X. USER transaction processing                          ;;
+;;    X.Y Common computations                                 ;;
+;;    X.Y.Z Cumulative gas must not exceed block gas limit    ;;
+;;                                                            ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-(defconstraint    USER-transaction-processing---common-computations---comparing-the-maximum-gas-price-to-the-basefee
+(defconstraint    USER-transaction-processing---common-computations---cumulative-gas-must-not-exceed-block-gas-limit
                   (:guard    (first-row-of-USER-transaction))
                   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                   (begin
