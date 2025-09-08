@@ -5,10 +5,11 @@
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;                  ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   EVM_LONDON                             14
-  EVM_PARIS                 (+ 1 EVM_LONDON)
-  EVM_SHANGHAI              (+ 2 EVM_LONDON)
-  EVM_CANCUN                (+ 3 EVM_LONDON)
-  EVM_PRAGUE                (+ 4 EVM_LONDON)
+  EVM_PARIS                              17
+  EVM_SHANGHAI                           18
+  EVM_CANCUN                             19
+  EVM_PRAGUE                             20
+  EVM_OSAKA                              21
   ;; Default fork
   (EVM_FORK :i8 :extern)         EVM_LONDON
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
