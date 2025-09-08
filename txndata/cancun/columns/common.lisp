@@ -27,7 +27,3 @@
   ( GAS_CUMULATIVE  :i32          )
   )
 
-
-(defcomputedcolumn  ( TOTL_TXN_NUMBER :i24 )  (+  SYSI_TXN_NUMBER
-                                                  USER_TXN_NUMBER
-                                                  SYSF_TXN_NUMBER))
