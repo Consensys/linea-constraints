@@ -8,8 +8,6 @@ GO_CORSET_COMPILE := ${GO_CORSET} compile -Dtags="${GIT_TAGS}" -Dcommit="${GIT_C
 ## Some modules set below are fork specific. Eg. For OOB, OOB_LONDON is the OOB module for London and OOB_SHANGHAI the OOB module for Shanghai.
 ## The discrimination is done by having one bin file per fork - see command line below
 
-ALU_LONDON := alu/add/london alu/ext alu/mod alu/mul
-
 ALU := alu/add/add.zkasm alu/ext alu/mod alu/mul
 
 BIN := bin   
@@ -47,7 +45,7 @@ BLS_CANCUN := $(wildcard bls/cancun/*.lisp) \
 	       $(wildcard bls/cancun/top_level_flags_mint_mext_wtrv_wnon/*.lisp) \
 		   $(wildcard bls/cancun/utilities/*.lisp) \
 
-BLS_CANCUN := $(wildcard bls/cancun/*.lisp) \
+BLS_PRAGUE := $(wildcard bls/cancun/*.lisp) \
 		   $(wildcard bls/cancun/generalities/constancy_conditions.lisp) \
 		   $(wildcard bls/cancun/generalities/constraining_address_sum.lisp) \
 		   $(wildcard bls/cancun/generalities/constraining_flag_sum.lisp) \
@@ -82,7 +80,7 @@ EUC := euc
 
 EXP := exp
 
-GAS := gas
+GAS := gas/gas.zkasm
 
 HUB_LONDON :=  hub/london
 
@@ -184,6 +182,7 @@ define warn_lispX
 endef
 
 ZKEVM_MODULES_COMMON := ${CONSTANTS} \
+		 ${ALU} \
 		 ${BIN} \
 		 ${BLAKE2f_MODEXP_DATA} \
 		 ${BLOCKHASH} \
@@ -207,7 +206,6 @@ ZKEVM_MODULES_COMMON := ${CONSTANTS} \
 ZKEVM_MODULES_LONDON := ${ZKEVM_MODULES_COMMON} \
 		 ${CONSTANTS_LONDON} \
 		 ${TABLES_LONDON} \
-		 ${ALU_LONDON} \
 		 ${BLOCKDATA_LONDON} \
 		 ${HUB_LONDON} \
 		 ${LOG_INFO_LONDON} \
@@ -220,7 +218,6 @@ ZKEVM_MODULES_LONDON := ${ZKEVM_MODULES_COMMON} \
 ZKEVM_MODULES_PARIS := ${ZKEVM_MODULES_COMMON} \
 		 ${CONSTANTS_LONDON} \
 		 ${TABLES_LONDON} \
-		 ${ALU_LONDON} \
 		 ${BLOCKDATA_PARIS} \
 		 ${HUB_LONDON} \
 		 ${LOG_INFO_LONDON} \
@@ -233,7 +230,6 @@ ZKEVM_MODULES_PARIS := ${ZKEVM_MODULES_COMMON} \
 ZKEVM_MODULES_SHANGHAI := ${ZKEVM_MODULES_COMMON} \
 		 ${CONSTANTS_LONDON} \
 		 ${TABLES_LONDON} \
-		 ${ALU} \
 		 ${BLOCKDATA_PARIS} \
 		 ${HUB_SHANGHAI} \
 		 ${LOG_INFO_LONDON} \
@@ -246,7 +242,6 @@ ZKEVM_MODULES_SHANGHAI := ${ZKEVM_MODULES_COMMON} \
 ZKEVM_MODULES_CANCUN := ${ZKEVM_MODULES_COMMON} \
          ${CONSTANTS_CANCUN} \
 		 ${TABLES_CANCUN} \
-		 ${ALU} \
 		 ${BLOCKDATA_CANCUN} \
 		 ${BLS_CANCUN} \
 		 ${HUB_CANCUN} \
@@ -261,7 +256,6 @@ ZKEVM_MODULES_CANCUN := ${ZKEVM_MODULES_COMMON} \
 ZKEVM_MODULES_PRAGUE := ${ZKEVM_MODULES_COMMON} \
 		 ${CONSTANTS_PRAGUE} \
 		 ${TABLES_CANCUN} \
-		 ${ALU} \
 		 ${BLOCKDATA_CANCUN} \
 		 ${BLS_PRAGUE} \
 		 ${HUB_CANCUN} \
