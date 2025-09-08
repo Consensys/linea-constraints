@@ -12,7 +12,7 @@
   ROFF___SYSI___CMP_ROW   1
 
   nROWS___SYSI___NOOP       2
-  nROWS___SYSI___EIP_4788   4
+  nROWS___SYSI___EIP_4788   3
   nROWS___SYSI___EIP_2935   3
   )
 

@@ -278,7 +278,6 @@
   LINEA_BLOCK_GAS_LIMIT                     LINEA_GAS_LIMIT_MAXIMUM
   LINEA_BLOB_BASE_FEE                       MIN_BASE_FEE_PER_BLOB_GAS
   LINEA_BLOB_PER_TRANSACTION_MAXIMUM        0
-  LINEA_CANCUN_FORK_TIMESTAMP               0x1337 ;; TODO: find actual values
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;               ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; SIZE / LENGTH ;;

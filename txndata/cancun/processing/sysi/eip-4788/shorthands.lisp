@@ -18,5 +18,4 @@
 (defconst
   ROFF___EIP_4788___TIMESTAMP_MOD_8191                                     1
   ROFF___EIP_4788___DETECTING_THE_GENESIS_BLOCK                            2
-  ROFF___EIP_4788___COMPARING_THE_TIMESTAMP_TO_LINEA_CANCUN_FORK_TIMESTAMP 3
   )
