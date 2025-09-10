@@ -2,7 +2,7 @@
 
 (defconst
   POINT_EVALUATION_PRIME_HI                      0x73eda753299d7d483339d80809a1d805        
-  POINT_EVALUATION_PRIME_LO                      0x1b4d2c3f4b6a0c7e8f3f5a0e9d1b2c3f
+  POINT_EVALUATION_PRIME_LO                      0x53BDA402FFFE5BFEFFFFFFFF00000001
   BLS_PRIME_3                                    0x00000000000000000000000000000000
   BLS_PRIME_2                                    0x1a0111ea397fe69a4b1ba7b6434bacd7
   BLS_PRIME_1                                    0x64774b84f38512bf6730d2a0f6b0f624
