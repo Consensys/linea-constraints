@@ -2,12 +2,12 @@
   mmio-into-blsdata
   ;; target columns
   (
-    bls.ID
-    bls.PHASE
-    bls.INDEX
-    bls.LIMB
-    bls.TOTAL_SIZE
-    bls.SUCCESS_BIT
+    blsdata.ID
+    blsdata.PHASE
+    blsdata.INDEX
+    blsdata.LIMB
+    blsdata.TOTAL_SIZE
+    blsdata.SUCCESS_BIT
   )
   ;; source selector
   mmio.EXO_IS_BLS
