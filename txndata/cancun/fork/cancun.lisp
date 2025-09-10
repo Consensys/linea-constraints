@@ -3,6 +3,8 @@
 
 ;; TODO: disable for Prague
 
+(defun    (first-SYSI-row)   (*   (prev (- 1 SYSI))  SYSI))
+
 
 (defconstraint    fork-specifics---cancun-specifics---SYSI-transactions ()
 		  (if-not-zero    SYSI
@@ -15,9 +17,12 @@
 						  (eq!    hub/NOOP    1))))
 
 (defconstraint    fork-specifics---cancun-specifics---transaction-order ()
-		  (if-not-zero    (*   (prev (- 1 SYSI))  SYSI)
+		  (if-not-zero    (first-SYSI-row)
 				  (begin
-				    (eq!    HUB             1)
 				    (eq!    hub/EIP_4788    1)
 				    (eq!   (shift   (+ USER SYSF)   nROWS___EIP_4788)   1)
 				    )))
+
+(defproperty      fork-specifics---cancun-specifics---transaction-order---sanity-checks ()
+		  (if-not-zero    (first-SYSI-row)
+				  (eq!  HUB  1)))
