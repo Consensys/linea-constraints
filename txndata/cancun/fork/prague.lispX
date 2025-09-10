@@ -26,9 +26,10 @@
 
 (defproperty      fork-specifics---prague-specifics---transaction-order---sanity-checks ()
 		  (if-not-zero    (first-SYSI-row)
+				  (begin
 				  (eq!          HUB                     1)
 				  (eq!  (shift  HUB  nROWS___EIP_4788)  1)
-				  ))
+				  )))
 
 (defconstraint    fork-specifics---prague-specifics---transaction-order---2935-and-forward ()
 		  (if-not-zero    SYSI
