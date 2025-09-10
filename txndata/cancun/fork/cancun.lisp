@@ -14,3 +14,10 @@
 				  (if-not-zero    HUB
 						  (eq!    hub/NOOP    1))))
 
+(defconstraint    fork-specifics---cancun-specifics---transaction-order ()
+		  (if-not-zero    (*   (prev (- 1 SYSI))  SYSI)
+				  (begin
+				    (eq!    HUB             1)
+				    (eq!    hub/EIP_4788    1)
+				    (eq!   (shift   (+ USER SYSF)   nROWS___EIP_4788)   1)
+				    )))
