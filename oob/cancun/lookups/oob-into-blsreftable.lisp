@@ -2,7 +2,7 @@
   oob.BLS_REF_TABLE_FLAG)
 
 (defclookup
-  oob-into-bls-ref-table
+  (oob-into-bls-ref-table :unchecked)
   ;; target columns
   (
     blsreftable.PRC_NAME

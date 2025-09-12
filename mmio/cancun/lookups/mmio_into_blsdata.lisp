@@ -1,5 +1,5 @@
 (defclookup
-  mmio-into-blsdata
+  (mmio-into-blsdata :unchecked)
   ;; target columns
   (
     blsdata.ID
