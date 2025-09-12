@@ -14,20 +14,20 @@
 
 
 (defconst
-  tx-skip---SYSI-2935---row-offset---TXN                                        0
-  tx-skip---SYSI-2935---row-offset---ACC---loading-the-beacon-root-account      1
-  tx-skip---SYSI-2935---row-offset---STO---storing-the-time-stamp               2
-  tx-skip---SYSI-2935---row-offset---CON---final-zero-context---nontrivial-case 3
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  tx-skip---SYSI-2935---row-offset---CON---final-zero-context---trivial-case    2
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  tx-skip---SYSI-2935---NSR---unconditional                                     2
-  tx-skip---SYSI-2935---NSR---trivial-case                                      3
-  tx-skip---SYSI-2935---NSR---nontrivial-case                                   4
+  tx-skip---SYSI-2935---row-offset---TXN                                          0
+  tx-skip---SYSI-2935---row-offset---ACC---loading-the-block-hash-history-account 1
+  tx-skip---SYSI-2935---row-offset---STO---storing-the-previous-block-hash        2
+  tx-skip---SYSI-2935---row-offset---CON---final-zero-context---nontrivial-case   3
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  tx-skip---SYSI-2935---row-offset---CON---final-zero-context---trivial-case      2
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  tx-skip---SYSI-2935---NSR---unconditional                                       2
+  tx-skip---SYSI-2935---NSR---trivial-case                                        3
+  tx-skip---SYSI-2935---NSR---nontrivial-case                                     4
   )
 
 
-(defun (tx-skip---SYSI-2935---sys-smc-has-code)             (shift   account/HAS_CODE              tx-skip---SYSI-2935---row-offset---ACC---loading-the-beacon-root-account)) ;; ""
+(defun (tx-skip---SYSI-2935---sys-smc-has-code)             (shift   account/HAS_CODE              tx-skip---SYSI-2935---row-offset---ACC---loading-the-block-hash-history-account)) ;; ""
 ;; we don't need "prev-block-number" itself
 (defun (tx-skip---SYSI-2935---prev-block-number-mod-8191)   (shift   transaction/SYST_TXN_DATA_2   tx-skip---SYSI-2935---row-offset---TXN)) ;; ""
 (defun (tx-skip---SYSI-2935---prev-block-hash-hi)           (shift   transaction/SYST_TXN_DATA_3   tx-skip---SYSI-2935---row-offset---TXN)) ;; ""
