@@ -1,0 +1,63 @@
+include "../util/min.zkasm"
+include "../util/log2.zkasm"
+include "../util/log256.zkasm"
+include "../util/byte_shift.zkasm"
+
+;; The Exponentiation Module (EXP) is a small module which carries out
+;; intermediate computations (e.g. logarithms) required for the gas
+;; pricing of the EXP opcode and the MODEXP precompile. Despite its
+;; name it neither carries out the EXP instruction nor the modular
+;; exponentiation of MODEXP.  For any call to exo, the "inst" argument
+;; indicates one of two psuedo-instructions:
+;;
+;; EXPLOG       0xee0a
+;; MODEXPLOG    0xee05
+;;
+;; The interpretation of the argument ARG depends upon the
+;; instruction, whilst CDS and EBS are only used for the MODEXPLOG
+;; case.
+fn exp(INST=0xEE0A u16, ARG u256, CDS u6, EBS u6) -> (RES=0 u128)
+;; PRE: 1<=CDS<=32 && 1<=EBS<=32
+{
+   var s, b u1
+   var tmp, tmp3 u5
+   var tmp2 u6
+   var tmp4 u8
+   var cutoff u6
+   var word u256
+   ;;
+   if INST==0xEE0A goto explog
+   if INST==0xEE05 goto modexplog
+   fail
+explog:
+   if ARG != 0 goto explog2
+   RES = 0
+   return
+explog2:
+   ;; calculate log
+   tmp = log256(ARG)
+   ;; increment
+   tmp2 = tmp + 1
+   ;; multiply by G_expbyte
+   RES = tmp2 * 50
+   return
+modexplog:
+   ;; calculate min cutoff
+   tmp2 = 32
+   cutoff = min6(CDS,EBS)
+   ;;
+   s, b, tmp3 = tmp2 - cutoff
+   ;; check precondition
+   if s != 0 goto failed_pre
+   if b != 0 goto failed_pre
+   ;; trim tail
+   word = byte_shr256(ARG,tmp3)
+   ;; cast
+   tmp4 = log2(word)
+   RES = tmp4
+   ;;
+   return
+failed_pre:
+   ;; precondition 1<=CDS/EBS<=32 does not hold.
+   fail
+}

@@ -78,7 +78,7 @@ EC_DATA := ecdata
 
 EUC := euc
 
-EXP := exp
+EXP := exp/exp.zkasm
 
 GAS := gas/gas.zkasm
 
