@@ -1,0 +1,17 @@
+;; Compute log256 of word
+fn log256(arg u256) -> (res u5) {
+  var tmp u256
+  var b u8
+  var c u1
+  ;; strip off first byte
+  tmp,b = arg
+  res = 0
+loop:
+  if tmp == 0 goto exit
+  ;; strip least significant byte
+  tmp,b = tmp
+  c, res = res + 1
+  goto loop
+exit:
+  return
+}

@@ -151,7 +151,7 @@ ROM_LEX := romlex
 
 SHAKIRA_DATA := shakiradata
 
-SHIFT :=  shf
+SHIFT :=  shf/shf.zkasm
 
 STP := stp
 

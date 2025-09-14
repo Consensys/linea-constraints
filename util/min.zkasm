@@ -1,0 +1,11 @@
+fn min6(x u6, y u6) -> (z u6) {
+   var b u1
+   var tmp u6
+   b,tmp = x - y
+   if b==0 goto exit1
+   z = x
+   return
+exit1:
+   z = y
+   return
+}
