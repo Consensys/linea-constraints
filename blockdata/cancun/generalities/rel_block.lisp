@@ -11,7 +11,7 @@
 		  (vanishes!   REL_BLOCK))
 
 (defproperty      rel-block---has-0-1-increments ()
-		  (has-zero-one-increments   REL_BLOCK))
+		  (has-0-1-increments   REL_BLOCK))
 
 (defconstraint    rel-block---precise-increments ()
 		  (will-inc!   REL_BLOCK
