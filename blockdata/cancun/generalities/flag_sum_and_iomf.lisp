@@ -1,6 +1,12 @@
 (module blockdata)
 
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                     ;;
+;;  2.X flag_sum and IOMF constraints  ;;
+;;                                     ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (defun    (about-to-start-new-block)    (*  (-  1  IS_CB)
 					    (next  IS_CB)))
 
