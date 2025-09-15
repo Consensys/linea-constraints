@@ -27,9 +27,9 @@
 		(if-not-zero   IOMF
 			       (if-not-zero   (-  CT_MAX  CT)
 					      (begin
-						(eq!   (next   (upcoming-legal-phase-transition)   0 ))
-						(eq!   (next   (upcoming-phase-is-different)       0 ))
-						(eq!   (next   (upcoming-phase-is-the-same)        1 ))
+						(eq!   (next   (upcoming-legal-phase-transition) )  0 )
+						(eq!   (next   (upcoming-phase-is-different)     )  0 )
+						(eq!   (next   (upcoming-phase-is-the-same)      )  1 )
 						))))
 
 
@@ -42,8 +42,8 @@
 		(if-not-zero   IOMF
 			       (if-zero   (-  CT_MAX  CT)
 					  (begin
-					    (eq!   (next   (upcoming-legal-phase-transition)   1 ))
-					    (eq!   (next   (upcoming-phase-is-different)       1 ))
-					    (eq!   (next   (upcoming-phase-is-the-same)        0 ))
+					    (eq!   (next   (upcoming-legal-phase-transition) )  1 )
+					    (eq!   (next   (upcoming-phase-is-different)     )  1 )
+					    (eq!   (next   (upcoming-phase-is-the-same)      )  0 )
 					    ))))
 
