@@ -1,36 +1,39 @@
 (defun (hub-into-txn-data-trigger) hub.PEEK_AT_TRANSACTION)
+(defun ((txn-data---priority-fee-per-gas :force :i64))  (- txndata.hub/GAS_PRICE txndata.hub/btc_BASEFEE ))
 
-(defclookup hub-into-txndata
+;; ""
+
+(defclookup (hub-into-txndata :unchecked)
   ;; target columns
   (
-   txndata.ABS_TX_NUM
-   txndata.REL_BLOCK
-   txndata.FROM_HI
-   txndata.FROM_LO
-   txndata.TO_HI
-   txndata.TO_LO
-   txndata.COINBASE_HI
-   txndata.COINBASE_LO
+   txndata.TOTL_TXN_NUMBER
+   txndata.BLK_NUMBER
+   txndata.hub/FROM_ADDRESS_HI
+   txndata.hub/FROM_ADDRESS_LO
+   txndata.hub/TO_ADDRESS_HI
+   txndata.hub/TO_ADDRESS_LO
+   txndata.hub/btc_COINBASE_ADDRESS_HI
+   txndata.hub/btc_COINBASE_ADDRESS_LO
    ;;
-   txndata.NONCE
-   txndata.VALUE
-   txndata.IS_DEP
-   txndata.TYPE2
-   txndata.GAS_PRICE
-   txndata.GAS_LIMIT
-   txndata.PRIORITY_FEE_PER_GAS
-   txndata.BASEFEE
-   txndata.CALL_DATA_SIZE
-   txndata.INIT_CODE_SIZE
+   txndata.hub/NONCE
+   txndata.hub/VALUE
+   txndata.hub/IS_DEPLOYMENT
+   txndata.hub/HAS_EIP_1559_GAS_SEMANTICS
+   txndata.hub/GAS_PRICE
+   txndata.hub/GAS_LIMIT
+   (txn-data---priority-fee-per-gas)
+   txndata.hub/btc_BASEFEE
+   txndata.hub/CALL_DATA_SIZE
+   txndata.hub/INIT_CODE_SIZE
    ;;
-   txndata.GAS_INITIALLY_AVAILABLE
-   txndata.INITIAL_BALANCE
-   txndata.REQUIRES_EVM_EXECUTION
-   txndata.COPY_TXCD
-   txndata.STATUS_CODE
-   txndata.GAS_LEFTOVER
-   txndata.REFUND_COUNTER
-   txndata.REFUND_EFFECTIVE
+   txndata.hub/GAS_INITIALLY_AVAILABLE
+   txndata.hub/INIT_BALANCE
+   txndata.hub/REQUIRES_EVM_EXECUTION
+   txndata.hub/COPY_TXCD
+   txndata.hub/STATUS_CODE
+   txndata.hub/GAS_LEFTOVER
+   txndata.hub/REFUND_COUNTER_FINAL
+   txndata.hub/REFUND_EFFECTIVE
   )
   ;; source selector
   (hub-into-txn-data-trigger)  
