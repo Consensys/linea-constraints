@@ -9,13 +9,14 @@
   (
    txndata.TOTL_TXN_NUMBER
    txndata.BLK_NUMBER
+   ;; addresses
    (*   txndata.USER   txndata.hub/FROM_ADDRESS_HI            )
    (*   txndata.USER   txndata.hub/FROM_ADDRESS_LO            )
    (*   txndata.USER   txndata.hub/TO_ADDRESS_HI              )
    (*   txndata.USER   txndata.hub/TO_ADDRESS_LO              )
    (*   txndata.USER   txndata.hub/btc_COINBASE_ADDRESS_HI    )
    (*   txndata.USER   txndata.hub/btc_COINBASE_ADDRESS_LO    )
-   ; ;
+   ;; transaction parameters
    (*   txndata.USER   txndata.hub/NONCE                      )
    (*   txndata.USER   txndata.hub/VALUE                      )
    (*   txndata.USER   txndata.hub/IS_DEPLOYMENT              )
@@ -26,28 +27,29 @@
    (*   txndata.USER   txndata.hub/btc_BASEFEE                )
    (*   txndata.USER   txndata.hub/CALL_DATA_SIZE             )
    (*   txndata.USER   txndata.hub/INIT_CODE_SIZE             )
-   ; ;
+   ;; start of transaction data
    (*   txndata.USER   txndata.hub/GAS_INITIALLY_AVAILABLE    )
    (*   txndata.USER   txndata.hub/INIT_BALANCE               )
    (*   txndata.USER   txndata.hub/REQUIRES_EVM_EXECUTION     )
    (*   txndata.USER   txndata.hub/COPY_TXCD                  )
+   ;; end of transaction data
    (*   txndata.USER   txndata.hub/STATUS_CODE                )
    (*   txndata.USER   txndata.hub/GAS_LEFTOVER               )
    (*   txndata.USER   txndata.hub/REFUND_COUNTER_FINAL       )
    (*   txndata.USER   txndata.hub/REFUND_EFFECTIVE           )
-   ;;
-   txndata.hub/NOOP            
-   txndata.hub/EIP_4788        
-   txndata.hub/EIP_2935        
-   txndata.hub/SYST_TXN_DATA_1 
-   txndata.hub/SYST_TXN_DATA_2 
-   txndata.hub/SYST_TXN_DATA_3 
-   txndata.hub/SYST_TXN_DATA_4 
-   txndata.hub/SYST_TXN_DATA_5 
+   ;; system transaction stuff
+   txndata.hub/NOOP
+   txndata.hub/EIP_4788
+   txndata.hub/EIP_2935
+   txndata.hub/SYST_TXN_DATA_1
+   txndata.hub/SYST_TXN_DATA_2
+   txndata.hub/SYST_TXN_DATA_3
+   txndata.hub/SYST_TXN_DATA_4
+   txndata.hub/SYST_TXN_DATA_5
 
   )
   ;; source selector
-  hub.PEEK_AT_TRANSACTION  
+  hub.PEEK_AT_TRANSACTION
   ;; source columns
   (
    hub.TOTL_TXN_NUMBER
@@ -79,13 +81,13 @@
    (*   hub.USER    hub.transaction/REFUND_COUNTER_INFINITY )
    (*   hub.USER    hub.transaction/REFUND_EFFECTIVE        )
    ;;
-   hub.transaction/NOOP            
-   hub.transaction/EIP_4788        
-   hub.transaction/EIP_2935        
-   hub.transaction/SYST_TXN_DATA_1 
-   hub.transaction/SYST_TXN_DATA_2 
-   hub.transaction/SYST_TXN_DATA_3 
-   hub.transaction/SYST_TXN_DATA_4 
-   hub.transaction/SYST_TXN_DATA_5 
+   hub.transaction/NOOP
+   hub.transaction/EIP_4788
+   hub.transaction/EIP_2935
+   hub.transaction/SYST_TXN_DATA_1
+   hub.transaction/SYST_TXN_DATA_2
+   hub.transaction/SYST_TXN_DATA_3
+   hub.transaction/SYST_TXN_DATA_4
+   hub.transaction/SYST_TXN_DATA_5
   )
 )
