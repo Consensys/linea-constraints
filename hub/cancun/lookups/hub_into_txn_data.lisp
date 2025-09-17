@@ -7,8 +7,8 @@
   txndata.HUB
   ;; target columns
   (
-   txndata.TOTL_TXN_NUMBER
    txndata.BLK_NUMBER
+   txndata.TOTL_TXN_NUMBER
    ;; addresses
    (*   txndata.USER   txndata.hub/FROM_ADDRESS_HI            )
    (*   txndata.USER   txndata.hub/FROM_ADDRESS_LO            )
@@ -52,8 +52,8 @@
   hub.PEEK_AT_TRANSACTION
   ;; source columns
   (
-   hub.TOTL_TXN_NUMBER
    hub.BLK_NUMBER
+   hub.TOTL_TXN_NUMBER
    (*   hub.USER    hub.transaction/FROM_ADDRESS_HI         )
    (*   hub.USER    hub.transaction/FROM_ADDRESS_LO         )
    (*   hub.USER    hub.transaction/TO_ADDRESS_HI           )
@@ -76,6 +76,7 @@
    (*   hub.USER    hub.transaction/INITIAL_BALANCE         )
    (*   hub.USER    hub.transaction/REQUIRES_EVM_EXECUTION  )
    (*   hub.USER    hub.transaction/COPY_TXCD               )
+   ;;
    (*   hub.USER    hub.transaction/STATUS_CODE             )
    (*   hub.USER    hub.transaction/GAS_LEFTOVER            )
    (*   hub.USER    hub.transaction/REFUND_COUNTER_INFINITY )

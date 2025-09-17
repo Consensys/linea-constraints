@@ -7,14 +7,14 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-(defun    (flag-sum)    (+ IS_CB
-			   IS_TS
-			   IS_NB
-			   IS_PR
-			   IS_GL
-			   IS_ID
-			   IS_BF
-			   IS_BL))
+(defun    (flag-sum)    (force-bin   (+ IS_CB
+					IS_TS
+					IS_NB
+					IS_PR
+					IS_GL
+					IS_ID
+					IS_BF
+					IS_BL)))
 
 (defun    (wght-sum)    (+ ( * (^ 2 0) IS_CB)
 			   ( * (^ 2 1) IS_TS)
@@ -89,8 +89,8 @@
 						   (* IS_BF (next IS_BL))
 						   (* IS_BL (next IS_CB))))
 
-(defun  (isnt-first-block-in-conflation)  (shift  IOMF     (- 0 nROWS_DEPTH)))
-(defun  (is-first-block-in-conflation)    (-  1  (isnt-first-block-in-conflation)))
+(defun  (isnt-first-block-in-conflation)  (shift  IOMF  (-  0   nROWS_DEPTH)))
+(defun  (is-first-block-in-conflation)    (force-bin    (-  1  (isnt-first-block-in-conflation))))
 (defun  (curr-data-hi)                            DATA_HI                     )
 (defun  (curr-data-lo)                            DATA_LO                     )
 (defun  (prev-data-hi)                    (shift  DATA_HI  (- 0 nROWS_DEPTH)))
