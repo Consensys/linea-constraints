@@ -8,7 +8,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;
 
 (defun    (conflation-constancy    COL)    (if-not-zero    IOMF    (will-remain-constant!    COL)))
-(defun    (block-constancy         COL)    (if-not-zero    (-    REL_BLOCK    (prev    REL_BLOCK))
+(defun    (block-constancy         COL)    (if-not-zero    (-    REL_BLOCK    (+   (prev    REL_BLOCK)   1))
 							   (remained-constant!    COL)))
 
 (defconstraint    first-block-number-is-conflation-constant ()
