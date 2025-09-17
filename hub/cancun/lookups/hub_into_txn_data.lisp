@@ -1,4 +1,4 @@
-(defun ((txn-data---priority-fee-per-gas :force :i64))  (*  txndata.USER  (- txndata.hub/GAS_PRICE txndata.hub/btc_BASEFEE)))
+(defun ((txn-data---priority-fee-per-gas :force :i64))  (*  txndata.HUB   txndata.USER  (- txndata.hub/GAS_PRICE txndata.hub/btc_BASEFEE)))
 
 ;; ""
 
@@ -22,7 +22,7 @@
    (*   txndata.USER   txndata.hub/HAS_EIP_1559_GAS_SEMANTICS )
    (*   txndata.USER   txndata.hub/GAS_PRICE                  )
    (*   txndata.USER   txndata.hub/GAS_LIMIT                  )
-   (txn-data---priority-fee-per-gas                           )
+   (txn-data---priority-fee-per-gas)
    (*   txndata.USER   txndata.hub/btc_BASEFEE                )
    (*   txndata.USER   txndata.hub/CALL_DATA_SIZE             )
    (*   txndata.USER   txndata.hub/INIT_CODE_SIZE             )
