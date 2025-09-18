@@ -155,10 +155,12 @@ ZKEVM_MODULES_LONDON := ${ZKEVM_MODULES_COMMON} \
 		 ${RLP_TXN_LONDON} \
 		 ${TXN_DATA_LONDON}
 
+ #This is not a typo for BLOCK_DATA:
+ #only a column name change between Paris and London that blocks us to have a conflation with London and Paris blocks
 ZKEVM_MODULES_PARIS := ${ZKEVM_MODULES_COMMON} \
 		 ${CONSTANTS_LONDON} \
 		 ${TABLES_LONDON} \
-		 ${BLOCKDATA_LONDON} \ #This is not a typo: only a column name change between Paris and London that blocks us to have a conflation with London and Paris blocks
+		 ${BLOCKDATA_LONDON} \
 		 ${HUB_LONDON} \
 		 ${LOG_INFO_LONDON} \
 		 ${MMIO_LONDON} \
