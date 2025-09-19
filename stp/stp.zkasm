@@ -40,13 +40,13 @@ fn stp(INST=0xf0 u8, GAS_ACTUAL u64, GAS_MXP u64, GAS u256, VALUE u256, EXISTS u
   ;; ===========================================================================
   ;; CALL / CALLCODE / DELEGATECALL / STATICCALL
   ;; ===========================================================================
-  stipend, gas_extra = call_gas_extra(INST, VALUE, WARM, EXISTS)
+  gas_extra, stipend = call_gas_extra(INST, VALUE, WARM, EXISTS)
   ;; determine upfront cost for call
   c, GAS_UPFRONT = GAS_MXP + gas_extra
   ;; sanity check precondition
   if c == 1 goto failed_pre
   ;; check for out-of-gas (oogx)
-  OOGX, L_gas_diff = gas_out_of_pocket(GAS_ACTUAL,GAS_UPFRONT)
+  L_gas_diff, OOGX = gas_out_of_pocket(GAS_ACTUAL,GAS_UPFRONT)
   ;; calculate gas_minc
   GAS_OOP = min256_64(GAS,L_gas_diff)
   ;; handle oogx case
@@ -65,7 +65,7 @@ create:
   ;; sanity check precondition
   if c == 1 goto failed_pre
   ;; calculate out-of-pocket cost
-  OOGX, GAS_OOP = gas_out_of_pocket(GAS_ACTUAL,GAS_UPFRONT)
+  GAS_OOP, OOGX = gas_out_of_pocket(GAS_ACTUAL,GAS_UPFRONT)
   GAS_STIPEND = 0
   return
 failed_pre:
