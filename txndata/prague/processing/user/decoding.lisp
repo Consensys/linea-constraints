@@ -7,66 +7,66 @@
 ;;                                      ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defun   (USER-transation---is-type-0)   (shift    rlp/TYPE_0   ROFF___USER___RLP_ROW))
-(defun   (USER-transation---is-type-1)   (shift    rlp/TYPE_1   ROFF___USER___RLP_ROW))
-(defun   (USER-transation---is-type-2)   (shift    rlp/TYPE_2   ROFF___USER___RLP_ROW))
-(defun   (USER-transation---is-type-3)   (shift    rlp/TYPE_3   ROFF___USER___RLP_ROW))
-(defun   (USER-transation---is-type-4)   (shift    rlp/TYPE_4   ROFF___USER___RLP_ROW))
+(defun   (USER-transaction---is-type-0)   (shift    rlp/TYPE_0   ROFF___USER___RLP_ROW))
+(defun   (USER-transaction---is-type-1)   (shift    rlp/TYPE_1   ROFF___USER___RLP_ROW))
+(defun   (USER-transaction---is-type-2)   (shift    rlp/TYPE_2   ROFF___USER___RLP_ROW))
+(defun   (USER-transaction---is-type-3)   (shift    rlp/TYPE_3   ROFF___USER___RLP_ROW))
+(defun   (USER-transaction---is-type-4)   (shift    rlp/TYPE_4   ROFF___USER___RLP_ROW))
 
 
 
 (defun    (USER-transaction---tx-decoding---tx-type-with-fixed-gas-price)
   (+
-    (USER-transation---is-type-0)
-    (USER-transation---is-type-1)
-    ;; (USER-transation---is-type-2)
-    ;; (USER-transation---is-type-3)
-    ;; (USER-transation---is-type-4)
+    (USER-transaction---is-type-0)
+    (USER-transaction---is-type-1)
+    ;; (USER-transaction---is-type-2)
+    ;; (USER-transaction---is-type-3)
+    ;; (USER-transaction---is-type-4)
     ))
 
 (defun    (USER-transaction---tx-decoding---tx-type-sans-fixed-gas-price)
   (+
-    ;; (USER-transation---is-type-0)
-    ;; (USER-transation---is-type-1)
-    (USER-transation---is-type-2)
-    (USER-transation---is-type-3)
-    (USER-transation---is-type-4)
+    ;; (USER-transaction---is-type-0)
+    ;; (USER-transaction---is-type-1)
+    (USER-transaction---is-type-2)
+    (USER-transaction---is-type-3)
+    (USER-transaction---is-type-4)
     ))
 
 (defun    (USER-transaction---tx-decoding---tx-type-sans-access-set)
   (+
-    (USER-transation---is-type-0)
-    ;; (USER-transation---is-type-1)
-    ;; (USER-transation---is-type-2)
-    ;; (USER-transation---is-type-3)
-    ;; (USER-transation---is-type-4)
+    (USER-transaction---is-type-0)
+    ;; (USER-transaction---is-type-1)
+    ;; (USER-transaction---is-type-2)
+    ;; (USER-transaction---is-type-3)
+    ;; (USER-transaction---is-type-4)
     ))
 
 (defun    (USER-transaction---tx-decoding---tx-type-with-access-set)
   (+
-    ;; (USER-transation---is-type-0)
-    (USER-transation---is-type-1)
-    (USER-transation---is-type-2)
-    (USER-transation---is-type-3)
-    (USER-transation---is-type-4)
+    ;; (USER-transaction---is-type-0)
+    (USER-transaction---is-type-1)
+    (USER-transaction---is-type-2)
+    (USER-transaction---is-type-3)
+    (USER-transaction---is-type-4)
     ))
 
 (defun    (USER-transaction---tx-decoding---tx-type-sans-delegation)
   (+
-    (USER-transation---is-type-0)
-    (USER-transation---is-type-1)
-    (USER-transation---is-type-2)
-    (USER-transation---is-type-3)
-    ;; (USER-transation---is-type-4)
+    (USER-transaction---is-type-0)
+    (USER-transaction---is-type-1)
+    (USER-transaction---is-type-2)
+    (USER-transaction---is-type-3)
+    ;; (USER-transaction---is-type-4)
     ))
 
 (defun    (USER-transaction---tx-decoding---tx-type-with-delegation)
   (+
-    ;; (USER-transation---is-type-0)
-    ;; (USER-transation---is-type-1)
-    ;; (USER-transation---is-type-2)
-    ;; (USER-transation---is-type-3)
-    (USER-transation---is-type-4)
+    ;; (USER-transaction---is-type-0)
+    ;; (USER-transaction---is-type-1)
+    ;; (USER-transaction---is-type-2)
+    ;; (USER-transaction---is-type-3)
+    (USER-transaction---is-type-4)
     ))
 
 (defun    (USER-transaction---tx-decoding---tx-type-flag-sum)
@@ -77,11 +77,11 @@
 
 (defun    (USER-transaction---tx-decoding---tx-type-wght-sum)
   (+
-    (*  0  (USER-transation---is-type-0))
-    (*  1  (USER-transation---is-type-1))
-    (*  2  (USER-transation---is-type-2))
-    (*  3  (USER-transation---is-type-3))
-    (*  4  (USER-transation---is-type-4))
+    (*  0  (USER-transaction---is-type-0))
+    (*  1  (USER-transaction---is-type-1))
+    (*  2  (USER-transaction---is-type-2))
+    (*  3  (USER-transaction---is-type-3))
+    (*  4  (USER-transaction---is-type-4))
     ))
 
 
@@ -105,9 +105,4 @@
 				  (vanishes!   (USER-transaction---RLP---number-of-access-list-addresses))
 				  )))
 
-;; TODO: remove for Prague
-(defconstraint   USER-transaction---transaction-decoding---CANCUN-specific---no-type-4-transactions
-		 (:guard   (first-row-of-USER-transaction))
-		 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-		 (vanishes!   (USER-transation---is-type-4)))
 
