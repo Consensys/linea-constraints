@@ -93,7 +93,7 @@ SHAKIRA_DATA := shakiradata
 
 SHIFT :=  shf/shf.zkasm
 
-STP := stp
+STP := stp/stp.zkasm
 
 TABLES_LONDON := reftables/*.lisp \
 				reftables/london/inst_decoder.lisp
