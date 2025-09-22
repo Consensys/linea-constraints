@@ -6,7 +6,7 @@
 ;;                                                          ;;
 ;;   X Transactions which skip evm execution                ;;
 ;;   X.Y The SYSF-transaction case                          ;;
-;;   X.Y.Z Shorthands                                       ;;
+;;   X.Y.Z Generalities                                     ;;
 ;;                                                          ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
