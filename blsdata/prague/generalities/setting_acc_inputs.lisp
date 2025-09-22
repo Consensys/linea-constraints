@@ -16,5 +16,4 @@
             (vanishes! (next ACC_INPUTS))
             (eq! (next ACC_INPUTS)
                  (+ ACC_INPUTS
-                    1
                     (will_switch_from_second_to_first))))))
