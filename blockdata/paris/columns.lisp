@@ -7,7 +7,7 @@
  (IS_COINBASE         :binary@prove)
  (IS_TIMESTAMP        :binary@prove)
  (IS_NUMBER           :binary@prove)
- (IS_PREVRANDAO       :binary@prove)
+ (IS_DIFFICULTY       :binary@prove)
  (IS_GASLIMIT         :binary@prove)
  (IS_CHAINID          :binary@prove)
  (IS_BASEFEE          :binary@prove)
