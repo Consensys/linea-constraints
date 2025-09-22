@@ -17,7 +17,11 @@ BLAKE2f_MODEXP_DATA := blake2fmodexpdata
 # constraints used in prod for LINEA, with linea block gas limit
 BLOCKDATA_LONDON := blockdata/london
 
+# in Paris, we trace Prevrandao in the column Difficulty for simplicity
 BLOCKDATA_PARIS := blockdata/paris
+
+# we add Blockdata for Shanghai fork, to switch tracing Prevrandao to the right column
+BLOCKDATA_SHANGHAI:= blockdata/shanghai
 
 BLOCKDATA_CANCUN := blockdata/cancun
 
@@ -163,7 +167,7 @@ ZKEVM_MODULES_LONDON := ${ZKEVM_MODULES_COMMON} \
 ZKEVM_MODULES_SHANGHAI := ${ZKEVM_MODULES_COMMON} \
 		 ${CONSTANTS_LONDON} \
 		 ${TABLES_LONDON} \
-		 ${BLOCKDATA_PARIS} \
+		 ${BLOCKDATA_SHANGHAI} \
 		 ${HUB_SHANGHAI} \
 		 ${LOG_INFO_LONDON} \
 		 ${MMIO_LONDON} \
