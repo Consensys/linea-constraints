@@ -51,11 +51,3 @@
                  (eq! (shift   transaction/GAS_LEFTOVER               tx-skip---USER---row-offset---TXN)
                       (shift   transaction/GAS_INITIALLY_AVAILABLE    tx-skip---USER---row-offset---TXN)))
 
-;; NOTE: this constraint may have to be moified starting with PRAGUE (specifically EIP-7623, call data floor price)
-;; If it fails, then the issue is with TXN_DATA, as the REFUND_EFFECTIVE should be set correctly and in a case
-;; independent fashion in this module.
-(defconstraint   tx-skip---TXN-row---justifying-effective-refund
-                 (:guard (tx-skip---precondition---USER))
-                 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-                 (eq! (shift   transaction/REFUND_EFFECTIVE    tx-skip---USER---row-offset---TXN)
-                      (shift   transaction/GAS_LEFTOVER        tx-skip---USER---row-offset---TXN)))
