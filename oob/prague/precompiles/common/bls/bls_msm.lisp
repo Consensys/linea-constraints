@@ -58,7 +58,7 @@
                            (vanishes! (shift MOD_FLAG 5))
                            (vanishes! (shift WCP_FLAG 5))
                            (eq!       (shift BLS_REF_TABLE_FLAG 5) 1)
-                           (eq! (shift OUTGOING_INST 5) (wght-sum-prc-bls))
+                           (eq! (shift OUTGOING_INST 5) (+ (* IS_BLS_G1_MSM 12) (* IS_BLS_G2_MSM 14))) ;; TODO: is this a clean solution? OUTGOING_INST is a byte
                            (eq! (* (shift [OUTGOING_DATA 1] 5) (msm-pair-size)) (prc-g1msm-prc-g2msm---num-inputs_msm-pair-size))
                            (vanishes! (shift [OUTGOING_DATA 2] 5))
                            (vanishes! (shift [OUTGOING_DATA 3] 5))
