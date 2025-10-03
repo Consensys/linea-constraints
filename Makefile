@@ -28,7 +28,6 @@ CONSTANTS := constants/constants.lisp
 CONSTANTS_LONDON := constants/london/constants.zkasm
 CONSTANTS_CANCUN := constants/cancun/constants.zkasm
 CONSTANTS_PRAGUE := constants/prague/constants.zkasm
-CONSTANTS_OSAKA := constants/osaka/constants.zkasm
 
 EC_DATA := ecdata
 
@@ -196,7 +195,7 @@ ZKEVM_MODULES_PRAGUE := ${ZKEVM_MODULES_COMMON} \
 		 ${TXN_DATA_PRAGUE}
 
 ZKEVM_MODULES_OSAKA := ${ZKEVM_MODULES_COMMON} \
-		 ${CONSTANTS_OSAKA} \
+		 ${CONSTANTS_PRAGUE} \
 		 ${TABLES_PRAGUE} \
 		 ${BLOCKDATA_CANCUN} \
 		 ${BLS_PRAGUE} \
