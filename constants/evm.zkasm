@@ -22,3 +22,9 @@ const G_EXPBYTE = 50
 const G_NEWACCOUNT = 25000
 const G_TXCREATE = 32000
 const G_WARMACCESS = 100
+
+;; =============================================================================
+;; ZkEvm instructions
+;; =============================================================================
+const EXP_INST_EXPLOG    = 0xEE0A
+const EXP_INST_MODEXPLOG = 0xEE05
