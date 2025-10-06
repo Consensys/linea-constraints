@@ -1,14 +1,10 @@
-;; The GAS module is responsible for checking there is sufficient (or
-;; insufficient) gas is available in difference scenarios.  For
-;; example, when a gas exception arises, this module checks that there
-;; was indeed insufficient gas.
-;;
+
 ;; XAHOY stands for "Exceptions Ahoy".  When XAHOY==1, the
 ;; corresponding instruction generated an exception.  OOGX stands for
 ;; "Out Of Gas Exception".  When OOGX==1, it means the corresponding
 ;; instruction generated an out-of-gas exception (rather than some
 ;; other exception kind).
-fn gas(GAS_COST u64, GAS_ACTUAL u64, XAHOY u1, OOGX u1) {
+pub fn gas(GAS_COST u64, GAS_ACTUAL u64, XAHOY u1, OOGX u1) {
   var tmp u64
   var b u1
   ;;
