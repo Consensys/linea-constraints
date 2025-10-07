@@ -1,7 +1,7 @@
 (defun (hub-into-clz-activation-flag)
   (* (unexceptional-stack-row)
       hub.stack/BIN_FLAG
-      [hub.stack/DEC_FLAG 2]))
+      [hub.stack/DEC_FLAG 3]))
 
 (defclookup (hub-into-clz :unchecked)
   ;; target columns

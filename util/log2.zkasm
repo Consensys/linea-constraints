@@ -1,7 +1,9 @@
 ;; Compute log2 of word
-pub fn log2(arg u256) -> (res u8, clz=256 u9) {
+pub fn log2(arg u256) -> (res u8) {
   var hi, lo u128
   var tmp u7
+  ;; used as the target of the lookup from HUB for CLZ opcode (post Osaka)
+  var clz u9
   ;; split argument
   hi,lo = arg
   ;; check hi or lo
