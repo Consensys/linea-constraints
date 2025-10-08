@@ -21,7 +21,7 @@
                                                                         (* PRC_BLS_G2_MSM_MULTIPLICATION_COST  IS_BLS_G2_MSM)))
 (defun (prc-g1msm-prc-g2msm---remainder)                                               (shift OUTGOING_RES_LO 2))
 (defun (prc-g1msm-prc-g2msm---cds-is-multiple-of-msm-pair-size)                        (shift OUTGOING_RES_LO 3))
-(defun (prc-g1msm-prc-g2msm---valid-cds) (* (prc---cds-is-non-zero) (prc-g1msm-prc-g2msm---cds-is-multiple-of-msm-pair-size)))
+(defun (prc-g1msm-prc-g2msm---valid-cds)                                               (* (prc---cds-is-non-zero) (prc-g1msm-prc-g2msm---cds-is-multiple-of-msm-pair-size)))
 (defun (prc-g1msm-prc-g2msm---num-inputs_msm-pair-size)                                (prc---cds))
 (defun (prc-g1msm-prc-g2msm---num-inputs-gt-128)                                       (shift OUTGOING_RES_LO 4))
 (defun (prc-g1msm-prc-g2msm---num-inputs-leq-128)                                      (- 1 (prc-g1msm-prc-g2msm---num-inputs-gt-128)))
