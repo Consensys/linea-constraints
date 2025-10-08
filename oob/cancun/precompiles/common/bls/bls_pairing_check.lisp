@@ -13,8 +13,8 @@
 (defun (prc-blspairingcheck---valid-cds)                                               (* (prc---cds-is-non-zero) (prc-blspairingcheck---cds-is-multiple-of-bls-pairing-check-pair-size)))
 (defun (prc-blspairingcheck---insufficient-gas)                                        (shift OUTGOING_RES_LO 4))
 (defun (prc-blspairingcheck---sufficient-gas)                                          (- 1 (prc-blspairingcheck---insufficient-gas)))
-(defun (prc-blspairingcheck---precompile-cost_PRECOMPILE_CALL_DATA_UNIT_SIZE___BLS_PAIRING_CHECK)       (*    (prc-blspairingcheck---valid-cds)
-                                                                  (+ (* GAS_CONST_BLS_PAIRING_CHECK PRECOMPILE_CALL_DATA_UNIT_SIZE___BLS_PAIRING_CHECK) (* GAS_CONST_BLS_PAIRING_CHECK_PAIR (prc---cds)))))
+(defun (prc-blspairingcheck---precompile-cost_PRECOMPILE_CALL_DATA_UNIT_SIZE___BLS_PAIRING_CHECK)       
+                                                                  (+ (* GAS_CONST_BLS_PAIRING_CHECK PRECOMPILE_CALL_DATA_UNIT_SIZE___BLS_PAIRING_CHECK) (* GAS_CONST_BLS_PAIRING_CHECK_PAIR (prc---cds))))
 
 (defconstraint prc-blspairingcheck---mod-cds-by-PRECOMPILE_CALL_DATA_UNIT_SIZE___BLS_PAIRING_CHECK (:guard (* (assumption---fresh-new-stamp) (prc-blspairingcheck---standard-precondition)))
   (call-to-MOD 2 0 (prc---cds) 0 PRECOMPILE_CALL_DATA_UNIT_SIZE___BLS_PAIRING_CHECK))
