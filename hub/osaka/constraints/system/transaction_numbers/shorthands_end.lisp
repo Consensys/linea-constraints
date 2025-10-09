@@ -9,10 +9,10 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-(defun    (force-bin (system-txn-numbers---sysi-txn-end))    (*    SYSI         TX_SKIP    CON))
-(defun    (force-bin (system-txn-numbers---sysf-txn-end))    (*    SYSF         TX_SKIP    CON))
-(defun    (force-bin (system-txn-numbers---user-txn-end))    (*    USER    (+   TX_SKIP
-								    TX_FINL)   CON))
+(defun   (system-txn-numbers---sysi-txn-end)   (force-bin  (*    SYSI         TX_SKIP    CON)))
+(defun   (system-txn-numbers---sysf-txn-end)   (force-bin  (*    SYSF         TX_SKIP    CON)))
+(defun   (system-txn-numbers---user-txn-end)   (force-bin  (*    USER    (+   TX_SKIP
+								    TX_FINL)   CON)))
 
 (defun    (system-txn-numbers---txn-end)    (force-bin (+  (system-txn-numbers---sysi-txn-end)
 						  						 		   (system-txn-numbers---user-txn-end)
