@@ -16,6 +16,7 @@
                   (:guard (tx-skip---precondition---SYSI-2935))
                   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                   (eq!    (+    (shift    PEEK_AT_TRANSACTION    ROFF---tx-skip---SYSI-2935---TXN                                          )
+                                (shift    PEEK_AT_ACCOUNT        ROFF---tx-skip---SYSI-2935---ACC---loading-the-system-address             )
                                 (shift    PEEK_AT_ACCOUNT        ROFF---tx-skip---SYSI-2935---ACC---loading-the-block-hash-history-account ))
                           NSR---tx-skip---SYSI-2935---unconditional))
 
@@ -25,6 +26,7 @@
                   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                   (if-not-zero   (tx-skip---SYSI-2935---sys-txn-is-trivial)
                                  (eq!    (+    (shift    PEEK_AT_TRANSACTION    ROFF---tx-skip---SYSI-2935---TXN                                          )
+                                               (shift    PEEK_AT_ACCOUNT        ROFF---tx-skip---SYSI-2935---ACC---loading-the-system-address             )
                                                (shift    PEEK_AT_ACCOUNT        ROFF---tx-skip---SYSI-2935---ACC---loading-the-block-hash-history-account )
                                                (shift    PEEK_AT_CONTEXT        ROFF---tx-skip---SYSI-2935---CON---final-zero-context---trivial-case      ))
                                          NSR---tx-skip---SYSI-2935---trivial-case)))
@@ -35,6 +37,7 @@
                   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                   (if-not-zero   (tx-skip---SYSI-2935---sys-txn-is-nontrivial)
                                  (eq!    (+    (shift    PEEK_AT_TRANSACTION    ROFF---tx-skip---SYSI-2935---TXN                                          )
+                                               (shift    PEEK_AT_ACCOUNT        ROFF---tx-skip---SYSI-2935---ACC---loading-the-system-address             )
                                                (shift    PEEK_AT_ACCOUNT        ROFF---tx-skip---SYSI-2935---ACC---loading-the-block-hash-history-account )
                                                (shift    PEEK_AT_STORAGE        ROFF---tx-skip---SYSI-2935---STO---storing-the-previous-block-hash        )
                                                (shift    PEEK_AT_CONTEXT        ROFF---tx-skip---SYSI-2935---CON---final-zero-context---nontrivial-case   ))
