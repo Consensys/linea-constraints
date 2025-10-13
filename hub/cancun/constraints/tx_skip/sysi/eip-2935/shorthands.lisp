@@ -15,15 +15,16 @@
 
 (defconst
   ROFF---tx-skip---SYSI-2935---TXN                                          0
-  ROFF---tx-skip---SYSI-2935---ACC---loading-the-block-hash-history-account 1
-  ROFF---tx-skip---SYSI-2935---STO---storing-the-previous-block-hash        2
-  ROFF---tx-skip---SYSI-2935---CON---final-zero-context---nontrivial-case   3
+  ROFF---tx-skip---SYSI-2935---ACC---loading-the-system-address             1
+  ROFF---tx-skip---SYSI-2935---ACC---loading-the-block-hash-history-account 2
+  ROFF---tx-skip---SYSI-2935---STO---storing-the-previous-block-hash        3
+  ROFF---tx-skip---SYSI-2935---CON---final-zero-context---nontrivial-case   4
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  ROFF---tx-skip---SYSI-2935---CON---final-zero-context---trivial-case      2
+  ROFF---tx-skip---SYSI-2935---CON---final-zero-context---trivial-case      3
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  NSR---tx-skip---SYSI-2935---unconditional                                 2
-  NSR---tx-skip---SYSI-2935---trivial-case                                  3
-  NSR---tx-skip---SYSI-2935---nontrivial-case                               4
+  NSR---tx-skip---SYSI-2935---unconditional                                 3
+  NSR---tx-skip---SYSI-2935---trivial-case                                  4
+  NSR---tx-skip---SYSI-2935---nontrivial-case                               5
   )
 
 

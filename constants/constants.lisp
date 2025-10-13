@@ -264,6 +264,8 @@
   PROTECTED_BASE_V_PO                       (+ PROTECTED_BASE_V 1)
   HISTORY_BUFFER_LENGTH                     8191         ;; EIP-4788
   HISTORY_SERVE_WINDOW                      8191         ;; EIP-2935
+  SYSTEM_ADDRESS_HI                         0xffffffff
+  SYSTEM_ADDRESS_LO                         0xfffffffffffffffffffffffffffffffe
   BEACON_ROOTS_ADDRESS_HI                   0x000f3df6
   BEACON_ROOTS_ADDRESS_LO                   0xd732807ef1319fb7b8bb8522d0beac02
   HISTORY_STORAGE_ADDRESS_HI                0x0000f908
