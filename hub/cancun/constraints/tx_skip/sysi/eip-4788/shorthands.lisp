@@ -15,16 +15,17 @@
 
 (defconst
   ROFF---tx-skip---SYSI-4788---TXN                                        0
-  ROFF---tx-skip---SYSI-4788---ACC---loading-the-beacon-root-account      1
-  ROFF---tx-skip---SYSI-4788---STO---storing-the-time-stamp               2
-  ROFF---tx-skip---SYSI-4788---STO---storing-the-beacon-root              3
-  ROFF---tx-skip---SYSI-4788---CON---final-zero-context---nontrivial-case 4
+  ROFF---tx-skip---SYSI-4788---ACC---loading-the-system-address           1
+  ROFF---tx-skip---SYSI-4788---ACC---loading-the-beacon-root-account      2
+  ROFF---tx-skip---SYSI-4788---STO---storing-the-time-stamp               3
+  ROFF---tx-skip---SYSI-4788---STO---storing-the-beacon-root              4
+  ROFF---tx-skip---SYSI-4788---CON---final-zero-context---nontrivial-case 5
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  ROFF---tx-skip---SYSI-4788---CON---final-zero-context---trivial-case    2
+  ROFF---tx-skip---SYSI-4788---CON---final-zero-context---trivial-case    3
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  NSR---tx-skip---SYSI-4788---unconditional                                     2
-  NSR---tx-skip---SYSI-4788---trivial-case                                      3
-  NSR---tx-skip---SYSI-4788---nontrivial-case                                   5
+  NSR---tx-skip---SYSI-4788---unconditional                               3
+  NSR---tx-skip---SYSI-4788---trivial-case                                4
+  NSR---tx-skip---SYSI-4788---nontrivial-case                             6
   )
 
 (defun (tx-skip---SYSI-4788---sys-smc-has-code)             (shift   account/HAS_CODE              ROFF---tx-skip---SYSI-4788---ACC---loading-the-beacon-root-account)) ;; ""
