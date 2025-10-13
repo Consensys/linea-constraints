@@ -28,6 +28,6 @@
   ROFF___USER___CMPTN_ROW___COMPUTING_THE_EFFECTIVE_GAS_PRICE                                    16
 
   nROWS___TRANSACTION___SANS___EIP_1559_GAS_SEMANTICS                                            15
-  nROWS___TRANSACTION___WITH___EIP_1559_GAS_SEMANTICS                                            16
+  nROWS___TRANSACTION___WITH___EIP_1559_GAS_SEMANTICS                                            17
   )
 
