@@ -16,9 +16,9 @@
                   (:guard (tx-skip---precondition---SYSI-4788))
                   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                   (eq!    (+    (shift    PEEK_AT_TRANSACTION    ROFF---tx-skip---SYSI-4788---TXN                                       )
-                                (shift    PEEK_AT_ACCOUNT        ROFF---tx-skip---SYSI-4788---ACC---loading-the-system-address          ))
+                                (shift    PEEK_AT_ACCOUNT        ROFF---tx-skip---SYSI-4788---ACC---loading-the-system-address          )
                                 (shift    PEEK_AT_ACCOUNT        ROFF---tx-skip---SYSI-4788---ACC---loading-the-beacon-root-account     ))
-                          NSR---tx-skip---SYSI-4788---unconditional)) ;; ""
+                          NSR---tx-skip---SYSI-4788---unconditional))
 
 
 (defconstraint    tx-skip---SYSI-4788---setting-the-exact-peeking-flags---trivial-case
