@@ -3,7 +3,7 @@
   ;; target columns
   (
     rom.CFI
-    rom.INDEX
+    rom.LIMB_INDEX
     rom.LIMB
     rom.CODE_SIZE
   )

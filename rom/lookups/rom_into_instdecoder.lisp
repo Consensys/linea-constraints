@@ -9,8 +9,8 @@
   ;; source columns
   (
     rom.OPCODE
-    rom.IS_PUSH
-    rom.IS_JUMPDEST
+    rom.OPCODE_IS_PUSH
+    rom.OPCODE_IS_JUMPDEST
   ))
 
 

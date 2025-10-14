@@ -15,27 +15,27 @@
   (if-not-eq ct ctmax (will-remain-constant! X)))
 
 (defun (push-constant X)
-  (if-not-zero COUNTER_PUSH
+  (if-not-zero PUSH_COUNTER
                (remained-constant! X)))
 
 (defun (push-incrementing X)
-  (if-not-zero COUNTER_PUSH
+  (if-not-zero PUSH_COUNTER
                (or! (remained-constant! X) (did-inc! X 1))))
 
 (defconstraint cfi-constancies ()
   (cfi-constant CODE_SIZE))
 
 (defconstraint cfi-incrementings ()
-  (begin (cfi-incrementing CODESIZE_REACHED)
+  (begin (cfi-incrementing CODE_SIZE_REACHED)
          (debug (cfi-incrementing PC))))
 
 (defconstraint ct-constancies ()
   (begin (counter-constant LIMB CT COUNTER_MAX)
-         (counter-constant nBYTES CT COUNTER_MAX)
+         (counter-constant LIMB_SIZE CT COUNTER_MAX)
          (counter-constant COUNTER_MAX CT COUNTER_MAX)))
 
 (defconstraint push-constancies ()
-  (begin (push-constant PUSH_PARAMETER)
+  (begin (push-constant PUSH_COUNTER_MAX)
          (push-constant PUSH_VALUE_HI)
          (push-constant PUSH_VALUE_LO)))
 
@@ -50,11 +50,11 @@
   (if-zero CFI
            (begin (vanishes! CT)
                   (vanishes! COUNTER_MAX)
-                  (vanishes! PBCB)
-                  (debug (vanishes! IS_PUSH))
-                  (debug (vanishes! IS_PUSH_DATA))
-                  (debug (vanishes! COUNTER_PUSH))
-                  (debug (vanishes! PUSH_PARAMETER))
+                  (vanishes! LIMB_BYTE)
+                  (debug (vanishes! OPCODE_IS_PUSH))
+                  (debug (vanishes! PUSH_CLAIMED))
+                  (debug (vanishes! PUSH_COUNTER))
+                  (debug (vanishes! PUSH_COUNTER_MAX))
                   (debug (vanishes! PROGRAM_COUNTER)))
            (begin (debug (or! (eq! COUNTER_MAX LLARGEMO) (eq! COUNTER_MAX WORD_SIZE_MO)))
                   (if-eq COUNTER_MAX LLARGEMO (will-remain-constant! CFI))
@@ -79,58 +79,58 @@
 
 (defconstraint limb-accumulator ()
   (begin (if-zero CT
-                  (eq! ACC PBCB)
-                  (eq! ACC
-                       (+ (* 256 (prev ACC))
-                          PBCB)))
-         (if-eq CT COUNTER_MAX (eq! ACC LIMB))))
+                  (eq! LIMB_ACC LIMB_BYTE)
+                  (eq! LIMB_ACC
+                       (+ (* 256 (prev LIMB_ACC))
+                          LIMB_BYTE)))
+         (if-eq CT COUNTER_MAX (eq! LIMB_ACC LIMB))))
 
-;; CODESIZE_REACHED Constraints
+;; CODE_SIZE_REACHED Constraints
 (defconstraint codesizereached-trigger ()
   (if-eq PC (- CODE_SIZE 1)
-         (eq! (+ CODESIZE_REACHED (next CODESIZE_REACHED))
+         (eq! (+ CODE_SIZE_REACHED (next CODE_SIZE_REACHED))
               1)))
 
 (defconstraint csr-impose-ctmax (:guard CFI)
   (if-zero CT
-           (if-zero CODESIZE_REACHED
+           (if-zero CODE_SIZE_REACHED
                     (eq! COUNTER_MAX LLARGEMO)
                     (eq! COUNTER_MAX WORD_SIZE_MO))))
 
 ;; nBytes constraints
 (defconstraint nbytes-acc (:guard CFI)
   (if-zero CT
-           (if-zero CODESIZE_REACHED
-                    (eq! nBYTES_ACC 1)
-                    (vanishes! nBYTES))
-           (if-zero CODESIZE_REACHED
-                    (did-inc! nBYTES_ACC 1)
-                    (remained-constant! nBYTES_ACC))))
+           (if-zero CODE_SIZE_REACHED
+                    (eq! LIMB_SIZE_ACC 1)
+                    (vanishes! LIMB_SIZE))
+           (if-zero CODE_SIZE_REACHED
+                    (did-inc! LIMB_SIZE_ACC 1)
+                    (remained-constant! LIMB_SIZE_ACC))))
 
 (defconstraint nbytes-collusion ()
-  (if-eq CT COUNTER_MAX (eq! nBYTES nBYTES_ACC)))
+  (if-eq CT COUNTER_MAX (eq! LIMB_SIZE LIMB_SIZE_ACC)))
 
-;; INDEX constraints
+;; LIMB_INDEX constraints
 (defconstraint no-cfi-no-index ()
   (if-zero CFI
-           (vanishes! INDEX)))
+           (vanishes! LIMB_INDEX)))
 
 (defconstraint new-cfi-reboot-index ()
   (if-not-zero (- CFI (prev CFI))
-               (vanishes! INDEX)))
+               (vanishes! LIMB_INDEX)))
 
 (defconstraint new-ct-increment-index ()
   (if-not (or! (eq! CFI 0)
                (did-inc! CFI 1)
                (neq! CT 0))
-          (did-inc! INDEX 1)))
+          (did-inc! LIMB_INDEX 1)))
 
 (defconstraint index-inc-in-middle-padding ()
-  (if-eq CT LLARGE (did-inc! INDEX 1)))
+  (if-eq CT LLARGE (did-inc! LIMB_INDEX 1)))
 
 (defconstraint index-quasi-ct-cst ()
   (if-not-zero (* CT (- CT LLARGE))
-               (remained-constant! INDEX)))
+               (remained-constant! LIMB_INDEX)))
 
 ;; PC constraints
 (defconstraint pc-incrementing (:guard CFI)
@@ -143,46 +143,46 @@
 
 ;; end of CFI (padding rows)
 (defconstraint end-code-no-opcode ()
-  (if-eq CODESIZE_REACHED 1 (vanishes! PBCB)))
+  (if-eq CODE_SIZE_REACHED 1 (vanishes! LIMB_BYTE)))
 
 ;; Constraints Related to PUSHX instructions
 (defconstraint not-a-push-data ()
-  (if-zero IS_PUSH_DATA
-           (begin (vanishes! COUNTER_PUSH)
-                  (eq! OPCODE PBCB))))
+  (if-zero PUSH_CLAIMED
+           (begin (vanishes! PUSH_COUNTER)
+                  (eq! OPCODE LIMB_BYTE))))
 
 (defconstraint ispush-ispushdata-exclusivity ()
-  (or! (eq! IS_PUSH 0) (eq! IS_PUSH_DATA 0)))
+  (or! (eq! OPCODE_IS_PUSH 0) (eq! PUSH_CLAIMED 0)))
 
 (defconstraint ispush-implies-next-pushdata ()
-  (if-not-zero IS_PUSH (eq! (next IS_PUSH_DATA) 1)))
+  (if-not-zero OPCODE_IS_PUSH (eq! (next PUSH_CLAIMED) 1)))
 
 (defconstraint ispush-constraint ()
-  (if-not-zero IS_PUSH
-               (begin (eq! PUSH_PARAMETER
+  (if-not-zero OPCODE_IS_PUSH
+               (begin (eq! PUSH_COUNTER_MAX
                            (- OPCODE (- EVM_INST_PUSH1 1)))
                       (vanishes! PUSH_VALUE_ACC)
                       (vanishes! (+ PUSH_FUNNEL_BIT (next PUSH_FUNNEL_BIT))))))
 
 (defconstraint ispushdata-constraint ()
-  (if-not-zero IS_PUSH_DATA
-               (begin (eq! (+ (prev IS_PUSH) (prev IS_PUSH_DATA))
+  (if-not-zero PUSH_CLAIMED
+               (begin (eq! (+ (prev OPCODE_IS_PUSH) (prev PUSH_CLAIMED))
                            1)
                       (eq! OPCODE EVM_INST_INVALID)
-                      (did-inc! COUNTER_PUSH 1)
-                      (if-zero (- (+ COUNTER_PUSH LLARGE) PUSH_PARAMETER)
+                      (did-inc! PUSH_COUNTER 1)
+                      (if-zero (- (+ PUSH_COUNTER LLARGE) PUSH_COUNTER_MAX)
                                (begin (will-inc! PUSH_FUNNEL_BIT 1)
                                       (eq! PUSH_VALUE_HI PUSH_VALUE_ACC))
-                               (if-eq (next IS_PUSH_DATA) 1 (will-remain-constant! PUSH_FUNNEL_BIT)))
+                               (if-eq (next PUSH_CLAIMED) 1 (will-remain-constant! PUSH_FUNNEL_BIT)))
                       (if-zero (- (prev PUSH_FUNNEL_BIT) PUSH_FUNNEL_BIT)
                                (eq! PUSH_VALUE_ACC
                                     (+ (* 256 (prev PUSH_VALUE_ACC))
-                                       PBCB))
-                               (eq! PUSH_VALUE_ACC PBCB))
-                      (if-eq COUNTER_PUSH PUSH_PARAMETER
+                                       LIMB_BYTE))
+                               (eq! PUSH_VALUE_ACC LIMB_BYTE))
+                      (if-eq PUSH_COUNTER PUSH_COUNTER_MAX
                              (begin (if-zero PUSH_FUNNEL_BIT
                                              (vanishes! PUSH_VALUE_HI))
                                     (eq! PUSH_VALUE_ACC PUSH_VALUE_LO)
-                                    (vanishes! (next IS_PUSH_DATA)))))))
+                                    (vanishes! (next PUSH_CLAIMED)))))))
 
 

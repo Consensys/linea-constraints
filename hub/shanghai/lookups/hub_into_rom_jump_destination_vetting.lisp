@@ -8,7 +8,7 @@
   (
    rom.CFI
    rom.PC
-   rom.IS_JUMPDEST
+   rom.OPCODE_IS_JUMPDEST
   )
   ;; source selector
   (hub-into-rom-jump-destination-vetting-trigger)

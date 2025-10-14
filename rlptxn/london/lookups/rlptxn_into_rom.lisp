@@ -8,8 +8,8 @@
   (
     rom.CODE_FRAGMENT_INDEX
     rom.LIMB
-    rom.INDEX
-    rom.nBYTES
+    rom.LIMB_INDEX
+    rom.LIMB_SIZE
   )
   ;; source selector
   (sel-rlptxn-to-rom)
