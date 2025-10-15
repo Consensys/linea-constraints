@@ -5,12 +5,14 @@
 
 (defclookup
   (hub-into-blockhash :unchecked)
+  ;; target selector
+  blockhash.MACRO
   ;; target columns
   (
     blockhash.macro/BLOCKHASH_ARG_HI
     blockhash.macro/BLOCKHASH_ARG_LO
-    blockhash.macro/BLOCKHASH_RES_HI
-    blockhash.macro/BLOCKHASH_RES_LO
+    blockhash.macro/BLOCKHASH_VAL_HI
+    blockhash.macro/BLOCKHASH_VAL_LO
   )
   ;; source selector
   (hub-into-block-hash-trigger-eip2935-consistency)
