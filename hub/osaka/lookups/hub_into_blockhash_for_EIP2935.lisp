@@ -19,7 +19,7 @@
   ;; source columns
   (
     0
-    hub.transaction/SYST_TXN_DATA_5                 ;; previous block number (or 0 if genesis)
+    hub.transaction/SYST_TXN_DATA_1                 ;; previous block number (or 0 if genesis)
     hub.transaction/SYST_TXN_DATA_3                 ;; previous blockhash hi (or 0 if genesis)
     hub.transaction/SYST_TXN_DATA_4                 ;; previous blockhash lo (or 0 if genesis)
   ))
