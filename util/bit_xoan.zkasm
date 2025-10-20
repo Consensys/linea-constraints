@@ -109,8 +109,8 @@ and_call:
     return
 not_call:
     ;; we only use ARGUMENT_1
-    res_hi = arg1_hi == 1 ? 0 : 1
-    res_lo = arg1_lo == 1 ? 0 : 1
+    res_hi = 1 - arg1_hi
+    res_lo = 1 - arg1_lo
     RES = ( res_hi * 2 ) + res_lo
     return
 }
