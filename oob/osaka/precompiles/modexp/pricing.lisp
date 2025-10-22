@@ -18,7 +18,7 @@
   )
 
 
-(defun (prc-modexp-pricing---standard-precondition)                (* (assumption---fresh-new-stamp) (prc-modexp-pricing---standard-precondition)))
+(defun (prc-modexp-pricing---standard-precondition)                (*   (assumption---fresh-new-stamp) IS_MODEXP_PRICING))
 (defun (prc-modexp-pricing---exponent-log)                         [DATA 6])
 (defun (prc-modexp-pricing---max-mbs-bbs)                          [DATA 7])
 ;; ""
@@ -39,7 +39,7 @@
                                     (prc---r@c)
                                     ))
 
-(defun   (prc-modex-pricing---r@c-is-zero)   (shift   OUTGOING_RES_LO   ROFF___MODEXP_PRICING___R@C_ISZERO_CHECK ))
+(defun   (prc-modex-pricing---r@c-is-zero)   (shift   OUTGOING_RES_LO   ROFF___MODEXP_PRICING___R@C_ISZERO_CHECK))
 
 
 
@@ -157,7 +157,7 @@
                                  (prc-modexp-pricing---precompile-cost)
                                  ))
 
-(defun   (prc-modexp-pricing---callee-gas-LT-precompile-cost)    (borce-bin   (shift   OUTGOING_RES_LO    ROFF___MODEXP_PRICING___CALLEE_GAS_VS_PRECOMPILE_COST)))
+(defun   (prc-modexp-pricing---callee-gas-LT-precompile-cost)    (force-bin   (shift   OUTGOING_RES_LO    ROFF___MODEXP_PRICING___CALLEE_GAS_VS_PRECOMPILE_COST)))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
