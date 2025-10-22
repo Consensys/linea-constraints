@@ -227,6 +227,7 @@
   GAS_CONST_IDENTITY                        15
   GAS_CONST_IDENTITY_WORD                   3
   GAS_CONST_MODEXP                          200
+  GAS_CONST_MODEXP_EIP_7823                 500
   GAS_CONST_ECADD                           150
   GAS_CONST_ECMUL                           6000
   GAS_CONST_ECPAIRING                       45000
