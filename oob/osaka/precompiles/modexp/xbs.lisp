@@ -24,7 +24,7 @@
 (defun (prc-modexp-xbs---ybs-lo)                                      [DATA   3])
 (defun (prc-modexp-xbs---compute-max)                     (force-bin  [DATA   4]))
 (defun (prc-modexp-xbs---max-xbs-ybs)                                 [DATA   7])
-(defun (prc-modexp-xbs---xbs-nonzero)                                 [DATA   8])
+(defun (prc-modexp-xbs---xbs-nonzero)                     (force-bin  [DATA   8]))
 (defun (prc-modexp-xbs---xbs-within-bounds)               (force-bin  [DATA   9]))
 (defun (prc-modexp-xbs---xbs-out-of-bounds)               (force-bin  [DATA  10]))
 ;; ""
