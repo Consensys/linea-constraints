@@ -1,6 +1,7 @@
 (defun (hub-into-block-hash-trigger-eip2935-consistency)
-  (* hub.transaction/EIP_2935
-     hub.PEEK_AT_TRANSACTION
+  (* hub.PEEK_AT_TRANSACTION
+     hub.SYSI
+     hub.transaction/EIP_2935
      (- 1 hub.transaction/SYST_TXN_DATA_5))) ;; hub.transaction/SYST_TXN_DATA_5 == is-genesis-block
 
 (defclookup
