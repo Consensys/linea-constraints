@@ -17,6 +17,7 @@ pub fn bin(INST=0x16 u8, ARGUMENT_1 u256, ARGUMENT_2 u256) -> (RES u256) {
    if INST==EVM_INST_NOT        goto not_call
    if INST==EVM_INST_BYTE       goto byte_call
    if INST==EVM_INST_SIGNEXTEND goto signextend_call
+   if INST==EVM_INST_CLZ        goto clz_call
    fail
    var inst u2
 
