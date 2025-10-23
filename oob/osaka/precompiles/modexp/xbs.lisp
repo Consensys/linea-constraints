@@ -30,7 +30,14 @@
 ;; ""
 
 
-(defconstraint    prc-modexp-xbs---compare-xbs-against-EIP-7823-upper-bound
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                           ;;
+;;   row i + 0: comparing xbs against 1024   ;;
+;;                                           ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+(defconstraint    prc-modexp-xbs---comparing-xbs-against-EIP-7823-upper-bound
                   (:guard (* (assumption---fresh-new-stamp) (prc-modexp-xbs---standard-precondition)))
                   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                   (call-to-LT   ROFF___MODEXP_XBS___XBS_VS_EIP_7823_UPPER_BOUND
@@ -40,7 +47,16 @@
                                 EIP_7823_MODEXP_UPPER_BYTE_SIZE_BOUND_PLUS_ONE
                                 ))
 
-(defconstraint    prc-modexp-xbs---compare-xbs-against-ybs
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                          ;;
+;;   row i + 1: comparing xbs against ybs   ;;
+;;                                          ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+(defconstraint    prc-modexp-xbs---comparing-xbs-against-ybs
                   (:guard (* (assumption---fresh-new-stamp) (prc-modexp-xbs---standard-precondition)))
                   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                   (call-to-LT   ROFF___MODEXP_XBS___XBS_VS_YBS
@@ -50,7 +66,16 @@
                                 (prc-modexp-xbs---ybs-lo)
                                 ))
 
-(defconstraint    prc-modexp-xbs---check-xbs-is-zero
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                       ;;
+;;   row i + 2: zeroness check for xbs   ;;
+;;                                       ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+(defconstraint    prc-modexp-xbs---is-zero-check-for-xbs
                   (:guard (* (assumption---fresh-new-stamp) (prc-modexp-xbs---standard-precondition)))
                   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                   (call-to-ISZERO    ROFF___MODEXP_XBS___XBS_ISZERO_CHECK
@@ -63,6 +88,13 @@
 (defun (prc-modexp-xbs---result-of-comparison)                 (shift   OUTGOING_RES_LO   ROFF___MODEXP_XBS___XBS_VS_YBS                  ))
 (defun (prc-modexp-xbs---xbs-is-zero)                          (shift   OUTGOING_RES_LO   ROFF___MODEXP_XBS___XBS_ISZERO_CHECK            ))
 (defun (prc-modexp-xbs---xbs-is-GT-EIP-7823-upper-bound)        (-  1  (prc-modexp-xbs---xbs-is-LEQ-EIP-7823-upper-bound)))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                ;;
+;;   justifying HUB predictions   ;;
+;;                                ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
 
