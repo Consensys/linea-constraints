@@ -29,9 +29,9 @@
                                                   IS_MODEXP_PRICING
                                                   IS_MODEXP_EXTRACT))
 
-(defun (flag-sum-eip-blob-transactions)     IS_POINT_EVALUATION)
+(defun (flag-sum-new-cancun-precompiles)     IS_POINT_EVALUATION)
 
-(defun (flag-sum-eip-bls12-precompiles)     (+    IS_BLS_G1_ADD
+(defun (flag-sum-new-prague-precompiles)     (+    IS_BLS_G1_ADD
                                                   IS_BLS_G1_MSM
                                                   IS_BLS_G2_ADD
                                                   IS_BLS_G2_MSM
@@ -39,8 +39,8 @@
                                                   IS_BLS_MAP_FP_TO_G1
                                                   IS_BLS_MAP_FP2_TO_G2))
 
-(defun (flag-sum-prc-bls)                   (+    (flag-sum-eip-blob-transactions)
-                                                  (flag-sum-eip-bls12-precompiles)))
+(defun (flag-sum-prc-bls)                   (+    (flag-sum-new-cancun-precompiles)
+                                                  (flag-sum-new-prague-precompiles)))
 
 (defun (flag-sum-prc)                       (+    (flag-sum-prc-common)
                                                   (flag-sum-prc-blake)
