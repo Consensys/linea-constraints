@@ -58,8 +58,11 @@ clz_call:
   ;; special case for 0
   if ARGUMENT_1 == 0 goto exit_256
   var lg2 u8
+  var tmp u8
+  ;; TODO: we shouldn't those intermediate result ...
   lg2 = log2(ARGUMENT_1)
-  RES = 255 - lg2
+  tmp = 255 - lg2
+  RES = tmp
   return
 exit_0:
    RES = 0
