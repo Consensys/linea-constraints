@@ -17,7 +17,7 @@
 (defun (prc-modexp-lead---ebs-is-zero)                         OUTGOING_RES_LO)
 (defun (prc-modexp-lead---ebs-less-than_32)                    (next OUTGOING_RES_LO))
 (defun (prc-modexp-lead---call-data-contains-exponent-bytes)   (shift OUTGOING_RES_LO 2))
-(defun (prc-modexp-lead---comp)                                (shift OUTGOING_RES_LO 3))
+(defun (prc-modexp-lead---result-of-comparison)                (shift OUTGOING_RES_LO 3))
 
 (defconstraint prc-modexp-lead---check-ebs-is-zero (:guard (* (assumption---fresh-new-stamp) (prc-modexp-lead---standard-precondition)))
   (call-to-ISZERO 0 0 (prc-modexp-lead---ebs)))
@@ -42,7 +42,7 @@
                  (- 1 (prc-modexp-lead---ebs-is-zero))))
          (if-zero (prc-modexp-lead---call-data-contains-exponent-bytes)
                   (vanishes! (prc-modexp-lead---cds-cutoff))
-                  (if-zero (prc-modexp-lead---comp)
+                  (if-zero (prc-modexp-lead---result-of-comparison)
                            (eq! (prc-modexp-lead---cds-cutoff) 32)
                            (eq! (prc-modexp-lead---cds-cutoff)
                                 (- (prc---cds) (+ 96 (prc-modexp-lead---bbs))))))
