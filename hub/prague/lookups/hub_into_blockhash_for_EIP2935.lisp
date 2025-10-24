@@ -5,7 +5,7 @@
      (- 1 hub.transaction/SYST_TXN_DATA_5))) ;; hub.transaction/SYST_TXN_DATA_5 == is-genesis-block
 
 (defclookup
-  hub-into-blockhash
+  hub-into-blockhash-for-eip2935
   ;; target selector
   blockhash.MACRO
   ;; target columns
