@@ -33,6 +33,9 @@ CONSTANTS_OSAKA := constants/osaka/constants.zkasm
 EC_DATA_LONDON := ecdata/london
 
 EC_DATA_OSAKA := ecdata/osaka
+EC_DATA_LONDON := ecdata/london
+
+EC_DATA_OSAKA := ecdata/osaka
 
 EUC := euc/euc.zkasm
 
