@@ -244,6 +244,7 @@
   GAS_CONST_BLS_MAP_FP2_TO_G2               23800
   GAS_CONST_BLS_PAIRING_CHECK               37700
   GAS_CONST_BLS_PAIRING_CHECK_PAIR          32600
+  GAS_CONST_P256_VERIFY                     6900
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;           ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;  EVM MISC ;;
@@ -326,6 +327,7 @@
   PRECOMPILE_CALL_DATA_UNIT_SIZE___BLS_PAIRING_CHECK       384
   PRECOMPILE_CALL_DATA_SIZE___FP_TO_G1                      64
   PRECOMPILE_CALL_DATA_SIZE___FP2_TO_G2                    128
+  PRECOMPILE_CALL_DATA_SIZE___P256_VERIFY                  160
 
   PRC_ECPAIRING_SIZE                                       (* 6 WORD_SIZE)
   PRECOMPILE_CALL_DATA_SIZE___BLAKE2F                      213
@@ -340,6 +342,7 @@
   PRECOMPILE_RETURN_DATA_SIZE___BLS_PAIRING_CHECK           32
   PRECOMPILE_RETURN_DATA_SIZE___BLS_MAP_FP_TO_G1           128
   PRECOMPILE_RETURN_DATA_SIZE___BLS_MAP_FP2_TO_G2          256
+  PRECOMPILE_RETURN_DATA_SIZE___P256_VERIFY                 32
 
   PRC_BLS_G1_MSM_MAX_DISCOUNT                              519
   PRC_BLS_G2_MSM_MAX_DISCOUNT                              524
