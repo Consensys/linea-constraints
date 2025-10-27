@@ -30,14 +30,20 @@
 (defun (is_ecpairing)
   (force-bin (+ IS_ECPAIRING_DATA IS_ECPAIRING_RESULT)))
 
+(defun (is_p256_verify)
+  (force-bin (+ IS_P256_VERIFY_DATA IS_P256_VERIFY_RESULT)))
+
 (defun (flag_sum)
-  (force-bin (+ (is_ecrecover) (is_ecadd) (is_ecmul) (is_ecpairing))))
+  (force-bin (+ (is_ecrecover) (is_ecadd) (is_ecmul) (is_ecpairing) (is_p256_verify))))
 
 (defun (address_sum)
   (+ (* ECRECOVER (is_ecrecover))
      (* ECADD (is_ecadd))
      (* ECMUL (is_ecmul))
-     (* ECPAIRING (is_ecpairing))))
+     (* ECPAIRING (is_ecpairing)
+     (* P256_VERIFY (is_p256_verify)))))
+
+;; TODO: rename constants
 
 (defun (phase_sum)
   (+ (* PHASE_ECRECOVER_DATA IS_ECRECOVER_DATA)
@@ -47,13 +53,15 @@
      (* PHASE_ECMUL_DATA IS_ECMUL_DATA)
      (* PHASE_ECMUL_RESULT IS_ECMUL_RESULT)
      (* PHASE_ECPAIRING_DATA IS_ECPAIRING_DATA)
-     (* PHASE_ECPAIRING_RESULT IS_ECPAIRING_RESULT)))
+     (* PHASE_ECPAIRING_RESULT IS_ECPAIRING_RESULT)
+     (* PHASE_P256_VERIFY_DATA IS_P256_VERIFY_DATA)
+     (* PHASE_P256_VERIFY_RESULT IS_P256_VERIFY_RESULT)))
 
 (defun (is_data)
-  (force-bin (+ IS_ECRECOVER_DATA IS_ECADD_DATA IS_ECMUL_DATA IS_ECPAIRING_DATA)))
+  (force-bin (+ IS_ECRECOVER_DATA IS_ECADD_DATA IS_ECMUL_DATA IS_ECPAIRING_DATA IS_P256_VERIFY_DATA)))
 
 (defun (is_result)
-  (force-bin (+ IS_ECRECOVER_RESULT IS_ECADD_RESULT IS_ECMUL_RESULT IS_ECPAIRING_RESULT)))
+  (force-bin (+ IS_ECRECOVER_RESULT IS_ECADD_RESULT IS_ECMUL_RESULT IS_ECPAIRING_RESULT IS_P256_VERIFY_RESULT)))
 
 (defun (transition_to_data)
   (force-bin (* (- 1 (is_data)) (next (is_data)))))
@@ -110,11 +118,13 @@
   (+ (* INDEX_MAX_ECRECOVER_DATA IS_ECRECOVER_DATA)
      (* INDEX_MAX_ECADD_DATA IS_ECADD_DATA)
      (* INDEX_MAX_ECMUL_DATA IS_ECMUL_DATA)
+     (* INDEX_MAX_P256_VERIFY_DATA IS_P256_VERIFY_DATA)
      ;;
      (* INDEX_MAX_ECRECOVER_RESULT IS_ECRECOVER_RESULT)
      (* INDEX_MAX_ECADD_RESULT IS_ECADD_RESULT)
      (* INDEX_MAX_ECMUL_RESULT IS_ECMUL_RESULT)
-     (* INDEX_MAX_ECPAIRING_RESULT IS_ECPAIRING_RESULT)))
+     (* INDEX_MAX_ECPAIRING_RESULT IS_ECPAIRING_RESULT)
+     (* INDEX_MAX_P256_VERIFY_RESULT IS_P256_VERIFY_RESULT)))
 
 (defconstraint set-index-max ()
   (eq! (* 16 INDEX_MAX)
@@ -132,10 +142,12 @@
           (* IS_ECADD_DATA TOTAL_SIZE_ECADD_DATA)
           (* IS_ECMUL_DATA TOTAL_SIZE_ECMUL_DATA)
           (* IS_ECPAIRING_DATA TOTAL_SIZE_ECPAIRING_DATA_MIN TOTAL_PAIRINGS)
+          (* IS_P256_VERIFY_DATA TOTAL_SIZE_P256_VERIFY_DATA)
           (* IS_ECRECOVER_RESULT TOTAL_SIZE_ECRECOVER_RESULT SUCCESS_BIT)
           (* IS_ECADD_RESULT TOTAL_SIZE_ECADD_RESULT SUCCESS_BIT)
           (* IS_ECMUL_RESULT TOTAL_SIZE_ECMUL_RESULT SUCCESS_BIT)
-          (* IS_ECPAIRING_RESULT TOTAL_SIZE_ECPAIRING_RESULT SUCCESS_BIT))))
+          (* IS_ECPAIRING_RESULT TOTAL_SIZE_ECPAIRING_RESULT SUCCESS_BIT)
+          (* IS_P256_VERIFY_RESULT TOTAL_SIZE_P256_VERIFY_RESULT SUCCESS_BIT))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                                    ;;
@@ -301,10 +313,12 @@
                        (* IS_ECADD_DATA (next (is_ecadd)))
                        (* IS_ECMUL_DATA (next (is_ecmul)))
                        (* IS_ECPAIRING_DATA (next (is_ecpairing)))
+                       (* IS_P256_VERIFY_DATA (next (is_p256_verify)))
                        (* IS_ECRECOVER_RESULT (next IS_ECRECOVER_RESULT))
                        (* IS_ECADD_RESULT (next IS_ECADD_RESULT))
                        (* IS_ECMUL_RESULT (next IS_ECMUL_RESULT))
                        (* IS_ECPAIRING_RESULT (next IS_ECPAIRING_RESULT))
+                       (* IS_P256_VERIFY_RESULT (next IS_P256_VERIFY_RESULT))
                        (transition_to_data))
                     1)))
 
