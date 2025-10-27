@@ -523,6 +523,95 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                     ;;
+;; 3.4.5 R1 membership ;;
+;;       utilities     ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun (callToR1Membership k P_x_hi P_x_lo P_y_hi P_y_lo)
+  (let ((P_x_is_in_range (shift WCP_RES k))
+        (P_y_is_in_range (shift WCP_RES (+ k 1)))
+        (P_satisfies_cubic (shift WCP_RES (+ k 2)))
+        (P_y_square_hi (shift EXT_RES_HI k))
+        (P_y_square_lo (shift EXT_RES_LO k))
+        (P_x_square_hi (shift EXT_RES_HI (+ k 1)))
+        (P_x_square_lo (shift EXT_RES_LO (+ k 1)))
+        (P_x_cube_hi (shift EXT_RES_HI (+ k 2)))
+        (P_x_cube_lo (shift EXT_RES_LO (+ k 2)))
+        (a_times_P_x_hi (shift EXT_RES_HI (+ k 3)))
+        (a_times_P_x_lo (shift EXT_RES_LO (+ k 3)))
+        (P_x_cube_plus_a_times_P_x_hi (shift EXT_RES_HI (+ k 4)))
+        (P_x_cube_plus_a_times_P_x_lo (shift EXT_RES_LO (+ k 4)))
+        (P_x_cube_plus_a_times_P_x_plus_b_hi (shift EXT_RES_HI (+ k 5)))
+        (P_x_cube_plus_a_times_P_x_plus_b_lo (shift EXT_RES_LO (+ k 5)))
+        (P_is_in_range (shift HURDLE (+ k 1)))
+        (R1_membership (shift HURDLE k))
+        (large_sum (+ P_x_hi P_x_lo P_y_hi P_y_lo))
+        (P_is_point_at_infinity (shift IS_INFINITY k)))
+       (begin (callToR1MembershipWCP k
+                                     P_x_hi
+                                     P_x_lo
+                                     P_y_hi
+                                     P_y_lo
+                                     P_y_square_hi
+                                     P_y_square_lo
+                                     P_x_cube_plus_a_times_P_x_plus_b_hi
+                                     P_x_cube_plus_a_times_P_x_plus_b_lo)
+              (callToR1MembershipEXT k
+                                     P_x_hi
+                                     P_x_lo
+                                     P_y_hi
+                                     P_y_lo
+                                     P_x_square_hi
+                                     P_x_square_lo
+                                     P_x_cube_hi
+                                     P_x_cube_lo
+                                     a_times_P_x_hi
+                                     a_times_P_x_lo
+                                     P_x_cube_plus_a_times_P_x_hi
+                                     P_x_cube_plus_a_times_P_x_lo)
+              (eq! P_is_in_range (* P_x_is_in_range P_y_is_in_range))
+              (eq! R1_membership
+                   (* P_is_in_range (- 1 P_is_point_at_infinity) P_satisfies_cubic))
+              (if-zero P_is_in_range
+                       (vanishes! P_is_point_at_infinity)
+                       (if-zero large_sum
+                                (eq! P_is_point_at_infinity 1)
+                                (vanishes! P_is_point_at_infinity))))))
+
+(defun (callToR1MembershipWCP k
+                              P_x_hi
+                              P_x_lo
+                              P_y_hi
+                              P_y_lo
+                              P_y_square_hi
+                              P_y_square_lo
+                              P_x_cube_plus_a_times_P_x_plus_b_hi
+                              P_x_cube_plus_a_times_P_x_plus_b_lo)
+  (begin (callToLT k P_x_hi P_x_lo P_R1_HI P_R1_LO)
+         (callToLT (+ k 1) P_y_hi P_y_lo P_R1_HI P_R1_LO)
+         (callToEQ (+ k 2) P_y_square_hi P_y_square_lo P_x_cube_plus_a_times_P_x_plus_b_hi P_x_cube_plus_a_times_P_x_plus_b_lo)))
+
+(defun (callToR1MembershipEXT k
+                              P_x_hi
+                              P_x_lo
+                              P_y_hi
+                              P_y_lo
+                              P_x_square_hi
+                              P_x_square_lo
+                              P_x_cube_hi
+                              P_x_cube_lo
+                              a_times_P_x_hi
+                              a_times_P_x_lo
+                              P_x_cube_plus_a_times_P_x_hi
+                              P_x_cube_plus_a_times_P_x_lo)
+  (begin (callToMULMOD k P_y_hi P_y_lo P_y_hi P_y_lo P_R1_HI P_R1_LO)
+         (callToMULMOD (+ k 1) P_x_hi P_x_lo P_x_hi P_x_lo P_R1_HI P_R1_LO)
+         (callToMULMOD (+ k 2) P_x_square_hi P_x_square_lo P_x_hi P_x_lo P_R1_HI P_R1_LO)
+         (callToMULMOD (+ k 3) A_COEFF_R1_HI A_COEFF_R1_LO P_x_hi P_x_lo P_R1_HI P_R1_LO)
+         (callToADDMOD (+ k 4) P_x_cube_hi P_x_lo a_times_P_x_hi a_times_P_x_lo P_R1_HI P_R1_LO)
+         (callToADDMOD (+ k 5) P_x_cube_plus_a_times_P_x_hi P_x_cube_plus_a_times_P_x_lo B_COEFF_R1_HI B_COEFF_R1_LO P_R1_HI P_R1_LO)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                     ;;
 ;; 3.4.4 Well formed   ;;
 ;;       coordinates   ;;
 ;;       utilities     ;;

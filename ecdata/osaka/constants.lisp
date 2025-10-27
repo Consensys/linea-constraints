@@ -3,6 +3,12 @@
 (defconst
   P_BN_HI                       0x30644e72e131a029b85045b68181585d
   P_BN_LO                       0x97816a916871ca8d3c208c16d87cfd47
+  P_R1_HI                       0xffffffff00000000ffffffffffffffff
+  P_R1_LO                       0xbce6faada7179e84f3b9cac2fc632551
+  A_COEFF_R1_HI                 0xffffffff000000010000000000000000
+  A_COEFF_R1_LO                 0x00000000fffffffffffffffffffffffc
+  B_COEFF_R1_HI                 0x5ac635d8aa3a93e7b3ebbd55769886bc
+  B_COEFF_R1_LO                 0x651d06b0cc53b0f63bce3c3e27d2604b
   SECP256K1N_HI                 0xffffffffffffffffffffffffffffffff
   SECP256K1N_LO                 0xfffffffffffffffffffffffefffffc2f
   MULMOD                        0x09
