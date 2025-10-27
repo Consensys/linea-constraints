@@ -12,19 +12,23 @@
                                                                        IS_BLS_G1_ADD
                                                                        IS_BLS_G2_ADD
                                                                        IS_BLS_MAP_FP_TO_G1
-                                                                       IS_BLS_MAP_FP2_TO_G2))
+                                                                       IS_BLS_MAP_FP2_TO_G2
+                                                                       IS_P256_VERIFY))
 (defun (fixed-cds)
                                                                     (+  (* PRECOMPILE_CALL_DATA_SIZE___POINT_EVALUATION  IS_POINT_EVALUATION)
                                                                         (* PRECOMPILE_CALL_DATA_SIZE___G1_ADD         IS_BLS_G1_ADD)
                                                                         (* PRECOMPILE_CALL_DATA_SIZE___G2_ADD         IS_BLS_G2_ADD)
                                                                         (* PRECOMPILE_CALL_DATA_SIZE___FP_TO_G1  IS_BLS_MAP_FP_TO_G1)
-                                                                        (* PRECOMPILE_CALL_DATA_SIZE___FP2_TO_G2 IS_BLS_MAP_FP2_TO_G2)))
+                                                                        (* PRECOMPILE_CALL_DATA_SIZE___FP2_TO_G2 IS_BLS_MAP_FP2_TO_G2)
+                                                                        (* PRECOMPILE_CALL_DATA_SIZE___P256_VERIFY IS_P256_VERIFY)))
 (defun (fixed-gast-cost)
                                                                     (+  (* GAS_CONST_POINT_EVALUATION  IS_POINT_EVALUATION)
                                                                         (* GAS_CONST_BLS_G1_ADD         IS_BLS_G1_ADD)
                                                                         (* GAS_CONST_BLS_G2_ADD         IS_BLS_G2_ADD)
                                                                         (* GAS_CONST_BLS_MAP_FP_TO_G1  IS_BLS_MAP_FP_TO_G1)
-                                                                        (* GAS_CONST_BLS_MAP_FP2_TO_G2 IS_BLS_MAP_FP2_TO_G2)))
+                                                                        (* GAS_CONST_BLS_MAP_FP2_TO_G2 IS_BLS_MAP_FP2_TO_G2)
+                                                                        (* GAS_CONST_P256_VERIFY IS_P256_VERIFY)))
+                                                                      
 (defun (prc-pointevaluation-prc-blsg1add-prc-blsg2add-prc-blsmapfptog1-prc-blsmapfp2tog2---precompile-cost)          (fixed-gast-cost))
 (defun (prc-pointevaluation-prc-blsg1add-prc-blsg2add-prc-blsmapfptog1-prc-blsmapfp2tog2---valid-cds)                (shift OUTGOING_RES_LO 2))
 (defun (prc-pointevaluation-prc-blsg1add-prc-blsg2add-prc-blsmapfptog1-prc-blsmapfp2tog2---sufficient-gas)           (- 1 (shift OUTGOING_RES_LO 3)))
