@@ -18,7 +18,8 @@
                                                   IS_ECADD
                                                   IS_ECMUL
                                                   IS_ECPAIRING
-                                                  (flag-sum-prc-bls)))
+                                                  (flag-sum-prc-bls)
+                                                  (flag-sum-osaka-precompile)))
 
 (defun (flag-sum-prc-blake)                 (+    IS_BLAKE2F_CDS
                                                   IS_BLAKE2F_PARAMS))
@@ -29,9 +30,9 @@
                                                   IS_MODEXP_PRICING
                                                   IS_MODEXP_EXTRACT))
 
-(defun (flag-sum-new-cancun-precompiles)     IS_POINT_EVALUATION)
+(defun (flag-sum-cancun-precompiles)     IS_POINT_EVALUATION)
 
-(defun (flag-sum-new-prague-precompiles)     (+    IS_BLS_G1_ADD
+(defun (flag-sum-prague-precompiles)     (+       IS_BLS_G1_ADD
                                                   IS_BLS_G1_MSM
                                                   IS_BLS_G2_ADD
                                                   IS_BLS_G2_MSM
@@ -39,8 +40,10 @@
                                                   IS_BLS_MAP_FP_TO_G1
                                                   IS_BLS_MAP_FP2_TO_G2))
 
-(defun (flag-sum-prc-bls)                   (+    (flag-sum-new-cancun-precompiles)
-                                                  (flag-sum-new-prague-precompiles)))
+(defun (flag-sum-prc-bls)                   (+    (flag-sum-cancun-precompiles)
+                                                  (flag-sum-prague-precompiles)))
+
+(defun (flag-sum-osaka-precompile)      IS_P256_VERIFY)
 
 (defun (flag-sum-prc)                       (+    (flag-sum-prc-common)
                                                   (flag-sum-prc-blake)
@@ -67,7 +70,8 @@
                                                   (* OOB_INST_ECADD            IS_ECADD)
                                                   (* OOB_INST_ECMUL            IS_ECMUL)
                                                   (* OOB_INST_ECPAIRING        IS_ECPAIRING)
-                                                  (wght-sum-prc-bls)))
+                                                  (wght-sum-prc-bls)
+                                                  (wght-sum-prc-osaka-precompiles)))
 
 (defun (wght-sum-prc-blake)                 (+    (* OOB_INST_BLAKE_CDS        IS_BLAKE2F_CDS)
                                                   (* OOB_INST_BLAKE_PARAMS     IS_BLAKE2F_PARAMS)))
@@ -78,9 +82,9 @@
                                                   (* OOB_INST_MODEXP_PRICING   IS_MODEXP_PRICING)
                                                   (* OOB_INST_MODEXP_EXTRACT   IS_MODEXP_EXTRACT)))
 
-(defun (wght-sum-prc-eip-blob-transactions) (+    (* OOB_INST_POINT_EVALUATION IS_POINT_EVALUATION)))
+(defun (wght-sum-prc-cancun-precompiles) (+    (* OOB_INST_POINT_EVALUATION IS_POINT_EVALUATION)))
 
-(defun (wght-sum-prc-eip-bls12-precompiles) (+    (* OOB_INST_BLS_G1_ADD        IS_BLS_G1_ADD)
+(defun (wght-sum-prc-prague-precompiles) (+       (* OOB_INST_BLS_G1_ADD        IS_BLS_G1_ADD)
                                                   (* OOB_INST_BLS_G1_MSM        IS_BLS_G1_MSM)
                                                   (* OOB_INST_BLS_G2_ADD        IS_BLS_G2_ADD)
                                                   (* OOB_INST_BLS_G2_MSM        IS_BLS_G2_MSM)
@@ -88,8 +92,10 @@
                                                   (* OOB_INST_BLS_MAP_FP_TO_G1 IS_BLS_MAP_FP_TO_G1)
                                                   (* OOB_INST_BLS_MAP_FP2_TO_G2 IS_BLS_MAP_FP2_TO_G2)))
 
-(defun (wght-sum-prc-bls)                   (+    (wght-sum-prc-eip-blob-transactions)
-                                                  (wght-sum-prc-eip-bls12-precompiles)))
+(defun (wght-sum-prc-osaka-precompiles) (+    (* OOB_INST_P256_VERIFY IS_P256_VERIFY)))                                              
+
+(defun (wght-sum-prc-bls)                   (+    (wght-sum-prc-cancun-precompiles)
+                                                  (wght-sum-prc-prague-precompiles)))
 
 (defun (wght-sum-prc)                       (+    (wght-sum-prc-common)
                                                   (wght-sum-prc-blake)
@@ -98,7 +104,7 @@
 (defun (wght-sum)                           (+    (wght-sum-inst)
                                                   (wght-sum-prc)))
 
-(defun (maxct-sum-inst)                     (+    (* CT_MAX_JUMP               IS_JUMP)
+(defun (ct-max-sum-inst)                    (+    (* CT_MAX_JUMP               IS_JUMP)
                                                   (* CT_MAX_JUMPI              IS_JUMPI)
                                                   (* CT_MAX_RDC                IS_RDC)
                                                   (* CT_MAX_CDL                IS_CDL)
@@ -109,27 +115,28 @@
                                                   (* CT_MAX_SSTORE             IS_SSTORE)
                                                   (* CT_MAX_DEPLOYMENT         IS_DEPLOYMENT)))
 
-(defun (maxct-sum-prc-common)               (+    (* CT_MAX_ECRECOVER          IS_ECRECOVER)
+(defun (ct-max-sum-prc-common)              (+    (* CT_MAX_ECRECOVER          IS_ECRECOVER)
                                                   (* CT_MAX_SHA2               IS_SHA2)
                                                   (* CT_MAX_RIPEMD             IS_RIPEMD)
                                                   (* CT_MAX_IDENTITY           IS_IDENTITY)
                                                   (* CT_MAX_ECADD              IS_ECADD)
                                                   (* CT_MAX_ECMUL              IS_ECMUL)
                                                   (* CT_MAX_ECPAIRING          IS_ECPAIRING)
-                                                  (maxct-sum-prc-bls)))
+                                                  (ct-max-sum-prc-bls)
+                                                  (ct-max-sum-prc-osaka-precompiles)))
 
-(defun (maxct-sum-prc-blake)                (+    (* CT_MAX_BLAKE2F_CDS IS_BLAKE2F_CDS)
+(defun (ct-max-sum-prc-blake)               (+    (* CT_MAX_BLAKE2F_CDS IS_BLAKE2F_CDS)
                                                   (* CT_MAX_BLAKE2F_PARAMS IS_BLAKE2F_PARAMS)))
 
-(defun (maxct-sum-prc-modexp)               (+    (* CT_MAX_MODEXP_CDS IS_MODEXP_CDS)
+(defun (ct-max-sum-prc-modexp)              (+    (* CT_MAX_MODEXP_CDS IS_MODEXP_CDS)
                                                   (* CT_MAX_MODEXP_XBS IS_MODEXP_XBS)
                                                   (* CT_MAX_MODEXP_LEAD IS_MODEXP_LEAD)
                                                   (* CT_MAX_MODEXP_PRICING IS_MODEXP_PRICING)
                                                   (* CT_MAX_MODEXP_EXTRACT IS_MODEXP_EXTRACT)))
 
-(defun (maxct-sum-prc-eip-blob-transactions)(+   (* CT_MAX_POINT_EVALUATION IS_POINT_EVALUATION)))
+(defun (ct-max-sum-prc-cancun-precompiles)(+   (* CT_MAX_POINT_EVALUATION IS_POINT_EVALUATION)))
 
-(defun (maxct-sum-prc-eip-bls12-precompiles)(+   (* CT_MAX_BLS_G1_ADD IS_BLS_G1_ADD)
+(defun (ct-max-sum-prc-prague-precompiles)(+      (* CT_MAX_BLS_G1_ADD IS_BLS_G1_ADD)
                                                   (* CT_MAX_BLS_G1_MSM IS_BLS_G1_MSM)
                                                   (* CT_MAX_BLS_G2_ADD IS_BLS_G2_ADD)
                                                   (* CT_MAX_BLS_G2_MSM IS_BLS_G2_MSM)
@@ -137,15 +144,17 @@
                                                   (* CT_MAX_BLS_MAP_FP_TO_G1 IS_BLS_MAP_FP_TO_G1)
                                                   (* CT_MAX_BLS_MAP_FP2_TO_G2 IS_BLS_MAP_FP2_TO_G2)))
 
-(defun (maxct-sum-prc-bls)                  (+    (maxct-sum-prc-eip-blob-transactions)
-                                                  (maxct-sum-prc-eip-bls12-precompiles)))
+(defun (ct-max-sum-prc-osaka-precompiles)   (* CT_MAX_P256_VERIFY IS_P256_VERIFY))                                                  
 
-(defun (maxct-sum-prc)                      (+    (maxct-sum-prc-common)
-                                                  (maxct-sum-prc-blake)
-                                                  (maxct-sum-prc-modexp)))
+(defun (ct-max-sum-prc-bls)                 (+    (ct-max-sum-prc-cancun-precompiles)
+                                                  (ct-max-sum-prc-prague-precompiles)))
 
-(defun (maxct-sum)                          (+    (maxct-sum-inst)
-                                                  (maxct-sum-prc)))
+(defun (ct-max-sum-prc)                     (+    (ct-max-sum-prc-common)
+                                                  (ct-max-sum-prc-blake)
+                                                  (ct-max-sum-prc-modexp)))
+
+(defun (ct-max-sum)                         (+    (ct-max-sum-inst)
+                                                  (ct-max-sum-prc)))
 
 (defun (lookup-sum k)                       (+    (shift ADD_FLAG k)
                                                   (shift MOD_FLAG k)
@@ -159,4 +168,3 @@
 
 (defun (assumption---fresh-new-stamp)       (- STAMP (prev STAMP)))
 
-;; TODO: change maxct ot ct-max
