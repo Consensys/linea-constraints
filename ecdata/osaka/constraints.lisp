@@ -795,6 +795,48 @@
            (vanishes! SUCCESS_BIT)
            (eq! SUCCESS_BIT (- 1 NOT_ON_G2_ACC_MAX))))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                       ;;
+;; 3.6.5 The P256_VERIFY ;;
+;;       case            ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun (p256-verify-hypothesis)
+  (* IS_P256_VERIFY_DATA
+     (~ (- ID (prev ID)))))
+
+(defconstraint internal-checks-256-verify (:guard (p256-verify-hypothesis))
+  (let ((h_hi LIMB)
+        (h_lo (next LIMB))
+        (r_hi (shift LIMB 2))
+        (r_lo (shift LIMB 3))
+        (s_hi (shift LIMB 4))
+        (s_lo (shift LIMB 5))
+        (Q_x_hi (shift LIMB 6))
+        (Q_x_lo (shift LIMB 7))
+        (Q_y_hi (shift LIMB 8))
+        (Q_y_lo (shift LIMB 9)))
+       (begin (callToLT 0 r_hi r_lo SECP256R1N_HI SECP256R1N_LO)
+              (callToLT 1 0 0 r_hi r_lo)
+              (callToLT 2 s_hi s_lo SECP256R1N_HI SECP256R1N_LO)
+              (callToLT 3 0 0 s_hi s_lo)
+              (callToR1Membership 4 Q_x_hi Q_x_lo Q_y_hi Q_y_lo))))
+
+(defconstraint justify-success-bit-256-verify (:guard (p256-verify-hypothesis))
+  (let ((r_is_in_range WCP_RES)
+        (r_is_positive (next WCP_RES))
+        (s_is_in_range (shift WCP_RES 2))
+        (s_is_positive (shift WCP_RES 3))
+        (R1_membership (shift HURDLE 4))
+        (internal_checks_passed (shift HURDLE INDEX_MAX_P256_VERIFY_DATA)))
+       (begin (eq! HURDLE (* r_is_in_range r_is_positive))
+              (eq! (next HURDLE) (* s_is_in_range s_is_positive))
+              (eq! (shift HURDLE 2)
+                   (* HURDLE (next HURDLE)))
+              (eq! internal_checks_passed
+                   (* R1_membership (shift HURDLE 2)))
+              (if-zero internal_checks_passed
+                       (vanishes! SUCCESS_BIT)))))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                     ;;
 ;; 3.7 Elliptic curve  ;;
