@@ -891,6 +891,9 @@
   )
 )
 
+(defconstraint p256-verify-circuit-selector ()
+  (eq! CS_P256_VERIFY (* ICP (is_p256_verify))))
+
 (defconstraint g2-membership-circuit-selector ()
   (eq! CS_G2_MEMBERSHIP G2MTR))
 
