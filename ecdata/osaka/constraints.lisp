@@ -40,8 +40,8 @@
   (+ (* ECRECOVER (is_ecrecover))
      (* ECADD (is_ecadd))
      (* ECMUL (is_ecmul))
-     (* ECPAIRING (is_ecpairing)
-     (* P256_VERIFY (is_p256_verify)))))
+     (* ECPAIRING (is_ecpairing))
+     (* P256_VERIFY (is_p256_verify))))
 
 ;; TODO: rename constants
 
