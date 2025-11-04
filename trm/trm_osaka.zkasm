@@ -17,7 +17,7 @@
 ;;
 ;; NOTE: the function currently only returns the high word of the
 ;; trimmed address, since the low word is unchanged.
-fn trm(RAW_ADDRESS u256) -> (ADDRESS_HI u32, IS_PRECOMPILE u1) {
+pub fn trm(RAW_ADDRESS u256) -> (ADDRESS_HI u32, IS_PRECOMPILE u1) {
   var low, tmp u128
   var high u96
   var b1 u1
