@@ -874,28 +874,23 @@
 ;; 3.7.3 Interface for ;;
 ;;       Gnark         ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;
-(defconstraint ecrecover-circuit-selector ()
-  (eq! CS_ECRECOVER (* ICP (is_ecrecover))))
+(defcomputedcolumn (CIRCUIT_SELECTOR_ECRECOVER :binary@prove) 
+  (* ICP (is_ecrecover)))
 
-(defconstraint ecadd-circuit-selector ()
-  (eq! CS_ECADD (* ICP (is_ecadd))))
+(defcomputedcolumn (CIRCUIT_SELECTOR_ECADD :binary@prove) 
+  (* ICP (is_ecadd)))
 
-(defconstraint ecmul-circuit-selector ()
-  (eq! CS_ECMUL (* ICP (is_ecmul))))
+(defcomputedcolumn (CIRCUIT_SELECTOR_ECMUL :binary@prove) 
+  (* ICP (is_ecmul)))
 
-(defconstraint ecpairing-circuit-selector ()
-  (begin 
-    (if-not-zero IS_ECPAIRING_DATA (eq! CS_ECPAIRING ACCPC))
-    (if-not-zero IS_ECPAIRING_RESULT (eq! CS_ECPAIRING (* SUCCESS_BIT (- 1 TRIVIAL_PAIRING))))
-    (if-zero (is_ecpairing) (vanishes! CS_ECPAIRING))
-  )
-)
+(defcomputedcolumn (CIRCUIT_SELECTOR_ECPAIRING :binary@prove) 
+  (+ (* IS_ECPAIRING_DATA ACCPC) (* IS_ECPAIRING_RESULT (* SUCCESS_BIT (- 1 TRIVIAL_PAIRING)))))
 
-(defconstraint p256-verify-circuit-selector ()
-  (eq! CS_P256_VERIFY (* ICP (is_p256_verify))))
+(defcomputedcolumn (CIRCUIT_SELECTOR_P256_VERIFY :binary@prove) 
+  (* ICP (is_p256_verify)))
 
-(defconstraint g2-membership-circuit-selector ()
-  (eq! CS_G2_MEMBERSHIP G2MTR))
+(defcomputedcolumn (CIRCUIT_SELECTOR_G2_MEMBERSHIP :binary@prove)
+  G2MTR)
 
 (defconstraint circuit-selectors-sum-binary ()
   (debug (is-binary (+ CS_ECRECOVER CS_ECADD CS_ECMUL CS_ECPAIRING CS_G2_MEMBERSHIP))))
