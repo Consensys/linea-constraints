@@ -17,7 +17,9 @@
 ;;
 ;; NOTE: the function currently only returns the high word of the
 ;; trimmed address, since the low word is unchanged.
-;; NOTE2: once issue is fixed in go-corset, we will be able to recombine trm_london and trm_osaka
+;; NOTE2: once issue is fixed in go-corset, we will be able to
+;; recombine trm_london and trm_osaka
+;; https://github.com/Consensys/go-corset/issues/1284
 pub fn trm(RAW_ADDRESS u256) -> (ADDRESS_HI u32, IS_PRECOMPILE u1) {
   var low, tmp u128
   var high u96

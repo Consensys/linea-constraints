@@ -1,3 +1,1 @@
 const MAX_PRC_CONTIGUOUS_ADDRESS = 0x09
-;; this constant will be used once issue in go-corset is fixed https://github.com/Consensys/go-corset/issues/1284
-const P256_VERIFY_ADDRESS = 0x09 ;; P256_VERIFY does not exist in London, we set to an already checked precompile address to avoid duplicating trm module
