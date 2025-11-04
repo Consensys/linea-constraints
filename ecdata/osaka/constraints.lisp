@@ -607,7 +607,7 @@
          (callToMULMOD (+ k 1) P_x_hi P_x_lo P_x_hi P_x_lo P_R1_HI P_R1_LO)
          (callToMULMOD (+ k 2) P_x_square_hi P_x_square_lo P_x_hi P_x_lo P_R1_HI P_R1_LO)
          (callToMULMOD (+ k 3) A_COEFF_R1_HI A_COEFF_R1_LO P_x_hi P_x_lo P_R1_HI P_R1_LO)
-         (callToADDMOD (+ k 4) P_x_cube_hi P_x_lo a_times_P_x_hi a_times_P_x_lo P_R1_HI P_R1_LO)
+         (callToADDMOD (+ k 4) P_x_cube_hi P_x_cube_lo a_times_P_x_hi a_times_P_x_lo P_R1_HI P_R1_LO)
          (callToADDMOD (+ k 5) P_x_cube_plus_a_times_P_x_hi P_x_cube_plus_a_times_P_x_lo B_COEFF_R1_HI B_COEFF_R1_LO P_R1_HI P_R1_LO)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;
