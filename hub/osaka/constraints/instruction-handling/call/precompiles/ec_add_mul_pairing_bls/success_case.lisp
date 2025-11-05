@@ -30,17 +30,16 @@
                                                                                       (scenario-shorthand---PRC---success)
                                                                                       ))
 
-;; TODO: complete handling P256_VERIFY in this file, including renaming shorthands
-
-(defun    (precompile-processing---ECADD_MUL_PAIRING_and_BLS---nontrivial-ECADD)        (*    (precompile-processing---common---OOB-extract-call-data)    scenario/PRC_ECADD))
-(defun    (precompile-processing---ECADD_MUL_PAIRING_and_BLS---nontrivial-ECMUL)        (*    (precompile-processing---common---OOB-extract-call-data)    scenario/PRC_ECMUL))
-(defun    (precompile-processing---ECADD_MUL_PAIRING_and_BLS---nontrivial-ECPAIRING)    (*    (precompile-processing---common---OOB-extract-call-data)    scenario/PRC_ECPAIRING))
-(defun    (precompile-processing---ECADD_MUL_PAIRING_and_BLS---trivial-ECPAIRING)       (*    (precompile-processing---common---OOB-empty-call-data)      scenario/PRC_ECPAIRING))
+(defun    (precompile-processing---ECADD_MUL_PAIRING_and_BLS---nontrivial-ECADD)          (*    (precompile-processing---common---OOB-extract-call-data)    scenario/PRC_ECADD))
+(defun    (precompile-processing---ECADD_MUL_PAIRING_and_BLS---nontrivial-ECMUL)          (*    (precompile-processing---common---OOB-extract-call-data)    scenario/PRC_ECMUL))
+(defun    (precompile-processing---ECADD_MUL_PAIRING_and_BLS---nontrivial-ECPAIRING)      (*    (precompile-processing---common---OOB-extract-call-data)    scenario/PRC_ECPAIRING))
+(defun    (precompile-processing---ECADD_MUL_PAIRING_and_BLS---trivial-ECPAIRING)         (*    (precompile-processing---common---OOB-empty-call-data)      scenario/PRC_ECPAIRING))
 
 (defun    (precompile-processing---ECADD_MUL_PAIRING_and_BLS---nontrivial-cases)        (+    (precompile-processing---ECADD_MUL_PAIRING_and_BLS---nontrivial-ECADD)
                                                                                               (precompile-processing---ECADD_MUL_PAIRING_and_BLS---nontrivial-ECMUL)
                                                                                               (precompile-processing---ECADD_MUL_PAIRING_and_BLS---nontrivial-ECPAIRING)
                                                                                               (scenario-shorthand---PRC---common-BLS-address-bit-sum)
+                                                                                              scenario/PRC_P256_VERIFY
                                                                                               ))
 
 
@@ -59,6 +58,7 @@
                                                                                      (precompile-processing---ECADD_MUL_PAIRING_and_BLS---nontrivial-ECPAIRING)
                                                                                      (precompile-processing---ECADD_MUL_PAIRING_and_BLS---trivial-ECPAIRING)
                                                                                      (scenario-shorthand---PRC---common-BLS-address-bit-sum)
+                                                                                     scenario/PRC_P256_VERIFY
                                                                                      ))
 
 (defconstraint    precompile-processing---ECADD_MUL_PAIRING_and_BLS---setting-MMU-instruction---full-return-data-transfer---trivial-case
