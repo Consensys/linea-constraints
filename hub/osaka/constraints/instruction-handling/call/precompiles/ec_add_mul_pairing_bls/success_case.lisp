@@ -25,9 +25,12 @@
                                                                                             scenario/PRC_ECMUL
                                                                                             scenario/PRC_ECPAIRING
                                                                                             (scenario-shorthand---PRC---common-BLS-address-bit-sum)
+                                                                                            scenario/PRC_P256_VERIFY
                                                                                             )
                                                                                       (scenario-shorthand---PRC---success)
                                                                                       ))
+
+;; TODO: complete handling P256_VERIFY in this file, including renaming shorthands
 
 (defun    (precompile-processing---ECADD_MUL_PAIRING_and_BLS---nontrivial-ECADD)        (*    (precompile-processing---common---OOB-extract-call-data)    scenario/PRC_ECADD))
 (defun    (precompile-processing---ECADD_MUL_PAIRING_and_BLS---nontrivial-ECMUL)        (*    (precompile-processing---common---OOB-extract-call-data)    scenario/PRC_ECMUL))
@@ -109,6 +112,7 @@
                                                                                            (*    PRECOMPILE_RETURN_DATA_SIZE___BLS_PAIRING_CHECK          scenario/PRC_BLS_PAIRING_CHECK                                            )
                                                                                            (*    PRECOMPILE_RETURN_DATA_SIZE___BLS_MAP_FP_TO_G1           scenario/PRC_BLS_MAP_FP_TO_G1                                             )
                                                                                            (*    PRECOMPILE_RETURN_DATA_SIZE___BLS_MAP_FP2_TO_G2          scenario/PRC_BLS_MAP_FP2_TO_G2                                            )
+                                                                                           (*   PRECOMPILE_RETURN_DATA_SIZE___P256_VERIFY                 scenario/PRC_P256_VERIFY                                                  )
                                                                                            ))
 
 (defun    (precompile-processing---ECADD_MUL_PAIRING_and_BLS---return-data-phase)              (+    (*    PHASE_ECADD_RESULT                (precompile-processing---ECADD_MUL_PAIRING_and_BLS---nontrivial-ECADD)     )
@@ -122,6 +126,7 @@
                                                                                                      (*    PHASE_BLS_PAIRING_CHECK_RESULT     scenario/PRC_BLS_PAIRING_CHECK                                            )
                                                                                                      (*    PHASE_BLS_MAP_FP_TO_G1_RESULT      scenario/PRC_BLS_MAP_FP_TO_G1                                             )
                                                                                                      (*    PHASE_BLS_MAP_FP2_TO_G2_RESULT     scenario/PRC_BLS_MAP_FP2_TO_G2                                            )
+                                                                                                     (*    PHASE_P256_VERIFY_RESULT           scenario/PRC_P256_VERIFY                                                  )
                                                                                                      ))
 
 
@@ -129,6 +134,7 @@
                                                                                  (*    EXO_SUM_WEIGHT_ECDATA      scenario/PRC_ECMUL                                     )
                                                                                  (*    EXO_SUM_WEIGHT_ECDATA      scenario/PRC_ECPAIRING                                 )
                                                                                  (*    EXO_SUM_WEIGHT_BLSDATA    (scenario-shorthand---PRC---common-BLS-address-bit-sum) )
+                                                                                 (*    EXO_SUM_WEIGHT_ECDATA      scenario/PRC_P256_VERIFY                                )
                                                                                  ))
 
 
@@ -178,6 +184,7 @@
                                                                                                      (*    PRECOMPILE_RETURN_DATA_SIZE___BLS_PAIRING_CHECK     scenario/PRC_BLS_PAIRING_CHECK  )
                                                                                                      (*    PRECOMPILE_RETURN_DATA_SIZE___BLS_MAP_FP_TO_G1      scenario/PRC_BLS_MAP_FP_TO_G1   )
                                                                                                      (*    PRECOMPILE_RETURN_DATA_SIZE___BLS_MAP_FP2_TO_G2     scenario/PRC_BLS_MAP_FP2_TO_G2  )
+                                                                                                     (*    PRECOMPILE_RETURN_DATA_SIZE___P256_VERIFY           scenario/PRC_P256_VERIFY        )
                                                                                                      ))
 
 
