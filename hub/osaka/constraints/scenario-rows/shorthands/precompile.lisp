@@ -30,6 +30,7 @@
                     ;; scenario/PRC_BLS_MAP_FP_TO_G1
                     ;; scenario/PRC_BLS_MAP_FP2_TO_G2
                     (scenario-shorthand---PRC---common-BLS-address-bit-sum)
+                    scenario/PRC_P256_VERIFY
                     )))
 
 
@@ -126,6 +127,7 @@
     (*   15   scenario/PRC_BLS_PAIRING_CHECK  )
     (*   16   scenario/PRC_BLS_MAP_FP_TO_G1   )
     (*   17   scenario/PRC_BLS_MAP_FP2_TO_G2  )
+    (*   256  scenario/PRC_P256_VERIFY        )
     ;; scenario/PRC_SUCCESS_CALLER_WILL_REVERT
     ;; scenario/PRC_SUCCESS_CALLER_WONT_REVERT
     ;; scenario/PRC_FAILURE_KNOWN_TO_HUB
