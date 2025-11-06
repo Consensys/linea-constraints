@@ -196,7 +196,7 @@
                                                                                    ;; src_offset_hi                                                                ;; source offset high
                                                                                    ;; src_offset_lo                                                                ;; source offset low
                                                                                    ;; tgt_offset_lo                                                                ;; target offset low
-                                                                                   512                                                                          ;; size
+                                                                                   EIP_7823_MODEXP_UPPER_BYTE_SIZE_BOUND                                        ;; size
                                                                                    ;; ref_offset                                                                   ;; reference offset
                                                                                    ;; ref_size                                                                     ;; reference size
                                                                                    ;; success_bit                                                                  ;; success bit
@@ -227,7 +227,8 @@
                                                                                     CONTEXT_NUMBER                                                                ;; target ID
                                                                                     ;; aux_id                                                                        ;; auxiliary ID
                                                                                     ;; src_offset_hi                                                                 ;; source offset high
-                                                                                    (-    512    (precompile-processing---MODEXP---mbs-normalized))               ;; source offset low
+                                                                                    (-    EIP_7823_MODEXP_UPPER_BYTE_SIZE_BOUND
+                                                                                          (precompile-processing---MODEXP---mbs-normalized))               ;; source offset low
                                                                                     ;; tgt_offset_lo                                                                 ;; target offset low
                                                                                     (precompile-processing---MODEXP---mbs-normalized)                             ;; size
                                                                                     (precompile-processing---dup-r@o)                                             ;; reference offset
@@ -250,7 +251,8 @@
                   (provide-return-data     precompile-processing---MODEXP---context-row-offset---success   ;; row offset
                                            CONTEXT_NUMBER                                                  ;; receiver context
                                            (+    1    HUB_STAMP)                                           ;; provider context
-                                           (-    512    (precompile-processing---MODEXP---mbs-normalized)) ;; rdo
+                                           (-    EIP_7823_MODEXP_UPPER_BYTE_SIZE_BOUND
+                                                 (precompile-processing---MODEXP---mbs-normalized))        ;; rdo
                                            (precompile-processing---MODEXP---mbs-normalized)               ;; rds
                                            ))
 
