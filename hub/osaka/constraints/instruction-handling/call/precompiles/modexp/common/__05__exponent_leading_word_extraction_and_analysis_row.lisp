@@ -25,7 +25,7 @@
 
 (defun    (precompile-processing---MODEXP---call-EXP-to-analyze-leading-word)   (shift    misc/EXP_FLAG    precompile-processing---MODEXP---misc-row-offset---leading-word-analysis))
 (defun    (precompile-processing---MODEXP---call-MMU-to-extract-leading-word)   (shift    misc/MMU_FLAG    precompile-processing---MODEXP---misc-row-offset---leading-word-analysis))
-(defun    (precompile-processing---MODEXP---call-OOB-on-leading-word-row)   (shift    misc/MMU_FLAG    precompile-processing---MODEXP---misc-row-offset---leading-word-analysis))
+(defun    (precompile-processing---MODEXP---call-OOB-on-leading-word-row)       (shift    misc/MMU_FLAG    precompile-processing---MODEXP---misc-row-offset---leading-word-analysis))
 
 
 (defconstraint    precompile-processing---MODEXP---lead-log-analysis---setting-misc-module-flags
@@ -44,17 +44,16 @@
 (defconstraint    precompile-processing---MODEXP---lead-log-analysis---setting-OOB-instruction
                   (:guard    (precompile-processing---MODEXP---standard-precondition))
                   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-                  (if-not-zero    (precompile-processing---MODEXP---call-OOB-module-for-modexp-lead)
-                                  (set-OOB-instruction---modexp-lead    precompile-processing---MODEXP---misc-row-offset---leading-word-analysis   ;; offset
-                                                                        (precompile-processing---MODEXP---bbs-normalized)                          ;; low part of bbs (base     byte size)
-                                                                        (precompile-processing---dup-cds)                                          ;; call data size
-                                                                        (precompile-processing---MODEXP---ebs-normalized)                          ;; low part of ebs (exponent byte size)
-                                                                        )))
+                  (set-OOB-instruction---modexp-lead    precompile-processing---MODEXP---misc-row-offset---leading-word-analysis   ;; offset
+                                                        (precompile-processing---MODEXP---bbs-normalized)                          ;; low part of bbs (base     byte size)
+                                                        (precompile-processing---dup-cds)                                          ;; call data size
+                                                        (precompile-processing---MODEXP---ebs-normalized)                          ;; low part of ebs (exponent byte size)
+                                                        ))
 
-(defun    (precompile-processing---MODEXP---extract-leading-word)     (*    (precompile-processing---MODEXP---call-OOB-module-for-modexp-lead)    (shift    [misc/OOB_DATA  4]    precompile-processing---MODEXP---misc-row-offset---leading-word-analysis))) ;; ""
-(defun    (precompile-processing---MODEXP---cds-cutoff)               (*    (precompile-processing---MODEXP---call-OOB-module-for-modexp-lead)    (shift    [misc/OOB_DATA  6]    precompile-processing---MODEXP---misc-row-offset---leading-word-analysis))) ;; ""
-(defun    (precompile-processing---MODEXP---ebs-cutoff)               (*    (precompile-processing---MODEXP---call-OOB-module-for-modexp-lead)    (shift    [misc/OOB_DATA  7]    precompile-processing---MODEXP---misc-row-offset---leading-word-analysis))) ;; ""
-(defun    (precompile-processing---MODEXP---sub-ebs-32)               (*    (precompile-processing---MODEXP---call-OOB-module-for-modexp-lead)    (shift    [misc/OOB_DATA  8]    precompile-processing---MODEXP---misc-row-offset---leading-word-analysis))) ;; ""
+(defun    (precompile-processing---MODEXP---extract-leading-word)     (shift    [misc/OOB_DATA  4]    precompile-processing---MODEXP---misc-row-offset---leading-word-analysis)) ;; ""
+(defun    (precompile-processing---MODEXP---cds-cutoff)               (shift    [misc/OOB_DATA  6]    precompile-processing---MODEXP---misc-row-offset---leading-word-analysis)) ;; ""
+(defun    (precompile-processing---MODEXP---ebs-cutoff)               (shift    [misc/OOB_DATA  7]    precompile-processing---MODEXP---misc-row-offset---leading-word-analysis)) ;; ""
+(defun    (precompile-processing---MODEXP---sub-ebs-32)               (shift    [misc/OOB_DATA  8]    precompile-processing---MODEXP---misc-row-offset---leading-word-analysis)) ;; ""
 
 
 (defconstraint    precompile-processing---MODEXP---lead-word-analysis---setting-MMU-instruction

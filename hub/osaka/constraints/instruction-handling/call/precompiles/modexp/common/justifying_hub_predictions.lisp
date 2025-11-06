@@ -27,6 +27,6 @@
                   (:guard    (precompile-processing---MODEXP---standard-precondition))
                   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                   (begin
-                    (eq!   (scenario-shorthand---PRC---success)       (*   (precompile-processing---MODEXP---ram-success)   (precompile-processing---MODEXP---all-byte-sizes-are-in-bounds) )
-                    (eq!   (precompile-processing---prd-return-gas)   (*   (precompile-processing---MODEXP---return-gas)    (precompile-processing---MODEXP---all-byte-sizes-are-in-bounds) )
+                    (eq!   (scenario-shorthand---PRC---success)       (*   (precompile-processing---MODEXP---ram-success)   (precompile-processing---MODEXP---all-byte-sizes-are-in-bounds) ) )
+                    (eq!   (precompile-processing---prd-return-gas)   (*   (precompile-processing---MODEXP---return-gas)    (precompile-processing---MODEXP---all-byte-sizes-are-in-bounds) ) )
                     ))
