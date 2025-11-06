@@ -27,7 +27,7 @@
                   (:guard    (precompile-processing---MODEXP---standard-precondition))
                   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                   (eq!    (weighted-MISC-flag-sum    precompile-processing---MODEXP---misc-row-offset---pricing)
-                          (*    (precompile-processing---MODEXP---all-byte-sizes-are-in-bounds)   MISC_WEIGHT_OOB)
+                          MISC_WEIGHT_OOB
                           ))
 
 

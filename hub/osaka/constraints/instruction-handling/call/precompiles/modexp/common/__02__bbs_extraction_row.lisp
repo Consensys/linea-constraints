@@ -23,20 +23,20 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-(defconstraint    precompile-processing---MODEXP---bbs-analysis---setting-misc-module-flags
+(defconstraint    precompile-processing---MODEXP---bbs-extraction-and-analysis---setting-misc-module-flags
                   (:guard    (precompile-processing---MODEXP---standard-precondition))
                   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-                  (eq!    (weighted-MISC-flag-sum    precompile-processing---MODEXP---misc-row-offset---bbs-analysis)
+                  (eq!    (weighted-MISC-flag-sum    precompile-processing---MODEXP---misc-row-offset---bbs-extraction-and-analysis)
                           (+    (*    MISC_WEIGHT_MMU    (precompile-processing---MODEXP---extract-bbs))
                                 MISC_WEIGHT_OOB)
                           ))
 
 
-(defconstraint    precompile-processing---MODEXP---bbs-analysis---setting-MMU-instruction
+(defconstraint    precompile-processing---MODEXP---bbs-extraction-and-analysis---setting-MMU-instruction
                   (:guard    (precompile-processing---MODEXP---standard-precondition))
                   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-                  (if-not-zero    (shift    misc/MMU_FLAG    precompile-processing---MODEXP---misc-row-offset---bbs-analysis)
-                                  (set-MMU-instruction---right-padded-word-extraction    precompile-processing---MODEXP---misc-row-offset---bbs-analysis                                          ;; offset
+                  (if-not-zero    (shift    misc/MMU_FLAG    precompile-processing---MODEXP---misc-row-offset---bbs-extraction-and-analysis)
+                                  (set-MMU-instruction---right-padded-word-extraction    precompile-processing---MODEXP---misc-row-offset---bbs-extraction-and-analysis                                          ;; offset
                                                                                          CONTEXT_NUMBER                                                                                           ;; source ID
                                                                                          ;; tgt_id                                                                                                   ;; target ID
                                                                                          ;; aux_id                                                                                                   ;; auxiliary ID
@@ -47,20 +47,20 @@
                                                                                          (precompile-processing---dup-cdo)                                                                        ;; reference offset
                                                                                          (precompile-processing---dup-cds)                                                                        ;; reference size
                                                                                          ;; success_bit                                                                                              ;; success bit
-                                                                                         (shift    misc/MMU_LIMB_1    precompile-processing---MODEXP---misc-row-offset---bbs-analysis)            ;; limb 1          ;; TODO: remove SELF REFERENCE
-                                                                                         (shift    misc/MMU_LIMB_2    precompile-processing---MODEXP---misc-row-offset---bbs-analysis)            ;; limb 2          ;; TODO: remove SELF REFERENCE
+                                                                                         (shift    misc/MMU_LIMB_1    precompile-processing---MODEXP---misc-row-offset---bbs-extraction-and-analysis)            ;; limb 1          ;; TODO: remove SELF REFERENCE
+                                                                                         (shift    misc/MMU_LIMB_2    precompile-processing---MODEXP---misc-row-offset---bbs-extraction-and-analysis)            ;; limb 2          ;; TODO: remove SELF REFERENCE
                                                                                          ;; exo_sum                                                                                                  ;; weighted exogenous module flag sum
                                                                                          ;; phase                                                                                                    ;; phase
                                                                                          )))
 
-(defun    (precompile-processing---MODEXP---bbs-hi)    (*    (precompile-processing---MODEXP---extract-bbs)    (shift    misc/MMU_LIMB_1    precompile-processing---MODEXP---misc-row-offset---bbs-analysis)))
-(defun    (precompile-processing---MODEXP---bbs-lo)    (*    (precompile-processing---MODEXP---extract-bbs)    (shift    misc/MMU_LIMB_2    precompile-processing---MODEXP---misc-row-offset---bbs-analysis)))
+(defun    (precompile-processing---MODEXP---bbs-hi)    (*    (precompile-processing---MODEXP---extract-bbs)    (shift    misc/MMU_LIMB_1    precompile-processing---MODEXP---misc-row-offset---bbs-extraction-and-analysis)))
+(defun    (precompile-processing---MODEXP---bbs-lo)    (*    (precompile-processing---MODEXP---extract-bbs)    (shift    misc/MMU_LIMB_2    precompile-processing---MODEXP---misc-row-offset---bbs-extraction-and-analysis)))
 
 
-(defconstraint    precompile-processing---MODEXP---bbs-analysis---setting-OOB-instruction
+(defconstraint    precompile-processing---MODEXP---bbs-extraction-and-analysis---setting-OOB-instruction
                   (:guard    (precompile-processing---MODEXP---standard-precondition))
                   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-                  (set-OOB-instruction---modexp-xbs    precompile-processing---MODEXP---misc-row-offset---bbs-analysis         ;; offset
+                  (set-OOB-instruction---modexp-xbs    precompile-processing---MODEXP---misc-row-offset---bbs-extraction-and-analysis         ;; offset
                                                        (precompile-processing---MODEXP---bbs-hi)                               ;; high part of some {b,e,m}bs
                                                        (precompile-processing---MODEXP---bbs-lo)                               ;; low  part of some {b,e,m}bs
                                                        0                                                                       ;; low  part of some {b,e,m}bs
@@ -68,5 +68,7 @@
                                                        ))
 
 
-(defun    (precompile-processing---MODEXP---bbs-within-bounds)    (shift    [misc/OOB_DATA   9]    precompile-processing---MODEXP---misc-row-offset---bbs-analysis))
-(defun    (precompile-processing---MODEXP---bbs-out-of-bounds)    (shift    [misc/OOB_DATA  10]    precompile-processing---MODEXP---misc-row-offset---bbs-analysis)) ;; ""
+(defun    (precompile-processing---MODEXP---bbs-within-bounds)    (shift    [misc/OOB_DATA   9]    precompile-processing---MODEXP---misc-row-offset---bbs-extraction-and-analysis)) ;; ""
+(defun    (precompile-processing---MODEXP---bbs-out-of-bounds)    (shift    [misc/OOB_DATA  10]    precompile-processing---MODEXP---misc-row-offset---bbs-extraction-and-analysis)) ;; ""
+(defun    (precompile-processing---MODEXP---bbs-normalized)       (*   (precompile-processing---MODEXP---bbs-lo)
+                                                                       (precompile-processing---MODEXP---bbs-within-bounds)))
