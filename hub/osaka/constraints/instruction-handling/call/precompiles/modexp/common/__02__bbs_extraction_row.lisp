@@ -31,6 +31,7 @@
                                 MISC_WEIGHT_OOB)
                           ))
 
+
 (defconstraint    precompile-processing---MODEXP---bbs-analysis---setting-MMU-instruction
                   (:guard    (precompile-processing---MODEXP---standard-precondition))
                   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -55,6 +56,7 @@
 (defun    (precompile-processing---MODEXP---bbs-hi)    (*    (precompile-processing---MODEXP---extract-bbs)    (shift    misc/MMU_LIMB_1    precompile-processing---MODEXP---misc-row-offset---bbs-analysis)))
 (defun    (precompile-processing---MODEXP---bbs-lo)    (*    (precompile-processing---MODEXP---extract-bbs)    (shift    misc/MMU_LIMB_2    precompile-processing---MODEXP---misc-row-offset---bbs-analysis)))
 
+
 (defconstraint    precompile-processing---MODEXP---bbs-analysis---setting-OOB-instruction
                   (:guard    (precompile-processing---MODEXP---standard-precondition))
                   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -64,6 +66,7 @@
                                                        0                                                                       ;; low  part of some {b,e,m}bs
                                                        0                                                                       ;; bit indicating whether to compute max(xbs, ybs) or not
                                                        ))
+
 
 (defun    (precompile-processing---MODEXP---bbs-within-bounds)    (shift    [misc/OOB_DATA   9]    precompile-processing---MODEXP---misc-row-offset---bbs-analysis))
 (defun    (precompile-processing---MODEXP---bbs-out-of-bounds)    (shift    [misc/OOB_DATA  10]    precompile-processing---MODEXP---misc-row-offset---bbs-analysis)) ;; ""

@@ -23,13 +23,18 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-(defconstraint    precompile-processing---MODEXP---mbs-analysis---setting-misc-module-flags    (:guard    (precompile-processing---MODEXP---standard-precondition))
+(defconstraint    precompile-processing---MODEXP---mbs-analysis---setting-misc-module-flags
+                  (:guard    (precompile-processing---MODEXP---standard-precondition))
+                  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                   (eq!    (weighted-MISC-flag-sum    precompile-processing---MODEXP---misc-row-offset---mbs-analysis)
                           (+    (*    MISC_WEIGHT_MMU    (precompile-processing---MODEXP---extract-mbs))
                                 MISC_WEIGHT_OOB)
                           ))
 
-(defconstraint    precompile-processing---MODEXP---mbs-analysis---setting-MMU-instruction    (:guard    (precompile-processing---MODEXP---standard-precondition))
+
+(defconstraint    precompile-processing---MODEXP---mbs-analysis---setting-MMU-instruction
+                  (:guard    (precompile-processing---MODEXP---standard-precondition))
+                  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                   (if-not-zero    (shift    misc/MMU_FLAG    precompile-processing---MODEXP---misc-row-offset---mbs-analysis)
                                   (set-MMU-instruction---right-padded-word-extraction    precompile-processing---MODEXP---misc-row-offset---mbs-analysis                                          ;; offset
                                                                                          CONTEXT_NUMBER                                                                                           ;; source ID
@@ -48,10 +53,14 @@
                                                                                          ;; phase                                                                                                    ;; phase
                                                                                          )))
 
+
 (defun    (precompile-processing---MODEXP---mbs-hi)    (*    (precompile-processing---MODEXP---extract-mbs)    (shift    misc/MMU_LIMB_1    precompile-processing---MODEXP---misc-row-offset---mbs-analysis)))
 (defun    (precompile-processing---MODEXP---mbs-lo)    (*    (precompile-processing---MODEXP---extract-mbs)    (shift    misc/MMU_LIMB_2    precompile-processing---MODEXP---misc-row-offset---mbs-analysis)))
 
-(defconstraint    precompile-processing---MODEXP---mbs-analysis---setting-OOB-instruction    (:guard    (precompile-processing---MODEXP---standard-precondition))
+
+(defconstraint    precompile-processing---MODEXP---mbs-analysis---setting-OOB-instruction
+                  (:guard    (precompile-processing---MODEXP---standard-precondition))
+                  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                   (set-OOB-instruction---modexp-xbs    precompile-processing---MODEXP---misc-row-offset---mbs-analysis         ;; offset
                                                        (precompile-processing---MODEXP---mbs-hi)                               ;; high part of some {b,e,m}bs
                                                        (precompile-processing---MODEXP---mbs-lo)                               ;; low  part of some {b,e,m}bs

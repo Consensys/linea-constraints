@@ -30,7 +30,10 @@
                           (*    (precompile-processing---MODEXP---all-byte-sizes-are-in-bounds)   MISC_WEIGHT_OOB)
                           ))
 
-(defconstraint    precompile-processing---MODEXP---pricing-analysis---setting-OOB-instruction    (:guard    (precompile-processing---MODEXP---standard-precondition))
+
+(defconstraint    precompile-processing---MODEXP---pricing-analysis---setting-OOB-instruction
+                  (:guard    (precompile-processing---MODEXP---standard-precondition))
+                  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                   (set-OOB-instruction---modexp-pricing    precompile-processing---MODEXP---misc-row-offset---pricing   ;; offset
                                                            (precompile-processing---dup-call-gas)                       ;; call gas i.e. gas provided to the precompile
                                                            (precompile-processing---dup-r@c)                            ;; return at capacity
