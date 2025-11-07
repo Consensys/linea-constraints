@@ -46,6 +46,9 @@
                                 EIP_7823_MODEXP_UPPER_BYTE_SIZE_BOUND_PLUS_ONE
                                 ))
 
+(defun (prc-modexp-xbs---xbs-is-LE-the-EIP-7823-upper-bound)   (shift   OUTGOING_RES_LO   ROFF___MODEXP_XBS___XBS_VS_EIP_7823_UPPER_BOUND ))
+(defun (prc-modexp-xbs---xbs-is-GT-the-EIP-7823-upper-bound)   (-  1  (prc-modexp-xbs---xbs-is-LE-the-EIP-7823-upper-bound)))
+
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -65,6 +68,8 @@
                                 (prc-modexp-xbs---ybs-lo)
                                 ))
 
+(defun (prc-modexp-xbs---xbs-is-LT-ybs)   (shift   OUTGOING_RES_LO   ROFF___MODEXP_XBS___XBS_VS_YBS ))
+
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -82,11 +87,8 @@
                                      (prc-modexp-xbs---xbs-lo)
                                      ))
 
+(defun (prc-modexp-xbs---xbs-is-zero)    (shift   OUTGOING_RES_LO   ROFF___MODEXP_XBS___XBS_ISZERO_CHECK ))
 
-(defun (prc-modexp-xbs---xbs-is-LE-the-EIP-7823-upper-bound)   (shift   OUTGOING_RES_LO   ROFF___MODEXP_XBS___XBS_VS_EIP_7823_UPPER_BOUND ))
-(defun (prc-modexp-xbs---xbs-is-LT-ybs)                        (shift   OUTGOING_RES_LO   ROFF___MODEXP_XBS___XBS_VS_YBS                  ))
-(defun (prc-modexp-xbs---xbs-is-zero)                          (shift   OUTGOING_RES_LO   ROFF___MODEXP_XBS___XBS_ISZERO_CHECK            ))
-(defun (prc-modexp-xbs---xbs-is-GT-the-EIP-7823-upper-bound)   (-  1  (prc-modexp-xbs---xbs-is-LE-the-EIP-7823-upper-bound)))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
