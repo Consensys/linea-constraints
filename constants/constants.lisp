@@ -45,6 +45,7 @@
   EVM_INST_SHL                              0x1b
   EVM_INST_SHR                              0x1c
   EVM_INST_SAR                              0x1d
+  EVM_INST_CLZ                              0x1e ;; Osaka, EIP-7939
   ;; KECCAK256
   EVM_INST_SHA3                             0x20
   ;; Environmental Information
@@ -227,6 +228,7 @@
   GAS_CONST_IDENTITY                        15
   GAS_CONST_IDENTITY_WORD                   3
   GAS_CONST_MODEXP                          200
+  GAS_CONST_MODEXP_EIP_7823                 500
   GAS_CONST_ECADD                           150
   GAS_CONST_ECMUL                           6000
   GAS_CONST_ECPAIRING                       45000
