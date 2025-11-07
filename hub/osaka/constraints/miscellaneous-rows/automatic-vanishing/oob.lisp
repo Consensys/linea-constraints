@@ -14,6 +14,6 @@
                   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                   (if-zero    misc/OOB_FLAG
                               (begin
-                                (vanishes!                  misc/OOB_INST        )
-                                (for k [10]  (vanishes!   [ misc/OOB_DATA   k ] )) ;; ""
+                                (vanishes!                    misc/OOB_INST        )
+                                (for k [1:10]  (vanishes!   [ misc/OOB_DATA   k ] )) ;; ""
                                 )))
