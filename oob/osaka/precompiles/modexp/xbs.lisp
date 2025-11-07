@@ -8,7 +8,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-
 (defconst
   EIP_7823_MODEXP_UPPER_BYTE_SIZE_BOUND_PLUS_ONE     (+ EIP_7823_MODEXP_UPPER_BYTE_SIZE_BOUND 1)
 
@@ -47,6 +46,9 @@
                                 EIP_7823_MODEXP_UPPER_BYTE_SIZE_BOUND_PLUS_ONE
                                 ))
 
+(defun (prc-modexp-xbs---xbs-is-LE-the-EIP-7823-upper-bound)   (shift   OUTGOING_RES_LO   ROFF___MODEXP_XBS___XBS_VS_EIP_7823_UPPER_BOUND ))
+(defun (prc-modexp-xbs---xbs-is-GT-the-EIP-7823-upper-bound)   (-  1  (prc-modexp-xbs---xbs-is-LE-the-EIP-7823-upper-bound)))
+
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -66,6 +68,8 @@
                                 (prc-modexp-xbs---ybs-lo)
                                 ))
 
+(defun (prc-modexp-xbs---xbs-is-LT-ybs)   (shift   OUTGOING_RES_LO   ROFF___MODEXP_XBS___XBS_VS_YBS ))
+
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -83,11 +87,8 @@
                                      (prc-modexp-xbs---xbs-lo)
                                      ))
 
+(defun (prc-modexp-xbs---xbs-is-zero)    (shift   OUTGOING_RES_LO   ROFF___MODEXP_XBS___XBS_ISZERO_CHECK ))
 
-(defun (prc-modexp-xbs---xbs-is-LEQ-EIP-7823-upper-bound)      (shift   OUTGOING_RES_LO   ROFF___MODEXP_XBS___XBS_VS_EIP_7823_UPPER_BOUND ))
-(defun (prc-modexp-xbs---result-of-comparison)                 (shift   OUTGOING_RES_LO   ROFF___MODEXP_XBS___XBS_VS_YBS                  ))
-(defun (prc-modexp-xbs---xbs-is-zero)                          (shift   OUTGOING_RES_LO   ROFF___MODEXP_XBS___XBS_ISZERO_CHECK            ))
-(defun (prc-modexp-xbs---xbs-is-GT-EIP-7823-upper-bound)        (-  1  (prc-modexp-xbs---xbs-is-LEQ-EIP-7823-upper-bound)))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -97,41 +98,37 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-
 (defconstraint    prc-modexp-xbs---binarity-sanity-check
                   (:guard (* (assumption---fresh-new-stamp) (prc-modexp-xbs---standard-precondition)))
                   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                   (is-binary   (prc-modexp-xbs---compute-max)))
 
-(defconstraint    prc-modexp-xbs---justify-hub-predictions---xbs-nonzero
-                  (:guard (* (assumption---fresh-new-stamp) (prc-modexp-xbs---standard-precondition)))
-                  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-                  (eq!   (prc-modexp-xbs---xbs-is-zero)
-                         (-   1   (prc-modexp-xbs---xbs-nonzero))
-                         ))
 
-(defconstraint    prc-modexp-xbs---justify-hub-predictions---sans-max-computation
-                  (:guard (* (assumption---fresh-new-stamp) (prc-modexp-xbs---standard-precondition)))
-                  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-                  (if-zero   (prc-modexp-xbs---compute-max)
-                             (vanishes! (prc-modexp-xbs---max-xbs-ybs))
-                             ))
+(defconstraint   prc-modexp-xbs---justifying-hub-predictions---various-prediction-bits
+                 (:guard (* (assumption---fresh-new-stamp) (prc-modexp-xbs---standard-precondition)))
+                 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                 (begin   (eq!   (prc-modexp-xbs---xbs-nonzero)         (- 1 (prc-modexp-xbs---xbs-is-zero))               )
+                          (eq!   (prc-modexp-xbs---xbs-within-bounds)   (prc-modexp-xbs---xbs-is-LE-the-EIP-7823-upper-bound)  )
+                          (eq!   (prc-modexp-xbs---xbs-out-of-bounds)   (prc-modexp-xbs---xbs-is-GT-the-EIP-7823-upper-bound)  )
+                          ))
 
-(defconstraint    prc-modexp-xbs---justify-hub-predictions---with-max-computation
-                  (:guard (* (assumption---fresh-new-stamp) (prc-modexp-xbs---standard-precondition)))
-                  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-                  (if-not-zero   (prc-modexp-xbs---compute-max)
-                                 (if-zero   (prc-modexp-xbs---result-of-comparison)
-                                            ;; result-of-comparison ≡ faux case
-                                            (eq! (prc-modexp-xbs---max-xbs-ybs) (prc-modexp-xbs---xbs-lo))
-                                            ;; result-of-comparison ≡ true case
-                                            (eq! (prc-modexp-xbs---max-xbs-ybs) (prc-modexp-xbs---ybs-lo))
-                                            )))
 
-(defconstraint    prc-modexp-xbs---justify-hub-predictions---bounds-bits
-                  (:guard (* (assumption---fresh-new-stamp) (prc-modexp-xbs---standard-precondition)))
-                  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-                  (begin   (eq!   (prc-modexp-xbs---xbs-within-bounds)  (prc-modexp-xbs---xbs-is-LEQ-EIP-7823-upper-bound))
-                           (eq!   (prc-modexp-xbs---xbs-out-of-bounds)  (prc-modexp-xbs---xbs-is-GT-EIP-7823-upper-bound))
-                           ))
-
+(defconstraint   prc-modexp-xbs---justifying-hub-predictions---setting-the-value-of-max-xbs-ybs
+                 (:guard (* (assumption---fresh-new-stamp) (prc-modexp-xbs---standard-precondition)))
+                 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                 (if-zero    (prc-modexp-xbs---compute-max)
+                             ;; comupte_max = false
+                             (vanishes!   (prc-modexp-xbs---max-xbs-ybs))
+                             ;; comupte_max = false
+                             (if-zero     (prc-modexp-xbs---xbs-is-LE-the-EIP-7823-upper-bound)
+                                          ;; false case
+                                          (vanishes!   (prc-modexp-xbs---max-xbs-ybs))
+                                          ;; true case
+                                          (if-zero     (prc-modexp-xbs---xbs-is-LT-ybs)
+                                                       ;; false case
+                                                       (eq!   (prc-modexp-xbs---max-xbs-ybs)
+                                                              (prc-modexp-xbs---xbs-lo))
+                                                       ;; true case
+                                                       (eq!   (prc-modexp-xbs---max-xbs-ybs)
+                                                              (prc-modexp-xbs---ybs-lo))
+                                                       ))))

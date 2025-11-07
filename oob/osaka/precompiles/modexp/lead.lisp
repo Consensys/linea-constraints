@@ -10,7 +10,7 @@
 (defun (prc-modexp-lead---standard-precondition)               IS_MODEXP_LEAD)
 (defun (prc-modexp-lead---bbs)                                 [DATA 1])
 (defun (prc-modexp-lead---ebs)                                 [DATA 3])
-(defun (prc-modexp-lead---load-lead)                           [DATA 4])
+(defun (prc-modexp-lead---extract-leading-word)                [DATA 4])
 (defun (prc-modexp-lead---cds-cutoff)                          [DATA 6])
 (defun (prc-modexp-lead---ebs-cutoff)                          [DATA 7])
 (defun (prc-modexp-lead---sub-ebs_32)                          [DATA 8])
@@ -18,6 +18,8 @@
 (defun (prc-modexp-lead---ebs-less-than_32)                    (next OUTGOING_RES_LO))
 (defun (prc-modexp-lead---call-data-contains-exponent-bytes)   (shift OUTGOING_RES_LO 2))
 (defun (prc-modexp-lead---result-of-comparison)                (shift OUTGOING_RES_LO 3))
+
+;; ""
 
 (defconstraint prc-modexp-lead---check-ebs-is-zero (:guard (* (assumption---fresh-new-stamp) (prc-modexp-lead---standard-precondition)))
   (call-to-ISZERO 0 0 (prc-modexp-lead---ebs)))
@@ -37,7 +39,7 @@
                            32)))
 
 (defconstraint prc-modexp-lead---justify-hub-predictions (:guard (* (assumption---fresh-new-stamp) (prc-modexp-lead---standard-precondition)))
-  (begin (eq! (prc-modexp-lead---load-lead)
+  (begin (eq! (prc-modexp-lead---extract-leading-word)
               (* (prc-modexp-lead---call-data-contains-exponent-bytes)
                  (- 1 (prc-modexp-lead---ebs-is-zero))))
          (if-zero (prc-modexp-lead---call-data-contains-exponent-bytes)
