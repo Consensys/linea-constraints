@@ -9,7 +9,7 @@
 
 
 (defconst
-  ROFF___MODEXP_PRICING___R@C_ISZERO_CHECK                 0
+  ROFF___MODEXP_PRICING___RAC_ISZERO_CHECK                 0
   ROFF___MODEXP_PRICING___EXPONENT_LOG_ISZERO_CHECK        1
   ROFF___MODEXP_PRICING___CEILING_OF_MAX_OVER_8            2
   ROFF___MODEXP_PRICING___MAX_VS_32                        3
@@ -34,12 +34,12 @@
 (defconstraint    prc-modexp-pricing---r@c-iszero-check
                   (:guard  (prc-modexp-pricing---standard-precondition))
                   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-                  (call-to-ISZERO   ROFF___MODEXP_PRICING___R@C_ISZERO_CHECK
+                  (call-to-ISZERO   ROFF___MODEXP_PRICING___RAC_ISZERO_CHECK
                                     0
                                     (prc---r@c)
                                     ))
 
-(defun   (prc-modex-pricing---r@c-is-zero)   (shift   OUTGOING_RES_LO   ROFF___MODEXP_PRICING___R@C_ISZERO_CHECK))
+(defun   (prc-modex-pricing---r@c-is-zero)   (shift   OUTGOING_RES_LO   ROFF___MODEXP_PRICING___RAC_ISZERO_CHECK))
 
 
 
