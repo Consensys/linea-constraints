@@ -478,7 +478,6 @@
                                 (eq! P_is_point_at_infinity 1)
                                 (vanishes! P_is_point_at_infinity))))))
 
-;; Note: in the specs for simplicity we omit the last four arguments
 (defun (callToC1MembershipWCP k
                               _P_x_hi
                               _P_x_lo
@@ -492,7 +491,6 @@
          (callToLT (+ k 1) _P_y_hi _P_y_lo P_BN_HI P_BN_LO)
          (callToEQ (+ k 2) _P_y_square_hi _P_y_square_lo _P_x_cube_plus_three_hi _P_x_cube_plus_three_lo)))
 
-;; Note: in the specs for simplicity we omit the last four arguments
 (defun (callToC1MembershipEXT k
                               _P_x_hi
                               _P_x_lo
