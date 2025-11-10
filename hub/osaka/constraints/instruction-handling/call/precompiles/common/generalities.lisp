@@ -132,6 +132,7 @@
         (*   96                                  scenario/PRC_ECMUL                                        )
         (*   (precompile-processing---dup-cds)   scenario/PRC_ECPAIRING                                    )
         (*   (precompile-processing---dup-cds)   (scenario-shorthand---PRC---common-BLS-address-bit-sum)   )
+        (*   160                                 scenario/PRC_P256_VERIFY                                  )
         ))
 
 (defun    (precompile-processing---common---MMU-exo-sum)
@@ -142,6 +143,7 @@
         (*    EXO_SUM_WEIGHT_ECDATA    scenario/PRC_ECMUL        )
         (*    EXO_SUM_WEIGHT_ECDATA    scenario/PRC_ECPAIRING    )
         (*    EXO_SUM_WEIGHT_BLSDATA  (scenario-shorthand---PRC---common-BLS-address-bit-sum)   )
+        (*    EXO_SUM_WEIGHT_ECDATA    scenario/PRC_P256_VERIFY  )
         ))
 
 (defun    (precompile-processing---common---MMU-phase)
