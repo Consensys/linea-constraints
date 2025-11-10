@@ -21,6 +21,7 @@
         (*    CALL___first_half_nsr___prc_success_wont_revert    scenario/PRC_SUCCESS_CALLER_WONT_REVERT)
         ))
 
+;; TODO add P256_VERIFY
 
 (defun        (precompile-processing---2nd-half-NSR)
   (+

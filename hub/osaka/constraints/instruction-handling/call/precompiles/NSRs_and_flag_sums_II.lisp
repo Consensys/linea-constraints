@@ -357,3 +357,11 @@
 (defun    (precompile-processing---flag-sum-all-BLS-FKTH)       (precompile-processing---flag-sum-standard-failure))
 (defun    (precompile-processing---flag-sum-all-BLS-FKTR)       (precompile-processing---flag-sum-standard-failure))
 (defun    (precompile-processing---flag-sum-all-BLS-success)    (precompile-processing---flag-sum-standard-success))
+
+;;;;;;;;;;;;;;;;;;;
+;;               ;;
+;;  P256_VERIFY  ;;
+;;               ;;
+;;;;;;;;;;;;;;;;;;;
+
+;; TODO
