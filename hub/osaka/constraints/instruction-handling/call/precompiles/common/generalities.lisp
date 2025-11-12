@@ -198,6 +198,7 @@
                                             scenario/PRC_ECMUL
                                             scenario/PRC_ECPAIRING
                                             (scenario-shorthand---PRC---common-BLS-address-bit-sum)
+                                            scenario/PRC_P256_VERIFY
                                             ))
                                 )))
 
@@ -212,6 +213,7 @@
                                       scenario/PRC_ECMUL
                                       scenario/PRC_ECPAIRING
                                       (scenario-shorthand---PRC---common-BLS-address-bit-sum)
+                                      scenario/PRC_P256_VERIFY
                                       ))))
 
 (defconstraint    precompile-processing---common---justifying-return-gas-prediction    (:guard    (precompile-processing---common---precondition))
