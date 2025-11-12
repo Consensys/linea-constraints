@@ -364,4 +364,23 @@
 ;;               ;;
 ;;;;;;;;;;;;;;;;;;;
 
-;; TODO
+;; P256_VERIFY flag sum
+(defun    (precompile-processing---2nd-half-flag-sum-for-P256-VERIFY)
+  (+  (*       scenario/PRC_FAILURE_KNOWN_TO_HUB)
+      (*  (precompile-processing---flag-sum-P256-VERIFY-FKTR)       scenario/PRC_FAILURE_KNOWN_TO_RAM)
+      (*  (precompile-processing---flag-sum-P256-VERIFY-success)    (scenario-shorthand---PRC---success))
+          ))
+;; P256_VERIFY non stack rows
+(defun    (precompile-processing---2nd-half-NSR-for-P256-VERIFY)
+  (+  (*  (precompile-processing---nsr-P256-VERIFY-FKTH)       scenario/PRC_FAILURE_KNOWN_TO_HUB)
+      (*  (precompile-processing---nsr-P256-VERIFY-FKTR)       scenario/PRC_FAILURE_KNOWN_TO_RAM)
+      (*  (precompile-processing---nsr-P256-VERIFY-success)    (scenario-shorthand---PRC---success))
+          ))
+;; P256_VERIFY non stack rows shorthands
+(defun    (precompile-processing---nsr-P256-VERIFY-FKTH)       precompile-processing---nsr-standard-failure)
+(defun    (precompile-processing---nsr-P256-VERIFY-FKTR)       precompile-processing---nsr-standard-failure)
+(defun    (precompile-processing---nsr-P256-VERIFY-success)    precompile-processing---nsr-standard-success) ;; ""
+;; P256_VERIFY flag sum shorthands
+(defun    (precompile-processing---flag-sum-P256-VERIFY-FKTH)       (precompile-processing---flag-sum-standard-failure))
+(defun    (precompile-processing---flag-sum-P256-VERIFY-FKTR)       (precompile-processing---flag-sum-standard-failure))
+(defun    (precompile-processing---flag-sum-P256-VERIFY-success)    (precompile-processing---flag-sum-standard-success))
