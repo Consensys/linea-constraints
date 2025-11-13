@@ -50,7 +50,7 @@
          (counter-constant IS_DATA)))
 
 (defconstraint special-ct-constancy ()
-  (if-not-zero (+ (- 1 PHASE_5) (- 1 DEPTH_1) IS_PREFIX (- 1 IS_DATA))
+  (if-not-zero (+ (- 1 [PHASE 5]) (- 1 DEPTH_1) IS_PREFIX (- 1 IS_DATA))
                (counter-constant [INPUT 1])))
 
 (defconstraint ct-incrementing ()
@@ -59,21 +59,21 @@
          (counter-incrementing LC_CORRECTION)))
 
 (defconstraint phase5-incrementing ()
-  (phase-incrementing PHASE_5 DEPTH_1))
+  (phase-incrementing [PHASE 5] DEPTH_1))
 
 (defconstraint is-topic-incrementing ()
   (phase-incrementing IS_TOPIC INDEX_LOCAL))
 
 (defconstraint phase1-constant ()
-  (phase-constancy PHASE_1 TXRCPT_SIZE))
+  (phase-constancy [PHASE 1] TXRCPT_SIZE))
 
 ;;    4.1.2 Global Phase Constraints    ;;
 (defconstraint impose-phase-id ()
   (eq! PHASE_ID
-       (+ (* 1 PHASE_1)
-          (* 2 PHASE_2)
-          (* 3 PHASE_3)
-          (* 5 PHASE_5)
+       (+ (* 1 [PHASE 1])
+          (* 2 [PHASE 2])
+          (* 3 [PHASE 3])
+          (* 5 [PHASE 5])
           (* SUBPHASE_ID_WEIGHT_IS_PREFIX IS_PREFIX)
           (* SUBPHASE_ID_WEIGHT_IS_OT IS_TOPIC)
           (* SUBPHASE_ID_WEIGHT_IS_OD IS_DATA)
@@ -84,7 +84,7 @@
   (begin (vanishes! ABS_TX_NUM)
          (vanishes! ABS_LOG_NUM)))
 
-(defun (phase-sum) (+ PHASE_1 PHASE_2 PHASE_3 PHASE_5)) 
+(defun (phase-sum) (+ [PHASE 1] [PHASE 2] [PHASE 3] [PHASE 5])) 
 
 (defconstraint phase-exclusion ()
   (if-zero ABS_TX_NUM
@@ -92,14 +92,14 @@
            (eq! 1 (phase-sum))))
 
 (defconstraint ABS_TX_NUM-evolution ()
-  (if (or! (eq! PHASE_1 0) (remained-constant! PHASE_1))
+  (if (or! (eq! [PHASE 1] 0) (remained-constant! [PHASE 1]))
            ;; no change
            (remained-constant! ABS_TX_NUM)
            ;; increment
            (did-inc! ABS_TX_NUM 1)))
 
 (defconstraint ABS_LOG_NUM-evolution ()
-  (if-zero (+ (- 1 PHASE_5) (- 1 DEPTH_1) (- 1 IS_PREFIX) IS_TOPIC IS_DATA CT)
+  (if-zero (+ (- 1 [PHASE 5]) (- 1 DEPTH_1) (- 1 IS_PREFIX) IS_TOPIC IS_DATA CT)
            (did-inc! ABS_LOG_NUM 1)
            (remained-constant! ABS_LOG_NUM)))
 
@@ -111,27 +111,27 @@
   (if-not-zero PHASE_SIZE
                (vanishes! PHASE_END)))
 
-(defun (phase-wght-sum) (+ PHASE_1 
-                          (* 2 PHASE_2)
-                          (* 3 PHASE_3)
-                          (* 5 PHASE_5)))
+(defun (phase-wght-sum) (+ [PHASE 1] 
+                          (* 2 [PHASE 2])
+                          (* 3 [PHASE 3])
+                          (* 5 [PHASE 5])))
 
 (defconstraint no-end-no-change-phase (:guard ABS_TX_NUM)
   (if-zero PHASE_END
            (eq! (phase-wght-sum)
-                (+ (next PHASE_1)
-                   (* 2 (next PHASE_2))
-                   (* 3 (next PHASE_3))
-                   (* 5 (next PHASE_5))))))
+                (+ (next [PHASE 1])
+                   (* 2 (next [PHASE 2]))
+                   (* 3 (next [PHASE 3]))
+                   (* 5 (next [PHASE 5]))))))
 
 (defconstraint phase-transition ()
   (if-eq PHASE_END 1
          (begin (eq! 1
-                     (+ (* PHASE_1 (next PHASE_2))
-                        (* PHASE_2 (next PHASE_3))
-                        (* PHASE_3 (next PHASE_5))
-                        (* PHASE_5 (next PHASE_1))))
-                (if-eq PHASE_5 1 (vanishes! TXRCPT_SIZE)))))
+                     (+ (* [PHASE 1] (next [PHASE 2]))
+                        (* [PHASE 2] (next [PHASE 3]))
+                        (* [PHASE 3] (next [PHASE 5]))
+                        (* [PHASE 5] (next [PHASE 1]))))
+                (if-eq [PHASE 5] 1 (vanishes! TXRCPT_SIZE)))))
 
 ;;    4.1.3 Byte decomposition's loop heartbeat  ;;
 (defconstraint ct-imply-done (:guard ABS_TX_NUM)
@@ -166,25 +166,25 @@
 
 ;;      4.1.6 Byte size updates     ;;
 (defconstraint globalsize-update ()
-  (if-zero PHASE_1
+  (if-zero [PHASE 1]
            (eq! TXRCPT_SIZE
                 (- (prev TXRCPT_SIZE) (* LC nBYTES)))))
 
 (defconstraint phase-size-update ()
-  (if-eq 1 (* PHASE_5 DEPTH_1)
+  (if-eq 1 (* [PHASE 5] DEPTH_1)
          (eq! PHASE_SIZE
               (- (prev PHASE_SIZE) (* LC nBYTES)))))
 
 ;;    LC correction nullity    ;;
 (defconstraint lc-correction-nullity ()
-  (if-zero (+ PHASE_1 (* PHASE_5 IS_DATA))
+  (if-zero (+ [PHASE 1] (* [PHASE 5] IS_DATA))
            (vanishes! LC_CORRECTION)))
 
 ;;    4.1.8 Finalization Constraints    ;;
 (defconstraint finalization (:domain {-1})
   (if-not-zero ABS_TX_NUM
                (begin (eq! PHASE_END 1)
-                      (eq! PHASE_5 1)
+                      (eq! [PHASE 5] 1)
                       (eq! ABS_TX_NUM ABS_TX_NUM_MAX)
                       (eq! ABS_LOG_NUM ABS_LOG_NUM_MAX))))
 
@@ -194,8 +194,8 @@
 ;;                             ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;    4.2.1 Phase 1 : RLP prefix  ;;
-(defconstraint phase1-init (:guard PHASE_1);; 4.1.1
-  (if-zero (prev PHASE_1)
+(defconstraint phase1-init (:guard [PHASE 1]);; 4.1.1
+  (if-zero (prev [PHASE 1])
            (begin (vanishes! (+ (- 1 IS_PREFIX) PHASE_END (next IS_PREFIX)))
                   (eq! nSTEP 1)
                   (if-zero [INPUT 1]
@@ -205,17 +205,17 @@
                                        (* [INPUT 1] (^ 256 LLARGEMO)))
                                   (eq! nBYTES 1))))))
 
-(defconstraint phase1-rlprefix (:guard PHASE_1)
+(defconstraint phase1-rlprefix (:guard [PHASE 1])
   (if-zero IS_PREFIX
            (begin (eq! nSTEP 8)
                   (vanishes! LC_CORRECTION)
                   (eq! [INPUT 1] TXRCPT_SIZE)
-                  (rlpPrefixOfByteString [INPUT 1] CT nSTEP DONE PHASE_1 ACC_SIZE POWER BIT [ACC 1] [ACC 2] LC LIMB nBYTES)
+                  (rlpPrefixOfByteString [INPUT 1] CT nSTEP DONE [PHASE 1] ACC_SIZE POWER BIT [ACC 1] [ACC 2] LC LIMB nBYTES)
                   (if-eq DONE 1 (eq! PHASE_END 1)))))
 
 ;;    4.2.2 Phase 2 : status code Rz  ;;
 (defconstraint phase2 ()
-  (if-eq PHASE_2 1
+  (if-eq [PHASE 2] 1
          (begin (eq! nSTEP 1)
                 (if-zero [INPUT 1]
                          (eq! LIMB
@@ -227,7 +227,7 @@
 
 ;; 4.2.3 Phase 3 : cumulative gas Ru  ;;
 (defconstraint phase3 ()
-  (if-eq PHASE_3 1
+  (if-eq [PHASE 3] 1
          (begin (eq! nSTEP 8)
                 (rlpPrefixInt [INPUT 1] CT nSTEP DONE [BYTE 1] [ACC 1] ACC_SIZE POWER BIT BIT_ACC LIMB LC nBYTES)
                 (if-eq DONE 1
@@ -235,11 +235,11 @@
                               (eq! PHASE_END 1))))))
 
 ;;  Phase 5: log series Rl    ;;
-(defconstraint phase5-init (:guard PHASE_5)
-  (if-zero (prev PHASE_5)
+(defconstraint phase5-init (:guard [PHASE 5])
+  (if-zero (prev [PHASE 5])
            (vanishes! (+ DEPTH_1 (- 1 IS_PREFIX) IS_TOPIC IS_DATA))))
 
-(defconstraint phase5-phaseRlpPrefix (:guard PHASE_5)
+(defconstraint phase5-phaseRlpPrefix (:guard [PHASE 5])
   (if-zero DEPTH_1
            (begin (eq! [INPUT 1] PHASE_SIZE)
                   (if-zero [INPUT 1]
@@ -249,22 +249,22 @@
                                   (eq! nBYTES 1)
                                   (eq! PHASE_END 1))
                            (begin (eq! nSTEP 8)
-                                  (rlpPrefixOfByteString [INPUT 1] CT nSTEP DONE PHASE_5 ACC_SIZE POWER BIT [ACC 1] [ACC 2] LC LIMB nBYTES)
+                                  (rlpPrefixOfByteString [INPUT 1] CT nSTEP DONE [PHASE 5] ACC_SIZE POWER BIT [ACC 1] [ACC 2] LC LIMB nBYTES)
                                   (if-eq DONE 1
                                          (vanishes! (+ (- 1 (next DEPTH_1))
                                                        (- 1 (next IS_PREFIX))
                                                        (next IS_TOPIC)
                                                        (next IS_DATA)))))))))
 
-(defconstraint phase5-logentryRlpPrefix (:guard PHASE_5)
+(defconstraint phase5-logentryRlpPrefix (:guard [PHASE 5])
   (if-eq 1 (* DEPTH_1 IS_PREFIX (- 1 IS_TOPIC) (- 1 IS_DATA))
          (begin (eq! [INPUT 1] LOG_ENTRY_SIZE)
                 (eq! nSTEP 8)
-                (rlpPrefixOfByteString [INPUT 1] CT nSTEP DONE PHASE_5 ACC_SIZE POWER BIT [ACC 1] [ACC 2] LC LIMB nBYTES)
+                (rlpPrefixOfByteString [INPUT 1] CT nSTEP DONE [PHASE 5] ACC_SIZE POWER BIT [ACC 1] [ACC 2] LC LIMB nBYTES)
                 (if-eq DONE 1
                        (vanishes! (+ (next IS_PREFIX) (next IS_TOPIC) (next IS_DATA)))))))
 
-(defconstraint phase5-rlpAddress (:guard PHASE_5)
+(defconstraint phase5-rlpAddress (:guard [PHASE 5])
   (if-zero (+ IS_PREFIX IS_TOPIC IS_DATA)
            (begin (eq! nSTEP 3)
                   (eq! LC 1)
@@ -281,7 +281,7 @@
                                               (- 1 (next IS_TOPIC))
                                               (next IS_DATA))))))))
 
-(defconstraint phase5-topic-prefix (:guard PHASE_5)
+(defconstraint phase5-topic-prefix (:guard [PHASE 5])
   (if-eq (* IS_PREFIX IS_TOPIC) 1
          (begin (vanishes! INDEX_LOCAL)
                 (eq! nSTEP 1)
@@ -306,7 +306,7 @@
                                               (- 1 (next IS_TOPIC))
                                               (next IS_DATA))))))))
 
-(defconstraint phase5-topic (:guard PHASE_5)
+(defconstraint phase5-topic (:guard [PHASE 5])
   (if-zero (+ IS_PREFIX (- 1 IS_TOPIC))
            (begin (eq! nSTEP 3)
                   (eq! LC 1)
@@ -330,7 +330,7 @@
                                                        (- 1 (next IS_TOPIC))
                                                        (next IS_DATA)))))))))
 
-(defconstraint phase5-dataprefix (:guard PHASE_5)
+(defconstraint phase5-dataprefix (:guard [PHASE 5])
   (if-eq (* IS_PREFIX IS_DATA) 1
          (begin (eq! [INPUT 1] LOCAL_SIZE)
                 (if-zero LOCAL_SIZE
@@ -372,7 +372,7 @@
                                                                           CT
                                                                           nSTEP
                                                                           DONE
-                                                                          PHASE_1
+                                                                          [PHASE 1]
                                                                           ACC_SIZE
                                                                           POWER
                                                                           BIT
@@ -386,7 +386,7 @@
                                                      (next IS_TOPIC)
                                                      (- 1 (next IS_DATA))))))))))
 
-(defconstraint phase5-data (:guard PHASE_5)
+(defconstraint phase5-data (:guard [PHASE 5])
   (if-zero (+ IS_PREFIX (- 1 IS_DATA))
            (begin (eq! INDEX_LOCAL CT)
                   (eq! LC 1)
@@ -401,13 +401,13 @@
                                                          (next IS_TOPIC)
                                                          (next IS_DATA)))))))))
 
-(defconstraint phase5-logEntrySize-update (:guard PHASE_5)
+(defconstraint phase5-logEntrySize-update (:guard [PHASE 5])
   (if-zero (+ (- 1 DEPTH_1)
               (* IS_PREFIX (- 1 IS_TOPIC) (- 1 IS_DATA)))
            (eq! LOG_ENTRY_SIZE
                 (- (prev LOG_ENTRY_SIZE) (* LC nBYTES)))))
 
-(defconstraint phase5-localsize-update (:guard PHASE_5)
+(defconstraint phase5-localsize-update (:guard [PHASE 5])
   (if-zero (+ IS_PREFIX
               (- 1 (+ IS_TOPIC IS_DATA)))
            (eq! LOCAL_SIZE
