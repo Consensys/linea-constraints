@@ -10,7 +10,10 @@
   (LIMB_CONSTRUCTED :binary@prove)
   (INDEX            :i24)
   (INDEX_LOCAL      :i24)
-  (PHASE            :binary@prove :array [5])
+  (PHASE_1          :binary@prove )
+  (PHASE_2          :binary@prove )
+  (PHASE_3          :binary@prove )
+  (PHASE_5          :binary@prove )
   (PHASE_END        :binary@prove)
   (COUNTER          :i32)
   (nSTEP            :i32)
@@ -30,8 +33,8 @@
   (IS_TOPIC         :binary@prove)
   (IS_DATA          :binary@prove)
   (LOG_ENTRY_SIZE   :i32)
-  (LOCAL_SIZE       :i32)
-  (PHASE_ID         :i16))
+  (LOCAL_SIZE       :i32))
+  ;; (PHASE_ID         :i16) defcomputedcolumn
 
 ;; aliases
 (defalias
