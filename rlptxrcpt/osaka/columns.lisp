@@ -33,8 +33,8 @@
   (IS_TOPIC         :binary@prove)
   (IS_DATA          :binary@prove)
   (LOG_ENTRY_SIZE   :i32)
-  (LOCAL_SIZE       :i32))
-  ;; (PHASE_ID         :i16) defcomputedcolumn
+  (LOCAL_SIZE       :i32)
+  (PHASE_ID         :i16))
 
 ;; aliases
 (defalias

@@ -68,9 +68,9 @@
   (phase-constancy PHASE_1 TXRCPT_SIZE))
 
 ;;    4.1.2 Global Phase Constraints    ;;
-(defcomputedcolumn (PHASE_ID :i16)
-       (+ 
-          (* 1 PHASE_1)
+(defconstraint impose-phase-id ()
+  (eq! PHASE_ID
+       (+ (* 1 PHASE_1)
           (* 2 PHASE_2)
           (* 3 PHASE_3)
           (* 5 PHASE_5)
@@ -78,7 +78,7 @@
           (* SUBPHASE_ID_WEIGHT_IS_OT IS_TOPIC)
           (* SUBPHASE_ID_WEIGHT_IS_OD IS_DATA)
           (* SUBPHASE_ID_WEIGHT_DEPTH DEPTH_1)
-          (* SUBPHASE_ID_WEIGHT_INDEX_LOCAL IS_TOPIC INDEX_LOCAL)))
+          (* SUBPHASE_ID_WEIGHT_INDEX_LOCAL IS_TOPIC INDEX_LOCAL))))
 
 (defconstraint initial-stamp (:domain {0})
   (begin (vanishes! ABS_TX_NUM)
