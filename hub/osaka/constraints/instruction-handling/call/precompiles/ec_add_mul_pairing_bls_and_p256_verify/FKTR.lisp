@@ -1,0 +1,36 @@
+(module hub)
+
+;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;                ;;;;
+;;;;    X.Y CALL    ;;;;
+;;;;                ;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                                                     ;;
+;;    X.Y.Z ECADD, ECMUL, ECPAIRING and BLS precompiles constraints    ;;
+;;                                                                     ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;;;;;;;;;;;;;;;;
+;; Shorthands ;;
+;;;;;;;;;;;;;;;;
+
+(defun    (precompile-processing---ECADD_MUL_PAIRING_BLS_and_P256_VERIFY---FKTR-case)    (*    PEEK_AT_SCENARIO
+                                                                                         (+    scenario/PRC_ECADD
+                                                                                               scenario/PRC_ECMUL
+                                                                                               scenario/PRC_ECPAIRING
+                                                                                               (scenario-shorthand---PRC---common-BLS-address-bit-sum)
+                                                                                               scenario/PRC_P256_VERIFY
+                                                                                               )
+                                                                                         scenario/PRC_FAILURE_KNOWN_TO_RAM))
+
+(defconstraint    precompile-processing---ECADD_MUL_PAIRING_BLS_and_P256_VERIFY---FKTR-requires-extracting-non-empty-call-data
+                  (:guard    (precompile-processing---ECADD_MUL_PAIRING_BLS_and_P256_VERIFY---FKTR-case))
+                  (eq!    (precompile-processing---common---OOB-extract-call-data)
+                          1))
+

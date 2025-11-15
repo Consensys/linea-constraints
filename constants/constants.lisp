@@ -228,6 +228,7 @@
   GAS_CONST_IDENTITY                        15
   GAS_CONST_IDENTITY_WORD                   3
   GAS_CONST_MODEXP                          200
+  GAS_CONST_MODEXP_EIP_7823                 500
   GAS_CONST_ECADD                           150
   GAS_CONST_ECMUL                           6000
   GAS_CONST_ECPAIRING                       45000
@@ -244,6 +245,7 @@
   GAS_CONST_BLS_MAP_FP2_TO_G2               23800
   GAS_CONST_BLS_PAIRING_CHECK               37700
   GAS_CONST_BLS_PAIRING_CHECK_PAIR          32600
+  GAS_CONST_P256_VERIFY                     6900
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;           ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;  EVM MISC ;;
@@ -270,6 +272,7 @@
   HISTORY_STORAGE_ADDRESS_HI                0x0000f908
   HISTORY_STORAGE_ADDRESS_LO                0x27f1c53a10cb7a02335b175320002935
   EIP_7825_TRANSACTION_GAS_LIMIT_CAP        0x1000000 ;; 2^24 == 16777216 appears in OSAKA 
+  EIP_7823_MODEXP_UPPER_BYTE_SIZE_BOUND     1024
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;             ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;  LINEA MISC ;;
@@ -326,6 +329,7 @@
   PRECOMPILE_CALL_DATA_UNIT_SIZE___BLS_PAIRING_CHECK       384
   PRECOMPILE_CALL_DATA_SIZE___FP_TO_G1                      64
   PRECOMPILE_CALL_DATA_SIZE___FP2_TO_G2                    128
+  PRECOMPILE_CALL_DATA_SIZE___P256_VERIFY                  160
 
   PRC_ECPAIRING_SIZE                                       (* 6 WORD_SIZE)
   PRECOMPILE_CALL_DATA_SIZE___BLAKE2F                      213
@@ -340,6 +344,7 @@
   PRECOMPILE_RETURN_DATA_SIZE___BLS_PAIRING_CHECK           32
   PRECOMPILE_RETURN_DATA_SIZE___BLS_MAP_FP_TO_G1           128
   PRECOMPILE_RETURN_DATA_SIZE___BLS_MAP_FP2_TO_G2          256
+  PRECOMPILE_RETURN_DATA_SIZE___P256_VERIFY                 32
 
   PRC_BLS_G1_MSM_MAX_DISCOUNT                              519
   PRC_BLS_G2_MSM_MAX_DISCOUNT                              524
@@ -403,6 +408,8 @@
   PHASE_ECMUL_RESULT                        0x070B
   PHASE_ECPAIRING_DATA                      0x080A
   PHASE_ECPAIRING_RESULT                    0x080B
+  PHASE_P256_VERIFY_DATA                    0x100A
+  PHASE_P256_VERIFY_RESULT                  0x100B
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;                 ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; BLS DATA MODULE ;;
@@ -521,6 +528,7 @@
   OOB_INST_BLS_PAIRING_CHECK                0xFF0F
   OOB_INST_BLS_MAP_FP_TO_G1                 0xFF10
   OOB_INST_BLS_MAP_FP2_TO_G2                0xFF11
+  OOB_INST_P256_VERIFY                      0xF100
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;             ;;
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; RLP* MODULE ;;

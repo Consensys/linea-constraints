@@ -55,6 +55,7 @@
         (*    OOB_INST_BLS_PAIRING_CHECK   scenario/PRC_BLS_PAIRING_CHECK  )
         (*    OOB_INST_BLS_MAP_FP_TO_G1    scenario/PRC_BLS_MAP_FP_TO_G1   )
         (*    OOB_INST_BLS_MAP_FP2_TO_G2   scenario/PRC_BLS_MAP_FP2_TO_G2  )
+        (*    OOB_INST_P256_VERIFY         scenario/PRC_P256_VERIFY        )
         ))
 
 
@@ -131,6 +132,7 @@
         (*   96                                  scenario/PRC_ECMUL                                        )
         (*   (precompile-processing---dup-cds)   scenario/PRC_ECPAIRING                                    )
         (*   (precompile-processing---dup-cds)   (scenario-shorthand---PRC---common-BLS-address-bit-sum)   )
+        (*   160                                 scenario/PRC_P256_VERIFY                                  )
         ))
 
 (defun    (precompile-processing---common---MMU-exo-sum)
@@ -141,6 +143,7 @@
         (*    EXO_SUM_WEIGHT_ECDATA    scenario/PRC_ECMUL        )
         (*    EXO_SUM_WEIGHT_ECDATA    scenario/PRC_ECPAIRING    )
         (*    EXO_SUM_WEIGHT_BLSDATA  (scenario-shorthand---PRC---common-BLS-address-bit-sum)   )
+        (*    EXO_SUM_WEIGHT_ECDATA    scenario/PRC_P256_VERIFY  )
         ))
 
 (defun    (precompile-processing---common---MMU-phase)
@@ -158,6 +161,7 @@
         (*    PHASE_BLS_PAIRING_CHECK_DATA     scenario/PRC_BLS_PAIRING_CHECK )
         (*    PHASE_BLS_MAP_FP_TO_G1_DATA      scenario/PRC_BLS_MAP_FP_TO_G1  )
         (*    PHASE_BLS_MAP_FP2_TO_G2_DATA     scenario/PRC_BLS_MAP_FP2_TO_G2 )
+        (*    PHASE_P256_VERIFY_DATA           scenario/PRC_P256_VERIFY       )
         ))
 
 ;; ECRECOVER related shorthands
@@ -194,6 +198,7 @@
                                             scenario/PRC_ECMUL
                                             scenario/PRC_ECPAIRING
                                             (scenario-shorthand---PRC---common-BLS-address-bit-sum)
+                                            scenario/PRC_P256_VERIFY
                                             ))
                                 )))
 
@@ -208,6 +213,7 @@
                                       scenario/PRC_ECMUL
                                       scenario/PRC_ECPAIRING
                                       (scenario-shorthand---PRC---common-BLS-address-bit-sum)
+                                      scenario/PRC_P256_VERIFY
                                       ))))
 
 (defconstraint    precompile-processing---common---justifying-return-gas-prediction    (:guard    (precompile-processing---common---precondition))
