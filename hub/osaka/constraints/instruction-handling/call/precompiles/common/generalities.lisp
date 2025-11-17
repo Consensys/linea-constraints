@@ -71,15 +71,14 @@
 (defun    (precompile-processing---common---OOB-empty-call-data)      (shift    [misc/OOB_DATA    7]    precompile-processing---common---1st-misc-row---row-offset))
 (defun    (precompile-processing---common---OOB-r@c-nonzero)          (shift    [misc/OOB_DATA    8]    precompile-processing---common---1st-misc-row---row-offset)) ;; ""
 
-(defproperty      precompile-processing---common---sanity-checks-for-BLS-precompiles
+(defproperty      precompile-processing---common---sanity-checks-for-BLS-precompiles-and-P256-verify
                   (if-not-zero (precompile-processing---common---precondition)
-                               (if-not-zero (scenario-shorthand---PRC---common-BLS-address-bit-sum)
+                               (if-not-zero (force-bin (+ (scenario-shorthand---PRC---common-BLS-address-bit-sum) scenario/PRC_P256_VERIFY))
                                             (begin
                                               (eq!    (precompile-processing---common---OOB-extract-call-data)
                                                       (precompile-processing---common---OOB-hub-success))
                                               (eq!    (precompile-processing---common---OOB-empty-call-data)
-                                                      0)
-                                              ))))
+                                                      0)))))
 
 (defconstraint    precompile-processing---common---setting-MMU-instruction    (:guard    (precompile-processing---common---precondition))
                   (if-not-zero    (shift    misc/MMU_FLAG    precompile-processing---common---1st-misc-row---row-offset)
