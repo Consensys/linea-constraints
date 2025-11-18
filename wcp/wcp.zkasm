@@ -26,7 +26,7 @@ include "../constants/evm.zkasm"
 ;; NOTE: an undocumented feature of the WCP module is that it is often
 ;; used by other modules to additionally ensure that the given
 ;; arguments are "small" (i.e. within their designated bitwidths).
-fn wcp(INST=16 u8, ARG_1 u256, ARG_2 u256) -> (RES u1) {
+pub fn wcp(INST=16 u8, ARG_1 u256, ARG_2 u256) -> (RES u1) {
    var delta u256
    var arg1bits, arg2bits u255
    var borrow,arg1sign,arg2sign u1
