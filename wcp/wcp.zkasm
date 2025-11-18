@@ -1,3 +1,5 @@
+include "../constants/evm.zkasm"
+
 ;; The Word Comparison Module (WCP) deals with six word comparison
 ;; instructions of the EVM as well as two word comparison instructions
 ;; that the zkEVM may use but which aren’t part of the EVM proper.
@@ -24,19 +26,19 @@
 ;; NOTE: an undocumented feature of the WCP module is that it is often
 ;; used by other modules to additionally ensure that the given
 ;; arguments are "small" (i.e. within their designated bitwidths).
-fn wcp(INST=14 u8, ARG_1 u256, ARG_2 u256) -> (RES u1) {
+fn wcp(INST=16 u8, ARG_1 u256, ARG_2 u256) -> (RES u1) {
    var delta u256
    var arg1bits, arg2bits u255
    var borrow,arg1sign,arg2sign u1
    ;;
-   if INST==14 goto geq
-   if INST==15 goto leq
-   if INST==16 goto lt
-   if INST==17 goto gt
-   if INST==18 goto slt
-   if INST==19 goto sgt
-   if INST==20 goto eq
-   if INST==21 goto isz
+   if INST == WCP_INST_GEQ goto geq
+   if INST == WCP_INST_LEQ goto leq
+   if INST == EVM_INST_LT goto lt
+   if INST == EVM_INST_GT goto gt
+   if INST == EVM_INST_SLT goto slt
+   if INST == EVM_INST_SGT goto sgt
+   if INST == EVM_INST_EQ goto eq
+   if INST == EVM_INST_ISZERO goto isz
    fail
 leq:
    borrow,delta = ARG_2 - ARG_1
