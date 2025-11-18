@@ -3,6 +3,11 @@ include "../../util/log256.zkasm"
 include "../../util/max3.zkasm"
 
 ;; Determine the maximum (base 256) logarithm of three values.
+;;
+;; NOTE: The inst parameter is used to handle one-line instructions
+;; which (historically) could not be used for determining the
+;; logarithm (in the WCP module).  Essentially, it is retained to
+;; ensure backwards compatibility.
 fn maxlog(inst u8, x u128, y u128, z u128) -> (res u4) {
   var m u128
   ;; check for one-line instructions
