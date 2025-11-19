@@ -23,9 +23,9 @@ include "../constants/evm.zkasm"
 ;; most significant bit of a word indicates (when set) that it is
 ;; negative or (when unset) that it is positive.
 ;;
-;; NOTE: an undocumented feature of the WCP module is that it is often
-;; used by other modules to additionally ensure that the given
-;; arguments are "small" (i.e. within their designated bitwidths).
+;; NOTE: a subtle aspect of the WCP module is that it is often used by
+;; other modules to additionally ensure that the given arguments are
+;; "small" (i.e. within their designated bitwidths).
 pub fn wcp(INST=16 u8, ARG_1 u256, ARG_2 u256) -> (RES u1) {
    var delta u256
    var arg1bits, arg2bits u255
