@@ -25,7 +25,7 @@
 
 (defun    (precompile-processing---MODEXP---call-EXP-to-analyze-leading-word)   (shift    misc/EXP_FLAG    precompile-processing---MODEXP---misc-row-offset---leading-word-analysis))
 (defun    (precompile-processing---MODEXP---call-MMU-to-extract-leading-word)   (shift    misc/MMU_FLAG    precompile-processing---MODEXP---misc-row-offset---leading-word-analysis))
-(defun    (precompile-processing---MODEXP---call-OOB-on-leading-word-row)       (shift    misc/MMU_FLAG    precompile-processing---MODEXP---misc-row-offset---leading-word-analysis))
+(defun    (precompile-processing---MODEXP---call-OOB-on-leading-word-row)       (shift    misc/OOB_FLAG    precompile-processing---MODEXP---misc-row-offset---leading-word-analysis))
 
 
 (defconstraint    precompile-processing---MODEXP---lead-log-analysis---setting-misc-module-flags

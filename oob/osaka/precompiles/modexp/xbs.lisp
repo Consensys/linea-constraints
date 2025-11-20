@@ -11,21 +11,22 @@
 (defconst
   EIP_7823_MODEXP_UPPER_BYTE_SIZE_BOUND_PLUS_ONE     (+ EIP_7823_MODEXP_UPPER_BYTE_SIZE_BOUND 1)
 
+  ROFF___MODEXP_XBS___FIRST_ROW                   0
   ROFF___MODEXP_XBS___XBS_VS_EIP_7823_UPPER_BOUND 0
   ROFF___MODEXP_XBS___XBS_VS_YBS                  1
   ROFF___MODEXP_XBS___XBS_ISZERO_CHECK            2
   )
 
 
-(defun (prc-modexp-xbs---standard-precondition)                        IS_MODEXP_XBS)
-(defun (prc-modexp-xbs---xbs-hi)                                      [DATA   1])
-(defun (prc-modexp-xbs---xbs-lo)                                      [DATA   2])
-(defun (prc-modexp-xbs---ybs-lo)                                      [DATA   3])
-(defun (prc-modexp-xbs---compute-max)                     (force-bin  [DATA   4]))
-(defun (prc-modexp-xbs---max-xbs-ybs)                                 [DATA   7])
-(defun (prc-modexp-xbs---xbs-nonzero)                     (force-bin  [DATA   8]))
-(defun (prc-modexp-xbs---xbs-within-bounds)               (force-bin  [DATA   9]))
-(defun (prc-modexp-xbs---xbs-out-of-bounds)               (force-bin  [DATA  10]))
+(defun (prc-modexp-xbs---standard-precondition)                              IS_MODEXP_XBS)
+(defun (prc-modexp-xbs---xbs-hi)                                    (shift  [DATA   1]    ROFF___MODEXP_XBS___FIRST_ROW )   )  ;; ""
+(defun (prc-modexp-xbs---xbs-lo)                                    (shift  [DATA   2]    ROFF___MODEXP_XBS___FIRST_ROW )   )  ;; ""
+(defun (prc-modexp-xbs---ybs-lo)                                    (shift  [DATA   3]    ROFF___MODEXP_XBS___FIRST_ROW )   )  ;; ""
+(defun (prc-modexp-xbs---compute-max)                   (force-bin  (shift  [DATA   4]    ROFF___MODEXP_XBS___FIRST_ROW ) ) )  ;; ""
+(defun (prc-modexp-xbs---max-xbs-ybs)                               (shift  [DATA   7]    ROFF___MODEXP_XBS___FIRST_ROW )   )  ;; ""
+(defun (prc-modexp-xbs---xbs-nonzero)                   (force-bin  (shift  [DATA   8]    ROFF___MODEXP_XBS___FIRST_ROW ) ) )  ;; ""
+(defun (prc-modexp-xbs---xbs-within-bounds)             (force-bin  (shift  [DATA   9]    ROFF___MODEXP_XBS___FIRST_ROW ) ) )  ;; ""
+(defun (prc-modexp-xbs---xbs-out-of-bounds)             (force-bin  (shift  [DATA  10]    ROFF___MODEXP_XBS___FIRST_ROW ) ) )  ;; ""
 ;; ""
 
 
@@ -104,13 +105,26 @@
                   (is-binary   (prc-modexp-xbs---compute-max)))
 
 
-(defconstraint   prc-modexp-xbs---justifying-hub-predictions---various-prediction-bits
+(defconstraint   prc-modexp-xbs---justifying-hub-predictions---setting-xbs-nonzero
                  (:guard (* (assumption---fresh-new-stamp) (prc-modexp-xbs---standard-precondition)))
                  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-                 (begin   (eq!   (prc-modexp-xbs---xbs-nonzero)         (- 1 (prc-modexp-xbs---xbs-is-zero))               )
-                          (eq!   (prc-modexp-xbs---xbs-within-bounds)   (prc-modexp-xbs---xbs-is-LE-the-EIP-7823-upper-bound)  )
-                          (eq!   (prc-modexp-xbs---xbs-out-of-bounds)   (prc-modexp-xbs---xbs-is-GT-the-EIP-7823-upper-bound)  )
-                          ))
+                 (eq!   (prc-modexp-xbs---xbs-nonzero)
+                        (- 1 (prc-modexp-xbs---xbs-is-zero))
+                        ))
+
+(defconstraint   prc-modexp-xbs---justifying-hub-predictions---setting-xbs-within-bounds
+                 (:guard (* (assumption---fresh-new-stamp) (prc-modexp-xbs---standard-precondition)))
+                 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                 (eq!   (prc-modexp-xbs---xbs-within-bounds)
+                        (prc-modexp-xbs---xbs-is-LE-the-EIP-7823-upper-bound)
+                        ))
+
+(defconstraint   prc-modexp-xbs---justifying-hub-predictions---setting-xbs-out-of-bounds
+                 (:guard (* (assumption---fresh-new-stamp) (prc-modexp-xbs---standard-precondition)))
+                 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                 (eq!   (prc-modexp-xbs---xbs-out-of-bounds)
+                        (prc-modexp-xbs---xbs-is-GT-the-EIP-7823-upper-bound)
+                        ))
 
 
 (defconstraint   prc-modexp-xbs---justifying-hub-predictions---setting-the-value-of-max-xbs-ybs
