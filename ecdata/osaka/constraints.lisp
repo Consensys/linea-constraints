@@ -216,9 +216,9 @@
            (vanishes! ICP)))
 
 (defconstraint set-icp ()
-  (let ((internal_checks_passed HURDLE))
+  (let ((icp_at_transition_to_result HURDLE))
        (if-not-zero (transition_to_result)
-                    (eq! ICP internal_checks_passed))))
+                    (eq! ICP icp_at_transition_to_result))))
 
 (defconstraint icp-necessary-condition-success-bit ()
   (debug (if-not-zero SUCCESS_BIT
@@ -802,7 +802,7 @@
   (* IS_P256_VERIFY_DATA
      (~ (- ID (prev ID)))))
 
-(defconstraint internal-checks-256-verify (:guard (p256-verify-hypothesis))
+(defconstraint internal-checks-p256-verify (:guard (p256-verify-hypothesis))
   (let ((h_hi LIMB)
         (h_lo (next LIMB))
         (r_hi (shift LIMB 2))
@@ -819,7 +819,7 @@
               (callToISZERO 3 s_hi s_lo)
               (callToR1Membership 4 Q_x_hi Q_x_lo Q_y_hi Q_y_lo))))
 
-(defconstraint justify-success-bit-256-verify (:guard (p256-verify-hypothesis))
+(defconstraint justify-success-bit-p256-verify (:guard (p256-verify-hypothesis))
   (let ((r_is_in_range WCP_RES)
         (r_is_positive (- 1 (next WCP_RES)))
         (s_is_in_range (shift WCP_RES 2))
@@ -835,6 +835,13 @@
               (if-zero internal_checks_passed
                        (vanishes! SUCCESS_BIT)))))
 
+(defconstraint setting-result-p256-verify (:guard (p256-verify-hypothesis))
+  (let (
+        (p256_verify_result_hi (shift LIMB (+ INDEX_MAX_P256_VERIFY_DATA 1)))
+        (p256_verify_result_lo (shift LIMB (+ INDEX_MAX_P256_VERIFY_DATA 2)))
+        )
+       (begin (vanishes! p256_verify_result_hi)
+              (eq! p256_verify_result_lo SUCCESS_BIT))))
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                     ;;
 ;; 3.7 Elliptic curve  ;;
