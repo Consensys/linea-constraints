@@ -54,9 +54,6 @@ LOG_DATA := logdata
 LOG_INFO_LONDON := loginfo/london
 LOG_INFO_CANCUN := loginfo/cancun
 
-MMU_LONDON :=  mmu/london
-MMU_OSAKA  :=  mmu/osaka
-
 MMIO_LONDON := mmio/london
 MMIO_CANCUN := mmio/cancun
 
