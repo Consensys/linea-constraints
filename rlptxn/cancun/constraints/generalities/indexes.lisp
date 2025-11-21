@@ -1,6 +1,6 @@
 (module rlptxn)
 
-;;note: :i17 is not enough for ref tests
+;;note: :i16 is not enough for ref tests
 
 (defcomputedcolumn (INDEX_LT :i32 :fwd) 
     (if-not-zero (is-first-row-of-transaction)
