@@ -42,8 +42,8 @@
                   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                   (eq!    NON_STACK_ROWS
                           (+    (precompile-processing---1st-half-NSR)
-                                (precompile-processing---2nd-half-NSR))
-                          ))
+                                (precompile-processing---2nd-half-NSR)
+                                )))
 
 (defconstraint    precompile-processing---setting-the-peeking-flags
                   (:guard (precompile-processing---standard-hypothesis))
