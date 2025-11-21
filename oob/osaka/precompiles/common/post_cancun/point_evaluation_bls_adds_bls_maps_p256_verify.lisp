@@ -9,7 +9,8 @@
 
 (defun (prc---fixed-size---cancun-prague-osaka---standard-precondition)   (+   (flag-sum-cancun-precompiles)
                                                                                (flag-sum-prague-precompiles-fixed-size)
-                                                                               (flag-sum-osaka-precompiles)))
+                                                                               (flag-sum-osaka-precompiles)
+                                                                               ))
 
 (defun (fixed-cds)   (+  (*   PRECOMPILE_CALL_DATA_SIZE___POINT_EVALUATION   IS_POINT_EVALUATION  )
                          (*   PRECOMPILE_CALL_DATA_SIZE___G1_ADD             IS_BLS_G1_ADD        )
@@ -52,15 +53,37 @@
                                (prc---fixed-size---cancun-prague-osaka---precompile-cost)
                                ))
 
-(defconstraint   prc---fixed-size---cancun-prague-osaka---justify-hub-predictions
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                ;;
+;;   Justifying HUB predictions   ;;
+;;                                ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+(defconstraint   prc---fixed-size---cancun-prague-osaka---justifying-hub-predictions---setting-hub-success---cancun-prague
                  (:guard (* (assumption---fresh-new-stamp) (prc---fixed-size---cancun-prague-osaka---standard-precondition)))
                  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-                 (begin
-                   (if-not-zero (+ (flag-sum-cancun-precompiles) (flag-sum-prague-precompiles-fixed-size))
-                                (eq! (prc---hub-success) (* (prc---fixed-size---cancun-prague-osaka---valid-cds) (prc---fixed-size---cancun-prague-osaka---sufficient-gas))))
-                   (if-not-zero (flag-sum-osaka-precompiles)
-                                (eq! (prc---hub-success) (prc---fixed-size---cancun-prague-osaka---sufficient-gas)))
-                   (if-zero (prc---hub-success)
-                            (vanishes! (prc---return-gas))
-                            (eq! (prc---return-gas)
-                                 (- (prc---callee-gas) (prc---fixed-size---cancun-prague-osaka---precompile-cost))))))
+                 (if-not-zero   (+ (flag-sum-cancun-precompiles) (flag-sum-prague-precompiles-fixed-size))
+                                (eq!   (prc---hub-success)
+                                       (* (prc---fixed-size---cancun-prague-osaka---valid-cds)
+                                          (prc---fixed-size---cancun-prague-osaka---sufficient-gas)))))
+
+
+(defconstraint   prc---fixed-size---cancun-prague-osaka---justifying-hub-predictions---setting-hub-success---osaka
+                 (:guard (* (assumption---fresh-new-stamp) (prc---fixed-size---cancun-prague-osaka---standard-precondition)))
+                 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                 (if-not-zero   (flag-sum-osaka-precompiles)
+                                (eq!   (prc---hub-success)
+                                       (prc---fixed-size---cancun-prague-osaka---sufficient-gas))))
+
+
+(defconstraint   prc---fixed-size---cancun-prague-osaka---justifying-hub-predictions---setting-return-gas
+                 (:guard (* (assumption---fresh-new-stamp) (prc---fixed-size---cancun-prague-osaka---standard-precondition)))
+                 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                 (if-zero       (prc---hub-success)
+                                (vanishes! (prc---return-gas))
+                                (eq!       (prc---return-gas)
+                                           (- (prc---callee-gas) (prc---fixed-size---cancun-prague-osaka---precompile-cost)))))
+
