@@ -1,33 +1,37 @@
 (module oob)
 
 
-(defun (flag-sum-inst)                      (+    IS_JUMP IS_JUMPI
-                                                  IS_RDC
-                                                  IS_CDL
-                                                  IS_XCALL
-                                                  IS_CALL
-                                                  IS_XCREATE
-                                                  IS_CREATE
-                                                  IS_SSTORE
-                                                  IS_DEPLOYMENT))
+(defun (flag-sum-inst)                         (+    IS_JUMP IS_JUMPI
+                                                     IS_RDC
+                                                     IS_CDL
+                                                     IS_XCALL
+                                                     IS_CALL
+                                                     IS_XCREATE
+                                                     IS_CREATE
+                                                     IS_SSTORE
+                                                     IS_DEPLOYMENT
+                                                     ))
 
-(defun (flag-sum-prc-common)                (+    (flag-sum-london-common-precompiles)
-                                                  (flag-sum-cancun-precompiles)
-                                                  (flag-sum-prague-precompiles)
-                                                  (flag-sum-osaka-precompiles)))
+(defun (flag-sum-prc-common)                   (+    (flag-sum-london-common-precompiles)
+                                                     (flag-sum-cancun-precompiles)
+                                                     (flag-sum-prague-precompiles)
+                                                     (flag-sum-osaka-precompiles)
+                                                     ))
 
-(defun (flag-sum-london-common-precompiles) (+    IS_ECRECOVER
-                                                  IS_SHA2
-                                                  IS_RIPEMD
-                                                  IS_IDENTITY
-                                                  IS_ECADD
-                                                  IS_ECMUL
-                                                  IS_ECPAIRING))
+(defun (flag-sum-london-common-precompiles)    (+    IS_ECRECOVER
+                                                     IS_SHA2
+                                                     IS_RIPEMD
+                                                     IS_IDENTITY
+                                                     IS_ECADD
+                                                     IS_ECMUL
+                                                     IS_ECPAIRING
+                                                     ))
 
-(defun (flag-sum-cancun-precompiles)     IS_POINT_EVALUATION)
+(defun (flag-sum-cancun-precompiles)           (+    IS_POINT_EVALUATION ))
 
-(defun (flag-sum-prague-precompiles)     (+       (flag-sum-prague-precompiles-fixed-size)
-                                                  (flag-sum-prague-precompiles-variable-size)))
+(defun (flag-sum-prague-precompiles)                (+  (flag-sum-prague-precompiles-fixed-size)
+                                                        (flag-sum-prague-precompiles-variable-size)
+                                                        ))
 
 (defun (flag-sum-prague-precompiles-fixed-size)     (+  IS_BLS_G1_ADD
                                                         IS_BLS_G2_ADD
@@ -40,7 +44,7 @@
                                                         IS_BLS_PAIRING_CHECK
                                                         ))
 
-(defun (flag-sum-osaka-precompiles)      IS_P256_VERIFY)
+(defun (flag-sum-osaka-precompiles)         (+    IS_P256_VERIFY ))
 
 (defun (flag-sum-prc-blake)                 (+    IS_BLAKE2F_CDS
                                                   IS_BLAKE2F_PARAMS))
@@ -49,33 +53,37 @@
                                                   IS_MODEXP_XBS
                                                   IS_MODEXP_LEAD
                                                   IS_MODEXP_PRICING
-                                                  IS_MODEXP_EXTRACT))
+                                                  IS_MODEXP_EXTRACT
+                                                  ))
 
 (defun (flag-sum-prc)                       (+    (flag-sum-prc-common)
                                                   (flag-sum-prc-blake)
-                                                  (flag-sum-prc-modexp)))
+                                                  (flag-sum-prc-modexp)
+                                                  ))
 
 (defun (flag-sum)                           (+    (flag-sum-inst)
-                                                  (flag-sum-prc)))
+                                                  (flag-sum-prc)
+                                                  ))
 
-(defun (wght-sum-inst)                      (+    (* OOB_INST_JUMP             IS_JUMP)
-                                                  (* OOB_INST_JUMPI            IS_JUMPI)
-                                                  (* OOB_INST_RDC              IS_RDC)
-                                                  (* OOB_INST_CDL              IS_CDL)
-                                                  (* OOB_INST_XCALL            IS_XCALL)
-                                                  (* OOB_INST_CALL             IS_CALL)
-                                                  (* OOB_INST_XCREATE          IS_XCREATE)
-                                                  (* OOB_INST_CREATE           IS_CREATE)
-                                                  (* OOB_INST_SSTORE           IS_SSTORE)
-                                                  (* OOB_INST_DEPLOYMENT       IS_DEPLOYMENT)))
+(defun (wght-sum-inst)                      (+    (* OOB_INST_JUMP             IS_JUMP       )
+                                                  (* OOB_INST_JUMPI            IS_JUMPI      )
+                                                  (* OOB_INST_RDC              IS_RDC        )
+                                                  (* OOB_INST_CDL              IS_CDL        )
+                                                  (* OOB_INST_XCALL            IS_XCALL      )
+                                                  (* OOB_INST_CALL             IS_CALL       )
+                                                  (* OOB_INST_XCREATE          IS_XCREATE    )
+                                                  (* OOB_INST_CREATE           IS_CREATE     )
+                                                  (* OOB_INST_SSTORE           IS_SSTORE     )
+                                                  (* OOB_INST_DEPLOYMENT       IS_DEPLOYMENT )
+                                                  ))
 
-(defun (wght-sum-prc-common)                (+    (* OOB_INST_ECRECOVER        IS_ECRECOVER)
-                                                  (* OOB_INST_SHA2             IS_SHA2)
-                                                  (* OOB_INST_RIPEMD           IS_RIPEMD)
-                                                  (* OOB_INST_IDENTITY         IS_IDENTITY)
-                                                  (* OOB_INST_ECADD            IS_ECADD)
-                                                  (* OOB_INST_ECMUL            IS_ECMUL)
-                                                  (* OOB_INST_ECPAIRING        IS_ECPAIRING)
+(defun (wght-sum-prc-common)                (+    (* OOB_INST_ECRECOVER        IS_ECRECOVER )
+                                                  (* OOB_INST_SHA2             IS_SHA2      )
+                                                  (* OOB_INST_RIPEMD           IS_RIPEMD    )
+                                                  (* OOB_INST_IDENTITY         IS_IDENTITY  )
+                                                  (* OOB_INST_ECADD            IS_ECADD     )
+                                                  (* OOB_INST_ECMUL            IS_ECMUL     )
+                                                  (* OOB_INST_ECPAIRING        IS_ECPAIRING )
                                                   (wght-sum-prc-bls)
                                                   (wght-sum-prc-osaka-precompiles)
                                                   ))
@@ -91,9 +99,9 @@
                                                   (*   OOB_INST_MODEXP_EXTRACT       IS_MODEXP_EXTRACT )
                                                   ))
 
-(defun (wght-sum-prc-cancun-precompiles) (+       (*   OOB_INST_POINT_EVALUATION     IS_POINT_EVALUATION ) ))
+(defun (wght-sum-prc-cancun-precompiles)    (+    (*   OOB_INST_POINT_EVALUATION     IS_POINT_EVALUATION ) ))
 
-(defun (wght-sum-prc-prague-precompiles) (+       (*   OOB_INST_BLS_G1_ADD           IS_BLS_G1_ADD        )
+(defun (wght-sum-prc-prague-precompiles)    (+    (*   OOB_INST_BLS_G1_ADD           IS_BLS_G1_ADD        )
                                                   (*   OOB_INST_BLS_G1_MSM           IS_BLS_G1_MSM        )
                                                   (*   OOB_INST_BLS_G2_ADD           IS_BLS_G2_ADD        )
                                                   (*   OOB_INST_BLS_G2_MSM           IS_BLS_G2_MSM        )
@@ -102,17 +110,20 @@
                                                   (*   OOB_INST_BLS_MAP_FP2_TO_G2    IS_BLS_MAP_FP2_TO_G2 )
                                                   ))
 
-(defun (wght-sum-prc-osaka-precompiles) (+    (* OOB_INST_P256_VERIFY IS_P256_VERIFY)))
+(defun (wght-sum-prc-osaka-precompiles)     (+    (* OOB_INST_P256_VERIFY            IS_P256_VERIFY)))
 
 (defun (wght-sum-prc-bls)                   (+    (wght-sum-prc-cancun-precompiles)
-                                                  (wght-sum-prc-prague-precompiles)))
+                                                  (wght-sum-prc-prague-precompiles)
+                                                  ))
 
 (defun (wght-sum-prc)                       (+    (wght-sum-prc-common)
                                                   (wght-sum-prc-blake)
-                                                  (wght-sum-prc-modexp)))
+                                                  (wght-sum-prc-modexp)
+                                                  ))
 
 (defun (wght-sum)                           (+    (wght-sum-inst)
-                                                  (wght-sum-prc)))
+                                                  (wght-sum-prc)
+                                                  ))
 
 (defun (ct-max-sum-inst)                    (+    (*   CT_MAX_JUMP               IS_JUMP       )
                                                   (*   CT_MAX_JUMPI              IS_JUMPI      )
@@ -167,20 +178,24 @@
 
 (defun (ct-max-sum-prc)                     (+    (ct-max-sum-prc-common)
                                                   (ct-max-sum-prc-blake)
-                                                  (ct-max-sum-prc-modexp)))
+                                                  (ct-max-sum-prc-modexp)
+                                                  ))
 
 (defun (ct-max-sum)                         (+    (ct-max-sum-inst)
-                                                  (ct-max-sum-prc)))
+                                                  (ct-max-sum-prc)
+                                                  ))
 
-(defun (lookup-sum k)                       (+    (shift ADD_FLAG k)
-                                                  (shift MOD_FLAG k)
-                                                  (shift WCP_FLAG k)
-                                                  (shift BLS_REF_TABLE_FLAG k)))
+(defun (lookup-sum k)                       (+    (shift   ADD_FLAG            k)
+                                                  (shift   MOD_FLAG            k)
+                                                  (shift   WCP_FLAG            k)
+                                                  (shift   BLS_REF_TABLE_FLAG  k)
+                                                  ))
 
-(defun (wght-lookup-sum k)                  (+    (* 1 (shift ADD_FLAG k))
-                                                  (* 2 (shift MOD_FLAG k))
-                                                  (* 3 (shift WCP_FLAG k))
-                                                  (* 4 (shift BLS_REF_TABLE_FLAG k))))
+(defun (wght-lookup-sum k)                  (+    (*  1  (shift   ADD_FLAG             k) )
+                                                  (*  2  (shift   MOD_FLAG             k) )
+                                                  (*  3  (shift   WCP_FLAG             k) )
+                                                  (*  4  (shift   BLS_REF_TABLE_FLAG   k) )
+                                                  ))
 
 (defun (assumption---fresh-new-stamp)       (- STAMP (prev STAMP)))
 

@@ -23,7 +23,9 @@
 (defun (prc---cdx-filter)                     (+ (flag-sum-london-common-precompiles)
                                                  (flag-sum-cancun-precompiles)
                                                  (flag-sum-prague-precompiles)
-                                                 (* (p256-verify-valid-cds) (flag-sum-osaka-precompiles))))
+                                                 (*   (flag-sum-osaka-precompiles)
+                                                      (p256-verify-valid-cds)
+                                                      )))
 ;; ""
 
 (defconstraint    prc---common-constraints---check-cds-is-zero
