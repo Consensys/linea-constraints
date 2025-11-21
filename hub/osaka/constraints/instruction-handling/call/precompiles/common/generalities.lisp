@@ -79,41 +79,47 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defproperty      precompile-processing---common---sanity-checks---binarities
-                  (begin
-                    (is-binary   (precompile-processing---common---OOB-hub-success)       )
-                    (is-binary   (precompile-processing---common---OOB-extract-call-data) )
-                    (is-binary   (precompile-processing---common---OOB-empty-call-data)   )
-                    (is-binary   (precompile-processing---common---OOB-r@c-nonzero)       )
-                    ))
-
-(defproperty      precompile-processing---common---sanity-checks---unconditional-extract-empty-exclusivity
-                  (vanishes!   (*  (precompile-processing---common---OOB-extract-call-data)
-                                   (precompile-processing---common---OOB-empty-call-data)
+                  (if-not-zero   (precompile-processing---common---precondition)
+                                 (begin
+                                   (is-binary   (precompile-processing---common---OOB-hub-success)       )
+                                   (is-binary   (precompile-processing---common---OOB-extract-call-data) )
+                                   (is-binary   (precompile-processing---common---OOB-empty-call-data)   )
+                                   (is-binary   (precompile-processing---common---OOB-r@c-nonzero)       )
                                    )))
 
+(defproperty      precompile-processing---common---sanity-checks---unconditional-extract-empty-exclusivity
+                  (if-not-zero   (precompile-processing---common---precondition)
+                                 (vanishes!   (*  (precompile-processing---common---OOB-extract-call-data)
+                                                  (precompile-processing---common---OOB-empty-call-data)
+                                                  ))))
+
 (defproperty      precompile-processing---common---sanity-checks---the-empty-call-data-bit-must-vanish-starting-with-Cancun
-                  (if-not-zero   (+   (scenario-shorthand---PRC---common-Cancun-address-bit-sum)
-                                      (scenario-shorthand---PRC---common-Prague-address-bit-sum)
-                                      (scenario-shorthand---PRC---common-Osaka-address-bit-sum))
-                                 (vanishes!   (precompile-processing---common---OOB-empty-call-data))
-                                 ))
+                  (if-not-zero   (precompile-processing---common---precondition)
+                                 (if-not-zero   (+   (scenario-shorthand---PRC---common-Cancun-address-bit-sum)
+                                                     (scenario-shorthand---PRC---common-Prague-address-bit-sum)
+                                                     (scenario-shorthand---PRC---common-Osaka-address-bit-sum))
+                                                (vanishes!   (precompile-processing---common---OOB-empty-call-data))
+                                                )))
 
 (defproperty      precompile-processing---common---sanity-checks---neat-splitting-of-hub-success-bit-prior-to-Osaka
-                  (if-not-zero   (+   (scenario-shorthand---PRC---common-London-address-bit-sum)
-                                      (scenario-shorthand---PRC---common-Cancun-address-bit-sum)
-                                      (scenario-shorthand---PRC---common-Prague-address-bit-sum))
-                                 (eq!   (precompile-processing---common---OOB-hub-success)
-                                        (+   (precompile-processing---common---OOB-extract-call-data)
-                                             (precompile-processing---common---OOB-empty-call-data)
-                                             ))))
+                  (if-not-zero   (precompile-processing---common---precondition)
+                                 (if-not-zero   (+   (scenario-shorthand---PRC---common-London-address-bit-sum)
+                                                     (scenario-shorthand---PRC---common-Cancun-address-bit-sum)
+                                                     (scenario-shorthand---PRC---common-Prague-address-bit-sum)
+                                                     )
+                                                (eq!   (precompile-processing---common---OOB-hub-success)
+                                                       (+   (precompile-processing---common---OOB-extract-call-data)
+                                                            (precompile-processing---common---OOB-empty-call-data)
+                                                            )))))
 
 ;; we verify empirically that 0 ≤ extract_call_data ≤ hub_success (≤ 1)
 (defproperty      precompile-processing---common---sanity-checks---not-so-neat-splitting-of-hub-success-for-Osaka
-                  (if-not-zero   (scenario-shorthand---PRC---common-Osaka-address-bit-sum)
-                                 (if-not-zero    (precompile-processing---common---OOB-extract-call-data)
-                                                 (eq!    (precompile-processing---common---OOB-hub-success)
-                                                         1
-                                                         ))))
+                  (if-not-zero   (precompile-processing---common---precondition)
+                                 (if-not-zero   (scenario-shorthand---PRC---common-Osaka-address-bit-sum)
+                                                (if-not-zero    (precompile-processing---common---OOB-extract-call-data)
+                                                                (eq!    (precompile-processing---common---OOB-hub-success)
+                                                                        1
+                                                                        )))))
 
 (defconstraint    precompile-processing---common---setting-MMU-instruction
                   (:guard    (precompile-processing---common---precondition))
@@ -217,13 +223,14 @@
 ;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~;;
 
 (defproperty    precompile-processing---common---address-recovery-success-shorthands-sanity-checks
-                (begin
-                  (is-binary   (precompile-processing---common---address-recovery-failure))
-                  (is-binary   (precompile-processing---common---address-recovery-success))
-                  (eq!         (precompile-processing---common---OOB-hub-success)
-                               (+ (precompile-processing---common---address-recovery-failure)
-                                  (precompile-processing---common---address-recovery-success)
-                                  ))))
+                (if-not-zero   (precompile-processing---common---precondition)
+                               (begin
+                                 (is-binary   (precompile-processing---common---address-recovery-failure))
+                                 (is-binary   (precompile-processing---common---address-recovery-success))
+                                 (eq!         (precompile-processing---common---OOB-hub-success)
+                                              (+ (precompile-processing---common---address-recovery-failure)
+                                                 (precompile-processing---common---address-recovery-success)
+                                                 )))))
 
 
 ;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~;;
@@ -241,13 +248,14 @@
 ;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~;;
 
 (defproperty    precompile-processing---common---well-and-mal-formed-data-shorthands-sanity-checks
-                (begin
-                  (is-binary   (precompile-processing---common---malformed-data))
-                  (is-binary   (precompile-processing---common---wellformed-data))
-                  (eq!         (precompile-processing---common---OOB-hub-success)
-                               (+   (precompile-processing---common---malformed-data)
-                                    (precompile-processing---common---wellformed-data)
-                                    ))))
+                (if-not-zero   (precompile-processing---common---precondition)
+                               (begin
+                                 (is-binary   (precompile-processing---common---malformed-data))
+                                 (is-binary   (precompile-processing---common---wellformed-data))
+                                 (eq!         (precompile-processing---common---OOB-hub-success)
+                                              (+   (precompile-processing---common---malformed-data)
+                                                   (precompile-processing---common---wellformed-data)
+                                                   )))))
 
 ;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~;;
 ;; P256_VERIFY related shorthands ;;
@@ -268,15 +276,16 @@
 ;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~;;
 
 (defproperty    precompile-processing---common---signature-verification-success-shorthands-sanity-checks
-                (begin
-                  (is-binary   (precompile-processing---common---p256-sufficient-gas-wrong-cds))
-                  (is-binary   (precompile-processing---common---p256-sig-verification-failure))
-                  (is-binary   (precompile-processing---common---p256-sig-verification-success))
-                  (eq!         (precompile-processing---common---OOB-hub-success)
-                               (+ (precompile-processing---common---p256-sufficient-gas-wrong-cds)
-                                  (precompile-processing---common---p256-sig-verification-failure)
-                                  (precompile-processing---common---p256-sig-verification-success)
-                                  ))))
+                (if-not-zero   (precompile-processing---common---precondition)
+                               (begin
+                                 (is-binary   (precompile-processing---common---p256-sufficient-gas-wrong-cds))
+                                 (is-binary   (precompile-processing---common---p256-sig-verification-failure))
+                                 (is-binary   (precompile-processing---common---p256-sig-verification-success))
+                                 (eq!         (precompile-processing---common---OOB-hub-success)
+                                              (+ (precompile-processing---common---p256-sufficient-gas-wrong-cds)
+                                                 (precompile-processing---common---p256-sig-verification-failure)
+                                                 (precompile-processing---common---p256-sig-verification-success)
+                                                 )))))
 
 
 

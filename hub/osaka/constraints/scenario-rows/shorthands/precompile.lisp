@@ -36,81 +36,81 @@
 
 (defun (scenario-shorthand---PRC---common-Cancun-address-bit-sum)
   (force-bin   (+   ;; scenario/PRC_ECRECOVER
-                    ;; scenario/PRC_SHA2-256
-                    ;; scenario/PRC_RIPEMD-160
-                    ;; scenario/PRC_IDENTITY
-                    ;; scenario/PRC_MODEXP
-                    ;; scenario/PRC_ECADD
-                    ;; scenario/PRC_ECMUL
-                    ;; scenario/PRC_ECPAIRING
-                    ;; scenario/PRC_BLAKE2f
-                    ;; scenario/PRC_SUCCESS_CALLER_WILL_REVERT
-                    ;; scenario/PRC_SUCCESS_CALLER_WONT_REVERT
-                    ;; scenario/PRC_FAILURE_KNOWN_TO_HUB
-                    ;; scenario/PRC_FAILURE_KNOWN_TO_RAM
-                    scenario/PRC_POINT_EVALUATION
-                    ;; scenario/PRC_BLS_G1_ADD
-                    ;; scenario/PRC_BLS_G1_MSM
-                    ;; scenario/PRC_BLS_G2_ADD
-                    ;; scenario/PRC_BLS_G2_MSM
-                    ;; scenario/PRC_BLS_PAIRING_CHECK
-                    ;; scenario/PRC_BLS_MAP_FP_TO_G1
-                    ;; scenario/PRC_BLS_MAP_FP2_TO_G2
-                    ;; (scenario-shorthand---PRC---common-BLS-address-bit-sum)
-                    ;; scenario/PRC_P256_VERIFY
-                    )))
+                 ;; scenario/PRC_SHA2-256
+                 ;; scenario/PRC_RIPEMD-160
+                 ;; scenario/PRC_IDENTITY
+                 ;; scenario/PRC_MODEXP
+                 ;; scenario/PRC_ECADD
+                 ;; scenario/PRC_ECMUL
+                 ;; scenario/PRC_ECPAIRING
+                 ;; scenario/PRC_BLAKE2f
+                 ;; scenario/PRC_SUCCESS_CALLER_WILL_REVERT
+                 ;; scenario/PRC_SUCCESS_CALLER_WONT_REVERT
+                 ;; scenario/PRC_FAILURE_KNOWN_TO_HUB
+                 ;; scenario/PRC_FAILURE_KNOWN_TO_RAM
+                 scenario/PRC_POINT_EVALUATION
+                 ;; scenario/PRC_BLS_G1_ADD
+                 ;; scenario/PRC_BLS_G1_MSM
+                 ;; scenario/PRC_BLS_G2_ADD
+                 ;; scenario/PRC_BLS_G2_MSM
+                 ;; scenario/PRC_BLS_PAIRING_CHECK
+                 ;; scenario/PRC_BLS_MAP_FP_TO_G1
+                 ;; scenario/PRC_BLS_MAP_FP2_TO_G2
+                 ;; (scenario-shorthand---PRC---common-BLS-address-bit-sum)
+                 ;; scenario/PRC_P256_VERIFY
+                 )))
 
 
 (defun (scenario-shorthand---PRC---common-Prague-address-bit-sum)
   (force-bin   (+   ;; scenario/PRC_ECRECOVER
-                    ;; scenario/PRC_SHA2-256
-                    ;; scenario/PRC_RIPEMD-160
-                    ;; scenario/PRC_IDENTITY
-                    ;; scenario/PRC_MODEXP
-                    ;; scenario/PRC_ECADD
-                    ;; scenario/PRC_ECMUL
-                    ;; scenario/PRC_ECPAIRING
-                    ;; scenario/PRC_BLAKE2f
-                    ;; scenario/PRC_SUCCESS_CALLER_WILL_REVERT
-                    ;; scenario/PRC_SUCCESS_CALLER_WONT_REVERT
-                    ;; scenario/PRC_FAILURE_KNOWN_TO_HUB
-                    ;; scenario/PRC_FAILURE_KNOWN_TO_RAM
-                    ;; scenario/PRC_POINT_EVALUATION
-                    scenario/PRC_BLS_G1_ADD
-                    scenario/PRC_BLS_G1_MSM
-                    scenario/PRC_BLS_G2_ADD
-                    scenario/PRC_BLS_G2_MSM
-                    scenario/PRC_BLS_PAIRING_CHECK
-                    scenario/PRC_BLS_MAP_FP_TO_G1
-                    scenario/PRC_BLS_MAP_FP2_TO_G2
-                    ;; scenario/PRC_P256_VERIFY
-                    )))
+                 ;; scenario/PRC_SHA2-256
+                 ;; scenario/PRC_RIPEMD-160
+                 ;; scenario/PRC_IDENTITY
+                 ;; scenario/PRC_MODEXP
+                 ;; scenario/PRC_ECADD
+                 ;; scenario/PRC_ECMUL
+                 ;; scenario/PRC_ECPAIRING
+                 ;; scenario/PRC_BLAKE2f
+                 ;; scenario/PRC_SUCCESS_CALLER_WILL_REVERT
+                 ;; scenario/PRC_SUCCESS_CALLER_WONT_REVERT
+                 ;; scenario/PRC_FAILURE_KNOWN_TO_HUB
+                 ;; scenario/PRC_FAILURE_KNOWN_TO_RAM
+                 ;; scenario/PRC_POINT_EVALUATION
+                 scenario/PRC_BLS_G1_ADD
+                 scenario/PRC_BLS_G1_MSM
+                 scenario/PRC_BLS_G2_ADD
+                 scenario/PRC_BLS_G2_MSM
+                 scenario/PRC_BLS_PAIRING_CHECK
+                 scenario/PRC_BLS_MAP_FP_TO_G1
+                 scenario/PRC_BLS_MAP_FP2_TO_G2
+                 ;; scenario/PRC_P256_VERIFY
+                 )))
 
 
 (defun (scenario-shorthand---PRC---common-Osaka-address-bit-sum)
   (force-bin   (+   ;; scenario/PRC_ECRECOVER
-                    ;; scenario/PRC_SHA2-256
-                    ;; scenario/PRC_RIPEMD-160
-                    ;; scenario/PRC_IDENTITY
-                    ;; scenario/PRC_MODEXP
-                    ;; scenario/PRC_ECADD
-                    ;; scenario/PRC_ECMUL
-                    ;; scenario/PRC_ECPAIRING
-                    ;; scenario/PRC_BLAKE2f
-                    ;; scenario/PRC_SUCCESS_CALLER_WILL_REVERT
-                    ;; scenario/PRC_SUCCESS_CALLER_WONT_REVERT
-                    ;; scenario/PRC_FAILURE_KNOWN_TO_HUB
-                    ;; scenario/PRC_FAILURE_KNOWN_TO_RAM
-                    ;; scenario/PRC_POINT_EVALUATION
-                    ;; scenario/PRC_BLS_G1_ADD
-                    ;; scenario/PRC_BLS_G1_MSM
-                    ;; scenario/PRC_BLS_G2_ADD
-                    ;; scenario/PRC_BLS_G2_MSM
-                    ;; scenario/PRC_BLS_PAIRING_CHECK
-                    ;; scenario/PRC_BLS_MAP_FP_TO_G1
-                    ;; scenario/PRC_BLS_MAP_FP2_TO_G2
-                    scenario/PRC_P256_VERIFY
-                    )))
+                 ;; scenario/PRC_SHA2-256
+                 ;; scenario/PRC_RIPEMD-160
+                 ;; scenario/PRC_IDENTITY
+                 ;; scenario/PRC_MODEXP
+                 ;; scenario/PRC_ECADD
+                 ;; scenario/PRC_ECMUL
+                 ;; scenario/PRC_ECPAIRING
+                 ;; scenario/PRC_BLAKE2f
+                 ;; scenario/PRC_SUCCESS_CALLER_WILL_REVERT
+                 ;; scenario/PRC_SUCCESS_CALLER_WONT_REVERT
+                 ;; scenario/PRC_FAILURE_KNOWN_TO_HUB
+                 ;; scenario/PRC_FAILURE_KNOWN_TO_RAM
+                 ;; scenario/PRC_POINT_EVALUATION
+                 ;; scenario/PRC_BLS_G1_ADD
+                 ;; scenario/PRC_BLS_G1_MSM
+                 ;; scenario/PRC_BLS_G2_ADD
+                 ;; scenario/PRC_BLS_G2_MSM
+                 ;; scenario/PRC_BLS_PAIRING_CHECK
+                 ;; scenario/PRC_BLS_MAP_FP_TO_G1
+                 ;; scenario/PRC_BLS_MAP_FP2_TO_G2
+                 scenario/PRC_P256_VERIFY
+                 )))
 
 ;;  PRC/sum
 (defun (scenario-shorthand---PRC---common-BLS-address-bit-sum)
@@ -154,12 +154,13 @@
 
 
 (defproperty    scenario-shorthands---the-two-definitions-of-common-prc-address-bit-sums-must-coincide
-                (eq!    (scenario-shorthand---PRC---common-address-bit-sum)
-                        (+   (scenario-shorthand---PRC---common-London-address-bit-sum)
-                             (scenario-shorthand---PRC---common-Cancun-address-bit-sum)
-                             (scenario-shorthand---PRC---common-Prague-address-bit-sum)
-                             (scenario-shorthand---PRC---common-Osaka-address-bit-sum)
-                             )))
+                (if-not-zero   PEEK_AT_SCENARIO
+                               (eq!    (scenario-shorthand---PRC---common-address-bit-sum)
+                                       (+   (scenario-shorthand---PRC---common-London-address-bit-sum)
+                                            (scenario-shorthand---PRC---common-Cancun-address-bit-sum)
+                                            (scenario-shorthand---PRC---common-Prague-address-bit-sum)
+                                            (scenario-shorthand---PRC---common-Osaka-address-bit-sum)
+                                            ))))
 
 ;;  PRC/sum
 (defun (scenario-shorthand---PRC---full-address-bit-sum)

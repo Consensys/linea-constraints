@@ -36,7 +36,8 @@
 ;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~;;
 
 (defproperty      precompile-processing---ECRECOVER-and-P256VERIFY-success---trigger-MMU-for-full-transfer-binarity-check
-                  (is-binary   (trigger-MMU-for-full-transfer)))
+                  (if-not-zero   (precompile-processing---ECRECOVER-and-P256VERIFY---success-precondition)
+                                 (is-binary   (trigger-MMU-for-full-transfer))))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -90,7 +91,8 @@
 ;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~;;
 
 (defproperty      precompile-processing---ECRECOVER-and-P256VERIFY-success---trigger-MMU-for-partial-copy-binarity-check
-                  (is-binary   (trigger-MMU-for-partial-copy)))
+                  (if-not-zero   (precompile-processing---ECRECOVER-and-P256VERIFY---success-precondition)
+                                 (is-binary   (trigger-MMU-for-partial-copy))))
 
 
 
