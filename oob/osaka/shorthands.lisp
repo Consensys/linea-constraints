@@ -26,18 +26,19 @@
 
 (defun (flag-sum-cancun-precompiles)     IS_POINT_EVALUATION)
 
-(defun (flag-sum-prague-precompiles)     (+       (flag-sum-prague-precompiles-fixed-size) 
+(defun (flag-sum-prague-precompiles)     (+       (flag-sum-prague-precompiles-fixed-size)
                                                   (flag-sum-prague-precompiles-variable-size)))
 
-(defun (flag-sum-prague-precompiles-fixed-size)     (+  IS_BLS_G1_ADD                                                             
+(defun (flag-sum-prague-precompiles-fixed-size)     (+  IS_BLS_G1_ADD
                                                         IS_BLS_G2_ADD
                                                         IS_BLS_MAP_FP_TO_G1
-                                                        IS_BLS_MAP_FP2_TO_G2))
+                                                        IS_BLS_MAP_FP2_TO_G2
+                                                        ))
 
 (defun (flag-sum-prague-precompiles-variable-size)  (+  IS_BLS_G1_MSM
-                                                        IS_BLS_G2_ADD                                                          
-                                                        IS_BLS_MAP_FP_TO_G1
-                                                        IS_BLS_MAP_FP2_TO_G2))
+                                                        IS_BLS_G2_MSM
+                                                        IS_BLS_PAIRING_CHECK
+                                                        ))
 
 (defun (flag-sum-osaka-precompiles)      IS_P256_VERIFY)
 
@@ -55,7 +56,7 @@
                                                   (flag-sum-prc-modexp)))
 
 (defun (flag-sum)                           (+    (flag-sum-inst)
-                                                  (flag-sum-prc)))                                              
+                                                  (flag-sum-prc)))
 
 (defun (wght-sum-inst)                      (+    (* OOB_INST_JUMP             IS_JUMP)
                                                   (* OOB_INST_JUMPI            IS_JUMPI)
@@ -97,7 +98,7 @@
                                                   (* OOB_INST_BLS_MAP_FP_TO_G1 IS_BLS_MAP_FP_TO_G1)
                                                   (* OOB_INST_BLS_MAP_FP2_TO_G2 IS_BLS_MAP_FP2_TO_G2)))
 
-(defun (wght-sum-prc-osaka-precompiles) (+    (* OOB_INST_P256_VERIFY IS_P256_VERIFY)))                                              
+(defun (wght-sum-prc-osaka-precompiles) (+    (* OOB_INST_P256_VERIFY IS_P256_VERIFY)))
 
 (defun (wght-sum-prc-bls)                   (+    (wght-sum-prc-cancun-precompiles)
                                                   (wght-sum-prc-prague-precompiles)))
@@ -149,7 +150,7 @@
                                                   (* CT_MAX_BLS_MAP_FP_TO_G1 IS_BLS_MAP_FP_TO_G1)
                                                   (* CT_MAX_BLS_MAP_FP2_TO_G2 IS_BLS_MAP_FP2_TO_G2)))
 
-(defun (ct-max-sum-prc-osaka-precompiles)   (* CT_MAX_P256_VERIFY IS_P256_VERIFY))                                                  
+(defun (ct-max-sum-prc-osaka-precompiles)   (* CT_MAX_P256_VERIFY IS_P256_VERIFY))
 
 (defun (ct-max-sum-prc-bls)                 (+    (ct-max-sum-prc-cancun-precompiles)
                                                   (ct-max-sum-prc-prague-precompiles)))
