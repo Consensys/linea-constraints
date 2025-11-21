@@ -20,6 +20,10 @@
 (defun (prc---cds-is-zero)                    OUTGOING_RES_LO)
 (defun (prc---cds-is-non-zero)                (- 1 (prc---cds-is-zero)))
 (defun (prc---r@c-is-zero)                    (next OUTGOING_RES_LO))
+(defun (prc---cdx-filter)                     (+ (flag-sum-london-common-precompiles)
+                                                 (flag-sum-cancun-precompiles)
+                                                 (flag-sum-prague-precompiles)
+                                                 (* (p256-verify-valid-cds) (flag-sum-osaka-precompiles))))
 
 (defconstraint prc---check-cds-is-zero (:guard (* (assumption---fresh-new-stamp) (prc-common---standard-precondition)))
   (call-to-ISZERO 0 0 (prc---cds)))
@@ -29,6 +33,6 @@
 
 (defconstraint prc---justify-hub-predictions (:guard (* (assumption---fresh-new-stamp) (prc-common---standard-precondition)))
   (begin (eq! (prc---extract-call-data)
-              (* (prc---hub-success) (- 1 (prc---cds-is-zero))))
-         (eq! (prc---empty-call-data) (* (prc---hub-success) (prc---cds-is-zero)))
+              (* (prc---hub-success) (prc---cdx-filter) (- 1 (prc---cds-is-zero))))
+         (eq! (prc---empty-call-data) (* (prc---hub-success) (prc---cdx-filter) (prc---cds-is-zero)))
          (eq! (prc---r@c-nonzero) (- 1 (prc---r@c-is-zero)))))
