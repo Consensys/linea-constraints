@@ -24,15 +24,57 @@
                                                  (flag-sum-cancun-precompiles)
                                                  (flag-sum-prague-precompiles)
                                                  (* (p256-verify-valid-cds) (flag-sum-osaka-precompiles))))
+;; ""
 
-(defconstraint prc---check-cds-is-zero (:guard (* (assumption---fresh-new-stamp) (prc-common---standard-precondition)))
-  (call-to-ISZERO 0 0 (prc---cds)))
+(defconstraint    prc---common-constraints---check-cds-is-zero
+                  (:guard (* (assumption---fresh-new-stamp) (prc-common---standard-precondition)))
+                  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                  (call-to-ISZERO   0
+                                    0
+                                    (prc---cds)
+                                    ))
 
-(defconstraint prc---check-r@c-is-zero (:guard (* (assumption---fresh-new-stamp) (prc-common---standard-precondition)))
-  (call-to-ISZERO 1 0 (prc---r@c)))
+(defconstraint    prc---common-constraints---check-r@c-is-zero
+                  (:guard (* (assumption---fresh-new-stamp) (prc-common---standard-precondition)))
+                  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                  (call-to-ISZERO   1
+                                    0
+                                    (prc---r@c)
+                                    ))
 
-(defconstraint prc---justify-hub-predictions (:guard (* (assumption---fresh-new-stamp) (prc-common---standard-precondition)))
-  (begin (eq! (prc---extract-call-data)
-              (* (prc---hub-success) (prc---cdx-filter) (- 1 (prc---cds-is-zero))))
-         (eq! (prc---empty-call-data) (* (prc---hub-success) (prc---cdx-filter) (prc---cds-is-zero)))
-         (eq! (prc---r@c-nonzero) (- 1 (prc---r@c-is-zero)))))
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                ;;
+;;   Justifying HUB predictions   ;;
+;;                                ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+
+(defconstraint    prc---common-constraints---justifying-hub-predictions---extract-call-data-bit
+                  (:guard (* (assumption---fresh-new-stamp) (prc-common---standard-precondition)))
+                  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                  (eq!   (prc---extract-call-data)
+                         (*   (prc---hub-success)
+                              (prc---cdx-filter)
+                              (prc---cds-is-non-zero)
+                              )))
+
+
+(defconstraint    prc---common-constraints---justifying-hub-predictions---empty-call-data-bit
+                  (:guard (* (assumption---fresh-new-stamp) (prc-common---standard-precondition)))
+                  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                  (eq!   (prc---empty-call-data)
+                         (*   (prc---hub-success)
+                              (prc---cdx-filter)
+                              (prc---cds-is-zero)
+                              )))
+
+
+(defconstraint    prc---common-constraints---justifying-hub-predictions---r@c-nonzero-bit
+                  (:guard (* (assumption---fresh-new-stamp) (prc-common---standard-precondition)))
+                  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                  (eq!   (prc---r@c-nonzero)
+                         (- 1 (prc---r@c-is-zero))))
