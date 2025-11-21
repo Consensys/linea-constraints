@@ -897,7 +897,13 @@
 (defcomputedcolumn (CIRCUIT_SELECTOR_G2_MEMBERSHIP :binary@prove)
   G2MTR)
 
-(defconstraint circuit-selectors-sum-binary ()
-  (debug (is-binary (+ CS_ECRECOVER CS_ECADD CS_ECMUL CS_ECPAIRING CS_G2_MEMBERSHIP))))
+(defproperty   at-most-one-circuit-selector-is-active-at-any-point-in-time
+               (is-binary   (+   CS_ECRECOVER
+                                 CS_ECADD
+                                 CS_ECMUL
+                                 CS_ECPAIRING
+                                 CS_G2_MEMBERSHIP
+                                 CS_P256_VERIFY
+                                 )))
 
 
