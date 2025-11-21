@@ -267,7 +267,7 @@
 ;; P256_VERIFY related shorthands sanity checks ;;
 ;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~;;
 
-(defproperty    precompile-processing---common---address-recovery-success-shorthands-sanity-checks
+(defproperty    precompile-processing---common---signature-verification-success-shorthands-sanity-checks
                 (begin
                   (is-binary   (precompile-processing---common---p256-sufficient-gas-wrong-cds))
                   (is-binary   (precompile-processing---common---p256-sig-verification-failure))
