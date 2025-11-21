@@ -41,7 +41,7 @@
 (defun    (precompile-processing---flag-sum-ECRECOVER-success)    (precompile-processing---flag-sum-standard-success))
 ;; non stack rows shorthands
 (defun    (precompile-processing---nsr-ECRECOVER-FKTH)            precompile-processing---nsr-standard-failure)
-(defun    (precompile-processing---nsr-ECRECOVER-success)         precompile-processing---nsr-standard-success) ;; ""
+(defun    (precompile-processing---nsr-ECRECOVER-success)         precompile-processing---nsr-standard-success)
 ;; NB: the failure scenario FAILURE_KNOWN_TO_RAM is impossible
 
 
@@ -384,3 +384,5 @@
 (defun    (precompile-processing---flag-sum-P256-VERIFY-FKTH)       (precompile-processing---flag-sum-standard-failure))
 (defun    (precompile-processing---flag-sum-P256-VERIFY-FKTR)       (precompile-processing---flag-sum-standard-failure))
 (defun    (precompile-processing---flag-sum-P256-VERIFY-success)    (precompile-processing---flag-sum-standard-success))
+
+;; NOTE: while defined here, FKTR ≡ impossible for the P256_VERIFY precompile
