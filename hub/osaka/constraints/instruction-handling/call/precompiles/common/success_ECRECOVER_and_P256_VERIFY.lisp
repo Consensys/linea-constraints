@@ -73,9 +73,9 @@
                                                                                    )))
 
 
-(defun    (precompile-processing---ECRECOVER-and-P256VERIFY---mmu-phase)    (+   (*   (*   PHASE_ECRECOVER_RESULT     scenario/PRC_ECRECOVER   )
-                                                                                      (*   PHASE_P256_VERIFY_RESULT   scenario/PRC_P256_VERIFY )
-                                                                                      )))
+(defun    (precompile-processing---ECRECOVER-and-P256VERIFY---mmu-phase)    (+   (*   PHASE_ECRECOVER_RESULT     scenario/PRC_ECRECOVER   )
+                                                                                 (*   PHASE_P256_VERIFY_RESULT   scenario/PRC_P256_VERIFY )
+                                                                                 ))
 
 
 ;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~;;
