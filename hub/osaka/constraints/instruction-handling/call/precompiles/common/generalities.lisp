@@ -224,13 +224,14 @@
 
 (defproperty    precompile-processing---common---address-recovery-success-shorthands-sanity-checks
                 (if-not-zero   (precompile-processing---common---precondition)
-                               (begin
-                                 (is-binary   (precompile-processing---common---address-recovery-failure))
-                                 (is-binary   (precompile-processing---common---address-recovery-success))
-                                 (eq!         (precompile-processing---common---OOB-hub-success)
-                                              (+ (precompile-processing---common---address-recovery-failure)
-                                                 (precompile-processing---common---address-recovery-success)
-                                                 )))))
+                               (if-not-zero    scenario/PRC_ECRECOVER
+                                               (begin
+                                                 (is-binary   (precompile-processing---common---address-recovery-failure))
+                                                 (is-binary   (precompile-processing---common---address-recovery-success))
+                                                 (eq!         (precompile-processing---common---OOB-hub-success)
+                                                              (+ (precompile-processing---common---address-recovery-failure)
+                                                                 (precompile-processing---common---address-recovery-success)
+                                                                 ))))))
 
 
 ;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~;;
@@ -247,15 +248,23 @@
 ;; ECADD, ECMUL, ECPAIRING and BLS related shorthands sanity checks ;;
 ;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~;;
 
+(defun    (common-precompiles-where-wellformed-and-malformed-data-matters)   (+   scenario/PRC_ECADD
+                                                                                  scenario/PRC_ECMUL
+                                                                                  scenario/PRC_ECPAIRING
+                                                                                  (scenario-shorthand---PRC---common-BLS-address-bit-sum)
+                                                                                  ))
+
+
 (defproperty    precompile-processing---common---well-and-mal-formed-data-shorthands-sanity-checks
                 (if-not-zero   (precompile-processing---common---precondition)
-                               (begin
-                                 (is-binary   (precompile-processing---common---malformed-data))
-                                 (is-binary   (precompile-processing---common---wellformed-data))
-                                 (eq!         (precompile-processing---common---OOB-hub-success)
-                                              (+   (precompile-processing---common---malformed-data)
-                                                   (precompile-processing---common---wellformed-data)
-                                                   )))))
+                               (if-not-zero    (common-precompiles-where-wellformed-and-malformed-data-matters)
+                                               (begin
+                                                 (is-binary   (precompile-processing---common---malformed-data))
+                                                 (is-binary   (precompile-processing---common---wellformed-data))
+                                                 (eq!         (precompile-processing---common---OOB-hub-success)
+                                                              (+   (precompile-processing---common---malformed-data)
+                                                                   (precompile-processing---common---wellformed-data)
+                                                                   ))))))
 
 ;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~;;
 ;; P256_VERIFY related shorthands ;;
@@ -277,15 +286,16 @@
 
 (defproperty    precompile-processing---common---signature-verification-success-shorthands-sanity-checks
                 (if-not-zero   (precompile-processing---common---precondition)
-                               (begin
-                                 (is-binary   (precompile-processing---common---p256-sufficient-gas-wrong-cds))
-                                 (is-binary   (precompile-processing---common---p256-sig-verification-failure))
-                                 (is-binary   (precompile-processing---common---p256-sig-verification-success))
-                                 (eq!         (precompile-processing---common---OOB-hub-success)
-                                              (+ (precompile-processing---common---p256-sufficient-gas-wrong-cds)
-                                                 (precompile-processing---common---p256-sig-verification-failure)
-                                                 (precompile-processing---common---p256-sig-verification-success)
-                                                 )))))
+                               (if-not-zero    scenario/PRC_P256_VERIFY
+                                               (begin
+                                                 (is-binary   (precompile-processing---common---p256-sufficient-gas-wrong-cds))
+                                                 (is-binary   (precompile-processing---common---p256-sig-verification-failure))
+                                                 (is-binary   (precompile-processing---common---p256-sig-verification-success))
+                                                 (eq!         (precompile-processing---common---OOB-hub-success)
+                                                              (+ (precompile-processing---common---p256-sufficient-gas-wrong-cds)
+                                                                 (precompile-processing---common---p256-sig-verification-failure)
+                                                                 (precompile-processing---common---p256-sig-verification-success)
+                                                                 ))))))
 
 
 
