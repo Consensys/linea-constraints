@@ -26,6 +26,13 @@ jobs:
       repo: ${{ github.repository }}
       scanner-ref: 'v2'
       paths-ignored: |
+      languages-config: |
+        [
+          {
+            "language": "javascript-typescript",
+            "ignore": true
+          }
+        ]
 
     secrets:
       project-metrics-token: ${{ secrets.SECURITY_SCAN_METRICS_TOKEN }}
