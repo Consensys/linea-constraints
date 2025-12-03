@@ -7,7 +7,7 @@ include "../util/padding.zkasm"
 ;; TODO, insert interface
 
 ;; The RLP_UTILS module is a helper module to compute some RLP-ifications:
-pub fn (INST=0x04 u8, DATA_1 u128, DATA_2 u128, DATA_3 u1, DATA_4 u1, DATA_5 u1, DATA_6 u128, DATA_7 u128, DATA_8 u5) {
+pub fn (INST=0x04 u8, DATA_1 u128, DATA_2 u128, DATA_3 u1, DATA_4 u1, DATA_5 u1) - > (DATA_6 u128, DATA_7 u128, DATA_8 u5) {
 
    if INST==RLP_UTILS_INST_INTEGER              goto integer
    if INST==RLP_UTILS_INST_BYTE_STRING_PREFIX   goto bytestring
@@ -17,9 +17,13 @@ pub fn (INST=0x04 u8, DATA_1 u128, DATA_2 u128, DATA_3 u1, DATA_4 u1, DATA_5 u1,
 
 exit_fail: fail
 
-integer:
-   return
+exit_trivial:
+DATA_6 = 0 
+DATA_7 = 0 
+DATA_8 = 0 
+return
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; This instruction computes the RLP prefix of a bytestring.
 ;; Input: 
 ;; DATA_1 == byte_string_length
@@ -30,6 +34,24 @@ integer:
 ;; DATA_5 = rlp_prefix_required == DATA_1 > 1 or (DATA_1 == 1 && DATA_2 < 128)
 ;; DATA_6 = rlp_prefix
 ;; DATA_8 = rlp_prefix_byte_size
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+integer:
+   return
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; This instruction computes the RLP prefix of a bytestring.
+;; Input: 
+;; DATA_1 == byte_string_length
+;; DATA_2 = byte_string_first_first_byte
+;; DATA_3 = byte_string_is_list
+;; Output : 
+;; DATA_4 = empty_byte_string = DATA_1 == 0, 
+;; DATA_5 = rlp_prefix_required == DATA_1 > 1 or (DATA_1 == 1 && DATA_2 < 128)
+;; DATA_6 = rlp_prefix
+;; DATA_8 = rlp_prefix_byte_size
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 bytestring:
 ;; check for empty bytestring:
 if DATA_4 !=0 goto bytestring_non_empty_case
@@ -44,37 +66,55 @@ var tmp u128
 var b u1
 b, tmp = DATA_2 - 128
 if b != 1 goto exit_fail
-DATA_8 = 0 ;; useless
-return
+goto exit_trivial
 
 bytestring_prefix_required:
+DATA_7 = 0 ;; DATA_7 is not used for this instruction
 var input_size_lt56 u1
 var tmp2 u128
-input_size_lt56, tp2 = DATA_1 - 56
+input_size_lt56, tmp2 = DATA_1 - 56
+var rlp_prefix_tmp u128
+var b3 u1
 if input_size_lt56 != 0 goto bytestring_long_input
 goto bytestring_short_input
 
 bytestring_long_input:
 var size u4
 size = log256_u128(DATA_1)
-if DATA_8 != size + 1 goto exit_fail
-var rlp_prefix_prefix u128
-rlp_prefix_prefix = rpad_128(RLP_PREFIX_INT_LONG + DATA_3 * RLP_FROM_INT_TO_LIST + size)
+DATA_8 = size + 1
+rlp_prefix_tmp = rpad_128(RLP_PREFIX_INT_LONG + DATA_3 * RLP_FROM_INT_TO_LIST + size)
 var rlp_prefix_suffix u120
 rlp_prefix_suffix = rpad_128_120(DATA_1)
-var b3 u1
-b3, DATA_7 = rlp_prefix_prefix + rlp_prefix_suffix ;; We must have equality
-if b3 !=0 goto exit_fail
+b3, DATA_7 = rlp_prefix_tmp + rlp_prefix_suffix ;; We must have equality
+if b3 !=0 goto exit_fail ;; TODO not sure it's needed ? 
 return
 
 bytestring_short_input:
-if DATA_8 != 1 goto exit_fail
-
+DATA_8 = 1
+b3, rlp_prefix_tmp = RLP_PREFIX_INT_SHORT + DATA_3 * RLP_FROM_INT_TO_LIST + size
+if b3 !=0 goto exit_fail ;; TODO not sure it's needed ? 
+DATA_6 = rpad_128(rlp_prefix_tmp)
+return
 
 eword:
 ;; Input: DATA_1:DATA_2
 ;; proof that DATA_1:DATA_2 is a u256 is automatic
-    return
+goto exit_trivial
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; This instruction counts the number of zeros / non zeros of. a limb
+;; Input: 
+;; DATA_1 == limb (right padded)
+;; DATA_2 = nBytes
+;; Output : 
+;; DATA_6 = nb of zero
+;; DATA_7 = nb of nonzero
+;; DATA_8 = first_byte
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 data_pricing:
+var remaining u120
+DATA_1 = DATA_8, remaining
+DATA_6, DATA_7 = counts_z_nz_128(DATA_1, DATA_2)
+if DATA_2 != DATA_6 + DATA_7 goto exit_fail ;; TODO not sure it's needed, it's more a sanity check ...
+return
 }

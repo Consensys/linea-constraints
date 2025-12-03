@@ -1,0 +1,85 @@
+;; Counts the number of zero and nonzero bytes of a right-padded limb
+fn counts_z_nz_128(limb u128, size u5) -> (zeros u5, non_zeros u5) {
+  var high, low u64  
+  var low_useless u1
+  var size_next u4
+  limb = high, low
+  low_useless, size_next = size - 9
+  if low_useless != 0 goto return_high
+  
+  zero, non_zeros =  counts_z_nz_64(high, 8) + counts_z_nz_64(low, size_next) ;; TODO, I'm sure it's not working this semantic
+  return 
+
+  return_high: 
+  zero, non_zeros =  counts_z_nz_64(high, size_next)
+  return
+}
+
+fn counts_z_nz_64(limb u64, size u4) -> (zeros u4, non_zeros u4) {
+  var high, low u32  
+  var low_useless u1
+  var size_next u3
+  limb = high, low
+  low_useless, size_next = size - 5
+  if low_useless != 0 goto return_high
+  
+  zero, non_zeros =  counts_z_nz_32(high, 4) + counts_z_nz_32(low, size_next) ;; TODO, I'm sure it's not working this semantic 
+  return 
+
+  return_high: 
+  zero, non_zeros =  counts_z_nz_32(high, size_next)
+  return
+}
+
+fn counts_z_nz_32(limb u32, size u3) -> (zeros u3, non_zeros u3) {
+  var high, low u16  
+  var low_useless u1
+  var size_next u2
+  limb = high, low
+  low_useless, size_next = size - 3
+  if low_useless != 0 goto return_high
+  
+  zero, non_zeros =  counts_z_nz_16(high, 2) + counts_z_nz_16(low, size_next) ;; TODO, I'm sure it's not working this semantic 
+  return 
+
+  return_high: 
+  zero, non_zeros =  counts_z_nz_16(high, size_next)
+  return
+}
+
+fn counts_z_nz_16(limb u16, size u2) -> (zeros u2, non_zeros u2) {
+  var high, low u8 
+  var low_useless u1
+  var size_next u1
+  limb = high, low
+  low_useless, size_next = size - 2
+  if low_useless != 0 goto return_high
+  
+  zero, non_zeros =  counts_z_nz_8(high, 1) + counts_z_nz_8(low, size_next) ;; TODO, I'm sure it's not working this semantic 
+  return 
+
+  return_high: 
+  zero, non_zeros =  counts_z_nz_8(high, size_next)
+  return
+}
+
+fn counts_z_nz_8(limb u8, size u1) -> (zeros u1, non_zeros u1) {
+  if size == 0 goto return_null
+  if limb != 0 goto return_nz
+  return_z
+
+  return_null: 
+  zeros = 0
+  non_zeros = 0
+  return
+
+  return_nz:
+  zeros = 0
+  non_zeros = 1
+  return
+
+  return_z:
+  zeros = 1
+  non_zeros = 0
+  return
+}
