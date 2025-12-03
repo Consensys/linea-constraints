@@ -24,20 +24,60 @@ DATA_8 = 0
 return
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; This instruction computes the RLP prefix of a bytestring.
+;; This instruction computes the RLP prefix of a integer.
 ;; Input: 
-;; DATA_1 == byte_string_length
-;; DATA_2 = byte_string_first_first_byte
-;; DATA_3 = byte_string_is_list
+;; DATA_1 = integer_hi
+;; DATA_2 = integer_lo
+;; Input bis: 
+;; DATA_3 = integer != 0
+;; DATA_4 = integer_hi != 0 
+;; DATA_5 = rlp_prefix_required == integer = 0 or integer > 128
 ;; Output : 
-;; DATA_4 = empty_byte_string = DATA_1 == 0, 
-;; DATA_5 = rlp_prefix_required == DATA_1 > 1 or (DATA_1 == 1 && DATA_2 < 128)
 ;; DATA_6 = rlp_prefix
-;; DATA_8 = rlp_prefix_byte_size
+;; DATA_7 = leading_limb_left_shifted
+;; DATA_8 = leading_limb_byte_size
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 integer:
-   return
+   val integer u256
+   integer = DATA_1:DATA_2
+   if integer != 0 goto integer_non_zero
 
+   ;; case integer == 0
+   if DATA_3 != 0 goto exit_fail ;; sanity check that integer != 0
+   if DATA_4 != 0 goto exit_fail ;; sanity check that integer_hi != 0
+   if DATA_5 == 0 goto exit_fail ;; sanity check that rlp_prefix_required == 1
+    DATA_6 = 0x8000000000000000000000000000000000
+    DATA_7 = 0
+    DATA_8 = 0
+    return
+
+   integer_non_zero:
+   if DATA_3 != 0 goto exit_fail ;; sanity check that integer != 0
+   if DATA_4 != 0 goto integer_two_limbs
+   var int_lo_lt_128 u1
+    var tmp u 128
+    int_lo_lt_128, tmp = DATA_2 - 128
+    if int_lo_lt_128 != 1 goto integer_very_low
+
+;; case 128 <= integer <= 2 ^128
+if DATA_5 != 1 goto exit_fail ;; sanity check that rlp_prefix_required = true
+DATA_8 = log256_u128(DATA_2)
+DATA_6 = (RLP_PREFIX_INT_SHORT + DATA_8) * 256 ^ 15
+DATA_7 = rpad_128(DATA_2)
+
+integer_very_low:
+if DATA_5 != 0 goto exit_fail ;; sanity check that rlp_prefix_required = false
+DATA_6 = 0
+DATA_7 = log256_u128(DATA_2)
+DATA_8 = 1
+
+integer_two_limbs: 
+if DATA_1 != 0 goto exit_fail ;; sanity check that integer_hi == 0
+if DATA_5 != 1 goto exit_fail ;; sanity check that rlp_prefix_required = true
+DATA_8 = log256_u128(DATA_1)
+DATA_6 = (RLP_PREFIX_INT_SHORT + 16 + DATA_8) * 256 ^ 15
+DATA_7 = rpad_128(DATA_1)
+return 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; This instruction computes the RLP prefix of a bytestring.
@@ -45,9 +85,10 @@ integer:
 ;; DATA_1 == byte_string_length
 ;; DATA_2 = byte_string_first_first_byte
 ;; DATA_3 = byte_string_is_list
-;; Output : 
+;; Input bis: 
 ;; DATA_4 = empty_byte_string = DATA_1 == 0, 
 ;; DATA_5 = rlp_prefix_required == DATA_1 > 1 or (DATA_1 == 1 && DATA_2 < 128)
+;; Output : 
 ;; DATA_6 = rlp_prefix
 ;; DATA_8 = rlp_prefix_byte_size
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
