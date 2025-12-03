@@ -1,0 +1,52 @@
+;; BIN module
+include "../constants/evm.zkasm"
+include "../util/log256.zkasm"
+
+;; The interface with RLP* modules is as follow
+;; TODO, insert interface
+
+;; The RLP_UTILS module is a helper module to compute some RLP-ifications:
+pub fn bin(INST=0x04 u8, DATA_1 u128, DATA_2 u128, DATA_3 u1, DATA_4 u1, DATA_5 u1, DATA_6 u128, DATA_7 u128) -> ( DATA_8 u5) {
+
+   if INST==RLP_UTILS_INST_INTEGER              goto integer
+   if INST==RLP_UTILS_INST_BYTE_STRING_PREFIX   goto bytestring
+   if INST==RLP_UTILS_INST_BYTES32              goto eword
+   if INST==RLP_UTILS_INST_DATA_PRICING         goto data_pricing
+   goto exit_fail
+
+exit_fail: fail
+
+integer:
+   return
+
+;; This instruction computes the RLP prefix of a bytestring.
+;; Input: DATA_1 == byte_string_length, DATA_2 = byte_string_first_first_byte, DATA_3 = byte_string_is_list
+;; Output : DATA_4 = empty_byte_string = DATA_1 == 0, DATA_5 = rlp_prefix_required == DATA_1 > 1 or (DATA_1 == 1 && DATA_2 < 128), DATA_6 = rlp_prefix, DATA_8 = rlp_prefix_byte_size
+bytestring:
+;; check for empty bytestring:
+if DATA_4 !=0 goto bytestring_non_empty_case
+if DATA_1 !=0 goto exit_fail
+return
+bytestring_non_empty_case:
+if DATA_5 != 0 goto bytestring_prefix_required
+;; prefix is not required => DATA_1 == 1 ...
+if DATA_1 != 1 goto exit_fail
+;; ... and that DATA_2 < 128
+var tmp u128
+var b u1
+b, tmp = DATA_2 - 128
+if b != 1 goto exit_fail
+DATA_8 = 0 ;; useless
+return
+bytestring_prefix_required:
+var size u4
+size = log256_u128(DATA_1)
+
+
+eword:
+;; proof that DATA_1:DATA_2 is a u256 is automatic
+DATA_8 = 0 ;; useless ...
+    return
+
+data_pricing:
+}
