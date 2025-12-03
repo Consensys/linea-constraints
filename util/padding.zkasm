@@ -1,0 +1,36 @@
+;; Right or Left Pad an input to a given size.
+fn rpad_128(input u128) -> (res u128) {
+  var leading_zeroes u8
+  var remaining u120
+  leading_zeroes, remaining = input
+  if leading_zeroes != 0 goto no_change
+  res = rpad_128(8 * remaining)
+  return
+  no_change: 
+  res = input
+  return
+}
+
+fn rpad_128_120(input u128) -> (res u120) {
+  var leading_zeroes u8
+  var remaining u120
+  leading_zeroes, remaining = input
+  if leading_zeroes != 0 goto exit_fail
+  res = rpad_120(remaining)
+  return
+  exit_fail: 
+  fail
+  return
+}
+
+fn rpad_120(input u120) -> (res u120) {
+  var leading_zeroes u8
+  var remaining u112
+  leading_zeroes, remaining = input
+  if leading_zeroes != 0 goto no_change
+  res = rpad_120(8 * remaining)
+  return
+  no_change: 
+  res = input
+  return
+}

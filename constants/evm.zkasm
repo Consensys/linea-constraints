@@ -32,10 +32,12 @@ const RLP_UTILS_INST_INTEGER                    = 0x01
 const RLP_UTILS_INST_BYTE_STRING_PREFIX         = 0x02
 const RLP_UTILS_INST_BYTES32                    = 0x04
 const RLP_UTILS_INST_DATA_PRICING               = 0x08
-const RLP_PREFIX_INT_SHORT                      = 0x80     ;; RLP prefix of a short integer (< 56 bytes), defined in the EYP.
-const RLP_PREFIX_INT_LONG                       = 0xB7     ;; RLP prefix of a long integer  (≥ 56 bytes), defined in the EYP.
-const RLP_PREFIX_LIST_SHORT                     = 0xC0     ;; RLP prefix of a short list    (< 56 bytes), defined in the EYP.
-const RLP_PREFIX_LIST_LONG                      = 0xF7     ;; RLP prefix of a long list     (≥ 56 bytes), defined in the EYP.
+const RLP_PREFIX_INT_SHORT                      = 0x80     ;; RLP prefix of a short integer (< 56 bytes), defined in the EYP = 128
+const RLP_PREFIX_INT_LONG                       = 0xB7     ;; RLP prefix of a long integer  (≥ 56 bytes), defined in the EYP = 183
+const RLP_PREFIX_LIST_SHORT                     = 0xC0     ;; RLP prefix of a short list    (< 56 bytes), defined in the EYP = 192
+const RLP_PREFIX_LIST_LONG                      = 0xF7     ;; RLP prefix of a long list     (≥ 56 bytes), defined in the EYP = 247
+const RLP_PREFIX_FROM_LONG_TO_SHORT             = 0x37     ;; diff between short and long prefix = 55
+const RLP_FROM_INT_TO_LIST                      = 0x40     ;; diff between int and list prefix = 64
 
 ;; =============================================================================
 ;; Wcp
