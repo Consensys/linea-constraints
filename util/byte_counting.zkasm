@@ -66,7 +66,7 @@ fn counts_nz_16(limb u16, size u2) -> (non_zeros u2) {
 fn counts_nz_8(limb u8, size u1) -> (non_zeros u1) {
   if size == 0 goto return_z
   if limb != 0 goto return_nz
-  return_z
+  goto return_z
 
   return_nz:
   non_zeros = 1

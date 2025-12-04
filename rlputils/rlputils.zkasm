@@ -52,8 +52,9 @@ integer:
     return
 
    integer_non_zero:
-   if DATA_3 != 0 goto exit_fail ;; sanity check that integer != 0
-   if DATA_4 != 0 goto integer_two_limbs
+   if DATA_3 != 1 goto exit_fail ;; sanity check that integer == 1
+   if DATA_1 != 0 goto integer_two_limbs
+   if DATA_4 != 0 goto exit_fail ;; sanity check that integer_hi == 0
    var int_lo_lt_128 u1
     var tmp u 128
     int_lo_lt_128, tmp = DATA_2 - 128
@@ -72,7 +73,7 @@ DATA_7 = log256_u128(DATA_2)
 DATA_8 = 1
 
 integer_two_limbs: 
-if DATA_1 != 0 goto exit_fail ;; sanity check that integer_hi == 0
+if DATA_4 == 0 goto exit_fail ;; sanity check that integer_hi != 0
 if DATA_5 != 1 goto exit_fail ;; sanity check that rlp_prefix_required = true
 DATA_8 = log256_u128(DATA_1)
 DATA_6 = (RLP_PREFIX_INT_SHORT + 16 + DATA_8) * 256 ^ 15
@@ -116,8 +117,8 @@ var tmp2 u128
 input_size_lt56, tmp2 = DATA_1 - 56
 var rlp_prefix_tmp u128
 var b3 u1
-if input_size_lt56 != 0 goto bytestring_long_input
-goto bytestring_short_input
+if input_size_lt56 != 0 goto bytestring_short_input
+goto bytestring_long_input
 
 bytestring_long_input:
 var size u4
@@ -132,7 +133,7 @@ return
 
 bytestring_short_input:
 DATA_8 = 1
-b3, rlp_prefix_tmp = RLP_PREFIX_INT_SHORT + DATA_3 * RLP_FROM_INT_TO_LIST + size
+b3, rlp_prefix_tmp = RLP_PREFIX_INT_SHORT + DATA_3 * RLP_FROM_INT_TO_LIST + 1 ;; as size == 1
 if b3 !=0 goto exit_fail ;; TODO not sure it's needed ? 
 DATA_6 = rpad_128(rlp_prefix_tmp)
 return
@@ -154,7 +155,7 @@ goto exit_trivial
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 data_pricing:
 var remaining u120
-DATA_1 = DATA_8, remaining
+DATA_8, remaining = DATA_1
 DATA_7 = counts_nz_128(DATA_1, DATA_2)
 var b u1
 b, DATA_6 = DATA_2 - DATA_7
