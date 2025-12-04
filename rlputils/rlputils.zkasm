@@ -7,7 +7,7 @@ include "../util/padding.zkasm"
 ;; TODO, insert interface
 
 ;; The RLP_UTILS module is a helper module to compute some RLP-ifications:
-pub fn (INST=0x04 u8, DATA_1 u128, DATA_2 u128, DATA_3 u1, DATA_4 u1, DATA_5 u1) - > (DATA_6 u128, DATA_7 u128, DATA_8 u5) {
+pub fn (INST=0x04 u8, DATA_1 u128, DATA_2 u128, DATA_3 u1, DATA_4 u1, DATA_5 u1) - > (DATA_6 u128, DATA_7 u128, DATA_8 u8) {
 
    if INST==RLP_UTILS_INST_INTEGER              goto integer
    if INST==RLP_UTILS_INST_BYTE_STRING_PREFIX   goto bytestring
@@ -58,7 +58,7 @@ integer:
    var int_lo_lt_128 u1
     var tmp u 128
     int_lo_lt_128, tmp = DATA_2 - 128
-    if int_lo_lt_128 != 1 goto integer_very_low
+    if int_lo_lt_128 != 0 goto integer_very_low
 
 ;; case 128 <= integer <= 2 ^128
 if DATA_5 != 1 goto exit_fail ;; sanity check that rlp_prefix_required = true
@@ -100,7 +100,12 @@ bytestring:
 ;; check for empty bytestring:
 if DATA_4 !=0 goto bytestring_non_empty_case
 if DATA_1 !=0 goto exit_fail
+;; empty case:
+DATA_6 = (128 + DATA_3 * RLP_FROM_INT_TO_LIST) * 256 ^ 15
+DATA_7 = 0
+DATA_8 = 1 
 return
+
 bytestring_non_empty_case:
 if DATA_5 != 0 goto bytestring_prefix_required
 ;; prefix is not required => DATA_1 == 1 ...
@@ -146,7 +151,7 @@ eword:
 goto exit_trivial
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; This instruction counts the number of zeros / non zeros of. a limb
+;; This instruction counts the number of zeros / non zeros of a limb
 ;; Input: 
 ;; DATA_1 == limb (right padded)
 ;; DATA_2 = nBytes

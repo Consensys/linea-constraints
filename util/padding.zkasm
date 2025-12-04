@@ -1,5 +1,6 @@
 ;; Right or Left Pad an input to a given size.
 fn rpad_128(input u128) -> (res u128) {
+  if input != 0 goto no_change
   var leading_zeroes u8
   var remaining u120
   leading_zeroes, remaining = input
@@ -24,6 +25,7 @@ fn rpad_128_120(input u128) -> (res u120) {
 }
 
 fn rpad_120(input u120) -> (res u120) {
+  if input != 0 goto no_change
   var leading_zeroes u8
   var remaining u112
   leading_zeroes, remaining = input
