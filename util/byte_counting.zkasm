@@ -14,7 +14,10 @@ fn counts_nz_128(limb u128, size u5) -> (non_zeros u5) {
   return 
 
   return_high: 
-  non_zeros =  counts_nz_64(high, size_next)
+  var b u1,
+  var size_trm u4
+  b, size_trm = size
+  non_zeros =  counts_nz_64(high, size_trm)
   return
 }
 
@@ -33,7 +36,10 @@ fn counts_nz_64(limb u64, size u4) -> (non_zeros u4) {
   return 
 
   return_high: 
-  non_zeros =  counts_nz_32(high, size_next)
+  var b u1,
+  var size_trm u3
+  b, size_trm = size
+  non_zeros =  counts_nz_32(high, size_trm)
   return
 }
 
@@ -53,7 +59,10 @@ fn counts_nz_32(limb u32, size u3) -> (non_zeros u3) {
   return 
 
   return_high: 
-  non_zeros =  counts_nz_16(high, size_next)
+  var b u1,
+  var size_trm u2
+  b, size_trm = size
+  non_zeros =  counts_nz_16(high, size_trm)
   return
 }
 
@@ -73,7 +82,10 @@ fn counts_nz_16(limb u16, size u2) -> (non_zeros u2) {
   return 
 
   return_high: 
-  non_zeros =  counts_nz_8(high, size_next)
+  var b u1,
+  var size_trm u1
+  b, size_trm = size
+  non_zeros =  counts_nz_8(high, size_trm)
   return
 }
 
