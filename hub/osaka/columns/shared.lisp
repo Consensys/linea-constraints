@@ -20,8 +20,8 @@
     ( TX_INIT                                   :binary@prove )
     ( TX_EXEC                                   :binary@prove )
     ( TX_FINL                                   :binary@prove )
-    ( HUB_STAMP                                 :i32 )
-    ( HUB_STAMP_TRANSACTION_END                 :i32 )
+    ( HUB_STAMP                                 :i16 )
+    ( HUB_STAMP_TRANSACTION_END                 :i16 )
     ( CONTEXT_MAY_CHANGE                        :binary@prove )
     ( EXCEPTION_AHOY                            :binary@prove )
 

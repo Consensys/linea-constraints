@@ -2,8 +2,8 @@
 
 (defcolumns
   ;; shared columns
-  (STAMP      :i32 :display :dec)
-  (MMIO_STAMP :i32 :display :dec)
+  (STAMP      :i16 :display :dec)
+  (MMIO_STAMP :i16 :display :dec)
   ;; perspective selector
   (MACRO :binary@prove)
   (PRPRC :binary@prove)
