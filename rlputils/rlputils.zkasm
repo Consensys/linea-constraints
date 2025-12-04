@@ -2,12 +2,17 @@
 include "../constants/evm.zkasm"
 include "../util/log256.zkasm"
 include "../util/padding.zkasm"
+include "../util/byte_counting.zkasm"
 
 ;; The interface with RLP* modules is as follow
 ;; TODO, insert interface
 
 ;; The RLP_UTILS module is a helper module to compute some RLP-ifications:
-pub fn (INST=0x04 u8, DATA_1 u128, DATA_2 u128, DATA_3 u1, DATA_4 u1, DATA_5 u1) - > (DATA_6 u128, DATA_7 u128, DATA_8 u8) {
+pub fn rlputils(INST=0x04 u8, DATA_1 u128, DATA_2 u128, DATA_3 u1, DATA_4 u1, DATA_5 u1) -> (DATA_6 u128, DATA_7 u128, DATA_8 u8) {
+
+   ;; used in integer_non_zero && bytestring_non_empty_case so factorized here
+    var data_2_lt_128 u1
+    var data_2_minus_128_tmp u128 
 
    if INST==RLP_UTILS_INST_INTEGER              goto integer
    if INST==RLP_UTILS_INST_BYTE_STRING_PREFIX   goto bytestring
@@ -38,8 +43,8 @@ return
 ;; DATA_8 = leading_limb_byte_size
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 integer:
-   val integer u256
-   integer = DATA_1:DATA_2
+   var integer u256
+   DATA_1, DATA_2 = integer
    if integer != 0 goto integer_non_zero
 
    ;; case integer == 0
@@ -55,15 +60,12 @@ integer:
    if DATA_3 != 1 goto exit_fail ;; sanity check that integer == 1
    if DATA_1 != 0 goto integer_two_limbs
    if DATA_4 != 0 goto exit_fail ;; sanity check that integer_hi == 0
-   var int_lo_lt_128 u1
-    var tmp u 128
-    int_lo_lt_128, tmp = DATA_2 - 128
-    if int_lo_lt_128 != 0 goto integer_very_low
+   if data_2_lt_128 != 0 goto integer_very_low
 
 ;; case 128 <= integer <= 2 ^128
 if DATA_5 != 1 goto exit_fail ;; sanity check that rlp_prefix_required = true
 DATA_8 = log256_u128(DATA_2)
-DATA_6 = (RLP_PREFIX_INT_SHORT + DATA_8) * 256 ^ 15
+DATA_6 = (RLP_PREFIX_INT_SHORT + DATA_8) * TWO_FIVE_SIX_POWER_SIXTEEN
 DATA_7 = rpad_128(DATA_2)
 return
 
@@ -78,7 +80,7 @@ integer_two_limbs:
 if DATA_4 == 0 goto exit_fail ;; sanity check that integer_hi != 0
 if DATA_5 != 1 goto exit_fail ;; sanity check that rlp_prefix_required = true
 DATA_8 = log256_u128(DATA_1)
-DATA_6 = (RLP_PREFIX_INT_SHORT + 16 + DATA_8) * 256 ^ 15
+DATA_6 = (RLP_PREFIX_INT_SHORT + 16 + DATA_8) * TWO_FIVE_SIX_POWER_SIXTEEN
 DATA_7 = rpad_128(DATA_1)
 return 
 
@@ -101,7 +103,7 @@ bytestring:
 if DATA_4 !=0 goto bytestring_non_empty_case
 if DATA_1 !=0 goto exit_fail
 ;; empty case:
-DATA_6 = (128 + DATA_3 * RLP_FROM_INT_TO_LIST) * 256 ^ 15
+DATA_6 = (128 + (DATA_3 * RLP_FROM_INT_TO_LIST)) * TWO_FIVE_SIX_POWER_SIXTEEN
 DATA_7 = 0
 DATA_8 = 1 
 return
@@ -111,10 +113,7 @@ if DATA_5 != 0 goto bytestring_prefix_required
 ;; prefix is not required => DATA_1 == 1 ...
 if DATA_1 != 1 goto exit_fail
 ;; ... and that DATA_2 < 128
-var tmp u128
-var b u1
-b, tmp = DATA_2 - 128
-if b != 1 goto exit_fail
+if data_2_lt_128 != 1 goto exit_fail
 goto exit_trivial
 
 bytestring_prefix_required:
@@ -131,7 +130,7 @@ bytestring_long_input:
 var size u4
 size = log256_u128(DATA_1)
 DATA_8 = size + 1
-rlp_prefix_tmp = rpad_128(RLP_PREFIX_INT_LONG + DATA_3 * RLP_FROM_INT_TO_LIST + size)
+rlp_prefix_tmp = rpad_128(RLP_PREFIX_INT_LONG + (DATA_3 * RLP_FROM_INT_TO_LIST) + size)
 var rlp_prefix_suffix u120
 rlp_prefix_suffix = rpad_128_120(DATA_1)
 b3, DATA_6 = rlp_prefix_tmp + rlp_prefix_suffix ;; We must have equality
@@ -140,7 +139,7 @@ return
 
 bytestring_short_input:
 DATA_8 = 1
-b3, rlp_prefix_tmp = RLP_PREFIX_INT_SHORT + DATA_3 * RLP_FROM_INT_TO_LIST + DATA_1
+b3, rlp_prefix_tmp = RLP_PREFIX_INT_SHORT + (DATA_3 * RLP_FROM_INT_TO_LIST) + DATA_1
 if b3 !=0 goto exit_fail ;; TODO not sure it's needed ? 
 DATA_6 = rpad_128(rlp_prefix_tmp)
 return
