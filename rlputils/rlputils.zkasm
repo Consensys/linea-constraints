@@ -155,7 +155,9 @@ goto exit_trivial
 data_pricing:
 var remaining u120
 DATA_1 = DATA_8, remaining
-DATA_6, DATA_7 = counts_z_nz_128(DATA_1, DATA_2)
-if DATA_2 != DATA_6 + DATA_7 goto exit_fail ;; TODO not sure it's needed, it's more a sanity check ...
+DATA_7 = counts_nz_128(DATA_1, DATA_2)
+var b u1
+b, DATA_6 = DATA_2 - DATA_7
+if b != 0 goto exit_fail ;; sanity check, not sure it's needed ...
 return
 }
