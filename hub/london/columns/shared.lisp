@@ -51,8 +51,8 @@
 
     ;; gas columns
     ( GAS_EXPECTED                              :i64 )
-    ( GAS_ACTUAL                                :i64 )
-    ( GAS_COST                                  :i64 )
+    ( GAS_ACTUAL                                :i32 )
+    ( GAS_COST                                  :i32 )
     ( GAS_NEXT                                  :i64 )
     ( REFUND_COUNTER                            :i32 )
     ( REFUND_COUNTER_NEW                        :i32 )
