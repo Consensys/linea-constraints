@@ -4,7 +4,7 @@ fn counts_nz_128(limb u128, size u5) -> (non_zeros u5) {
   var low_useless u1
   var size_next u4
   high, low = limb
-  low_useless, size_next = size - 9
+  low_useless, size_next = size - 8
   if low_useless != 0 goto return_high
   var nz_high u4
   var nz_low u4
@@ -23,7 +23,7 @@ fn counts_nz_64(limb u64, size u4) -> (non_zeros u4) {
   var low_useless u1
   var size_next u3
   high, low = limb
-  low_useless, size_next = size - 5
+  low_useless, size_next = size - 4
   if low_useless != 0 goto return_high
   var nz_high u3
   var nz_low u3
@@ -42,7 +42,7 @@ fn counts_nz_32(limb u32, size u3) -> (non_zeros u3) {
   var low_useless u1
   var size_next u2
   high, low = limb
-  low_useless, size_next = size - 3
+  low_useless, size_next = size - 2
   if low_useless != 0 goto return_high
   
   var nz_high u2
@@ -62,7 +62,7 @@ fn counts_nz_16(limb u16, size u2) -> (non_zeros u2) {
   var low_useless u1
   var size_next u1
   high, low = limb
-  low_useless, size_next = size - 2
+  low_useless, size_next = size - 1
   if low_useless != 0 goto return_high
   
   var nz_high u1

@@ -12,7 +12,8 @@ pub fn rlputils(INST=0x04 u8, DATA_1 u128, DATA_2 u128, DATA_3 u1, DATA_4 u1, DA
 
    ;; used in integer_one_limb_non_zero && bytestring_non_empty_case so factorized here
     var data_2_lt_128 u1
-    var data_2_minus_128_tmp u128 
+    var data_2_minus_128_tmp u128
+    data_2_lt_128 u1, data_2_minus_128_tmp u128 = DATA_2 - 128
 
    if INST==RLP_UTILS_INST_INTEGER              goto integer
    if INST==RLP_UTILS_INST_BYTE_STRING_PREFIX   goto bytestring
