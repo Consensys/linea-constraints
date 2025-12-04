@@ -10,7 +10,7 @@ include "../util/byte_counting.zkasm"
 ;; The RLP_UTILS module is a helper module to compute some RLP-ifications:
 pub fn rlputils(INST=0x04 u8, DATA_1 u128, DATA_2 u128, DATA_3 u1, DATA_4 u1, DATA_5 u1) -> (DATA_6 u128, DATA_7 u128, DATA_8 u8) {
 
-   ;; used in integer_non_zero && bytestring_non_empty_case so factorized here
+   ;; used in integer_one_limb_non_zero && bytestring_non_empty_case so factorized here
     var data_2_lt_128 u1
     var data_2_minus_128_tmp u128 
 
@@ -43,23 +43,20 @@ return
 ;; DATA_8 = leading_limb_byte_size
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 integer:
-   var integer u256
-   DATA_1, DATA_2 = integer
-   if integer != 0 goto integer_non_zero
+   if DATA_1 != 0 goto integer_two_limbs goto integer_two_limbs
+   if DATA_4 != 0 goto exit_fail ;; sanity check that integer_hi != 0
 
+   if DATA_2 != 0 goto integer_one_limb_non_zero
    ;; case integer == 0
    if DATA_3 != 0 goto exit_fail ;; sanity check that integer != 0
-   if DATA_4 != 0 goto exit_fail ;; sanity check that integer_hi != 0
    if DATA_5 == 0 goto exit_fail ;; sanity check that rlp_prefix_required == 1
     DATA_6 = 0x80000000000000000000000000000000
     DATA_7 = 0
     DATA_8 = 0
     return
 
-   integer_non_zero:
+   integer_one_limb_non_zero:
    if DATA_3 != 1 goto exit_fail ;; sanity check that integer == 1
-   if DATA_1 != 0 goto integer_two_limbs
-   if DATA_4 != 0 goto exit_fail ;; sanity check that integer_hi == 0
    if data_2_lt_128 != 0 goto integer_very_low
 
 ;; case 128 <= integer <= 2 ^128
