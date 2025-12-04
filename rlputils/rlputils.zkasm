@@ -65,12 +65,14 @@ if DATA_5 != 1 goto exit_fail ;; sanity check that rlp_prefix_required = true
 DATA_8 = log256_u128(DATA_2)
 DATA_6 = (RLP_PREFIX_INT_SHORT + DATA_8) * 256 ^ 15
 DATA_7 = rpad_128(DATA_2)
+return
 
 integer_very_low:
 if DATA_5 != 0 goto exit_fail ;; sanity check that rlp_prefix_required = false
 DATA_6 = 0
-DATA_7 = log256_u128(DATA_2)
+DATA_7 = rpad_128(DATA_2)
 DATA_8 = 1
+return
 
 integer_two_limbs: 
 if DATA_4 == 0 goto exit_fail ;; sanity check that integer_hi != 0
@@ -127,13 +129,13 @@ DATA_8 = size + 1
 rlp_prefix_tmp = rpad_128(RLP_PREFIX_INT_LONG + DATA_3 * RLP_FROM_INT_TO_LIST + size)
 var rlp_prefix_suffix u120
 rlp_prefix_suffix = rpad_128_120(DATA_1)
-b3, DATA_7 = rlp_prefix_tmp + rlp_prefix_suffix ;; We must have equality
+b3, DATA_6 = rlp_prefix_tmp + rlp_prefix_suffix ;; We must have equality
 if b3 !=0 goto exit_fail ;; TODO not sure it's needed ? 
 return
 
 bytestring_short_input:
 DATA_8 = 1
-b3, rlp_prefix_tmp = RLP_PREFIX_INT_SHORT + DATA_3 * RLP_FROM_INT_TO_LIST + 1 ;; as size == 1
+b3, rlp_prefix_tmp = RLP_PREFIX_INT_SHORT + DATA_3 * RLP_FROM_INT_TO_LIST + DATA_1
 if b3 !=0 goto exit_fail ;; TODO not sure it's needed ? 
 DATA_6 = rpad_128(rlp_prefix_tmp)
 return
