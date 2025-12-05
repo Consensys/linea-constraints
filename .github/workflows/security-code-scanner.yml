@@ -28,10 +28,6 @@ jobs:
       paths-ignored: |
       languages-config: |
         [
-          {
-            "language": "javascript-typescript",
-            "ignore": true
-          }
         ]
 
     secrets:
