@@ -1,0 +1,8 @@
+include "../constants/evm.zkasm"
+
+fn recover(chain_id u256, nonce u64, address u160, y_parity u8, r u256, s u256) -> (authority u160, error u1)
+{
+    authority = 0
+    error = 0
+    return
+} 
