@@ -13,7 +13,7 @@ pub fn rlputils(INST=0x04 u8, DATA_1 u128, DATA_2 u128, DATA_3 u1, DATA_4 u1, DA
    ;; used in integer_one_limb_non_zero && bytestring_non_empty_case so factorized here
     var data_2_lt_128 u1
     var data_2_minus_128_tmp u128
-    data_2_lt_128 u1, data_2_minus_128_tmp u128 = DATA_2 - 128
+    data_2_lt_128, data_2_minus_128_tmp = DATA_2 - 128
 
    if INST==RLP_UTILS_INST_INTEGER              goto integer
    if INST==RLP_UTILS_INST_BYTE_STRING_PREFIX   goto bytestring
@@ -63,7 +63,8 @@ integer:
 ;; case 128 <= integer <= 2 ^128
 if DATA_5 != 1 goto exit_fail ;; sanity check that rlp_prefix_required = true
 DATA_8 = log256_u128(DATA_2)
-DATA_6 = (RLP_PREFIX_INT_SHORT + DATA_8) * TWO_FIVE_SIX_POWER_SIXTEEN
+var z1 u1
+z1, DATA_6 = (RLP_PREFIX_INT_SHORT + DATA_8) * TWO_FIVE_SIX_POWER_SIXTEEN
 DATA_7 = rpad_128(DATA_2)
 return
 
@@ -78,7 +79,8 @@ integer_two_limbs:
 if DATA_4 == 0 goto exit_fail ;; sanity check that integer_hi != 0
 if DATA_5 != 1 goto exit_fail ;; sanity check that rlp_prefix_required = true
 DATA_8 = log256_u128(DATA_1)
-DATA_6 = (RLP_PREFIX_INT_SHORT + 16 + DATA_8) * TWO_FIVE_SIX_POWER_SIXTEEN
+var z2 u1
+z2, DATA_6 = (RLP_PREFIX_INT_SHORT + 16 + DATA_8) * TWO_FIVE_SIX_POWER_SIXTEEN
 DATA_7 = rpad_128(DATA_1)
 return 
 
