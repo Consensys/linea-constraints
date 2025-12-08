@@ -66,7 +66,7 @@ OOB_LONDON := oob/london
 OOB_SHANGHAI := oob/shanghai
 OOB_CANCUN := oob/cancun
 OOB_PRAGUE := oob/prague
-OOB_OSAKA := oob/osaka
+OOB_OSAKA := oob/osaka/columns.lisp
 
 RLP_ADDR := rlpaddr
 
