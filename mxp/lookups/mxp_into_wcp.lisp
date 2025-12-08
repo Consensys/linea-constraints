@@ -4,7 +4,7 @@
   )
 
 (defclookup
-  (mxp-into-wcp :unchecked)
+  mxp-into-wcp
   ;; target columns
   (
     wcp.INST
@@ -19,5 +19,5 @@
     mxp.computation/EXO_INST
     (:: mxp.computation/ARG_1_HI mxp.computation/ARG_1_LO)
     (:: mxp.computation/ARG_2_HI mxp.computation/ARG_2_LO)
-    mxp.computation/RES_A
+    (i1 mxp.computation/RES_A)
   ))

@@ -2,7 +2,7 @@
   oob.ADD_FLAG)
 
 (defclookup
-  (oob-into-add :unchecked)
+  oob-into-add
   ;; target columns
   (
     add.ARG_1
@@ -17,7 +17,7 @@
     (:: [oob.OUTGOING_DATA 1] [oob.OUTGOING_DATA 2])
     (:: [oob.OUTGOING_DATA 3] [oob.OUTGOING_DATA 4])
     (:: (next [oob.OUTGOING_DATA 1]) (next [oob.OUTGOING_DATA 2]))
-    oob.OUTGOING_INST
+    (i8 oob.OUTGOING_INST)
   ))
 
 

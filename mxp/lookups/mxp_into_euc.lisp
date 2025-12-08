@@ -4,7 +4,7 @@
   )
 
 (defclookup
-  (mxp-into-euc :unchecked)
+  mxp-into-euc
   ;; target columns
   (
     euc.DIVIDEND
@@ -16,8 +16,8 @@
   (mxp-to-euc-selector)
   ;; source columns
   (
-    mxp.computation/ARG_1_LO
-    mxp.computation/ARG_2_LO
+    (i64 mxp.computation/ARG_1_LO)
+    (i64 mxp.computation/ARG_2_LO)
     mxp.computation/RES_A
     mxp.computation/RES_B
   ))
