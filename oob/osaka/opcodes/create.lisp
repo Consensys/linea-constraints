@@ -12,10 +12,10 @@
 (defun (create---value-lo)                  [DATA  2])
 (defun (create---balance)                   [DATA  3])
 (defun (create---nonce)                     [DATA  4])
-(defun (create---has-code)                  [DATA  5])
+(defun (create---has-code)                  (i1 [DATA  5]))
 (defun (create---call-stack-depth)          [DATA  6])
-(defun (create---aborting-condition)        [DATA  7])
-(defun (create---failure-condition)         [DATA  8])
+(defun (create---aborting-condition)        (i1 [DATA  7]))
+(defun (create---failure-condition)         (i1 [DATA  8]))
 (defun (create---creator-nonce)             [DATA  9])
 (defun (create---init-code-size)            [DATA 10]) ;; ""
 
@@ -28,7 +28,7 @@
                              (create---value-hi)
                              (create---value-lo)))
 
-(defun (create---insufficient-balance-abort) (shift OUTGOING_RES_LO 0))
+(defun (create---insufficient-balance-abort) (i1 (shift OUTGOING_RES_LO 0)))
 
 
 
@@ -40,7 +40,7 @@
                              0
                              1024))
 
-(defun (create---stack-depth-abort) (- 1 (shift OUTGOING_RES_LO 1)))
+(defun (create---stack-depth-abort) (- 1 (shift (i1 OUTGOING_RES_LO) 1)))
 
 
 
@@ -50,7 +50,7 @@
                                  0
                                  (create---nonce)))
 
-(defun (create---nonzero-nonce) (- 1 (shift OUTGOING_RES_LO 2)))
+(defun (create---nonzero-nonce) (- 1 (shift (i1 OUTGOING_RES_LO) 2)))
 
 
 
@@ -62,7 +62,7 @@
                              0
                              EIP2681_MAX_NONCE))
 
-(defun (create---creator-nonce-abort) (- 1 (shift OUTGOING_RES_LO 3)))
+(defun (create---creator-nonce-abort) (- 1 (shift (i1 OUTGOING_RES_LO) 3)))
 
 
 

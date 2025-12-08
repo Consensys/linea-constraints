@@ -14,9 +14,9 @@
 (defun (call---call-stack-depth)                [DATA 6])
 (defun (call---value-is-nonzero)                [DATA 7])
 (defun (call---aborting-condition)              [DATA 8])
-(defun (call---insufficient-balance-abort)      OUTGOING_RES_LO)
-(defun (call---call-stack-depth-abort)          (- 1 (next OUTGOING_RES_LO)))
-(defun (call---value-is-zero)                   (shift OUTGOING_RES_LO 2))
+(defun (call---insufficient-balance-abort)      (i1 OUTGOING_RES_LO))
+(defun (call---call-stack-depth-abort)          (- 1 (next (i1 OUTGOING_RES_LO))))
+(defun (call---value-is-zero)                   (i1 (shift OUTGOING_RES_LO 2)))
 
 (defconstraint call---compare-balance-against-value (:guard (* (assumption---fresh-new-stamp) (call---standard-precondition)))
   (call-to-LT 0 0 (call---balance) (call---value-hi) (call---value-lo)))

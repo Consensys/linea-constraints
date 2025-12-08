@@ -16,8 +16,8 @@
 (defun (rdc---size-lo)                  [DATA 4])
 (defun (rdc---rds)                      [DATA 5])
 (defun (rdc---rdcx)                     [DATA 7])
-(defun (rdc---rdc-roob)                 (- 1 OUTGOING_RES_LO))
-(defun (rdc---rdc-soob)                 (shift OUTGOING_RES_LO 2))
+(defun (rdc---rdc-roob)                 (i1 (- 1 OUTGOING_RES_LO)))
+(defun (rdc---rdc-soob)                 (i1 (shift OUTGOING_RES_LO 2)))
 
 (defconstraint rdc---check-offset-is-zero (:guard (* (assumption---fresh-new-stamp) (rdc---standard-precondition)))
   (call-to-ISZERO 0 (rdc---offset-hi) (rdc---size-hi)))
