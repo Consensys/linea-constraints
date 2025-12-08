@@ -2,7 +2,7 @@
   blockdata.WCP_FLAG)
 
 (defclookup 
-  (blockdata-into-wcp :unchecked)
+  blockdata-into-wcp
   ;; target columns
   (
     wcp.ARG_1
@@ -16,7 +16,7 @@
   (
     (:: blockdata.ARG_1_HI blockdata.ARG_1_LO)
     (:: blockdata.ARG_2_HI blockdata.ARG_2_LO)
-    blockdata.RES
+    (i1 blockdata.RES)
     blockdata.EXO_INST
   ))
 

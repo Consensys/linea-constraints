@@ -2,9 +2,6 @@
   (* hub.PEEK_AT_MISCELLANEOUS
      hub.misc/EXP_FLAG))
 
-;; Cast any value into a u6
-(defun ((force-u6 :u6 :force) X) X) 
-
 (defclookup hub-into-exp
   ;; target columns
   (
@@ -23,9 +20,9 @@
    ;; primary argument
    (:: [hub.misc/EXP_DATA 1] [hub.misc/EXP_DATA 2])
    ;; precondition: 1 <= CDS <= 32
-   (force-u6 [hub.misc/EXP_DATA 3])
+   (i6 [hub.misc/EXP_DATA 3])
    ;; precondition: 1 <= EBS <= 32
-   (force-u6 [hub.misc/EXP_DATA 4])
+   (i6 [hub.misc/EXP_DATA 4])
    ;; result
    [hub.misc/EXP_DATA 5]
   )
