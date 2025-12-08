@@ -1,7 +1,7 @@
 (defun (sel-rlptxn-to-trm) (* rlptxn.CMP rlptxn.cmp/TRM_FLAG))
 
 (defclookup
-  (rlptxn-into-trm :unchecked)
+  rlptxn-into-trm
   ;; target columns
   (
     trm.RAW_ADDRESS   
@@ -12,5 +12,5 @@
   ;; source columns
   (
    (:: rlptxn.cmp/EXO_DATA_1 rlptxn.cmp/EXO_DATA_2)
-   rlptxn.cmp/EXO_DATA_1
+   (i32 rlptxn.cmp/EXO_DATA_1)
   ))
