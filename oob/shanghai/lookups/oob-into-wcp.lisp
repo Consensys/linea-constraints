@@ -2,7 +2,7 @@
   oob.WCP_FLAG)
 
 (defclookup
-  (oob-into-wcp :unchecked)
+  oob-into-wcp
   ;; target columns
   (
     wcp.ARG_1
@@ -16,7 +16,7 @@
   (
     (:: [oob.OUTGOING_DATA 1] [oob.OUTGOING_DATA 2])
     (:: [oob.OUTGOING_DATA 3] [oob.OUTGOING_DATA 4])
-    oob.OUTGOING_RES_LO
+    (i1 oob.OUTGOING_RES_LO)
     oob.OUTGOING_INST
   ))
 

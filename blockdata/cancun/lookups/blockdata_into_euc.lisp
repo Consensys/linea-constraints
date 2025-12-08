@@ -1,7 +1,7 @@
 (defun (blockdata-into-euc-selector) blockdata.EUC_FLAG)
 
 (defclookup 
-  (blockdata-into-euc :unchecked)
+  blockdata-into-euc
   ;; target columns
   (
     euc.DIVIDEND
@@ -12,8 +12,8 @@
   (blockdata-into-euc-selector)
   ;; source columns
   (
-    blockdata.ARG_1_LO
-    blockdata.ARG_2_LO
-    blockdata.RES
-  ))
+   (i64 blockdata.ARG_1_LO)
+   (i64 blockdata.ARG_2_LO)
+   (i64 blockdata.RES)
+   ))
 

@@ -1,5 +1,5 @@
 (defclookup
-  (txndata-into-wcp :unchecked)
+  txndata-into-wcp
   ; target columns
   (
     wcp.ARG_1
@@ -13,7 +13,7 @@
   (
     txndata.ARG_ONE_LO
     txndata.ARG_TWO_LO
-    txndata.RES
+    (i1 txndata.RES)
     txndata.INST
   ))
 
