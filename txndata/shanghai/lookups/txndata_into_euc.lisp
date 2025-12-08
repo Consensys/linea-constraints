@@ -1,5 +1,5 @@
 (defclookup
-  (txndata-into-euc :unchecked)
+  txndata-into-euc
   ;; target columns
   (
     euc.DIVIDEND
@@ -10,9 +10,9 @@
   txndata.EUC_FLAG
   ;; source columns
   (
-    txndata.ARG_ONE_LO
-    txndata.ARG_TWO_LO
-    txndata.RES
+    (i64 txndata.ARG_ONE_LO)
+    (i64 txndata.ARG_TWO_LO)
+    (i64 txndata.RES)
   ))
 
 
