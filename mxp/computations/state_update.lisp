@@ -16,8 +16,8 @@
 				 (*  (mxp-shorthand---double-offset-instruction)  (mxp-shorthand---max-2))
 				 ))
 
-(defun  (mxp-shorthand---use-parameter-set-2)  (shift  computation/RES_A  ROW_OFFSET___COMPARISON_OF_MAX_OFFSETS))
-(defun  (mxp-shorthand---use-parameter-set-1)  (-   1    (mxp-shorthand---use-parameter-set-2)))
+(defun  ((mxp-shorthand---use-parameter-set-2 :binary :force))  (shift  computation/RES_A  ROW_OFFSET___COMPARISON_OF_MAX_OFFSETS))
+(defun  ((mxp-shorthand---use-parameter-set-1 :binary))  (-   1    (mxp-shorthand---use-parameter-set-2)))
 
 (defun  (mxp-shorthand---max-1)          (* (mxp-shorthand---size-1-is-nonzero) (+ (mxp-shorthand---offset-1-lo)   (mxp-shorthand---size-1-lo))))
 (defun  (mxp-shorthand---max-2)          (* (mxp-shorthand---size-2-is-nonzero) (+ (mxp-shorthand---offset-2-lo)   (mxp-shorthand---size-2-lo))))
@@ -26,11 +26,11 @@
 (defun  (mxp-shorthand---max-offset)     (+   (*   (mxp-shorthand---use-parameter-set-1)   (mxp-shorthand---max-offset-1))
 					      (*   (mxp-shorthand---use-parameter-set-2)   (mxp-shorthand---max-offset-2))))
 
-(defconstraint  computations---state-update---computing-EYP_A-as-division-of-max-offset-by-32
-		(:guard   (mxp-guard---state-update))
-		(euc-call    ROW_OFFSET___FLOOR_OF_MAX_OFFSET_OVER_32
-			     (mxp-shorthand---max-offset)
-			     WORD_SIZE))
+;; (defconstraint  computations---state-update---computing-EYP_A-as-division-of-max-offset-by-32
+;; 		(:guard   (mxp-guard---state-update))
+;; 		(euc-call    ROW_OFFSET___FLOOR_OF_MAX_OFFSET_OVER_32
+;; 			     (mxp-shorthand---max-offset)
+;; 			     WORD_SIZE))
 
 (defun  (mxp-shorthand---floor)   (shift   computation/RES_A   ROW_OFFSET___FLOOR_OF_MAX_OFFSET_OVER_32))
 (defun  (mxp-shorthand---EYP_a)   (+   (mxp-shorthand---floor)   1))
