@@ -9,8 +9,8 @@
 
 (defun (prc-ecpairing---standard-precondition)                    IS_ECPAIRING)
 (defun (prc-ecpairing---remainder)                                (shift OUTGOING_RES_LO 2))
-(defun (prc-ecpairing---is-multiple_PRECOMPILE_CALL_DATA_UNIT_SIZE___ECPAIRING)           (shift OUTGOING_RES_LO 3))
-(defun (prc-ecpairing---insufficient-gas)                         (shift OUTGOING_RES_LO 4))
+(defun (prc-ecpairing---is-multiple_PRECOMPILE_CALL_DATA_UNIT_SIZE___ECPAIRING)           (i1 (shift OUTGOING_RES_LO 3)))
+(defun (prc-ecpairing---insufficient-gas)                         (i1 (shift OUTGOING_RES_LO 4)))
 (defun (prc-ecpairing---precompile-cost_PRECOMPILE_CALL_DATA_UNIT_SIZE___ECPAIRING)       (*    (prc-ecpairing---is-multiple_PRECOMPILE_CALL_DATA_UNIT_SIZE___ECPAIRING)
                                                                   (+ (* GAS_CONST_ECPAIRING PRECOMPILE_CALL_DATA_UNIT_SIZE___ECPAIRING) (* GAS_CONST_ECPAIRING_PAIR (prc---cds)))))
 
@@ -34,10 +34,21 @@
                   (eq! (* (shift [OUTGOING_DATA 4] 4) PRECOMPILE_CALL_DATA_UNIT_SIZE___ECPAIRING)
                        (prc-ecpairing---precompile-cost_PRECOMPILE_CALL_DATA_UNIT_SIZE___ECPAIRING)))))
 
+;; (defconstraint prc-ecpairing---justify-hub-predictions (:guard (* (assumption---fresh-new-stamp) (prc-ecpairing---standard-precondition)))
+;;   (begin (eq! (prc---hub-success)
+;;               (* (prc-ecpairing---is-multiple_PRECOMPILE_CALL_DATA_UNIT_SIZE___ECPAIRING) (- 1 (prc-ecpairing---insufficient-gas))))
+;;          (if-zero (prc---hub-success)
+;;                   (vanishes! (prc---return-gas))
+;;                   (eq! (* (prc---return-gas) PRECOMPILE_CALL_DATA_UNIT_SIZE___ECPAIRING)
+;;                        (- (* (prc---callee-gas) PRECOMPILE_CALL_DATA_UNIT_SIZE___ECPAIRING) (prc-ecpairing---precompile-cost_PRECOMPILE_CALL_DATA_UNIT_SIZE___ECPAIRING))))))
+
 (defconstraint prc-ecpairing---justify-hub-predictions (:guard (* (assumption---fresh-new-stamp) (prc-ecpairing---standard-precondition)))
-  (begin (eq! (prc---hub-success)
-              (* (prc-ecpairing---is-multiple_PRECOMPILE_CALL_DATA_UNIT_SIZE___ECPAIRING) (- 1 (prc-ecpairing---insufficient-gas))))
-         (if-zero (prc---hub-success)
-                  (vanishes! (prc---return-gas))
-                  (eq! (* (prc---return-gas) PRECOMPILE_CALL_DATA_UNIT_SIZE___ECPAIRING)
-                       (- (* (prc---callee-gas) PRECOMPILE_CALL_DATA_UNIT_SIZE___ECPAIRING) (prc-ecpairing---precompile-cost_PRECOMPILE_CALL_DATA_UNIT_SIZE___ECPAIRING))))))
+  (if (== 0 (prc---hub-success))
+      (begin
+       (∨ (== 0 (prc-ecpairing---is-multiple_PRECOMPILE_CALL_DATA_UNIT_SIZE___ECPAIRING)) (!= 0 (prc-ecpairing---insufficient-gas)))
+       (vanishes! (prc---return-gas))
+       ;; TODO: fix constraint below
+       (eq! (* (prc---return-gas) PRECOMPILE_CALL_DATA_UNIT_SIZE___ECPAIRING)
+            (- (* (prc---callee-gas) PRECOMPILE_CALL_DATA_UNIT_SIZE___ECPAIRING) (prc-ecpairing---precompile-cost_PRECOMPILE_CALL_DATA_UNIT_SIZE___ECPAIRING))))
+      ;; else
+      (∧ (!= 0 (prc-ecpairing---is-multiple_PRECOMPILE_CALL_DATA_UNIT_SIZE___ECPAIRING)) (== 0 (prc-ecpairing---insufficient-gas)))))

@@ -11,9 +11,9 @@
 (defun (jump---pc-new-hi)                   [DATA 1])
 (defun (jump---pc-new-lo)                   [DATA 2])
 (defun (jump---code-size)                   [DATA 5])
-(defun (jump---guaranteed-exception)        [DATA 7])
-(defun (jump---jump-must-be-attempted)      [DATA 8])
-(defun (jump---valid-pc-new)                OUTGOING_RES_LO)
+(defun (jump---guaranteed-exception)        (i1 [DATA 7]))
+(defun (jump---jump-must-be-attempted)      (i1 [DATA 8]))
+(defun (jump---valid-pc-new)                (i1 OUTGOING_RES_LO))
 
 (defconstraint jump---compare-pc-new-against-code-size (:guard (* (assumption---fresh-new-stamp) (jump---standard-precondition)))
   (call-to-LT 0 (jump---pc-new-hi) (jump---pc-new-lo) 0 (jump---code-size)))
