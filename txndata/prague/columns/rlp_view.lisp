@@ -35,7 +35,7 @@
 	 ( MAX_FEE_PER_GAS                    :i64          )
 	 ( NUMBER_OF_ACCESS_LIST_ADDRESSES    :i24          )
 	 ( NUMBER_OF_ACCESS_LIST_STORAGE_KEYS :i24          )
-	 ( CHAIN_ID                           :i32          )
+	 ( CHAIN_ID                           :i24          )
 	 ( CFI                                :i16          )
 	 ( REQUIRES_EVM_EXECUTION             :binary@prove )
 	 ))
