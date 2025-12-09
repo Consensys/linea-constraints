@@ -1,7 +1,7 @@
 (module oob)
 
 (defcolumns
-  (STAMP :i16)
+  (STAMP :i32)
   (CT :i3)
   (CT_MAX :i3)
   (DATA :i128 :array [10])
