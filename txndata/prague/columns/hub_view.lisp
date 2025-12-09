@@ -31,7 +31,7 @@
                 ( VALUE                      :i128         )
                 ( GAS_LIMIT                  :i64          )
                 ( GAS_PRICE                  :i64          )
-                ( GAS_INITIALLY_AVAILABLE    :i128         )
+                ( GAS_INITIALLY_AVAILABLE    :i64          )
                 ( CALL_DATA_SIZE             :i24          )
                 ( INIT_CODE_SIZE             :i24          )
                 ( HAS_EIP_1559_GAS_SEMANTICS :binary@prove )
