@@ -24,8 +24,8 @@
 
                 ;; gas related
                 ( GAS_LIMIT                    :i64 )
-                ( GAS_INITIALLY_AVAILABLE      :i64 )
-                ( GAS_PRICE                    :i64 )
+                ( GAS_INITIALLY_AVAILABLE      :i24 )
+                ( GAS_PRICE                    :i24 )
                 ( PRIORITY_FEE_PER_GAS         :i64 )
                 ( BASEFEE                      :i64 ) ;; in Linea London this is hard-coded to 7 ... but in the reference tests this may be much larger
 
