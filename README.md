@@ -13,6 +13,8 @@ the [Apache 2.0 license](LICENSE).
 
 [Linea](https://linea.build) is a developer-ready layer 2 network scaling Ethereum. It's secured with a zero-knowledge rollup, built on lattice-based cryptography, and powered by [Consensys](https://consensys.io).
 
+Linea is supported by the execution clients [Besu](https://github.com/hyperledger/besu/) or [Geth](https://github.com/ethereum/go-ethereum) which can leverage [Maru](https://github.com/Consensys/maru) to run a full node.
+
 <!-- ## Get started
 
 tbd -->
@@ -24,7 +26,6 @@ Linea's stack is made up of multiple repositories, these include:
 - This repo, [linea-constraints](https://github.com/Consensys/linea-constraints): Implementation of the constraint system from the specification
 - [linea-monorepo](https://github.com/Consensys/linea-monorepo): The main repository for the Linea stack & network
 > Also maintains a set of Linea-Besu plugins for the sequencer, tracer, and RPC nodes.
-- [linea-besu](https://github.com/hyperledger/besu/): Besu execution client
 - [linea-tracer](https://github.com/Consensys/linea-tracer): Linea-Besu plugin which produces the traces that the constraint system applies and that serve as inputs to the prover
 - [linea-specification](https://github.com/Consensys/linea-specification): Specification of the constraint system defining Linea's zkEVM
 
