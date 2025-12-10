@@ -1,8 +1,38 @@
 include "../constants/evm.zkasm"
 
-fn recover(chain_id u256, nonce u64, address u160, y_parity u8, r u256, s u256) -> (authority u160, error u1)
-{
-    authority = 0
-    error = 0
-    return
+;; https://eips.ethereum.org/EIPS/eip-7702
+
+const SECP256K1N = 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffc2f
+
+fn rlpauth(CHAIN_ID u256, NONCE u64, ADDRESS u160, Y_PARITY u8, R u256, S u256) -> (AUTHORITY u160, ERROR u1)
+{   
+    ;; The following checks are enforced by the types above:
+    ;; assert auth.chain_id < 2**256
+    ;; assert auth.nonce < 2**64
+    ;; assert len(auth.address) == 20
+    ;; assert auth.y_parity < 2**8
+    ;; assert auth.r < 2**256
+    ;; assert auth.s < 2**256
+    step_1: 
+        if CHAIN_ID == 0 goto step_3
+        if CHAIN_ID == 1 goto step_3
+        fail
+    ;; step_2 is implicitly succeseful due to NONCE being declared as u64
+    step_3:
+        ;; Divide SECP256K1N by 2
+        var secp256k1n_divided_by_two u256
+        var b u1
+        secp256k1n_divided_by_two, b = SECP256K1N
+        ;; Check that S <= SECP256K1N / 2
+        var tmp u256
+        b, tmp = S - secp256k1n_divided_by_two
+        if b == 1 goto failure
+        ;; compute msg
+        ;; call ecrecover
+    exit:
+        AUTHORITY = 0
+        ERROR = 0
+        return
+    failure:
+        fail
 } 
