@@ -35,9 +35,9 @@
 
                 ;; end of transaction predictions
                 ( STATUS_CODE                  :binary )
-                ( GAS_LEFTOVER                 :i64    )
-                ( REFUND_COUNTER_INFINITY      :i64    )
-                ( REFUND_EFFECTIVE             :i64    )
+                ( GAS_LEFTOVER                 :i24    )
+                ( REFUND_COUNTER_INFINITY      :i24    )
+                ( REFUND_EFFECTIVE             :i24    )
 
                 ;; coinbase related
                 ( COINBASE_ADDRESS_HI          :i32  )

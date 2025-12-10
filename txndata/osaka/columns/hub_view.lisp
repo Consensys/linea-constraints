@@ -31,7 +31,7 @@
                 ( VALUE                      :i128         )
                 ( GAS_LIMIT                  :i64          )
                 ( GAS_PRICE                  :i64          )
-                ( GAS_INITIALLY_AVAILABLE    :i64          )
+                ( GAS_INITIALLY_AVAILABLE    :i24          ) ;; EIP-7825 Transaction Gas Limit cap
                 ( CALL_DATA_SIZE             :i24          )
                 ( INIT_CODE_SIZE             :i24          )
                 ( HAS_EIP_1559_GAS_SEMANTICS :binary@prove )
