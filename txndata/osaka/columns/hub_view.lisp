@@ -29,7 +29,7 @@
                 ( IS_DEPLOYMENT              :binary@prove )
                 ( NONCE                      :i64          ) ;; recall the EIP capping nonces to 2^64 - 1 or so
                 ( VALUE                      :i128         )
-                ( GAS_LIMIT                  :i64          )
+                ( GAS_LIMIT                  :i24          )
                 ( GAS_PRICE                  :i64          )
                 ( GAS_INITIALLY_AVAILABLE    :i24          ) ;; EIP-7825 Transaction Gas Limit cap
                 ( CALL_DATA_SIZE             :i24          )
@@ -40,9 +40,9 @@
                 ( CFI                        :i16          )
                 ( INIT_BALANCE               :i128         )
                 ( STATUS_CODE                :binary@prove )
-                ( GAS_LEFTOVER               :i64          )
-                ( REFUND_COUNTER_FINAL       :i64          )
-                ( REFUND_EFFECTIVE           :i64          )
+                ( GAS_LEFTOVER               :i24          )
+                ( REFUND_COUNTER_FINAL       :i24          )
+                ( REFUND_EFFECTIVE           :i24          )
                 ( EIP_4788                   :binary@prove )
                 ( EIP_2935                   :binary@prove )
                 ( NOOP                       :binary@prove )
