@@ -10,7 +10,7 @@
                  ( GAS_PRICE                        :i64  )
                  ( MAX_PRIORITY_FEE_PER_GAS         :i64  )
                  ( MAX_FEE_PER_GAS                  :i64  )
-                 ( GAS_LIMIT                        :i64  )
+                 ( GAS_LIMIT                        :i25  )
                  ( TO_HI                            :i32  )
                  ( TO_LO                            :i128 )
                  ( VALUE                            :i96  )
