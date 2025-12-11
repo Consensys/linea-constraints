@@ -33,7 +33,7 @@
   (GAS_LEFTOVER            :i25)
   (REFUND_COUNTER          :i25)
   (REFUND_EFFECTIVE        :i25)
-  (GAS_CUMULATIVE          :i25)
+  (GAS_CUMULATIVE          :i64)
   (STATUS_CODE             :binary@prove)
   (PHASE_RLP_TXN           :byte)
   (PHASE_RLP_TXNRCPT       :byte)
