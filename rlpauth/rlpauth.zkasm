@@ -2,6 +2,7 @@ include "../constants/evm.zkasm"
 
 ;; https://eips.ethereum.org/EIPS/eip-7702
 
+;; TODO: here we can directly have secp256k1n_divided_by_two
 const SECP256K1N = 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffc2f
 
 fn rlpauth(CHAIN_ID u256, NONCE u64, ADDRESS u160, Y_PARITY u8, R u256, S u256) -> (AUTHORITY u160, ERROR u1)
