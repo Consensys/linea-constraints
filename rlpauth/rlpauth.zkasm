@@ -2,10 +2,12 @@ include "../constants/evm.zkasm"
 
 ;; https://eips.ethereum.org/EIPS/eip-7702
 
+;; TODO: do we have an shared notation for constants, function arguments...?
 ;; TODO: here we can directly have secp256k1n_divided_by_two
 const SECP256K1N = 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffc2f
+const MAGIC = 0x05
 
-fn rlpauth(CHAIN_ID u256, NONCE u64, ADDRESS u160, Y_PARITY u8, R u256, S u256) -> (AUTHORITY u160, ERROR u1)
+fn rlpauth(chain_id u256, nonce u64, address u160, y_parity u8, r u256, s u256) -> (authority u160, error u1)
 {   
     ;; The following checks are enforced by the types above:
     ;; assert auth.chain_id < 2**256
@@ -15,25 +17,74 @@ fn rlpauth(CHAIN_ID u256, NONCE u64, ADDRESS u160, Y_PARITY u8, R u256, S u256) 
     ;; assert auth.r < 2**256
     ;; assert auth.s < 2**256
     step_1: 
-        if CHAIN_ID == 0 goto step_3
-        if CHAIN_ID == 1 goto step_3
+        if chain_id == 0 goto step_3
+        if chain_id == 1 goto step_3 ;; TODO: this should check current chain_id instead
         fail
-    ;; step_2 is implicitly succeseful due to NONCE being declared as u64
+    ;; step_2 is implicitly succeseful due to nonce being declared as u64
     step_3:
         ;; Divide SECP256K1N by 2
         var secp256k1n_divided_by_two u256
         var b u1
         secp256k1n_divided_by_two, b = SECP256K1N
-        ;; Check that S <= SECP256K1N / 2
+        ;; Check that s <= SECP256K1N / 2
         var tmp u256
-        b, tmp = S - secp256k1n_divided_by_two
+        b, tmp = s - secp256k1n_divided_by_two
         if b == 1 goto failure
-        ;; compute msg
-        ;; call ecrecover
+        ;;
+        var rlp_res u256
+        rlp_res = compute_rlp(chain_id, address, nonce)
+        ;;
+        var keccak_input u264
+        keccak_input = compute_concat_magic_and_rlp(MAGIC, rlp_res)
+        ;;
+        var msg u256
+        msg = keccak(keccak_input)
+        authority = ecrecover(msg, y_parity, r, s)
+    step_4:
+        ;; Add authority to accessed_addresses, as defined in EIP-2929. Does it have any effect here?
+    step_5:
+        ;; if authority is emtpy goto step_6
+        ;; if authority is already delegated goto step_6
+        ;; fail  
+    step_6:
+        ;; if authority.nonce == nonce goto step_7
+        ;; fail
+    step_7:
+        ;; Add PER_EMPTY_ACCOUNT_COST - PER_AUTH_BASE_COST gas to the global refund counter if authority is not empty. Does it have any effect here?
+    step_8:
+        ;; if address == 0x0000000000000000000000000000000000000000 goto "authority.code_hash = 0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470"
+        ;; authority.code = 0xef0100 || address
+    step_9:
+        ;; authority.nonce = authority.nonce + 1
     exit:
-        AUTHORITY = 0
-        ERROR = 0
+        ;; dummy values
+        authority = 0
+        error = 0
         return
     failure:
         fail
-} 
+}
+
+;; temporary dummy functions
+;; TODO: determine the exact size of RLP
+fn compute_rlp(chain_id u256, address u160, nonce u64) -> (rlp_res u256) {
+    rlp_res = 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffc2f
+    return
+}
+
+fn compute_concat_magic_and_rlp(magic u8, rlp u256) -> (concat_res u264) {
+    ;; TODO: how to concat? 
+    ;; concat_res = magic, rlp?
+    concat_res = 0x05fffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffc2f
+    return
+}
+
+fn keccak(keccak_input u264) -> (keccak_output u256) {
+    keccak_output = 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffc2f
+    return
+}
+
+fn ecrecover(msg u256, y_parity u8, r u256, s u256) -> (ecrecover_result u160) {
+    ecrecover_result = 0xfffffffffffffffffffffffffffffffefffffc2f
+    return
+}
