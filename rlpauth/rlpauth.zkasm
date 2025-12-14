@@ -73,8 +73,6 @@ fn compute_rlp(chain_id u256, address u160, nonce u64) -> (rlp_res u256) {
 }
 
 fn compute_concat_magic_and_rlp(magic u8, rlp_res u256) -> (concat_res u264) {
-    ;; TODO: how to concat? 
-    ;; concat_res = magic, rlp_res?
     concat_res = (magic * 2^256) + rlp_res
     return
 }
