@@ -70,6 +70,8 @@ OOB_OSAKA := oob/osaka
 
 RLP_ADDR := rlpaddr
 
+RLP_AUTH := rlpauth/rlpauth.zkasm
+
 RLP_TXN_LONDON := rlptxn/london
 RLP_TXN_CANCUN := rlptxn/cancun
 RLP_TXN_PRAGUE := rlptxn/cancun
@@ -196,6 +198,7 @@ ZKEVM_MODULES_PRAGUE := ${ZKEVM_MODULES_COMMON} \
 		 ${MMU_LONDON} \
 		 ${MXP_CANCUN} \
 		 ${OOB_PRAGUE} \
+		 ${RLP_AUTH} \
 		 ${RLP_TXN_PRAGUE} \
 		 ${RLP_UTILS_CANCUN} \
 		 ${TRM_LONDON} \
@@ -214,6 +217,7 @@ ZKEVM_MODULES_OSAKA := ${ZKEVM_MODULES_COMMON} \
 		 ${MMU_OSAKA} \
 		 ${MXP_CANCUN} \
 		 ${OOB_OSAKA} \
+		 ${RLP_AUTH} \
 		 ${RLP_TXN_PRAGUE} \
 		 ${RLP_UTILS_CANCUN} \
 		 ${TRM_OSAKA} \
