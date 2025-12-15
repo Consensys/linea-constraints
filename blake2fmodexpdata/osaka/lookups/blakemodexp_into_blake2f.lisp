@@ -1,7 +1,9 @@
-(defun (blakemodexp-to-blake2f-selector)
-  (* blakemodexp.IS_BLAKE_DATA))
+(defun (blake2fmodexp-start-data-phase)
+  (force-bin (- blake2fmodexpdata.ID
+                (prev blake2fmodexpdata.ID))))
 
-;; add IDs
+(defun (blakemodexp-to-blake2f-selector)
+  (* (blake2fmodexp-start-data-phase) blakemodexp.IS_BLAKE_DATA))
 
 (defclookup
   blakemodexp-into-blake2f
