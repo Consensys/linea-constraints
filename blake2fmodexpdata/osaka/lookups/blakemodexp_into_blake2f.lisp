@@ -20,6 +20,12 @@
     (:: blake2f.m12      blake2f.m13     )
     (:: blake2f.m14      blake2f.m15     )
     (:: blake2f.to       blake2f.t1      )
+    blake2f.r
+    blake2f.f
+    (:: blake2f.h0       blake2f.h1      )
+    (:: blake2f.h2       blake2f.h3      )
+    (:: blake2f.h4       blake2f.h5      )
+    (:: blake2f.h6       blake2f.h7      )
   )
   ;; source selector
   (blakemodexp-to-blake2f-selector)
@@ -38,5 +44,11 @@
     (shift blakemodexp.LIMB 10)
     (shift blakemodexp.LIMB 11)
     (shift blakemodexp.LIMB 12)
+    (shift blakemodexp.LIMB 13)
+    (shift blakemodexp.LIMB 14)
+    (shift blakemodexp.LIMB 15)
+    (shift blakemodexp.LIMB 16)
+    (shift blakemodexp.LIMB 17)
+    (shift blakemodexp.LIMB 18)
   ))
 
