@@ -38,7 +38,7 @@ const RLP_PREFIX_LIST_SHORT                     = 0xC0     ;; RLP prefix of a sh
 const RLP_PREFIX_LIST_LONG                      = 0xF7     ;; RLP prefix of a long list     (≥ 56 bytes), defined in the EYP = 247
 const RLP_PREFIX_FROM_LONG_TO_SHORT             = 0x37     ;; diff between short and long prefix = 55
 const RLP_FROM_INT_TO_LIST                      = 0x40     ;; diff between int and list prefix = 64
-const TWO_FIVE_SIX_POWER_SIXTEEN                = 0x01000000000000000000000000000000 ;; 
+const TWO_FIVE_SIX_POWER_FIFTEEN                = 0x01000000000000000000000000000000 ;; 
 
 ;; =============================================================================
 ;; Wcp
