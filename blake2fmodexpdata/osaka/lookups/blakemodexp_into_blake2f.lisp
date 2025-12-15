@@ -25,6 +25,18 @@
   (blakemodexp-to-blake2f-selector)
   ;; source columns
   (
-    blakemodexp.LIMB
+    (shift blakemodexp.LIMB 0 )
+    (shift blakemodexp.LIMB 1 )
+    (shift blakemodexp.LIMB 2 )
+    (shift blakemodexp.LIMB 3 )
+    (shift blakemodexp.LIMB 4 )
+    (shift blakemodexp.LIMB 5 )
+    (shift blakemodexp.LIMB 6 )
+    (shift blakemodexp.LIMB 7 )
+    (shift blakemodexp.LIMB 8 )
+    (shift blakemodexp.LIMB 9 )
+    (shift blakemodexp.LIMB 10)
+    (shift blakemodexp.LIMB 11)
+    (shift blakemodexp.LIMB 12)
   ))
 
