@@ -12,6 +12,8 @@ ALU := alu/add/add.zkasm alu/ext alu/mod alu/mul
 
 BIN := bin/bin.zkasm
 
+BLAKE_2f_OSAKA := blake2f/blake2f.zkasm
+
 BLAKE2f_MODEXP_DATA_LONDON := blake2fmodexpdata/london
 BLAKE2f_MODEXP_DATA_OSAKA  := blake2fmodexpdata/osaka
 
@@ -204,6 +206,7 @@ ZKEVM_MODULES_PRAGUE := ${ZKEVM_MODULES_COMMON} \
 ZKEVM_MODULES_OSAKA := ${ZKEVM_MODULES_COMMON} \
 		 ${CONSTANTS_OSAKA} \
 		 ${TABLES_PRAGUE} \
+		 ${BLAKE_2f_OSAKA} \
 		 ${BLAKE2f_MODEXP_DATA_OSAKA} \
 		 ${BLOCKDATA_CANCUN} \
 		 ${BLS_PRAGUE} \
