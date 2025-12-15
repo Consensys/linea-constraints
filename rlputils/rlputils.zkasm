@@ -1,8 +1,9 @@
-;; BIN module
+;; RLP_UTILS module
+
 include "../constants/evm.zkasm"
-include "../util/log256.zkasm"
 include "../util/padding.zkasm"
 include "../util/byte_counting.zkasm"
+include "../util/byte_size.zkasm"
 
 ;; The interface with RLP* modules is as follow
 ;; TODO, insert interface
@@ -45,7 +46,7 @@ exit_trivial:
 ;; DATA_8 = leading_limb_byte_size
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 integer:
-   if DATA_1 != 0 goto integer_two_limbs goto integer_two_limbs
+   if DATA_1 != 0 goto integer_two_limbs
    if DATA_4 != 0 goto exit_fail ;; sanity check that integer_hi != 0
 
    if DATA_2 != 0 goto integer_one_limb_non_zero
@@ -58,13 +59,14 @@ integer:
    return
 
 integer_one_limb_non_zero:
-   if DATA_3 != 1 goto exit_fail ;; sanity check that integer == 1
+   if DATA_3 != 1 goto exit_fail ;; sanity check that integer_is_non_zero == 1
    if data_2_lt_128 != 0 goto integer_very_low
 
    ;; case 128 <= integer <= 2 ^128
    if DATA_5 != 1 goto exit_fail ;; sanity check that rlp_prefix_required = true
-   DATA_8 = log256_u128(DATA_2)
-   DATA_6 = (RLP_PREFIX_INT_SHORT + DATA_8) * TWO_FIVE_SIX_POWER_SIXTEEN
+   DATA_8 = byte_size(DATA_2)
+   var c1 u1
+   c1, DATA_6 = (RLP_PREFIX_INT_SHORT + DATA_8) * TWO_FIVE_SIX_POWER_FIFTEEN
    DATA_7 = rpad_128(DATA_2)
    return
 
@@ -78,8 +80,9 @@ integer_very_low:
 integer_two_limbs: 
    if DATA_4 == 0 goto exit_fail ;; sanity check that integer_hi != 0
    if DATA_5 != 1 goto exit_fail ;; sanity check that rlp_prefix_required = true
-   DATA_8 = log256_u128(DATA_1)
-   DATA_6 = (RLP_PREFIX_INT_SHORT + 16 + DATA_8) * TWO_FIVE_SIX_POWER_SIXTEEN
+   DATA_8 = byte_size(DATA_1)
+   var c2 u1
+   c2, DATA_6 = (RLP_PREFIX_INT_SHORT + 16 + DATA_8) * TWO_FIVE_SIX_POWER_FIFTEEN
    DATA_7 = rpad_128(DATA_1)
    return
 
@@ -99,10 +102,11 @@ integer_two_limbs:
 
 bytestring:
    ;; check for empty bytestring:
-   if DATA_4 !=0 goto bytestring_non_empty_case
+   if DATA_4 != 0 goto bytestring_non_empty_case
    if DATA_1 !=0 goto exit_fail
    ;; empty case:
-   DATA_6 = (128 + (DATA_3 * RLP_FROM_INT_TO_LIST)) * TWO_FIVE_SIX_POWER_SIXTEEN
+   if DATA_5 != 1 goto exit_fail ;; there is a RLP prefix for the empty case
+   DATA_6 = (128 + (DATA_3 * RLP_FROM_INT_TO_LIST)) * TWO_FIVE_SIX_POWER_FIFTEEN
    DATA_7 = 0
    DATA_8 = 1
    return
@@ -126,8 +130,8 @@ bytestring_prefix_required:
    goto bytestring_long_input
 
 bytestring_long_input:
-   var size u4
-   size = log256_u128(DATA_1)
+   var size u6
+   size = byte_size(DATA_1)
    DATA_8 = size + 1
    rlp_prefix_tmp = rpad_128(RLP_PREFIX_INT_LONG + (DATA_3 * RLP_FROM_INT_TO_LIST) + size)
    var rlp_prefix_suffix u120
@@ -143,6 +147,12 @@ bytestring_short_input:
    DATA_6 = rpad_128(rlp_prefix_tmp)
    return
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; This instruction does only a range check of DATA1, DATA2, a uint256
+;; Input: 
+;; DATA_1 = limb high
+;; DATA_2 = limb low
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 eword:
    ;; Input: DATA_1:DATA_2
    ;; proof that DATA_1:DATA_2 is a u256 is automatic
@@ -159,11 +169,23 @@ eword:
 ;; DATA_8 = first_byte
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 data_pricing:
+   ;; 0 < DATA_2 <= 16
+   var zero123 u123
+   var data2_trm u5
+   zero123, data2_trm = DATA_2
+   if zero123 != 0 goto exit_fail
+   if data2_trm == 0 goto exit_fail
+   var b4 u1
+   var tmp_u5 u5
+   b4, tmp_u5 = 16 - data2_trm
+   if b4 != 0 goto exit_fail
+
    var remaining u120
    DATA_8, remaining = DATA_1
-   DATA_7 = counts_nz_128(DATA_1, DATA_2)
+
+   DATA_7 = counts_nz_128(DATA_1, data2_trm)
    var b u1
    b, DATA_6 = DATA_2 - DATA_7
-   if b != 0 goto exit_fail ;; sanity check, not sure it's needed ...
+   if b != 0 goto exit_fail ;; sanity check that z + nz = nBytes
    return
 }
