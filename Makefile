@@ -73,7 +73,9 @@ RLP_ADDR := rlpaddr
 RLP_TXN_LONDON := rlptxn/london
 RLP_TXN_CANCUN := rlptxn/cancun
 RLP_TXN_PRAGUE := rlptxn/cancun
+RLP_TXN_OSAKA  := rlptxn/osaka
 # TODO: update for Prague v2 + add RLP_AUTH
+# only difference between cancun and prague is the size of GAS_LIMIT (i25 vs i32)
 
 RLP_TXN_RCPT := rlptxrcpt
 
@@ -214,7 +216,7 @@ ZKEVM_MODULES_OSAKA := ${ZKEVM_MODULES_COMMON} \
 		 ${MMU_OSAKA} \
 		 ${MXP_CANCUN} \
 		 ${OOB_OSAKA} \
-		 ${RLP_TXN_PRAGUE} \
+		 ${RLP_TXN_OSAKA} \
 		 ${RLP_UTILS_CANCUN} \
 		 ${TRM_OSAKA} \
 		 ${TXN_DATA_OSAKA}
