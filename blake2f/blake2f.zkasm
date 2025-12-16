@@ -16,7 +16,7 @@ const IV_7 = 0x5BE0CD19137E2179
 ;; corresponds to the default value for padding h0, h1 ... h7
 ;; cannot use constants for padding default for now
 
-pub fn F(r u32, h0_input u64, h1_input u64, h2_input u64, h3_input u64, h4_input u64, h5_input u64, h6_input u64, h7_input u64, m0 u64, m1 u64, m2 u64, m3 u64, m4 u64, m5 u64, m6 u64, m7 u64, m8 u64, m9 u64, m10 u64, m11 u64, m12 u64, m13 u64, m14 u64, m15 u64, t0 u64, t1 u64, f u1 ) -> (h0=0x6A09E667F3BCC908 u64, h1=0xBB67AE8584CAA73B u64, h2=0x3C6EF372FE94F82B u64, h3=0xA54FF53A5F1D36F1 u64, h4=0x510E527FADE682D1 u64, h5=0x9B05688C2B3E6C1F u64, h6=0x1F83D9ABFB41BD6B u64, h7=0x5BE0CD19137E2179 u64) {
+pub fn blake2f(r u32, h0_input u64, h1_input u64, h2_input u64, h3_input u64, h4_input u64, h5_input u64, h6_input u64, h7_input u64, m0 u64, m1 u64, m2 u64, m3 u64, m4 u64, m5 u64, m6 u64, m7 u64, m8 u64, m9 u64, m10 u64, m11 u64, m12 u64, m13 u64, m14 u64, m15 u64, t0 u64, t1 u64, f u1 ) -> (h0=0x6A09E667F3BCC908 u64, h1=0xBB67AE8584CAA73B u64, h2=0x3C6EF372FE94F82B u64, h3=0xA54FF53A5F1D36F1 u64, h4=0x510E527FADE682D1 u64, h5=0x9B05688C2B3E6C1F u64, h6=0x1F83D9ABFB41BD6B u64, h7=0x5BE0CD19137E2179 u64) {
       ;; v array variables and initialization
       var v0, v1, v2, v3, v4, v5, v6, v7, v8, v9 u64
       var v10, v11, v12, v13, v14, v15 u64
