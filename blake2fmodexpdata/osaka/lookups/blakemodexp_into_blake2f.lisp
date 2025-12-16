@@ -1,12 +1,9 @@
-(defun (blake2fmodexp-start-data-phase)
-  (force-bin (- blake2fmodexpdata.ID
-                (prev blake2fmodexpdata.ID))))
-
 (defun (blakemodexp-to-blake2f-selector)
-  (* (blake2fmodexp-start-data-phase) blakemodexp.IS_BLAKE_DATA))
+  (* (- 1 (prev blakemodexp.IS_BLAKE_DATA)) blakemodexp.IS_BLAKE_DATA))
 
 (defclookup
-  blakemodexp-into-blake2f
+  (blakemodexp-into-blake2f :unchecked)
+  ;; unchecked because of r and f
   ;; target columns
   (
     (:: blake2f.h0_input blake2f.h1_input)
