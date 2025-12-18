@@ -9,7 +9,7 @@ include "../util/bit_xoan.zkasm"
 ;;  DIV      ARG_1  /  ARG_2                               0x04
 ;;  MOD      ARG_1  %  ARG_2                               0x06
 ;; SDIV*   (|ARG_1| / |ARG_2|) * sign(ARG_1) * sign(ARG2)  0x05
-;; SMOD    (|ARG_1| * |ARG_2|) * sign(ARG_1)               0x07
+;; SMOD    (|ARG_1| % |ARG_2|) * sign(ARG_1)               0x07
 ;;
 ;; NOTES: the division "/" and remainder "%" operators used above both
 ;; return zero when the divisor is zero.  The absolute function "|X|"
@@ -41,6 +41,8 @@ smod:
   return
 }
 
+;; Perform signed division as per the semantics of the Yellow Paper
+;; (see above for handling of signs).
 fn signed_divide(num u256, den=1 u256) -> (quot u256, rem u256) {
   var num_s, den_s u1
   var abs_num, abs_den u256
@@ -102,8 +104,8 @@ fn negate(val u256) -> (neg_val u256) {
   return
 }
 
-;; Divide numerator by denominator, where divizion by zero is resolved
-;; as 0 / 0.
+;; Divide numerator by denominator, where divizion by zero evaluates
+;; to 0 (as per the Yellow Paper).
 fn divide(num u256, den=1 u256) -> (quot u256, rem u256) {
   var sum u512
   var witsum u257

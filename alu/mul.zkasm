@@ -5,9 +5,11 @@ include "../constants/evm.zkasm"
 ;; which of these instructions is being computed:
 ;;
 ;; MUL    (ARG_1 * ARG_2) % 2^256                   0x02
-;; EXP    (ARG_1 - ARG_2) % 2^256                   0x0a
+;; EXP    (ARG_1 ^ ARG_2) % 2^256                   0x0a
 ;;
-;; Both of these operate on u256 words with "wrap around" semantics.
+;; Here, "^" represents exponentiation (i.e. "power of" where
+;; e.g. 2^16=65536).  Both of these operate on u256 words with "wrap
+;; around" semantics.
 pub fn mul(INST=0x2 u8, ARG_1 u256, ARG_2 u256) -> (RES u256) {
   if INST==EVM_INST_MUL goto mul
   if INST==EVM_INST_EXP goto exp
@@ -24,7 +26,8 @@ exp:
 ;; compute n^k
 fn pow(n u256, k u256) -> (res=1 u256) {
   var tmp1, tmp2, val u256
-  var nk2, i u256
+  var nk2 u256
+  var i u255
   var b u1
   ;;
   if k == 0 goto one
