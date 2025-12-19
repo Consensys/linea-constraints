@@ -16,6 +16,7 @@ fn oob_prc(INST=0xFF01 u16, DATA_1 u128, DATA_2 u128, DATA_3 u128, DATA_4 u128, 
   inst_hi, inst_lo = INST
   ;; type 1 & 2 checks
   if inst_hi == 0xFF goto oob_type12
+  if inst_hi == 0xF1 goto oob_type12
   ;; blake
   if INST == OOB_INST_BLAKE_CDS goto oob_blake_cds
   if INST == OOB_INST_BLAKE_PARAMS goto oob_blake_pricing
@@ -161,7 +162,7 @@ fn oob_prc_pricing(inst=0xFF01 u16, callee_gas u128, cds u32, r_c u128) -> (succ
   success = 1
   return_gas = delta
   extract_call_data = cds != 0 ? 1 : 0
-  empty_call_data = 1 - extract_call_data
+  empty_call_data = inst == OOB_INST_P256_VERIFY ? 0 : 1 - extract_call_data
   return
 exit_f:
   success = 0
@@ -266,6 +267,7 @@ fn oob_gas_cost(INST=0xFF01 u16, call_data_size u32) -> (gas_cost=3000 u34) {
   if INST == OOB_INST_BLS_G1_MSM goto bls_g1msm
   if INST == OOB_INST_BLS_G2_MSM goto bls_g2msm
   if INST == OOB_INST_BLS_PAIRING_CHECK goto bls_pairing
+  if INST == OOB_INST_P256_VERIFY goto p256_verify
   fail
 ecrecover:
   gas_cost = G_ECDSA
@@ -329,6 +331,9 @@ bls_g2msm:
 bls_pairing:
   k,r,w,s,ws = call_data_size / 384
   c,gas_cost = (k * 32600) + 37700
+  return
+p256_verify:
+  gas_cost = G_P256_VERIFY
   return
 exit_f:
   fail
