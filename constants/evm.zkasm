@@ -55,6 +55,7 @@ const OOB_INST_BLS_G2_MSM                       = 0xFF0E
 const OOB_INST_BLS_PAIRING_CHECK                = 0xFF0F
 const OOB_INST_BLS_MAP_FP_TO_G1                 = 0xFF10
 const OOB_INST_BLS_MAP_FP2_TO_G2                = 0xFF11
+const OOB_INST_P256_VERIFY                      = 0xF100
 ;; blake
 const OOB_INST_BLAKE_CDS                        = 0xFA09
 const OOB_INST_BLAKE_PARAMS                     = 0xFB09
