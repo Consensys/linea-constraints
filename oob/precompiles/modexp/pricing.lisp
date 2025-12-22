@@ -19,7 +19,7 @@
 
 
 (defun (prc-modexp-pricing---standard-precondition)                (*   (assumption---fresh-new-stamp) IS_MODEXP_PRICING))
-(defun (prc-modexp-pricing---exponent-log)                         [DATA 6])
+(defun (prc-modexp-pricing---exponent-log)                         (i12 [DATA 6]))
 (defun (prc-modexp-pricing---max-mbs-bbs)                          [DATA 7])
 ;; ""
 
@@ -58,7 +58,7 @@
                                     (prc-modexp-pricing---exponent-log)
                                     ))
 
-(defun   (prc-modexp-pricing---exponent-log-is-zero)  (shift   OUTGOING_RES_LO   ROFF___MODEXP_PRICING___EXPONENT_LOG_ISZERO_CHECK))
+(defun   (prc-modexp-pricing---exponent-log-is-zero)  (i1 (shift   OUTGOING_RES_LO   ROFF___MODEXP_PRICING___EXPONENT_LOG_ISZERO_CHECK)))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

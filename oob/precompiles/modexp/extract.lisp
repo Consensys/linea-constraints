@@ -14,9 +14,9 @@
 (defun (prc-modexp-extract---extract-base)                          [DATA 6])
 (defun (prc-modexp-extract---extract-exponent)                      [DATA 7])
 (defun (prc-modexp-extract---extract-modulus)                       [DATA 8])
-(defun (prc-modexp-extract---bbs-is-zero)                           OUTGOING_RES_LO)
-(defun (prc-modexp-extract---ebs-is-zero)                           (next OUTGOING_RES_LO))
-(defun (prc-modexp-extract---mbs-is-zero)                           (shift OUTGOING_RES_LO 2))
+(defun (prc-modexp-extract---bbs-is-zero)                           (i1 OUTGOING_RES_LO))
+(defun (prc-modexp-extract---ebs-is-zero)                           (i1 (next OUTGOING_RES_LO)))
+(defun (prc-modexp-extract---mbs-is-zero)                           (i1 (shift OUTGOING_RES_LO 2)))
 (defun (prc-modexp-extract---call-data-extends-beyond-exponent)     (shift OUTGOING_RES_LO 3))
 
 (defconstraint prc-modexp-extract---check-bbs-is-zero (:guard (* (assumption---fresh-new-stamp) (prc-modexp-extract---standard-precondition)))

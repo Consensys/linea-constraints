@@ -10,8 +10,8 @@
 (defun (prc-blake-params---standard-precondition)          IS_BLAKE2F_PARAMS)
 (defun (prc-blake-params---blake-r)                        [DATA 6])
 (defun (prc-blake-params---blake-f)                        [DATA 7])
-(defun (prc-blake-params---sufficient-gas)                 (- 1 OUTGOING_RES_LO))
-(defun (prc-blake-params---f-is-a-bit)                     (next OUTGOING_RES_LO))
+(defun (prc-blake-params---sufficient-gas)                 (- 1 (i1 OUTGOING_RES_LO)))
+(defun (prc-blake-params---f-is-a-bit)                     (next (i1 OUTGOING_RES_LO)))
 
 
 (defconstraint prc-blake-params---compare-call-gas-against-blake-r (:guard (* (assumption---fresh-new-stamp) (prc-blake-params---standard-precondition)))
