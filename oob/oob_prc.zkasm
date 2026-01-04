@@ -196,9 +196,9 @@ fn oob_cds_valid(INST=0xFF01 u16, call_data_size u32) -> (cds_valid=1 u1) {
   if INST == OOB_INST_BLS_G2_ADD goto cds_512
   if INST == OOB_INST_BLS_MAP_FP_TO_G1 goto cds_64
   if INST == OOB_INST_BLS_MAP_FP2_TO_G2 goto cds_128
-  if INST == OOB_INST_BLS_G1_MSM goto cds_mod160
-  if INST == OOB_INST_BLS_G2_MSM goto cds_mod288
-  if INST == OOB_INST_BLS_PAIRING_CHECK goto cds_mod384
+  if INST == OOB_INST_BLS_G1_MSM goto cds_mod160nz
+  if INST == OOB_INST_BLS_G2_MSM goto cds_mod288nz
+  if INST == OOB_INST_BLS_PAIRING_CHECK goto cds_mod384nz
   ;; default case
   goto exit_s
 cds_64:
@@ -219,22 +219,25 @@ cds_256:
 cds_512:
   if call_data_size == 512 goto exit_s
   goto exit_f
-cds_mod160:
-  ;; check cds%160==0
+cds_mod160nz:
+  ;; check cds%160==0 ∧ cds!=0
   divisor = 160
-  goto cds_mod
+  goto cds_mod_nz
 cds_mod192:
   ;; check cds%192==0
   divisor = 192
   goto cds_mod
-cds_mod288:
-  ;; check cds%288==0
+cds_mod288nz:
+  ;; check cds%288==0 ∧ cds!=0
   divisor = 288
-  goto cds_mod
-cds_mod384:
-  ;; check cds%384==0
+  goto cds_mod_nz
+cds_mod384nz:
+  ;; check cds%384==0 ∧ cds!=0
   divisor = 384
-  goto cds_mod
+  goto cds_mod_nz
+cds_mod_nz:
+  ;; ensure cds != 0
+  if call_data_size == 0 goto exit_f
 cds_mod:
   ;; compute cds%288
   quot,rem,wit,sum,witsum = call_data_size / divisor
