@@ -151,19 +151,26 @@ fn oob_prc_pricing(inst=0xFF01 u16, callee_gas u128, cds u32, r_c u128) -> (succ
   var b u1
   ;; calculate r@c != 0
   rc_nz = r_c != 0 ? 1 : 0
-  ;; cds validity
-  cds_valid = oob_cds_valid(inst,cds)
-  if cds_valid == 0 goto exit_f
   ;; calculate gas_cost
   gas_cost = oob_gas_cost(inst, cds)
   ;; check gas_cost <= callee_gas
   b, delta = callee_gas - gas_cost
   if b != 0 goto exit_f
+  ;; cds validity
+  cds_valid = oob_cds_valid(inst,cds)
+  if inst == OOB_INST_P256_VERIFY goto p256verify
+  if cds_valid == 0 goto exit_f  
   success = 1
   return_gas = delta
   extract_call_data = cds != 0 ? 1 : 0
   empty_call_data = inst == OOB_INST_P256_VERIFY ? 0 : 1 - extract_call_data
   return
+p256verify:
+  success = 1
+  return_gas = delta
+  extract_call_data = cds == 160 ? 1 : 0
+  empty_call_data = 0
+  return  
 exit_f:
   success = 0
   return_gas = 0
