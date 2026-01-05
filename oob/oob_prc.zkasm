@@ -163,7 +163,7 @@ fn oob_prc_pricing(inst=0xFF01 u16, callee_gas u128, cds u32, r_c u128) -> (succ
   success = 1
   return_gas = delta
   extract_call_data = cds != 0 ? 1 : 0
-  empty_call_data = inst == OOB_INST_P256_VERIFY ? 0 : 1 - extract_call_data
+  empty_call_data = 1 - extract_call_data
   return
 p256verify:
   success = 1
