@@ -6,19 +6,19 @@
   ;; unchecked because of r and f
   ;; target columns
   (
-    (:: blake2f.h0_input blake2f.h1_input)
-    (:: blake2f.h2_input blake2f.h3_input)
-    (:: blake2f.h4_input blake2f.h5_input)
-    (:: blake2f.h6_input blake2f.h7_input)
-    (:: blake2f.m0       blake2f.m1      )
-    (:: blake2f.m2       blake2f.m3      )
-    (:: blake2f.m4       blake2f.m5      )
-    (:: blake2f.m6       blake2f.m7      )
-    (:: blake2f.m8       blake2f.m9      )
-    (:: blake2f.m10      blake2f.m11     )
-    (:: blake2f.m12      blake2f.m13     )
-    (:: blake2f.m14      blake2f.m15     )
-    (:: blake2f.t0       blake2f.t1      )
+    (:: blake2f.h0_be_input blake2f.h1_be_input)
+    (:: blake2f.h2_be_input blake2f.h3_be_input)
+    (:: blake2f.h4_be_input blake2f.h5_be_input)
+    (:: blake2f.h6_be_input blake2f.h7_be_input)
+    (:: blake2f.m0_be       blake2f.m1_be      )
+    (:: blake2f.m2_be       blake2f.m3_be      )
+    (:: blake2f.m4_be       blake2f.m5_be      )
+    (:: blake2f.m6_be       blake2f.m7_be      )
+    (:: blake2f.m8_be       blake2f.m9_be      )
+    (:: blake2f.m10_be      blake2f.m11_be     )
+    (:: blake2f.m12_be      blake2f.m13_be     )
+    (:: blake2f.m14_be      blake2f.m15_be     )
+    (:: blake2f.t0_be       blake2f.t1_be      )
     blake2f.r
     blake2f.f
     (:: blake2f.h0       blake2f.h1      )
