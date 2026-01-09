@@ -29,7 +29,7 @@
 
 (defun (stateless-instructions---classifier) (force-bin (+ stack/ADD_FLAG
                                                 stack/BIN_FLAG
-                                                stack/BLOB_VERSIONED_HASH_FLAG
+                                                stack/BLOB_HASH_FLAG
                                                 stack/EXT_FLAG
                                                 stack/MOD_FLAG
                                                 stack/MUL_FLAG
@@ -39,7 +39,7 @@
                                              [ stack/DEC_FLAG 2 ])))
 (defun (stateless-instruction---isnt-EXP) (force-bin (+ stack/ADD_FLAG
                                              stack/BIN_FLAG
-                                             stack/BLOB_VERSIONED_HASH_FLAG
+                                             stack/BLOB_HASH_FLAG
                                              stack/EXT_FLAG
                                              stack/MOD_FLAG
                                              stack/SHF_FLAG
@@ -47,7 +47,7 @@
                                              (* stack/MUL_FLAG [ stack/DEC_FLAG 1 ]))))
 (defun (stateless-instruction---1-argument-instruction) (force-bin (+ (* (+ stack/BIN_FLAG stack/WCP_FLAG)
                                                                          [ stack/DEC_FLAG 1 ])
-                                                                      stack/BLOB_VERSIONED_HASH_FLAG)))
+                                                                      stack/BLOB_HASH_FLAG)))
 (defun (stateless-instruction---2-argument-instruction) (force-bin (+ stack/ADD_FLAG
                                                            (* stack/BIN_FLAG (- 1 [ stack/DEC_FLAG 1 ]))
                                                            stack/MOD_FLAG

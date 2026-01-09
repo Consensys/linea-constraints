@@ -8,7 +8,7 @@
 ;; - at least one BLOB for BLOB txs
 ;; - first byte of blob hash is VERSIONED_HASH_VERSION_KZG
 
-pub fn blobVersionedHashes(USER_TXN_NUMBER u24, TOT_NUMBER_OF_HASHES u16, HASH_INDEX u256, BLOB_VERSION_HASH u256) -> (OOI=0x01 u1) {
+pub fn blobHash(USER_TXN_NUMBER u24, TOT_NUMBER_OF_HASHES u16, HASH_INDEX u256, BLOB_VERSION_HASH u256) -> (OOI=0x01 u1) {
     ;; first check if Out Of Index
     var tmp u256
     OOI, tmp = TOT_NUMBER_OF_HASHES - HASH_INDEX - 1 ;; index starts at 0
@@ -19,7 +19,7 @@ pub fn blobVersionedHashes(USER_TXN_NUMBER u24, TOT_NUMBER_OF_HASHES u16, HASH_I
   
     ;; check that first byte is VERSIONED_HASH_VERSION_KZG
     var first_byte u8
-    var remainder u 248
+    var remainder u248
     first_byte, remainder = BLOB_VERSION_HASH
     if first_byte != VERSIONED_HASH_VERSION_KZG goto exit_fail
 

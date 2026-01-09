@@ -1,13 +1,13 @@
 (defun (hub-into-blob-hash-activation-flag)
   (* (unexceptional-stack-row)
-      hub.stack/BLOB_VERSIONED_HASH_FLAG))
+      hub.stack/BLOB_HASH_FLAG))
 
 (defclookup hub-into-blob-versioned-hash
   ;; target columns
   (
-   blobVersionedHashes.USER_TXN_NUMBER
-   blobVersionedHashes.HASH_INDEX
-   blobVersionedHashes.BLOB_VERSION_HASH
+   blobHash.USER_TXN_NUMBER
+   blobHash.HASH_INDEX
+   blobHash.BLOB_VERSION_HASH
   )
   ;; source selector
   (hub-into-blob-hash-activation-flag)

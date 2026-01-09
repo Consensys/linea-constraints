@@ -14,6 +14,8 @@ BIN := bin/bin.zkasm
 
 BLAKE2f_MODEXP_DATA  := blake2fmodexpdata
 
+BLOB_HASH := blobhash/blobhash.zkasm
+
 # constraints used in prod for LINEA, with linea block gas limit
 BLOCKDATA := blockdata
 
@@ -87,6 +89,7 @@ ZKEVM_MODULES_COMMON := ${CONSTANTS} \
 		 ${ALU} \
 		 ${BIN} \
 		 ${BLAKE2f_MODEXP_DATA} \
+		 ${BLOB_HASH} \
 		 ${BLOCKDATA} \
 		 ${BLOCKHASH} \
 		 ${BLS} \

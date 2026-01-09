@@ -18,7 +18,7 @@
    ( ACC_FLAG                     :binary )
    ( ADD_FLAG                     :binary )
    ( BIN_FLAG                     :binary )
-   ( BLOB_VERSIONED_HASH_FLAG     :binary )
+   ( BLOB_HASH_FLAG               :binary )
    ( BTC_FLAG                     :binary )
    ( CALL_FLAG                    :binary )
    ( CON_FLAG                     :binary )
