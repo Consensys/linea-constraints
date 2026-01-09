@@ -9,8 +9,28 @@
 ;; 6. CHAINID
 ;; 7. BASEFEE
 ;; 8. BLOBBASEFEE
+;; 9. EXCESS_BLOB_GAS
 
-pub fn bin(INST=0x43 u8, BLOCK_NUMBER u32, VALUE u256, ARGUMENT_1 u256) -> (VALUE_NEXT_BLOCK u256) {
+pub fn bin(FIRST_BLOCK_NUMBER u32, BLOCK_NUMBER u32, INST=0x43 u8, VALUE_PARENT u256, AUX_1 u256, VALUE_CURRENT u256) -> (IS_NOT_FIRST_BLOCK u1) {
+
+;; TODO: FIRST_BLOCK_NUMBER must be conflation constant
+
+;; Some preliminary checks:
+var rel_block u32
+var sgn_rel_block u1
+sgn_rel_block, rel_block = BLOCK_NUMBER - FIRST_BLOCK_NUMBER
+
+if sgn_rel_block != 0 goto exit_fail
+IS_NOT_FIRST_BLOCK = rel_block != 0
+
+var current_minus_parent u256
+var sgn_current_minus_parent u1
+sgn_current_minus_parent, current_minus_parent = VALUE_CURRENT - VALUE_PARENT
+
+var genesis_block u1
+genesis_block = BLOCK_NUMBER == 0
+
+;; Now, deal with the different instructions:
 
   if INST==EVM_INST_COINBASE     goto coinbase
   if INST==EVM_INST_TIMESTAMP    goto timestamp ;;TODO
@@ -20,44 +40,88 @@ pub fn bin(INST=0x43 u8, BLOCK_NUMBER u32, VALUE u256, ARGUMENT_1 u256) -> (VALU
   if INST==EVM_INST_CHAINID      goto chainid
   if INST==EVM_INST_BASEFEE      goto basefee
   if INST==EVM_INST_BLOBBASEFEE  goto blobbasefee
-  goto exit_f
+  if INST==EXCESS_BLOB_GAS       goto excessblobgas
+  goto exit_fail
 
-  var b u1
-
-exit_f:
+exit_fail:
     fail
+    
 coinbase:
 ;; nothing to do
-    return
+return
+  
 timestamp:
 ;; need to prove a (strict) increase of timestamp
-    var tmp u256
-    b, tmp = VALUE_NEXT_BLOCK - VALUE - 1
-    if b == 1 exit_f
-    return
+    if sgn_current_minus_parent == 1 exit_fail  ;; ie current block is older than VALUE_PREVIOUS_BLOCK
+    if current_minus_parent == 0 exit_fail      ;; ie current block has same timestamp as previous one. We could merge the two checks.
+return
+
 number:
-;; prove the value of BLOCK_NUMBER
-    if BLOCK_NUMBER != VALUE exit_f
+;; check that NUMBER == BLOCK_NUMBER
+    if BLOCK_NUMBER != VALUE_CURRENT exit_fail
+
 ;; block number increases by 1
-    b, VALUE_NEXT_BLOCK = VALUE + 1
-    if b != 0
-    exit_f
-   return
+;; need to prove a (strict) increase of timestamp
+    if sgn_current_minus_parent == 1 exit_fail  ;; ie current block is older than VALUE_PREVIOUS_BLOCK
+    if current_minus_parent != 1 exit_fail      ;; the NUMBER should increase by 1 between blocks
+return
+
 prevrandao:
 ;; nothing to prove
-   return
+return
+
 gaslimit:
-   ;; TODO
-   return
+if genesis_block goto gaslimit_genesis
+
+;; see EIP-1559
+;; AUX_1 represents the gas used by the current block
+
+;; # check if the block used too much gas
+var gas_used_minus_gas_limit u64
+var sgn_gas_used_minus_gas_limit u1
+sgn_gas_used_minus_gas_limit, gas_used_minus_gas_limit = AUX_1 - VALUE_CURRENT
+if sgn_gas_used_minus_gas_limit != 0 goto exit_fail
+
+;; # check if the block changed the gas limit too much
+var max_abs_change u53
+max_abs_change = VALUE_PARENT / 1024
+var max_change_minus_change u256
+var sgn_max_change_minus_change u1
+sgn_current_minus_parent, max_change_minus_change = max_abs_change - current_minus_parent
+if sgn_max_change_minus_change !=0 goto exit_fail
+
+;; # check if the gas limit is at least the minimum gas limit
+var gas_limit_minus_min u256
+var sgn_gas_limit_minus_min u1
+sgn_gas_limit_minus_min, gas_limit_minus_min = VALUE_CURRENT - 5000
+if sgn_gas_limit_minus_min != 0 goto exit_fail
+  
+return
+
+timestamp_genesis:
+;; WTF is happening ? the EIP says nothing
+return
+
 chainid:
-;; prove constancy
-    if VALUE_NEXT_BLOCK != VALUE exit_f
-    return
+;; prove conflation constancy
+    if current_minus_parent != 0 exit_fail
+return
+
 basefee:
+if genesis_block goto basefee_genesis
 ;; TODO
   return
+
+basefee_genesis:  
+;; just to a network constant, nothing to check
+return
+
 blobbasefee:
 ;; TODO
   return
+
+excessblobgas:
+;; TODO:
+return
 }
   
