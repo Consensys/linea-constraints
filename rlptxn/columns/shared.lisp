@@ -1,7 +1,7 @@
 (module rlptxn)
 
 (defcolumns
-  ;; ( USER_TXN_NUMBER                  :i24 ) ;; defcomputed column
+  ;; ( USER_TXN_NUMBER                  :i16 ) ;; defcomputed column
   ( TXN                           :binary@prove )
   ( CMP                           :binary@prove )
   ( LIMB_CONSTRUCTED              :binary@prove )

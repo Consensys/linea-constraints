@@ -14,7 +14,7 @@ BIN := bin/bin.zkasm
 
 BLAKE2f_MODEXP_DATA  := blake2fmodexpdata
 
-BLOB_HASH := blobhash/blobhash.zkasm
+BLOB_HASH := blobhash/blobhash.zkasm blobhash/lookups/blobhash_into_rlptxn.lisp
 
 # constraints used in prod for LINEA, with linea block gas limit
 BLOCKDATA := blockdata

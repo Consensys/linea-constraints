@@ -5,9 +5,9 @@
 (defclookup hub-into-blob-versioned-hash
   ;; target columns
   (
-   blobHash.USER_TXN_NUMBER
-   blobHash.HASH_INDEX
-   blobHash.BLOB_VERSION_HASH
+   blobhash.USER_TXN_NUMBER
+   blobhash.HASH_INDEX
+   blobhash.BLOB_VERSION_HASH
   )
   ;; source selector
   (hub-into-blob-hash-activation-flag)
