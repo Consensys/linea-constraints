@@ -29,8 +29,9 @@
   ( IS_VALUE                      :binary@prove )
   ( IS_DATA                       :binary@prove )
   ( IS_ACCESS_LIST                :binary@prove )
+  ( IS_MAX_FEE_PER_BLOB_GAS       :binary@prove )
+  ( IS_BLOB_HASH                  :binary@prove )
   ( IS_BETA                       :binary@prove )
-
   ( IS_Y                          :binary@prove )
   ( IS_R                          :binary@prove )
   ( IS_S                          :binary@prove )

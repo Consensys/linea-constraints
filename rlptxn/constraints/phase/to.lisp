@@ -15,7 +15,9 @@
                                                        (*  RLP_PREFIX_INT_SHORT (^ 256 LLARGEMO)) ;; ""
                                                        1)
                                            ;; setting PHASE_END
-                                           (eq!   (shift PHASE_END 1)   1))
+                                           (eq!   (shift PHASE_END 1)   1)
+                                           ;; can't be a BLOB transaction
+                                           (eq! TYPE_3 0))
                                          ;; message call transaction case
                                          ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                                          (begin
