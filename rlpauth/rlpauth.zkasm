@@ -37,16 +37,12 @@ pub fn rlpauth(chain_id u256, nonce u256, address u160, y_parity u8, r u256, s u
         b, tmp3 = s - SECP256K1N_DIVIDED_BY_TWO
         if b == 1 goto failure
         ;;
-        var rlp_res u256
-        rlp_res = compute_rlp(chain_id, address, nonce)
-        ;;
-        var keccak_input u264
-        keccak_input = (MAGIC * 2^256) + rlp_res
-        ;;
-        var msg u256
-        msg = keccak(keccak_input)
-        authority = ecrecover(msg, y_parity, r, s)
-        ;; step_4: happens in the HUB
+        var msg u240
+        msg = compute_rlp(chain_id, address, nonce)
+
+        var success_bit u1
+        authority, success_bit = ecrecover(msg, y_parity, r, s)
+    ;; step_4: happens in the HUB
         ;; Add authority to accessed_addresses, as defined in EIP-2929.
     step_5:
         ;; TODO: I get the information for this step via a lookup to the HUB, it is a single bit representing
@@ -80,19 +76,69 @@ pub fn rlpauth(chain_id u256, nonce u256, address u160, y_parity u8, r u256, s u
 }
 
 ;; temporary dummy functions
-;; TODO: determine the exact size of RLP
-fn compute_rlp(chain_id u256, address u160, nonce u256) -> (rlp_res u256) {
-    rlp_res = 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffc2f
+fn compute_rlp(chain_id u256, address u160, nonce u256) -> (rlp_res u240) {
+    rlp_res = 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffeffff
     return
 }
 
-;; TODO: discuss with David and Azam how to communicate with the prover for computing these 2 functions below
-fn keccak(keccak_input u264) -> (keccak_output u256) {
+fn keccak(keccak_input u184) -> (keccak_output u256) {
+    ;; dummy value TODO: how to set the correct one?
     keccak_output = 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffc2f
+    ;;
+
+    ;; extract keccak_input and assign to limb
+    var limb u128
+    var left_aligned_prefix u24
+    var left_aligned_address_hi u32
+    var left_aligned_address_lo u128
+    left_aligned_prefix, left_aligned_address_hi, left_aligned_address_lo = keccak_input
+    limb = left_aligned_prefix * 2^104
+    limb = left_aligned_address_hi * 2^96
+    limb = left_aligned_address_lo
+
     return
 }
 
-fn ecrecover(msg u256, y_parity u8, r u256, s u256) -> (ecrecover_result u160) {
-    ecrecover_result = 0xfffffffffffffffffffffffffffffffefffffc2f
+fn ecrecover(msg u240, y_parity u8, r u256, s u256) -> (address u160, success_bit u1) {
+    ;; dummy values TODO: how to set the correct ones?
+    address = 0x1234567890abcdef1234567890abcdef12345678
+    success_bit = 1
+    ;;
+
+    var limb u128
+    
+    limb = y_parity
+
+    var r_lo u128
+    limb, r_lo = r ;; r_hi
+    limb = r_lo ;; r_lo
+
+    var s_lo u128
+    limb, s_lo = s ;; s_hi
+    limb = s_lo ;; s_lo
+
+    var address_lo u128
+    limb, address_lo = address ;; address_hi
+    limb = address_lo ;; address_lo
+
+    limb = success_bit
+
+    ;; extract msg and assign to limb TODO: give proper names
+    var a, b, c, e, h u8    
+    var d u24     
+    var f u32
+    var g u128
+    var i u16    
+    a, b, c, d, e, f, g, h, i = msg
+    limb = a * 2^120 
+    limb = b * 2^120 
+    limb = c * 2^120 
+    limb = d * 2^104 
+    limb = e * 2^120 
+    limb = f * 2^96 
+    limb = g
+    limb = h * 2^120 
+    limb = i * 2^112 
+    
     return
 }

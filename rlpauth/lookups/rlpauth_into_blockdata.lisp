@@ -14,6 +14,6 @@
     ;; source columns
     (
         rlpauth.blk_number
-        1
+        1 ;; TODO: fix zkasm to handle 1 wip
         rlpauth.network_chain_id
     ))
