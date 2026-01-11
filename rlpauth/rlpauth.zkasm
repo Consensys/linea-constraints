@@ -12,7 +12,7 @@ const MAGIC = 0x05
 
 ;; TODO: add sender (TXN_FROM_ADDRESS) as an argument of the function, and compare it later with authority to compute SENDER_IS_AUTHORITY
 ;;       it can be obtained either from RLPTXN or from the HUB, which internally gets it from TXNDATA (TBD). Lookup to the HUB is probably the best solution
-fn rlpauth(chain_id u256, nonce u256, address u160, y_parity u8, r u256, s u256) -> (authority u160, error u1)
+pub fn rlpauth(chain_id u256, nonce u256, address u160, y_parity u8, r u256, s u256, blk_number u16, network_chain_id u256) -> (authority u160, error u1)
 {
     ;; The following checks are enforced by the types above:
     ;; assert auth.chain_id < 2**256
@@ -24,7 +24,7 @@ fn rlpauth(chain_id u256, nonce u256, address u160, y_parity u8, r u256, s u256)
     step_1:
         ;; Verify that chain_id is 0 or the ID of the current chain
         if chain_id == 0 goto step_2
-        if chain_id == 1 goto step_2 ;; TODO: current chain_id should be obtained via a lookup to blockdata
+        if chain_id == 1 goto step_2 ;; TODO: current chain_id should be obtained via a lookup to blockdata (wip)
         fail
     step_2:
         var b u1

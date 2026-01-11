@@ -70,7 +70,7 @@ OOB_OSAKA := oob/osaka
 
 RLP_ADDR := rlpaddr
 
-RLP_AUTH := rlpauth/rlpauth.zkasm
+RLP_AUTH := rlpauth/rlpauth.zkasm rlpauth/lookups
 
 RLP_TXN_LONDON := rlptxn/london
 RLP_TXN_CANCUN := rlptxn/cancun
