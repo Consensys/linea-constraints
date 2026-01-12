@@ -6,25 +6,25 @@
   ;; unchecked because of r and f
   ;; target columns
   (
-    (:: blake2f.h0_be_input blake2f.h1_be_input)
-    (:: blake2f.h2_be_input blake2f.h3_be_input)
-    (:: blake2f.h4_be_input blake2f.h5_be_input)
-    (:: blake2f.h6_be_input blake2f.h7_be_input)
-    (:: blake2f.m0_be       blake2f.m1_be      )
-    (:: blake2f.m2_be       blake2f.m3_be      )
-    (:: blake2f.m4_be       blake2f.m5_be      )
-    (:: blake2f.m6_be       blake2f.m7_be      )
-    (:: blake2f.m8_be       blake2f.m9_be      )
-    (:: blake2f.m10_be      blake2f.m11_be     )
-    (:: blake2f.m12_be      blake2f.m13_be     )
-    (:: blake2f.m14_be      blake2f.m15_be     )
-    (:: blake2f.t0_be       blake2f.t1_be      )
+    blake2f.h0h1_be_input
+    blake2f.h2h3_be_input
+    blake2f.h4h5_be_input
+    blake2f.h6h7_be_input
+    blake2f.m0m1_be
+    blake2f.m2m3_be
+    blake2f.m4m5_be
+    blake2f.m6m7_be
+    blake2f.m8m9_be
+    blake2f.m10m11_be
+    blake2f.m12m13_be
+    blake2f.m14m15_be
+    blake2f.t0t1_be
     blake2f.r
     blake2f.f
-    (:: blake2f.h0       blake2f.h1      )
-    (:: blake2f.h2       blake2f.h3      )
-    (:: blake2f.h4       blake2f.h5      )
-    (:: blake2f.h6       blake2f.h7      )
+    blake2f.h0h1_be
+    blake2f.h2h3_be
+    blake2f.h4h5_be
+    blake2f.h6h7_be
   )
   ;; source selector
   (blakemodexp-to-blake2f-selector)

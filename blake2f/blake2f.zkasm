@@ -17,37 +17,33 @@ const IV_7 = 0x5BE0CD19137E2179
 ;; corresponds to the default value for padding h0, h1 ... h7
 ;; cannot use constants for padding default for now
 
-pub fn blake2f(r u64, h0_be_input u64, h1_be_input u64, h2_be_input u64, h3_be_input u64, h4_be_input u64, h5_be_input u64, h6_be_input u64, h7_be_input u64, m0_be u64, m1_be u64, m2_be u64, m3_be u64, m4_be u64, m5_be u64, m6_be u64, m7_be u64, m8_be u64, m9_be u64, m10_be u64, m11_be u64, m12_be u64, m13_be u64, m14_be u64, m15_be u64, t0_be u64, t1_be u64, f u1 ) -> (h0=0x8C9BCF367E6096A u64, h1=0x3BA7CA8485AE67BB u64, h2=0x2BF894FE72F36E3C u64, h3=0xF1361D5F3AF54FA5 u64, h4=0xD182E6AD7F520E51 u64, h5=0x1F6C3E2B8C68059B u64, h6=0x6BBD41FBABD9831F u64, h7=0x79217E1319CDE05B u64) {
+pub fn blake2f(r u64, h0h1_be_input u128, h2h3_be_input u128, h4h5_be_input u128, h6h7_be_input u128, m0m1_be u128, m2m3_be u128, m4m5_be u128, m6m7_be u128, m8m9_be u128, m10m11_be u128, m12m13_be u128, m14m15_be u128, t0t1_be u128, f u1 ) -> (h0h1_be=0x08C9BCF367E6096A3BA7CA8485AE67BB u128, h2h3_be=0x2BF894FE72F36E3CF1361D5F3AF54FA5 u128, h4h5_be=0xD182E6AD7F520E511F6C3E2B8C68059B u128, h6h7_be=0x6BBD41FBABD9831F79217E1319CDE05B u128) {
+      ;; split inputs from u128 to u64 - inputs are given in u128 for the blakefmodexpdata lookup to work
+      var h0_be_input, h1_be_input, h2_be_input, h3_be_input, h4_be_input, h5_be_input, h6_be_input, h7_be_input u64
+      var m0_be, m1_be, m2_be, m3_be, m4_be, m5_be, m6_be, m7_be, m8_be, m9_be, m10_be, m11_be, m12_be, m13_be, m14_be, m15_be u64
+      var t0_be, t1_be u64
+      h0_be_input, h1_be_input = h0h1_be_input
+      h2_be_input, h3_be_input = h2h3_be_input
+      h4_be_input, h5_be_input = h4h5_be_input
+      h6_be_input, h7_be_input = h6h7_be_input
+      m0_be, m1_be = m0m1_be
+      m2_be, m3_be = m2m3_be
+      m4_be, m5_be = m4m5_be
+      m6_be, m7_be = m6m7_be
+      m8_be, m9_be = m8m9_be
+      m10_be, m11_be = m10m11_be
+      m12_be, m13_be = m12m13_be
+      m14_be, m15_be = m14m15_be
+      t0_be, t1_be = t0t1_be
       ;; convert big-endian inputs to little-endian
       var h0_input, h1_input, h2_input, h3_input, h4_input, h5_input, h6_input, h7_input u64
       var m0, m1, m2, m3, m4, m5, m6, m7, m8, m9, m10, m11, m12, m13, m14, m15 u64
       var t0, t1 u64
-      h0_input = BE_to_LE_u64(h0_be_input)
-      h1_input = BE_to_LE_u64(h1_be_input)
-      h2_input = BE_to_LE_u64(h2_be_input)
-      h3_input = BE_to_LE_u64(h3_be_input)
-      h4_input = BE_to_LE_u64(h4_be_input)
-      h5_input = BE_to_LE_u64(h5_be_input)
-      h6_input = BE_to_LE_u64(h6_be_input)
-      h7_input = BE_to_LE_u64(h7_be_input)
-        m0 = BE_to_LE_u64(m0_be)
-        m1 = BE_to_LE_u64(m1_be)
-        m2 = BE_to_LE_u64(m2_be)
-        m3 = BE_to_LE_u64(m3_be)
-        m4 = BE_to_LE_u64(m4_be)
-        m5 = BE_to_LE_u64(m5_be)
-        m6 = BE_to_LE_u64(m6_be)
-        m7 = BE_to_LE_u64(m7_be)
-        m8 = BE_to_LE_u64(m8_be)
-        m9 = BE_to_LE_u64(m9_be)
-        m10 = BE_to_LE_u64(m10_be)
-        m11 = BE_to_LE_u64(m11_be)
-        m12 = BE_to_LE_u64(m12_be)
-        m13 = BE_to_LE_u64(m13_be)
-        m14 = BE_to_LE_u64(m14_be)
-        m15 = BE_to_LE_u64(m15_be)
-        t0 = BE_to_LE_u64(t0_be)
-        t1 = BE_to_LE_u64(t1_be)
+      h0_input, h1_input, h2_input, h3_input, h4_input, h5_input, h6_input, h7_input = BE_to_LE_8_args(h0_be_input, h1_be_input, h2_be_input, h3_be_input, h4_be_input, h5_be_input, h6_be_input, h7_be_input)
+      m0, m1, m2, m3, m4, m5, m6, m7 = BE_to_LE_8_args(m0_be, m1_be, m2_be, m3_be, m4_be, m5_be, m6_be, m7_be)
+      m8, m9, m10, m11, m12, m13, m14, m15 = BE_to_LE_8_args(m8_be, m9_be, m10_be, m11_be, m12_be, m13_be, m14_be, m15_be)
+      t0 = BE_to_LE_u64(t0_be)
+      t1 = BE_to_LE_u64(t1_be)
       ;; v array variables and initialization
       var v0, v1, v2, v3, v4, v5, v6, v7, v8, v9 u64
       var v10, v11, v12, v13, v14, v15 u64
@@ -103,6 +99,7 @@ loop:
       goto loop
 xor_two_halves:
       var h0_le, h1_le, h2_le, h3_le, h4_le, h5_le, h6_le, h7_le u64
+      var h0_be, h1_be, h2_be, h3_be, h4_be, h5_be, h6_be, h7_be u64
       h0_le = xor_on_xor(v0, v8, h0_input)
       h1_le = xor_on_xor(v1, v9, h1_input)
       h2_le = xor_on_xor(v2, v10, h2_input)
@@ -111,15 +108,24 @@ xor_two_halves:
       h5_le = xor_on_xor(v5, v13, h5_input)
       h6_le = xor_on_xor(v6, v14, h6_input)
       h7_le = xor_on_xor(v7, v15, h7_input)
-        ;; convert little-endian outputs to big-endian
-        h0 = LE_to_BE_u64(h0_le)
-        h1 = LE_to_BE_u64(h1_le)
-        h2 = LE_to_BE_u64(h2_le)
-        h3 = LE_to_BE_u64(h3_le)
-        h4 = LE_to_BE_u64(h4_le)
-        h5 = LE_to_BE_u64(h5_le)
-        h6 = LE_to_BE_u64(h6_le)
-        h7 = LE_to_BE_u64(h7_le)
+      ;; convert little-endian outputs to big-endian
+      h0_be, h1_be, h2_be, h3_be, h4_be, h5_be, h6_be, h7_be = BE_to_LE_8_args(h0_le, h1_le, h2_le, h3_le, h4_le, h5_le, h6_le, h7_le)
+      h0h1_be = (2^64 * h0_be) + h1_be
+      h2h3_be = (2^64 * h2_be) + h3_be
+      h4h5_be = (2^64 * h4_be) + h5_be
+      h6h7_be = (2^64 * h6_be) + h7_be
+      return
+}
+
+fn BE_to_LE_8_args(arg_BE_1 u64, arg_BE_2 u64, arg_BE_3 u64, arg_BE_4 u64, arg_BE_5 u64, arg_BE_6 u64,arg_BE_7 u64, arg_BE_8 u64) -> (arg_LE_1 u64, arg_LE_2 u64, arg_LE_3 u64, arg_LE_4 u64, arg_LE_5 u64, arg_LE_6 u64,arg_LE_7 u64, arg_LE_8 u64){
+      arg_LE_1 = BE_to_LE_u64(arg_BE_1)
+      arg_LE_2 = BE_to_LE_u64(arg_BE_2)
+      arg_LE_3 = BE_to_LE_u64(arg_BE_3)
+      arg_LE_4 = BE_to_LE_u64(arg_BE_4)
+      arg_LE_5 = BE_to_LE_u64(arg_BE_5)
+      arg_LE_6 = BE_to_LE_u64(arg_BE_6)
+      arg_LE_7 = BE_to_LE_u64(arg_BE_7)
+      arg_LE_8 = BE_to_LE_u64(arg_BE_8)
       return
 }
 
