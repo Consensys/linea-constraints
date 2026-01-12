@@ -12,7 +12,10 @@ const MAGIC = 0x05
 
 ;; TODO: add sender (TXN_FROM_ADDRESS) as an argument of the function, and compare it later with authority to compute SENDER_IS_AUTHORITY
 ;;       it can be obtained either from RLPTXN or from the HUB, which internally gets it from TXNDATA (TBD). Lookup to the HUB is probably the best solution
-pub fn rlpauth(chain_id u256, nonce u256, address u160, y_parity u8, r u256, s u256, blk_number u16, network_chain_id u256) -> (authority u160, error u1)
+pub fn rlpauth(chain_id u256, nonce u256, address u160, y_parity u8, r u256, s u256, 
+authority u160, success_bit u1, ;; predicticted returned values by ecrecover
+xtern u1, blk_number u16, network_chain_id u256) ;; lookup into blockdata
+-> (error u1)
 {
     ;; The following checks are enforced by the types above:
     ;; assert auth.chain_id < 2**256
@@ -24,7 +27,7 @@ pub fn rlpauth(chain_id u256, nonce u256, address u160, y_parity u8, r u256, s u
     step_1:
         ;; Verify that chain_id is 0 or the ID of the current chain
         if chain_id == 0 goto step_2
-        if chain_id == 1 goto step_2 ;; TODO: current chain_id should be obtained via a lookup to blockdata (wip)
+        if chain_id == network_chain_id goto step_2
         fail
     step_2:
         var b u1
@@ -40,8 +43,9 @@ pub fn rlpauth(chain_id u256, nonce u256, address u160, y_parity u8, r u256, s u
         var msg u240
         msg = compute_rlp(chain_id, address, nonce)
 
-        var success_bit u1
-        authority, success_bit = ecrecover(msg, y_parity, r, s)
+        var ecrecover_fails u1
+        ecrecover_fails = ecrecover(msg, y_parity, r, s, authority, success_bit)
+        if ecrecover_fails == 1 goto failure
     ;; step_4: happens in the HUB
         ;; Add authority to accessed_addresses, as defined in EIP-2929.
     step_5:
@@ -67,8 +71,6 @@ pub fn rlpauth(chain_id u256, nonce u256, address u160, y_parity u8, r u256, s u
     ;; step_9: happens in the HUB
         ;; authority.nonce = authority.nonce + 1
     exit:
-        ;; dummy values
-        authority = 0
         error = 0
         return
     failure:
@@ -81,11 +83,9 @@ fn compute_rlp(chain_id u256, address u160, nonce u256) -> (rlp_res u240) {
     return
 }
 
-fn keccak(keccak_input u184) -> (keccak_output u256) {
-    ;; dummy value TODO: how to set the correct one?
-    keccak_output = 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffc2f
-    ;;
-
+;; keccak_output is a prediction to be confirmed by the prover
+fn keccak(keccak_input u184, 
+keccak_output u256) -> (keccak_fails u1) {
     ;; extract keccak_input and assign to limb
     var limb u128
     var left_aligned_prefix u24
@@ -96,15 +96,13 @@ fn keccak(keccak_input u184) -> (keccak_output u256) {
     limb = left_aligned_address_hi * 2^96
     limb = left_aligned_address_lo
 
+    keccak_fails = 0
     return
 }
 
-fn ecrecover(msg u240, y_parity u8, r u256, s u256) -> (address u160, success_bit u1) {
-    ;; dummy values TODO: how to set the correct ones?
-    address = 0x1234567890abcdef1234567890abcdef12345678
-    success_bit = 1
-    ;;
-
+;; address and success_bit are predictions to be confirmed by the prover 
+fn ecrecover(msg u240, y_parity u8, r u256, s u256, 
+address u160, success_bit u1) -> (ecrecover_fails u1) {
     var limb u128
     
     limb = y_parity
@@ -140,5 +138,6 @@ fn ecrecover(msg u240, y_parity u8, r u256, s u256) -> (address u160, success_bi
     limb = h * 2^120 
     limb = i * 2^112 
     
+    ecrecover_fails = 0
     return
 }

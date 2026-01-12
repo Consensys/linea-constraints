@@ -1,5 +1,4 @@
-;; temporary dummy selector
-(defun (rlp-auth-into-blockdata-activation-flag) 1)
+(defun (rlp-auth-into-blockdata-activation-flag) rlpauth.xtern)
 
 (defclookup
     (rlp-auth-into-blockdata :unchecked)
@@ -14,6 +13,6 @@
     ;; source columns
     (
         rlpauth.blk_number
-        1 ;; TODO: fix zkasm to handle 1 wip
+        1
         rlpauth.network_chain_id
     ))
