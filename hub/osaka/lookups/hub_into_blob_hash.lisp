@@ -2,7 +2,7 @@
   (* (unexceptional-stack-row)
       hub.stack/BLOB_HASH_FLAG))
 
-(defclookup hub-into-blob-versioned-hash
+(defclookup hub-into-blob-hash
   ;; target columns
   (
    blobhash.USER_TXN_NUMBER

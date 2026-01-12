@@ -1,5 +1,7 @@
 ;; BLOCKDATA module
 
+include "../util/max2.zkasm"
+
 ;; The BLOCKDATA module is responsible for storing block-constant values:
 ;; 1. COINBASE     
 ;; 2. TIMESTAMP       
@@ -11,7 +13,7 @@
 ;; 8. BLOBBASEFEE
 ;; 9. EXCESS_BLOB_GAS
 
-pub fn bin(FIRST_BLOCK_NUMBER u32, BLOCK_NUMBER u32, INST=0x43 u8, VALUE_PARENT u256, AUX_1 u256, VALUE_CURRENT u256) -> (IS_NOT_FIRST_BLOCK u1) {
+pub fn bin(FIRST_BLOCK_NUMBER u32, BLOCK_NUMBER u32, INST=0x43 u8, VALUE_PARENT u256, AUX_1 u64, AUX_2 u64, VALUE_CURRENT u256) -> (IS_NOT_FIRST_BLOCK u1) {
 
 ;; TODO: FIRST_BLOCK_NUMBER must be conflation constant
 
@@ -109,8 +111,37 @@ return
 
 basefee:
 if genesis_block goto basefee_genesis
-;; TODO
-  return
+;; AUX_1 represents the gas used by the parent block
+;; AUX_2 represents the parent block gas target   
+var sgn_gas_used_delta u1
+var gas_used_delta u64
+sgn_gas_used_delta, gas_used_delta = AUX_1 - AUX_2
+
+if gas_used_delta == 0 goto exit_basefee_no_change
+var base_fee_per_gas_delta u64
+base_fee_per_gas_delta = VALUE_PARENT * gas_used_delta / AUX_2 / BASE_FEE_MAX_CHANGE_DENOMINATOR
+
+if gas_used_delta == 0 goto exit_basefee_increase
+
+;; case gas used > gas target. The gas decrease by max (1,base_fee_per_gas_delta )
+var value_decrease u64
+value_decrease = max_u64(base_fee_per_gas_delta, 1)
+var b u1
+var tmp u64
+b, tmp = VALUE_PARENT - value_decrease
+if tmp != VALUE_CURRENT goto exit_fail
+return
+
+exit_basefee_no_change:
+if VALUE_PARENT != VALUE_CURRENT goto exit_fail
+return
+
+exit_basefee_increase:
+var b1 u1
+var tmp1 u64
+b1, tmp1 = VALUE_PARENT + base_fee_per_gas_delta
+if tmp1 != VALUE_CURRENT goto exit_fail
+return
 
 basefee_genesis:  
 ;; just to a network constant, nothing to check
