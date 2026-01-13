@@ -14,10 +14,31 @@ const MAGIC = 0x05
 ;;       it can be obtained either from RLPTXN or from the HUB, which internally gets it from TXNDATA (TBD). Lookup to the HUB is probably the best solution
 pub fn rlpauth(chain_id u256, nonce u256, address u160, y_parity u8, r u256, s u256, 
 authority u160, success_bit u1, ;; predicticted returned values by ecrecover
-xtern u1, blk_number u16, network_chain_id u256) ;; lookup into blockdata
+xtern u1, blk_number u16, network_chain_id u256, ;; lookup into blockdata
+authority_ecrecover_success u1, authority_nonce u256, sender u160, codehash u256, code_of_authority_is_empty_or_delegated u1) ;; lookup into hub
 -> (error u1)
 {
-    ;; The following checks are enforced by the types above:
+    ;; Preliminary computation
+    pre_1:
+        var address_is_zero_address u1
+        if address == 0 goto set_address_is_zero_address_to_true
+        if address != 0 goto set_address_is_zero_address_to_false
+        set_address_is_zero_address_to_true:
+            address_is_zero_address = 1
+            goto pre_2
+        set_address_is_zero_address_to_false:
+            address_is_zero_address = 0
+
+    pre_2:
+        var sender_is_authority u1
+        if sender == authority goto set_sender_is_authority_to_true
+        if sender != authority goto set_sender_is_authority_to_false
+        set_sender_is_authority_to_true:
+            sender_is_authority = 1
+            goto step_1
+        set_sender_is_authority_to_false:
+            sender_is_authority = 0
+
     ;; assert auth.chain_id < 2**256
     ;; assert auth.nonce < 2**64
     ;; assert len(auth.address) == 20
@@ -49,27 +70,31 @@ xtern u1, blk_number u16, network_chain_id u256) ;; lookup into blockdata
     ;; step_4: happens in the HUB
         ;; Add authority to accessed_addresses, as defined in EIP-2929.
     step_5:
-        ;; TODO: I get the information for this step via a lookup to the HUB, it is a single bit representing
-        ;; if we are in one of the two cases below
-        ;; code_of_authority_is_empty_or_delegated
-        ;; if authority is emtpy goto step_6
-        ;; if authority is already delegated goto step_6
-        ;; fail
+        ;; TODO: lookup into the hub confirms code_of_authority_is_empty_or_delegated
+        if code_of_authority_is_empty_or_delegated == 1 goto step_6
+        fail
     step_6:
-        ;; TODO: a lookup is obtained by a combination of legacy lisp and zkasm. Ask Francois
-        ;; TODO: authority.nonce is coming from the hub
-        ;; NOTE: the sender.nonce will be incremented after the authority list in Linea; if sender == authority (SENDER_IS_AUTHORITY) one must verify authority.nonce + 1 == nonce (TBC)
-        ;; if authority.nonce == nonce goto step_7
-        ;; fail
+        ;; TODO: lookup into the hub confirms authority_nonce
+        ;; NOTE: the sender_nonce will be incremented after the authority list in Linea; if sender == authority (SENDER_IS_AUTHORITY) one must verify authority_nonce + 1 == nonce (TBC)
+        if sender_is_authority == 1 goto step_6_with_sender_is_authority
+        if sender_is_authority == 0 goto step_6_with_sender_is_not_authority
+    step_6_with_sender_is_authority:
+        var authority_nonce_plus_one u257 ;; to avoid overflow
+        authority_nonce_plus_one = authority_nonce + 1
+        if authority_nonce_plus_one == nonce goto step_8
+        fail
+    step_6_with_sender_is_not_authority:
+        if authority_nonce == nonce goto step_8
+        fail       
     ;; step_7: happens in the HUB
         ;; Add PER_EMPTY_ACCOUNT_COST - PER_AUTH_BASE_COST gas to the global refund counter if authority is not empty.
     step_8:
+        ;; TODO: the computation of the hash does not happen here anymore
         ;; TODO: compute the hash of 0xef0100 || address (send this to the prover, along with the expected code_hash, so as the prover proves it is correct)
         ;; if address == 0x0000000000000000000000000000000000000000 goto "authority.code_hash = 0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470"
-        ;; authority.code = (0xef0100 * 2^160) + address
-        ;; TODO: look at Into HUB lookup and compute all the required values
+        ;; authority_code = (0xef0100 * 2^160) + address
     ;; step_9: happens in the HUB
-        ;; authority.nonce = authority.nonce + 1
+        ;; authority_nonce = authority_nonce + 1
     exit:
         error = 0
         return
