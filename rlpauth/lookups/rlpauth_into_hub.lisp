@@ -4,16 +4,15 @@
     (rlp-auth-into-hub :unchecked)
     ;; target columns
     (
-        ;; TODO: substitute with actual columns
+        ;; TODO: lips wip
         hub.TX_AUTH
         hub.PEEK_AT_AUTH
-        (:: hub.AUTHORITY_HI hub.AUTHORITY_LO)
-        (:: hub.ADDRESS_HI hub.ADDRESS_LO)
-        hub.ADDRESS_IS_ZERO_ADDRESS
-        hub.AUTHORITY_NONCE
-        hub.SENDER_IS_AUTHORITY
-        (:: hub.CODEHASH_HI hub.CODEHASH_LO)
-        hub.CODE_OF_AUTHORITY_IS_EMPTY_OR_DELEGATED
+        hub.auth/AUTHORITY_ECRECOVER_SUCCESS 
+        (:: hub.auth/AUTHORITY_ADDRESS_HI hub.auth/AUTHORITY_ADDRESS_LO)
+        hub.auth/AUTHORITY_NONCE
+        hub.auth/AUTHORITY_HAS_EMPTY_CODE_OR_IS_DELEGATED 
+        (:: hub.auth/DELEGATION_ADDRESS_HI hub.auth/DELEGATION_ADDRESS_LO)
+        hub.auth/DELEGATION_ADDRESS_IS_ZERO
     )
     ;; source selector
     (rlp-auth-into-hub-activation-flag)
@@ -21,11 +20,10 @@
     (
         1
         1
-        rlpauth.authority
-        rlpauth.address
-        rlpauth.address_is_zero_address
-        rlpauth.authority_nonce
-        rlpauth.sender_is_authority
-        rlpauth.codehash
-        rlpauth.code_of_authority_is_empty_or_delegated
+        rlpauth.authority_ecrecover_success ;; This is justified in RLPAUTH
+        rlpauth.authority ;; This is justified in RLPAUTH
+        rlpauth.authority_nonce ;; This is justified in the HUB
+        rlpauth.authority_has_empty_code_or_is_delegated ;; This is justified in the HUB
+        rlpauth.address ;; This is justified in RLPAUTH
+        rlpauth.address_is_zero_address ;; This is justified in RLPAUTH                 
     ))
