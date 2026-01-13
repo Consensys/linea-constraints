@@ -2,22 +2,16 @@
 
 ;; https://eips.ethereum.org/EIPS/eip-7702
 
-;; TODO: look at rlpauth spec, prepare arguments and execute a lookup to the hub
-;;       macro: data coming from rlptxn module
-;;       xtern: data extracted from the hub
-
 ;; TODO: do we have an shared notation for constants, function arguments...?
 ;; const SECP256K1N = 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffc2f
 const SECP256K1N_DIVIDED_BY_TWO = 0x7fffffffffffffffffffffffffffffffffffffffffffffffffffffff7ffffe17
 const MAGIC = 0x05
 
-;; TODO: add sender (TXN_FROM_ADDRESS) as an argument of the function, and that has to be confirmed via a lookup into TXNDATA
-
 pub fn rlpauth(chain_id u256, nonce u256, delegation_address u160, y_parity u8, r u256, s u256, 
-authority_address u160, ;; predicticted returned values by ecrecover
-user_transaction_number u24, ;; lookup into usertxndata
-xtern u1, blk_number u16, network_chain_id u256, ;; lookup into blockdata
-authority_ecrecover_success u1, authority_nonce u256, txn_from_address u160, authority_has_empty_code_or_is_delegated u1) ;; lookup into hub
+authority_address u160, ;; predicticted returned value by ecrecover
+macro u1, blk_number u16, user_txn_number u24, txn_from_address u160, authority_is_sender_tot u1, ;; (TODO: check) columns for lookup into usertxndata
+xtern u1, network_chain_id u256, ;; additional columns for lookup into blockdata
+authority_ecrecover_success u1, authority_nonce u256, authority_has_empty_code_or_is_delegated u1) ;; additional columns for lookup into hub
 -> (error u1)
 {
     ;; Preliminary computation
@@ -72,11 +66,9 @@ authority_ecrecover_success u1, authority_nonce u256, txn_from_address u160, aut
     ;; step_4: happens in the HUB
         ;; Add authority to accessed_addresses, as defined in EIP-2929.
     step_5:
-        ;; TODO: lookup into the hub confirms authority_has_empty_code_or_is_delegated
         if authority_has_empty_code_or_is_delegated == 1 goto step_6
         fail
     step_6:
-        ;; TODO: lookup into the hub confirms authority_nonce
         ;; NOTE: the sender_nonce will be incremented after the authority list in Linea; if sender == authority_address (SENDER_IS_AUTHORITY) one must verify authority_nonce + 1 == nonce (TBC)
         if sender_is_authority == 1 goto step_6_with_sender_is_authority
         if sender_is_authority == 0 goto step_6_with_sender_is_not_authority
