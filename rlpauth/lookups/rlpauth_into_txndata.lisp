@@ -9,7 +9,7 @@
         txndata.USER
         txndata.HUB
         (prev txndata.rlp/TYPE_4)
-        (:: txndata.FROM_ADDR_HI txndata.FROM_ADDR_LO)
+        (:: txndata.FROM_ADDRESS_HI txndata.FROM_ADDRESS_LO)
         txndata.AUTHORITY_IS_SENDER_TOT ;; TODO
     )
     ;; source selector
