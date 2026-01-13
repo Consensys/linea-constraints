@@ -1,4 +1,4 @@
-;; include "../rlputils/rlputils.zkasm"
+include "../constants/evm.zkasm"
 
 ;; https://eips.ethereum.org/EIPS/eip-7702
 
@@ -15,25 +15,11 @@ authority_ecrecover_success u1, authority_nonce u256, authority_has_empty_code_o
 -> (error u1)
 {
     ;; Preliminary computation
-    pre_1:
-        var delegation_address_is_zero u1
-        if delegation_address == 0 goto set_delegation_address_is_zero_to_true
-        if delegation_address != 0 goto set_delegation_address_is_zero_to_false
-        set_delegation_address_is_zero_to_true:
-            delegation_address_is_zero = 1
-            goto pre_2
-        set_delegation_address_is_zero_to_false:
-            delegation_address_is_zero = 0
+    var delegation_address_is_zero u1
+    delegation_address_is_zero = delegation_address == 0 ? 1 : 0
 
-    pre_2:
-        var sender_is_authority u1
-        if txn_from_address == authority_address goto set_sender_is_authority_to_true
-        if txn_from_address != authority_address goto set_sender_is_authority_to_false
-        set_sender_is_authority_to_true:
-            sender_is_authority = 1
-            goto step_1
-        set_sender_is_authority_to_false:
-            sender_is_authority = 0
+    var sender_is_authority u1
+    sender_is_authority = txt_from_address == authority_address ? 1 : 0
 
     ;; assert auth.chain_id < 2**256
     ;; assert auth.nonce < 2**64
@@ -99,6 +85,30 @@ authority_ecrecover_success u1, authority_nonce u256, authority_has_empty_code_o
 ;; temporary dummy functions
 fn compute_rlp(chain_id u256, address u160, nonce u256) -> (rlp_output u240) {
     rlp_output = 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffeffff
+    ;; TODO: call twice compute_rlp_integer and compute_rlp_address, verify sizes and concatenate
+    return
+}
+
+fn compute_rlp_integer(integer u256) -> (rlp_prefix u128, leading_limb_left_shifted u128, leading_limb_byte_size u8) {
+    var integer_hi u128
+    var integer_lo u128
+    integer_hi, integer_lo = integer
+
+    var integer_is_nonzero u1
+    integer_is_nonzero = integer != 0 ? 1 : 0
+
+    var integer_hi_is_nonzero u1
+    integer_hi_is_nonzero = integer_hi != 0 ? 1 : 0
+
+    var rlp_prefix_required u1
+    var integer_greater_or_equal_to_128 u1
+    var b u1
+    var integer_minus_128_tmp u256
+    b, integer_minus_128_tmp = integer - 128
+    integer_greater_or_equal_to_128 = b == 0 ? 1 : 0
+    rlp_prefix_required = integer_is_nonzero == 0 ? 1 : integer_greater_or_equal_to_128
+
+    rlp_prefix, leading_limb_left_shifted, leading_limb_byte_size = rlputils(RLP_UTILS_INST_INTEGER, integer_hi, integer_lo, integer_is_nonzero, integer_hi_is_nonzero, rlp_prefix_required)
     return
 }
 
