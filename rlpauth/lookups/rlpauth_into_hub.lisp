@@ -21,9 +21,9 @@
         1
         1
         rlpauth.authority_ecrecover_success ;; This is justified in RLPAUTH
-        rlpauth.authority ;; This is justified in RLPAUTH
+        rlpauth.authority_address ;; This is justified in RLPAUTH
         rlpauth.authority_nonce ;; This is justified in the HUB
         rlpauth.authority_has_empty_code_or_is_delegated ;; This is justified in the HUB
-        rlpauth.address ;; This is justified in RLPAUTH
-        rlpauth.address_is_zero_address ;; This is justified in RLPAUTH                 
+        rlpauth.delegation_address ;; This is justified in RLPAUTH
+        rlpauth.delegation_address_is_zero ;; This is justified in RLPAUTH                 
     ))

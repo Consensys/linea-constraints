@@ -13,28 +13,28 @@ const MAGIC = 0x05
 
 ;; TODO: add sender (TXN_FROM_ADDRESS) as an argument of the function, and that has to be confirmed via a lookup into TXNDATA
 
-pub fn rlpauth(chain_id u256, nonce u256, address u160, y_parity u8, r u256, s u256, 
-authority u160, success_bit u1, ;; predicticted returned values by ecrecover
+pub fn rlpauth(chain_id u256, nonce u256, delegation_address u160, y_parity u8, r u256, s u256, 
+authority_address u160, ;; predicticted returned values by ecrecover
 user_transaction_number u24, ;; lookup into usertxndata
 xtern u1, blk_number u16, network_chain_id u256, ;; lookup into blockdata
-authority_ecrecover_success u1, authority_nonce u256, sender u160, authority_has_empty_code_or_is_delegated u1) ;; lookup into hub
+authority_ecrecover_success u1, authority_nonce u256, txn_from_address u160, authority_has_empty_code_or_is_delegated u1) ;; lookup into hub
 -> (error u1)
 {
     ;; Preliminary computation
     pre_1:
-        var address_is_zero_address u1
-        if address == 0 goto set_address_is_zero_address_to_true
-        if address != 0 goto set_address_is_zero_address_to_false
-        set_address_is_zero_address_to_true:
-            address_is_zero_address = 1
+        var delegation_address_is_zero u1
+        if delegation_address == 0 goto set_delegation_address_is_zero_to_true
+        if delegation_address != 0 goto set_delegation_address_is_zero_to_false
+        set_delegation_address_is_zero_to_true:
+            delegation_address_is_zero = 1
             goto pre_2
-        set_address_is_zero_address_to_false:
-            address_is_zero_address = 0
+        set_delegation_address_is_zero_to_false:
+            delegation_address_is_zero = 0
 
     pre_2:
         var sender_is_authority u1
-        if sender == authority goto set_sender_is_authority_to_true
-        if sender != authority goto set_sender_is_authority_to_false
+        if txn_from_address == authority_address goto set_sender_is_authority_to_true
+        if txn_from_address != authority_address goto set_sender_is_authority_to_false
         set_sender_is_authority_to_true:
             sender_is_authority = 1
             goto step_1
@@ -43,7 +43,7 @@ authority_ecrecover_success u1, authority_nonce u256, sender u160, authority_has
 
     ;; assert auth.chain_id < 2**256
     ;; assert auth.nonce < 2**64
-    ;; assert len(auth.address) == 20
+    ;; assert len(auth.delegation_address) == 20
     ;; assert auth.y_parity < 2**8
     ;; assert auth.r < 2**256
     ;; assert auth.s < 2**256
@@ -64,10 +64,10 @@ authority_ecrecover_success u1, authority_nonce u256, sender u160, authority_has
         if b == 1 goto failure
         ;;
         var msg u240
-        msg = compute_rlp(chain_id, address, nonce)
+        msg = compute_rlp(chain_id, delegation_address, nonce)
 
         var ecrecover_fails u1
-        ecrecover_fails = ecrecover(msg, y_parity, r, s, authority, success_bit)
+        ecrecover_fails = ecrecover(msg, y_parity, r, s, authority_address, authority_ecrecover_success)
         if ecrecover_fails == 1 goto failure
     ;; step_4: happens in the HUB
         ;; Add authority to accessed_addresses, as defined in EIP-2929.
@@ -77,7 +77,7 @@ authority_ecrecover_success u1, authority_nonce u256, sender u160, authority_has
         fail
     step_6:
         ;; TODO: lookup into the hub confirms authority_nonce
-        ;; NOTE: the sender_nonce will be incremented after the authority list in Linea; if sender == authority (SENDER_IS_AUTHORITY) one must verify authority_nonce + 1 == nonce (TBC)
+        ;; NOTE: the sender_nonce will be incremented after the authority list in Linea; if sender == authority_address (SENDER_IS_AUTHORITY) one must verify authority_nonce + 1 == nonce (TBC)
         if sender_is_authority == 1 goto step_6_with_sender_is_authority
         if sender_is_authority == 0 goto step_6_with_sender_is_not_authority
     step_6_with_sender_is_authority:
@@ -92,9 +92,9 @@ authority_ecrecover_success u1, authority_nonce u256, sender u160, authority_has
         ;; Add PER_EMPTY_ACCOUNT_COST - PER_AUTH_BASE_COST gas to the global refund counter if authority is not empty.
     step_8:
         ;; TODO: the computation of the hash does not happen here anymore
-        ;; TODO: compute the hash of 0xef0100 || address (send this to the prover, along with the expected code_hash, so as the prover proves it is correct)
-        ;; if address == 0x0000000000000000000000000000000000000000 goto "authority.code_hash = 0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470"
-        ;; authority_code = (0xef0100 * 2^160) + address
+        ;; TODO: compute the hash of 0xef0100 || delegation_address (send this to the prover, along with the expected code_hash, so as the prover proves it is correct)
+        ;; if delegation_address == 0x0000000000000000000000000000000000000000 goto "authority.code_hash = 0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470"
+        ;; authority_code = (0xef0100 * 2^160) + delegation_address
     ;; step_9: happens in the HUB
         ;; authority_nonce = authority_nonce + 1
     exit:
@@ -105,8 +105,8 @@ authority_ecrecover_success u1, authority_nonce u256, sender u160, authority_has
 }
 
 ;; temporary dummy functions
-fn compute_rlp(chain_id u256, address u160, nonce u256) -> (rlp_res u240) {
-    rlp_res = 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffeffff
+fn compute_rlp(chain_id u256, address u160, nonce u256) -> (rlp_output u240) {
+    rlp_output = 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffeffff
     return
 }
 
