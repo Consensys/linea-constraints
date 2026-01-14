@@ -13,6 +13,7 @@
         hub.auth/AUTHORITY_HAS_EMPTY_CODE_OR_IS_DELEGATED 
         (:: hub.auth/DELEGATION_ADDRESS_HI hub.auth/DELEGATION_ADDRESS_LO)
         hub.auth/DELEGATION_ADDRESS_IS_ZERO
+        hub.auth/AUTHORIZATION_TUPLE_IS_VALID
     )
     ;; source selector
     (rlp-auth-into-hub-activation-flag)
@@ -25,5 +26,6 @@
         rlpauth.authority_nonce ;; This is justified in the HUB
         rlpauth.authority_has_empty_code_or_is_delegated ;; This is justified in the HUB
         rlpauth.delegation_address ;; This is justified in RLPAUTH
-        rlpauth.delegation_address_is_zero ;; This is justified in RLPAUTH                 
+        rlpauth.delegation_address_is_zero ;; This is justified in RLPAUTH    
+        rlpauth.authorization_tuple_is_valid             
     ))
