@@ -48,7 +48,7 @@ MMU := mmu
 
 MXP := mxp
 
-OOB := oob
+OOB := oob/oob.zkasm
 
 RLP_ADDR := rlpaddr
 
