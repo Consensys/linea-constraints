@@ -27,5 +27,5 @@
         rlpauth.authority_has_empty_code_or_is_delegated ;; This is justified in the HUB
         rlpauth.delegation_address ;; This is justified in RLPAUTH
         rlpauth.delegation_address_is_zero ;; This is justified in RLPAUTH    
-        rlpauth.authorization_tuple_is_valid             
+        rlpauth.authorization_tuple_is_valid ;; Computed in RLPAUTH module using local computations and information from the HUB
     ))
