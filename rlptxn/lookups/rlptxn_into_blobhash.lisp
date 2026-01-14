@@ -5,7 +5,7 @@
   ;; target columns
   (
     blobhash.USER_TXN_NUMBER
-    blobhash.TOT_NUMBER_OF_HASHES
+    blobhash.NUMBER_OF_BLOBS
     blobhash.HASH_INDEX
     blobhash.BLOB_VERSION_HASH
   )
