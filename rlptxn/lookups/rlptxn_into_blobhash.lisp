@@ -14,7 +14,7 @@
   ;; source columns
   (
     rlptxn.USER_TXN_NUMBER
-    rlptxn.cmp/AUX_CCC_1 ;; TOT number of hashes
-    rlptxn.cmp/AUX_CCC_2 ;; INDEX
+    rlptxn.txn/NUMBER_OF_BLOBS
+    rlptxn.cmp/AUX_CCC_1 ;; INDEX
     (::  rlptxn.cmp/EXO_DATA_1 rlptxn.cmp/EXO_DATA_2)
   ))

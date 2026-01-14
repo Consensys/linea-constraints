@@ -1,8 +1,7 @@
 (module rlptxn)
 
 (defun    (blob-hash-rlp-length-countdown)    cmp/AUX_1)
-(defun    (blob-hash-tot-hashes)              cmp/AUX_CCC_1)
-(defun    (blob-hash-index)                   cmp/AUX_CCC_2)
+(defun    (blob-hash-index)                   cmp/AUX_CCC_1)
 (defun    (blob-hash-first-row-of-blob-hash)  (force-bin (* (- 1 (prev TXN)) (prev DONE))))
 
 (defconstraint blob-hash-phase-constraints-prefix (:guard IS_BLOB_HASH)
@@ -13,11 +12,8 @@
                                                                      1)))
 
 (defconstraint blob-hash-phase-constraints-setting-tot-hashes (:guard IS_BLOB_HASH)
-    (begin
-    (if-not-zero (prev TXN) (eq! (prev (blob-hash-rlp-length-countdown))
-                                 (* 33 (blob-hash-tot-hashes))))
-    (if-not-zero (prev CMP) (eq! (blob-hash-tot-hashes)
-                                 (prev (blob-hash-tot-hashes))))))                                                                     
+    (if-not-zero (prev TXN) (eq! blob-hash-rlp-length-countdown
+                                 (* 33 (prev txn/NUMBER_OF_BLOBS)))))                                                                     
 
 (defconstraint blob-hash-phase-constraints-propagate-rlp-size (:guard IS_BLOB_HASH)
     (if-not-zero CMP

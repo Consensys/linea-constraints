@@ -19,4 +19,5 @@
                  ( NUMBER_OF_NONZERO_BYTES          :i32  )
                  ( NUMBER_OF_PREWARMED_ADDRESSES    :i24  )
                  ( NUMBER_OF_PREWARMED_STORAGE_KEYS :i24  )
+                 ( NUMBER_OF_BLOBS                  :i16  )
                  ))
