@@ -1,12 +1,12 @@
-(defun (rlp-auth-into-hub-activation-flag) rlpauth.xtern * rlpauth.authority_ecrecover_success)
+(defun (rlp-auth-into-hub-activation-flag) (* rlpauth.xtern rlpauth.authority_ecrecover_success))
 
 (defclookup
     (rlp-auth-into-hub :unchecked)
+    ;; target selector
+    (* hub.auth/TX_AUTH hub.PEEK_AT_AUTH)
     ;; target columns
     (
         ;; TODO: lips wip
-        hub.TX_AUTH
-        hub.PEEK_AT_AUTH
         hub.auth/AUTHORITY_ECRECOVER_SUCCESS 
         (:: hub.auth/AUTHORITY_ADDRESS_HI hub.auth/AUTHORITY_ADDRESS_LO)
         hub.auth/AUTHORITY_NONCE
@@ -19,8 +19,6 @@
     (rlp-auth-into-hub-activation-flag)
     ;; source columns
     (
-        1
-        1
         rlpauth.authority_ecrecover_success ;; This is justified in RLPAUTH
         rlpauth.authority_address ;; This is justified in RLPAUTH
         rlpauth.authority_nonce ;; This is justified in the HUB

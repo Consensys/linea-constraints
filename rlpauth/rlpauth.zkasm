@@ -19,7 +19,7 @@ authority_ecrecover_success u1, authority_nonce u256, authority_has_empty_code_o
     delegation_address_is_zero = delegation_address == 0 ? 1 : 0
 
     var sender_is_authority u1
-    sender_is_authority = txt_from_address == authority_address ? 1 : 0
+    sender_is_authority = txn_from_address == authority_address ? 1 : 0
 
     ;; assert auth.chain_id < 2**256
     ;; assert auth.nonce < 2**64
