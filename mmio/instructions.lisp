@@ -190,7 +190,7 @@
 
 ;; This is just a way to cast an intermediate result, as the current constraint were creating a i354 which makes the splitting huge.
 
-(defcomputedcolumn (CAST_INTERMEDIATE_RESULT :i128 :fwd) (* IS_RAM_TO_LIMB_TWO_SOURCE [ACC 1] [POW_256 2]))
+(defcomputedcolumn (CAST_INTERMEDIATE_RESULT :i128 :fwd) (* IS_RAM_TO_RAM_TWO_SOURCE [ACC 1] [POW_256 2]))
 
 (defconstraint ram-to-ram-two-source (:guard IS_RAM_TO_RAM_TWO_SOURCE)
                (begin (eq! CN_A CNS)
