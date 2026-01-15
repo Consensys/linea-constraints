@@ -114,6 +114,25 @@ fn compute_rlp_integer(integer u256) -> (rlp_prefix u128, leading_limb_left_shif
     return
 }
 
+fn compute_rlp_address(address u160) -> (rlp_prefix u128, rlp_prefix_byte_size u8) {
+    ;; TODO: should the other values verified here?
+    ;; address_length = 20 ;; length of address in bytes
+
+    var address_first_byte u8
+    var address_other_bytes u152
+    address_first_byte, address_other_bytes = address
+
+    ;; address_is_list = 0
+
+    ;; address_is_nonempty = 1
+
+    ;; rlp_prefix_required  = 0 
+
+    var tmp u128
+    rlp_prefix, tmp, rlp_prefix_byte_size = rlputils(RLP_UTILS_INST_BYTE_STRING_PREFIX, 20, address_first_byte, 0, 1, 0)
+    return
+}
+
 ;; keccak_output is a prediction to be confirmed by the prover
 fn keccak(keccak_input u184, 
 keccak_output u256) -> (keccak_fails u1) {
