@@ -126,7 +126,7 @@ fn compute_rlp_address(address u160) -> (rlp_prefix u128, rlp_prefix_byte_size u
 
     ;; address_is_nonempty = 1
 
-    ;; rlp_prefix_required  = 0 
+    ;; rlp_prefix_required  = 0 (as address_length is fixed to 20 bytes)
 
     var tmp u128
     rlp_prefix, tmp, rlp_prefix_byte_size = rlputils(RLP_UTILS_INST_BYTE_STRING_PREFIX, 20, address_first_byte, 0, 1, 0)
