@@ -8,10 +8,10 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v3
+      uses: actions/checkout@v5
 
     - name: Install Go
-      uses: actions/setup-go@v5.1.0
+      uses: actions/setup-go@v6.0.0
 
     - name: Install Go Corset
       shell: bash
