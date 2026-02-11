@@ -2,9 +2,13 @@ name: Check compilation
 
 on: [push, pull_request]
 
+permissions: {} # lock everything by default (least-privilege)
+
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
 
     steps:
     - name: Checkout repository
