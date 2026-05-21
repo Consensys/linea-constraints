@@ -1,3 +1,8 @@
+> [!WARNING]
+> **This repository has been archived and is no longer actively maintained.**
+> The content has been moved to [**Consensys/linea-monorepo**](https://github.com/Consensys/linea-monorepo).
+> Please refer to that repository for the latest implementation of the Linea constraint system.
+
 # Linea constraints 
 
 This repository hosts the implementation of the constraint system specified in the [linea-specification repo](https://github.com/Consensys/linea-specification). 
